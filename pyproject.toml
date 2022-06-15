@@ -1,0 +1,140 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+    "poetry-core>=1.0.0",
+]
+
+[tool.black]
+exclude = '''
+/(
+  | \.git
+  | \.mypy_cache
+  | _build
+  | build
+  | dist
+)/
+'''
+line-length = 79
+skip-magic-trailing-comma = true
+
+[tool.constcheck]
+filter = true
+
+[tool.coverage.report]
+fail_under = 100
+
+[tool.coverage.run]
+omit = [
+    "whitelist.py",
+    "docsig/__main__.py",
+]
+
+[tool.poetry]
+authors = [
+    "jshwi <stephen@jshwisolutions.com>",
+]
+description = "Check signature params for proper documentation"
+documentation = "https://docsig.readthedocs.io/en/latest/?badge=latest"
+homepage = "https://pypi.org/project/docsig/"
+keywords = [
+    "docstring",
+    "signature",
+    "params",
+    "check",
+    "docs",
+]
+license = "MIT"
+maintainers = [
+    "jshwi <stephen@jshwisolutions.com>",
+]
+name = "docsig"
+readme = "README.rst"
+repository = "https://github.com/jshwi/docsig"
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+object-colors = "^2.1.0"
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+bump2version = "^1.0.1"
+ipython = "^8.2.0"
+prompt-toolkit = "^3.0.29"
+pyaud = "^3.10.0"
+pytest = "^7.1.1"
+pytest-randomly = "^3.11.0"
+pytest-sugar = "^0.9.4"
+restview = "^3.0.0"
+sphinx-toolbox = "^3.1.1"
+templatest = "^0.5.0"
+
+[tool.poetry.scripts]
+docsig = "docsig.__main__:main"
+
+[tool.pyaud.audit]
+modules = [
+    "toc",
+    "whitelist",
+    "sort-pyproject",
+    "format",
+    "format-docs",
+    "format-str",
+    "imports",
+    "typecheck",
+    "unused",
+    "lint",
+    "const",
+    "test",
+    "docs",
+]
+
+[tool.pyaud.clean]
+exclude = [
+    "*.egg*",
+    ".mypy_cache",
+    ".env",
+]
+
+[tool.pyaud.indexing]
+exclude = [
+    "whitelist.py",
+    "conf.py",
+]
+
+[tool.pyaud.logging]
+disable_existing_loggers = true
+version = 1
+
+[tool.pyaud.logging.formatters.standard]
+format = "%(asctime)s %(levelname)s %(name)s %(message)s"
+
+[tool.pyaud.logging.handlers.default]
+backupCount = 60
+class = "logging.handlers.TimedRotatingFileHandler"
+filename = "~/.cache/pyaud/log/pyaud.log"
+formatter = "standard"
+when = "d"
+
+[tool.pyaud.logging.root]
+handlers = [
+    "default",
+]
+level = "DEBUG"
+propagate = false
+
+[tool.pytest.ini_options]
+addopts = [
+    "--durations=5",
+    "-vv",
+    "--color=yes",
+    "--cov-report",
+    "term-missing",
+]
+filterwarnings = "ignore::DeprecationWarning"
+norecursedirs = [
+    "docs",
+    "*.egg-info",
+    ".git",
+    ".mypy_cache",
+    ".idea",
+]

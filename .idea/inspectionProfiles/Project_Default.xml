@@ -1,0 +1,65 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Annotator" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="docs.index" level="ERROR" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="whitelist.py" level="WEAK WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="IgnoreCoverEntry" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name=".prettierignore" level="WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="IgnoreUnusedEntry" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name=".prettierignore" level="WEAK WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="PoetryPackageVersionsInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="tests.files" level="WEAK WARNING" enabled="false" />
+      <scope name="whitelist.py" level="WEAK WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="app.dom.renderers" level="WEAK WARNING" enabled="false" />
+      <scope name="pyaud._environ" level="WEAK WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="PyProtectedMemberInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="whitelist.py" level="WEAK WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <scope name="docs.conf" level="WEAK WARNING" enabled="false">
+        <option name="ignoredNames">
+          <list>
+            <option value="id" />
+          </list>
+        </option>
+      </scope>
+      <option name="ignoredNames">
+        <list>
+          <option value="id" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyStatementEffectInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="whitelist.py" level="WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="pyaud.config" level="WARNING" enabled="false" />
+      <scope name="whitelist.py" level="WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="Pylint" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="docs.conf" level="WARNING" enabled="false" />
+      <scope name="whitelist.py" level="WARNING" enabled="false" />
+    </inspection_tool>
+    <inspection_tool class="SpellCheckingInspection" enabled="true" level="TYPO" enabled_by_default="true">
+      <scope name="Pipfile.lock" level="TYPO" enabled="false">
+        <option name="processCode" value="true" />
+        <option name="processLiterals" value="true" />
+        <option name="processComments" value="true" />
+      </scope>
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+    <inspection_tool class="StandardJS" enabled="true" level="ERROR" enabled_by_default="true" />
+  </profile>
+</component>

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="whitelist.py" pattern="file:whitelist.py" />
+</component>

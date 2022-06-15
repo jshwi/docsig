@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="bump2version" pattern="file:.bumpversion.cfg" />
+</component>

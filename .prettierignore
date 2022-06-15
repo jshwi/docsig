@@ -1,0 +1,8 @@
+.mypy_cache/
+.pytest_cache/
+CHANGELOG.md
+dist/
+docs/_build/
+docs/_themes/
+node_modules/
+package-lock.json

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="docs.index" pattern="file:docs/index.rst" />
+</component>
