@@ -16,7 +16,10 @@ from ._core import warn as _warn
 
 
 def main() -> int:
-    """Main function for package."""
+    """Main function for package.
+
+    :return: Non-zero exit status if check fails else zero.
+    """
     failed = False
     paths: _PathList = []
     failures: _FailedDocData = {}
