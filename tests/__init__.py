@@ -10,6 +10,8 @@ from pathlib import Path
 from templatest import BaseTemplate as _BaseTemplate
 from templatest import templates as _templates
 
+from docsig import messages
+
 MockMainType = t.Callable[..., int]
 InitFileFixtureType = t.Callable[[str], Path]
 
@@ -340,3 +342,128 @@ def function({CHECK}param1) -> {CROSS}Optional:
     :return: {CROSS}
     \"\"\"
 """
+
+
+@_templates.register
+class _FailOutOfOrderSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"...
+
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FailParamDocsSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E102
+
+
+@_templates.register
+class _FailParamSigSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
+
+
+@_templates.register
+class _FailRetTypeDocsSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E104
+
+
+@_templates.register
+class _FailRetTypeSigSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> int:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E105
+
+
+@_templates.register
+class _FailDupesSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E106

@@ -7,6 +7,7 @@ import sys as _sys
 import typing as _t
 import warnings as _warnings
 from argparse import ArgumentParser as _ArgumentParser
+from collections import Counter as _Counter
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -20,7 +21,7 @@ from pygments.formatters.terminal256 import (
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
 from ._version import __version__
-from .messages import W101
+from .messages import E101, E102, E103, E104, E105, E106, W101
 
 color = _Color()
 
@@ -32,13 +33,15 @@ CROSS = color.red.get("\u2716")
 TRIPLE_QUOTES = '"""'
 TAB = "    "
 
+Args = _t.Tuple[str, ...]
 DocArgs = _t.Tuple[_t.Optional[str], ...]
-SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
+SigArgs = _t.Tuple[Args, _t.Optional[str]]
 DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
 FuncDataList = _t.List[FuncData]
 ModuleData = _t.Tuple[str, FuncDataList]
-FailedDocData = _t.Dict[str, _t.List[str]]
+FailedFunc = _t.Tuple[str, _t.Tuple[str, ...]]
+FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 MissingDocList = _t.List[_t.Tuple[str, str]]
 MemberData = _t.Tuple[ModuleData, ...]
 PathList = _t.List[_Path]
@@ -139,6 +142,34 @@ def _lexer(value: str) -> str:
     return _highlight(value, _PythonLexer(), formatter).strip()
 
 
+def _get_param_summary(
+    arg: _t.Optional[str],
+    doc: _t.Optional[str],
+    params: Args,
+    docstring: DocArgs,
+    summary: _t.Set[str],
+) -> None:
+    if arg in docstring or doc in params:
+        summary.add(E101)
+
+    if len(docstring) > len(params):
+        summary.add(E102)
+
+    if len(params) > len(docstring):
+        summary.add(E103)
+
+    if any(k for k, v in _Counter(docstring).items() if v > 1):
+        summary.add(E106)
+
+
+def _get_return_summary(returns, arg_returns, summary) -> None:
+    if returns and not arg_returns:
+        summary.add(E104)
+
+    if arg_returns and not returns:
+        summary.add(E105)
+
+
 def get_members(paths: PathList) -> MemberData:
     """Get a tuple of module names paired with function information.
 
@@ -164,7 +195,7 @@ def get_files(root: _Path, paths: PathList) -> None:
 
 def construct_func(
     func: str, args: SigArgs, docstring: DocArgs, returns: bool
-) -> _t.Optional[str]:
+) -> _t.Optional[FailedFunc]:
     """Construct a string representation of function and docstring info.
 
     Return None if the test passed.
@@ -175,6 +206,7 @@ def construct_func(
     :param returns: Bool for whether function returns value.
     :return: String if test fails else None.
     """
+    summary: _t.Set[str] = set()
     failed = False
     func_str = _lexer(f"def {func}(").strip()
     doc_str = f"{_lexer(f'{TAB}{TRIPLE_QUOTES}...')}\n"
@@ -183,7 +215,13 @@ def construct_func(
         longest = max([len(params), len(docstring)])
         arg = _get_index(count, params)
         doc = _get_index(count, docstring)
-        (mark, failed) = (CHECK, False) if arg == doc else (CROSS, True)
+        if arg == doc:
+            mark = CHECK
+        else:
+            mark = CROSS
+            failed = True
+            _get_param_summary(arg, doc, params, docstring, summary)
+
         func_str += f"{mark}{arg}"
         doc_str += f"\n{TAB}:param {doc}: {mark}"
         if count + 1 != longest:
@@ -196,11 +234,12 @@ def construct_func(
         mark = CROSS
         doc_str += f"\n{TAB}:return: {CROSS}"
         failed = True
+        _get_return_summary(returns, arg_returns, summary)
 
     func_str += f") -> {mark}{arg_returns}:"
     doc_str += f"\n{TAB}{_lexer(TRIPLE_QUOTES)}\n"
     if failed:
-        return f"{func_str}\n{doc_str}"
+        return f"{func_str}\n{doc_str}", tuple(summary)
 
     return None
 
@@ -213,9 +252,10 @@ def print_failures(failures: FailedDocData) -> None:
     """
     for module, funcs in failures.items():
         if funcs:
-            color.magenta.print(module)
-            print(len(module) * "-")
-            print("\n".join(funcs))
+            for func, summary in funcs:
+                color.magenta.print(module)
+                print(len(module) * "-")
+                print("\n".join([func, *summary]) + "\n")
 
 
 def warn(missing: MissingDocList) -> None:

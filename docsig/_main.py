@@ -34,9 +34,11 @@ def main() -> int:
                 if not is_doc:
                     missing.append((module, func))
                 else:
-                    func_str = _construct_func(func, args, docstring, returns)
-                    if func_str is not None:
-                        failures[module].append(func_str)
+                    func_result = _construct_func(
+                        func, args, docstring, returns
+                    )
+                    if func_result is not None:
+                        failures[module].append(func_result)
                         failed = True
 
     _print_failures(failures)
