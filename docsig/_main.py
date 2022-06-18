@@ -30,11 +30,11 @@ def main() -> int:
     for module, func_data in members:
         failures[module] = []
         if func_data:
-            for func, args, (is_doc, docstring) in func_data:
+            for func, args, (is_doc, docstring, returns) in func_data:
                 if not is_doc:
                     missing.append((module, func))
                 else:
-                    func_str = _construct_func(func, args, docstring)
+                    func_str = _construct_func(func, args, docstring, returns)
                     if func_str is not None:
                         failures[module].append(func_str)
                         failed = True

@@ -33,8 +33,8 @@ TRIPLE_QUOTES = '"""'
 TAB = "    "
 
 DocArgs = _t.Tuple[_t.Optional[str], ...]
-SigArgs = _t.Tuple[str, ...]
-DocstringData = _t.Tuple[bool, DocArgs]
+SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
+DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
 FuncDataList = _t.List[FuncData]
 ModuleData = _t.Tuple[str, FuncDataList]
@@ -90,22 +90,42 @@ def _get_index(index: int, params: _t.Sequence) -> _t.Optional[str]:
 def _parse_docstring(docstring: _t.Optional[str] = None) -> DocstringData:
     if docstring is None:
         # noinspection PyRedundantParentheses
-        return False, tuple()
+        return False, tuple(), False
 
-    return True, tuple(
+    params = tuple(
         _get_index(1, s.split())
         for s in docstring.split(":")
         if s.startswith("param")
     )
+    return True, params, bool(":return:" in docstring)
+
+
+def _get_returns(func: _ast.FunctionDef) -> _t.Optional[str]:
+    if func.returns is not None:
+        if isinstance(func.returns, _ast.Name):
+            return func.returns.id
+
+        if isinstance(func.returns, _ast.Subscript):
+            if isinstance(func.returns.value, _ast.Name):
+                return func.returns.value.id
+
+            if isinstance(func.returns.value, _ast.Attribute):
+                return func.returns.value.attr
+
+    return None
 
 
 # collect a tuple of function information values
 def _get_func_data(path: _Path) -> _t.List[FuncData]:
     node = _ast.parse(path.read_text(), filename=str(path))
+    # noinspection PyUnresolvedReferences
     return [
         (
             f.name,
-            tuple(a.arg for a in f.args.args if a.arg != "_"),
+            (
+                tuple(a.arg for a in f.args.args if a.arg != "_"),
+                _get_returns(f),
+            ),
             _parse_docstring(_ast.get_docstring(f)),
         )
         for f in node.body
@@ -143,7 +163,7 @@ def get_files(root: _Path, paths: PathList) -> None:
 
 
 def construct_func(
-    func: str, args: SigArgs, docstring: DocArgs
+    func: str, args: SigArgs, docstring: DocArgs, returns: bool
 ) -> _t.Optional[str]:
     """Construct a string representation of function and docstring info.
 
@@ -152,14 +172,16 @@ def construct_func(
     :param func: Function name.
     :param args: Tuple of signature parameters.
     :param docstring: Tuple of docstring parameters.
+    :param returns: Bool for whether function returns value.
     :return: String if test fails else None.
     """
     failed = False
     func_str = _lexer(f"def {func}(").strip()
     doc_str = f"{_lexer(f'{TAB}{TRIPLE_QUOTES}...')}\n"
-    for count, _ in enumerate(_zip_longest(args, docstring)):
-        longest = max([len(args), len(docstring)])
-        arg = _get_index(count, args)
+    params, arg_returns = args
+    for count, _ in enumerate(_zip_longest(params, docstring)):
+        longest = max([len(params), len(docstring)])
+        arg = _get_index(count, params)
         doc = _get_index(count, docstring)
         (mark, failed) = (CHECK, False) if arg == doc else (CROSS, True)
         func_str += f"{mark}{arg}"
@@ -167,7 +189,15 @@ def construct_func(
         if count + 1 != longest:
             func_str += _lexer(", ")
 
-    func_str += "):"
+    mark = CHECK
+    if returns and arg_returns:
+        doc_str += f"\n{TAB}:return: {CHECK}"
+    elif returns and not arg_returns or arg_returns and not returns:
+        mark = CROSS
+        doc_str += f"\n{TAB}:return: {CROSS}"
+        failed = True
+
+    func_str += f") -> {mark}{arg_returns}:"
     doc_str += f"\n{TAB}{_lexer(TRIPLE_QUOTES)}\n"
     if failed:
         return f"{func_str}\n{doc_str}"

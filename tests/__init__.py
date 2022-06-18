@@ -28,7 +28,6 @@ def function(param1, param2, param3) -> None:
     :param param1: Passes.
     :param param2: Passes.
     :param param3: Passes.
-    :return: Passes.
     \"\"\"
 """
 
@@ -48,14 +47,13 @@ def function(param1, param2) -> None:
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    :return: Fails.
     \"\"\"
 """
 
     @property
     def expected(self) -> str:
         return f"""\
-def function({CHECK}param1, {CHECK}param2, {CROSS}None):
+def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"...
 
     :param param1: {CHECK}
@@ -75,14 +73,13 @@ def function(param1, param2, param3) -> None:
 
     :param param1: Fails.
     :param param2: Fails.
-    :return: Fails.
     \"\"\"
 """
 
     @property
     def expected(self) -> str:
         return f"""\
-def function({CHECK}param1, {CHECK}param2, {CROSS}param3):
+def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"...
 
     :param param1: {CHECK}
@@ -130,7 +127,6 @@ def function(param1, param2, _) -> None:
 
     :param param1: Passes.
     :param param2: Passes.
-    :return: Passes.
     \"\"\"
 """
 
@@ -157,11 +153,190 @@ def function(param1, param2, param3):
     @property
     def expected(self) -> str:
         return f"""\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3):
+def function({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"...
 
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _PassRetType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> int:
+    \"\"\"Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    :param param3: Passes.
+    :return: Passes.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailRetTypeDocs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FailRetTypeSig(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> int:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _PassNoRetNoType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    :param param3: Passes.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailNoRetDocsNoType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FailRetDocsAttrType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+import typing as t
+
+def function(param1) -> t.Optional[str]:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1) -> {CROSS}Optional:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FailRetDocsNameType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import Optional
+
+def function(param1) -> Optional[str]:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1) -> {CROSS}Optional:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :return: {CROSS}
     \"\"\"
 """
