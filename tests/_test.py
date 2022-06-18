@@ -2,6 +2,7 @@
 tests._test
 ===========
 """
+# pylint: disable=protected-access
 import pytest
 import templatest
 from templatest import Template, templates
@@ -175,3 +176,14 @@ def test_main_multi(
     out = nocolorcapsys.readouterr()[0]
     # all_expected = expected.split("\n\n\n")
     assert expected in out
+
+
+def test_mutable_set() -> None:
+    """Get coverage on ``MutableSet``."""
+    value = "value"
+    report = docsig._report.Report()  # type: ignore
+    report.add(value)
+    assert value in report
+    assert len(report) == 1
+    report.discard(value)
+    assert value not in report

@@ -7,7 +7,6 @@ import sys as _sys
 import typing as _t
 import warnings as _warnings
 from argparse import ArgumentParser as _ArgumentParser
-from collections import Counter as _Counter
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -19,10 +18,11 @@ from pygments.formatters.terminal256 import (
 # noinspection PyUnresolvedReferences
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
+from ._report import Report as _Report
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 from ._version import __version__
-from .messages import E101, E102, E103, E104, E105, E106, E107, W101
+from .messages import W101
 
 NAME = __name__.split(".", maxsplit=1)[0]
 CHECK = _color.green.get("\u2713")
@@ -30,12 +30,11 @@ CROSS = _color.red.get("\u2716")
 TRIPLE_QUOTES = '"""'
 TAB = "    "
 
-Args = _t.Tuple[str, ...]
 DocArgs = _t.Tuple[_t.Optional[str], ...]
-SigArgs = _t.Tuple[Args, _t.Optional[str]]
+SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
 DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
-FailedFunc = _t.Tuple[str, _t.Tuple[str, ...]]
+FailedFunc = _t.Tuple[str, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 MissingDocList = _t.List[_t.Tuple[str, str]]
 
@@ -135,37 +134,6 @@ def _lexer(value: str) -> str:
     return _highlight(value, _PythonLexer(), formatter).strip()
 
 
-def _get_param_summary(
-    arg: _t.Optional[str],
-    doc: _t.Optional[str],
-    params: Args,
-    docstring: DocArgs,
-    summary: _t.Set[str],
-) -> None:
-    if arg in docstring or doc in params:
-        summary.add(E101)
-
-    if len(docstring) > len(params):
-        summary.add(E102)
-
-    if len(params) > len(docstring):
-        summary.add(E103)
-
-    if any(k for k, v in _Counter(docstring).items() if v > 1):
-        summary.add(E106)
-
-    if arg is None and doc is None:
-        summary.add(E107)
-
-
-def _get_return_summary(returns, arg_returns, summary) -> None:
-    if returns and not arg_returns:
-        summary.add(E104)
-
-    if arg_returns and not returns:
-        summary.add(E105)
-
-
 def get_members(
     paths: _t.List[_Path],
 ) -> _t.Tuple[_t.Tuple[str, _t.List[FuncData]], ...]:
@@ -211,11 +179,14 @@ def construct_func(
     :param returns: Bool for whether function returns value.
     :return: String if test fails else None.
     """
-    summary: _t.Set[str] = set()
+    report = _Report()
     failed = False
     func_str = _lexer(f"def {func}(").strip()
     doc_str = f"{_lexer(f'{TAB}{TRIPLE_QUOTES}...')}\n"
     params, arg_returns = args
+    report.exists(params, docstring)
+    report.missing(params, docstring)
+    report.duplicates(docstring)
     for count, _ in enumerate(_zip_longest(params, docstring)):
         longest = max([len(params), len(docstring)])
         arg = _get_index(count, params)
@@ -225,7 +196,8 @@ def construct_func(
         else:
             mark = CROSS
             failed = True
-            _get_param_summary(arg, doc, params, docstring, summary)
+            report.order(arg, doc, params, docstring)
+            report.incorrect(arg, doc)
 
         func_str += f"{mark}{arg}"
         doc_str += f"\n{TAB}:param {doc}: {mark}"
@@ -239,12 +211,13 @@ def construct_func(
         mark = CROSS
         doc_str += f"\n{TAB}:return: {CROSS}"
         failed = True
-        _get_return_summary(returns, arg_returns, summary)
 
+    report.extra_return(returns, arg_returns)
+    report.missing_return(returns, arg_returns)
     func_str += f") -> {mark}{arg_returns}:"
     doc_str += f"\n{TAB}{_lexer(TRIPLE_QUOTES)}\n"
     if failed:
-        return f"{func_str}\n{doc_str}", tuple(summary)
+        return f"{func_str}\n{doc_str}", report
 
     return None
 
@@ -259,7 +232,7 @@ def print_failures(failures: FailedDocData) -> None:
         for func, summary in funcs:
             _color.magenta.print(module)
             print(len(module) * "-")
-            print("\n".join([func, *summary]) + "\n")
+            print(f"{func}\n{summary.get_report()}")
 
 
 def warn(missing: MissingDocList) -> None:
