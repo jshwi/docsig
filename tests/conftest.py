@@ -4,6 +4,7 @@ tests.conftest
 """
 # pylint: disable=too-many-arguments,too-many-locals,too-few-public-methods
 # pylint: disable=protected-access,no-member,too-many-statements
+import warnings
 from pathlib import Path
 
 import pytest
@@ -22,14 +23,20 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     :return: Function for using this fixture.
     """
 
-    def _main(*args: str) -> int:
+    def _main(*args: str, catch_warnings: bool = True) -> int:
         """Run main with custom args."""
         # noinspection PyProtectedMember
         # pylint: disable=protected-access,import-outside-toplevel
         from docsig.__main__ import main
 
-        monkeypatch.setattr("sys.argv", [docsig.__name__, *args])
-        return main()
+        monkeypatch.setattr(
+            "sys.argv", [docsig.__name__, *[str(a) for a in args]]
+        )
+        with warnings.catch_warnings():
+            if catch_warnings:
+                warnings.simplefilter("ignore")
+
+            return main()
 
     return _main
 

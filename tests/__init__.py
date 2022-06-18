@@ -18,11 +18,11 @@ CROSS = "\u2716"
 
 
 @_templates.register
-class _FunctionPass(_BaseTemplate):
+class _PassParam(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_1(param1, param2, param3) -> None:
+def function(param1, param2, param3) -> None:
     \"\"\"Proper docstring.
 
     :param param1: Passes.
@@ -38,11 +38,11 @@ def function_1(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FunctionFailTooManyInDocs(_BaseTemplate):
+class _FailParamDocs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_2(param1, param2) -> None:
+def function(param1, param2) -> None:
     \"\"\"...
 
     :param param1: Fails.
@@ -55,7 +55,7 @@ def function_2(param1, param2) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None):
+def function({CHECK}param1, {CHECK}param2, {CROSS}None):
     \"\"\"...
 
     :param param1: {CHECK}
@@ -66,11 +66,11 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None):
 
 
 @_templates.register
-class _FunctionFailTooManyInSig(_BaseTemplate):
+class _FailParamSig(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_3(param1, param2, param3) -> None:
+def function(param1, param2, param3) -> None:
     \"\"\"Not proper docstring.
 
     :param param1: Fails.
@@ -82,7 +82,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3):
+def function({CHECK}param1, {CHECK}param2, {CROSS}param3):
     \"\"\"...
 
     :param param1: {CHECK}
@@ -93,11 +93,11 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3):
 
 
 @_templates.register
-class _FunctionNoDocstring(_BaseTemplate):
+class _PassNoDocstring(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_4(param1, param2, param3) -> None:
+def function(param1, param2, param3) -> None:
     pass
 """
 
@@ -107,11 +107,11 @@ def function_4(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FunctionNoParams(_BaseTemplate):
+class _PassNoParams(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_5() -> None:
+def function() -> None:
     \"\"\"No params.\"\"\"
 """
 
@@ -121,11 +121,11 @@ def function_5() -> None:
 
 
 @_templates.register
-class _FunctionUnderscoreParam(_BaseTemplate):
+class _PassUnderscoreParam(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_1(param1, param2, _) -> None:
+def function(param1, param2, _) -> None:
     \"\"\"Proper docstring.
 
     :param param1: Passes.
@@ -137,3 +137,31 @@ def function_1(param1, param2, _) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FailOutOfOrder(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CROSS}param1, {CROSS}param2, {CROSS}param3):
+    \"\"\"...
+
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+"""
