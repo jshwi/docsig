@@ -20,6 +20,7 @@ from pygments.formatters.terminal256 import (
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
 from ._version import __version__
+from .messages import W101
 
 color = _Color()
 
@@ -194,4 +195,4 @@ def warn(missing: MissingDocList) -> None:
         to warn for.
     """
     for module, func in missing:
-        _warnings.warn(f"{module}::{func} is missing a docstring")
+        _warnings.warn(W101.format(module=module, func=func))

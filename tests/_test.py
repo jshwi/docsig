@@ -8,6 +8,8 @@ import pytest
 import templatest
 from templatest import Template, templates
 
+import docsig.messages
+
 from . import InitFileFixtureType, MockMainType
 from ._utils import NoColorCapsys
 
@@ -97,7 +99,8 @@ def test_no_docstring(
         templates.registered.getbyname("function-no-docstring").template
     )
     with pytest.warns(
-        UserWarning, match=f"{file}::function_4 is missing a docstring"
+        UserWarning,
+        match=docsig.messages.W101.format(module=file, func="function_4"),
     ):
         main(str(file.parent))
 
