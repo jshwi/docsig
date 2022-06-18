@@ -118,3 +118,22 @@ def function_5() -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FunctionUnderscoreParam(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, _) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    :return: Passes.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

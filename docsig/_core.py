@@ -104,7 +104,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
     return [
         (
             f.name,
-            tuple(a.arg for a in f.args.args),
+            tuple(a.arg for a in f.args.args if a.arg != "_"),
             _parse_docstring(_ast.get_docstring(f)),
         )
         for f in node.body
