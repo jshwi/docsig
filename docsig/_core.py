@@ -269,11 +269,10 @@ def print_failures(failures: FailedDocData) -> None:
         functions.
     """
     for module, funcs in failures.items():
-        if funcs:
-            for func, summary in funcs:
-                color.magenta.print(module)
-                print(len(module) * "-")
-                print("\n".join([func, *summary]) + "\n")
+        for func, summary in funcs:
+            color.magenta.print(module)
+            print(len(module) * "-")
+            print("\n".join([func, *summary]) + "\n")
 
 
 def warn(missing: MissingDocList) -> None:
