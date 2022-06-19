@@ -137,7 +137,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
         (
             f.name,
             (_get_args(f), _get_returns(f)),
-            _parse_docstring(_ast.get_docstring(f)),
+            _parse_docstring(_ast.get_docstring(f)),  # type: ignore
         )
         for f in node.body
         if isinstance(f, _ast.FunctionDef) and not str(f.name).startswith("_")
