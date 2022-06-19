@@ -557,3 +557,48 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 """
+
+
+@_templates.register
+class _PassWithKwargs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Pass.
+    :param param2: Pass.
+    :param kwargs: Pass
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailWithKwargs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Pass.
+    :param param2: Pass.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""

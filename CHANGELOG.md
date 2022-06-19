@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.3.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Adds support for `**kwargs`
 - Adds support for `*args`
 
 [0.3.0](https://github.com/jshwi/docsig/releases/tag/v0.3.0) - 2022-06-19

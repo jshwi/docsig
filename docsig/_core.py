@@ -123,6 +123,9 @@ def _get_args(func: _ast.FunctionDef) -> _t.Tuple[str, ...]:
     if func.args.vararg is not None:
         args.append(f"*{func.args.vararg.arg}")
 
+    if func.args.kwarg is not None:
+        args.append(f"**{func.args.kwarg.arg}")
+
     return tuple(args)
 
 
