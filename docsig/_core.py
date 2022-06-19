@@ -9,30 +9,19 @@ from argparse import ArgumentParser as _ArgumentParser
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
-from pygments import highlight as _highlight
-from pygments.formatters.terminal256 import (
-    Terminal256Formatter as _Terminal256Formatter,
-)
-
-# noinspection PyUnresolvedReferences
-from pygments.lexers.python import PythonLexer as _PythonLexer
-
 from ._report import Report as _Report
+from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 from ._version import __version__
 
 NAME = __name__.split(".", maxsplit=1)[0]
-CHECK = _color.green.get("\u2713")
-CROSS = _color.red.get("\u2716")
-TRIPLE_QUOTES = '"""'
-TAB = "    "
 
 DocArgs = _t.Tuple[_t.Optional[str], ...]
 SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
 DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
-FailedFunc = _t.Tuple[str, _Report]
+FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 
 
@@ -125,12 +114,6 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
     ]
 
 
-# Add syntax highlighting to string.
-def _lexer(value: str) -> str:
-    formatter = _Terminal256Formatter(style="monokai")
-    return _highlight(value, _PythonLexer(), formatter).strip()
-
-
 def get_members(
     paths: _t.List[_Path],
 ) -> _t.Tuple[_t.Tuple[str, _t.List[FuncData]], ...]:
@@ -177,9 +160,7 @@ def construct_func(
     :return: String if test fails else None.
     """
     report = _Report()
-    failed = False
-    func_str = _lexer(f"def {func}(").strip()
-    doc_str = f"{_lexer(f'{TAB}{TRIPLE_QUOTES}...')}\n"
+    func_str = _FuncStr(func)
     params, arg_returns = args
     report.exists(params, docstring)
     report.missing(params, docstring)
@@ -189,32 +170,28 @@ def construct_func(
         arg = _get_index(count, params)
         doc = _get_index(count, docstring)
         if _compare_args(arg, doc):
-            mark = CHECK
+            func_str.add_param(arg, doc)
         else:
-            mark = CROSS
-            failed = True
+            func_str.add_param(arg, doc, failed=True)
             report.order(arg, doc, params, docstring)
             report.incorrect(arg, doc)
 
-        func_str += f"{mark}{arg}"
-        doc_str += f"\n{TAB}:param {doc}: {mark}"
         if count + 1 != longest:
-            func_str += _lexer(", ")
+            func_str.add_comma()
 
-    mark = CHECK
+    func_str.set_mark()
     if returns and arg_returns:
-        doc_str += f"\n{TAB}:return: {CHECK}"
+        func_str.add_return()
     elif returns and not arg_returns or arg_returns and not returns:
-        mark = CROSS
-        doc_str += f"\n{TAB}:return: {CROSS}"
-        failed = True
+        func_str.add_return(failed=True)
 
+    func_str.close_sig(arg_returns)
     report.extra_return(returns, arg_returns)
     report.missing_return(returns, arg_returns)
-    func_str += f") -> {mark}{arg_returns}:"
-    doc_str += f"\n{TAB}{_lexer(TRIPLE_QUOTES)}\n"
-    if failed:
-        return f"{func_str}\n{doc_str}", report
+    func_str.close_docstring()
+    func_str.render()
+    if report:
+        return func_str, report
 
     return None
 

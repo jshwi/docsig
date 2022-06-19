@@ -1,3 +1,8 @@
+_.data  # unused attribute (docsig/_repr.py:32)
+_.data  # unused attribute (docsig/_repr.py:63)
+_.data  # unused attribute (docsig/_repr.py:79)
+_.data  # unused attribute (docsig/_repr.py:83)
+_.data  # unused attribute (docsig/_repr.py:91)
 _FailDupesSum  # unused class (tests/__init__.py:471)
 _FailIncorrectDoc  # unused class (tests/__init__.py:369)
 _FailIncorrectDocSum  # unused class (tests/__init__.py:491)
