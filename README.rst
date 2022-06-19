@@ -25,6 +25,8 @@ docsig
 Check signature params for proper documentation
 -----------------------------------------------
 
+Currently only supports reStructuredText (Sphinx)
+
 Installation
 ------------
 
@@ -40,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-c INT] [-l INT] [-s STR] [-i LIST] [-I LIST]usage: docsig [-h] [-v] path
+    usage: docsig [-h] [-v] path
 
     Check docstring matches signature
 
