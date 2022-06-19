@@ -20,7 +20,6 @@ def main() -> int:
 
     :return: Non-zero exit status if check fails else zero.
     """
-    failed = False
     paths: _PathList = []
     failures: _FailedDocData = {}
     missing: _MissingDocList = []
@@ -28,8 +27,8 @@ def main() -> int:
     _get_files(parser.args.path, paths)
     members = _get_members(paths)
     for module, func_data in members:
-        failures[module] = []
         if func_data:
+            module_data = []
             for func, args, (is_doc, docstring, returns) in func_data:
                 if not is_doc:
                     missing.append((module, func))
@@ -38,9 +37,13 @@ def main() -> int:
                         func, args, docstring, returns
                     )
                     if func_result is not None:
-                        failures[module].append(func_result)
-                        failed = True
+                        module_data.append(func_result)
+
+            if module_data:
+                failures[module] = module_data
 
     _print_failures(failures)
     _warn(missing)
-    return int(failed)
+
+    # pylint: disable=use-implicit-booleaness-not-comparison
+    return int(failures != {})
