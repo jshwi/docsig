@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.2.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds check for incorrectly documented params
 
 [0.2.0](https://github.com/jshwi/docsig/releases/tag/v0.2.0) - 2022-06-18
 ------------------------------------------------------------------------

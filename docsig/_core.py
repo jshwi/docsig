@@ -21,7 +21,7 @@ from pygments.formatters.terminal256 import (
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
 from ._version import __version__
-from .messages import E101, E102, E103, E104, E105, E106, W101
+from .messages import E101, E102, E103, E104, E105, E106, E107, W101
 
 color = _Color()
 
@@ -161,6 +161,9 @@ def _get_param_summary(
     if any(k for k, v in _Counter(docstring).items() if v > 1):
         summary.add(E106)
 
+    if arg is None and doc is None:
+        summary.add(E107)
+
 
 def _get_return_summary(returns, arg_returns, summary) -> None:
     if returns and not arg_returns:
@@ -215,7 +218,7 @@ def construct_func(
         longest = max([len(params), len(docstring)])
         arg = _get_index(count, params)
         doc = _get_index(count, docstring)
-        if arg == doc:
+        if arg == doc and arg is not None and doc is not None:
             mark = CHECK
         else:
             mark = CROSS

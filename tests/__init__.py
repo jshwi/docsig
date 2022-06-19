@@ -373,6 +373,31 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
+class _FailIncorrectDoc(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
 class _FailParamDocsSum(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -467,3 +492,23 @@ def function(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return messages.E106
+
+
+@_templates.register
+class _FailIncorrectDocSum(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E107
