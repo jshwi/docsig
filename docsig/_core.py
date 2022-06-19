@@ -118,6 +118,14 @@ def _get_returns(func: _ast.FunctionDef) -> _t.Optional[str]:
     return None
 
 
+def _get_args(func: _ast.FunctionDef) -> _t.Tuple[str, ...]:
+    args = [a.arg for a in func.args.args if a.arg != "_"]
+    if func.args.vararg is not None:
+        args.append(f"*{func.args.vararg.arg}")
+
+    return tuple(args)
+
+
 # collect a tuple of function information values
 def _get_func_data(path: _Path) -> _t.List[FuncData]:
     node = _ast.parse(path.read_text(), filename=str(path))
@@ -125,10 +133,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
     return [
         (
             f.name,
-            (
-                tuple(a.arg for a in f.args.args if a.arg != "_"),
-                _get_returns(f),
-            ),
+            (_get_args(f), _get_returns(f)),
             _parse_docstring(_ast.get_docstring(f)),
         )
         for f in node.body
@@ -196,6 +201,13 @@ def get_files(root: _Path, paths: PathList) -> None:
             get_files(path, paths)
 
 
+def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
+    if isinstance(arg, str):
+        arg = arg.replace("*", "")
+
+    return arg == doc and arg is not None and doc is not None
+
+
 def construct_func(
     func: str, args: SigArgs, docstring: DocArgs, returns: bool
 ) -> _t.Optional[FailedFunc]:
@@ -218,7 +230,7 @@ def construct_func(
         longest = max([len(params), len(docstring)])
         arg = _get_index(count, params)
         doc = _get_index(count, docstring)
-        if arg == doc and arg is not None and doc is not None:
+        if _compare_args(arg, doc):
             mark = CHECK
         else:
             mark = CROSS

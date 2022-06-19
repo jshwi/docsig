@@ -512,3 +512,48 @@ def function(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return messages.E107
+
+
+@_templates.register
+class _PassWithArgs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, *args) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Pass.
+    :param param2: Pass.
+    :param args: Pass
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailWithArgs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, *args) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Pass.
+    :param param2: Pass.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""
