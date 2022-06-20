@@ -13,8 +13,7 @@ from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 
-FailedFunc = _t.Tuple[_FuncStr, _Report]
-FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
+FailedDocData = _t.Dict[str, _t.List[_t.Tuple[_FuncStr, _Report]]]
 
 
 def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
@@ -47,19 +46,16 @@ def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
     return arg == doc and arg is not None and doc is not None
 
 
-def construct_func(func: _Function) -> _t.Optional[FailedFunc]:
+def construct_func(func: _Function, report: _Report) -> _FuncStr:
     """Construct a string representation of function and docstring info.
 
     Return None if the test passed.
 
     :param func: Function object.
+    :param report: Report object for final summary of results.
     :return: String if test fails else None.
     """
-    report = _Report()
     func_str = _FuncStr(func.name)
-    report.exists(func.signature.args, func.docstring.args)
-    report.missing(func.signature.args, func.docstring.args)
-    report.duplicates(func.docstring.args)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
@@ -70,7 +66,7 @@ def construct_func(func: _Function) -> _t.Optional[FailedFunc]:
             func_str.add_param(arg, doc)
         else:
             func_str.add_param(arg, doc, failed=True)
-            report.order(arg, doc, func.signature.args, func.docstring.args)
+            report.order(arg, doc)
             report.incorrect(arg, doc)
 
         if count + 1 != longest:
@@ -88,14 +84,9 @@ def construct_func(func: _Function) -> _t.Optional[FailedFunc]:
         func_str.add_return(failed=True)
 
     func_str.close_sig(func.signature.returns)
-    report.extra_return(func.docstring.returns, func.signature.returns)
-    report.missing_return(func.docstring.returns, func.signature.returns)
     func_str.close_docstring()
     func_str.render()
-    if report:
-        return func_str, report
-
-    return None
+    return func_str
 
 
 def print_failures(failures: FailedDocData) -> None:

@@ -181,7 +181,7 @@ def test_main_multi(
 def test_mutable_set() -> None:
     """Get coverage on ``MutableSet``."""
     value = "value"
-    report = docsig._report.Report()  # type: ignore
+    report = docsig._report.Report("func")  # type: ignore
     report.add(value)
     assert value in report
     assert len(report) == 1
