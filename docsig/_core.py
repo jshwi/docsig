@@ -8,6 +8,7 @@ from pathlib import Path as _Path
 
 from ._function import Function as _Function
 from ._module import Module as _Module
+from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
@@ -100,3 +101,35 @@ def print_failures(failures: FailedDocData) -> None:
             _color.magenta.print(module)
             print(len(module) * "-")
             print(f"{func}\n{summary.get_report()}")
+
+
+def populate(
+    name: str,
+    parent: _Parent,
+    failures: FailedDocData,
+    missing: _t.List[_t.Tuple[str, _Function]],
+) -> None:
+    """Populate function issues.
+
+    :param name: Name of function parent.
+    :param parent: Functions ``Parent`` object.
+    :param failures: Dictionary of failure objects.
+    :param missing: List of functions with missing docstrings.
+    """
+    module_data = []
+    for func in parent.funcs:
+        if not func.docstring.is_doc:
+            missing.append((name, func))
+        else:
+            report = _Report(func)
+            report.exists()
+            report.missing()
+            report.duplicates()
+            report.extra_return()
+            report.missing_return()
+            func_result = construct_func(func, report)
+            if report:
+                module_data.append((func_result, report))
+
+    if module_data:
+        failures[name] = module_data
