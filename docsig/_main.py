@@ -29,11 +29,11 @@ def main() -> int:
     members = _get_members(paths)
     for module, func_data in members:
         module_data = []
-        for func, args, (is_doc, docstring, returns) in func_data:
-            if not is_doc:
+        for func, args, docstring in func_data:
+            if not docstring.is_doc:
                 missing.append((module, func))
             else:
-                func_result = _construct_func(func, args, docstring, returns)
+                func_result = _construct_func(func, args, docstring)
                 if func_result is not None:
                     module_data.append(func_result)
 

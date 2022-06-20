@@ -9,6 +9,7 @@ from argparse import ArgumentParser as _ArgumentParser
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
+from ._function import Docstring as _Docstring
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
@@ -20,7 +21,7 @@ NAME = __name__.split(".", maxsplit=1)[0]
 DocArgs = _t.Tuple[_t.Optional[str], ...]
 SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
 DocstringData = _t.Tuple[bool, DocArgs, bool]
-FuncData = _t.Tuple[str, SigArgs, DocstringData]
+FuncData = _t.Tuple[str, SigArgs, _Docstring]
 FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 
@@ -59,20 +60,6 @@ class Parser(_ArgumentParser):
             _sys.exit(0)
 
 
-# parse docstring into a tuple of documentation and parameters
-def _parse_docstring(docstring: _t.Optional[str] = None) -> DocstringData:
-    if docstring is None:
-        # noinspection PyRedundantParentheses
-        return False, tuple(), False
-
-    params = tuple(
-        _get_index(1, s.split())
-        for s in docstring.split(":")
-        if s.startswith("param")
-    )
-    return True, params, bool(":return:" in docstring)
-
-
 def _get_returns(func: _ast.FunctionDef) -> _t.Optional[str]:
     if func.returns is not None:
         if isinstance(func.returns, _ast.Name):
@@ -107,7 +94,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
         (
             f.name,
             (_get_args(f), _get_returns(f)),
-            _parse_docstring(_ast.get_docstring(f)),  # type: ignore
+            _Docstring(f),  # type: ignore
         )
         for f in node.body
         if isinstance(f, _ast.FunctionDef) and not str(f.name).startswith("_")
@@ -147,7 +134,7 @@ def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
 
 
 def construct_func(
-    func: str, args: SigArgs, docstring: DocArgs, returns: bool
+    func: str, args: SigArgs, docstring: _Docstring
 ) -> _t.Optional[FailedFunc]:
     """Construct a string representation of function and docstring info.
 
@@ -155,39 +142,43 @@ def construct_func(
 
     :param func: Function name.
     :param args: Tuple of signature parameters.
-    :param docstring: Tuple of docstring parameters.
-    :param returns: Bool for whether function returns value.
+    :param docstring: Docstring parameters.
     :return: String if test fails else None.
     """
     report = _Report()
     func_str = _FuncStr(func)
     params, arg_returns = args
-    report.exists(params, docstring)
-    report.missing(params, docstring)
-    report.duplicates(docstring)
-    for count, _ in enumerate(_zip_longest(params, docstring)):
-        longest = max([len(params), len(docstring)])
+    report.exists(params, docstring.args)
+    report.missing(params, docstring.args)
+    report.duplicates(docstring.args)
+    for count, _ in enumerate(_zip_longest(params, docstring.args)):
+        longest = max([len(params), len(docstring.args)])
         arg = _get_index(count, params)
-        doc = _get_index(count, docstring)
+        doc = _get_index(count, docstring.args)
         if _compare_args(arg, doc):
             func_str.add_param(arg, doc)
         else:
             func_str.add_param(arg, doc, failed=True)
-            report.order(arg, doc, params, docstring)
+            report.order(arg, doc, params, docstring.args)
             report.incorrect(arg, doc)
 
         if count + 1 != longest:
             func_str.add_comma()
 
     func_str.set_mark()
-    if returns and arg_returns:
+    if docstring.returns and arg_returns:
         func_str.add_return()
-    elif returns and not arg_returns or arg_returns and not returns:
+    elif (
+        docstring.returns
+        and not arg_returns
+        or arg_returns
+        and not docstring.returns
+    ):
         func_str.add_return(failed=True)
 
     func_str.close_sig(arg_returns)
-    report.extra_return(returns, arg_returns)
-    report.missing_return(returns, arg_returns)
+    report.extra_return(docstring.returns, arg_returns)
+    report.missing_return(docstring.returns, arg_returns)
     func_str.close_docstring()
     func_str.render()
     if report:
