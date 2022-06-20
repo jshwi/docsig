@@ -3,10 +3,11 @@ docsig._report
 ==============
 """
 import typing as _t
+import warnings as _warnings
 from collections import Counter as _Counter
 
 from ._objects import MutableSet as _MutableSet
-from .messages import E101, E102, E103, E104, E105, E106, E107
+from .messages import E101, E102, E103, E104, E105, E106, E107, W101
 
 
 class Report(_MutableSet):
@@ -100,3 +101,13 @@ class Report(_MutableSet):
         :return: Current report.
         """
         return "\n".join(self) + "\n"
+
+
+def warn(missing: _t.List[_t.Tuple[str, str]]) -> None:
+    """Warn if function does not contain a docstring.
+
+    :param missing: Tuple of module names containing a list of function
+        to warn for.
+    """
+    for module, func in missing:
+        _warnings.warn(W101.format(module=module, func=func))

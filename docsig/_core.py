@@ -5,7 +5,6 @@ docsig._core
 import ast as _ast
 import sys as _sys
 import typing as _t
-import warnings as _warnings
 from argparse import ArgumentParser as _ArgumentParser
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
@@ -22,7 +21,6 @@ from ._report import Report as _Report
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 from ._version import __version__
-from .messages import W101
 
 NAME = __name__.split(".", maxsplit=1)[0]
 CHECK = _color.green.get("\u2713")
@@ -36,7 +34,6 @@ DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
 FailedFunc = _t.Tuple[str, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
-MissingDocList = _t.List[_t.Tuple[str, str]]
 
 
 class Parser(_ArgumentParser):
@@ -233,13 +230,3 @@ def print_failures(failures: FailedDocData) -> None:
             _color.magenta.print(module)
             print(len(module) * "-")
             print(f"{func}\n{summary.get_report()}")
-
-
-def warn(missing: MissingDocList) -> None:
-    """Warn if function does not contain a docstring.
-
-    :param missing: Tuple of module names containing a list of function
-        to warn for.
-    """
-    for module, func in missing:
-        _warnings.warn(W101.format(module=module, func=func))
