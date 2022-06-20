@@ -9,8 +9,7 @@ from argparse import ArgumentParser as _ArgumentParser
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
-from ._function import Docstring as _Docstring
-from ._function import Signature as _Signature
+from ._function import Function as _Function
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
@@ -19,7 +18,6 @@ from ._version import __version__
 
 NAME = __name__.split(".", maxsplit=1)[0]
 
-FuncData = _t.Tuple[str, _Signature, _Docstring]
 FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 
@@ -58,11 +56,11 @@ class Parser(_ArgumentParser):
 
 
 # collect a tuple of function information values
-def _get_func_data(path: _Path) -> _t.List[FuncData]:
+def _get_func_data(path: _Path) -> _t.List[_Function]:
     node = _ast.parse(path.read_text(), filename=str(path))
     # noinspection PyUnresolvedReferences
     return [
-        (f.name, _Signature(f), _Docstring(f))  # type: ignore
+        _Function(f)
         for f in node.body
         if isinstance(f, _ast.FunctionDef) and not str(f.name).startswith("_")
     ]
@@ -70,7 +68,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
 
 def get_members(
     paths: _t.List[_Path],
-) -> _t.Tuple[_t.Tuple[str, _t.List[FuncData]], ...]:
+) -> _t.Tuple[_t.Tuple[str, _t.List[_Function]], ...]:
     """Get a tuple of module names paired with function information.
 
     :param paths: Paths to parse for function information.
@@ -100,51 +98,49 @@ def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
     return arg == doc and arg is not None and doc is not None
 
 
-def construct_func(
-    func: str, signature: _Signature, docstring: _Docstring
-) -> _t.Optional[FailedFunc]:
+def construct_func(func: _Function) -> _t.Optional[FailedFunc]:
     """Construct a string representation of function and docstring info.
 
     Return None if the test passed.
 
-    :param func: Function name.
-    :param signature: Tuple of signature parameters.
-    :param docstring: Docstring parameters.
+    :param func: Function object.
     :return: String if test fails else None.
     """
     report = _Report()
-    func_str = _FuncStr(func)
-    report.exists(signature.args, docstring.args)
-    report.missing(signature.args, docstring.args)
-    report.duplicates(docstring.args)
-    for count, _ in enumerate(_zip_longest(signature.args, docstring.args)):
-        longest = max([len(signature.args), len(docstring.args)])
-        arg = _get_index(count, signature.args)
-        doc = _get_index(count, docstring.args)
+    func_str = _FuncStr(func.name)
+    report.exists(func.signature.args, func.docstring.args)
+    report.missing(func.signature.args, func.docstring.args)
+    report.duplicates(func.docstring.args)
+    for count, _ in enumerate(
+        _zip_longest(func.signature.args, func.docstring.args)
+    ):
+        longest = max([len(func.signature.args), len(func.docstring.args)])
+        arg = _get_index(count, func.signature.args)
+        doc = _get_index(count, func.docstring.args)
         if _compare_args(arg, doc):
             func_str.add_param(arg, doc)
         else:
             func_str.add_param(arg, doc, failed=True)
-            report.order(arg, doc, signature.args, docstring.args)
+            report.order(arg, doc, func.signature.args, func.docstring.args)
             report.incorrect(arg, doc)
 
         if count + 1 != longest:
             func_str.add_comma()
 
     func_str.set_mark()
-    if docstring.returns and signature.returns:
+    if func.docstring.returns and func.signature.returns:
         func_str.add_return()
     elif (
-        docstring.returns
-        and not signature.returns
-        or signature.returns
-        and not docstring.returns
+        func.docstring.returns
+        and not func.signature.returns
+        or func.signature.returns
+        and not func.docstring.returns
     ):
         func_str.add_return(failed=True)
 
-    func_str.close_sig(signature.returns)
-    report.extra_return(docstring.returns, signature.returns)
-    report.missing_return(docstring.returns, signature.returns)
+    func_str.close_sig(func.signature.returns)
+    report.extra_return(func.docstring.returns, func.signature.returns)
+    report.missing_return(func.docstring.returns, func.signature.returns)
     func_str.close_docstring()
     func_str.render()
     if report:

@@ -89,3 +89,31 @@ class Signature:
     def returns(self) -> _t.Optional[str]:
         """Return type:"""
         return self._returns
+
+
+class Function:
+    """Represents a function with signature and docstring parameters.
+
+    :param func: ``ast.FunctionDef`` object from which the params can be
+        parsed.
+    """
+
+    def __init__(self, func: _ast.FunctionDef) -> None:
+        self._name = func.name
+        self._signature = Signature(func)
+        self._docstring = Docstring(func)
+
+    @property
+    def name(self) -> str:
+        """The name of the function."""
+        return self._name
+
+    @property
+    def signature(self) -> Signature:
+        """The function's signature parameters."""
+        return self._signature
+
+    @property
+    def docstring(self) -> Docstring:
+        """The function's docstring parameters."""
+        return self._docstring
