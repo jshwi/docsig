@@ -38,13 +38,9 @@ DocArgs = _t.Tuple[_t.Optional[str], ...]
 SigArgs = _t.Tuple[Args, _t.Optional[str]]
 DocstringData = _t.Tuple[bool, DocArgs, bool]
 FuncData = _t.Tuple[str, SigArgs, DocstringData]
-FuncDataList = _t.List[FuncData]
-ModuleData = _t.Tuple[str, FuncDataList]
 FailedFunc = _t.Tuple[str, _t.Tuple[str, ...]]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 MissingDocList = _t.List[_t.Tuple[str, str]]
-MemberData = _t.Tuple[ModuleData, ...]
-PathList = _t.List[_Path]
 
 
 class Parser(_ArgumentParser):
@@ -181,7 +177,9 @@ def _get_return_summary(returns, arg_returns, summary) -> None:
         summary.add(E105)
 
 
-def get_members(paths: PathList) -> MemberData:
+def get_members(
+    paths: _t.List[_Path],
+) -> _t.Tuple[_t.Tuple[str, _t.List[FuncData]], ...]:
     """Get a tuple of module names paired with function information.
 
     :param paths: Paths to parse for function information.
@@ -190,7 +188,7 @@ def get_members(paths: PathList) -> MemberData:
     return tuple((str(p), _get_func_data(p)) for p in paths)
 
 
-def get_files(root: _Path, paths: PathList) -> None:
+def get_files(root: _Path, paths: _t.List[_Path]) -> None:
     """Get files belonging to the provided package.
 
     :param root: The path where to check for files.
