@@ -28,18 +28,18 @@ def main() -> int:
     parser = _Parser()
     _get_files(parser.args.path, paths)
     members = _get_members(paths)
-    for module, funcs in members:
+    for module in members:
         module_data = []
-        for func in funcs:
+        for func in module.funcs:
             if not func.docstring.is_doc:
-                missing.append((module, func))
+                missing.append((module.name, func))
             else:
                 func_result = _construct_func(func)
                 if func_result is not None:
                     module_data.append(func_result)
 
         if module_data:
-            failures[module] = module_data
+            failures[module.name] = module_data
 
     _print_failures(failures)
     _warn(missing)

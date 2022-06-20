@@ -2,12 +2,12 @@
 docsig._core
 ============
 """
-import ast as _ast
 import typing as _t
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
 from ._function import Function as _Function
+from ._module import Module as _Module
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
@@ -17,26 +17,13 @@ FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 
 
-# collect a tuple of function information values
-def _get_func_data(path: _Path) -> _t.List[_Function]:
-    node = _ast.parse(path.read_text(), filename=str(path))
-    # noinspection PyUnresolvedReferences
-    return [
-        _Function(f)
-        for f in node.body
-        if isinstance(f, _ast.FunctionDef) and not str(f.name).startswith("_")
-    ]
-
-
-def get_members(
-    paths: _t.List[_Path],
-) -> _t.Tuple[_t.Tuple[str, _t.List[_Function]], ...]:
+def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
     """Get a tuple of module names paired with function information.
 
     :param paths: Paths to parse for function information.
     :return: A tuple of module level function values.
     """
-    return tuple((str(p), _get_func_data(p)) for p in paths)
+    return tuple(_Module(p) for p in paths)
 
 
 def get_files(root: _Path, paths: _t.List[_Path]) -> None:
