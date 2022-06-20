@@ -11,7 +11,6 @@ from collections import Counter as _Counter
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
-from object_colors import Color as _Color
 from pygments import highlight as _highlight
 from pygments.formatters.terminal256 import (
     Terminal256Formatter as _Terminal256Formatter,
@@ -20,16 +19,14 @@ from pygments.formatters.terminal256 import (
 # noinspection PyUnresolvedReferences
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
+from ._utils import color as _color
+from ._utils import get_index as _get_index
 from ._version import __version__
 from .messages import E101, E102, E103, E104, E105, E106, E107, W101
 
-color = _Color()
-
-color.populate_colors()
-
 NAME = __name__.split(".", maxsplit=1)[0]
-CHECK = color.green.get("\u2713")
-CROSS = color.red.get("\u2716")
+CHECK = _color.green.get("\u2713")
+CROSS = _color.red.get("\u2716")
 TRIPLE_QUOTES = '"""'
 TAB = "    "
 
@@ -48,7 +45,7 @@ class Parser(_ArgumentParser):
 
     def __init__(self) -> None:
         super().__init__(
-            prog=color.cyan.get(NAME),
+            prog=_color.cyan.get(NAME),
             description="Check docstring matches signature",
         )
         self._add_arguments()
@@ -75,14 +72,6 @@ class Parser(_ArgumentParser):
         if len(_sys.argv) > 1 and _sys.argv[1] == "--version":
             print(__version__)
             _sys.exit(0)
-
-
-# get index without throwing an error if index does not exist
-def _get_index(index: int, params: _t.Sequence) -> _t.Optional[str]:
-    try:
-        return params[index]
-    except IndexError:
-        return None
 
 
 # parse docstring into a tuple of documentation and parameters
@@ -268,7 +257,7 @@ def print_failures(failures: FailedDocData) -> None:
     """
     for module, funcs in failures.items():
         for func, summary in funcs:
-            color.magenta.print(module)
+            _color.magenta.print(module)
             print(len(module) * "-")
             print("\n".join([func, *summary]) + "\n")
 
