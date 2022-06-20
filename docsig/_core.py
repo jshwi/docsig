@@ -3,9 +3,7 @@ docsig._core
 ============
 """
 import ast as _ast
-import sys as _sys
 import typing as _t
-from argparse import ArgumentParser as _ArgumentParser
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -14,45 +12,9 @@ from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
-from ._version import __version__
-
-NAME = __name__.split(".", maxsplit=1)[0]
 
 FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
-
-
-class Parser(_ArgumentParser):
-    """Parse commandline arguments."""
-
-    def __init__(self) -> None:
-        super().__init__(
-            prog=_color.cyan.get(NAME),
-            description="Check docstring matches signature",
-        )
-        self._add_arguments()
-        self._version_request()
-        self.args = self.parse_args()
-        self._version_request()
-
-    def _add_arguments(self) -> None:
-        self.add_argument(
-            "path",
-            action="store",
-            type=_Path,
-            help="directory or file to check",
-        )
-        self.add_argument(
-            "-v",
-            "--version",
-            action="store_true",
-            help="show version and exit",
-        )
-
-    @staticmethod
-    def _version_request() -> None:
-        if len(_sys.argv) > 1 and _sys.argv[1] == "--version":
-            print(__version__)
 
 
 # collect a tuple of function information values
