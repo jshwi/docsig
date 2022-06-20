@@ -18,6 +18,8 @@ InitFileFixtureType = t.Callable[[str], Path]
 CHECK = "\u2713"
 CROSS = "\u2716"
 
+MULTI = "multi"
+
 
 @_templates.register
 class _PassParam(_BaseTemplate):
@@ -345,7 +347,7 @@ def function({CHECK}param1) -> {CROSS}Optional:
 
 
 @_templates.register
-class _FailOutOfOrderSum(_BaseTemplate):
+class _FailOutOfOrder1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -361,15 +363,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f"""\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    \"\"\"
-"""
+        return messages.E101
 
 
 @_templates.register
@@ -398,7 +392,7 @@ def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FailParamDocsSum(_BaseTemplate):
+class _FailParamDocs1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -417,7 +411,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FailParamSigSum(_BaseTemplate):
+class _FailParamSig1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -435,7 +429,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FailRetTypeDocsSum(_BaseTemplate):
+class _FailRetTypeDocs1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -455,7 +449,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FailRetTypeSigSum(_BaseTemplate):
+class _FailRetTypeSig1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -601,4 +595,71 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
     :param param2: {CHECK}
     :param None: {CROSS}
     \"\"\"
+"""
+
+
+@_templates.register
+class _MultiFail(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+    
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+    
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"...
+
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+
+{messages.E101}
+
+
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+
+{messages.E102}
+
+
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
 """
