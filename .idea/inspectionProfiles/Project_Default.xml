@@ -51,7 +51,7 @@
       <scope name="whitelist.py" level="WARNING" enabled="false" />
     </inspection_tool>
     <inspection_tool class="SpellCheckingInspection" enabled="true" level="TYPO" enabled_by_default="true">
-      <scope name="Pipfile.lock" level="TYPO" enabled="false">
+      <scope name=".pylintrc" level="TYPO" enabled="false">
         <option name="processCode" value="true" />
         <option name="processLiterals" value="true" />
         <option name="processComments" value="true" />
