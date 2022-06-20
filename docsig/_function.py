@@ -54,12 +54,19 @@ class Signature:
         parsed.
     """
 
-    def __init__(self, func: _ast.FunctionDef) -> None:
+    def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._func = func
         self._args = [a.arg for a in self._func.args.args if a.arg != "_"]
         self._returns: _t.Optional[str] = None
         self._get_args_kwargs()
         self._get_returns()
+        if method:
+            for dec in func.decorator_list:
+                if isinstance(dec, _ast.Name) and dec.id == "property":
+                    self._returns = None
+
+            if self._args and self._args[0] in ("self", "cls"):
+                self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
         if self._func.args.vararg is not None:
@@ -98,9 +105,9 @@ class Function:
         parsed.
     """
 
-    def __init__(self, func: _ast.FunctionDef) -> None:
+    def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._name = func.name
-        self._signature = Signature(func)
+        self._signature = Signature(func, method=method)
         self._docstring = Docstring(func)
 
     @property

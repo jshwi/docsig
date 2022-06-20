@@ -663,3 +663,68 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E103}
 """
+
+
+@_templates.register
+class _FailClass(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+    def method(param1, param2, **kwargs) -> None:
+        \"\"\"Proper docstring.
+
+        :param param1: Pass.
+        :param param2: Pass.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _PassClassSelf(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+    def method(self, param1) -> None:
+        \"\"\"Proper docstring.
+
+        :param param1: Pass.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassClassProperty(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+    @property
+    def method(self) -> int:
+        \"\"\"Proper docstring.\"\"\"
+        return self._method
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
