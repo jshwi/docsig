@@ -10,6 +10,7 @@ from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
 from ._function import Docstring as _Docstring
+from ._function import Signature as _Signature
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
@@ -18,10 +19,7 @@ from ._version import __version__
 
 NAME = __name__.split(".", maxsplit=1)[0]
 
-DocArgs = _t.Tuple[_t.Optional[str], ...]
-SigArgs = _t.Tuple[_t.Tuple[str, ...], _t.Optional[str]]
-DocstringData = _t.Tuple[bool, DocArgs, bool]
-FuncData = _t.Tuple[str, SigArgs, _Docstring]
+FuncData = _t.Tuple[str, _Signature, _Docstring]
 FailedFunc = _t.Tuple[_FuncStr, _Report]
 FailedDocData = _t.Dict[str, _t.List[FailedFunc]]
 
@@ -57,33 +55,6 @@ class Parser(_ArgumentParser):
     def _version_request() -> None:
         if len(_sys.argv) > 1 and _sys.argv[1] == "--version":
             print(__version__)
-            _sys.exit(0)
-
-
-def _get_returns(func: _ast.FunctionDef) -> _t.Optional[str]:
-    if func.returns is not None:
-        if isinstance(func.returns, _ast.Name):
-            return func.returns.id
-
-        if isinstance(func.returns, _ast.Subscript):
-            if isinstance(func.returns.value, _ast.Name):
-                return func.returns.value.id
-
-            if isinstance(func.returns.value, _ast.Attribute):
-                return func.returns.value.attr
-
-    return None
-
-
-def _get_args(func: _ast.FunctionDef) -> _t.Tuple[str, ...]:
-    args = [a.arg for a in func.args.args if a.arg != "_"]
-    if func.args.vararg is not None:
-        args.append(f"*{func.args.vararg.arg}")
-
-    if func.args.kwarg is not None:
-        args.append(f"**{func.args.kwarg.arg}")
-
-    return tuple(args)
 
 
 # collect a tuple of function information values
@@ -91,11 +62,7 @@ def _get_func_data(path: _Path) -> _t.List[FuncData]:
     node = _ast.parse(path.read_text(), filename=str(path))
     # noinspection PyUnresolvedReferences
     return [
-        (
-            f.name,
-            (_get_args(f), _get_returns(f)),
-            _Docstring(f),  # type: ignore
-        )
+        (f.name, _Signature(f), _Docstring(f))  # type: ignore
         for f in node.body
         if isinstance(f, _ast.FunctionDef) and not str(f.name).startswith("_")
     ]
@@ -134,51 +101,50 @@ def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
 
 
 def construct_func(
-    func: str, args: SigArgs, docstring: _Docstring
+    func: str, signature: _Signature, docstring: _Docstring
 ) -> _t.Optional[FailedFunc]:
     """Construct a string representation of function and docstring info.
 
     Return None if the test passed.
 
     :param func: Function name.
-    :param args: Tuple of signature parameters.
+    :param signature: Tuple of signature parameters.
     :param docstring: Docstring parameters.
     :return: String if test fails else None.
     """
     report = _Report()
     func_str = _FuncStr(func)
-    params, arg_returns = args
-    report.exists(params, docstring.args)
-    report.missing(params, docstring.args)
+    report.exists(signature.args, docstring.args)
+    report.missing(signature.args, docstring.args)
     report.duplicates(docstring.args)
-    for count, _ in enumerate(_zip_longest(params, docstring.args)):
-        longest = max([len(params), len(docstring.args)])
-        arg = _get_index(count, params)
+    for count, _ in enumerate(_zip_longest(signature.args, docstring.args)):
+        longest = max([len(signature.args), len(docstring.args)])
+        arg = _get_index(count, signature.args)
         doc = _get_index(count, docstring.args)
         if _compare_args(arg, doc):
             func_str.add_param(arg, doc)
         else:
             func_str.add_param(arg, doc, failed=True)
-            report.order(arg, doc, params, docstring.args)
+            report.order(arg, doc, signature.args, docstring.args)
             report.incorrect(arg, doc)
 
         if count + 1 != longest:
             func_str.add_comma()
 
     func_str.set_mark()
-    if docstring.returns and arg_returns:
+    if docstring.returns and signature.returns:
         func_str.add_return()
     elif (
         docstring.returns
-        and not arg_returns
-        or arg_returns
+        and not signature.returns
+        or signature.returns
         and not docstring.returns
     ):
         func_str.add_return(failed=True)
 
-    func_str.close_sig(arg_returns)
-    report.extra_return(docstring.returns, arg_returns)
-    report.missing_return(docstring.returns, arg_returns)
+    func_str.close_sig(signature.returns)
+    report.extra_return(docstring.returns, signature.returns)
+    report.missing_return(docstring.returns, signature.returns)
     func_str.close_docstring()
     func_str.render()
     if report:

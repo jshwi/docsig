@@ -1,4 +1,3 @@
-DocstringData  # unused variable (docsig/_core.py:23)
 _.data  # unused attribute (docsig/_repr.py:32)
 _.data  # unused attribute (docsig/_repr.py:63)
 _.data  # unused attribute (docsig/_repr.py:79)
