@@ -94,6 +94,9 @@ class Signature:
             if isinstance(self._func.returns, _ast.Name):
                 self._returns = self._func.returns.id
 
+            elif isinstance(self._func.returns, _ast.Attribute):
+                self._returns = self._func.returns.attr
+
             elif isinstance(self._func.returns, _ast.Subscript):
                 if isinstance(self._func.returns.value, _ast.Name):
                     self._returns = self._func.returns.value.id

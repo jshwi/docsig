@@ -812,3 +812,23 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassReturnAny(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+    \"\"\"Proper docstring.
+
+    :param args: Manipulate string(s).
+    :key format: Return a string instead of a tuple if strings are
+        passed as tuple.
+    :return: Colored string or None.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
