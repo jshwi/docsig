@@ -76,7 +76,9 @@ class FuncStr(_UserString):
 
         :param arg: Signature argument.
         """
-        self.data += f") -> {self._mark}{arg}:"
+        self.data += "{}{}{}{}".format(
+            self._lexer(") -> "), self._mark, arg, self._lexer(":")
+        )
 
     def add_comma(self) -> None:
         """Add comma between parenthesis."""
