@@ -40,7 +40,12 @@ def get_files(root: _Path, paths: _t.List[_Path]) -> None:
             get_files(path, paths)
 
 
-def _compare_args(arg: _t.Optional[str], doc: _t.Optional[str]) -> bool:
+def _compare_args(
+    arg: _t.Optional[str], doc: _t.Optional[str], kind: str
+) -> bool:
+    if kind in ("key", "keyword") and arg is not None:
+        return arg[:2] == "**"
+
     if isinstance(arg, str):
         arg = arg.replace("*", "")
 
@@ -62,11 +67,15 @@ def construct_func(func: _Function, report: _Report) -> _FuncStr:
     ):
         longest = max([len(func.signature.args), len(func.docstring.args)])
         arg = _get_index(count, func.signature.args)
-        doc = _get_index(count, func.docstring.args)
-        if _compare_args(arg, doc):
-            func_str.add_param(arg, doc)
+        doc_info = _get_index(count, func.docstring.args)
+        if doc_info is not None:
+            kind, doc = doc_info
         else:
-            func_str.add_param(arg, doc, failed=True)
+            kind, doc = "param", None
+        if _compare_args(arg, doc, kind):
+            func_str.add_param(arg, doc, kind)
+        else:
+            func_str.add_param(arg, doc, kind, failed=True)
             report.order(arg, doc)
             report.incorrect(arg, doc)
 

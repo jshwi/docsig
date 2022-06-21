@@ -728,3 +728,87 @@ class Klass:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassWithKwargsKey(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Passes
+    :key kwarg1: Pass
+    :keyword kwarg2: Pass
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailWithKwargsOutOfOrder(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    :keyword kwarg1: Fail
+    :keyword kwarg3: Fail
+    :param param1: Fail
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassDualColon(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(attachments, sync, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    Note: Keyword args (dict) to pass to ``attachments``:
+
+        See ``flask_mail.Message.attach``.
+
+        * filename:     filename of attachment
+        * content_type: file mimetype
+        * data:         the raw file data
+
+    :param attachments: Iterable of kwargs to construct attachment.
+    :param sync: Don't thread if True: Defaults to False.
+    :param kwargs: Keyword args to pass to ``Message``:
+        See ``flask_mail.Message``.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassOnlyParams(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+    \"\"\"Proper docstring.
+
+    :param reduce: :func:`~lsfiles.utils._Tree.reduce`
+    :return: Tuple of `Path` objects or str repr.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

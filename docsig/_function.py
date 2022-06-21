@@ -3,9 +3,8 @@ docsig._function
 ================
 """
 import ast as _ast
+import re
 import typing as _t
-
-from ._utils import get_index as _get_index
 
 
 class Docstring:
@@ -18,18 +17,33 @@ class Docstring:
     def __init__(self, func: _ast.FunctionDef) -> None:
         self._docstring: _t.Optional[str] = _ast.get_docstring(func)
         self._is_doc = bool(self._docstring is not None)
-        self._args: _t.Tuple[_t.Optional[str], ...] = tuple()
+        self._args: _t.List[_t.Tuple[str, _t.Optional[str]]] = []
         self._returns = False
-        if self._is_doc:
+        if self._docstring is not None:
             self._parse_docstring()
 
     def _parse_docstring(self):
-        self._returns = bool(":return:" in self._docstring)
-        self._args = tuple(
-            _get_index(1, s.split())
-            for s in self._docstring.split(":")
-            if s.startswith("param")
-        )
+        keys = 0
+        for i in re.findall(":(.*?): ", self._docstring):
+            string = i.split()
+            if 0 < len(string) <= 2:
+                if len(string) == 1:
+                    key, value = string[0], None
+                else:
+                    key, value = string[0], string[1]
+
+                if key == "return":
+                    self._returns = True
+
+                elif key not in ("raise", "raises"):
+                    if key in ("key", "keyword"):
+                        if keys == 1:
+                            continue
+
+                        keys = 1
+                        value = "(**)"
+
+                    self._args.append((key, value))
 
     @property
     def is_doc(self) -> bool:
@@ -37,9 +51,9 @@ class Docstring:
         return self._is_doc
 
     @property
-    def args(self) -> _t.Tuple[_t.Optional[str], ...]:
+    def args(self) -> _t.Tuple[_t.Tuple[str, _t.Optional[str]], ...]:
         """Docstring args."""
-        return self._args
+        return tuple(self._args)
 
     @property
     def returns(self) -> bool:

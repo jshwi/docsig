@@ -51,6 +51,7 @@ class FuncStr(_UserString):
         self,
         arg: _t.Optional[str],
         doc: _t.Optional[str],
+        kind: str,
         failed: bool = False,
     ) -> None:
         """Add parameters to docstring.
@@ -61,7 +62,7 @@ class FuncStr(_UserString):
         """
         self.set_mark(failed)
         self.data += f"{self._mark}{arg}"
-        self._docstring += f"\n{self.TAB}:param {doc}: {self._mark}"
+        self._docstring += f"\n{self.TAB}:{kind} {doc}: {self._mark}"
 
     def add_return(self, failed: bool = False) -> None:
         """Add return statement to docstring.

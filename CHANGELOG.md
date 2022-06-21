@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.5.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Allows `key(word)` for `**kwargs`
+
 ### Changed
 - Updates syntax highlighting
 
