@@ -58,6 +58,7 @@ class FuncStr(_UserString):
 
         :param arg: Signature argument.
         :param doc: Docstring argument.
+        :param kind: Type of docstring parameter.
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)

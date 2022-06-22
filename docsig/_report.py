@@ -56,8 +56,7 @@ class Report(_MutableSet):
             self.add(E104)
 
     def missing_return(self) -> None:
-        """Check that return is documented when function returns
-        value."""
+        """Check that return is documented when func returns value."""
         if self._func.signature.returns and not self._func.docstring.returns:
             self.add(E105)
 

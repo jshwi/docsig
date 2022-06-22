@@ -10,8 +10,8 @@ import typing as _t
 class Docstring:
     """Represents docstring parameters.
 
-    :param func: ``ast.FunctionDef`` object from which the
-        docstring can be parsed.
+    :param func: ``ast.FunctionDef`` object from which the docstring can
+        be parsed.
     """
 
     def __init__(self, func: _ast.FunctionDef) -> None:

@@ -14,7 +14,7 @@ color.populate_colors()
 
 
 def get_index(index: int, seq: _t.Sequence[_T]) -> _t.Optional[_T]:
-    """Fet index without throwing an error if index does not exist.
+    """Get index without throwing an error if index does not exist.
 
     :param index: Index to get.
     :param seq: Sequence object that can be indexed.
