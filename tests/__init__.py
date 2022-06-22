@@ -832,3 +832,46 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassPoorIndent(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_post(
+        id: int, version: t.Optional[int] = None, checkauthor: bool = True
+) -> Post:
+    \"\"\"Get post by post's ID or abort with ``404: Not Found.``
+
+    Standard behaviour would be to return None, so do not bypass
+     silently.
+
+     :param id: The post's ID.
+     :param version: If provided populate session object with
+        version.
+     :param checkauthor: Rule whether to check for author ID.
+     :return: Post's connection object.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailNoSpace(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1:Passes.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
