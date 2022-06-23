@@ -26,7 +26,9 @@ def main() -> int:
     failures: _FailedDocData = {}
     missing: _t.List[_t.Tuple[str, _Function]] = []
     parser = _Parser()
-    _get_files(parser.args.path, paths)
+    for path in parser.args.path:
+        _get_files(path, paths)
+
     members = _get_members(paths)
     for module in members:
         _populate(module.name, module, failures, missing)
