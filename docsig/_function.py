@@ -90,7 +90,9 @@ class Signature:
         if self._func.args.kwarg is not None:
             self._args.append(f"**{self._func.args.kwarg.arg}")
 
-    def _get_returns(self, returns: _ast.expr | None) -> str | None:
+    def _get_returns(  # pylint: disable=too-many-return-statements
+        self, returns: _ast.expr | _ast.slice | None
+    ) -> str | None:
         if isinstance(returns, _ast.Name):
             return returns.id
 
@@ -100,8 +102,14 @@ class Signature:
         if isinstance(returns, _ast.Constant):
             return returns.kind
 
-        if isinstance(returns, _ast.Subscript):
+        if isinstance(returns, _ast.Index):
             return self._get_returns(returns.value)
+
+        if isinstance(returns, _ast.Subscript):
+            return "{}[{}]".format(
+                self._get_returns(returns.value),
+                self._get_returns(returns.slice),
+            )
 
         if isinstance(returns, _ast.BinOp):
             return "{} | {}".format(

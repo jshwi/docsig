@@ -311,7 +311,7 @@ def function(param1) -> t.Optional[str]:
     @property
     def expected(self) -> str:
         return f"""\
-def function({CHECK}param1) -> {CROSS}Optional:
+def function({CHECK}param1) -> {CROSS}Optional[str]:
     \"\"\"...
 
     :param param1: {CHECK}
@@ -337,7 +337,7 @@ def function(param1) -> Optional[str]:
     @property
     def expected(self) -> str:
         return f"""\
-def function({CHECK}param1) -> {CROSS}Optional:
+def function({CHECK}param1) -> {CROSS}Optional[str]:
     \"\"\"...
 
     :param param1: {CHECK}
