@@ -103,6 +103,12 @@ class Signature:
         if isinstance(returns, _ast.Subscript):
             return self._get_returns(returns.value)
 
+        if isinstance(returns, _ast.BinOp):
+            return "{} | {}".format(
+                self._get_returns(returns.left),
+                self._get_returns(returns.right),
+            )
+
         return None
 
     @property

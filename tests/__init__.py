@@ -875,3 +875,50 @@ def function(param1) -> None:
     @property
     def expected(self) -> str:
         return messages.E103
+
+
+@_templates.register
+class _PassBinOp(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+    \"\"\"Fet index without throwing an error if index does not exist.
+
+    :param index: Index to get.
+    :param seq: Sequence object that can be indexed.
+    :return: Item from index else None.
+    \"\"\"
+    try:
+        return seq[index]
+    except IndexError:
+        return None
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailBinOpRepr(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_index(index: int) -> _T | None:
+    \"\"\"Get index without throwing an error if index does not exist.
+
+    :return: Item from index else None.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""
+def get_index({CROSS}index) -> {CHECK}_T | None:
+    \"\"\"...
+
+    :param None: {CROSS}
+    :return: {CHECK}
+    \"\"\"
+"""
