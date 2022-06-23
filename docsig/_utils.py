@@ -6,7 +6,7 @@ import typing as _t
 
 from object_colors import Color as _Color
 
-_T = _t.TypeVar("_T")
+from ._objects import T as _T
 
 color = _Color()
 
