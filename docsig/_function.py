@@ -71,9 +71,8 @@ class Signature:
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._func = func
         self._args = [a.arg for a in self._func.args.args if a.arg != "_"]
-        self._returns: _t.Optional[str] = None
+        self._returns = self._get_returns(self._func.returns)
         self._get_args_kwargs()
-        self._get_returns()
         if method:
             for dec in func.decorator_list:
                 if isinstance(dec, _ast.Name) and dec.id == "property":
@@ -89,20 +88,22 @@ class Signature:
         if self._func.args.kwarg is not None:
             self._args.append(f"**{self._func.args.kwarg.arg}")
 
-    def _get_returns(self) -> None:
-        if self._func.returns is not None:
-            if isinstance(self._func.returns, _ast.Name):
-                self._returns = self._func.returns.id
+    def _get_returns(
+        self, returns: _t.Optional[_ast.expr]
+    ) -> _t.Optional[str]:
+        if isinstance(returns, _ast.Name):
+            return returns.id
 
-            elif isinstance(self._func.returns, _ast.Attribute):
-                self._returns = self._func.returns.attr
+        if isinstance(returns, _ast.Attribute):
+            return returns.attr
 
-            elif isinstance(self._func.returns, _ast.Subscript):
-                if isinstance(self._func.returns.value, _ast.Name):
-                    self._returns = self._func.returns.value.id
+        if isinstance(returns, _ast.Constant):
+            return returns.kind
 
-                elif isinstance(self._func.returns.value, _ast.Attribute):
-                    self._returns = self._func.returns.value.attr
+        if isinstance(returns, _ast.Subscript):
+            return self._get_returns(returns.value)
+
+        return None
 
     @property
     def args(self) -> _t.Tuple[str, ...]:
