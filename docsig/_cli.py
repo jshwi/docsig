@@ -23,7 +23,6 @@ class Parser(_ArgumentParser):
         self._add_arguments()
         self._version_request()
         self.args = self.parse_args()
-        self._version_request()
 
     def _add_arguments(self) -> None:
         self.add_argument(
