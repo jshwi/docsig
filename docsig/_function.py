@@ -8,6 +8,8 @@ import ast as _ast
 import re
 import typing as _t
 
+from ._utils import get_index as _get_index
+
 
 class Docstring:
     """Represents docstring parameters.
@@ -16,28 +18,23 @@ class Docstring:
         be parsed.
     """
 
+    PARAM_KEYS = ("param", "key", "keyword", "return")
+
     def __init__(self, func: _ast.FunctionDef) -> None:
         self._docstring: str | None = _ast.get_docstring(func)
-        self._is_doc = bool(self._docstring is not None)
+        self._is_doc = self._docstring is not None
         self._args: _t.List[_t.Tuple[str, str | None]] = []
         self._returns = False
         if self._docstring is not None:
-            self._parse_docstring()
+            keys = 0
+            for param in re.findall(":(.*?): ", self._docstring):
+                if any(param.startswith(inc) for inc in self.PARAM_KEYS):
+                    string = param.split()
+                    key, value = string[0], _get_index(1, string)
+                    if key == "return":
+                        self._returns = True
+                        continue
 
-    def _parse_docstring(self):
-        keys = 0
-        for i in re.findall(":(.*?): ", self._docstring):
-            string = i.split()
-            if 0 < len(string) <= 2:
-                if len(string) == 1:
-                    key, value = string[0], None
-                else:
-                    key, value = string[0], string[1]
-
-                if key == "return":
-                    self._returns = True
-
-                elif key not in ("raise", "raises"):
                     if key in ("key", "keyword"):
                         if keys == 1:
                             continue
