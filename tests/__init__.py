@@ -922,3 +922,35 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
     :return: {CHECK}
     \"\"\"
 """
+
+
+@_templates.register
+class _PassDoubleUnderscoreParam(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, __) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassUnderscoreArgsKwargs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(*_, **__) -> None:
+    \"\"\"Proper docstring.\"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

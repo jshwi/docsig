@@ -69,7 +69,9 @@ class Signature:
 
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._func = func
-        self._args = [a.arg for a in self._func.args.args if a.arg != "_"]
+        self._args = [
+            a.arg for a in self._func.args.args if not a.arg.startswith("_")
+        ]
         self._returns = self._get_returns(self._func.returns)
         self._get_args_kwargs()
         if method:
@@ -81,11 +83,13 @@ class Signature:
                 self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
-        if self._func.args.vararg is not None:
-            self._args.append(f"*{self._func.args.vararg.arg}")
+        vararg = self._func.args.vararg
+        if vararg is not None and not vararg.arg.startswith("_"):
+            self._args.append(f"*{vararg.arg}")
 
-        if self._func.args.kwarg is not None:
-            self._args.append(f"**{self._func.args.kwarg.arg}")
+        kwarg = self._func.args.kwarg
+        if kwarg is not None and not kwarg.arg.startswith("_"):
+            self._args.append(f"**{kwarg.arg}")
 
     def _get_returns(  # pylint: disable=too-many-return-statements
         self, returns: _ast.expr | _ast.slice | None
