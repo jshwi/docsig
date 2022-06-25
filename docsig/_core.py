@@ -2,6 +2,8 @@
 docsig._core
 ============
 """
+from __future__ import annotations
+
 import typing as _t
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
@@ -40,9 +42,7 @@ def get_files(root: _Path, paths: _t.List[_Path]) -> None:
             get_files(path, paths)
 
 
-def _compare_args(
-    arg: _t.Optional[str], doc: _t.Optional[str], kind: str
-) -> bool:
+def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
     if kind in ("key", "keyword") and arg is not None:
         return arg[:2] == "**"
 

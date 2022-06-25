@@ -2,6 +2,8 @@
 docsig._function
 ================
 """
+from __future__ import annotations
+
 import ast as _ast
 import re
 import typing as _t
@@ -15,9 +17,9 @@ class Docstring:
     """
 
     def __init__(self, func: _ast.FunctionDef) -> None:
-        self._docstring: _t.Optional[str] = _ast.get_docstring(func)
+        self._docstring: str | None = _ast.get_docstring(func)
         self._is_doc = bool(self._docstring is not None)
-        self._args: _t.List[_t.Tuple[str, _t.Optional[str]]] = []
+        self._args: _t.List[_t.Tuple[str, str | None]] = []
         self._returns = False
         if self._docstring is not None:
             self._parse_docstring()
@@ -51,7 +53,7 @@ class Docstring:
         return self._is_doc
 
     @property
-    def args(self) -> _t.Tuple[_t.Tuple[str, _t.Optional[str]], ...]:
+    def args(self) -> _t.Tuple[_t.Tuple[str, str | None], ...]:
         """Docstring args."""
         return tuple(self._args)
 
@@ -88,9 +90,7 @@ class Signature:
         if self._func.args.kwarg is not None:
             self._args.append(f"**{self._func.args.kwarg.arg}")
 
-    def _get_returns(
-        self, returns: _t.Optional[_ast.expr]
-    ) -> _t.Optional[str]:
+    def _get_returns(self, returns: _ast.expr | None) -> str | None:
         if isinstance(returns, _ast.Name):
             return returns.id
 
@@ -117,7 +117,7 @@ class Signature:
         return tuple(self._args)
 
     @property
-    def returns(self) -> _t.Optional[str]:
+    def returns(self) -> str | None:
         """Return type:"""
         return self._returns
 

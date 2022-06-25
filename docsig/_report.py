@@ -2,6 +2,8 @@
 docsig._report
 ==============
 """
+from __future__ import annotations
+
 import typing as _t
 import warnings as _warnings
 from collections import Counter as _Counter
@@ -21,7 +23,7 @@ class Report(_MutableSet):
         super().__init__()
         self._func = func
 
-    def order(self, arg: _t.Optional[str], doc: _t.Optional[str]) -> None:
+    def order(self, arg: str | None, doc: str | None) -> None:
         """Test for documented parameters and their order.
 
         :param arg: Signature argument.
@@ -60,7 +62,7 @@ class Report(_MutableSet):
         if self._func.signature.returns and not self._func.docstring.returns:
             self.add(E105)
 
-    def incorrect(self, arg: _t.Optional[str], doc: _t.Optional[str]) -> None:
+    def incorrect(self, arg: str | None, doc: str | None) -> None:
         """Test that proper syntax is used when documenting parameters.
 
         :param arg: Signature argument.

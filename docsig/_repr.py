@@ -2,7 +2,8 @@
 docsig._repr
 ============
 """
-import typing as _t
+from __future__ import annotations
+
 from collections import UserString as _UserString
 
 from pygments import highlight as _highlight
@@ -48,11 +49,7 @@ class FuncStr(_UserString):
         self._mark = self.CROSS if failed else self.CHECK
 
     def add_param(
-        self,
-        arg: _t.Optional[str],
-        doc: _t.Optional[str],
-        kind: str,
-        failed: bool = False,
+        self, arg: str | None, doc: str | None, kind: str, failed: bool = False
     ) -> None:
         """Add parameters to docstring.
 
@@ -73,7 +70,7 @@ class FuncStr(_UserString):
         self.set_mark(failed)
         self._docstring += f"\n{self.TAB}:return: {self._mark}"
 
-    def close_sig(self, arg: _t.Optional[str]):
+    def close_sig(self, arg: str | None) -> None:
         """Close function signature.
 
         :param arg: Signature argument.
