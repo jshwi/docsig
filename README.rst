@@ -42,12 +42,12 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] path
+    usage: docsig [-h] [-v] [path [path ...]]
 
     Check docstring matches signature
 
     positional arguments:
-      path           directory or file to check
+      path           directories or files to check
 
     optional arguments:
       -h, --help     show this help message and exit
