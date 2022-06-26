@@ -15,3 +15,7 @@ E104 = "return statement documented for None"
 E105 = "return missing from docstring"
 E106 = "duplicate parameters found"
 E107 = "parameter appears to be incorrectly documented"
+
+#: Hxxx: Hint
+#: H1xx: Docstring
+H101 = "hint: there appears to be a syntax error that could be causing this"

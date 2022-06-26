@@ -45,6 +45,11 @@ class Docstring:
                     self._args.append((key, value))
 
     @property
+    def docstring(self) -> str | None:
+        """The raw documentation string, if it exists, else None."""
+        return self._docstring
+
+    @property
     def is_doc(self) -> bool:
         """Check that docstring exists."""
         return self._is_doc

@@ -10,7 +10,7 @@ from collections import Counter as _Counter
 
 from ._function import Function as _Function
 from ._objects import MutableSet as _MutableSet
-from .messages import E101, E102, E103, E104, E105, E106, E107, W101
+from .messages import E101, E102, E103, E104, E105, E106, E107, H101, W101
 
 
 class Report(_MutableSet):
@@ -43,7 +43,14 @@ class Report(_MutableSet):
     def missing(self) -> None:
         """Test that parameter is not missing from documentation."""
         if len(self._func.signature.args) > len(self._func.docstring.args):
-            self.add(E103)
+            message = E103
+            docstring = self._func.docstring.docstring
+            if docstring is not None and all(
+                f"param {i}" in docstring for i in self._func.signature.args
+            ):
+                message += f"\n{H101}"
+
+            self.add(message)
 
     def duplicates(self) -> None:
         """Test that there are no duplicate parameters in docstring."""
