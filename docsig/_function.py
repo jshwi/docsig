@@ -5,7 +5,7 @@ docsig._function
 from __future__ import annotations
 
 import ast as _ast
-import re
+import re as _re
 import typing as _t
 
 from ._utils import get_index as _get_index
@@ -27,7 +27,7 @@ class Docstring:
         self._returns = False
         if self._docstring is not None:
             keys = 0
-            for param in re.findall(":(.*?): ", self._docstring):
+            for param in _re.findall(":(.*?): ", self._docstring):
                 if any(param.startswith(inc) for inc in self.PARAM_KEYS):
                     string = param.split()
                     key, value = string[0], _get_index(1, string)
