@@ -10,7 +10,18 @@ from collections import Counter as _Counter
 
 from ._function import Function as _Function
 from ._objects import MutableSet as _MutableSet
-from .messages import E101, E102, E103, E104, E105, E106, E107, H101, W101
+from .messages import (
+    E101,
+    E102,
+    E103,
+    E104,
+    E105,
+    E106,
+    E107,
+    H101,
+    H102,
+    W101,
+)
 
 
 class Report(_MutableSet):
@@ -62,7 +73,11 @@ class Report(_MutableSet):
     def extra_return(self) -> None:
         """Check that return is not documented when there is none."""
         if self._func.docstring.returns and not self._func.signature.returns:
-            self.add(E104)
+            message = E104
+            if self._func.isproperty:
+                message += f"\n{H102}"
+
+            self.add(message)
 
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""

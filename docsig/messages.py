@@ -19,3 +19,4 @@ E107 = "parameter appears to be incorrectly documented"
 #: Hxxx: Hint
 #: H1xx: Docstring
 H101 = "hint: there appears to be a syntax error that could be causing this"
+H102 = "hint: documentation is sufficient as a getter is the value returned"

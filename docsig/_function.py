@@ -72,20 +72,20 @@ class Signature:
         parsed.
     """
 
-    def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
+    def __init__(
+        self, func: _ast.FunctionDef, method: bool = False, prop: bool = False
+    ) -> None:
         self._func = func
         self._args = [
             a.arg for a in self._func.args.args if not a.arg.startswith("_")
         ]
+        self._prop = prop
         self._returns = self._get_returns(self._func.returns)
-        self._get_args_kwargs()
-        if method:
-            for dec in func.decorator_list:
-                if isinstance(dec, _ast.Name) and dec.id == "property":
-                    self._returns = None
 
-            if self._args and self._args[0] in ("self", "cls"):
-                self._args.pop(0)
+        self._get_args_kwargs()
+
+        if method and self._args and self._args[0] in ("self", "cls"):
+            self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
         vararg = self._func.args.vararg
@@ -99,29 +99,30 @@ class Signature:
     def _get_returns(  # pylint: disable=too-many-return-statements
         self, returns: _ast.expr | _ast.slice | None
     ) -> str | None:
-        if isinstance(returns, _ast.Name):
-            return returns.id
+        if not self._prop:
+            if isinstance(returns, _ast.Name):
+                return returns.id
 
-        if isinstance(returns, _ast.Attribute):
-            return returns.attr
+            if isinstance(returns, _ast.Attribute):
+                return returns.attr
 
-        if isinstance(returns, _ast.Constant):
-            return returns.kind
+            if isinstance(returns, _ast.Constant):
+                return returns.kind
 
-        if isinstance(returns, _ast.Index):
-            return self._get_returns(returns.value)
+            if isinstance(returns, _ast.Index):
+                return self._get_returns(returns.value)
 
-        if isinstance(returns, _ast.Subscript):
-            return "{}[{}]".format(
-                self._get_returns(returns.value),
-                self._get_returns(returns.slice),
-            )
+            if isinstance(returns, _ast.Subscript):
+                return "{}[{}]".format(
+                    self._get_returns(returns.value),
+                    self._get_returns(returns.slice),
+                )
 
-        if isinstance(returns, _ast.BinOp):
-            return "{} | {}".format(
-                self._get_returns(returns.left),
-                self._get_returns(returns.right),
-            )
+            if isinstance(returns, _ast.BinOp):
+                return "{} | {}".format(
+                    self._get_returns(returns.left),
+                    self._get_returns(returns.right),
+                )
 
         return None
 
@@ -145,13 +146,23 @@ class Function:
 
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._name = func.name
-        self._signature = Signature(func, method=method)
+        self._isproperty = False
+        for dec in func.decorator_list:
+            if isinstance(dec, _ast.Name) and dec.id == "property":
+                self._isproperty = True
+
+        self._signature = Signature(func, method=method, prop=self._isproperty)
         self._docstring = Docstring(func)
 
     @property
     def name(self) -> str:
         """The name of the function."""
         return self._name
+
+    @property
+    def isproperty(self) -> bool:
+        """Boolean value determining that this func os a property."""
+        return self._isproperty
 
     @property
     def signature(self) -> Signature:

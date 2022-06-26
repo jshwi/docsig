@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.8.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Adds hint for property returns
 - Adds hint for missing parameters
 
 ### Fixed

@@ -954,3 +954,40 @@ def function(*_, **__) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassPropertyNoReturn(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    @property
+    def function(*_, **__) -> int:
+        \"\"\"Proper docstring.\"\"\"
+        return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailPropertyReturn(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    @property
+    def function(*_, **__) -> int:
+        \"\"\"Proper docstring.
+        
+        :return: Returncode.
+        \"\"\"
+        return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H102
