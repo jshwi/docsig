@@ -4,6 +4,7 @@ tests
 
 Test package for ``docsig``.
 """
+# pylint: disable=too-many-lines
 import typing as t
 from pathlib import Path
 
@@ -991,3 +992,20 @@ class Klass:
     @property
     def expected(self) -> str:
         return messages.H102
+
+
+@_templates.register
+class _FailHintMissingReturn(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_post() -> Post:
+    \"\"\"Proper docstring.
+
+     return: Post's connection object.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H103

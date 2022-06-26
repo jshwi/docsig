@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.9.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Adds hint for missing returns
 - Adds codes to printed messages
 
 ### Changed

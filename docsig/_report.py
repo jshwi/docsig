@@ -71,7 +71,12 @@ class Report(_MutableSet):
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""
         if self._func.signature.returns and not self._func.docstring.returns:
-            self.add(_messages.E105)
+            message = _messages.E105
+            docstring = self._func.docstring.docstring
+            if docstring is not None and "return" in docstring:
+                message += f"\n{_messages.H103}"
+
+            self.add(message)
 
     def incorrect(self, arg: str | None, doc: str | None) -> None:
         """Test that proper syntax is used when documenting parameters.
