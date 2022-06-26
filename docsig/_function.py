@@ -27,9 +27,17 @@ class Docstring:
         self._returns = False
         if self._docstring is not None:
             keys = 0
-            for param in _re.findall(":(.*?): ", self._docstring):
-                if any(param.startswith(inc) for inc in self.PARAM_KEYS):
-                    string = param.split()
+            for line in self._docstring.splitlines():
+                match = _re.match(":(.*?): ", line)
+                if (
+                    match is not None
+                    and line.startswith(match.group(0))
+                    and any(
+                        match.group(1).startswith(inc)
+                        for inc in self.PARAM_KEYS
+                    )
+                ):
+                    string = match.group(1).split()
                     key, value = string[0], _get_index(1, string)
                     if key == "return":
                         self._returns = True

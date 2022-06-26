@@ -835,7 +835,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _PassPoorIndent(_BaseTemplate):
+class _FailPoorIndent(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -857,7 +857,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.H101
 
 
 @_templates.register
