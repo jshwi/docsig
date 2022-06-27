@@ -2,10 +2,6 @@
 docsig.messages
 ===============
 """
-#: Wxxx: Warning
-#: W1xx: Docstring
-W101 = "{module}::{func} is missing a docstring"
-
 #: Exxx: Error
 #: E1xx: Docstring
 E101 = "E101: parameters out of order"
@@ -21,3 +17,4 @@ E107 = "E107: parameter appears to be incorrectly documented"
 H101 = "hint: there appears to be a syntax error that could be causing this"
 H102 = "hint: documentation is sufficient as a getter is the value returned"
 H103 = "hint: it is possible a syntax error could be causing this"
+H104 = "hint: function is missing a docstring"

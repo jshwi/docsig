@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.10.0...HEAD)
 ------------------------------------------------------------------------
 ### Changed
+- Fails checks for missing docstring
 - Ignores docstrings for overridden methods
 
 [0.10.0](https://github.com/jshwi/docsig/releases/tag/v0.10.0) - 2022-06-26

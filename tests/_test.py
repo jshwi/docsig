@@ -79,23 +79,6 @@ def test_main_output(
     assert template.expected in nocolorcapsys.readouterr()[0]
 
 
-def test_no_docstring(
-    init_file: InitFileFixtureType, main: MockMainType
-) -> None:
-    """Test main for function with no docstring.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    """
-    contents = templates.registered.getbyname("pass-no-docstring").template
-    file = init_file(contents)
-    with pytest.warns(
-        UserWarning,
-        match=docsig.messages.W101.format(module=file, func="function"),
-    ):
-        main(file.parent, catch_warnings=False)
-
-
 def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
     """Test main for function without params.
 

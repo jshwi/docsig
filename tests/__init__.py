@@ -95,7 +95,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _PassNoDocstring(_BaseTemplate):
+class _FailNoDocNoRet(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -105,7 +105,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.H104
 
 
 @_templates.register
@@ -1046,3 +1046,17 @@ class MutableSet(_t.MutableSet[T]):
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FailNoDocRet(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function() -> int:
+    pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H104

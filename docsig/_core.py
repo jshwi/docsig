@@ -112,33 +112,24 @@ def print_failures(failures: FailedDocData) -> None:
             print(f"{func}\n{summary.get_report()}")
 
 
-def populate(
-    name: str,
-    parent: _Parent,
-    failures: FailedDocData,
-    missing: _t.List[_t.Tuple[str, _Function]],
-) -> None:
+def populate(name: str, parent: _Parent, failures: FailedDocData) -> None:
     """Populate function issues.
 
     :param name: Name of function parent.
     :param parent: Functions ``Parent`` object.
     :param failures: Dictionary of failure objects.
-    :param missing: List of functions with missing docstrings.
     """
     module_data = []
     for func in parent.funcs:
-        if not func.docstring.is_doc:
-            missing.append((name, func))
-        else:
-            report = _Report(func)
-            report.exists()
-            report.missing()
-            report.duplicates()
-            report.extra_return()
-            report.missing_return()
-            func_result = construct_func(func, report)
-            if report:
-                module_data.append((func_result, report))
+        report = _Report(func)
+        report.exists()
+        report.missing()
+        report.duplicates()
+        report.extra_return()
+        report.missing_return()
+        func_result = construct_func(func, report)
+        if report:
+            module_data.append((func_result, report))
 
     if module_data:
         failures[name] = module_data

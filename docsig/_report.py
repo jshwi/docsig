@@ -4,8 +4,6 @@ docsig._report
 """
 from __future__ import annotations
 
-import typing as _t
-import warnings as _warnings
 from collections import Counter as _Counter
 
 from . import messages as _messages
@@ -45,7 +43,10 @@ class Report(_MutableSet):
         if len(self._func.signature.args) > len(self._func.docstring.args):
             message = _messages.E103
             docstring = self._func.docstring.docstring
-            if docstring is not None and all(
+            if not self._func.docstring.is_doc:
+                message += f"\n{_messages.H104}"
+
+            elif docstring is not None and all(
                 f"param {i}" in docstring for i in self._func.signature.args
             ):
                 message += f"\n{_messages.H101}"
@@ -73,7 +74,10 @@ class Report(_MutableSet):
         if self._func.signature.returns and not self._func.docstring.returns:
             message = _messages.E105
             docstring = self._func.docstring.docstring
-            if docstring is not None and "return" in docstring:
+            if not self._func.docstring.is_doc:
+                message += f"\n{_messages.H104}"
+
+            elif docstring is not None and "return" in docstring:
                 message += f"\n{_messages.H103}"
 
             self.add(message)
@@ -93,13 +97,3 @@ class Report(_MutableSet):
         :return: Current report.
         """
         return "\n".join(self) + "\n"
-
-
-def warn(missing: _t.List[_t.Tuple[str, _Function]]) -> None:
-    """Warn if function does not contain a docstring.
-
-    :param missing: Tuple of module names containing a list of function
-        to warn for.
-    """
-    for module, func in missing:
-        _warnings.warn(_messages.W101.format(module=module, func=func.name))
