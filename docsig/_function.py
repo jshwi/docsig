@@ -94,7 +94,10 @@ class Signature:
             a.name for a in self._func.args.args if not a.name.startswith("_")
         ]
         self._prop = prop
-        self._returns = self._get_returns(self._func.returns)
+        self._return_value = self._get_returns(self._func.returns)
+        self._returns = (
+            self._return_value is not None and self._return_value != "None"
+        )
 
         self._get_args_kwargs()
 
@@ -121,7 +124,7 @@ class Signature:
                 return returns.attrname
 
             if isinstance(returns, _ast.Const):
-                return returns.kind
+                return str(returns.kind)
 
             if isinstance(returns, _ast.Subscript):
                 return "{}[{}]".format(
@@ -143,8 +146,17 @@ class Signature:
         return tuple(self._args)
 
     @property
-    def returns(self) -> str | None:
-        """Return type:"""
+    def return_value(self) -> str | None:
+        """Function's return value.
+
+        If a function is typed to return None, return str(None). If no
+        typehint exists then return None (NoneType).
+        """
+        return self._return_value
+
+    @property
+    def returns(self) -> bool:
+        """Check that a function returns a value."""
         return self._returns
 
 

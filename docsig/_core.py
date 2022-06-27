@@ -93,7 +93,7 @@ def construct_func(func: _Function, report: _Report) -> _FuncStr:
     ):
         func_str.add_return(failed=True)
 
-    func_str.close_sig(func.signature.returns)
+    func_str.close_sig(func.signature.return_value)
     func_str.close_docstring()
     func_str.render()
     return func_str
@@ -126,6 +126,7 @@ def populate(name: str, parent: _Parent, failures: FailedDocData) -> None:
         report.missing()
         report.duplicates()
         report.extra_return()
+        report.return_not_typed()
         report.missing_return()
         report.property_return()
         func_result = construct_func(func, report)

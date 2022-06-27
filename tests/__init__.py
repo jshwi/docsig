@@ -158,7 +158,7 @@ def function(param1, param2, param3):
     @property
     def expected(self) -> str:
         return f"""\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
     \"\"\"...
 
     :param param2: {CROSS}
@@ -248,7 +248,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
 
 
 @_templates.register
-class _PassNoRetNoType(_BaseTemplate):
+class _FailNoRetNoType(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -263,7 +263,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E109
 
 
 @_templates.register
@@ -284,7 +284,7 @@ def function(param1, param2, param3):
     @property
     def expected(self) -> str:
         return f"""\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
     \"\"\"...
 
     :param param1: {CHECK}
@@ -352,7 +352,7 @@ class _FailOutOfOrder1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function(param1, param2, param3):
+def function(param1, param2, param3) -> None:
     \"\"\"Proper docstring.
 
     :param param2: Fails.
@@ -604,7 +604,7 @@ class _MultiFail(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function_1(param1, param2, param3):
+def function_1(param1, param2, param3) -> None:
     \"\"\"Proper docstring.
 
     :param param2: Fails.
@@ -1080,3 +1080,34 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FailWRetQuestion(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function():
+    \"\"\"Docstring.
+    
+    :return: Does it?
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E109
+
+
+@_templates.register
+class _FailWORetQuestion(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function():
+    \"\"\"Docstring.\"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E109
