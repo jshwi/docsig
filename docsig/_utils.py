@@ -26,3 +26,16 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
         return seq[index]
     except IndexError:
         return None
+
+
+def lstrip_quant(string: str, quant: int) -> str:
+    """Strip leading whitespace by the number of occurrences provided.
+
+    :param string: String to strip leading whitespace from.
+    :param quant: Quantity of whitespace needed to be trimmed.
+    :return: Altered string.
+    """
+    while string.startswith(quant * " "):
+        string = string[4:]
+
+    return string

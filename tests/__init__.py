@@ -1060,3 +1060,23 @@ def function() -> int:
     @property
     def expected(self) -> str:
         return messages.H104
+
+
+@_templates.register
+class _PassInconsistentSpace(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@pytest.fixture(name="main")
+def fixture_main(monkeypatch) -> t.Callable[..., None]:
+    \"\"\"Function for passing mock ``main`` commandline arguments
+    to package's main function.
+
+    :param monkeypatch: ``pytest`` fixture for mocking attributes.
+    :return:            Function for using this fixture.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

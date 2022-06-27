@@ -10,6 +10,7 @@ import typing as _t
 import astroid as _ast
 
 from ._utils import get_index as _get_index
+from ._utils import lstrip_quant as _lstrip_quant
 
 
 class Docstring:
@@ -24,7 +25,7 @@ class Docstring:
     def __init__(self, func: _ast.FunctionDef) -> None:
         self._docstring: str | None = func.doc_node
         if self._docstring is not None:
-            self._docstring = func.doc_node.value.replace(4 * " ", "")
+            self._docstring = func.doc_node.value
 
         self._is_doc = self._docstring is not None
         self._args: _t.List[_t.Tuple[str, str | None]] = []
@@ -32,6 +33,7 @@ class Docstring:
         if self._docstring is not None:
             keys = 0
             for line in self._docstring.splitlines():
+                line = _lstrip_quant(line, 4)
                 match = _re.match(":(.*?): ", line)
                 if (
                     match is not None
