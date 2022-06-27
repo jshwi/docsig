@@ -4,9 +4,10 @@ docsig._function
 """
 from __future__ import annotations
 
-import ast as _ast
 import re as _re
 import typing as _t
+
+import astroid as _ast
 
 from ._utils import get_index as _get_index
 
@@ -21,7 +22,10 @@ class Docstring:
     PARAM_KEYS = ("param", "key", "keyword", "return")
 
     def __init__(self, func: _ast.FunctionDef) -> None:
-        self._docstring: str | None = _ast.get_docstring(func)
+        self._docstring: str | None = func.doc_node
+        if self._docstring is not None:
+            self._docstring = func.doc_node.value.replace(4 * " ", "")
+
         self._is_doc = self._docstring is not None
         self._args: _t.List[_t.Tuple[str, str | None]] = []
         self._returns = False
@@ -85,7 +89,7 @@ class Signature:
     ) -> None:
         self._func = func
         self._args = [
-            a.arg for a in self._func.args.args if not a.arg.startswith("_")
+            a.name for a in self._func.args.args if not a.name.startswith("_")
         ]
         self._prop = prop
         self._returns = self._get_returns(self._func.returns)
@@ -97,28 +101,25 @@ class Signature:
 
     def _get_args_kwargs(self) -> None:
         vararg = self._func.args.vararg
-        if vararg is not None and not vararg.arg.startswith("_"):
-            self._args.append(f"*{vararg.arg}")
+        if vararg is not None and not vararg.startswith("_"):
+            self._args.append(f"*{vararg}")
 
         kwarg = self._func.args.kwarg
-        if kwarg is not None and not kwarg.arg.startswith("_"):
-            self._args.append(f"**{kwarg.arg}")
+        if kwarg is not None and not kwarg.startswith("_"):
+            self._args.append(f"**{kwarg}")
 
     def _get_returns(  # pylint: disable=too-many-return-statements
-        self, returns: _ast.expr | _ast.slice | None
+        self, returns: _ast.NodeNG | None
     ) -> str | None:
         if not self._prop:
             if isinstance(returns, _ast.Name):
-                return returns.id
+                return returns.name
 
             if isinstance(returns, _ast.Attribute):
-                return returns.attr
+                return returns.attrname
 
-            if isinstance(returns, _ast.Constant):
+            if isinstance(returns, _ast.Const):
                 return returns.kind
-
-            if isinstance(returns, _ast.Index):
-                return self._get_returns(returns.value)
 
             if isinstance(returns, _ast.Subscript):
                 return "{}[{}]".format(
@@ -155,9 +156,11 @@ class Function:
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._name = func.name
         self._isproperty = False
-        for dec in func.decorator_list:
-            if isinstance(dec, _ast.Name) and dec.id == "property":
-                self._isproperty = True
+        decorators = func.decorators
+        if decorators is not None:
+            for dec in decorators.nodes:
+                if isinstance(dec, _ast.Name) and dec.name == "property":
+                    self._isproperty = True
 
         self._signature = Signature(func, method=method, prop=self._isproperty)
         self._docstring = Docstring(func)

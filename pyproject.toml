@@ -53,6 +53,7 @@ repository = "https://github.com/jshwi/docsig"
 version = "0.10.0"
 
 [tool.poetry.dependencies]
+astroid = "^2.11.6"
 object-colors = "^2.1.0"
 python = "^3.8"
 

@@ -2,9 +2,12 @@
 docsig._module
 ==============
 """
-import ast as _ast
+from __future__ import annotations
+
 import typing as _t
 from pathlib import Path as _Path
+
+import astroid as _ast
 
 from ._function import Function as _Function
 
@@ -15,18 +18,32 @@ class Parent:  # pylint: disable=too-few-public-methods
     :param node: Abstract syntax tree.
     """
 
-    def __init__(self, node: _ast.AST, method: bool = False) -> None:
+    def __init__(
+        self, node: _ast.Module | _ast.ClassDef, method: bool = False
+    ) -> None:
         self._node = node
-        self._funcs = [
-            _Function(f, method)
-            for f in self._node.body  # type: ignore
-            if isinstance(f, _ast.FunctionDef)
-            and not str(f.name).startswith("_")
-        ]
+        self._funcs = []
+        for item in self._node.body:  # type: ignore
+            if isinstance(item, _ast.FunctionDef) and not str(
+                item.name
+            ).startswith("_"):
+                overridden = False
+                if isinstance(item.parent.frame(), _ast.ClassDef):
+                    for ancestor in item.parent.frame().ancestors():
+                        if item.name in ancestor and isinstance(
+                            ancestor[item.name], _ast.nodes.FunctionDef
+                        ):
+                            overridden = True
+
+                if not overridden:
+                    self._funcs.append(_Function(item, method))
 
     @property
     def funcs(self) -> _t.List[_Function]:
-        """List of functions contained within the module."""
+        """List of functions contained within the module.
+
+        :param:
+        """
         return self._funcs
 
 
@@ -52,7 +69,7 @@ class Module(Parent):
     """
 
     def __init__(self, path: _Path) -> None:
-        node = _ast.parse(path.read_text(), filename=str(path))
+        node = _ast.parse(path.read_text())
         super().__init__(node)
         self._path = path
         self._classes = [
