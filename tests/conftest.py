@@ -15,6 +15,18 @@ from . import InitFileFixtureType, MockMainType
 from ._utils import NoColorCapsys
 
 
+@pytest.fixture(name="environment", autouse=True)
+def fixture_environment(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Prepare environment for testing.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param tmp_path: Create and return temporary directory.
+    """
+    monkeypatch.chdir(tmp_path)
+
+
 @pytest.fixture(name="main")
 def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     """Pass patched commandline arguments to package's main function.
