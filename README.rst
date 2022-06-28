@@ -34,6 +34,8 @@ Installation
 
     $ pip install docsig
 
+`Error Codes <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
+
 Usage
 -----
 
