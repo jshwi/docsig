@@ -7,23 +7,47 @@ import typing as _t
 T = _t.TypeVar("T")
 
 
-class MutableSet(_t.MutableSet[T]):
-    """Set objet to inherit from."""
+class MutableSequence(_t.MutableSequence[T]):
+    """List-object to inherit from."""
 
     def __init__(self) -> None:
-        self._set: _t.Set[T] = set()
+        self._list: _t.List[T] = []
 
-    def add(self, value: T) -> None:
-        self._set.add(value)
+    def insert(self, index: int, value: T) -> None:
+        self._list.insert(index, value)
 
-    def discard(self, value: T) -> None:
-        self._set.discard(value)
+    @_t.overload
+    def __getitem__(self, i: int) -> T:
+        ...
 
-    def __contains__(self, x: object) -> bool:
-        return self._set.__contains__(x)
+    @_t.overload
+    def __getitem__(self, s: slice) -> _t.MutableSequence[T]:
+        ...
 
-    def __len__(self) -> int:
-        return self._set.__len__()
+    def __getitem__(self, i):
+        return self._list.__getitem__(i)
 
-    def __iter__(self) -> _t.Iterator[T]:
-        return self._set.__iter__()
+    @_t.overload
+    def __setitem__(self, i: int, o: T) -> None:
+        ...
+
+    @_t.overload
+    def __setitem__(self, s: slice, o: _t.Iterable[T]) -> None:
+        ...
+
+    def __setitem__(self, i, o):
+        return self._list.__setitem__(i, o)
+
+    @_t.overload
+    def __delitem__(self, i: int) -> None:
+        ...
+
+    @_t.overload
+    def __delitem__(self, i: slice) -> None:
+        ...
+
+    def __delitem__(self, i):
+        return self._list.__delitem__(i)
+
+    def __len__(self):
+        return self._list.__len__()

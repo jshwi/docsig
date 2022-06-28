@@ -8,10 +8,10 @@ from collections import Counter as _Counter
 
 from . import messages as _messages
 from ._function import Function as _Function
-from ._objects import MutableSet as _MutableSet
+from ._objects import MutableSequence as _MutableSequence
 
 
-class Report(_MutableSet):
+class Report(_MutableSequence):
     """Compile and produce report.
 
     :param func: Function object.
@@ -31,12 +31,12 @@ class Report(_MutableSet):
             arg in self._func.docstring.args
             or doc in self._func.signature.args
         ):
-            self.add(_messages.E101)
+            self.append(_messages.E101)
 
     def exists(self) -> None:
         """Test that non-existing parameter is not documented."""
         if len(self._func.docstring.args) > len(self._func.signature.args):
-            self.add(_messages.E102)
+            self.append(_messages.E102)
 
     def missing(self) -> None:
         """Test that parameter is not missing from documentation."""
@@ -51,14 +51,14 @@ class Report(_MutableSet):
             ):
                 message += f"\n{_messages.H101}"
 
-            self.add(message)
+            self.append(message)
 
     def duplicates(self) -> None:
         """Test that there are no duplicate parameters in docstring."""
         if any(
             k for k, v in _Counter(self._func.docstring.args).items() if v > 1
         ):
-            self.add(_messages.E106)
+            self.append(_messages.E106)
 
     def extra_return(self) -> None:
         """Check that return is not documented when there is none."""
@@ -67,12 +67,12 @@ class Report(_MutableSet):
             and self._func.signature.return_value == "None"
             and not self._func.isproperty
         ):
-            self.add(_messages.E104)
+            self.append(_messages.E104)
 
     def property_return(self) -> None:
         """Check that return is not documented for property."""
         if self._func.docstring.returns and self._func.isproperty:
-            self.add(f"{_messages.E108}\n{_messages.H102}")
+            self.append(f"{_messages.E108}\n{_messages.H102}")
 
     def return_not_typed(self) -> None:
         """Check that return is not documented when no type provided."""
@@ -80,7 +80,7 @@ class Report(_MutableSet):
             self._func.signature.return_value is None
             and not self._func.isproperty
         ):
-            self.add(_messages.E109)
+            self.append(_messages.E109)
 
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""
@@ -93,7 +93,7 @@ class Report(_MutableSet):
             elif docstring is not None and "return" in docstring:
                 message += f"\n{_messages.H103}"
 
-            self.add(message)
+            self.append(message)
 
     def incorrect(self, arg: str | None, doc: str | None) -> None:
         """Test that proper syntax is used when documenting parameters.
@@ -102,7 +102,7 @@ class Report(_MutableSet):
         :param doc: Docstring argument.
         """
         if arg is None and doc is None:
-            self.add(_messages.E107)
+            self.append(_messages.E107)
 
     def get_report(self) -> str:
         """Get report compiled as a string.

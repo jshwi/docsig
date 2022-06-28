@@ -9,7 +9,7 @@ from templatest import Template, templates
 
 import docsig.messages
 
-from . import MULTI, InitFileFixtureType, MockMainType
+from . import E101, E102, MULTI, InitFileFixtureType, MockMainType
 from ._utils import NoColorCapsys
 
 
@@ -161,12 +161,12 @@ def test_main_multi(
     assert expected in out
 
 
-def test_mutable_set() -> None:
-    """Get coverage on ``MutableSet``."""
-    value = "value"
+def test_mutable_sequence() -> None:
+    """Get coverage on ``MutableSequence``."""
     report = docsig._report.Report("func")  # type: ignore
-    report.add(value)
-    assert value in report
+    report.append(E101)
+    assert E101 in report
     assert len(report) == 1
-    report.discard(value)
-    assert value not in report
+    report[0] = E102
+    report.pop()
+    assert E102 not in report

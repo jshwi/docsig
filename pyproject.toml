@@ -22,6 +22,9 @@ filter = true
 
 [tool.coverage.report]
 fail_under = 100
+exclude_lines = [
+    "@_t.overload",
+]
 
 [tool.coverage.run]
 omit = [

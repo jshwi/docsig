@@ -20,6 +20,8 @@ CHECK = "\u2713"
 CROSS = "\u2716"
 
 MULTI = "multi"
+E101 = "E101"
+E102 = "E102"
 
 
 @_templates.register
