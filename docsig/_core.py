@@ -127,6 +127,7 @@ def populate(name: str, parent: _Parent, failures: FailedDocData) -> None:
         report.duplicates()
         report.extra_return()
         report.missing_return()
+        report.property_return()
         func_result = construct_func(func, report)
         if report:
             module_data.append((func_result, report))

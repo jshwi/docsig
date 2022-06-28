@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.11.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds error for documented property returns
+
 ### Fixed
 - Allows for params with any amount of spaces before description
 

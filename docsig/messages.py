@@ -11,6 +11,7 @@ E104 = "E104: return statement documented for None"
 E105 = "E105: return missing from docstring"
 E106 = "E106: duplicate parameters found"
 E107 = "E107: parameter appears to be incorrectly documented"
+E108 = "E108: return statement documented for property"
 
 #: Hxxx: Hint
 #: H1xx: Docstring

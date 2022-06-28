@@ -991,7 +991,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.H102
+        return messages.E108
 
 
 @_templates.register

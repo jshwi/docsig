@@ -62,12 +62,17 @@ class Report(_MutableSet):
 
     def extra_return(self) -> None:
         """Check that return is not documented when there is none."""
-        if self._func.docstring.returns and not self._func.signature.returns:
-            message = _messages.E104
-            if self._func.isproperty:
-                message += f"\n{_messages.H102}"
+        if (
+            self._func.docstring.returns
+            and not self._func.signature.returns
+            and not self._func.isproperty
+        ):
+            self.add(_messages.E104)
 
-            self.add(message)
+    def property_return(self) -> None:
+        """Check that return is not documented for property."""
+        if self._func.docstring.returns and self._func.isproperty:
+            self.add(f"{_messages.E108}\n{_messages.H102}")
 
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""
