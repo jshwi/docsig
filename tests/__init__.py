@@ -22,6 +22,8 @@ CROSS = "\u2716"
 MULTI = "multi"
 E101 = "E101"
 E102 = "E102"
+H101 = "H101"
+H102 = "H102"
 
 
 @_templates.register

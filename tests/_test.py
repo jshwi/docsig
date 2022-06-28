@@ -9,7 +9,7 @@ from templatest import Template, templates
 
 import docsig.messages
 
-from . import E101, E102, MULTI, InitFileFixtureType, MockMainType
+from . import E101, E102, H101, H102, MULTI, InitFileFixtureType, MockMainType
 from ._utils import NoColorCapsys
 
 
@@ -165,8 +165,29 @@ def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
     report = docsig._report.Report("func")  # type: ignore
     report.append(E101)
-    assert E101 in report
+    assert getattr(docsig.messages, E101) in report
     assert len(report) == 1
     report[0] = E102
     report.pop()
     assert E102 not in report
+
+
+def test_message_sequence() -> None:
+    """Test disabling of error messages.
+
+    Assert that all following hints are disabled, until a new error
+    message that has not been disabled is appended to the sequence.
+    """
+    msg_seq = docsig._report._MessageSequence(disable=[E101])  # type: ignore
+    msg_seq.append(E101)
+    msg_seq.append(H101)
+    msg_seq.append(H102)
+    assert getattr(docsig.messages, E101) not in msg_seq
+    assert getattr(docsig.messages, H102) not in msg_seq
+    assert getattr(docsig.messages, H102) not in msg_seq
+    msg_seq.append(E102)
+    msg_seq.append(H101)
+    msg_seq.append(H102)
+    assert getattr(docsig.messages, E102) in msg_seq
+    assert getattr(docsig.messages, H101) in msg_seq
+    assert getattr(docsig.messages, H102) in msg_seq
