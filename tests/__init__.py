@@ -22,8 +22,17 @@ CROSS = "\u2716"
 MULTI = "multi"
 E101 = "E101"
 E102 = "E102"
+E103 = "E103"
+E104 = "E104"
+E105 = "E105"
+E106 = "E106"
+E107 = "E107"
+E108 = "E108"
 H101 = "H101"
 H102 = "H102"
+NAME = "name"
+TEMPLATE = "template"
+ERR_GROUP = "fail-e-1-0"
 
 
 @_templates.register
@@ -252,7 +261,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
 
 
 @_templates.register
-class _FailNoRetNoType(_BaseTemplate):
+class _FailE109NoRetNoType(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -352,7 +361,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FailOutOfOrder1Sum(_BaseTemplate):
+class _FailE101OutOfOrder1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -397,7 +406,7 @@ def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FailParamDocs1Sum(_BaseTemplate):
+class _FailE102ParamDocs1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -416,7 +425,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FailParamSig1Sum(_BaseTemplate):
+class _FailE103ParamSig1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -434,7 +443,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FailRetTypeDocs1Sum(_BaseTemplate):
+class _FailE104RetTypeDocs1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -454,7 +463,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FailRetTypeSig1Sum(_BaseTemplate):
+class _FailE105RetTypeSig1Sum(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -840,7 +849,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _FailPoorIndent(_BaseTemplate):
+class _FailMsgPoorIndent(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -866,7 +875,7 @@ def get_post(
 
 
 @_templates.register
-class _FailNoSpace(_BaseTemplate):
+class _FailE103NoSpace(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1087,7 +1096,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
 
 
 @_templates.register
-class _FailWRetQuestion(_BaseTemplate):
+class _FailE109WRetQuestion(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1104,7 +1113,7 @@ def function():
 
 
 @_templates.register
-class _FailWORetQuestion(_BaseTemplate):
+class _FailE109WORetQuestion(_BaseTemplate):
     @property
     def template(self) -> str:
         return """

@@ -44,13 +44,25 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [path [path ...]]
+    usage: docsig [-h] [-v] [-d LIST] [path [path ...]]
 
     Check docstring matches signature
 
     positional arguments:
-      path           directories or files to check
+      path                     directories or files to check
 
     optional arguments:
-      -h, --help     show this help message and exit
-      -v, --version  show version and exit
+      -h, --help               show this help message and exit
+      -v, --version            show version and exit
+      -d LIST, --disable LIST  comma separated list of rules to disable
+
+Options can also be configured with the pyproject.toml file
+
+.. code-block:: toml
+
+    [tool.docsig]
+    disable = [
+        "E101",
+        "E102",
+        "E103",
+    ]

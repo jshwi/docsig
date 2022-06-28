@@ -8,6 +8,7 @@ import typing as _t
 from pathlib import Path as _Path
 
 from ._cli import Parser as _Parser
+from ._cli import get_config as _get_config
 from ._core import FailedDocData as _FailedDocData
 from ._core import get_files as _get_files
 from ._core import get_members as _get_members
@@ -22,16 +23,17 @@ def main() -> int:
     """
     paths: _t.List[_Path] = []
     failures: _FailedDocData = {}
-    parser = _Parser()
+    config = _get_config()
+    parser = _Parser(config)
     for path in parser.args.path:
         _get_files(path, paths)
 
     members = _get_members(paths)
     for module in members:
-        _populate(module.name, module, failures)
+        _populate(module.name, module, failures, parser.args.disable)
         for klass in module.classes:
             name = f"{module.name}::{klass.name}"
-            _populate(name, klass, failures)
+            _populate(name, klass, failures, parser.args.disable)
 
     _print_failures(failures)
 

@@ -39,8 +39,8 @@ class Report(_MessageSequence):
     :param func: Function object.
     """
 
-    def __init__(self, func: _Function) -> None:
-        super().__init__()
+    def __init__(self, func: _Function, disable: _t.List[str]) -> None:
+        super().__init__(disable)
         self._func = func
 
     def order(self, arg: str | None, doc: str | None) -> None:

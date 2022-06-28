@@ -112,16 +112,19 @@ def print_failures(failures: FailedDocData) -> None:
             print(f"{func}\n{summary.get_report()}")
 
 
-def populate(name: str, parent: _Parent, failures: FailedDocData) -> None:
+def populate(
+    name: str, parent: _Parent, failures: FailedDocData, disable: _t.List[str]
+) -> None:
     """Populate function issues.
 
     :param name: Name of function parent.
     :param parent: Functions ``Parent`` object.
     :param failures: Dictionary of failure objects.
+    :param disable: List of rules to disable.
     """
     module_data = []
     for func in parent.funcs:
-        report = _Report(func)
+        report = _Report(func, disable)
         report.exists()
         report.missing()
         report.duplicates()

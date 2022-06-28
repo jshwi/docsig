@@ -3,13 +3,34 @@ tests._test
 ===========
 """
 # pylint: disable=protected-access
+import typing as t
+from pathlib import Path
+
 import pytest
 import templatest
+import tomli_w
 from templatest import Template, templates
 
 import docsig.messages
 
-from . import E101, E102, H101, H102, MULTI, InitFileFixtureType, MockMainType
+from . import (
+    E101,
+    E102,
+    E103,
+    E104,
+    E105,
+    E106,
+    E107,
+    E108,
+    ERR_GROUP,
+    H101,
+    H102,
+    MULTI,
+    NAME,
+    TEMPLATE,
+    InitFileFixtureType,
+    MockMainType,
+)
 from ._utils import NoColorCapsys
 
 
@@ -33,7 +54,7 @@ def test_print_version(
 
 
 @pytest.mark.parametrize(
-    "name,template,_",
+    [NAME, TEMPLATE, "_"],
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
@@ -58,7 +79,10 @@ def test_main_args(
 @pytest.mark.parametrize(
     "template",
     templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
+    ids=[
+        i.replace("-", "").upper()[4:8] if "e-1-0-" in i else i
+        for i in templates.registered.filtergroup(MULTI).getids()
+    ],
 )
 def test_main_output(
     init_file: InitFileFixtureType,
@@ -97,9 +121,9 @@ def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
     "template",
     [i for i in templatest.templates.registered if i.name.endswith("1-sum")],
     ids=[
-        i.name
-        for i in templatest.templates.registered
-        if i.name.endswith("1-sum")
+        i.replace("-", "").upper()[4:8] if "e-1-0-" in i else i
+        for i in templatest.templates.registered.getids()
+        if i.endswith("1-sum")
     ],
 )
 def test_main_no_sum(
@@ -163,7 +187,7 @@ def test_main_multi(
 
 def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
-    report = docsig._report.Report("func")  # type: ignore
+    report = docsig._report.Report("func", "config")  # type: ignore
     report.append(E101)
     assert getattr(docsig.messages, E101) in report
     assert len(report) == 1
@@ -191,3 +215,98 @@ def test_message_sequence() -> None:
     assert getattr(docsig.messages, E102) in msg_seq
     assert getattr(docsig.messages, H101) in msg_seq
     assert getattr(docsig.messages, H102) in msg_seq
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.getgroup(ERR_GROUP),
+    ids=[
+        i.replace("-", "").upper()[4:8]
+        for i in templates.registered.getgroup(ERR_GROUP).getids()
+    ],
+)
+def test_main_toml_disable(
+    tmp_path: Path,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    name: str,
+    template: str,
+    _: str,
+) -> None:
+    """Test main for disabling errors via pyproject.toml file.
+
+    :param tmp_path: Create and return temporary directory.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    pyproject_file = tmp_path / "pyproject.toml"
+    pyproject_obj = {
+        "tool": {
+            docsig.__name__: {"disable": [name.replace("-", "").upper()[4:8]]}
+        }
+    }
+    init_file(template)
+    pyproject_file.write_text(tomli_w.dumps(pyproject_obj))
+    assert main(".") == 0
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.getgroup(ERR_GROUP),
+    ids=[
+        i.replace("-", "").upper()[4:8]
+        for i in templates.registered.getgroup(ERR_GROUP).getids()
+    ],
+)
+def test_main_cli_disable(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    name: str,
+    template: str,
+    _: str,
+) -> None:
+    """Test main for disabling errors via the commandline.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    init_file(template)
+    assert main(".", "--disable", name.replace("-", "").upper()[4:8]) == 0
+
+
+def test_main_cli_command_separated_list(
+    monkeypatch: pytest.MonkeyPatch, main: MockMainType
+) -> None:
+    """Test main for disabling errors via the commandline.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param main: Mock ``main`` function.
+    """
+    instance = []
+
+    # noinspection PyUnresolvedReferences
+    def _parser(_: t.Any) -> docsig._cli.Parser:
+        parser = docsig._cli.Parser({})
+        instance.append(parser)
+        return parser
+
+    monkeypatch.setattr("docsig._main._Parser", _parser)
+    main(
+        ".",
+        "--disable",
+        f"{E101},{E102},{E103},{E104},{E105},{E106},{E107},{E108}",
+    )
+    assert instance[0].args.disable == [
+        E101,
+        E102,
+        E103,
+        E104,
+        E105,
+        E106,
+        E107,
+        E108,
+    ]
