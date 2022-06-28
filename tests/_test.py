@@ -150,6 +150,7 @@ def test_main_no_sum(
     main(file.parent)
     out = nocolorcapsys.readouterr()[0]
     assert template.expected in out
+    assert out.count(template.expected) == 1
     for message in messages:
         assert not getattr(docsig.messages, message) in out
 
