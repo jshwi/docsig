@@ -7,8 +7,8 @@ Contains package entry point.
 import typing as _t
 from pathlib import Path as _Path
 
-from ._cli import Parser as _Parser
-from ._cli import get_config as _get_config
+from ._config import Parser as _Parser
+from ._config import get_config as _get_config
 from ._core import FailedDocData as _FailedDocData
 from ._core import get_files as _get_files
 from ._core import get_members as _get_members

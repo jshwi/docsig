@@ -1,6 +1,6 @@
 """
-docsig._cli
-===========
+docsig._config
+==============
 """
 import re as _re
 import sys as _sys

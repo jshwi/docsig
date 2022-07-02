@@ -46,7 +46,7 @@ def test_print_version(
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
     """
-    monkeypatch.setattr("docsig._cli.__version__", "1.0.0")
+    monkeypatch.setattr("docsig._config.__version__", "1.0.0")
     with pytest.raises(SystemExit):
         main("--version")
 
@@ -290,8 +290,8 @@ def test_main_cli_command_separated_list(
     instance = []
 
     # noinspection PyUnresolvedReferences
-    def _parser(_: t.Any) -> docsig._cli.Parser:
-        parser = docsig._cli.Parser({})
+    def _parser(_: t.Any) -> docsig._config.Parser:
+        parser = docsig._config.Parser({})
         instance.append(parser)
         return parser
 
