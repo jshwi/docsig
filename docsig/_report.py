@@ -27,13 +27,13 @@ class _MessageSequence(_MutableSequence[str]):
         if value in self._disable:
             self._disabled = True
 
-    def append(self, value: str) -> None:
+    def insert(self, index: int, value: str) -> None:
         self._lock(value)
         message = getattr(_messages, value)
         if not self._disabled and not (
             value.startswith("E") and message in self
         ):
-            super().append(message)
+            super().insert(index, message)
 
 
 class Report(_MessageSequence):
