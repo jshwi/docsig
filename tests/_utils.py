@@ -7,6 +7,8 @@ import typing as t
 
 import pytest
 
+from docsig import messages
+
 
 class NoColorCapsys:
     """Capsys but with a regex to remove ANSI escape codes.
@@ -53,3 +55,15 @@ class NoColorCapsys:
         :return: Stdout.
         """
         return self.readouterr()[0]
+
+
+#: Error message codes.
+errors = [
+    i for i in dir(messages) if not i.startswith("__") and i.startswith("E")
+]
+
+
+#: Hint message codes.
+hints = [
+    i for i in dir(messages) if not i.startswith("__") and i.startswith("H")
+]

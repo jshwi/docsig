@@ -14,24 +14,14 @@ from templatest import Template, templates
 import docsig.messages
 
 from . import (
-    E101,
-    E102,
-    E103,
-    E104,
-    E105,
-    E106,
-    E107,
-    E108,
     ERR_GROUP,
-    H101,
-    H102,
     MULTI,
     NAME,
     TEMPLATE,
     InitFileFixtureType,
     MockMainType,
 )
-from ._utils import NoColorCapsys
+from ._utils import NoColorCapsys, errors, hints
 
 
 def test_print_version(
@@ -142,10 +132,7 @@ def test_main_no_sum(
     """
     file = init_file(template.template)
     messages = [
-        i
-        for i in dir(docsig.messages)
-        if not i.startswith("__")
-        and not getattr(docsig.messages, i) == template.expected
+        i for i in errors if getattr(docsig.messages, i) != template.expected
     ]
     main(file.parent)
     out = nocolorcapsys.readouterr()[0]
@@ -189,12 +176,12 @@ def test_main_multi(
 def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
     report = docsig._report.Report("func", "config")  # type: ignore
-    report.append(E101)
-    assert getattr(docsig.messages, E101) in report
+    report.append(errors[0])
+    assert getattr(docsig.messages, errors[0]) in report
     assert len(report) == 1
-    report[0] = E102
+    report[0] = errors[1]
     report.pop()
-    assert E102 not in report
+    assert errors[1] not in report
 
 
 def test_message_sequence() -> None:
@@ -203,19 +190,21 @@ def test_message_sequence() -> None:
     Assert that all following hints are disabled, until a new error
     message that has not been disabled is appended to the sequence.
     """
-    msg_seq = docsig._report._MessageSequence(disable=[E101])  # type: ignore
-    msg_seq.append(E101)
-    msg_seq.append(H101)
-    msg_seq.append(H102)
-    assert getattr(docsig.messages, E101) not in msg_seq
-    assert getattr(docsig.messages, H102) not in msg_seq
-    assert getattr(docsig.messages, H102) not in msg_seq
-    msg_seq.append(E102)
-    msg_seq.append(H101)
-    msg_seq.append(H102)
-    assert getattr(docsig.messages, E102) in msg_seq
-    assert getattr(docsig.messages, H101) in msg_seq
-    assert getattr(docsig.messages, H102) in msg_seq
+    msg_seq = docsig._report._MessageSequence(  # type: ignore
+        disable=[errors[0]]
+    )
+    msg_seq.append(errors[0])
+    msg_seq.append(hints[0])
+    msg_seq.append(hints[1])
+    assert getattr(docsig.messages, errors[0]) not in msg_seq
+    assert getattr(docsig.messages, hints[1]) not in msg_seq
+    assert getattr(docsig.messages, hints[1]) not in msg_seq
+    msg_seq.append(errors[1])
+    msg_seq.append(hints[0])
+    msg_seq.append(hints[1])
+    assert getattr(docsig.messages, errors[1]) in msg_seq
+    assert getattr(docsig.messages, hints[0]) in msg_seq
+    assert getattr(docsig.messages, hints[1]) in msg_seq
 
 
 @pytest.mark.parametrize(
@@ -299,15 +288,24 @@ def test_main_cli_command_separated_list(
     main(
         ".",
         "--disable",
-        f"{E101},{E102},{E103},{E104},{E105},{E106},{E107},{E108}",
+        "{},{},{},{},{},{},{},{}".format(
+            errors[0],
+            errors[1],
+            errors[2],
+            errors[3],
+            errors[4],
+            errors[5],
+            errors[6],
+            errors[7],
+        ),
     )
     assert instance[0].args.disable == [
-        E101,
-        E102,
-        E103,
-        E104,
-        E105,
-        E106,
-        E107,
-        E108,
+        errors[0],
+        errors[1],
+        errors[2],
+        errors[3],
+        errors[4],
+        errors[5],
+        errors[6],
+        errors[7],
     ]
