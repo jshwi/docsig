@@ -5,6 +5,7 @@ docsig._core
 from __future__ import annotations
 
 import typing as _t
+from argparse import Namespace
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -113,18 +114,18 @@ def print_failures(failures: FailedDocData) -> None:
 
 
 def populate(
-    name: str, parent: _Parent, failures: FailedDocData, disable: _t.List[str]
+    name: str, parent: _Parent, failures: FailedDocData, args: Namespace
 ) -> None:
     """Populate function issues.
 
     :param name: Name of function parent.
     :param parent: Functions ``Parent`` object.
     :param failures: Dictionary of failure objects.
-    :param disable: List of rules to disable.
+    :param args: Commandline args.
     """
     module_data = []
     for func in parent.funcs:
-        report = _Report(func, disable)
+        report = _Report(func, args.target, args.disable)
         report.exists()
         report.missing()
         report.duplicates()

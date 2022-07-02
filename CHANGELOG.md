@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.12.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds target option
 
 [0.12.1](https://github.com/jshwi/docsig/releases/tag/v0.12.1) - 2022-06-29
 ------------------------------------------------------------------------

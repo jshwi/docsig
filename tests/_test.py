@@ -2,7 +2,7 @@
 tests._test
 ===========
 """
-# pylint: disable=protected-access
+# pylint: disable=protected-access,too-many-arguments
 import typing as t
 from pathlib import Path
 
@@ -175,7 +175,7 @@ def test_main_multi(
 
 def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
-    report = docsig._report.Report("func", "config")  # type: ignore
+    report = docsig._report.Report("func", [], [])  # type: ignore
     report.append(errors[0])
     assert getattr(docsig.messages, errors[0]) in report
     assert len(report) == 1
@@ -309,3 +309,17 @@ def test_main_cli_command_separated_list(
         errors[6],
         errors[7],
     ]
+
+
+@pytest.mark.parametrize("message", errors)
+def test_target_report(message: str) -> None:
+    """Test report only adds the target error provided.
+
+    :param message: Error message code.
+    """
+    report = docsig._report.Report(  # type: ignore
+        "func", targets=[message], disable=[]  # type: ignore
+    )
+    report.extend(errors)
+    assert getattr(docsig.messages, message) in report
+    assert len(report) == 1

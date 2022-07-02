@@ -44,7 +44,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-d LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-d LIST] [-t LIST] [path [path ...]]
 
     Check docstring matches signature
 
@@ -55,6 +55,7 @@ Commandline
       -h, --help               show this help message and exit
       -v, --version            show version and exit
       -d LIST, --disable LIST  comma separated list of rules to disable
+      -t LIST, --target LIST   comma separated list of rules to target
 
 Options can also be configured with the pyproject.toml file
 
@@ -65,4 +66,9 @@ Options can also be configured with the pyproject.toml file
         "E101",
         "E102",
         "E103",
+    ]
+    target = [
+        "E102",
+        "E103",
+        "E104",
     ]

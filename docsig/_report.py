@@ -13,10 +13,27 @@ from ._objects import MutableSequence as _MutableSequence
 
 
 class _MessageSequence(_MutableSequence[str]):
-    def __init__(self, disable: _t.List[str] | None = None) -> None:
+    def __init__(
+        self,
+        targets: _t.List[str] | None = None,
+        disable: _t.List[str] | None = None,
+    ) -> None:
         super().__init__()
         self._disable = disable or []
         self._disabled = False
+        self._resolve_targeted(targets or [])
+
+    def _resolve_targeted(self, targets: _t.List[str]) -> None:
+        errors = [
+            i
+            for i in dir(_messages)
+            if not i.startswith("__") and i.startswith("E")
+        ]
+        if targets:
+            for target in targets:
+                errors.remove(target)
+
+            self._disable.extend(errors)
 
     def _lock(self, value: str) -> None:
         # if the last code to be disabled was an error then all
@@ -42,8 +59,10 @@ class Report(_MessageSequence):
     :param func: Function object.
     """
 
-    def __init__(self, func: _Function, disable: _t.List[str]) -> None:
-        super().__init__(disable)
+    def __init__(
+        self, func: _Function, targets: _t.List[str], disable: _t.List[str]
+    ) -> None:
+        super().__init__(targets, disable)
         self._func = func
 
     def order(self, arg: str | None, doc: str | None) -> None:

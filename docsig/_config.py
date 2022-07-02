@@ -79,6 +79,15 @@ class Parser(_ArgumentParser):
             default=self._kwargs.get("disable", []),
             help="comma separated list of rules to disable",
         )
+        self.add_argument(
+            "-t",
+            "--target",
+            action="store",
+            metavar="LIST",
+            type=_split_comma,
+            default=self._kwargs.get("target", []),
+            help="comma separated list of rules to target",
+        )
 
     @staticmethod
     def _version_request() -> None:

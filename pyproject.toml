@@ -20,6 +20,11 @@ skip-magic-trailing-comma = true
 [tool.constcheck]
 filter = true
 
+[tool.constcheck.ignore_from]
+"docsig/_config.py" = [
+    "store",
+]
+
 [tool.coverage.report]
 fail_under = 100
 exclude_lines = [
