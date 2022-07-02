@@ -23,6 +23,7 @@ MULTI = "multi"
 NAME = "name"
 TEMPLATE = "template"
 ERR_GROUP = "fail-e-1-0"
+FUNC = "func"
 
 
 @_templates.register

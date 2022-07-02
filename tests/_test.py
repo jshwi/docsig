@@ -15,6 +15,7 @@ import docsig.messages
 
 from . import (
     ERR_GROUP,
+    FUNC,
     MULTI,
     NAME,
     TEMPLATE,
@@ -175,7 +176,7 @@ def test_main_multi(
 
 def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
-    report = docsig._report.Report("func", [], [])  # type: ignore
+    report = docsig._report.Report(FUNC, [], [])  # type: ignore
     report.append(errors[0])
     assert getattr(docsig.messages, errors[0]) in report
     assert len(report) == 1
@@ -318,8 +319,22 @@ def test_target_report(message: str) -> None:
     :param message: Error message code.
     """
     report = docsig._report.Report(  # type: ignore
-        "func", targets=[message], disable=[]  # type: ignore
+        FUNC, targets=[message], disable=[]  # type: ignore
     )
     report.extend(errors)
     assert getattr(docsig.messages, message) in report
     assert len(report) == 1
+
+
+@pytest.mark.parametrize("message", errors)
+def test_disable_report(message: str) -> None:
+    """Test report adds all errors provided except for the disabled one.
+
+    :param message: Error message code.
+    """
+    report = docsig._report.Report(  # type: ignore
+        FUNC, targets=[], disable=[message]  # type: ignore
+    )
+    report.extend(errors)
+    assert getattr(docsig.messages, message) not in report
+    assert len(report) == len(errors) - 1
