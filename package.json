@@ -1,6 +1,6 @@
 {
   "name": "docsig",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Check signature params for proper documentation",
   "private": true,
   "directories": {
