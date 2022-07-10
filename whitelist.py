@@ -1,4 +1,4 @@
-H102  # unused variable (docsig/messages.py:28)
+H102  # unused variable (docsig/messages.py:29)
 _.data  # unused attribute (docsig/_repr.py:33)
 _.data  # unused attribute (docsig/_repr.py:62)
 _.data  # unused attribute (docsig/_repr.py:79)
