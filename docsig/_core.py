@@ -49,6 +49,7 @@ def _construct_func(
             func_str.add_param(arg, doc, kind, failed=True)
             report.order(arg, doc)
             report.incorrect(arg, doc)
+            report.misspelled(arg, doc)
             report.not_equal(arg, doc)
 
         if count + 1 != longest:

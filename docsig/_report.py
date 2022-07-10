@@ -10,6 +10,10 @@ from collections import Counter as _Counter
 from . import messages as _messages
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
+from ._utils import almost_equal as _almost_equal
+
+_MIN_MATCH = 0.8
+_MAX_MATCH = 1.0
 
 
 class _MessageSequence(_MutableSequence[str]):
@@ -178,6 +182,24 @@ class Report(_MessageSequence):
         if self._func.docstring.returns and self._func.kind.isinit:
             self.append("E111")
             self.append("H105")
+
+    def misspelled(self, arg: str | None, doc: str | None) -> None:
+        """Test whether there is a spelling error in documentation.
+
+        To avoid false positives also check whether doc param is almost
+        equal amongst its sibling params. If params are too similarly
+        named then this error won't be raised.
+
+        :param arg: Signature argument.
+        :param doc: Docstring argument.
+        """
+        if (
+            arg is not None
+            and doc is not None
+            and not self._errors
+            and _almost_equal(arg, doc, _MIN_MATCH, _MAX_MATCH)
+        ):
+            self.append("E112")
 
     def get_report(self) -> str:
         """Get report compiled as a string.

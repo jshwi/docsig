@@ -1550,3 +1550,20 @@ def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 """
+
+
+@_templates.register
+class _FailE112(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param) -> None:
+    \"\"\"Docstring.
+
+    :param pram: Misspelled.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E112

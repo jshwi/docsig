@@ -12,6 +12,7 @@ docsig.messages
 | E109: cannot determine whether a return statement should exist or not
 | E110: documented parameter not equal to its respective argument
 | E111: return statement documented for class
+| E112: spelling error found in documented parameter
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -26,6 +27,7 @@ E108 = "E108: return statement documented for property"
 E109 = "E109: cannot determine whether a return statement should exist or not"
 E110 = "E110: documented parameter not equal to its respective argument"
 E111 = "E111: return statement documented for class"
+E112 = "E111: spelling error found in documented parameter"
 
 # Hxxx: Hint
 # H1xx: Docstring
