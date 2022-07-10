@@ -91,6 +91,6 @@ class Parser(_ArgumentParser):
 
     @staticmethod
     def _version_request() -> None:
-        if len(_sys.argv) > 1 and _sys.argv[1] == "--version":
+        if len(_sys.argv) > 1 and _sys.argv[1] in ("-v", "--version"):
             print(__version__)
             _sys.exit(0)

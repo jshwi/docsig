@@ -25,10 +25,12 @@ from . import (
 from ._utils import NoColorCapsys, errors, hints
 
 
+@pytest.mark.parametrize("arg", ("-v", "--version"))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     main: MockMainType,
     nocolorcapsys: NoColorCapsys,
+    arg: str,
 ) -> None:
     """Test printing of version on commandline.
 
@@ -39,7 +41,7 @@ def test_print_version(
     """
     monkeypatch.setattr("docsig._config.__version__", "1.0.0")
     with pytest.raises(SystemExit):
-        main("--version")
+        main(arg)
 
     assert nocolorcapsys.stdout().strip() == "1.0.0"
 

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.13.0...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+Fixes issue where `docsig -v` did not print version
 
 [0.13.0](https://github.com/jshwi/docsig/releases/tag/v0.13.0) - 2022-07-02
 ------------------------------------------------------------------------
