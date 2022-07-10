@@ -22,6 +22,7 @@ class _MessageSequence(_MutableSequence[str]):
         self._disable = disable or []
         self._disabled = False
         self._resolve_targeted(targets or [])
+        self._errors: _t.List[str] = []
 
     def _resolve_targeted(self, targets: _t.List[str]) -> None:
         errors = [
@@ -46,6 +47,9 @@ class _MessageSequence(_MutableSequence[str]):
 
     def insert(self, index: int, value: str) -> None:
         self._lock(value)
+        if value.startswith("E"):
+            self._errors.append(value)
+
         message = getattr(_messages, value)
         if not self._disabled and not (
             value.startswith("E") and message in self
@@ -144,6 +148,18 @@ class Report(_MessageSequence):
         """
         if arg is None and doc is None:
             self.append("E107")
+
+    def not_equal(self, arg: str | None, doc: str | None) -> None:
+        """Final catch-all.
+
+        Only applies if no other errors, including disabled, have been
+        triggered
+
+        :param arg: Signature argument.
+        :param doc: Docstring argument.
+        """
+        if arg is not None and doc is not None and not self._errors:
+            self.append("E110")
 
     def get_report(self) -> str:
         """Get report compiled as a string.

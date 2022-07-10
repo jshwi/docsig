@@ -10,6 +10,7 @@ docsig.messages
 | E107: parameter appears to be incorrectly documented
 | E108: return statement documented for property
 | E109: cannot determine whether a return statement should exist or not
+| E110: documented parameter not equal to its respective argument
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -22,6 +23,7 @@ E106 = "E106: duplicate parameters found"
 E107 = "E107: parameter appears to be incorrectly documented"
 E108 = "E108: return statement documented for property"
 E109 = "E109: cannot determine whether a return statement should exist or not"
+E110 = "E110: documented parameter not equal to its respective argument"
 
 # Hxxx: Hint
 # H1xx: Docstring

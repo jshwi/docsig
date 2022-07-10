@@ -1115,3 +1115,21 @@ def function():
     @property
     def expected(self) -> str:
         return messages.E109
+
+
+@_templates.register
+class _FailE110NE(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(arg, param2) -> None:
+    \"\"\"Docstring.
+    
+    :param param1: not equal.
+    :param para2: not equal.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E110

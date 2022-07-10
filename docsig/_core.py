@@ -79,6 +79,7 @@ def construct_func(func: _Function, report: _Report) -> _FuncStr:
             func_str.add_param(arg, doc, kind, failed=True)
             report.order(arg, doc)
             report.incorrect(arg, doc)
+            report.not_equal(arg, doc)
 
         if count + 1 != longest:
             func_str.add_comma()

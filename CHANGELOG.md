@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.13.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- add: Adds `E110` catch-all for documentation not equal to its signature
+
 ### Fixed
 Fixes issue where `docsig -v` did not print version
 
