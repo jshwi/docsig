@@ -1153,3 +1153,27 @@ class Klass:
     @property
     def expected(self) -> str:
         return "module/file.py::Klass::4"
+
+
+@_templates.register
+class _PassKWOnlyArgs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def docsig(
+    *path: _Path,
+    targets: _t.List[str] | None = None,
+    disable: _t.List[str] | None = None,
+) -> bool:
+    \"\"\"...
+
+    :param path: Path(s) to check.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
+    :return: Boolean value for whether there were any failures or not.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return """"""

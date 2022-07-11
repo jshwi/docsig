@@ -111,6 +111,9 @@ class Signature:
         if vararg is not None and not vararg.startswith("_"):
             self._args.append(f"*{vararg}")
 
+        if self._func.args.kwonlyargs:
+            self._args.extend([k.name for k in self._func.args.kwonlyargs])
+
         kwarg = self._func.args.kwarg
         if kwarg is not None and not kwarg.startswith("_"):
             self._args.append(f"**{kwarg}")
