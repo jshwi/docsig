@@ -24,7 +24,7 @@ class Parent:  # pylint: disable=too-few-public-methods
     ) -> None:
         self._node = node
         self._funcs = []
-        for item in self._node.body:  # type: ignore
+        for item in self._node.body:
             if isinstance(item, _ast.FunctionDef) and not str(
                 item.name
             ).startswith("_"):
@@ -60,7 +60,7 @@ class Class(Parent):  # pylint: disable=too-few-public-methods
     @property
     def name(self) -> str:
         """Name of module."""
-        return self._node.name  # type: ignore
+        return self._node.name
 
 
 class Module(Parent):
@@ -75,7 +75,7 @@ class Module(Parent):
         self._path = path
         self._classes = [
             Class(f)
-            for f in node.body  # type: ignore
+            for f in node.body
             if isinstance(f, _ast.ClassDef) and not str(f.name).startswith("_")
         ]
 

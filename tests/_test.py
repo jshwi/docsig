@@ -194,9 +194,8 @@ def test_message_sequence() -> None:
     Assert that all following hints are disabled, until a new error
     message that has not been disabled is appended to the sequence.
     """
-    msg_seq = docsig._report._MessageSequence(  # type: ignore
-        disable=[errors[0]]
-    )
+    # noinspection PyUnresolvedReferences
+    msg_seq = docsig._report._MessageSequence(disable=[errors[0]])
     msg_seq.append(errors[0])
     msg_seq.append(hints[0])
     msg_seq.append(hints[1])
@@ -321,7 +320,8 @@ def test_target_report(message: str) -> None:
 
     :param message: Error message code.
     """
-    report = docsig._report.Report(  # type: ignore
+    # noinspection PyUnresolvedReferences
+    report = docsig._report.Report(
         FUNC, targets=[message], disable=[]  # type: ignore
     )
     report.extend(errors)
@@ -335,7 +335,8 @@ def test_disable_report(message: str) -> None:
 
     :param message: Error message code.
     """
-    report = docsig._report.Report(  # type: ignore
+    # noinspection PyUnresolvedReferences
+    report = docsig._report.Report(
         FUNC, targets=[], disable=[message]  # type: ignore
     )
     report.extend(errors)
