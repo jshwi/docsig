@@ -27,22 +27,21 @@ class Parent(_MutableSequence[_Function]):
         method: bool = False,
     ) -> None:
         super().__init__()
-        self._node = node
         self._name = str(path)
-        for item in self._node.body:
-            if isinstance(item, _ast.FunctionDef) and not str(
-                item.name
+        for subnode in node.body:
+            if isinstance(subnode, _ast.FunctionDef) and not str(
+                subnode.name
             ).startswith("_"):
                 overridden = False
-                if isinstance(item.parent.frame(), _ast.ClassDef):
-                    for ancestor in item.parent.frame().ancestors():
-                        if item.name in ancestor and isinstance(
-                            ancestor[item.name], _ast.nodes.FunctionDef
+                if isinstance(subnode.parent.frame(), _ast.ClassDef):
+                    for ancestor in subnode.parent.frame().ancestors():
+                        if subnode.name in ancestor and isinstance(
+                            ancestor[subnode.name], _ast.nodes.FunctionDef
                         ):
                             overridden = True
 
                 if not overridden:
-                    self.append(_Function(item, method))
+                    self.append(_Function(subnode, method))
 
     @property
     def name(self) -> str:
