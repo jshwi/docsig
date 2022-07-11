@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.14.0](https://github.com/jshwi/docsig/releases/tag/v0.14.0) - 2022-07-10
 ------------------------------------------------------------------------
 ### Added
-- add: Adds `E110` catch-all for documentation not equal to its signature
+- Adds `E110` catch-all for documentation not equal to its signature
 
 ### Fixed
-Fixes issue where `docsig -v` did not print version
+- Fixes issue where `docsig -v` did not print version
 
 [0.13.0](https://github.com/jshwi/docsig/releases/tag/v0.13.0) - 2022-07-02
 ------------------------------------------------------------------------
