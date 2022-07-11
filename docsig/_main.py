@@ -30,9 +30,8 @@ def main() -> int:
 
     members = _get_members(paths)
     for module in members:
-        _populate(module, failures, parser.args)
-        for klass in module.classes:
-            _populate(klass, failures, parser.args)
+        for top_level in module:
+            _populate(top_level, failures, parser.args)
 
     _print_failures(failures)
 

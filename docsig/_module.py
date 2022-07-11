@@ -4,7 +4,6 @@ docsig._module
 """
 from __future__ import annotations
 
-import typing as _t
 from pathlib import Path as _Path
 
 import astroid as _ast
@@ -63,22 +62,18 @@ class Class(Parent):  # pylint: disable=too-few-public-methods
         self._name = f"{self._name}::{node.name}"
 
 
-class Module(Parent):
+class Module(_MutableSequence[Parent]):
     """Represents a module with function parameters.
 
     :param path: Path to compile function data from.
     """
 
     def __init__(self, path: _Path) -> None:
+        super().__init__()
         node = _ast.parse(path.read_text())
-        super().__init__(path, node)
-        self._classes = [
-            Class(path, f)
-            for f in node.body
-            if isinstance(f, _ast.ClassDef) and not str(f.name).startswith("_")
-        ]
-
-    @property
-    def classes(self) -> _t.List[Class]:
-        """List of ``Class`` objects."""
-        return self._classes
+        self.append(Parent(path, node))
+        for subnode in node.body:
+            if isinstance(subnode, _ast.ClassDef) and not str(
+                subnode.name
+            ).startswith("_"):
+                self.append(Class(path, subnode))
