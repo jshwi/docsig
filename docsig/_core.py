@@ -5,7 +5,6 @@ docsig._core
 from __future__ import annotations
 
 import typing as _t
-from argparse import Namespace
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -17,7 +16,8 @@ from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 
-FailedDocData = _t.Dict[str, _t.List[_t.Tuple[_FuncStr, int, _Report]]]
+FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
+FailedDocData = _t.Dict[str, FailedDocList]
 
 
 def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
@@ -116,17 +116,18 @@ def print_failures(failures: FailedDocData) -> None:
 
 
 def populate(
-    parent: _Parent, failures: FailedDocData, args: Namespace
-) -> None:
+    parent: _Parent, targets: _t.List[str], disable: _t.List[str]
+) -> FailedDocList:
     """Populate function issues.
 
     :param parent: Functions ``Parent`` object.
-    :param failures: Dictionary of failure objects.
-    :param args: Commandline args.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
+    :return: List of tuples containing failed doc information.
     """
     module_data = []
     for func in parent:
-        report = _Report(func, args.target, args.disable)
+        report = _Report(func, targets, disable)
         report.exists()
         report.missing()
         report.duplicates()
@@ -138,5 +139,4 @@ def populate(
         if report:
             module_data.append((func_result, func.lineno, report))
 
-    if module_data:
-        failures[parent.name] = module_data
+    return module_data

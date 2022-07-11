@@ -31,7 +31,11 @@ def main() -> int:
     members = _get_members(paths)
     for module in members:
         for top_level in module:
-            _populate(top_level, failures, parser.args)
+            module_data = _populate(
+                top_level, parser.args.target, parser.args.disable
+            )
+            if module_data:
+                failures[top_level.name] = module_data
 
     _print_failures(failures)
 
