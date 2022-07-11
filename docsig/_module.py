@@ -76,3 +76,23 @@ class Module(_MutableSequence[Parent]):
                 subnode.name
             ).startswith("_"):
                 self.append(Class(path, subnode))
+
+
+class Modules(_MutableSequence[Module]):
+    """Sequence of ``Module`` objects parsed from Python modules.
+
+    :param paths: Path(s) to pase ``Module``(s) from.
+    """
+
+    def __init__(self, *paths: _Path) -> None:
+        super().__init__()
+        for path in paths:
+            self._populate(path)
+
+    def _populate(self, root: _Path) -> None:
+        if root.is_file() and root.name.endswith(".py"):
+            self.append(Module(root))
+
+        if root.is_dir():
+            for path in root.iterdir():
+                self._populate(path)

@@ -4,15 +4,11 @@ docsig._main
 
 Contains package entry point.
 """
-import typing as _t
-from pathlib import Path as _Path
-
 from ._config import Parser as _Parser
 from ._config import get_config as _get_config
-from ._core import get_files as _get_files
-from ._core import get_members as _get_members
 from ._core import populate as _populate
 from ._core import print_failures as _print_failures
+from ._module import Modules as _Modules
 
 
 def main() -> int:
@@ -21,14 +17,10 @@ def main() -> int:
     :return: Exit status for whether test failed or not.
     """
     failed = False
-    paths: _t.List[_Path] = []
     config = _get_config()
     parser = _Parser(config)
-    for path in parser.args.path:
-        _get_files(path, paths)
-
-    members = _get_members(paths)
-    for module in members:
+    modules = _Modules(*parser.args.path)
+    for module in modules:
         for top_level in module:
             module_data = _populate(
                 top_level, parser.args.target, parser.args.disable

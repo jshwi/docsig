@@ -6,10 +6,8 @@ from __future__ import annotations
 
 import typing as _t
 from itertools import zip_longest as _zip_longest
-from pathlib import Path as _Path
 
 from ._function import Function as _Function
-from ._module import Module as _Module
 from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
@@ -17,29 +15,6 @@ from ._utils import color as _color
 from ._utils import get_index as _get_index
 
 FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
-
-
-def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
-    """Get a tuple of module names paired with function information.
-
-    :param paths: Paths to parse for function information.
-    :return: A tuple of module level function values.
-    """
-    return tuple(_Module(p) for p in paths)
-
-
-def get_files(root: _Path, paths: _t.List[_Path]) -> None:
-    """Get files belonging to the provided package.
-
-    :param root: The path where to check for files.
-    :param paths: List to populate.
-    """
-    if root.is_file() and str(root.name).endswith(".py"):
-        paths.append(root)
-
-    if root.is_dir():
-        for path in root.iterdir():
-            get_files(path, paths)
 
 
 def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
