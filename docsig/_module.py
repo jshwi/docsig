@@ -12,17 +12,22 @@ import astroid as _ast
 from ._function import Function as _Function
 
 
-class Parent:  # pylint: disable=too-few-public-methods
+class Parent:
     """Represents an object that contains functions/methods.
 
+    :param path: Path that node is parsed from.
     :param node: Abstract syntax tree.
     :param method: Boolean for whether functions are class methods.
     """
 
     def __init__(
-        self, node: _ast.Module | _ast.ClassDef, method: bool = False
+        self,
+        path: _Path,
+        node: _ast.Module | _ast.ClassDef,
+        method: bool = False,
     ) -> None:
         self._node = node
+        self._name = str(path)
         self._funcs = []
         for item in self._node.body:
             if isinstance(item, _ast.FunctionDef) and not str(
@@ -40,6 +45,11 @@ class Parent:  # pylint: disable=too-few-public-methods
                     self._funcs.append(_Function(item, method))
 
     @property
+    def name(self) -> str:
+        """Name of parent."""
+        return self._name
+
+    @property
     def funcs(self) -> _t.List[_Function]:
         """List of functions contained within the module.
 
@@ -51,16 +61,13 @@ class Parent:  # pylint: disable=too-few-public-methods
 class Class(Parent):  # pylint: disable=too-few-public-methods
     """Represents a class with method parameters.
 
+    :param path: Path that node is parsed from.
     :param node: Abstract syntax tree.
     """
 
-    def __init__(self, node: _ast.ClassDef) -> None:
-        super().__init__(node, method=True)
-
-    @property
-    def name(self) -> str:
-        """Name of module."""
-        return self._node.name
+    def __init__(self, path: _Path, node: _ast.ClassDef) -> None:
+        super().__init__(path, node, method=True)
+        self._name = f"{self._name}::{node.name}"
 
 
 class Module(Parent):
@@ -71,18 +78,12 @@ class Module(Parent):
 
     def __init__(self, path: _Path) -> None:
         node = _ast.parse(path.read_text())
-        super().__init__(node)
-        self._path = path
+        super().__init__(path, node)
         self._classes = [
-            Class(f)
+            Class(path, f)
             for f in node.body
             if isinstance(f, _ast.ClassDef) and not str(f.name).startswith("_")
         ]
-
-    @property
-    def name(self) -> str:
-        """Name of module."""
-        return str(self._path)
 
     @property
     def classes(self) -> _t.List[Class]:

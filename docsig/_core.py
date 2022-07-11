@@ -116,11 +116,10 @@ def print_failures(failures: FailedDocData) -> None:
 
 
 def populate(
-    name: str, parent: _Parent, failures: FailedDocData, args: Namespace
+    parent: _Parent, failures: FailedDocData, args: Namespace
 ) -> None:
     """Populate function issues.
 
-    :param name: Name of function parent.
     :param parent: Functions ``Parent`` object.
     :param failures: Dictionary of failure objects.
     :param args: Commandline args.
@@ -140,4 +139,4 @@ def populate(
             module_data.append((func_result, func.lineno, report))
 
     if module_data:
-        failures[name] = module_data
+        failures[parent.name] = module_data
