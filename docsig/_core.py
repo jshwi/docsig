@@ -89,7 +89,9 @@ def print_failures(name: str, funcs: FailedDocList) -> None:
 
 
 def populate(
-    parent: _Parent, targets: _t.List[str], disable: _t.List[str]
+    parent: _Parent,
+    targets: _t.List[str] | None = None,
+    disable: _t.List[str] | None = None,
 ) -> FailedDocList:
     """Populate function issues.
 
