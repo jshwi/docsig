@@ -61,6 +61,8 @@ class Report(_MessageSequence):
     """Compile and produce report.
 
     :param func: Function object.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
     """
 
     def __init__(

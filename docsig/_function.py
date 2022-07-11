@@ -84,6 +84,8 @@ class Signature:
 
     :param func: ``ast.FunctionDef`` object from which the params can be
         parsed.
+    :param method: Boolean for whether function is a class method.
+    :param prop: Boolean for whether function is a class property.
     """
 
     def __init__(
@@ -165,6 +167,7 @@ class Function:
 
     :param func: ``ast.FunctionDef`` object from which the params can be
         parsed.
+    :param method: Boolean for whether function is a class method.
     """
 
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:

@@ -38,6 +38,7 @@ def test_print_version(
     :param main: Patch package entry point.
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
+    :param arg: Version argument.
     """
     monkeypatch.setattr("docsig._config.__version__", "1.0.0")
     with pytest.raises(SystemExit):

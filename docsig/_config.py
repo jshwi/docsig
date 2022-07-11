@@ -41,7 +41,10 @@ def get_config() -> ConfigType:
 
 
 class Parser(_ArgumentParser):
-    """Parse commandline arguments."""
+    """Parse commandline arguments.
+
+    :param kwargs: Default args from parsed config.
+    """
 
     def __init__(self, kwargs: ConfigType) -> None:
         super().__init__(

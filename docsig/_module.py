@@ -16,6 +16,7 @@ class Parent:  # pylint: disable=too-few-public-methods
     """Represents an object that contains functions/methods.
 
     :param node: Abstract syntax tree.
+    :param method: Boolean for whether functions are class methods.
     """
 
     def __init__(
