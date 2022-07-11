@@ -1133,3 +1133,23 @@ def function(arg, param2) -> None:
     @property
     def expected(self) -> str:
         return messages.E110
+
+
+@_templates.register
+class _FailClassHeader(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+    def method(param1, param2, **kwargs) -> None:
+        \"\"\"Proper docstring.
+
+        :param param1: Pass.
+        :param param2: Pass.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return "module/file.py::Klass::4"
