@@ -342,3 +342,23 @@ def test_disable_report(message: str) -> None:
     report.extend(errors)
     assert getattr(docsig.messages, message) not in report
     assert len(report) == len(errors) - 1
+
+
+def test_lineno(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+) -> None:
+    """Test printing of three function errors with line number.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    """
+    init_file(templates.registered.getbyname("multi-fail").template)
+    main(".")
+    out = nocolorcapsys.stdout()
+    assert "module/file.py::2" in out
+    assert "module/file.py::11" in out
+    assert "module/file.py::19" in out

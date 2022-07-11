@@ -172,6 +172,7 @@ class Function:
 
     def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
         self._name = func.name
+        self._lineno = func.lineno or 0
         self._isproperty = False
         decorators = func.decorators
         if decorators is not None:
@@ -186,6 +187,11 @@ class Function:
     def name(self) -> str:
         """The name of the function."""
         return self._name
+
+    @property
+    def lineno(self) -> int:
+        """Line number of function declaration."""
+        return self._lineno
 
     @property
     def isproperty(self) -> bool:

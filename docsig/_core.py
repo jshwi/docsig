@@ -17,7 +17,7 @@ from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
 
-FailedDocData = _t.Dict[str, _t.List[_t.Tuple[_FuncStr, _Report]]]
+FailedDocData = _t.Dict[str, _t.List[_t.Tuple[_FuncStr, int, _Report]]]
 
 
 def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
@@ -108,9 +108,10 @@ def print_failures(failures: FailedDocData) -> None:
         functions.
     """
     for module, funcs in failures.items():
-        for func, summary in funcs:
-            _color.magenta.print(module)
-            print(len(module) * "-")
+        for func, lineno, summary in funcs:
+            name = f"{module}::{lineno}"
+            _color.magenta.print(name)
+            print(len(name) * "-")
             print(f"{func}\n{summary.get_report()}")
 
 
@@ -136,7 +137,7 @@ def populate(
         report.property_return()
         func_result = construct_func(func, report)
         if report:
-            module_data.append((func_result, report))
+            module_data.append((func_result, func.lineno, report))
 
     if module_data:
         failures[name] = module_data
