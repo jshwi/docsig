@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import typing as _t
 from itertools import zip_longest as _zip_longest
+from pathlib import Path as _Path
 
 from ._function import Function as _Function
+from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
@@ -27,15 +29,7 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
     return arg == doc and arg is not None and doc is not None
 
 
-def construct_func(func: _Function, report: _Report) -> _FuncStr:
-    """Construct a string representation of function and docstring info.
-
-    Return None if the test passed.
-
-    :param func: Function object.
-    :param report: Report object for final summary of results.
-    :return: String if test fails else None.
-    """
+def _construct_func(func: _Function, report: _Report) -> _FuncStr:
     func_str = _FuncStr(func.name)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
@@ -75,12 +69,7 @@ def construct_func(func: _Function, report: _Report) -> _FuncStr:
     return func_str
 
 
-def print_failures(name: str, funcs: FailedDocList) -> None:
-    """Print failed tests.
-
-    :param name: Name of the parent of the failed test.
-    :param funcs: List of tuples containing failed doc information.
-    """
+def _print_failures(name: str, funcs: FailedDocList) -> None:
     for func, lineno, summary in funcs:
         header = f"{name}{lineno}"
         _color.magenta.print(header)
@@ -88,18 +77,11 @@ def print_failures(name: str, funcs: FailedDocList) -> None:
         print(f"{func}\n{summary.get_report()}")
 
 
-def populate(
+def _populate(
     parent: _Parent,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> FailedDocList:
-    """Populate function issues.
-
-    :param parent: Functions ``Parent`` object.
-    :param targets: List of errors to target.
-    :param disable: List of errors to disable.
-    :return: List of tuples containing failed doc information.
-    """
     module_data = []
     for func in parent:
         report = _Report(func, targets, disable)
@@ -110,8 +92,39 @@ def populate(
         report.return_not_typed()
         report.missing_return()
         report.property_return()
-        func_result = construct_func(func, report)
+        func_result = _construct_func(func, report)
         if report:
             module_data.append((func_result, func.lineno, report))
 
     return module_data
+
+
+def docsig(
+    *path: _Path,
+    targets: _t.List[str] | None = None,
+    disable: _t.List[str] | None = None,
+) -> int:
+    """Package's core functionality.
+
+    Populate a sequence of module objects before iterating over their
+    top-level functions and classes.
+
+    If any of the functions within the module - and methods within its
+    classes - fail, print the resulting function string representation
+    and report.
+
+    :param path: Path(s) to check.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
+    :return: Exit status for whether test failed or not.
+    """
+    failed = False
+    modules = _Modules(*path)
+    for module in modules:
+        for top_level in module:
+            module_data = _populate(top_level, targets, disable)
+            if module_data:
+                failed = True
+                _print_failures(top_level.name, module_data)
+
+    return int(failed)
