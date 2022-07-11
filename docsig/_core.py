@@ -17,7 +17,6 @@ from ._utils import color as _color
 from ._utils import get_index as _get_index
 
 FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
-FailedDocData = _t.Dict[str, FailedDocList]
 
 
 def get_members(paths: _t.List[_Path]) -> _t.Tuple[_Module, ...]:
@@ -101,18 +100,17 @@ def construct_func(func: _Function, report: _Report) -> _FuncStr:
     return func_str
 
 
-def print_failures(failures: FailedDocData) -> None:
+def print_failures(name: str, funcs: FailedDocList) -> None:
     """Print failed tests.
 
-    :param failures: Tuple of module names containing a list of failed
-        functions.
+    :param name: Name of the parent of the failed test.
+    :param funcs: List of tuples containing failed doc information.
     """
-    for module, funcs in failures.items():
-        for func, lineno, summary in funcs:
-            name = f"{module}::{lineno}"
-            _color.magenta.print(name)
-            print(len(name) * "-")
-            print(f"{func}\n{summary.get_report()}")
+    for func, lineno, summary in funcs:
+        header = f"{name}::{lineno}"
+        _color.magenta.print(header)
+        print(len(header) * "-")
+        print(f"{func}\n{summary.get_report()}")
 
 
 def populate(
