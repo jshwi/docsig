@@ -10,9 +10,10 @@ from pathlib import Path as _Path
 import astroid as _ast
 
 from ._function import Function as _Function
+from ._objects import MutableSequence as _MutableSequence
 
 
-class Parent:
+class Parent(_MutableSequence[_Function]):
     """Represents an object that contains functions/methods.
 
     :param path: Path that node is parsed from.
@@ -26,9 +27,9 @@ class Parent:
         node: _ast.Module | _ast.ClassDef,
         method: bool = False,
     ) -> None:
+        super().__init__()
         self._node = node
         self._name = str(path)
-        self._funcs = []
         for item in self._node.body:
             if isinstance(item, _ast.FunctionDef) and not str(
                 item.name
@@ -42,20 +43,12 @@ class Parent:
                             overridden = True
 
                 if not overridden:
-                    self._funcs.append(_Function(item, method))
+                    self.append(_Function(item, method))
 
     @property
     def name(self) -> str:
         """Name of parent."""
         return self._name
-
-    @property
-    def funcs(self) -> _t.List[_Function]:
-        """List of functions contained within the module.
-
-        :param:
-        """
-        return self._funcs
 
 
 class Class(Parent):  # pylint: disable=too-few-public-methods

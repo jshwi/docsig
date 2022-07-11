@@ -125,7 +125,7 @@ def populate(
     :param args: Commandline args.
     """
     module_data = []
-    for func in parent.funcs:
+    for func in parent:
         report = _Report(func, args.target, args.disable)
         report.exists()
         report.missing()
