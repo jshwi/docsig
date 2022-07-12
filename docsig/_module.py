@@ -78,15 +78,19 @@ class Module(_MutableSequence[Parent]):
 
 
 class Modules(_MutableSequence[Module]):
-    """Sequence of ``Module`` objects parsed from Python modules.
+    """Sequence of ``Module`` objects parsed from Python modules or str.
 
     :param paths: Path(s) to pase ``Module``(s) from.
+    :param string: String to parse if provided.
     """
 
-    def __init__(self, *paths: _Path) -> None:
+    def __init__(self, *paths: _Path, string: str | None = None) -> None:
         super().__init__()
-        for path in paths:
-            self._populate(path)
+        if string is not None:
+            self.append(Module(_ast.parse(string)))
+        else:
+            for path in paths:
+                self._populate(path)
 
     def _populate(self, root: _Path) -> None:
         if root.is_file() and root.name.endswith(".py"):

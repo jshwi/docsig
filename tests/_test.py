@@ -14,6 +14,7 @@ from templatest import Template, templates
 import docsig.messages
 
 from . import (
+    E10,
     ERR_GROUP,
     FUNC,
     MULTI,
@@ -71,10 +72,10 @@ def test_main_args(
 
 
 @pytest.mark.parametrize(
-    "template",
+    TEMPLATE,
     templates.registered.filtergroup(MULTI),
     ids=[
-        i.replace("-", "").upper()[4:8] if "e-1-0-" in i else i
+        i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI).getids()
     ],
 )
@@ -112,10 +113,10 @@ def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
 
 
 @pytest.mark.parametrize(
-    "template",
+    TEMPLATE,
     [i for i in templatest.templates.registered if i.name.endswith("1-sum")],
     ids=[
-        i.replace("-", "").upper()[4:8] if "e-1-0-" in i else i
+        i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templatest.templates.registered.getids()
         if i.endswith("1-sum")
     ],
@@ -362,3 +363,44 @@ def test_lineno(
     assert "module/file.py::2" in out
     assert "module/file.py::11" in out
     assert "module/file.py::19" in out
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.filtergroup(MULTI),
+    ids=templates.registered.filtergroup(MULTI).getids(),
+)
+def test_main_str(
+    main: MockMainType, name: str, template: str, _: str
+) -> None:
+    """Test main for passing and failing checks with strings.
+
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    assert main("--string", template) == int(name.startswith("fail"))
+
+
+@pytest.mark.parametrize(
+    TEMPLATE,
+    templates.registered.filtergroup(MULTI).filtergroup("fail-class-header"),
+    ids=[
+        i.replace("-", "").upper()[4:8] if E10 in i else i
+        for i in templates.registered.filtergroup(MULTI)
+        .filtergroup("fail-class-header")
+        .getids()
+    ],
+)
+def test_main_str_out(
+    main: MockMainType, nocolorcapsys: NoColorCapsys, template: Template
+) -> None:
+    """Test main for stdout with strings.
+
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: String data.
+    """
+    main("--string", template.template)
+    assert template.expected in nocolorcapsys.readouterr()[0]

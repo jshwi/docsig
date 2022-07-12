@@ -20,6 +20,7 @@ def main() -> int:
     parser = _Parser(config)
     return _docsig(
         *parser.args.path,
+        string=parser.args.string,
         targets=parser.args.target,
         disable=parser.args.disable
     )

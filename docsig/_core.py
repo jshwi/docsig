@@ -101,6 +101,7 @@ def _populate(
 
 def docsig(
     *path: _Path,
+    string: str | None = None,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> int:
@@ -114,12 +115,13 @@ def docsig(
     and report.
 
     :param path: Path(s) to check.
+    :param string: String to check.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
     failed = False
-    modules = _Modules(*path)
+    modules = _Modules(*path, string=string)
     for module in modules:
         for top_level in module:
             module_data = _populate(top_level, targets, disable)

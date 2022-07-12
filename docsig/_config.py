@@ -75,6 +75,13 @@ class Parser(_ArgumentParser):
             help="show version and exit",
         )
         self.add_argument(
+            "-s",
+            "--string",
+            action="store",
+            metavar="STR",
+            help="string to parse instead of files",
+        )
+        self.add_argument(
             "-d",
             "--disable",
             action="store",

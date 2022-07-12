@@ -34,8 +34,6 @@ Installation
 
     $ pip install docsig
 
-`Error Codes <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
-
 Usage
 -----
 
@@ -44,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check docstring matches signature
 
@@ -54,6 +52,7 @@ Commandline
     optional arguments:
       -h, --help               show this help message and exit
       -v, --version            show version and exit
+      -s STR, --string STR     string to parse instead of files
       -d LIST, --disable LIST  comma separated list of rules to disable
       -t LIST, --target LIST   comma separated list of rules to target
 
@@ -72,3 +71,56 @@ Options can also be configured with the pyproject.toml file
         "E103",
         "E104",
     ]
+
+API
+***
+
+.. code-block:: python
+
+    >>> from docsig import docsig
+
+.. code-block:: python
+
+    >>> string = """
+    ... def function(param1, param2, param3) -> None:
+    ...     '''Summary for passing docstring...
+    ...
+    ...     Explanation for passing docstring...
+    ...
+    ...     :param param1: About param1.
+    ...     :param param2: About param2.
+    ...     :param param3: About param3.
+    ...     '''
+    ...     """
+    >>> docsig(string=string)
+    0
+
+.. code-block:: python
+
+    >>> string = """
+    ... def function(param1, param2) -> None:
+    ...     '''Summary for failing docstring...
+    ...
+    ...     Explanation for failing docstring...
+    ...
+    ...     :param param1: About param1.
+    ...     :param param2: About param2.
+    ...     :param param3: About param3.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    2
+    -
+    def function(✓param1, ✓param2, ✖None) -> ✓None:
+        """...
+    <BLANKLINE>
+        :param param1: ✓
+        :param param2: ✓
+        :param param3: ✖
+        """
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    <BLANKLINE>
+    1
+
+There are currently 9 other `errors <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_

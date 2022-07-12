@@ -24,6 +24,7 @@ NAME = "name"
 TEMPLATE = "template"
 ERR_GROUP = "fail-e-1-0"
 FUNC = "func"
+E10 = "e-1-0"
 
 
 @_templates.register
