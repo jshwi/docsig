@@ -74,7 +74,8 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
         header = f"{name}{lineno}"
         _color.magenta.print(header)
         print(len(header) * "-")
-        print(f"{func_str}\n{report.get_report()}")
+        print(func_str)
+        print(report.get_report())
 
 
 def _run_check(
