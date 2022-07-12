@@ -82,7 +82,7 @@ def print_failures(name: str, funcs: FailedDocList) -> None:
     :param funcs: List of tuples containing failed doc information.
     """
     for func, lineno, summary in funcs:
-        header = f"{name}::{lineno}"
+        header = f"{name}{lineno}"
         _color.magenta.print(header)
         print(len(header) * "-")
         print(f"{func}\n{summary.get_report()}")

@@ -27,7 +27,7 @@ class Parent(_MutableSequence[_Function]):
         method: bool = False,
     ) -> None:
         super().__init__()
-        self._name = str(path)
+        self._name = f"{path}::"
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef) and not str(
                 subnode.name
@@ -58,7 +58,7 @@ class Class(Parent):  # pylint: disable=too-few-public-methods
 
     def __init__(self, path: _Path, node: _ast.ClassDef) -> None:
         super().__init__(path, node, method=True)
-        self._name = f"{self._name}::{node.name}"
+        self._name = f"{self._name}{node.name}::"
 
 
 class Module(_MutableSequence[Parent]):
