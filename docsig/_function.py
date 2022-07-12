@@ -118,9 +118,7 @@ class Signature:
         if kwarg is not None and not kwarg.startswith("_"):
             self._args.append(f"**{kwarg}")
 
-    def _get_returns(  # pylint: disable=too-many-return-statements
-        self, returns: _ast.NodeNG | None
-    ) -> str | None:
+    def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
         if not self._prop:
             if isinstance(returns, _ast.Name):
                 return returns.name

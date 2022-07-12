@@ -49,7 +49,7 @@ class Parent(_MutableSequence[_Function]):
         return self._name
 
 
-class Class(Parent):  # pylint: disable=too-few-public-methods
+class Class(Parent):
     """Represents a class with method parameters.
 
     :param node: Abstract syntax tree.
