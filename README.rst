@@ -49,7 +49,7 @@ Commandline
     Check docstring matches signature
 
     positional arguments:
-      path                     directories or files to check
+      path                     directories or files to check (default: .)
 
     optional arguments:
       -h, --help               show this help message and exit

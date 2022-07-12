@@ -65,7 +65,8 @@ class Parser(_ArgumentParser):
             nargs="*",
             action="store",
             type=_Path,
-            help="directories or files to check",
+            default=[_Path(".")],
+            help="directories or files to check (default: .)",
         )
         self.add_argument(
             "-v",

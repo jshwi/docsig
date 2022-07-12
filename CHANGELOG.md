@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.15.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds default path argument as current working dir
+
 ### Fixed
 - Fixes issue where keyword only args were not recognised
 
