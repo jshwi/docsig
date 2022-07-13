@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.17.0...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- Removes `E105` check for class docstrings
 - Removes `E109` check for class docstrings
 
 [0.17.0](https://github.com/jshwi/docsig/releases/tag/v0.17.0) - 2022-07-13

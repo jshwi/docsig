@@ -1250,3 +1250,25 @@ class Klass:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassInitBadRet(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+    # bad typing, but leave that up to mypy
+    def __init__(param1, param2) -> int:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

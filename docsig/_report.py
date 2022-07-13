@@ -141,6 +141,7 @@ class Report(_MessageSequence):
             self._func.signature.returns
             and not self._func.docstring.returns
             and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E105")
             docstring = self._func.docstring.docstring
