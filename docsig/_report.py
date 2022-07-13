@@ -96,7 +96,7 @@ class Report(_MessageSequence):
         if len(self._func.signature.args) > len(self._func.docstring.args):
             self.append("E103")
             docstring = self._func.docstring.docstring
-            if not self._func.docstring.is_doc:
+            if docstring is None:
                 self.append("H104")
 
             elif docstring is not None and all(
@@ -139,7 +139,7 @@ class Report(_MessageSequence):
         if self._func.signature.returns and not self._func.docstring.returns:
             self.append("E105")
             docstring = self._func.docstring.docstring
-            if not self._func.docstring.is_doc:
+            if docstring is None:
                 self.append("H104")
 
             elif docstring is not None and "return" in docstring:

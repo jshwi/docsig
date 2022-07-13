@@ -23,12 +23,10 @@ class Docstring:
 
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._docstring = None
-        self._is_doc = False
         self._returns = False
         self._args: _t.List[_t.Tuple[str, str | None]] = []
         if node is not None:
             self._docstring = node.value
-            self._is_doc = True
             keys = 0
             for line in self._docstring.splitlines():
                 line = _lstrip_quant(line, 4)
@@ -60,11 +58,6 @@ class Docstring:
     def docstring(self) -> str | None:
         """The raw documentation string, if it exists, else None."""
         return self._docstring
-
-    @property
-    def is_doc(self) -> bool:
-        """Check that docstring exists."""
-        return self._is_doc
 
     @property
     def args(self) -> _t.Tuple[_t.Tuple[str, str | None], ...]:
