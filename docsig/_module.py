@@ -30,11 +30,15 @@ class Parent(_MutableSequence[_Function]):
         self._name = node.name
         self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
-            if isinstance(subnode, _ast.FunctionDef) and not str(
-                subnode.name
-            ).startswith("_"):
+            if isinstance(subnode, _ast.FunctionDef) and (
+                not str(subnode.name).startswith("_")
+                or str(subnode.name) == "__init__"
+            ):
                 overridden = False
-                if isinstance(subnode.parent.frame(), _ast.ClassDef):
+                if (
+                    isinstance(subnode.parent.frame(), _ast.ClassDef)
+                    and str(subnode.name) != "__init__"
+                ):
                     for ancestor in subnode.parent.frame().ancestors():
                         if subnode.name in ancestor and isinstance(
                             ancestor[subnode.name], _ast.nodes.FunctionDef
@@ -66,12 +70,6 @@ class Class(Parent):
         super().__init__(node, path, method=True)
         self._name = node.name
         self._path = f"{self._path}{self.name}::"
-        for subnode in node.body:
-            if (
-                isinstance(subnode, _ast.FunctionDef)
-                and str(subnode.name) == "__init__"
-            ):
-                self.append(_Function(subnode, method=True))
 
 
 class Module(_MutableSequence[Parent]):
