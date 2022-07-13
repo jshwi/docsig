@@ -76,7 +76,6 @@ class Signature:
     :param arguments: Argument's abstract syntax tree.
     :param returns: Function's return value.
     :param method: Boolean for whether function is a class method.
-    :param prop: Boolean for whether function is a class property.
     """
 
     def __init__(
@@ -84,13 +83,11 @@ class Signature:
         arguments: _ast.Arguments,
         returns: _ast.Module,
         method: bool = False,
-        prop: bool = False,
     ) -> None:
         self._arguments = arguments
         self._args = [
             a.name for a in self._arguments.args if not a.name.startswith("_")
         ]
-        self._prop = prop
         self._return_value = self._get_returns(returns)
         self._returns = (
             self._return_value is not None and self._return_value != "None"
@@ -112,27 +109,26 @@ class Signature:
             self._args.append(f"**{kwarg}")
 
     def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
-        if not self._prop:
-            if isinstance(returns, _ast.Name):
-                return returns.name
+        if isinstance(returns, _ast.Name):
+            return returns.name
 
-            if isinstance(returns, _ast.Attribute):
-                return returns.attrname
+        if isinstance(returns, _ast.Attribute):
+            return returns.attrname
 
-            if isinstance(returns, _ast.Const):
-                return str(returns.kind)
+        if isinstance(returns, _ast.Const):
+            return str(returns.kind)
 
-            if isinstance(returns, _ast.Subscript):
-                return "{}[{}]".format(
-                    self._get_returns(returns.value),
-                    self._get_returns(returns.slice),
-                )
+        if isinstance(returns, _ast.Subscript):
+            return "{}[{}]".format(
+                self._get_returns(returns.value),
+                self._get_returns(returns.slice),
+            )
 
-            if isinstance(returns, _ast.BinOp):
-                return "{} | {}".format(
-                    self._get_returns(returns.left),
-                    self._get_returns(returns.right),
-                )
+        if isinstance(returns, _ast.BinOp):
+            return "{} | {}".format(
+                self._get_returns(returns.left),
+                self._get_returns(returns.right),
+            )
 
         return None
 
@@ -182,9 +178,7 @@ class Function:
             self._isinit = True
             doc_node = node.parent.frame().doc_node
 
-        self._signature = Signature(
-            node.args, node.returns, method=method, prop=self._isproperty
-        )
+        self._signature = Signature(node.args, node.returns, method=method)
         self._docstring = Docstring(doc_node)
 
     @property

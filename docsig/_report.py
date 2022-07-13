@@ -137,7 +137,11 @@ class Report(_MessageSequence):
 
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""
-        if self._func.signature.returns and not self._func.docstring.returns:
+        if (
+            self._func.signature.returns
+            and not self._func.docstring.returns
+            and not self._func.isproperty
+        ):
             self.append("E105")
             docstring = self._func.docstring.docstring
             if docstring is None:
