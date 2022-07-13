@@ -160,20 +160,15 @@ class Function:
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
-    :param doc_node: Docstring node if other than this function.
     :param method: Boolean for whether function is a class method.
     """
 
-    def __init__(
-        self,
-        node: _ast.FunctionDef,
-        doc_node: _ast.Const | None = None,
-        method: bool = False,
-    ) -> None:
+    def __init__(self, node: _ast.FunctionDef, method: bool = False) -> None:
         self._name = node.name
         self._lineno = node.lineno or 0
         self._isproperty = False
         self._isinit = False
+        doc_node = node.doc_node
         decorators = node.decorators
         if decorators is not None:
             for dec in decorators.nodes:
@@ -185,11 +180,12 @@ class Function:
             and node.name == "__init__"
         ):
             self._isinit = True
+            doc_node = node.parent.frame().doc_node
 
         self._signature = Signature(
             node.args, node.returns, method=method, prop=self._isproperty
         )
-        self._docstring = Docstring(doc_node or node.doc_node)
+        self._docstring = Docstring(doc_node)
 
     @property
     def name(self) -> str:

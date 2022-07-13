@@ -71,7 +71,7 @@ class Class(Parent):
                 isinstance(subnode, _ast.FunctionDef)
                 and str(subnode.name) == "__init__"
             ):
-                self.append(_Function(subnode, node.doc_node, method=True))
+                self.append(_Function(subnode, method=True))
 
 
 class Module(_MutableSequence[Parent]):
