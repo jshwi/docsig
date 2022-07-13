@@ -70,19 +70,19 @@ def _construct_func(func: _Function, report: _Report) -> _FuncStr:
 
 
 def _print_failures(name: str, funcs: FailedDocList) -> None:
-    for func, lineno, summary in funcs:
+    for func_str, lineno, report in funcs:
         header = f"{name}{lineno}"
         _color.magenta.print(header)
         print(len(header) * "-")
-        print(f"{func}\n{summary.get_report()}")
+        print(f"{func_str}\n{report.get_report()}")
 
 
-def _populate(
+def _run_check(
     parent: _Parent,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> FailedDocList:
-    module_data = []
+    failures = []
     for func in parent:
         report = _Report(func, targets, disable)
         report.exists()
@@ -92,11 +92,11 @@ def _populate(
         report.return_not_typed()
         report.missing_return()
         report.property_return()
-        func_result = _construct_func(func, report)
+        func_str = _construct_func(func, report)
         if report:
-            module_data.append((func_result, func.lineno, report))
+            failures.append((func_str, func.lineno, report))
 
-    return module_data
+    return failures
 
 
 def docsig(
@@ -124,9 +124,9 @@ def docsig(
     modules = _Modules(*path, string=string)
     for module in modules:
         for top_level in module:
-            module_data = _populate(top_level, targets, disable)
-            if module_data:
+            failures = _run_check(top_level, targets, disable)
+            if failures:
                 failed = True
-                _print_failures(top_level.name, module_data)
+                _print_failures(top_level.name, failures)
 
     return int(failed)

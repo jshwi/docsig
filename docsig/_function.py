@@ -16,16 +16,16 @@ from ._utils import lstrip_quant as _lstrip_quant
 class Docstring:
     """Represents docstring parameters.
 
-    :param func: ``ast.FunctionDef`` object from which the docstring can
+    :param node: ``ast.FunctionDef`` object from which the docstring can
         be parsed.
     """
 
     PARAM_KEYS = ("param", "key", "keyword", "return")
 
-    def __init__(self, func: _ast.FunctionDef) -> None:
-        self._docstring: str | None = func.doc_node
+    def __init__(self, node: _ast.FunctionDef) -> None:
+        self._docstring: str | None = node.doc_node
         if self._docstring is not None:
-            self._docstring = func.doc_node.value
+            self._docstring = node.doc_node.value
 
         self._is_doc = self._docstring is not None
         self._args: _t.List[_t.Tuple[str, str | None]] = []
@@ -82,21 +82,21 @@ class Docstring:
 class Signature:
     """Represents signature parameters.
 
-    :param func: ``ast.FunctionDef`` object from which the params can be
+    :param node: ``ast.FunctionDef`` object from which the params can be
         parsed.
     :param method: Boolean for whether function is a class method.
     :param prop: Boolean for whether function is a class property.
     """
 
     def __init__(
-        self, func: _ast.FunctionDef, method: bool = False, prop: bool = False
+        self, node: _ast.FunctionDef, method: bool = False, prop: bool = False
     ) -> None:
-        self._func = func
+        self._node = node
         self._args = [
-            a.name for a in self._func.args.args if not a.name.startswith("_")
+            a.name for a in self._node.args.args if not a.name.startswith("_")
         ]
         self._prop = prop
-        self._return_value = self._get_returns(self._func.returns)
+        self._return_value = self._get_returns(self._node.returns)
         self._returns = (
             self._return_value is not None and self._return_value != "None"
         )
@@ -107,14 +107,14 @@ class Signature:
             self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
-        vararg = self._func.args.vararg
+        vararg = self._node.args.vararg
         if vararg is not None and not vararg.startswith("_"):
             self._args.append(f"*{vararg}")
 
-        if self._func.args.kwonlyargs:
-            self._args.extend([k.name for k in self._func.args.kwonlyargs])
+        if self._node.args.kwonlyargs:
+            self._args.extend([k.name for k in self._node.args.kwonlyargs])
 
-        kwarg = self._func.args.kwarg
+        kwarg = self._node.args.kwarg
         if kwarg is not None and not kwarg.startswith("_"):
             self._args.append(f"**{kwarg}")
 
@@ -168,23 +168,23 @@ class Signature:
 class Function:
     """Represents a function with signature and docstring parameters.
 
-    :param func: ``ast.FunctionDef`` object from which the params can be
+    :param node: ``ast.FunctionDef`` object from which the params can be
         parsed.
     :param method: Boolean for whether function is a class method.
     """
 
-    def __init__(self, func: _ast.FunctionDef, method: bool = False) -> None:
-        self._name = func.name
-        self._lineno = func.lineno or 0
+    def __init__(self, node: _ast.FunctionDef, method: bool = False) -> None:
+        self._name = node.name
+        self._lineno = node.lineno or 0
         self._isproperty = False
-        decorators = func.decorators
+        decorators = node.decorators
         if decorators is not None:
             for dec in decorators.nodes:
                 if isinstance(dec, _ast.Name) and dec.name == "property":
                     self._isproperty = True
 
-        self._signature = Signature(func, method=method, prop=self._isproperty)
-        self._docstring = Docstring(func)
+        self._signature = Signature(node, method=method, prop=self._isproperty)
+        self._docstring = Docstring(node)
 
     @property
     def name(self) -> str:
