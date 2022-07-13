@@ -1211,3 +1211,21 @@ class Klass:
 
     def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 """
+
+
+@_templates.register
+class _PassPropNoRetType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+    @property
+    def method(self):
+        \"\"\"Proper docstring.\"\"\"
+        return self._method
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
