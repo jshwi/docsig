@@ -13,10 +13,10 @@ from ._objects import MutableSequence as _MutableSequence
 
 
 class Parent(_MutableSequence[_Function]):
-    """Represents an object that contains functions/methods.
+    """Represents an object that contains functions or methods.
 
-    :param path: Path that node is parsed from.
-    :param node: Abstract syntax tree.
+    :param node: Parent's abstract syntax tree.
+    :param path: Path to base parent's name on.
     :param method: Boolean for whether functions are class methods.
     """
 
@@ -50,10 +50,10 @@ class Parent(_MutableSequence[_Function]):
 
 
 class Class(Parent):
-    """Represents a class with method parameters.
+    """Represents a class and its methods.
 
-    :param node: Abstract syntax tree.
-    :param path: Path that node is parsed from.
+    :param node: Class's abstract syntax tree.
+    :param path: Path to base class's name on.
     """
 
     def __init__(self, node: _ast.ClassDef, path: _Path | None = None) -> None:
@@ -62,9 +62,10 @@ class Class(Parent):
 
 
 class Module(_MutableSequence[Parent]):
-    """Represents a module with function parameters.
+    """Represents a module with top level functions and classes.
 
-    :param path: Path to compile function data from.
+    :param node: Module's abstract syntax tree.
+    :param path: Path for naming module and classes.
     """
 
     def __init__(self, node: _ast.Module, path: _Path | None = None) -> None:
@@ -79,6 +80,11 @@ class Module(_MutableSequence[Parent]):
 
 class Modules(_MutableSequence[Module]):
     """Sequence of ``Module`` objects parsed from Python modules or str.
+
+    Recursively collect Python files from within all dirs that exist
+    under paths provided.
+
+    If string is provided, ignore paths.
 
     :param paths: Path(s) to pase ``Module``(s) from.
     :param string: String to parse if provided.

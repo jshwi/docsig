@@ -14,10 +14,9 @@ from ._utils import lstrip_quant as _lstrip_quant
 
 
 class Docstring:
-    """Represents docstring parameters.
+    """Represents docstring.
 
-    :param node: ``ast.FunctionDef`` object from which the docstring can
-        be parsed.
+    :param node: Function's abstract syntax tree.
     """
 
     PARAM_KEYS = ("param", "key", "keyword", "return")
@@ -82,8 +81,7 @@ class Docstring:
 class Signature:
     """Represents signature parameters.
 
-    :param node: ``ast.FunctionDef`` object from which the params can be
-        parsed.
+    :param node: Function's abstract syntax tree.
     :param method: Boolean for whether function is a class method.
     :param prop: Boolean for whether function is a class property.
     """
@@ -166,8 +164,7 @@ class Signature:
 class Function:
     """Represents a function with signature and docstring parameters.
 
-    :param node: ``ast.FunctionDef`` object from which the params can be
-        parsed.
+    :param node: Function's abstract syntax tree.
     :param method: Boolean for whether function is a class method.
     """
 
@@ -196,7 +193,7 @@ class Function:
 
     @property
     def isproperty(self) -> bool:
-        """Boolean value determining that this func os a property."""
+        """Boolean value determining that this func is a property."""
         return self._isproperty
 
     @property
@@ -206,5 +203,5 @@ class Function:
 
     @property
     def docstring(self) -> Docstring:
-        """The function's docstring parameters."""
+        """The function's docstring."""
         return self._docstring
