@@ -99,6 +99,7 @@ def _run_check(
         report.return_not_typed()
         report.missing_return()
         report.property_return()
+        report.class_return()
         func_str = _construct_func(func, parent, report)
         if report:
             failures.append((func_str, func.lineno, report))

@@ -1275,7 +1275,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitRetNone(_BaseTemplate):
+class _FailInitRetNone(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1293,4 +1293,36 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return f"""
+class Klass:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
+"""
+
+
+@_templates.register
+class _FailE111(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :return: Fails
+    \"\"\"
+
+    def __init__(param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E111

@@ -173,6 +173,12 @@ class Report(_MessageSequence):
         if arg is not None and doc is not None and not self._errors:
             self.append("E110")
 
+    def class_return(self) -> None:
+        """Check that return is not documented for __init__."""
+        if self._func.docstring.returns and self._func.isinit:
+            self.append("E111")
+            self.append("H105")
+
     def get_report(self) -> str:
         """Get report compiled as a string.
 

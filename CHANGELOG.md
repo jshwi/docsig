@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.17.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds `E111` check for classes that document a return
+
 ### Fixed
 - Removes `E104` check for class docstrings
 - Removes `E105` check for class docstrings
