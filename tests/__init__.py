@@ -1272,3 +1272,25 @@ class Klass:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassInitRetNone(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :return: Fails
+    \"\"\"
+
+    def __init__(param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

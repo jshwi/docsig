@@ -117,6 +117,7 @@ class Report(_MessageSequence):
             self._func.docstring.returns
             and self._func.signature.return_value == "None"
             and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E104")
 
