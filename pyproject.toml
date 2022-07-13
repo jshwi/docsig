@@ -26,16 +26,19 @@ filter = true
 ]
 
 [tool.coverage.report]
-fail_under = 100
 exclude_lines = [
     "@_t.overload",
 ]
+fail_under = 100
 
 [tool.coverage.run]
 omit = [
     "whitelist.py",
     "docsig/__main__.py",
 ]
+
+[tool.docsig]
+check-class = true
 
 [tool.poetry]
 authors = [
