@@ -95,9 +95,7 @@ class Signature:
         self._returns = (
             self._return_value is not None and self._return_value != "None"
         )
-
         self._get_args_kwargs()
-
         if method and self._args and self._args[0] in ("self", "cls"):
             self._args.pop(0)
 
