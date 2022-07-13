@@ -128,6 +128,6 @@ def docsig(
             failures = _run_check(top_level, targets, disable)
             if failures:
                 failed = True
-                _print_failures(top_level.name, failures)
+                _print_failures(top_level.path, failures)
 
     return int(failed)

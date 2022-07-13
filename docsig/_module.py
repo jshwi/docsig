@@ -16,7 +16,7 @@ class Parent(_MutableSequence[_Function]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
-    :param path: Path to base parent's name on.
+    :param path: Path to base path representation on.
     :param method: Boolean for whether functions are class methods.
     """
 
@@ -27,7 +27,7 @@ class Parent(_MutableSequence[_Function]):
         method: bool = False,
     ) -> None:
         super().__init__()
-        self._name = f"{path}::" if path is not None else ""
+        self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef) and not str(
                 subnode.name
@@ -44,21 +44,21 @@ class Parent(_MutableSequence[_Function]):
                     self.append(_Function(subnode, method))
 
     @property
-    def name(self) -> str:
-        """Name of parent."""
-        return self._name
+    def path(self) -> str:
+        """Representation of path to parent."""
+        return self._path
 
 
 class Class(Parent):
     """Represents a class and its methods.
 
     :param node: Class's abstract syntax tree.
-    :param path: Path to base class's name on.
+    :param path: Path to base path representation on.
     """
 
     def __init__(self, node: _ast.ClassDef, path: _Path | None = None) -> None:
         super().__init__(node, path, method=True)
-        self._name = f"{self._name}{node.name}::"
+        self._path = f"{self._path}{node.name}::"
 
 
 class Module(_MutableSequence[Parent]):
