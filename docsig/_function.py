@@ -21,10 +21,10 @@ class Docstring:
 
     PARAM_KEYS = ("param", "key", "keyword", "return")
 
-    def __init__(self, node: _ast.FunctionDef) -> None:
-        self._docstring: str | None = node.doc_node
-        if self._docstring is not None:
-            self._docstring = node.doc_node.value
+    def __init__(self, node: _ast.Const | None = None) -> None:
+        self._docstring = None
+        if node is not None:
+            self._docstring = node.value
 
         self._is_doc = self._docstring is not None
         self._args: _t.List[_t.Tuple[str, str | None]] = []
@@ -179,7 +179,7 @@ class Function:
                     self._isproperty = True
 
         self._signature = Signature(node, method=method, prop=self._isproperty)
-        self._docstring = Docstring(node)
+        self._docstring = Docstring(node.doc_node)
 
     @property
     def name(self) -> str:
