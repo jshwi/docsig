@@ -73,20 +73,25 @@ class Docstring:
 class Signature:
     """Represents signature parameters.
 
-    :param node: Function's abstract syntax tree.
+    :param arguments: Argument's abstract syntax tree.
+    :param returns: Function's return value.
     :param method: Boolean for whether function is a class method.
     :param prop: Boolean for whether function is a class property.
     """
 
     def __init__(
-        self, node: _ast.FunctionDef, method: bool = False, prop: bool = False
+        self,
+        arguments: _ast.Arguments,
+        returns: _ast.Module,
+        method: bool = False,
+        prop: bool = False,
     ) -> None:
-        self._node = node
+        self._arguments = arguments
         self._args = [
-            a.name for a in self._node.args.args if not a.name.startswith("_")
+            a.name for a in self._arguments.args if not a.name.startswith("_")
         ]
         self._prop = prop
-        self._return_value = self._get_returns(self._node.returns)
+        self._return_value = self._get_returns(returns)
         self._returns = (
             self._return_value is not None and self._return_value != "None"
         )
@@ -97,14 +102,14 @@ class Signature:
             self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
-        vararg = self._node.args.vararg
+        vararg = self._arguments.vararg
         if vararg is not None and not vararg.startswith("_"):
             self._args.append(f"*{vararg}")
 
-        if self._node.args.kwonlyargs:
-            self._args.extend([k.name for k in self._node.args.kwonlyargs])
+        if self._arguments.kwonlyargs:
+            self._args.extend([k.name for k in self._arguments.kwonlyargs])
 
-        kwarg = self._node.args.kwarg
+        kwarg = self._arguments.kwarg
         if kwarg is not None and not kwarg.startswith("_"):
             self._args.append(f"**{kwarg}")
 
@@ -170,7 +175,9 @@ class Function:
                 if isinstance(dec, _ast.Name) and dec.name == "property":
                     self._isproperty = True
 
-        self._signature = Signature(node, method=method, prop=self._isproperty)
+        self._signature = Signature(
+            node.args, node.returns, method=method, prop=self._isproperty
+        )
         self._docstring = Docstring(node.doc_node)
 
     @property
