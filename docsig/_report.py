@@ -131,6 +131,7 @@ class Report(_MessageSequence):
         if (
             self._func.signature.return_value is None
             and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E109")
 
