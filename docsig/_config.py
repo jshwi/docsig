@@ -75,6 +75,13 @@ class Parser(_ArgumentParser):
             help="show version and exit",
         )
         self.add_argument(
+            "-c",
+            "--check-class",
+            action="store_true",
+            default=self._kwargs.get("check-class"),
+            help="check class docstrings",
+        )
+        self.add_argument(
             "-s",
             "--string",
             action="store",

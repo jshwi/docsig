@@ -29,8 +29,10 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
     return arg == doc and arg is not None and doc is not None
 
 
-def _construct_func(func: _Function, report: _Report) -> _FuncStr:
-    func_str = _FuncStr(func.name)
+def _construct_func(
+    func: _Function, parent: _Parent, report: _Report
+) -> _FuncStr:
+    func_str = _FuncStr(func.name, parent.name)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
@@ -80,11 +82,15 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
 
 def _run_check(
     parent: _Parent,
+    check_class: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> FailedDocList:
     failures = []
     for func in parent:
+        if func.name == "__init__" and not check_class:
+            continue
+
         report = _Report(func, targets, disable)
         report.exists()
         report.missing()
@@ -93,7 +99,7 @@ def _run_check(
         report.return_not_typed()
         report.missing_return()
         report.property_return()
-        func_str = _construct_func(func, report)
+        func_str = _construct_func(func, parent, report)
         if report:
             failures.append((func_str, func.lineno, report))
 
@@ -103,6 +109,7 @@ def _run_check(
 def docsig(
     *path: _Path,
     string: str | None = None,
+    check_class: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> int:
@@ -117,6 +124,7 @@ def docsig(
 
     :param path: Path(s) to check.
     :param string: String to check.
+    :param check_class: check class docstrings.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
@@ -125,7 +133,7 @@ def docsig(
     modules = _Modules(*path, string=string)
     for module in modules:
         for top_level in module:
-            failures = _run_check(top_level, targets, disable)
+            failures = _run_check(top_level, check_class, targets, disable)
             if failures:
                 failed = True
                 _print_failures(top_level.path, failures)

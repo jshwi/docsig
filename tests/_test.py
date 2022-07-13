@@ -14,6 +14,7 @@ from templatest import Template, templates
 import docsig.messages
 
 from . import (
+    CHECK_CLASS,
     E10,
     ERR_GROUP,
     FUNC,
@@ -68,7 +69,7 @@ def test_main_args(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(file.parent) == int(name.startswith("fail"))
+    assert main(CHECK_CLASS, file.parent) == int(name.startswith("fail"))
 
 
 @pytest.mark.parametrize(
@@ -94,7 +95,7 @@ def test_main_output(
     :param template: String data.
     """
     file = init_file(template.template)
-    main(file.parent)
+    main(CHECK_CLASS, file.parent)
     assert template.expected in nocolorcapsys.readouterr()[0]
 
 
@@ -379,7 +380,9 @@ def test_main_str(
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    assert main("--string", template) == int(name.startswith("fail"))
+    assert main(CHECK_CLASS, "--string", template) == int(
+        name.startswith("fail")
+    )
 
 
 @pytest.mark.parametrize(
@@ -402,5 +405,23 @@ def test_main_str_out(
         color codes.
     :param template: String data.
     """
-    main("--string", template.template)
+    main(CHECK_CLASS, "--string", template.template)
     assert template.expected in nocolorcapsys.readouterr()[0]
+
+
+def test_no_check_init_flag(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+) -> None:
+    """Test that failing class passes without ``--check-init`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    """
+    template = templates.registered.getbyname("fail-init")
+    file = init_file(template.template)
+    assert main(file.parent) == 0
+    assert not nocolorcapsys.stdout()

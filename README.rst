@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check docstring matches signature
 
@@ -52,6 +52,7 @@ Commandline
     optional arguments:
       -h, --help               show this help message and exit
       -v, --version            show version and exit
+      -c, --check-class        check class docstrings and constructors
       -s STR, --string STR     string to parse instead of files
       -d LIST, --disable LIST  comma separated list of rules to disable
       -t LIST, --target LIST   comma separated list of rules to target
@@ -123,4 +124,50 @@ API
     <BLANKLINE>
     1
 
+
 There are currently 9 other `errors <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
+
+Classes
+#######
+Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone
+
+This check will check documentation of `__init__` under the class docstring, and not under `__init__` itself
+
+.. code-block:: python
+
+    >>> string = """
+    ...     class Klass:
+    ...         '''Summary for failing docstring...
+    ...
+    ...         Explanation for failing docstring...
+    ...
+    ...         :param param1: About param1.
+    ...         :param param2: About param2.
+    ...         :param param3: About param3.
+    ...         '''
+    ...         def __init__(param1, param2) -> None:
+    ...             pass
+    ... """
+    >>> docsig(string=string, check_class=True)
+    Klass::11
+    ---------
+    class Klass:
+        """...
+    <BLANKLINE>
+        :param param1: ✓
+        :param param2: ✓
+        :param param3: ✖
+        """
+    <BLANKLINE>
+        def __init__(✓param1, ✓param2, ✖None) -> ✓None:
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    <BLANKLINE>
+    1
+
+Checking class docstrings can be permanently enabled in the pyproject.toml file
+
+.. code-block:: toml
+
+    [tool.docsig]
+    check-class = true

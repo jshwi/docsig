@@ -21,6 +21,7 @@ def main() -> int:
     return _docsig(
         *parser.args.path,
         string=parser.args.string,
+        check_class=parser.args.check_class,
         targets=parser.args.target,
         disable=parser.args.disable
     )

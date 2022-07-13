@@ -42,7 +42,7 @@ class Parent(_MutableSequence[_Function]):
                             overridden = True
 
                 if not overridden:
-                    self.append(_Function(subnode, method))
+                    self.append(_Function(subnode, method=method))
 
     @property
     def name(self) -> str:
@@ -66,6 +66,12 @@ class Class(Parent):
         super().__init__(node, path, method=True)
         self._name = node.name
         self._path = f"{self._path}{self.name}::"
+        for subnode in node.body:
+            if (
+                isinstance(subnode, _ast.FunctionDef)
+                and str(subnode.name) == "__init__"
+            ):
+                self.append(_Function(subnode, node.doc_node, method=True))
 
 
 class Module(_MutableSequence[Parent]):

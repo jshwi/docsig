@@ -21,6 +21,7 @@ class FuncStr(_UserString):
     """String representation for function.
 
     :param name: Name of the function to construct:
+    :param parent_name: Name of class, if parent is a class:
     """
 
     CHECK = _color.green.get("\u2713")
@@ -28,9 +29,16 @@ class FuncStr(_UserString):
     TRIPLE_QUOTES = '"""'
     TAB = "    "
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, parent_name: str) -> None:
         super().__init__(name)
-        self.data = self._lexer(f"def {name}(")
+        self._parent_name = parent_name
+        self._isinit = False
+        self.data = ""
+        if name == "__init__":
+            self._isinit = True
+            self.data += self.TAB
+
+        self.data += self._lexer(f"def {name}(")
         self._docstring = (
             f"{self._lexer(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
         )
@@ -94,4 +102,11 @@ class FuncStr(_UserString):
 
     def render(self) -> None:
         """Render final string by adding docstring to function."""
-        self.data += f"\n{self._docstring}"
+        if self._isinit:
+            self.data = (
+                self._lexer(f"class {self._parent_name}:")
+                + f"\n{self._docstring}"
+                + f"\n{self.data}\n"
+            )
+        else:
+            self.data += f"\n{self._docstring}"

@@ -25,6 +25,7 @@ TEMPLATE = "template"
 ERR_GROUP = "fail-e-1-0"
 FUNC = "func"
 E10 = "e-1-0"
+CHECK_CLASS = "--check-class"
 
 
 @_templates.register
@@ -1178,3 +1179,35 @@ def docsig(
     @property
     def expected(self) -> str:
         return """"""
+
+
+@_templates.register
+class _FailInit(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+    
+    def __init__(param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+class Klass:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+
+    def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+"""
