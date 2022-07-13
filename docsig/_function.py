@@ -16,20 +16,19 @@ from ._utils import lstrip_quant as _lstrip_quant
 class Docstring:
     """Represents docstring.
 
-    :param node: Function's abstract syntax tree.
+    :param node: Docstring's abstract syntax tree.
     """
 
     PARAM_KEYS = ("param", "key", "keyword", "return")
 
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._docstring = None
+        self._is_doc = False
+        self._returns = False
+        self._args: _t.List[_t.Tuple[str, str | None]] = []
         if node is not None:
             self._docstring = node.value
-
-        self._is_doc = self._docstring is not None
-        self._args: _t.List[_t.Tuple[str, str | None]] = []
-        self._returns = False
-        if self._docstring is not None:
+            self._is_doc = True
             keys = 0
             for line in self._docstring.splitlines():
                 line = _lstrip_quant(line, 4)
