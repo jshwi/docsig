@@ -22,6 +22,8 @@ class FuncStr(_UserString):
 
     :param name: Name of the function to construct:
     :param parent_name: Name of class, if parent is a class:
+    :param isinit: Boolean value for whether function is a class
+        constructor or not.
     """
 
     CHECK = _color.green.get("\u2713")
@@ -29,13 +31,14 @@ class FuncStr(_UserString):
     TRIPLE_QUOTES = '"""'
     TAB = "    "
 
-    def __init__(self, name: str, parent_name: str) -> None:
+    def __init__(
+        self, name: str, parent_name: str, isinit: bool = False
+    ) -> None:
         super().__init__(name)
         self._parent_name = parent_name
-        self._isinit = False
+        self._isinit = isinit
         self.data = ""
-        if name == "__init__":
-            self._isinit = True
+        if self._isinit:
             self.data += self.TAB
 
         self.data += self._lexer(f"def {name}(")

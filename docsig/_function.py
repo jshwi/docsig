@@ -173,11 +173,18 @@ class Function:
         self._name = node.name
         self._lineno = node.lineno or 0
         self._isproperty = False
+        self._isinit = False
         decorators = node.decorators
         if decorators is not None:
             for dec in decorators.nodes:
                 if isinstance(dec, _ast.Name) and dec.name == "property":
                     self._isproperty = True
+
+        if (
+            isinstance(node.parent.frame(), _ast.ClassDef)
+            and node.name == "__init__"
+        ):
+            self._isinit = True
 
         self._signature = Signature(
             node.args, node.returns, method=method, prop=self._isproperty
@@ -198,6 +205,11 @@ class Function:
     def isproperty(self) -> bool:
         """Boolean value determining that this func is a property."""
         return self._isproperty
+
+    @property
+    def isinit(self) -> bool:
+        """Boolean value determining this as a class constructor."""
+        return self._isinit
 
     @property
     def signature(self) -> Signature:

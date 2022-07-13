@@ -32,7 +32,7 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
 def _construct_func(
     func: _Function, parent: _Parent, report: _Report
 ) -> _FuncStr:
-    func_str = _FuncStr(func.name, parent.name)
+    func_str = _FuncStr(func.name, parent.name, func.isinit)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
