@@ -65,6 +65,11 @@ class FunctionKind:
         """Boolean value for whether function is protected."""
         return _isprotected(self._node.name)
 
+    @property
+    def isstaticmethod(self) -> bool:
+        """Boolean value for whether function is a static method."""
+        return self.ismethod and self._by_decorated("staticmethod")
+
 
 class Docstring:
     """Represents docstring.
@@ -128,14 +133,14 @@ class Signature:
 
     :param arguments: Argument's abstract syntax tree.
     :param returns: Function's return value.
-    :param method: Boolean for whether function is a class method.
+    :param kind: Kind of function.
     """
 
     def __init__(
         self,
         arguments: _ast.Arguments,
         returns: _ast.Module,
-        method: bool = False,
+        kind: FunctionKind,
     ) -> None:
         self._arguments = arguments
         self._args = [
@@ -146,7 +151,12 @@ class Signature:
             self._return_value is not None and self._return_value != "None"
         )
         self._get_args_kwargs()
-        if method and self._args and self._args[0] in ("self", "cls"):
+        if (
+            kind.ismethod
+            and not kind.isstaticmethod
+            and self._args
+            and self._args[0] in ("self", "cls")
+        ):
             self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
@@ -219,9 +229,7 @@ class Function:
         if self._kind.isinit:
             doc_node = node.parent.frame().doc_node
 
-        self._signature = Signature(
-            node.args, node.returns, method=self._kind.ismethod
-        )
+        self._signature = Signature(node.args, node.returns, self._kind)
         self._docstring = Docstring(doc_node)
 
     @property

@@ -1416,3 +1416,23 @@ def __init__(param1, param2) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PassStaticSelf(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+    class Klass:
+        @staticmethod
+        def method(self, param1) -> None:
+            \"\"\"Proper docstring.
+
+            :param self: Pass.
+            :param param1: Pass.
+            \"\"\"
+    """
+
+    @property
+    def expected(self) -> str:
+        return ""
