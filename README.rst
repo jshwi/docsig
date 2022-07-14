@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-p] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check docstring matches signature
 
@@ -53,6 +53,7 @@ Commandline
       -h, --help               show this help message and exit
       -v, --version            show version and exit
       -c, --check-class        check class docstrings
+      -p, --check-protected    check protected functions and classes
       -s STR, --string STR     string to parse instead of files
       -d LIST, --disable LIST  comma separated list of rules to disable
       -t LIST, --target LIST   comma separated list of rules to target
@@ -62,6 +63,7 @@ Options can also be configured with the pyproject.toml file
 .. code-block:: toml
 
     [tool.docsig]
+    check-protected = false
     disable = [
         "E101",
         "E102",

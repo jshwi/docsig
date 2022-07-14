@@ -82,6 +82,13 @@ class Parser(_ArgumentParser):
             help="check class docstrings",
         )
         self.add_argument(
+            "-p",
+            "--check-protected",
+            action="store_true",
+            default=self._kwargs.get("check-protected"),
+            help="check protected functions and classes",
+        )
+        self.add_argument(
             "-s",
             "--string",
             action="store",

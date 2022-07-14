@@ -22,6 +22,7 @@ def main() -> int:
         *parser.args.path,
         string=parser.args.string,
         check_class=parser.args.check_class,
+        check_protected=parser.args.check_protected,
         targets=parser.args.target,
         disable=parser.args.disable
     )

@@ -80,20 +80,26 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
         print(report.get_report())
 
 
-def _protect_exempt(func: _Function, check_class: bool = False) -> bool:
-    return check_class and func.kind.isinit
+def _protect_exempt(
+    func: _Function, check_class: bool = False, check_protected: bool = False
+) -> bool:
+    return (check_class and func.kind.isinit) or (
+        check_protected and not func.kind.isdunder
+    )
 
 
 def _run_check(
     parent: _Parent,
     check_class: bool = False,
+    check_protected: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> FailedDocList:
     failures = []
     for func in parent:
         if not func.kind.isoverridden and (
-            not func.kind.isprotected or _protect_exempt(func, check_class)
+            not func.kind.isprotected
+            or _protect_exempt(func, check_class, check_protected)
         ):
             report = _Report(func, targets, disable)
             report.exists()
@@ -115,6 +121,7 @@ def docsig(
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
+    check_protected: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> int:
@@ -130,6 +137,7 @@ def docsig(
     :param path: Path(s) to check.
     :param string: String to check.
     :param check_class: check class docstrings.
+    :param check_protected: Check protected functions and classes.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
@@ -138,8 +146,10 @@ def docsig(
     modules = _Modules(*path, string=string)
     for module in modules:
         for top_level in module:
-            if not top_level.isprotected:
-                failures = _run_check(top_level, check_class, targets, disable)
+            if not top_level.isprotected or check_protected:
+                failures = _run_check(
+                    top_level, check_class, check_protected, targets, disable
+                )
                 if failures:
                     failed = True
                     _print_failures(top_level.path, failures)

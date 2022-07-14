@@ -26,6 +26,7 @@ ERR_GROUP = "fail-e-1-0"
 FUNC = "func"
 E10 = "e-1-0"
 CHECK_CLASS = "--check-class"
+CHECK_PROTECTED = "--check-protected"
 
 
 @_templates.register
@@ -1329,7 +1330,7 @@ class Klass:
 
 
 @_templates.register
-class _PassProtectedFunc(_BaseTemplate):
+class _FailProtectFunc(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1344,7 +1345,15 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return f"""\
+def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+"""
 
 
 @_templates.register
@@ -1405,7 +1414,7 @@ def method(self):
 
 
 @_templates.register
-class _PassIgnoreNonConstruct(_BaseTemplate):
+class _FailProtectNInit(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1415,7 +1424,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E103
 
 
 @_templates.register
@@ -1455,3 +1464,31 @@ class Klass:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FailProtectCls(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class _Klass:
+    def method(self, param1, param2, **kwargs) -> None:
+        \"\"\"Proper docstring.
+
+        :param param1: Pass.
+        :param param2: Pass.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.18.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Adds `-p/--check-protected` argument
+
 ### Fixed
 - Fixes issue where `self` and `cls` were the only first args ignored
 - Fixes issue where `self` and `cls` were ignored for static methods

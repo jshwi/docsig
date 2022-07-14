@@ -70,6 +70,14 @@ class FunctionKind:
         """Boolean value for whether function is a static method."""
         return self.ismethod and self._by_decorated("staticmethod")
 
+    @property
+    def isdunder(self) -> bool:
+        """Boolean value for whether function is a dunder method."""
+        return (
+            self.ismethod
+            and self._node.name[:2] + self._node.name[-2:] == "____"
+        )
+
 
 class Docstring:
     """Represents docstring.
