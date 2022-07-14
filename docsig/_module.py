@@ -34,7 +34,7 @@ class Parent(_MutableSequence[_Function]):
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(subnode, method=method)
                 if (
-                    not _isprotected(subnode.name) or func.kind.isinit
+                    not func.kind.isprotected or func.kind.isinit
                 ) and not func.kind.isoverridden:
                     self.append(func)
 

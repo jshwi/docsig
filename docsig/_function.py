@@ -60,6 +60,11 @@ class FunctionKind:
 
         return False
 
+    @property
+    def isprotected(self) -> bool:
+        """Boolean value for whether function is protected."""
+        return _isprotected(self._node.name)
+
 
 class Docstring:
     """Represents docstring.
