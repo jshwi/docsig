@@ -48,6 +48,11 @@ class Parent(_MutableSequence[_Function]):
         """Representation of path to parent."""
         return self._path
 
+    @property
+    def isprotected(self):
+        """Boolean value for whether class is protected."""
+        return _isprotected(self._name)
+
 
 class Class(Parent):
     """Represents a class and its methods.
@@ -73,10 +78,10 @@ class Module(_MutableSequence[Parent]):
         super().__init__()
         self.append(Parent(node, path))
         for subnode in node.body:
-            if isinstance(subnode, _ast.ClassDef) and not _isprotected(
-                subnode.name
-            ):
-                self.append(Class(subnode, path))
+            if isinstance(subnode, _ast.ClassDef):
+                klass = Class(subnode, path)
+                if not klass.isprotected:
+                    self.append(klass)
 
 
 class Modules(_MutableSequence[Module]):
