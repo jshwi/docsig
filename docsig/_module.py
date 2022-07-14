@@ -18,21 +18,17 @@ class Parent(_MutableSequence[_Function]):
 
     :param node: Parent's abstract syntax tree.
     :param path: Path to base path representation on.
-    :param method: Boolean for whether functions are class methods.
     """
 
     def __init__(
-        self,
-        node: _ast.Module | _ast.ClassDef,
-        path: _Path | None = None,
-        method: bool = False,
+        self, node: _ast.Module | _ast.ClassDef, path: _Path | None = None
     ) -> None:
         super().__init__()
         self._name = node.name
         self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
-                func = _Function(subnode, method=method)
+                func = _Function(subnode)
                 if (
                     not func.kind.isprotected or func.kind.isinit
                 ) and not func.kind.isoverridden:
@@ -62,7 +58,7 @@ class Class(Parent):
     """
 
     def __init__(self, node: _ast.ClassDef, path: _Path | None = None) -> None:
-        super().__init__(node, path, method=True)
+        super().__init__(node, path)
         self._name = node.name
         self._path = f"{self._path}{self.name}::"
 
