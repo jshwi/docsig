@@ -88,21 +88,19 @@ def _run_check(
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if func.kind.isinit and not check_class:
-            continue
-
-        report = _Report(func, targets, disable)
-        report.exists()
-        report.missing()
-        report.duplicates()
-        report.extra_return()
-        report.return_not_typed()
-        report.missing_return()
-        report.property_return()
-        report.class_return()
-        func_str = _construct_func(func, parent, report)
-        if report:
-            failures.append((func_str, func.lineno, report))
+        if not (not check_class and func.kind.isinit):
+            report = _Report(func, targets, disable)
+            report.exists()
+            report.missing()
+            report.duplicates()
+            report.extra_return()
+            report.return_not_typed()
+            report.missing_return()
+            report.property_return()
+            report.class_return()
+            func_str = _construct_func(func, parent, report)
+            if report:
+                failures.append((func_str, func.lineno, report))
 
     return failures
 
