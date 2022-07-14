@@ -80,6 +80,10 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
         print(report.get_report())
 
 
+def _protect_exempt(func: _Function, check_class: bool = False) -> bool:
+    return check_class and func.kind.isinit
+
+
 def _run_check(
     parent: _Parent,
     check_class: bool = False,
@@ -88,7 +92,7 @@ def _run_check(
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if not (not check_class and func.kind.isinit):
+        if not func.kind.isprotected or _protect_exempt(func, check_class):
             report = _Report(func, targets, disable)
             report.exists()
             report.missing()
@@ -132,9 +136,10 @@ def docsig(
     modules = _Modules(*path, string=string)
     for module in modules:
         for top_level in module:
-            failures = _run_check(top_level, check_class, targets, disable)
-            if failures:
-                failed = True
-                _print_failures(top_level.path, failures)
+            if not top_level.isprotected:
+                failures = _run_check(top_level, check_class, targets, disable)
+                if failures:
+                    failed = True
+                    _print_failures(top_level.path, failures)
 
     return int(failed)

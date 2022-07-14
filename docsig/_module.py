@@ -29,9 +29,7 @@ class Parent(_MutableSequence[_Function]):
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(subnode)
-                if (
-                    not func.kind.isprotected or func.kind.isinit
-                ) and not func.kind.isoverridden:
+                if not func.kind.isoverridden:
                     self.append(func)
 
     @property
@@ -75,9 +73,7 @@ class Module(_MutableSequence[Parent]):
         self.append(Parent(node, path))
         for subnode in node.body:
             if isinstance(subnode, _ast.ClassDef):
-                klass = Class(subnode, path)
-                if not klass.isprotected:
-                    self.append(klass)
+                self.append(Class(subnode, path))
 
 
 class Modules(_MutableSequence[Module]):
