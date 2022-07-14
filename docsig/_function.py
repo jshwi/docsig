@@ -14,6 +14,36 @@ from ._utils import isprotected as _isprotected
 from ._utils import lstrip_quant as _lstrip_quant
 
 
+class FunctionKind:
+    """Check node for kinds of functions.
+
+    :param node: Function's abstract syntax tree.
+    """
+
+    def __init__(self, node: _ast.FunctionDef) -> None:
+        self._node = node
+        self._parent = node.parent.frame()
+
+    def _by_decorated(self, name: str) -> bool:
+        decorators = self._node.decorators
+        if decorators is not None:
+            for dec in decorators.nodes:
+                if isinstance(dec, _ast.Name) and dec.name == name:
+                    return True
+
+        return False
+
+    @property
+    def ismethod(self) -> bool:
+        """Boolean value for whether function is a method."""
+        return isinstance(self._parent, _ast.ClassDef)
+
+    @property
+    def isproperty(self) -> bool:
+        """Boolean value for whether function is a property."""
+        return self.ismethod and self._by_decorated("property")
+
+
 class Docstring:
     """Represents docstring.
 
@@ -161,18 +191,11 @@ class Function:
     """
 
     def __init__(self, node: _ast.FunctionDef, method: bool = False) -> None:
+        self._kind = FunctionKind(node)
         self._name = node.name
         self._lineno = node.lineno or 0
-        self._isproperty = False
         self._isinit = False
         doc_node = node.doc_node
-        if method:
-            decorators = node.decorators
-            if decorators is not None:
-                for dec in decorators.nodes:
-                    if isinstance(dec, _ast.Name) and dec.name == "property":
-                        self._isproperty = True
-
         if (
             isinstance(node.parent.frame(), _ast.ClassDef)
             and node.name == "__init__"
@@ -194,9 +217,9 @@ class Function:
         return self._lineno
 
     @property
-    def isproperty(self) -> bool:
-        """Boolean value determining that this func is a property."""
-        return self._isproperty
+    def kind(self) -> FunctionKind:
+        """Kind of function."""
+        return self._kind
 
     @property
     def isinit(self) -> bool:
