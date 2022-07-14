@@ -151,12 +151,7 @@ class Signature:
             self._return_value is not None and self._return_value != "None"
         )
         self._get_args_kwargs()
-        if (
-            kind.ismethod
-            and not kind.isstaticmethod
-            and self._args
-            and self._args[0] in ("self", "cls")
-        ):
+        if kind.ismethod and not kind.isstaticmethod and self._args:
             self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:

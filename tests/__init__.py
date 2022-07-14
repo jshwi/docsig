@@ -679,7 +679,7 @@ class _FailClass(_BaseTemplate):
         return """
 
 class Klass:
-    def method(param1, param2, **kwargs) -> None:
+    def method(self, param1, param2, **kwargs) -> None:
         \"\"\"Proper docstring.
 
         :param param1: Pass.
@@ -1194,7 +1194,7 @@ class Klass:
     :param param3: Fails.
     \"\"\"
     
-    def __init__(param1, param2) -> None:
+    def __init__(self, param1, param2) -> None:
         pass
 """
 
@@ -1243,7 +1243,7 @@ class Klass:
     :param param2: Fails.
     \"\"\"
 
-    def __init__(param1, param2):
+    def __init__(self, param1, param2):
         pass
 """
 
@@ -1265,7 +1265,7 @@ class Klass:
     \"\"\"
 
     # bad typing, but leave that up to mypy
-    def __init__(param1, param2) -> int:
+    def __init__(self, param1, param2) -> int:
         pass
 """
 
@@ -1287,7 +1287,7 @@ class Klass:
     :return: Fails
     \"\"\"
 
-    def __init__(param1, param2) -> None:
+    def __init__(self, param1, param2) -> None:
         pass
 """
 
@@ -1432,6 +1432,25 @@ class _PassStaticSelf(_BaseTemplate):
             :param param1: Pass.
             \"\"\"
     """
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassClassNoSelf(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+
+class Klass:
+
+    # against convention but not up to this package to decide
+    def method(no_self) -> None:
+        \"\"\"Docstring.\"\"\"
+        return None
+"""
 
     @property
     def expected(self) -> str:

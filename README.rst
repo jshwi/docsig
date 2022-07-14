@@ -145,7 +145,7 @@ This check will check documentation of `__init__` under the class docstring, and
     ...         :param param2: About param2.
     ...         :param param3: About param3.
     ...         '''
-    ...         def __init__(param1, param2) -> None:
+    ...         def __init__(self, param1, param2) -> None:
     ...             pass
     ... """
     >>> docsig(string=string, check_class=True)
