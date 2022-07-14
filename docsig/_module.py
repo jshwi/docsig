@@ -30,23 +30,13 @@ class Parent(_MutableSequence[_Function]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}::" if path is not None else ""
-        for subnode in node.body:  # pylint: disable=too-many-nested-blocks
+        for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(subnode, method=method)
-                if not _isprotected(subnode.name) or func.kind.isinit:
-                    overridden = False
-                    if (
-                        isinstance(subnode.parent.frame(), _ast.ClassDef)
-                        and not func.kind.isinit
-                    ):
-                        for ancestor in subnode.parent.frame().ancestors():
-                            if subnode.name in ancestor and isinstance(
-                                ancestor[subnode.name], _ast.nodes.FunctionDef
-                            ):
-                                overridden = True
-
-                    if not overridden:
-                        self.append(func)
+                if (
+                    not _isprotected(subnode.name) or func.kind.isinit
+                ) and not func.kind.isoverridden:
+                    self.append(func)
 
     @property
     def name(self) -> str:

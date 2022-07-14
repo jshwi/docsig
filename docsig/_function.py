@@ -48,6 +48,18 @@ class FunctionKind:
         """Boolean value for whether function is a class constructor."""
         return self.ismethod and self._node.name == "__init__"
 
+    @property
+    def isoverridden(self) -> bool:
+        """Boolean value for whether function is overridden."""
+        if self.ismethod and not self.isinit:
+            for ancestor in self._parent.ancestors():
+                if self._node.name in ancestor and isinstance(
+                    ancestor[self._node.name], _ast.nodes.FunctionDef
+                ):
+                    return True
+
+        return False
+
 
 class Docstring:
     """Represents docstring.
