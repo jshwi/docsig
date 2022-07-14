@@ -92,7 +92,9 @@ def _run_check(
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if not func.kind.isprotected or _protect_exempt(func, check_class):
+        if not func.kind.isoverridden and (
+            not func.kind.isprotected or _protect_exempt(func, check_class)
+        ):
             report = _Report(func, targets, disable)
             report.exists()
             report.missing()

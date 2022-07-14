@@ -28,9 +28,7 @@ class Parent(_MutableSequence[_Function]):
         self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
-                func = _Function(subnode)
-                if not func.kind.isoverridden:
-                    self.append(func)
+                self.append(_Function(subnode))
 
     @property
     def name(self) -> str:
