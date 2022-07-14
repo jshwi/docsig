@@ -166,11 +166,12 @@ class Function:
         self._isproperty = False
         self._isinit = False
         doc_node = node.doc_node
-        decorators = node.decorators
-        if decorators is not None:
-            for dec in decorators.nodes:
-                if isinstance(dec, _ast.Name) and dec.name == "property":
-                    self._isproperty = True
+        if method:
+            decorators = node.decorators
+            if decorators is not None:
+                for dec in decorators.nodes:
+                    if isinstance(dec, _ast.Name) and dec.name == "property":
+                        self._isproperty = True
 
         if (
             isinstance(node.parent.frame(), _ast.ClassDef)

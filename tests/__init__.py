@@ -1345,3 +1345,60 @@ def _function(param1, param2) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FailFuncProp(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@property
+def function(self) -> int:
+    \"\"\"Docstring.
+    
+    :param self: Fails.
+    \"\"\"
+    return self._method
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E105
+
+
+@_templates.register
+class _PassFuncPropReturn(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@property
+def function(*_, **__) -> int:
+    \"\"\"Docstring.
+
+    :return: Returncode.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FailFuncPropNoRetType(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@property
+def method(self):
+    \"\"\"Docstring.
+    
+    :param self: Fails.
+    \"\"\"
+    return self._method
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E109
