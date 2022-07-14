@@ -52,7 +52,7 @@ Commandline
     optional arguments:
       -h, --help               show this help message and exit
       -v, --version            show version and exit
-      -c, --check-class        check class docstrings and constructors
+      -c, --check-class        check class docstrings
       -s STR, --string STR     string to parse instead of files
       -d LIST, --disable LIST  comma separated list of rules to disable
       -t LIST, --target LIST   comma separated list of rules to target
