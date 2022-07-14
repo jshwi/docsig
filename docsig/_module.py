@@ -10,6 +10,7 @@ import astroid as _ast
 
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
+from ._utils import isprotected as _isprotected
 
 
 class Parent(_MutableSequence[_Function]):
@@ -31,7 +32,7 @@ class Parent(_MutableSequence[_Function]):
         self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef) and (
-                not str(subnode.name).startswith("_")
+                not _isprotected(subnode.name)
                 or str(subnode.name) == "__init__"
             ):
                 overridden = False
@@ -83,9 +84,9 @@ class Module(_MutableSequence[Parent]):
         super().__init__()
         self.append(Parent(node, path))
         for subnode in node.body:
-            if isinstance(subnode, _ast.ClassDef) and not str(
+            if isinstance(subnode, _ast.ClassDef) and not _isprotected(
                 subnode.name
-            ).startswith("_"):
+            ):
                 self.append(Class(subnode, path))
 
 

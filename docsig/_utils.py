@@ -59,3 +59,12 @@ def find_pyproject_toml(path: _Path | None = None) -> _Path | None:
         return None
 
     return find_pyproject_toml(path.parent)
+
+
+def isprotected(name: str | None) -> bool:
+    """Confirm whether attribute is protected or not.
+
+    :param name: Name to check.
+    :return: Boolean value for whether attribute is protected or not.
+    """
+    return str(name).startswith("_")
