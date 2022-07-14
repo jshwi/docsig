@@ -23,6 +23,7 @@ filter = true
 [tool.constcheck.ignore_from]
 "docsig/_config.py" = [
     "store",
+    "store_true",
 ]
 
 [tool.coverage.report]
