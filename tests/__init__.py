@@ -1326,3 +1326,22 @@ class Klass:
     @property
     def expected(self) -> str:
         return messages.E111
+
+
+@_templates.register
+class _PassProtectedFunc(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def _function(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
