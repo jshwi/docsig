@@ -117,7 +117,7 @@ class Report(_MessageSequence):
             self._func.docstring.returns
             and self._func.signature.return_value == "None"
             and not self._func.kind.isproperty
-            and not self._func.isinit
+            and not self._func.kind.isinit
         ):
             self.append("E104")
 
@@ -132,7 +132,7 @@ class Report(_MessageSequence):
         if (
             self._func.signature.return_value is None
             and not self._func.kind.isproperty
-            and not self._func.isinit
+            and not self._func.kind.isinit
         ):
             self.append("E109")
 
@@ -142,7 +142,7 @@ class Report(_MessageSequence):
             self._func.signature.returns
             and not self._func.docstring.returns
             and not self._func.kind.isproperty
-            and not self._func.isinit
+            and not self._func.kind.isinit
         ):
             self.append("E105")
             docstring = self._func.docstring.docstring
@@ -175,7 +175,7 @@ class Report(_MessageSequence):
 
     def class_return(self) -> None:
         """Check that return is not documented for __init__."""
-        if self._func.docstring.returns and self._func.isinit:
+        if self._func.docstring.returns and self._func.kind.isinit:
             self.append("E111")
             self.append("H105")
 

@@ -68,13 +68,3 @@ def isprotected(name: str | None) -> bool:
     :return: Boolean value for whether attribute is protected or not.
     """
     return str(name).startswith("_")
-
-
-def isinit(name: str, ismethod: bool = False) -> bool:
-    """Check function to confirm whether it is a class constructor.
-
-    :param name: Name of function.
-    :param ismethod: Boolean value for whether function is a method.
-    :return: Boolean value for whether function is a class constructor.
-    """
-    return ismethod and name == "__init__"

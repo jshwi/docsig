@@ -15,7 +15,6 @@ from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
-from ._utils import isinit as _isinit
 
 FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
 
@@ -33,7 +32,7 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
 def _construct_func(
     func: _Function, parent: _Parent, report: _Report
 ) -> _FuncStr:
-    func_str = _FuncStr(func.name, parent.name, func.isinit)
+    func_str = _FuncStr(func.name, parent.name, func.kind.isinit)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
@@ -89,7 +88,7 @@ def _run_check(
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if _isinit(func.name, func.kind.ismethod) and not check_class:
+        if func.kind.isinit and not check_class:
             continue
 
         report = _Report(func, targets, disable)

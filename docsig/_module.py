@@ -10,7 +10,6 @@ import astroid as _ast
 
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
-from ._utils import isinit as _isinit
 from ._utils import isprotected as _isprotected
 
 
@@ -31,22 +30,23 @@ class Parent(_MutableSequence[_Function]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}::" if path is not None else ""
-        for subnode in node.body:
-            if isinstance(subnode, _ast.FunctionDef) and (
-                not _isprotected(subnode.name) or _isinit(subnode.name, method)
-            ):
-                overridden = False
-                if isinstance(
-                    subnode.parent.frame(), _ast.ClassDef
-                ) and not _isinit(subnode.name, method):
-                    for ancestor in subnode.parent.frame().ancestors():
-                        if subnode.name in ancestor and isinstance(
-                            ancestor[subnode.name], _ast.nodes.FunctionDef
-                        ):
-                            overridden = True
+        for subnode in node.body:  # pylint: disable=too-many-nested-blocks
+            if isinstance(subnode, _ast.FunctionDef):
+                func = _Function(subnode, method=method)
+                if not _isprotected(subnode.name) or func.kind.isinit:
+                    overridden = False
+                    if (
+                        isinstance(subnode.parent.frame(), _ast.ClassDef)
+                        and not func.kind.isinit
+                    ):
+                        for ancestor in subnode.parent.frame().ancestors():
+                            if subnode.name in ancestor and isinstance(
+                                ancestor[subnode.name], _ast.nodes.FunctionDef
+                            ):
+                                overridden = True
 
-                if not overridden:
-                    self.append(_Function(subnode, method=method))
+                    if not overridden:
+                        self.append(func)
 
     @property
     def name(self) -> str:

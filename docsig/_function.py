@@ -10,7 +10,6 @@ import typing as _t
 import astroid as _ast
 
 from ._utils import get_index as _get_index
-from ._utils import isinit as _isinit
 from ._utils import isprotected as _isprotected
 from ._utils import lstrip_quant as _lstrip_quant
 
@@ -43,6 +42,11 @@ class FunctionKind:
     def isproperty(self) -> bool:
         """Boolean value for whether function is a property."""
         return self.ismethod and self._by_decorated("property")
+
+    @property
+    def isinit(self) -> bool:
+        """Boolean value for whether function is a class constructor."""
+        return self.ismethod and self._node.name == "__init__"
 
 
 class Docstring:
@@ -195,12 +199,8 @@ class Function:
         self._kind = FunctionKind(node)
         self._name = node.name
         self._lineno = node.lineno or 0
-        self._isinit = False
         doc_node = node.doc_node
-        if isinstance(node.parent.frame(), _ast.ClassDef) and _isinit(
-            node.name, method
-        ):
-            self._isinit = True
+        if self._kind.isinit:
             doc_node = node.parent.frame().doc_node
 
         self._signature = Signature(node.args, node.returns, method=method)
@@ -220,11 +220,6 @@ class Function:
     def kind(self) -> FunctionKind:
         """Kind of function."""
         return self._kind
-
-    @property
-    def isinit(self) -> bool:
-        """Boolean value determining this as a class constructor."""
-        return self._isinit
 
     @property
     def signature(self) -> Signature:
