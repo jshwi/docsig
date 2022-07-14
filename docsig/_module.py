@@ -10,6 +10,7 @@ import astroid as _ast
 
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
+from ._utils import isinit as _isinit
 from ._utils import isprotected as _isprotected
 
 
@@ -32,14 +33,12 @@ class Parent(_MutableSequence[_Function]):
         self._path = f"{path}::" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef) and (
-                not _isprotected(subnode.name)
-                or str(subnode.name) == "__init__"
+                not _isprotected(subnode.name) or _isinit(subnode.name, method)
             ):
                 overridden = False
-                if (
-                    isinstance(subnode.parent.frame(), _ast.ClassDef)
-                    and str(subnode.name) != "__init__"
-                ):
+                if isinstance(
+                    subnode.parent.frame(), _ast.ClassDef
+                ) and not _isinit(subnode.name, method):
                     for ancestor in subnode.parent.frame().ancestors():
                         if subnode.name in ancestor and isinstance(
                             ancestor[subnode.name], _ast.nodes.FunctionDef

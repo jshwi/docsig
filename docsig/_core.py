@@ -15,6 +15,7 @@ from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 from ._utils import color as _color
 from ._utils import get_index as _get_index
+from ._utils import isinit as _isinit
 
 FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
 
@@ -88,7 +89,7 @@ def _run_check(
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if func.name == "__init__" and not check_class:
+        if _isinit(func.name, func.kind.ismethod) and not check_class:
             continue
 
         report = _Report(func, targets, disable)

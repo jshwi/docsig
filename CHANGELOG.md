@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.18.0...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- Fixes issue where any func named `__init__` was not protected
 - Fixes issue where any function could be a property
 
 [0.18.0](https://github.com/jshwi/docsig/releases/tag/v0.18.0) - 2022-07-13

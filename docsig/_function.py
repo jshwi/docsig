@@ -10,6 +10,7 @@ import typing as _t
 import astroid as _ast
 
 from ._utils import get_index as _get_index
+from ._utils import isinit as _isinit
 from ._utils import isprotected as _isprotected
 from ._utils import lstrip_quant as _lstrip_quant
 
@@ -196,9 +197,8 @@ class Function:
         self._lineno = node.lineno or 0
         self._isinit = False
         doc_node = node.doc_node
-        if (
-            isinstance(node.parent.frame(), _ast.ClassDef)
-            and node.name == "__init__"
+        if isinstance(node.parent.frame(), _ast.ClassDef) and _isinit(
+            node.name, method
         ):
             self._isinit = True
             doc_node = node.parent.frame().doc_node

@@ -1402,3 +1402,17 @@ def method(self):
     @property
     def expected(self) -> str:
         return messages.E109
+
+
+@_templates.register
+class _PassIgnoreNonConstruct(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def __init__(param1, param2) -> None:
+    pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
