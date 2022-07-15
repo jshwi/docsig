@@ -1493,3 +1493,29 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 """
+
+
+@_templates.register
+class _PassDunder(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class MutableSet:
+    \"\"\"Set objet to inherit from.\"\"\"
+
+    def __init__(self) -> None:
+        self._set: _t.Set[T] = set()
+
+    def __contains__(self, x: object) -> bool:
+        return self._set.__contains__(x)
+
+    def __len__(self) -> int:
+        return self._set.__len__()
+
+    def __iter__(self) -> _t.Iterator[T]:
+        return self._set.__iter__()
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
