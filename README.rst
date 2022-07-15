@@ -44,7 +44,7 @@ Commandline
 
     usage: docsig [-h] [-v] [-c] [-p] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
-    Check docstring matches signature
+    Check signature params for proper documentation
 
     positional arguments:
       path                     directories or files to check (default: .)

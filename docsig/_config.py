@@ -52,7 +52,7 @@ class Parser(_ArgumentParser):
             formatter_class=lambda prog: _HelpFormatter(
                 prog, max_help_position=45
             ),
-            description="Check docstring matches signature",
+            description="Check signature params for proper documentation",
         )
         self._kwargs = kwargs
         self._add_arguments()
