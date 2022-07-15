@@ -78,28 +78,28 @@ class Parser(_ArgumentParser):
             "-c",
             "--check-class",
             action="store_true",
-            default=self._kwargs.get("check-class"),
+            default=self._kwargs.get("check-class", False),
             help="check class docstrings",
         )
         self.add_argument(
             "-D",
             "--check-dunders",
             action="store_true",
-            default=self._kwargs.get("check-dunders"),
+            default=self._kwargs.get("check-dunders", False),
             help="check dunder methods",
         )
         self.add_argument(
             "-o",
             "--check-overridden",
             action="store_true",
-            default=self._kwargs.get("check-overridden"),
+            default=self._kwargs.get("check-overridden", False),
             help="check overridden methods",
         )
         self.add_argument(
             "-p",
             "--check-protected",
             action="store_true",
-            default=self._kwargs.get("check-protected"),
+            default=self._kwargs.get("check-protected", False),
             help="check protected functions and classes",
         )
         self.add_argument(
