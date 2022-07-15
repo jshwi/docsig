@@ -126,8 +126,7 @@ API
     <BLANKLINE>
     1
 
-
-There are currently 9 other `errors <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
+A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
 
 Classes
 #######
@@ -138,17 +137,17 @@ This check will check documentation of `__init__` under the class docstring, and
 .. code-block:: python
 
     >>> string = """
-    ...     class Klass:
-    ...         '''Summary for failing docstring...
+    ... class Klass:
+    ...     '''Summary for failing docstring...
     ...
-    ...         Explanation for failing docstring...
+    ...     Explanation for failing docstring...
     ...
-    ...         :param param1: About param1.
-    ...         :param param2: About param2.
-    ...         :param param3: About param3.
-    ...         '''
-    ...         def __init__(self, param1, param2) -> None:
-    ...             pass
+    ...     :param param1: About param1.
+    ...     :param param2: About param2.
+    ...     :param param3: About param3.
+    ...     '''
+    ...     def __init__(self, param1, param2) -> None:
+    ...         pass
     ... """
     >>> docsig(string=string, check_class=True)
     Klass::11
