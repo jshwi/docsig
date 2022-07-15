@@ -31,6 +31,7 @@ FAIL_PROTECT = "fail-protect"
 CHECK_OVERRIDDEN = "--check-overridden"
 FAIL_OVERRIDE = "fail-override"
 CHECK_DUNDERS = "--check-dunders"
+FAIL = "fail"
 
 
 @_templates.register

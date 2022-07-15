@@ -201,9 +201,10 @@ class Report(_MessageSequence):
         ):
             self.append("E112")
 
-    def get_report(self) -> str:
+    def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.
 
+        :param prefix: Prefix report.
         :return: Current report.
         """
-        return "\n".join(self) + "\n"
+        return f"\n{prefix}".join(self) + "\n"

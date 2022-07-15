@@ -36,3 +36,21 @@ class Display(_MutableMapping[str, _t.List[FailedDocList]]):
                     print(len(header) * "-")
                     print(func_str)
                     print(report.get_report())
+
+    def summarise(self) -> None:
+        """Display report summary if any checks have failed."""
+        for key, value in self.items():
+            path = key[:-2]
+            _color.magenta.print(path)
+            print(len(path) * "-")
+            for failures in value:
+                for _, lineno, report in failures:
+                    lineno = _color.yellow.get(lineno)
+                    pipe = _color.cyan.get("|")
+                    print(
+                        "{}\t{} {}\n".format(
+                            lineno,
+                            pipe,
+                            report.get_report("\t{} ".format(pipe)).strip(),
+                        )
+                    )

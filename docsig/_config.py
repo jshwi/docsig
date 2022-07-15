@@ -103,6 +103,13 @@ class Parser(_ArgumentParser):
             help="check protected functions and classes",
         )
         self.add_argument(
+            "-S",
+            "--summary",
+            action="store_true",
+            default=self._kwargs.get("summary", False),
+            help="print a summarised report",
+        )
+        self.add_argument(
             "-s",
             "--string",
             action="store",

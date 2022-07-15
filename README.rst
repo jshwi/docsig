@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check signature params for proper documentation
 
@@ -56,11 +56,14 @@ Commandline
       -D, --check-dunders      check dunder methods
       -o, --check-overridden   check overridden methods
       -p, --check-protected    check protected functions and classes
+      -S, --summary            print a summarised report
       -s STR, --string STR     string to parse instead of files
       -d LIST, --disable LIST  comma separated list of rules to disable
       -t LIST, --target LIST   comma separated list of rules to target
 
 Options can also be configured with the pyproject.toml file
+
+If you find the output is too verbose then the report can be configured to display a summary
 
 .. code-block:: toml
 
@@ -68,6 +71,7 @@ Options can also be configured with the pyproject.toml file
     check-dunders = false
     check-overridden = false
     check-protected = false
+    summary = true
     disable = [
         "E101",
         "E102",

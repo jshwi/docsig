@@ -110,6 +110,7 @@ def docsig(
     check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
+    summary: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> int:
@@ -128,6 +129,7 @@ def docsig(
     :param check_dunders: Check dunder methods
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
+    :param summary: Print a summarised report.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
@@ -151,5 +153,9 @@ def docsig(
                     failed = True
                     display.add_failure(top_level.path, failures)
 
-    display.report()
+    if summary:
+        display.summarise()
+    else:
+        display.report()
+
     return int(failed)

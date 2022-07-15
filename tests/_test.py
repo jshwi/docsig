@@ -14,12 +14,15 @@ from templatest import Template, templates
 import docsig.messages
 
 from . import (
+    CHECK,
     CHECK_CLASS,
     CHECK_DUNDERS,
     CHECK_OVERRIDDEN,
     CHECK_PROTECTED,
+    CROSS,
     E10,
     ERR_GROUP,
+    FAIL,
     FAIL_OVERRIDE,
     FAIL_PROTECT,
     FUNC,
@@ -80,7 +83,7 @@ def test_main_args(
         CHECK_OVERRIDDEN,
         CHECK_DUNDERS,
         file.parent,
-    ) == int(name.startswith("fail"))
+    ) == int(name.startswith(FAIL))
 
 
 @pytest.mark.parametrize(
@@ -404,7 +407,7 @@ def test_main_str(
         CHECK_DUNDERS,
         "--string",
         template,
-    ) == int(name.startswith("fail"))
+    ) == int(name.startswith(FAIL))
 
 
 @pytest.mark.parametrize(
@@ -601,3 +604,42 @@ def test_mutable_mapping() -> None:
     assert len(mapping) == 1
     del mapping[1]
     assert len(mapping) == 0
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup(FAIL),
+    ids=templates.registered.getgroup(FAIL).getids(),
+)
+def test_main_sum(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test main for passing and failing checks with ``--summary``.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert (
+        main(
+            "--summary",
+            CHECK_CLASS,
+            CHECK_PROTECTED,
+            CHECK_OVERRIDDEN,
+            CHECK_DUNDERS,
+            file.parent,
+        )
+        == 1
+    )
+    out = nocolorcapsys.stdout()
+    assert CHECK not in out
+    assert CROSS not in out
+    assert out.count(str(file)) == 1
