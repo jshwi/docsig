@@ -75,6 +75,7 @@ class FunctionKind:
         """Boolean value for whether function is a dunder method."""
         return (
             self.ismethod
+            and not self.isinit
             and self._node.name[:2] + self._node.name[-2:] == "____"
         )
 

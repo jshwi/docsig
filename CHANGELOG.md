@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Adds `-o/--check-overridden` argument
 
+### Changed
+- Changes class constructor to no longer be considered a dunder method
+
 [0.19.0](https://github.com/jshwi/docsig/releases/tag/v0.19.0) - 2022-07-14
 ------------------------------------------------------------------------
 ### Added
