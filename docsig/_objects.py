@@ -5,6 +5,8 @@ docsig._objects
 import typing as _t
 
 T = _t.TypeVar("T")
+KT = _t.TypeVar("KT")
+VT = _t.TypeVar("VT")
 
 
 class MutableSequence(_t.MutableSequence[T]):
@@ -51,3 +53,25 @@ class MutableSequence(_t.MutableSequence[T]):
 
     def __len__(self):
         return self._list.__len__()
+
+
+class MutableMapping(_t.MutableMapping[KT, VT]):
+    """Dict-object to inherit from."""
+
+    def __init__(self) -> None:
+        self._dict: _t.Dict[KT, VT] = {}
+
+    def __setitem__(self, __k: KT, __v: VT) -> None:
+        self._dict.__setitem__(__k, __v)
+
+    def __delitem__(self, __v: KT) -> None:
+        self._dict.__delitem__(__v)
+
+    def __getitem__(self, __k: KT) -> VT:
+        return self._dict.__getitem__(__k)
+
+    def __len__(self) -> int:
+        return self._dict.__len__()
+
+    def __iter__(self) -> _t.Iterator[KT]:
+        return self._dict.__iter__()

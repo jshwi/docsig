@@ -589,3 +589,15 @@ def test_no_check_dunder_flag(
     file = init_file(template)
     assert main(file.parent) == 0
     assert not nocolorcapsys.stdout()
+
+
+def test_mutable_mapping() -> None:
+    """Get coverage on ``MutableMapping``."""
+    mapping = docsig._objects.MutableMapping()  # type: ignore
+    assert len(mapping) == 0
+    mapping[1] = 1
+    assert 1 in mapping
+    assert mapping[1] == 1
+    assert len(mapping) == 1
+    del mapping[1]
+    assert len(mapping) == 0

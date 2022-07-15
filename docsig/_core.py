@@ -8,15 +8,14 @@ import typing as _t
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
+from ._display import Display as _Display
+from ._display import FailedDocList as _FailedDocList
 from ._function import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
-from ._utils import color as _color
 from ._utils import get_index as _get_index
-
-FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
 
 
 def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
@@ -72,15 +71,6 @@ def _construct_func(
     return func_str
 
 
-def _print_failures(name: str, funcs: FailedDocList) -> None:
-    for func_str, lineno, report in funcs:
-        header = f"{name}{lineno}"
-        _color.magenta.print(header)
-        print(len(header) * "-")
-        print(func_str)
-        print(report.get_report())
-
-
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool = False,
@@ -89,7 +79,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_protected: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
-) -> FailedDocList:
+) -> _FailedDocList:
     failures = []
     for func in parent:
         if not (func.kind.isoverridden and not check_overridden) and (
@@ -144,6 +134,7 @@ def docsig(
     """
     failed = False
     modules = _Modules(*path, string=string)
+    display = _Display()
     for module in modules:
         for top_level in module:
             if not top_level.isprotected or check_protected:
@@ -158,6 +149,7 @@ def docsig(
                 )
                 if failures:
                     failed = True
-                    _print_failures(top_level.path, failures)
+                    display.add_failure(top_level.path, failures)
 
+    display.report()
     return int(failed)
