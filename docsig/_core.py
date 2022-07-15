@@ -80,14 +80,6 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
         print(report.get_report())
 
 
-def _protect_exempt(
-    func: _Function, check_class: bool = False, check_protected: bool = False
-) -> bool:
-    return (check_class and func.kind.isinit) or (
-        check_protected and not func.kind.isdunder
-    )
-
-
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool = False,
@@ -99,8 +91,11 @@ def _run_check(  # pylint: disable=too-many-arguments
     failures = []
     for func in parent:
         if not (func.kind.isoverridden and not check_overridden) and (
-            not func.kind.isprotected
-            or _protect_exempt(func, check_class, check_protected)
+            not (
+                func.kind.isprotected
+                and not (check_protected and not func.kind.isdunder)
+            )
+            or (check_class and func.kind.isinit)
         ):
             report = _Report(func, targets, disable)
             report.exists()
