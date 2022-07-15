@@ -82,6 +82,13 @@ class Parser(_ArgumentParser):
             help="check class docstrings",
         )
         self.add_argument(
+            "-o",
+            "--check-overridden",
+            action="store_true",
+            default=self._kwargs.get("check-overridden"),
+            help="check overridden methods",
+        )
+        self.add_argument(
             "-p",
             "--check-protected",
             action="store_true",

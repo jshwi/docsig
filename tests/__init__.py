@@ -28,6 +28,8 @@ E10 = "e-1-0"
 CHECK_CLASS = "--check-class"
 CHECK_PROTECTED = "--check-protected"
 FAIL_PROTECT = "fail-protect"
+CHECK_OVERRIDDEN = "--check-overridden"
+FAIL_OVERRIDE = "fail-override"
 
 
 @_templates.register
@@ -1020,7 +1022,7 @@ def get_post() -> Post:
 
 
 @_templates.register
-class _PassSkipOverridden(_BaseTemplate):
+class _FailOverride(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1053,7 +1055,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E103
 
 
 @_templates.register

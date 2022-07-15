@@ -88,16 +88,17 @@ def _protect_exempt(
     )
 
 
-def _run_check(
+def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool = False,
+    check_overridden: bool = False,
     check_protected: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> FailedDocList:
     failures = []
     for func in parent:
-        if not func.kind.isoverridden and (
+        if not (func.kind.isoverridden and not check_overridden) and (
             not func.kind.isprotected
             or _protect_exempt(func, check_class, check_protected)
         ):
@@ -121,6 +122,7 @@ def docsig(
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
+    check_overridden: bool = False,
     check_protected: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -137,6 +139,7 @@ def docsig(
     :param path: Path(s) to check.
     :param string: String to check.
     :param check_class: Check class docstrings.
+    :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
@@ -148,7 +151,12 @@ def docsig(
         for top_level in module:
             if not top_level.isprotected or check_protected:
                 failures = _run_check(
-                    top_level, check_class, check_protected, targets, disable
+                    top_level,
+                    check_class,
+                    check_overridden,
+                    check_protected,
+                    targets,
+                    disable,
                 )
                 if failures:
                     failed = True
