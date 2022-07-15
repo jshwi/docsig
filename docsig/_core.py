@@ -95,7 +95,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                 func.kind.isprotected
                 and not (check_protected and not func.kind.isdunder)
             )
-            or (check_class and func.kind.isinit)
+            and not (func.kind.isinit and not check_class)
         ):
             report = _Report(func, targets, disable)
             report.exists()

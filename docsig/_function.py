@@ -63,7 +63,7 @@ class FunctionKind:
     @property
     def isprotected(self) -> bool:
         """Boolean value for whether function is protected."""
-        return _isprotected(self._node.name)
+        return _isprotected(self._node.name) and not self.isinit
 
     @property
     def isstaticmethod(self) -> bool:
