@@ -18,6 +18,7 @@ from . import (
     CHECK_PROTECTED,
     E10,
     ERR_GROUP,
+    FAIL_PROTECT,
     FUNC,
     MULTI,
     NAME,
@@ -432,8 +433,8 @@ def test_no_check_init_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup("fail-protect"),
-    ids=templates.registered.getgroup("fail-protect").getids(),
+    templates.registered.getgroup(FAIL_PROTECT),
+    ids=templates.registered.getgroup(FAIL_PROTECT).getids(),
 )
 def test_no_check_protected_flag(
     init_file: InitFileFixtureType,
@@ -454,3 +455,38 @@ def test_no_check_protected_flag(
     file = init_file(template)
     assert main(file.parent) == 0
     assert not nocolorcapsys.stdout()
+
+
+def test_only_init_flag(
+    init_file: InitFileFixtureType, main: MockMainType
+) -> None:
+    """Test that failing class passes with only ``--check-init`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = templates.registered.getbyname("fail-init")
+    file = init_file(template.template)
+    assert main(CHECK_CLASS, file.parent) == 1
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup(FAIL_PROTECT),
+    ids=templates.registered.getgroup(FAIL_PROTECT).getids(),
+)
+def test_only_protected_flag(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test that failing func passes with only ``--check-protected``.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert main(CHECK_PROTECTED, file.parent) == 1

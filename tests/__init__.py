@@ -27,6 +27,7 @@ FUNC = "func"
 E10 = "e-1-0"
 CHECK_CLASS = "--check-class"
 CHECK_PROTECTED = "--check-protected"
+FAIL_PROTECT = "fail-protect"
 
 
 @_templates.register
