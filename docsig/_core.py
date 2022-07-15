@@ -136,7 +136,7 @@ def docsig(
 
     :param path: Path(s) to check.
     :param string: String to check.
-    :param check_class: check class docstrings.
+    :param check_class: Check class docstrings.
     :param check_protected: Check protected functions and classes.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
