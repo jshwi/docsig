@@ -103,6 +103,13 @@ class Parser(_ArgumentParser):
             help="check protected functions and classes",
         )
         self.add_argument(
+            "-n",
+            "--no-ansi",
+            action="store_true",
+            default=self._kwargs.get("no-ansi", False),
+            help="disable ansi output",
+        )
+        self.add_argument(
             "-S",
             "--summary",
             action="store_true",

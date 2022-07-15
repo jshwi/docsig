@@ -29,9 +29,9 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
 
 
 def _construct_func(
-    func: _Function, parent: _Parent, report: _Report
+    func: _Function, parent: _Parent, report: _Report, no_ansi: bool = False
 ) -> _FuncStr:
-    func_str = _FuncStr(func.name, parent.name, func.kind.isinit)
+    func_str = _FuncStr(func.name, parent.name, func.kind.isinit, no_ansi)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
@@ -77,6 +77,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
+    no_ansi: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
 ) -> _FailedDocList:
@@ -96,20 +97,21 @@ def _run_check(  # pylint: disable=too-many-arguments
             report.missing_return()
             report.property_return()
             report.class_return()
-            func_str = _construct_func(func, parent, report)
+            func_str = _construct_func(func, parent, report, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
 
     return failures
 
 
-def docsig(
+def docsig(  # pylint: disable=too-many-locals
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
     check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
+    no_ansi: bool = False,
     summary: bool = False,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -129,6 +131,7 @@ def docsig(
     :param check_dunders: Check dunder methods
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
+    :param no_ansi: Disable ANSI output.
     :param summary: Print a summarised report.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
@@ -136,7 +139,7 @@ def docsig(
     """
     failed = False
     modules = _Modules(*path, string=string)
-    display = _Display()
+    display = _Display(no_ansi)
     for module in modules:
         for top_level in module:
             if not top_level.isprotected or check_protected:
@@ -146,6 +149,7 @@ def docsig(
                     check_dunders,
                     check_overridden,
                     check_protected,
+                    no_ansi,
                     targets,
                     disable,
                 )

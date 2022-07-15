@@ -643,3 +643,38 @@ def test_main_sum(
     assert CHECK not in out
     assert CROSS not in out
     assert out.count(str(file)) == 1
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup(FAIL),
+    ids=templates.registered.getgroup(FAIL).getids(),
+)
+def test_no_ansi(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test main for failing checks with the ``--no-ansi`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param capsys: Capture and return stdout and stderr stream.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert (
+        main(
+            "--no-ansi",
+            CHECK_CLASS,
+            CHECK_PROTECTED,
+            CHECK_OVERRIDDEN,
+            CHECK_DUNDERS,
+            file.parent,
+        )
+        == 1
+    )
+    assert "\x1b" not in capsys.readouterr()[0]

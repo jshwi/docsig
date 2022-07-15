@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.21.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Adds `-n/--no-ansi` argument
 - Adds `-S/--summary` argument
 
 [0.21.0](https://github.com/jshwi/docsig/releases/tag/v0.21.0) - 2022-07-15

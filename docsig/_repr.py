@@ -17,26 +17,38 @@ from pygments.lexers.python import PythonLexer as _PythonLexer
 from ._utils import color as _color
 
 
-class FuncStr(_UserString):
+class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
     """String representation for function.
 
     :param name: Name of the function to construct:
     :param parent_name: Name of class, if parent is a class:
     :param isinit: Boolean value for whether function is a class
         constructor or not.
+    :param no_ansi: Disable ANSI output.
     """
 
-    CHECK = _color.green.get("\u2713")
-    CROSS = _color.red.get("\u2716")
     TRIPLE_QUOTES = '"""'
     TAB = "    "
 
     def __init__(
-        self, name: str, parent_name: str, isinit: bool = False
+        self,
+        name: str,
+        parent_name: str,
+        isinit: bool = False,
+        no_ansi: bool = False,
     ) -> None:
         super().__init__(name)
         self._parent_name = parent_name
         self._isinit = isinit
+        self._no_ansi = no_ansi
+        self._check = "\u2713"
+        self._cross = "\u2716"
+        self._question = "?"
+        if not self._no_ansi:
+            self._check = _color.green.get(self._check)
+            self._cross = _color.red.get(self._cross)
+            self._question = _color.red.get(self._question)
+
         self.data = ""
         if self._isinit:
             self.data += self.TAB
@@ -45,10 +57,12 @@ class FuncStr(_UserString):
         self._docstring = (
             f"{self._lexer(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
         )
-        self._mark = self.CHECK
+        self._mark = self._check
 
-    @staticmethod
-    def _lexer(value: str) -> str:
+    def _lexer(self, value: str) -> str:
+        if self._no_ansi:
+            return value
+
         formatter = _Terminal256Formatter(style="monokai")
         return _highlight(value, _PythonLexer(), formatter).strip()
 
@@ -57,7 +71,7 @@ class FuncStr(_UserString):
 
         :param failed: Boolean to test that check failed.
         """
-        self._mark = self.CROSS if failed else self.CHECK
+        self._mark = self._cross if failed else self._check
 
     def add_param(
         self, arg: str | None, doc: str | None, kind: str, failed: bool = False
@@ -92,7 +106,7 @@ class FuncStr(_UserString):
             )
         else:
             self.data += "{}{}{}".format(
-                self._lexer(")"), _color.red.bold.get("?"), self._lexer(":")
+                self._lexer(")"), self._question, self._lexer(":")
             )
 
     def add_comma(self) -> None:
