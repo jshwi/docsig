@@ -91,11 +91,9 @@ def _run_check(  # pylint: disable=too-many-arguments
     failures = []
     for func in parent:
         if not (func.kind.isoverridden and not check_overridden) and (
-            not (
-                func.kind.isprotected
-                and not (check_protected and not func.kind.isdunder)
-            )
+            not (func.kind.isprotected and not check_protected)
             and not (func.kind.isinit and not check_class)
+            and not func.kind.isdunder
         ):
             report = _Report(func, targets, disable)
             report.exists()

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Adds `-o/--check-overridden` argument
 
 ### Changed
+- Changes dunder methods to no longer be considered private
 - Changes class constructor to no longer be considered a private method
 - Changes class constructor to no longer be considered a dunder method
 
