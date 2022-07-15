@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.19.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Adds `-D/--check-dunders` argument
 - Adds `-o/--check-overridden` argument
 
 ### Changed

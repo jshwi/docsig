@@ -15,6 +15,7 @@ import docsig.messages
 
 from . import (
     CHECK_CLASS,
+    CHECK_DUNDERS,
     CHECK_OVERRIDDEN,
     CHECK_PROTECTED,
     E10,
@@ -74,7 +75,11 @@ def test_main_args(
     """
     file = init_file(template)
     assert main(
-        CHECK_CLASS, CHECK_PROTECTED, CHECK_OVERRIDDEN, file.parent
+        CHECK_CLASS,
+        CHECK_PROTECTED,
+        CHECK_OVERRIDDEN,
+        CHECK_DUNDERS,
+        file.parent,
     ) == int(name.startswith("fail"))
 
 
@@ -101,7 +106,13 @@ def test_main_output(
     :param template: String data.
     """
     file = init_file(template.template)
-    main(CHECK_CLASS, CHECK_PROTECTED, CHECK_OVERRIDDEN, file.parent)
+    main(
+        CHECK_CLASS,
+        CHECK_PROTECTED,
+        CHECK_DUNDERS,
+        CHECK_OVERRIDDEN,
+        file.parent,
+    )
     assert template.expected in nocolorcapsys.readouterr()[0]
 
 
@@ -387,7 +398,12 @@ def test_main_str(
     :param template: Contents to write to file.
     """
     assert main(
-        CHECK_CLASS, CHECK_PROTECTED, CHECK_OVERRIDDEN, "--string", template
+        CHECK_CLASS,
+        CHECK_PROTECTED,
+        CHECK_OVERRIDDEN,
+        CHECK_DUNDERS,
+        "--string",
+        template,
     ) == int(name.startswith("fail"))
 
 
@@ -413,6 +429,7 @@ def test_main_str_out(
     """
     main(
         CHECK_CLASS,
+        CHECK_DUNDERS,
         CHECK_PROTECTED,
         CHECK_OVERRIDDEN,
         "--string",
@@ -546,3 +563,29 @@ def test_only_overridden_flag(
     """
     file = init_file(template)
     assert main(CHECK_OVERRIDDEN, file.parent) == 1
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup("fail-dunder"),
+    ids=templates.registered.getgroup("fail-dunder").getids(),
+)
+def test_no_check_dunder_flag(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test that failing func passes without ``--check-dunders`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert main(file.parent) == 0
+    assert not nocolorcapsys.stdout()

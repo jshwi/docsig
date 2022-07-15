@@ -83,6 +83,7 @@ def _print_failures(name: str, funcs: FailedDocList) -> None:
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool = False,
+    check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
     targets: _t.List[str] | None = None,
@@ -93,7 +94,7 @@ def _run_check(  # pylint: disable=too-many-arguments
         if not (func.kind.isoverridden and not check_overridden) and (
             not (func.kind.isprotected and not check_protected)
             and not (func.kind.isinit and not check_class)
-            and not func.kind.isdunder
+            and not (func.kind.isdunder and not check_dunders)
         ):
             report = _Report(func, targets, disable)
             report.exists()
@@ -115,6 +116,7 @@ def docsig(
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
+    check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
     targets: _t.List[str] | None = None,
@@ -132,6 +134,7 @@ def docsig(
     :param path: Path(s) to check.
     :param string: String to check.
     :param check_class: Check class docstrings.
+    :param check_dunders: Check dunder methods
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param targets: List of errors to target.
@@ -146,6 +149,7 @@ def docsig(
                 failures = _run_check(
                     top_level,
                     check_class,
+                    check_dunders,
                     check_overridden,
                     check_protected,
                     targets,

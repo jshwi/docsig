@@ -82,6 +82,13 @@ class Parser(_ArgumentParser):
             help="check class docstrings",
         )
         self.add_argument(
+            "-D",
+            "--check-dunders",
+            action="store_true",
+            default=self._kwargs.get("check-dunders"),
+            help="check dunder methods",
+        )
+        self.add_argument(
             "-o",
             "--check-overridden",
             action="store_true",

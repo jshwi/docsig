@@ -30,6 +30,7 @@ CHECK_PROTECTED = "--check-protected"
 FAIL_PROTECT = "fail-protect"
 CHECK_OVERRIDDEN = "--check-overridden"
 FAIL_OVERRIDE = "fail-override"
+CHECK_DUNDERS = "--check-dunders"
 
 
 @_templates.register
@@ -1498,7 +1499,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassDunder(_BaseTemplate):
+class _FailDunder(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1520,4 +1521,32 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E103
+
+
+@_templates.register
+class _FailDunderParam(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    def __dunder__(self, param1, param2) -> None:
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        :param param3: Fails.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+"""

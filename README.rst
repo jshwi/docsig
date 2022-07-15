@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-o] [-p] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check signature params for proper documentation
 
@@ -53,6 +53,7 @@ Commandline
       -h, --help               show this help message and exit
       -v, --version            show version and exit
       -c, --check-class        check class docstrings
+      -D, --check-dunders      check dunder methods
       -o, --check-overridden   check overridden methods
       -p, --check-protected    check protected functions and classes
       -s STR, --string STR     string to parse instead of files
@@ -64,6 +65,7 @@ Options can also be configured with the pyproject.toml file
 .. code-block:: toml
 
     [tool.docsig]
+    check-dunders = false
     check-overridden = false
     check-protected = false
     disable = [
