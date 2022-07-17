@@ -11,7 +11,7 @@ from ._ansi import color as _color
 from ._function import Function as _Function
 
 
-class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
+class FuncStr(_UserString):
     """String representation for function.
 
     :param func: Represents a function with signature and docstring
