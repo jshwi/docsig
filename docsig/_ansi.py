@@ -35,19 +35,20 @@ class ANSI:
         :return: Colored string or string as was supplied.
         """
         string = str(obj)
-        if not self._no_ansi:
-            return color_obj.get(obj)
+        if self._no_ansi:
+            return string
 
-        return string
+        return color_obj.get(obj)
 
-    def get_syntax(self, value: str) -> str:
+    def get_syntax(self, obj: _t.Any) -> str:
         """Get code representation with syntax highlighting.
 
-        :param value: String object to highlight.
+        :param obj: Any object, represented as ``__str__``.
         :return: Colored string or string as was supplied.
         """
+        string = str(obj)
         if self._no_ansi:
-            return value
+            return string
 
         formatter = _Terminal256Formatter(style="monokai")
-        return _highlight(value, _PythonLexer(), formatter).strip()
+        return _highlight(string, _PythonLexer(), formatter).strip()
