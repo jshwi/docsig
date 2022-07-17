@@ -2,7 +2,7 @@
 tests._test
 ===========
 """
-# pylint: disable=protected-access,too-many-arguments
+# pylint: disable=protected-access
 from pathlib import Path
 
 import pytest
