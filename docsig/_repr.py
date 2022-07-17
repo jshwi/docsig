@@ -16,7 +16,6 @@ class FuncStr(_UserString):
 
     :param func: Represents a function with signature and docstring
         parameters.
-    :param parent_name: Name of class, if parent is a class:
     :param no_ansi: Disable ANSI output.
     """
 
@@ -25,12 +24,10 @@ class FuncStr(_UserString):
     TRIPLE_QUOTES = '"""'
     TAB = "    "
 
-    def __init__(
-        self, func: _Function, parent_name: str, no_ansi: bool = False
-    ) -> None:
+    def __init__(self, func: _Function, no_ansi: bool = False) -> None:
         super().__init__(func.name)
         self._ansi = _ANSI(no_ansi)
-        self._parent_name = parent_name
+        self._parent_name = func.parent_name
         self._isinit = func.kind.isinit
         self.data = ""
         if self._isinit:

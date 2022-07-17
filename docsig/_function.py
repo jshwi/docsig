@@ -232,10 +232,12 @@ class Function:
     def __init__(self, node: _ast.FunctionDef) -> None:
         self._kind = FunctionKind(node)
         self._name = node.name
+        parent = node.parent.frame()
+        self._parent_name = parent.name
         self._lineno = node.lineno or 0
         doc_node = node.doc_node
         if self._kind.isinit:
-            doc_node = node.parent.frame().doc_node
+            doc_node = parent.doc_node
 
         self._signature = Signature(node.args, node.returns, self._kind)
         self._docstring = Docstring(doc_node)
@@ -244,6 +246,11 @@ class Function:
     def name(self) -> str:
         """The name of the function."""
         return self._name
+
+    @property
+    def parent_name(self) -> str:
+        """The name of the function's parent."""
+        return self._parent_name
 
     @property
     def lineno(self) -> int:
