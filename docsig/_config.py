@@ -11,7 +11,7 @@ from pathlib import Path as _Path
 
 import tomli as _tomli
 
-from ._utils import color as _color
+from ._ansi import color as _color
 from ._utils import find_pyproject_toml as _find_pyproject_toml
 from ._version import __version__
 
