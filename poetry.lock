@@ -21,8 +21,8 @@ platformdirs = ">=2.3.0"
 requests = ">=2.24.0"
 
 [package.extras]
-all = ["cachecontrol[filecache] (>=0.12.6)", "lockfile (>=0.12.2)"]
-limiter = ["cachecontrol[filecache] (>=0.12.6)", "lockfile (>=0.12.2)"]
+limiter = ["lockfile (>=0.12.2)", "cachecontrol[filecache] (>=0.12.6)"]
+all = ["lockfile (>=0.12.2)", "cachecontrol[filecache] (>=0.12.6)"]
 
 [[package]]
 name = "appdirs"
@@ -443,8 +443,8 @@ optional = false
 python-versions = ">=3.6.1"
 
 [package.extras]
-all = ["coincidence (>=0.2.0)", "pytest (>=6.0.0)"]
-testing = ["coincidence (>=0.2.0)", "pytest (>=6.0.0)"]
+testing = ["pytest (>=6.0.0)", "coincidence (>=0.2.0)"]
+all = ["pytest (>=6.0.0)", "coincidence (>=0.2.0)"]
 
 [[package]]
 name = "html5lib"
@@ -459,10 +459,10 @@ six = ">=1.9"
 webencodings = "*"
 
 [package.extras]
-all = ["genshi", "chardet (>=2.2)", "lxml"]
-chardet = ["chardet (>=2.2)"]
-genshi = ["genshi"]
 lxml = ["lxml"]
+genshi = ["genshi"]
+chardet = ["chardet (>=2.2)"]
+all = ["lxml", "chardet (>=2.2)", "genshi"]
 
 [[package]]
 name = "idna"
@@ -610,18 +610,6 @@ python-versions = ">=3.8,<4.0"
 gitspy = ">=0,<1"
 
 [[package]]
-name = "m2r"
-version = "0.2.1"
-description = "Markdown and reStructuredText in a single file."
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-docutils = "*"
-mistune = "*"
-
-[[package]]
 name = "markupsafe"
 version = "2.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -664,14 +652,6 @@ description = "McCabe checker, plugin for flake8"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
-
-[[package]]
-name = "mistune"
-version = "0.8.4"
-description = "The fastest markdown parser in pure Python"
-category = "dev"
-optional = false
-python-versions = "*"
 
 [[package]]
 name = "msgpack"
@@ -813,8 +793,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
+testing = ["pytest-benchmark", "pytest"]
+dev = ["tox", "pre-commit"]
 
 [[package]]
 name = "prompt-toolkit"
@@ -856,7 +836,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pyaud"
-version = "3.13.5"
+version = "4.0.2"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
@@ -867,16 +847,15 @@ appdirs = ">=1.4.4,<2.0.0"
 environs = ">=9.4.0,<10.0.0"
 gitspy = ">=0,<1"
 lsfiles = ">=0,<1"
-m2r = ">=0.2.1,<0.3.0"
-mistune = "<=0.8.4"
 object-colors = ">=2.0.1,<3.0.0"
-pyaud-plugins = ">=0,<1"
+pyaud-plugins = ">=0.8"
 spall = ">=0,<1"
-toml = ">=0.10.2,<0.11.0"
+tomli = ">=2.0.1,<3.0.0"
+tomli-w = ">=1.0.0,<2.0.0"
 
 [[package]]
 name = "pyaud-plugins"
-version = "0.7.1"
+version = "0.9.0"
 description = "Plugin package for Pyaud"
 category = "dev"
 optional = false
@@ -892,10 +871,9 @@ docformatter = ">=1.4,<2.0"
 docsig = ">=0,<1"
 environs = ">=9.4.0,<10.0.0"
 flynt = ">=0.75,<0.77"
+gitspy = ">=0,<1"
 isort = ">=5.10.1,<6.0.0"
-m2r = ">=0.2.1,<0.3.0"
-mistune = "<=0.8.4"
-mypy = ">=0.930,<0.962"
+mypy = ">=0.930,<0.972"
 object-colors = ">=2.0.1,<3.0.0"
 pipfile-requirements = ">=0.3.0,<0.4.0"
 pylint = ">=2.12.2,<3.0.0"
@@ -972,9 +950,9 @@ toml = ">=0.10.2"
 typing-extensions = ">=3.7.4.3"
 
 [package.extras]
-all = ["click (>=7.1.2)", "consolekit (>=1.2.0)", "docutils (==0.16)", "readme-renderer[md] (>=27.0)"]
-cli = ["click (>=7.1.2)", "consolekit (>=1.2.0)"]
-readme = ["docutils (==0.16)", "readme-renderer[md] (>=27.0)"]
+readme = ["readme-renderer[md] (>=27.0)", "docutils (==0.16)"]
+cli = ["consolekit (>=1.2.0)", "click (>=7.1.2)"]
+all = ["readme-renderer[md] (>=27.0)", "docutils (==0.16)", "consolekit (>=1.2.0)", "click (>=7.1.2)"]
 
 [[package]]
 name = "pytest"
@@ -1010,7 +988,7 @@ coverage = {version = ">=5.2.1", extras = ["toml"]}
 pytest = ">=4.6"
 
 [package.extras]
-testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
+testing = ["virtualenv", "pytest-xdist", "six", "process-tests", "hunter", "fields"]
 
 [[package]]
 name = "pytest-randomly"
@@ -1329,8 +1307,8 @@ optional = false
 python-versions = ">=3.5"
 
 [package.extras]
-lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
+lint = ["docutils-stubs", "mypy", "flake8"]
 
 [[package]]
 name = "sphinxcontrib-devhelp"
@@ -1341,8 +1319,8 @@ optional = false
 python-versions = ">=3.5"
 
 [package.extras]
-lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
+lint = ["docutils-stubs", "mypy", "flake8"]
 
 [[package]]
 name = "sphinxcontrib-fulltoc"
@@ -1361,8 +1339,8 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-lint = ["flake8", "mypy", "docutils-stubs"]
-test = ["pytest", "html5lib"]
+test = ["html5lib", "pytest"]
+lint = ["docutils-stubs", "mypy", "flake8"]
 
 [[package]]
 name = "sphinxcontrib-jsmath"
@@ -1373,7 +1351,7 @@ optional = false
 python-versions = ">=3.5"
 
 [package.extras]
-test = ["pytest", "flake8", "mypy"]
+test = ["mypy", "flake8", "pytest"]
 
 [[package]]
 name = "sphinxcontrib-programoutput"
@@ -1395,8 +1373,8 @@ optional = false
 python-versions = ">=3.5"
 
 [package.extras]
-lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest"]
+lint = ["docutils-stubs", "mypy", "flake8"]
 
 [[package]]
 name = "sphinxcontrib-serializinghtml"
@@ -1424,7 +1402,7 @@ executing = "*"
 pure-eval = "*"
 
 [package.extras]
-tests = ["pytest", "typeguard", "pygments", "littleutils", "cython"]
+tests = ["cython", "littleutils", "pygments", "typeguard", "pytest"]
 
 [[package]]
 name = "tabulate"
@@ -1586,7 +1564,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a19d6f32f04847aaa7789901acac018a9209168e07af2e3a31af26ccd640b873"
+content-hash = "c745344ac8cffb1fda0767458f6b3f9e34fcd651023c85bf8ede15e26968b15c"
 
 [metadata.files]
 alabaster = [
@@ -1609,12 +1587,17 @@ astor = [
     {file = "astor-0.8.1-py2.py3-none-any.whl", hash = "sha256:070a54e890cefb5b3739d19f30f5a5ec840ffc9c50ffa7d23cc9fc1a38ebbfc5"},
     {file = "astor-0.8.1.tar.gz", hash = "sha256:6a6effda93f4e1ce9f618779b2dd1d9d84f1e32812c23a29b3fff6fd7f63fa5e"},
 ]
-astroid = []
+astroid = [
+    {file = "astroid-2.11.7-py3-none-any.whl", hash = "sha256:86b0a340a512c65abf4368b80252754cda17c02cdbbd3f587dddf98112233e7b"},
+    {file = "astroid-2.11.7.tar.gz", hash = "sha256:bb24615c77f4837c707669d16907331374ae8a964650a66999da3f5ca68dc946"},
+]
 asttokens = [
     {file = "asttokens-2.0.5-py2.py3-none-any.whl", hash = "sha256:0844691e88552595a6f4a4281a9f7f79b8dd45ca4ccea82e5e05b4bbdb76705c"},
     {file = "asttokens-2.0.5.tar.gz", hash = "sha256:9a54c114f02c7a9480d56550932546a3f1fe71d8a02f1bc7ccd0ee3ee35cf4d5"},
 ]
-atomicwrites = []
+atomicwrites = [
+    {file = "atomicwrites-1.4.1.tar.gz", hash = "sha256:81b2c9071a49367a7f770170e5eec8cb66567cfbbc8c73d20ce5ca4a8d71cf11"},
+]
 attrs = [
     {file = "attrs-21.4.0-py2.py3-none-any.whl", hash = "sha256:2d27e3784d7a565d36ab851fe94887c5eccd6a463168875832a1be79c82828b4"},
     {file = "attrs-21.4.0.tar.gz", hash = "sha256:626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"},
@@ -1878,9 +1861,6 @@ lsfiles = [
     {file = "lsfiles-0.1.2-py3-none-any.whl", hash = "sha256:2b45f7a12af5c8ba3124875bf7bc2e410c991dd3152f29dad95483d776d5f96e"},
     {file = "lsfiles-0.1.2.tar.gz", hash = "sha256:0555f777cb3d6117639bdc900362db0df5838cc92bf5a517ebe4505ec3bf798d"},
 ]
-m2r = [
-    {file = "m2r-0.2.1.tar.gz", hash = "sha256:bf90bad66cda1164b17e5ba4a037806d2443f2a4d5ddc9f6a5554a0322aaed99"},
-]
 markupsafe = [
     {file = "MarkupSafe-2.1.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:86b1f75c4e7c2ac2ccdaec2b9022845dbb81880ca318bb7a0a01fbf7813e3812"},
     {file = "MarkupSafe-2.1.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:f121a1420d4e173a5d96e47e9a0c0dcff965afdf1626d28de1460815f7c4ee7a"},
@@ -1934,10 +1914,6 @@ matplotlib-inline = [
 mccabe = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
-]
-mistune = [
-    {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},
-    {file = "mistune-0.8.4.tar.gz", hash = "sha256:59a3429db53c50b5c6bcc8a07f8848cb00d7dc8bdb431a4ab41920d201d4756e"},
 ]
 msgpack = [
     {file = "msgpack-1.0.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:4ab251d229d10498e9a2f3b1e68ef64cb393394ec477e3370c457f9430ce9250"},
@@ -2079,12 +2055,12 @@ py = [
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pyaud = [
-    {file = "pyaud-3.13.5-py3-none-any.whl", hash = "sha256:8d895ee0bf96a52abee47220244ce8c85cba469edd12e8d6cb7a5fad13c7cdd0"},
-    {file = "pyaud-3.13.5.tar.gz", hash = "sha256:5ec4265c1ecd3c488fcc9a263338ed8ad4a06865d607163cf2cc7bd38cc3f27e"},
+    {file = "pyaud-4.0.2-py3-none-any.whl", hash = "sha256:24839f53f81c33b0c5a51bc9677e0db2defba592dbc487c0b0cbc210229e50f5"},
+    {file = "pyaud-4.0.2.tar.gz", hash = "sha256:7d7cb58039b2eab07c51da554cb714906e8f0b1c68e7eba72852b75ea3b9ccb1"},
 ]
 pyaud-plugins = [
-    {file = "pyaud-plugins-0.7.1.tar.gz", hash = "sha256:9c7afff41c2ff6bda2dfb383ac2d85a79cd32b0424886a69257cf6d0a9c7722c"},
-    {file = "pyaud_plugins-0.7.1-py3-none-any.whl", hash = "sha256:86781f5f52737d3da31c9070dd6fe5b105d3a23b43ac4a7d971bc4e517e53566"},
+    {file = "pyaud-plugins-0.9.0.tar.gz", hash = "sha256:775c27779e756c56f0647e1d7f1354768688066fde8c8b07b9d4750de35f594f"},
+    {file = "pyaud_plugins-0.9.0-py3-none-any.whl", hash = "sha256:51548b39cbaad1c0307a456b4582e249a9459ef706acb3b449b4ffd50d3878b4"},
 ]
 pygments = [
     {file = "Pygments-2.12.0-py3-none-any.whl", hash = "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"},
@@ -2114,7 +2090,10 @@ pytest-randomly = [
     {file = "pytest-randomly-3.12.0.tar.gz", hash = "sha256:d60c2db71ac319aee0fc6c4110a7597d611a8b94a5590918bfa8583f00caccb2"},
     {file = "pytest_randomly-3.12.0-py3-none-any.whl", hash = "sha256:f4f2e803daf5d1ba036cc22bf4fe9dbbf99389ec56b00e5cba732fb5c1d07fdd"},
 ]
-pytest-sugar = []
+pytest-sugar = [
+    {file = "pytest-sugar-0.9.5.tar.gz", hash = "sha256:eea78b6f15b635277d3d90280cd386d8feea1cab0f9be75947a626e8b02b477d"},
+    {file = "pytest_sugar-0.9.5-py2.py3-none-any.whl", hash = "sha256:3da42de32ce4e1e95b448d61c92804433f5d4058c0a765096991c2e93d5a289f"},
+]
 python-dotenv = [
     {file = "python-dotenv-0.20.0.tar.gz", hash = "sha256:b7e3b04a59693c42c36f9ab1cc2acc46fa5df8c78e178fc33a8d4cd05c8d498f"},
     {file = "python_dotenv-0.20.0-py3-none-any.whl", hash = "sha256:d92a187be61fe482e4fd675b6d52200e7be63a12b724abbf931a40ce4fa92938"},
@@ -2279,7 +2258,10 @@ tomli-w = [
     {file = "tomli_w-1.0.0-py3-none-any.whl", hash = "sha256:9f2a07e8be30a0729e533ec968016807069991ae2fd921a78d42f429ae5f4463"},
     {file = "tomli_w-1.0.0.tar.gz", hash = "sha256:f463434305e0336248cac9c2dc8076b707d8a12d019dd349f5c1e382dd1ae1b9"},
 ]
-tomlkit = []
+tomlkit = [
+    {file = "tomlkit-0.11.1-py3-none-any.whl", hash = "sha256:1c5bebdf19d5051e2e1de6cf70adfc5948d47221f097fcff7a3ffc91e953eaf5"},
+    {file = "tomlkit-0.11.1.tar.gz", hash = "sha256:61901f81ff4017951119cd0d1ed9b7af31c821d6845c8c477587bbdcd5e5854e"},
+]
 traitlets = [
     {file = "traitlets-5.3.0-py3-none-any.whl", hash = "sha256:65fa18961659635933100db8ca120ef6220555286949774b9cfc106f941d1c7a"},
     {file = "traitlets-5.3.0.tar.gz", hash = "sha256:0bb9f1f9f017aa8ec187d8b1b2a7a6626a2a1d877116baba52a129bfa124f8e2"},
@@ -2291,7 +2273,10 @@ typing-extensions = [
 untokenize = [
     {file = "untokenize-0.1.1.tar.gz", hash = "sha256:3865dbbbb8efb4bb5eaa72f1be7f3e0be00ea8b7f125c69cbd1f5fda926f37a2"},
 ]
-urllib3 = []
+urllib3 = [
+    {file = "urllib3-1.26.10-py2.py3-none-any.whl", hash = "sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec"},
+    {file = "urllib3-1.26.10.tar.gz", hash = "sha256:879ba4d1e89654d9769ce13121e0f94310ea32e8d2f8cf587b77c08bbcdb30d6"},
+]
 vulture = [
     {file = "vulture-2.5-py2.py3-none-any.whl", hash = "sha256:a7c7e7a23b11e78840fdd821509d05a6134aa9fd60418fe39d60b3026fe698d9"},
     {file = "vulture-2.5.tar.gz", hash = "sha256:2831694055eb2e36a09c3b7680934837102b9b6c0969206e3902d513612177c3"},
