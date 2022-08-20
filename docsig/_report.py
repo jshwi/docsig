@@ -99,7 +99,7 @@ class Report(_MessageSequence):
         """Test that parameter is not missing from documentation."""
         if len(self._func.signature.args) > len(self._func.docstring.args):
             self.append("E103")
-            docstring = self._func.docstring.docstring
+            docstring = self._func.docstring.string
             if docstring is None:
                 self.append("H104")
 
@@ -149,7 +149,7 @@ class Report(_MessageSequence):
             and not self._func.kind.isinit
         ):
             self.append("E105")
-            docstring = self._func.docstring.docstring
+            docstring = self._func.docstring.string
             if docstring is None:
                 self.append("H104")
 

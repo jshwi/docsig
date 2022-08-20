@@ -93,13 +93,13 @@ class Docstring:
     PARAM_KEYS = ("param", "key", "keyword", "return")
 
     def __init__(self, node: _ast.Const | None = None) -> None:
-        self._docstring = None
+        self._string = None
         self._returns = False
         self._args: _t.List[_t.Tuple[str, str | None]] = []
         if node is not None:
-            self._docstring = node.value
+            self._string = node.value
             keys = 0
-            for line in self._docstring.splitlines():
+            for line in self._string.splitlines():
                 line = _lstrip_quant(line, 4)
                 match = _re.match(":(.*?): ", line)
                 if (
@@ -126,9 +126,9 @@ class Docstring:
                     self._args.append((key, value))
 
     @property
-    def docstring(self) -> str | None:
+    def string(self) -> str | None:
         """The raw documentation string, if it exists, else None."""
-        return self._docstring
+        return self._string
 
     @property
     def args(self) -> _t.Tuple[_t.Tuple[str, str | None], ...]:
