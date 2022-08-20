@@ -14,7 +14,7 @@ from ._utils import isprotected as _isprotected
 from ._utils import lstrip_quant as _lstrip_quant
 
 
-class FunctionKind:
+class _FunctionKind:
     """Check node for kinds of functions.
 
     :param node: Function's abstract syntax tree.
@@ -84,7 +84,7 @@ class FunctionKind:
         )
 
 
-class Docstring:
+class _Docstring:
     """Represents docstring.
 
     :param node: Docstring's abstract syntax tree.
@@ -141,7 +141,7 @@ class Docstring:
         return self._returns
 
 
-class Signature:
+class _Signature:
     """Represents signature parameters.
 
     :param arguments: Argument's abstract syntax tree.
@@ -153,7 +153,7 @@ class Signature:
         self,
         arguments: _ast.Arguments,
         returns: _ast.Module,
-        kind: FunctionKind,
+        kind: _FunctionKind,
     ) -> None:
         self._arguments = arguments
         self._args = [
@@ -230,15 +230,15 @@ class Function:
     """
 
     def __init__(self, node: _ast.FunctionDef) -> None:
-        self._kind = FunctionKind(node)
+        self._kind = _FunctionKind(node)
         self._name = node.name
         self._lineno = node.lineno or 0
         doc_node = node.doc_node
         if self._kind.isinit:
             doc_node = node.parent.frame().doc_node
 
-        self._signature = Signature(node.args, node.returns, self._kind)
-        self._docstring = Docstring(doc_node)
+        self._signature = _Signature(node.args, node.returns, self._kind)
+        self._docstring = _Docstring(doc_node)
 
     @property
     def name(self) -> str:
@@ -251,16 +251,16 @@ class Function:
         return self._lineno
 
     @property
-    def kind(self) -> FunctionKind:
+    def kind(self) -> _FunctionKind:
         """Kind of function."""
         return self._kind
 
     @property
-    def signature(self) -> Signature:
+    def signature(self) -> _Signature:
         """The function's signature parameters."""
         return self._signature
 
     @property
-    def docstring(self) -> Docstring:
+    def docstring(self) -> _Docstring:
         """The function's docstring."""
         return self._docstring
