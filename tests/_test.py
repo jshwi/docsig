@@ -125,7 +125,7 @@ def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    contents = templates.registered.getbyname("pass-no-params").template
+    contents = templates.registered.getbyname("pass-no-params-s").template
     file = init_file(contents)
     with pytest.warns(None) as record:  # type: ignore
         main(file.parent)
@@ -135,11 +135,11 @@ def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    [i for i in templatest.templates.registered if i.name.endswith("1-sum")],
+    [i for i in templatest.templates.registered if i.name.endswith("1-sum-s")],
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templatest.templates.registered.getids()
-        if i.endswith("1-sum")
+        if i.endswith("1-sum-s")
     ],
 )
 def test_main_no_sum(
@@ -378,7 +378,7 @@ def test_lineno(
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
     """
-    init_file(templates.registered.getbyname("multi-fail").template)
+    init_file(templates.registered.getbyname("multi-fail-s").template)
     main(".")
     out = nocolorcapsys.stdout()
     assert "module/file.py::2" in out
@@ -453,7 +453,7 @@ def test_no_check_init_flag(
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
     """
-    template = templates.registered.getbyname("f-init")
+    template = templates.registered.getbyname("f-init-s")
     file = init_file(template.template)
     assert main(file.parent) == 0
     assert not nocolorcapsys.stdout()
@@ -493,7 +493,7 @@ def test_only_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname("f-init")
+    template = templates.registered.getbyname("f-init-s")
     file = init_file(template.template)
     assert main(CHECK_CLASS, file.parent) == 1
 

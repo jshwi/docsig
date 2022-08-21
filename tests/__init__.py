@@ -35,7 +35,7 @@ FAIL = "f"
 
 
 @_templates.register
-class _PassParam(_BaseTemplate):
+class _PassParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -54,7 +54,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FParamDocs(_BaseTemplate):
+class _FParamDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -81,7 +81,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FParamSig(_BaseTemplate):
+class _FParamSigS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -107,7 +107,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FNoDocNoRet(_BaseTemplate):
+class _FNoDocNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -121,7 +121,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassNoParams(_BaseTemplate):
+class _PassNoParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -135,7 +135,7 @@ def function() -> None:
 
 
 @_templates.register
-class _PassUnderscoreParam(_BaseTemplate):
+class _PassUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -153,7 +153,7 @@ def function(param1, param2, _) -> None:
 
 
 @_templates.register
-class _FOutOfOrder(_BaseTemplate):
+class _FOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -181,7 +181,7 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
 
 
 @_templates.register
-class _PassRetType(_BaseTemplate):
+class _PassRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -202,7 +202,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FRetTypeDocs(_BaseTemplate):
+class _FRetTypeDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -231,7 +231,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
 
 
 @_templates.register
-class _FRetTypeSig(_BaseTemplate):
+class _FRetTypeSigS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -260,7 +260,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
 
 
 @_templates.register
-class _FE109NoRetNoType(_BaseTemplate):
+class _FE109NoRetNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -279,7 +279,7 @@ def function(param1, param2, param3):
 
 
 @_templates.register
-class _FNoRetDocsNoType(_BaseTemplate):
+class _FNoRetDocsNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -308,7 +308,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
 
 
 @_templates.register
-class _FRetDocsAttrType(_BaseTemplate):
+class _FRetDocsAttrTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -334,7 +334,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FRetDocsNameType(_BaseTemplate):
+class _FRetDocsNameTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -360,7 +360,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrder1Sum(_BaseTemplate):
+class _FE101OutOfOrder1SumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -380,7 +380,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FIncorrectDoc(_BaseTemplate):
+class _FIncorrectDocS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -405,7 +405,7 @@ def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FE102ParamDocs1Sum(_BaseTemplate):
+class _FE102ParamDocs1SumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -424,7 +424,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSig1Sum(_BaseTemplate):
+class _FE103ParamSig1SumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -442,7 +442,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocs1Sum(_BaseTemplate):
+class _FE104RetTypeDocs1SumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -462,7 +462,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSig1Sum(_BaseTemplate):
+class _FE105RetTypeSig1SumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -482,7 +482,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FDupesSum(_BaseTemplate):
+class _FDupesSumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -502,7 +502,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FIncorrectDocSum(_BaseTemplate):
+class _FIncorrectDocSumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -522,7 +522,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassWithArgs(_BaseTemplate):
+class _PassWithArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -541,7 +541,7 @@ def function(param1, param2, *args) -> None:
 
 
 @_templates.register
-class _FWithArgs(_BaseTemplate):
+class _FWithArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -567,7 +567,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PassWithKwargs(_BaseTemplate):
+class _PassWithKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -586,7 +586,7 @@ def function(param1, param2, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargs(_BaseTemplate):
+class _FWithKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -612,7 +612,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _MultiFail(_BaseTemplate):
+class _MultiFailS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -679,7 +679,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClass(_BaseTemplate):
+class _FClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -707,7 +707,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassClassSelf(_BaseTemplate):
+class _PassClassSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -726,7 +726,7 @@ class Klass:
 
 
 @_templates.register
-class _PassClassProperty(_BaseTemplate):
+class _PassClassPropertyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -744,7 +744,7 @@ class Klass:
 
 
 @_templates.register
-class _PassWithKwargsKey(_BaseTemplate):
+class _PassWithKwargsKeyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -763,7 +763,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrder(_BaseTemplate):
+class _FWithKwargsOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -782,7 +782,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PassDualColon(_BaseTemplate):
+class _PassDualColonS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -810,7 +810,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _PassOnlyParams(_BaseTemplate):
+class _PassOnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -828,7 +828,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAny(_BaseTemplate):
+class _PassReturnAnyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -848,7 +848,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _FMsgPoorIndent(_BaseTemplate):
+class _FMsgPoorIndentS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -874,7 +874,7 @@ def get_post(
 
 
 @_templates.register
-class _FE103NoSpace(_BaseTemplate):
+class _FE103NoSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -891,7 +891,7 @@ def function(param1) -> None:
 
 
 @_templates.register
-class _PassBinOp(_BaseTemplate):
+class _PassBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -914,7 +914,7 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
 
 
 @_templates.register
-class _FBinOpRepr(_BaseTemplate):
+class _FBinOpReprS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -938,7 +938,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _PassDoubleUnderscoreParam(_BaseTemplate):
+class _PassDoubleUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -956,7 +956,7 @@ def function(param1, param2, __) -> None:
 
 
 @_templates.register
-class _PassUnderscoreArgsKwargs(_BaseTemplate):
+class _PassUnderscoreArgsKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -970,7 +970,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _PassPropertyNoReturn(_BaseTemplate):
+class _PassPropertyNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -987,7 +987,7 @@ class Klass:
 
 
 @_templates.register
-class _FPropertyReturn(_BaseTemplate):
+class _FPropertyReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1007,7 +1007,7 @@ class Klass:
 
 
 @_templates.register
-class _FHintMissingReturn(_BaseTemplate):
+class _FHintMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1024,7 +1024,7 @@ def get_post() -> Post:
 
 
 @_templates.register
-class _FOverride(_BaseTemplate):
+class _FOverrideS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1061,7 +1061,7 @@ class MutableSet(_t.MutableSet[T]):
 
 
 @_templates.register
-class _FNoDocRet(_BaseTemplate):
+class _FNoDocRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1075,7 +1075,7 @@ def function() -> int:
 
 
 @_templates.register
-class _PassInconsistentSpace(_BaseTemplate):
+class _PassInconsistentSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1095,7 +1095,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
 
 
 @_templates.register
-class _FE109WRetQuestion(_BaseTemplate):
+class _FE109WRetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1112,7 +1112,7 @@ def function():
 
 
 @_templates.register
-class _FE109WORetQuestion(_BaseTemplate):
+class _FE109WORetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1126,7 +1126,7 @@ def function():
 
 
 @_templates.register
-class _FE110NE(_BaseTemplate):
+class _FE110NES(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1144,7 +1144,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _FClassHeader(_BaseTemplate):
+class _FClassHeaderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1164,7 +1164,7 @@ class Klass:
 
 
 @_templates.register
-class _PassKWOnlyArgs(_BaseTemplate):
+class _PassKWOnlyArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1188,7 +1188,7 @@ def docsig(
 
 
 @_templates.register
-class _FInit(_BaseTemplate):
+class _FInitS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1220,7 +1220,7 @@ class Klass:
 
 
 @_templates.register
-class _PassPropNoRetType(_BaseTemplate):
+class _PassPropNoRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1238,7 +1238,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitNoRet(_BaseTemplate):
+class _PassInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1259,7 +1259,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitBadRet(_BaseTemplate):
+class _PassInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1281,7 +1281,7 @@ class Klass:
 
 
 @_templates.register
-class _FInitRetNone(_BaseTemplate):
+class _FInitRetNoneS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1313,7 +1313,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111(_BaseTemplate):
+class _FE111S(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1335,7 +1335,7 @@ class Klass:
 
 
 @_templates.register
-class _FProtectFunc(_BaseTemplate):
+class _FProtectFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1362,7 +1362,7 @@ def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FFuncProp(_BaseTemplate):
+class _FFuncPropS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1381,7 +1381,7 @@ def function(self) -> int:
 
 
 @_templates.register
-class _PassFuncPropReturn(_BaseTemplate):
+class _PassFuncPropReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1400,7 +1400,7 @@ def function(*_, **__) -> int:
 
 
 @_templates.register
-class _FFuncPropNoRetType(_BaseTemplate):
+class _FFuncPropNoRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1419,7 +1419,7 @@ def method(self):
 
 
 @_templates.register
-class _FProtectNInit(_BaseTemplate):
+class _FProtectNInitS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1433,7 +1433,7 @@ def __init__(param1, param2) -> None:
 
 
 @_templates.register
-class _PassStaticSelf(_BaseTemplate):
+class _PassStaticSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1453,7 +1453,7 @@ class _PassStaticSelf(_BaseTemplate):
 
 
 @_templates.register
-class _PassClassNoSelf(_BaseTemplate):
+class _PassClassNoSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1472,7 +1472,7 @@ class Klass:
 
 
 @_templates.register
-class _FProtectCls(_BaseTemplate):
+class _FProtectClsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1500,7 +1500,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _FDunder(_BaseTemplate):
+class _FDunderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1526,7 +1526,7 @@ class MutableSet:
 
 
 @_templates.register
-class _FDunderParam(_BaseTemplate):
+class _FDunderParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1554,7 +1554,7 @@ def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FE112(_BaseTemplate):
+class _FE112S(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
