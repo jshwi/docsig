@@ -259,7 +259,7 @@ def test_main_toml_disable(
     pyproject_file = tmp_path / "pyproject.toml"
     pyproject_obj = {
         "tool": {
-            docsig.__name__: {"disable": [name.replace("-", "").upper()[4:8]]}
+            docsig.__name__: {"disable": [name.replace("-", "").upper()[1:5]]}
         }
     }
     init_file(template)
@@ -290,7 +290,7 @@ def test_main_cli_disable(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", "--disable", name.replace("-", "").upper()[4:8]) == 0
+    assert main(".", "--disable", name.replace("-", "").upper()[1:5]) == 0
 
 
 def test_main_cli_command_separated_list(
@@ -412,11 +412,11 @@ def test_main_str(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.filtergroup(MULTI).filtergroup("fail-class-header"),
+    templates.registered.filtergroup(MULTI).filtergroup("f-class-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI)
-        .filtergroup("fail-class-header")
+        .filtergroup("f-class-header")
         .getids()
     ],
 )
@@ -453,7 +453,7 @@ def test_no_check_init_flag(
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
     """
-    template = templates.registered.getbyname("fail-init")
+    template = templates.registered.getbyname("f-init")
     file = init_file(template.template)
     assert main(file.parent) == 0
     assert not nocolorcapsys.stdout()
@@ -493,7 +493,7 @@ def test_only_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname("fail-init")
+    template = templates.registered.getbyname("f-init")
     file = init_file(template.template)
     assert main(CHECK_CLASS, file.parent) == 1
 
@@ -570,8 +570,8 @@ def test_only_overridden_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup("fail-dunder"),
-    ids=templates.registered.getgroup("fail-dunder").getids(),
+    templates.registered.getgroup("f-dunder"),
+    ids=templates.registered.getgroup("f-dunder").getids(),
 )
 def test_no_check_dunder_flag(
     init_file: InitFileFixtureType,
