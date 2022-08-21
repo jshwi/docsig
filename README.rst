@@ -25,7 +25,7 @@ docsig
 Check signature params for proper documentation
 -----------------------------------------------
 
-Currently only supports reStructuredText (Sphinx)
+Currently supports reStructuredText (Sphinx) and `numpy`
 
 Installation
 ------------

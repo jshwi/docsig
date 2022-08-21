@@ -25,6 +25,9 @@ filter = true
     "store",
     "store_true",
 ]
+"docsig/_docstring.py" = [
+    "keyword",
+]
 
 [tool.coverage.report]
 exclude_lines = [
