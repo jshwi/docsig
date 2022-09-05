@@ -76,7 +76,7 @@ tomli = "^2.0.1"
 [tool.poetry.dev-dependencies]
 bump2version = "^1.0.1"
 ipython = "^8.2.0"
-prompt-toolkit = "^3.0.30"
+prompt-toolkit = "^3.0.31"
 pyaud = "^4.0.2"
 pytest = "^7.1.1"
 pytest-randomly = "^3.11.0"
