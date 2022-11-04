@@ -16,7 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/docs/_themes" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint" />
     </content>
-    <orderEntry type="jdk" jdkName="Poetry (docsig)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
