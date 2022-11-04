@@ -83,7 +83,7 @@ pytest-randomly = "^3.11.0"
 pytest-sugar = "^0.9.4"
 restview = "^3.0.0"
 sphinx-toolbox = "^3.2.0"
-templatest = "^0.5.0"
+templatest = "^0.7.0"
 tomli-w = "^1.0.0"
 
 [tool.poetry.scripts]

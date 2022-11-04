@@ -1414,7 +1414,7 @@ widechars = ["wcwidth"]
 
 [[package]]
 name = "templatest"
-version = "0.5.0"
+version = "0.7.0"
 description = "Templates for testing with strings"
 category = "dev"
 optional = false
@@ -1561,7 +1561,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "724ed3f02ca0a34073f2f05be0a62c0774e0ac0585c53e5c2c8735b7376eebb1"
+content-hash = "1187070b466d8b0af8b1b2cd30ab5841963111c8733f611c2cea839db3bdef25"
 
 [metadata.files]
 alabaster = [
@@ -2233,8 +2233,8 @@ tabulate = [
     {file = "tabulate-0.8.10.tar.gz", hash = "sha256:6c57f3f3dd7ac2782770155f3adb2db0b1a269637e42f27599925e64b114f519"},
 ]
 templatest = [
-    {file = "templatest-0.5.0-py3-none-any.whl", hash = "sha256:2ead1c7671aaaa2d6bad15f8f9b6d7d7b46c82b67ef10e3a848d5ee38cf31fff"},
-    {file = "templatest-0.5.0.tar.gz", hash = "sha256:23d8ae7dd902147b8027ab537aec1f74a2c138d9bc30912af161513721c13d8d"},
+    {file = "templatest-0.7.0-py3-none-any.whl", hash = "sha256:77f72d43c1844904196b196aa66c35ab0a7d1535eb3bbd880d3d2621c41c1c5c"},
+    {file = "templatest-0.7.0.tar.gz", hash = "sha256:8a8cf03ceeb6e4bbfdd698aa648a630519aeb5e74cadfb5dde3ed29d8bb308c1"},
 ]
 termcolor = [
     {file = "termcolor-1.1.0.tar.gz", hash = "sha256:1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"},
