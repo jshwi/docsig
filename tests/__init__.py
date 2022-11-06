@@ -3242,3 +3242,20 @@ def function(param) -> None:
     @property
     def expected(self) -> str:
         return messages.E112
+
+
+@_templates.register
+class _PassSphinxWNumpy(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function() -> str:
+    \"\"\"Proper docstring.
+
+    :return: Returns is an indicator this could be a numpy docstring.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

@@ -136,6 +136,13 @@ class _NumpyStyle(_DocStyle):
             self._populate_kwargs(line, stripped_line)
             self._populate_returns(stripped_line)
 
+    @property
+    def isstyle(self) -> bool:
+        """Boolean result for whether string matches this style."""
+        return super().isstyle and any(
+            i in self._string for i in self.PARAM_UL
+        )
+
 
 class Docstring:
     """Represents docstring.
