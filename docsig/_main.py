@@ -5,7 +5,6 @@ docsig._main
 Contains package entry point.
 """
 from ._config import Parser as _Parser
-from ._config import get_config as _get_config
 from ._core import docsig as _docsig
 
 
@@ -16,8 +15,7 @@ def main() -> int:
 
     :return: Exit status for whether test failed or not.
     """
-    config = _get_config()
-    parser = _Parser(config)
+    parser = _Parser()
     return _docsig(
         *parser.args.path,
         string=parser.args.string,

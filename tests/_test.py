@@ -3,7 +3,6 @@ tests._test
 ===========
 """
 # pylint: disable=protected-access,too-many-arguments
-import typing as t
 from pathlib import Path
 
 import pytest
@@ -291,49 +290,6 @@ def test_main_cli_disable(
     """
     init_file(template)
     assert main(".", "--disable", name.replace("-", "").upper()[1:5]) == 0
-
-
-def test_main_cli_command_separated_list(
-    monkeypatch: pytest.MonkeyPatch, main: MockMainType
-) -> None:
-    """Test main for disabling errors via the commandline.
-
-    :param monkeypatch: Mock patch environment and attributes.
-    :param main: Mock ``main`` function.
-    """
-    instance = []
-
-    # noinspection PyUnresolvedReferences
-    def _parser(_: t.Any) -> docsig._config.Parser:
-        parser = docsig._config.Parser({})
-        instance.append(parser)
-        return parser
-
-    monkeypatch.setattr("docsig._main._Parser", _parser)
-    main(
-        ".",
-        "--disable",
-        "{},{},{},{},{},{},{},{}".format(
-            errors[0],
-            errors[1],
-            errors[2],
-            errors[3],
-            errors[4],
-            errors[5],
-            errors[6],
-            errors[7],
-        ),
-    )
-    assert instance[0].args.disable == [
-        errors[0],
-        errors[1],
-        errors[2],
-        errors[3],
-        errors[4],
-        errors[5],
-        errors[6],
-        errors[7],
-    ]
 
 
 @pytest.mark.parametrize("message", errors)

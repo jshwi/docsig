@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
-from pathlib import Path as _Path
 
 from object_colors import Color as _Color
 
@@ -41,25 +40,6 @@ def lstrip_quant(string: str, quant: int) -> str:
         string = string[4:]
 
     return string
-
-
-def find_pyproject_toml(path: _Path | None = None) -> _Path | None:
-    """Attempt to locate a pyproject.toml file if one exists in parents.
-
-    :param path: Path to start search, if None start with CWD.
-    :return: Path to pyproject.toml if it exists, else None.
-    """
-    if not path:
-        path = _Path.cwd()
-
-    pyproject_toml = path / "pyproject.toml"
-    if pyproject_toml.is_file():
-        return pyproject_toml
-
-    if path == _Path("/"):
-        return None
-
-    return find_pyproject_toml(path.parent)
 
 
 def isprotected(name: str | None) -> bool:
