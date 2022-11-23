@@ -81,6 +81,18 @@ class _NumpyStyle(_DocStyle):
     PARAM_KEYS = ("Parameters", "**kwargs", "Returns")
     PARAM_UL = tuple(len(i) * "-" for i in PARAM_KEYS)
 
+    def __init__(self, string: str) -> None:
+        super().__init__(string)
+        self._in_params = 0
+        self._in_kwargs = 0
+        self._in_returns = 0
+        self._got_kwargs = False
+        self._match_indent = None
+        for line in string.splitlines():
+            self._populate_args(line)
+            self._populate_kwargs(line)
+            self._populate_returns(line)
+
     def _populate_args(self, line):
         if self.PARAM_KEYS[0] in line:
             self._in_params = 1
@@ -129,18 +141,6 @@ class _NumpyStyle(_DocStyle):
         elif self._in_returns == 2:
             self._returns = True
 
-    def __init__(self, string: str) -> None:
-        super().__init__(string)
-        self._in_params = 0
-        self._in_kwargs = 0
-        self._in_returns = 0
-        self._got_kwargs = False
-        self._match_indent = None
-        for line in string.splitlines():
-            self._populate_args(line)
-            self._populate_kwargs(line)
-            self._populate_returns(line)
-
     @property
     def isstyle(self) -> bool:
         """Boolean result for whether string matches this style."""
@@ -155,15 +155,6 @@ class Docstring:
     :param node: Docstring's abstract syntax tree.
     """
 
-    def _get_style(self):
-        sphinx_style = _SphinxStyle(self._string)
-        numpy_style = _NumpyStyle(self._string)
-        if numpy_style.isstyle:
-            self._style = numpy_style
-
-        elif sphinx_style.isstyle:
-            self._style = sphinx_style
-
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
         self._returns = False
@@ -172,6 +163,15 @@ class Docstring:
         if node is not None:
             self._string = node.value
             self._get_style()
+
+    def _get_style(self):
+        sphinx_style = _SphinxStyle(self._string)
+        numpy_style = _NumpyStyle(self._string)
+        if numpy_style.isstyle:
+            self._style = numpy_style
+
+        elif sphinx_style.isstyle:
+            self._style = sphinx_style
 
     @property
     def string(self) -> str | None:
