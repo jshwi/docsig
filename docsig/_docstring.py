@@ -119,9 +119,6 @@ class _NumpyStyle(_DocStyle):
             self._in_returns = 2
 
         elif self._in_returns == 2:
-            self._in_returns = 3
-
-        elif self._in_returns == 3:
             self._returns = True
 
     def __init__(self, string: str) -> None:
