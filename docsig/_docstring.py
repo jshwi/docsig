@@ -93,7 +93,7 @@ class _NumpyStyle(_DocStyle):
             if line == "":
                 self._in_params = 0
             else:
-                match = _re.match("(.*?) : ", line)
+                match = _re.match("(.*?): ", line)
                 if (
                     match is not None
                     and line.startswith(match.group(0))

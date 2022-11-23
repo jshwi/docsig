@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.23.1...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- Remove check for spaced colon in `numpy` style docstrings
 - Remove indent requirement for `numpy` style docstrings
 
 [0.23.1](https://github.com/jshwi/docsig/releases/tag/v0.23.1) - 2022-11-06

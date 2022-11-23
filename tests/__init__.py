@@ -3279,3 +3279,23 @@ def function(param) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _NumpyColonSpace(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param) -> None:
+    \"\"\"Docstring.
+
+    Parameters
+    ----------
+    param: int
+        Description.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
