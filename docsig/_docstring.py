@@ -156,11 +156,11 @@ class Docstring:
         self._style = _BaseDocStyle()
         if node is not None:
             self._string = node.value
-            self._get_style()
+            self._get_style(node.value)
 
-    def _get_style(self):
-        sphinx_style = _SphinxStyle(self._string)
-        numpy_style = _NumpyStyle(self._string)
+    def _get_style(self, string: str) -> None:
+        sphinx_style = _SphinxStyle(string)
+        numpy_style = _NumpyStyle(string)
         if numpy_style.isstyle:
             self._style = numpy_style
 
