@@ -3299,3 +3299,64 @@ def function(param) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _Issue36Param(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def modify(numericString: Union[str, int]) -> str:
+    \"\"\"Do stuff.
+
+    Parameters
+    ----------
+    numericString: Union[str, int]
+        numeric string that should be converted.
+
+    Returns
+    -------
+    str
+        reformatted string
+    \"\"\"
+    numericString = str(numericString)
+    last = numericString[-1]
+    middle = numericString[-3:-1]
+    first = numericString[:-3]
+    finalstring = "-".join([first, middle, last])
+    return finalstring
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _Issue36Return(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def check_stuff(str_lin: str) -> bool:
+    \"\"\"Check if "A" or "B".
+
+    The function checks whether the string is "A" or "B".
+
+    Parameters
+    ----------
+    str_lin: str
+        special string produced by function_of_y
+
+    Returns
+    -------
+    bool
+        Returns True, else false
+    \"\"\"
+    if any(s in str_lin for s in ["A", "B"]):
+        return True
+    return False
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
