@@ -3259,3 +3259,23 @@ def function() -> str:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _NumpyNoIdent(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param) -> None:
+    \"\"\"Docstring.
+
+    Parameters
+    ----------
+    param : int
+        Description.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
