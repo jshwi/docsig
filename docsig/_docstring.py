@@ -11,6 +11,7 @@ import typing as _t
 import astroid as _ast
 
 from ._utils import get_index as _get_index
+from ._utils import gettabno as _gettabno
 from ._utils import lstrip_quant as _lstrip_quant
 
 
@@ -93,7 +94,17 @@ class _NumpyStyle(_DocStyle):
                 self._in_params = 0
             else:
                 match = _re.match("(.*?) : ", line)
-                if match is not None and line.startswith(match.group(0)):
+                if (
+                    match is not None
+                    and line.startswith(match.group(0))
+                    and (
+                        self._match_indent is None
+                        or _gettabno(line) == self._match_indent
+                    )
+                ):
+                    if self._match_indent is None:
+                        self._match_indent = _gettabno(line)
+
                     string_list = match.group(1).split()
                     key, value = "param", string_list[0]
                     self._args.append((key, value))
@@ -125,6 +136,7 @@ class _NumpyStyle(_DocStyle):
         self._in_kwargs = 0
         self._in_returns = 0
         self._got_kwargs = False
+        self._match_indent = None
         for line in string.splitlines():
             self._populate_args(line)
             self._populate_kwargs(line)
