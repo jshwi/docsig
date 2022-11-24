@@ -114,6 +114,9 @@ class _NumpyStyle(_DocStyle):
                         if value.startswith("**"):
                             key, value = "keyword", "(**)"
 
+                        elif value.startswith("*"):
+                            value = value[1:]
+
                         self._args.append((key, value))
 
     @property

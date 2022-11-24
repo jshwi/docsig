@@ -2124,7 +2124,7 @@ def function(param1, param2, *args) -> None:
             Pass.
         param2 : int
             Pass.
-        args : int
+        *args : int
             Pass
     \"\"\"
 """
@@ -2401,7 +2401,7 @@ class _FWithKwargsOutOfSectN(_BaseTemplate):
 def function(param1, **kwargs) -> None:
     \"\"\"Proper docstring.
 
-    **kwargs
+    **kwargs : int
         Passes
 
     Parameters
@@ -2483,7 +2483,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
     Parameters
     ----------
-        args : int
+        *args : int
             Manipulate string(s).
         **kwargs : int
             Return a string instead of a tuple if strings are passed as tuple.
@@ -3886,7 +3886,7 @@ def function(param1, param2, *args) -> None:
         Pass.
     param2: int
         Pass.
-    args: int
+    *args: int
         Pass
     \"\"\"
 """
@@ -4145,7 +4145,7 @@ class _FWithKwargsOutOfSectNI(_BaseTemplate):
 def function(param1, **kwargs) -> None:
     \"\"\"Proper docstring.
 
-    **kwargs
+    **kwargs: int
         Passes
 
     Parameters
@@ -4228,7 +4228,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
     Parameters
     ----------
-    args: int
+    *args: int
         Manipulate string(s).
     **kwargs: int
         Return a string instead of a tuple if strings are passed as tuple.
