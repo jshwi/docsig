@@ -82,6 +82,7 @@ pyaud = "^4.0.2"
 pytest = "^7.2.0"
 pytest-randomly = "^3.11.0"
 pytest-sugar = "^0.9.6"
+pytest-xdist = "^3.0.2"
 restview = "^3.0.0"
 sphinx-toolbox = "^3.2.0"
 templatest = "^0.7.0"
@@ -149,6 +150,8 @@ addopts = [
     "--color=yes",
     "--cov-report",
     "term-missing",
+    "-n",
+    "auto",
 ]
 filterwarnings = "ignore::DeprecationWarning"
 norecursedirs = [
