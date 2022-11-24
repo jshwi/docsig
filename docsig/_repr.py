@@ -14,16 +14,16 @@ from pygments.formatters.terminal256 import (
 # noinspection PyUnresolvedReferences
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
+from ._function import Function as _Function
 from ._utils import color as _color
 
 
 class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
     """String representation for function.
 
-    :param name: Name of the function to construct:
+    :param func: Represents a function with signature and docstring
+        parameters.
     :param parent_name: Name of class, if parent is a class:
-    :param isinit: Boolean value for whether function is a class
-        constructor or not.
     :param no_ansi: Disable ANSI output.
     """
 
@@ -31,15 +31,11 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
     TAB = "    "
 
     def __init__(
-        self,
-        name: str,
-        parent_name: str,
-        isinit: bool = False,
-        no_ansi: bool = False,
+        self, func: _Function, parent_name: str, no_ansi: bool = False
     ) -> None:
-        super().__init__(name)
+        super().__init__(func.name)
         self._parent_name = parent_name
-        self._isinit = isinit
+        self._isinit = func.kind.isinit
         self._no_ansi = no_ansi
         self._check = "\u2713"
         self._cross = "\u2716"
@@ -53,7 +49,7 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         if self._isinit:
             self.data += self.TAB
 
-        self.data += self._lexer(f"def {name}(")
+        self.data += self._lexer(f"def {func.name}(")
         self._docstring = (
             f"{self._lexer(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
         )
