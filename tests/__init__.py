@@ -2413,7 +2413,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E101
 
 
 @_templates.register
@@ -4160,7 +4160,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E101
 
 
 @_templates.register
