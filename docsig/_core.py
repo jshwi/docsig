@@ -136,7 +136,6 @@ def docsig(  # pylint: disable=too-many-locals
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
-    failed = False
     modules = _Modules(*path, string=string)
     display = _Display(no_ansi)
     for module in modules:
@@ -153,7 +152,6 @@ def docsig(  # pylint: disable=too-many-locals
                     disable,
                 )
                 if failures:
-                    failed = True
                     display[top_level.path].append(failures)
 
     if summary:
@@ -161,4 +159,4 @@ def docsig(  # pylint: disable=too-many-locals
     else:
         display.report()
 
-    return int(failed)
+    return int(bool(display))
