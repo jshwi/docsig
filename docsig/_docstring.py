@@ -87,13 +87,14 @@ class _NumpyStyle(_DocStyle):
         super().__init__(string)
         self._in_params = 0
         self._in_kwargs = 0
-        self._in_returns = 0
+        self._returns = (
+            f"{self.PARAM_KEYS[2]}\n{self.PARAM_UL[2]}" in self._string
+        )
         self._got_kwargs = False
         self._match_indent: int | None = None
         for line in string.splitlines():
             self._populate_args(line)
             self._populate_kwargs(line)
-            self._populate_returns(line)
 
     def _populate_args(self, line: str) -> None:
         if self.PARAM_KEYS[0] in line:
@@ -126,16 +127,6 @@ class _NumpyStyle(_DocStyle):
             elif not self._got_kwargs:
                 self._got_kwargs = True
                 self._args.append(("keyword", "(**)"))
-
-    def _populate_returns(self, line: str) -> None:
-        if self.PARAM_KEYS[2] in line:
-            self._in_returns = 1
-
-        elif self._in_returns == 1 and self.PARAM_UL[2] in line:
-            self._in_returns = 2
-
-        elif self._in_returns == 2:
-            self._returns = True
 
     @property
     def isstyle(self) -> bool:
