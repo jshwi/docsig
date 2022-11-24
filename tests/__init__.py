@@ -2416,6 +2416,27 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
+class _FWithKwargsOutOfOrderN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    Parameters
+    ----------
+        **kwargs : int
+            Passes
+        param1 : int Fail
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E101
+
+
+@_templates.register
 class _PassDualColonN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4158,6 +4179,27 @@ def function(param1, **kwargs) -> None:
     @property
     def expected(self) -> str:
         return messages.E103
+
+
+@_templates.register
+class _FWithKwargsOutOfOrderNI(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    Parameters
+    ----------
+    **kwargs : int
+        Passes
+    param1 : int Fail
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E101
 
 
 @_templates.register
