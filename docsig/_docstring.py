@@ -105,20 +105,14 @@ class _NumpyStyle(_DocStyle):
                 self._in_params = 0
             else:
                 match = _re.match("(.*?): ", line)
-                if (
-                    match is not None
-                    and line.startswith(match.group(0))
-                    and (
-                        self._match_indent is None
-                        or _gettabno(line) == self._match_indent
-                    )
-                ):
+                if match is not None and line.startswith(match.group(0)):
                     if self._match_indent is None:
                         self._match_indent = _gettabno(line)
 
-                    string_list = match.group(1).split()
-                    key, value = "param", string_list[0]
-                    self._args.append((key, value))
+                    if _gettabno(line) == self._match_indent:
+                        string_list = match.group(1).split()
+                        key, value = "param", string_list[0]
+                        self._args.append((key, value))
 
     def _populate_kwargs(self, line):
         if self.PARAM_KEYS[1] in line:
