@@ -99,7 +99,7 @@ class _NumpyStyle(_DocStyle):
         elif self._in_params == 1 and self.PARAM_UL[0] in line:
             self._in_params = 2
 
-        elif self._in_params >= 2:
+        elif self._in_params == 2:
             if line == "":
                 self._in_params = 0
             else:
