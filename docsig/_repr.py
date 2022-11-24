@@ -6,16 +6,9 @@ from __future__ import annotations
 
 from collections import UserString as _UserString
 
-from pygments import highlight as _highlight
-from pygments.formatters.terminal256 import (
-    Terminal256Formatter as _Terminal256Formatter,
-)
-
-# noinspection PyUnresolvedReferences
-from pygments.lexers.python import PythonLexer as _PythonLexer
-
+from ._ansi import ANSI as _ANSI
+from ._ansi import color as _color
 from ._function import Function as _Function
-from ._utils import color as _color
 
 
 class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
@@ -34,33 +27,22 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         self, func: _Function, parent_name: str, no_ansi: bool = False
     ) -> None:
         super().__init__(func.name)
+        self._ansi = _ANSI(no_ansi)
         self._parent_name = parent_name
         self._isinit = func.kind.isinit
-        self._no_ansi = no_ansi
-        self._check = "\u2713"
-        self._cross = "\u2716"
-        self._question = "?"
-        if not self._no_ansi:
-            self._check = _color.green.get(self._check)
-            self._cross = _color.red.get(self._cross)
-            self._question = _color.red.get(self._question)
+        self._check = self._ansi.get_color("\u2713", _color.green)
+        self._cross = self._ansi.get_color("\u2716", _color.red)
+        self._question = self._ansi.get_color("?", _color.red)
 
         self.data = ""
         if self._isinit:
             self.data += self.TAB
 
-        self.data += self._lexer(f"def {func.name}(")
+        self.data += self._ansi.get_syntax(f"def {func.name}(")
         self._docstring = (
-            f"{self._lexer(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
+            f"{self._ansi.get_syntax(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
         )
         self._mark = self._check
-
-    def _lexer(self, value: str) -> str:
-        if self._no_ansi:
-            return value
-
-        formatter = _Terminal256Formatter(style="monokai")
-        return _highlight(value, _PythonLexer(), formatter).strip()
 
     def set_mark(self, failed: bool = False) -> None:
         """Set mark to a cross or a check.
@@ -98,26 +80,33 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         """
         if arg is not None:
             self.data += "{}{}{}{}".format(
-                self._lexer(") -> "), self._mark, arg, self._lexer(":")
+                self._ansi.get_syntax(") -> "),
+                self._mark,
+                arg,
+                self._ansi.get_syntax(":"),
             )
         else:
             self.data += "{}{}{}".format(
-                self._lexer(")"), self._question, self._lexer(":")
+                self._ansi.get_syntax(")"),
+                self._question,
+                self._ansi.get_syntax(":"),
             )
 
     def add_comma(self) -> None:
         """Add comma between parenthesis."""
-        self.data += self._lexer(", ")
+        self.data += self._ansi.get_syntax(", ")
 
     def close_docstring(self) -> None:
         """Close docstring."""
-        self._docstring += f"\n{self.TAB}{self._lexer(self.TRIPLE_QUOTES)}\n"
+        self._docstring += (
+            f"\n{self.TAB}{self._ansi.get_syntax(self.TRIPLE_QUOTES)}\n"
+        )
 
     def render(self) -> None:
         """Render final string by adding docstring to function."""
         if self._isinit:
             self.data = (
-                self._lexer(f"class {self._parent_name}:")
+                self._ansi.get_syntax(f"class {self._parent_name}:")
                 + f"\n{self._docstring}"
                 + f"\n{self.data}\n"
             )

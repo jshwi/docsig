@@ -7,13 +7,7 @@ from __future__ import annotations
 import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
 
-from object_colors import Color as _Color
-
 from ._objects import T as _T
-
-color = _Color()
-
-color.populate_colors()
 
 
 def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
