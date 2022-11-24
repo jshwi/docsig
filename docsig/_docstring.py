@@ -5,6 +5,7 @@ docsig._docstring
 from __future__ import annotations
 
 import re as _re
+import textwrap as _textwrap
 
 import astroid as _ast
 
@@ -34,7 +35,9 @@ class _BaseDocStyle:
 class _DocStyle(_BaseDocStyle):
     def __init__(self, string: str) -> None:
         super().__init__()
-        self._string = string
+        # the first line has variable indentation
+        # remove for uniform dedenting
+        self._string = _textwrap.dedent("\n".join(string.splitlines()[1:]))
 
     @property
     def isstyle(self) -> bool:
