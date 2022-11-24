@@ -28,9 +28,9 @@ def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
 
 
 def _construct_func(
-    func: _Function, parent: _Parent, report: _Report, no_ansi: bool = False
+    func: _Function, report: _Report, no_ansi: bool = False
 ) -> _FuncStr:
-    func_str = _FuncStr(func, parent.name, no_ansi)
+    func_str = _FuncStr(func, no_ansi)
     for count, _ in enumerate(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
@@ -96,7 +96,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             report.missing_return()
             report.property_return()
             report.class_return()
-            func_str = _construct_func(func, parent, report, no_ansi)
+            func_str = _construct_func(func, report, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
 
