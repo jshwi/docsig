@@ -20,6 +20,8 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
     :param no_ansi: Disable ANSI output.
     """
 
+    CHECK = "\u2713"
+    CROSS = "\u2716"
     TRIPLE_QUOTES = '"""'
     TAB = "    "
 
@@ -30,10 +32,6 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         self._ansi = _ANSI(no_ansi)
         self._parent_name = parent_name
         self._isinit = func.kind.isinit
-        self._check = self._ansi.get_color("\u2713", _color.green)
-        self._cross = self._ansi.get_color("\u2716", _color.red)
-        self._question = self._ansi.get_color("?", _color.red)
-
         self.data = ""
         if self._isinit:
             self.data += self.TAB
@@ -42,14 +40,18 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         self._docstring = (
             f"{self._ansi.get_syntax(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
         )
-        self._mark = self._check
+        self._mark = self._ansi.get_color(self.CHECK, _color.green)
 
     def set_mark(self, failed: bool = False) -> None:
         """Set mark to a cross or a check.
 
         :param failed: Boolean to test that check failed.
         """
-        self._mark = self._cross if failed else self._check
+        self._mark = (
+            self._ansi.get_color(self.CROSS, _color.red)
+            if failed
+            else self._ansi.get_color(self.CHECK, _color.green)
+        )
 
     def add_param(
         self, arg: str | None, doc: str | None, kind: str, failed: bool = False
@@ -88,7 +90,7 @@ class FuncStr(_UserString):  # pylint: disable=too-many-instance-attributes
         else:
             self.data += "{}{}{}".format(
                 self._ansi.get_syntax(")"),
-                self._question,
+                self._ansi.get_color("?", _color.red),
                 self._ansi.get_syntax(":"),
             )
 
