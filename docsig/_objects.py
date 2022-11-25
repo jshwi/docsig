@@ -2,6 +2,8 @@
 docsig._objects
 ===============
 """
+from __future__ import annotations
+
 import typing as _t
 
 T = _t.TypeVar("T")
@@ -13,7 +15,7 @@ class MutableSequence(_t.MutableSequence[T]):
     """List-object to inherit from."""
 
     def __init__(self) -> None:
-        self._list: _t.List[T] = []
+        self._list: list[T] = []
 
     def insert(self, index: int, value: T) -> None:
         self._list.insert(index, value)
@@ -59,7 +61,7 @@ class MutableMapping(_t.MutableMapping[KT, VT]):
     """Dict-object to inherit from."""
 
     def __init__(self) -> None:
-        self._dict: _t.Dict[KT, VT] = {}
+        self._dict: dict[KT, VT] = {}
 
     def __setitem__(self, __k: KT, __v: VT) -> None:
         self._dict.__setitem__(__k, __v)

@@ -41,7 +41,7 @@ class Parent(_MutableSequence[_Function]):
         return self._path
 
     @property
-    def isprotected(self):
+    def isprotected(self) -> bool:
         """Boolean value for whether class is protected."""
         return _isprotected(self._name)
 

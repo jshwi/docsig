@@ -5,7 +5,6 @@ docsig._docstring
 from __future__ import annotations
 
 import re as _re
-import typing as _t
 
 import astroid as _ast
 
@@ -15,14 +14,14 @@ from ._utils import lstrip_quant as _lstrip_quant
 
 
 class _BaseDocStyle:
-    PARAM_KEYS: _t.Tuple[str, ...] = tuple()
+    PARAM_KEYS: tuple[str, ...] = tuple()
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._returns = False
-        self._args: _t.List[_t.Tuple[str, str | None]] = []
+        self._args: list[tuple[str, str | None]] = []
 
     @property
-    def args(self) -> _t.Tuple[_t.Tuple[str, str | None], ...]:
+    def args(self) -> tuple[tuple[str, str | None], ...]:
         """Docstring args."""
         return tuple(self._args)
 
@@ -87,13 +86,13 @@ class _NumpyStyle(_DocStyle):
         self._in_kwargs = 0
         self._in_returns = 0
         self._got_kwargs = False
-        self._match_indent = None
+        self._match_indent: int | None = None
         for line in string.splitlines():
             self._populate_args(line)
             self._populate_kwargs(line)
             self._populate_returns(line)
 
-    def _populate_args(self, line):
+    def _populate_args(self, line: str) -> None:
         if self.PARAM_KEYS[0] in line:
             self._in_params = 1
 
@@ -114,7 +113,7 @@ class _NumpyStyle(_DocStyle):
                         key, value = "param", string_list[0]
                         self._args.append((key, value))
 
-    def _populate_kwargs(self, line):
+    def _populate_kwargs(self, line: str) -> None:
         if self.PARAM_KEYS[1] in line:
             self._in_kwargs = 1
 
@@ -125,7 +124,7 @@ class _NumpyStyle(_DocStyle):
                 self._got_kwargs = True
                 self._args.append(("keyword", "(**)"))
 
-    def _populate_returns(self, line):
+    def _populate_returns(self, line: str) -> None:
         if self.PARAM_KEYS[2] in line:
             self._in_returns = 1
 
@@ -152,7 +151,7 @@ class Docstring:
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
         self._returns = False
-        self._args: _t.List[_t.Tuple[str, str | None]] = []
+        self._args: list[tuple[str, str | None]] = []
         self._style = _BaseDocStyle()
         if node is not None:
             self._string = node.value
@@ -173,7 +172,7 @@ class Docstring:
         return self._string
 
     @property
-    def args(self) -> _t.Tuple[_t.Tuple[str, str | None], ...]:
+    def args(self) -> tuple[tuple[str, str | None], ...]:
         """Docstring args."""
         return tuple(self._style.args)
 

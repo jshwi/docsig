@@ -4,8 +4,6 @@ docsig._function
 """
 from __future__ import annotations
 
-import typing as _t
-
 import astroid as _ast
 
 from ._docstring import Docstring as _Docstring
@@ -145,7 +143,7 @@ class _Signature:
         return None
 
     @property
-    def args(self) -> _t.Tuple[str, ...]:
+    def args(self) -> tuple[str, ...]:
         """Tuple of signature parameters."""
         return tuple(self._args)
 

@@ -4,7 +4,6 @@ docsig._report
 """
 from __future__ import annotations
 
-import typing as _t
 from collections import Counter as _Counter
 
 from . import messages as _messages
@@ -19,16 +18,16 @@ _MAX_MATCH = 1.0
 class _MessageSequence(_MutableSequence[str]):
     def __init__(
         self,
-        targets: _t.List[str] | None = None,
-        disable: _t.List[str] | None = None,
+        targets: list[str] | None = None,
+        disable: list[str] | None = None,
     ) -> None:
         super().__init__()
         self._disable = disable or []
         self._disabled = False
         self._resolve_targeted(targets or [])
-        self._errors: _t.List[str] = []
+        self._errors: list[str] = []
 
-    def _resolve_targeted(self, targets: _t.List[str]) -> None:
+    def _resolve_targeted(self, targets: list[str]) -> None:
         errors = [
             i
             for i in dir(_messages)
@@ -72,8 +71,8 @@ class Report(_MessageSequence):
     def __init__(
         self,
         func: _Function,
-        targets: _t.List[str] | None = None,
-        disable: _t.List[str] | None = None,
+        targets: list[str] | None = None,
+        disable: list[str] | None = None,
     ) -> None:
         super().__init__(targets, disable)
         self._func = func

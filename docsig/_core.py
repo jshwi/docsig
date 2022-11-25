@@ -4,7 +4,6 @@ docsig._core
 """
 from __future__ import annotations
 
-import typing as _t
 from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
@@ -78,8 +77,8 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_overridden: bool = False,
     check_protected: bool = False,
     no_ansi: bool = False,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    targets: list[str] | None = None,
+    disable: list[str] | None = None,
 ) -> _FailedDocList:
     failures = []
     for func in parent:
@@ -113,8 +112,8 @@ def docsig(  # pylint: disable=too-many-locals
     check_protected: bool = False,
     no_ansi: bool = False,
     summary: bool = False,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    targets: list[str] | None = None,
+    disable: list[str] | None = None,
 ) -> int:
     """Package's core functionality.
 
