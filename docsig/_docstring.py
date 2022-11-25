@@ -104,13 +104,13 @@ class _NumpyStyle(_DocStyle):
             if line == "":
                 self._in_params = 0
             else:
-                match = _re.match("(.*?): ", line)
-                if match is not None and line.startswith(match.group(0)):
-                    if self._match_indent is None:
-                        self._match_indent = _gettabno(line)
+                if self._match_indent is None:
+                    self._match_indent = _gettabno(line)
 
-                    if _gettabno(line) == self._match_indent:
-                        key, value = "param", match.group(1).split()[0]
+                if _gettabno(line) == self._match_indent:
+                    value = line.split(":")[0].strip()
+                    if value:
+                        key = "param"
                         if value.startswith("**"):
                             key, value = "keyword", "(**)"
 

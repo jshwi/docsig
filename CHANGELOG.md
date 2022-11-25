@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.23.3...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- Remove requirement for typed `numpy` docstrings
 
 [0.23.3](https://github.com/jshwi/docsig/releases/tag/v0.23.3) - 2022-11-25
 ------------------------------------------------------------------------
