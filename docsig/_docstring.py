@@ -80,21 +80,18 @@ class _SphinxStyle(_DocStyle):
 
 class _NumpyStyle(_DocStyle):
     TAB = "    "
-    PARAM_KEYS = ("Parameters", "**kwargs", "Returns")
+    PARAM_KEYS = ("Parameters", "Returns")
     PARAM_UL = tuple(len(i) * "-" for i in PARAM_KEYS)
 
     def __init__(self, string: str) -> None:
         super().__init__(string)
         self._in_params = 0
-        self._in_kwargs = 0
         self._returns = (
-            f"{self.PARAM_KEYS[2]}\n{self.PARAM_UL[2]}" in self._string
+            f"{self.PARAM_KEYS[1]}\n{self.PARAM_UL[1]}" in self._string
         )
-        self._got_kwargs = False
         self._match_indent: int | None = None
         for line in string.splitlines():
             self._populate_args(line)
-            self._populate_kwargs(line)
 
     def _populate_args(self, line: str) -> None:
         if self.PARAM_KEYS[0] in line:
@@ -114,19 +111,10 @@ class _NumpyStyle(_DocStyle):
 
                     if _gettabno(line) == self._match_indent:
                         key, value = "param", match.group(1).split()[0]
-                        if value != self.PARAM_KEYS[1]:
-                            self._args.append((key, value))
+                        if value.startswith("**"):
+                            key, value = "keyword", "(**)"
 
-    def _populate_kwargs(self, line: str) -> None:
-        if self.PARAM_KEYS[1] in line:
-            self._in_kwargs = 1
-
-        elif self._in_kwargs == 1:
-            if not line.startswith(self.TAB):
-                self._in_kwargs = 0
-            elif not self._got_kwargs:
-                self._got_kwargs = True
-                self._args.append(("keyword", "(**)"))
+                        self._args.append((key, value))
 
     @property
     def isstyle(self) -> bool:

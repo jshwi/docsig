@@ -2383,9 +2383,8 @@ def function(param1, **kwargs) -> None:
     ----------
         param1 : int
             Passes
-
-    **kwargs
-        Passes
+        **kwargs : int
+            Passes
     \"\"\"
 """
 
@@ -2395,7 +2394,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderN(_BaseTemplate):
+class _FWithKwargsOutOfSectN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2413,7 +2412,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return messages.E103
 
 
 @_templates.register
@@ -2486,9 +2485,8 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     ----------
         args : int
             Manipulate string(s).
-
-    **kwargs
-        Return a string instead of a tuple if strings are passed as tuple.
+        **kwargs : int
+            Return a string instead of a tuple if strings are passed as tuple.
 
     Returns
     -------
@@ -4129,8 +4127,7 @@ def function(param1, **kwargs) -> None:
     ----------
     param1: int
         Passes
-
-    **kwargs
+    **kwargs: int
         Passes
     \"\"\"
 """
@@ -4141,7 +4138,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderNI(_BaseTemplate):
+class _FWithKwargsOutOfSectNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4160,7 +4157,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return messages.E103
 
 
 @_templates.register
@@ -4233,8 +4230,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     ----------
     args: int
         Manipulate string(s).
-
-    **kwargs
+    **kwargs: int
         Return a string instead of a tuple if strings are passed as tuple.
 
     Returns
