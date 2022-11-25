@@ -154,7 +154,7 @@ def docsig(  # pylint: disable=too-many-locals
                 )
                 if failures:
                     failed = True
-                    display.add_failure(top_level.path, failures)
+                    display[top_level.path].append(failures)
 
     if summary:
         display.summarise()

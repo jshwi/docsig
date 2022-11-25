@@ -2,6 +2,8 @@
 docsig._display
 ===============
 """
+from __future__ import annotations
+
 import typing as _t
 
 from object_colors import Color as _Color
@@ -14,7 +16,21 @@ from ._utils import color as _color
 FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
 
 
-class Display(_MutableMapping[str, _t.List[FailedDocList]]):
+class _DisplaySequence(_MutableMapping[str, _t.List[FailedDocList]]):
+    """Sequence for collection of report info.
+
+    If an attempt is made to append a report to a list whose key does
+    not exist then the key and its list value will be added first.
+    """
+
+    def __getitem__(self, key: str) -> list[FailedDocList]:
+        if key not in super().__iter__():
+            super().__setitem__(key, [])
+
+        return super().__getitem__(key)
+
+
+class Display(_DisplaySequence):
     """Collect and display report.
 
     :param no_ansi: Disable ANSI output.
@@ -23,17 +39,6 @@ class Display(_MutableMapping[str, _t.List[FailedDocList]]):
     def __init__(self, no_ansi: bool = False) -> None:
         super().__init__()
         self._no_ansi = no_ansi
-
-    def add_failure(self, path: str, failed: FailedDocList) -> None:
-        """Add report information.
-
-        :param path: Path to file, and class if applicable.
-        :param failed: Failed check information.
-        """
-        if path not in self:
-            self[path] = []
-
-        self[path].append(failed)
 
     def _get_color(self, obj: _t.Any, color: _Color) -> str:
         string = str(obj)
