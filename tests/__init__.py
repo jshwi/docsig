@@ -2178,7 +2178,7 @@ def function(param1, param2, **kwargs) -> None:
             Pass.
         param2 : int
             Pass.
-        kwargs : int
+        **kwargs : int
             Pass
     \"\"\"
 """
@@ -2438,7 +2438,7 @@ def function(attachments, sync, **kwargs) -> None:
             Iterable of kwargs to construct attachment.
         sync : int
             Don't thread if True: Defaults to False.
-        kwargs : int
+        **kwargs : int
             Keyword args to pass to ``Message``:
             See ``flask_mail.Message``.
     \"\"\"
@@ -3942,7 +3942,7 @@ def function(param1, param2, **kwargs) -> None:
         Pass.
     param2: int
         Pass.
-    kwargs: int
+    **kwargs: int
         Pass
     \"\"\"
 """
@@ -4185,7 +4185,7 @@ def function(attachments, sync, **kwargs) -> None:
         Iterable of kwargs to construct attachment.
     sync: int
         Don't thread if True: Defaults to False.
-    kwargs: int
+    **kwargs: int
         Keyword args to pass to ``Message``:
         See ``flask_mail.Message``.
     \"\"\"

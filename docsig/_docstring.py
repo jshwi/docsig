@@ -114,7 +114,8 @@ class _NumpyStyle(_DocStyle):
 
                     if _gettabno(line) == self._match_indent:
                         key, value = "param", match.group(1).split()[0]
-                        self._args.append((key, value))
+                        if value != self.PARAM_KEYS[1]:
+                            self._args.append((key, value))
 
     def _populate_kwargs(self, line: str) -> None:
         if self.PARAM_KEYS[1] in line:
