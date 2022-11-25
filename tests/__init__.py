@@ -10,11 +10,15 @@ from pathlib import Path
 
 from templatest import BaseTemplate as _BaseTemplate
 from templatest import templates as _templates
+from templatest.utils import VarPrefix as _VarPrefix
 
 from docsig import messages
 
 MockMainType = t.Callable[..., int]
 InitFileFixtureType = t.Callable[[str], Path]
+
+short = _VarPrefix("-")
+long = _VarPrefix("--", "-")
 
 CHECK = "\u2713"
 CROSS = "\u2716"
@@ -25,12 +29,8 @@ TEMPLATE = "template"
 ERR_GROUP = "f-e-1-0"
 FUNC = "func"
 E10 = "e-1-0"
-CHECK_CLASS = "--check-class"
-CHECK_PROTECTED = "--check-protected"
 FAIL_PROTECT = "f-protect"
-CHECK_OVERRIDDEN = "--check-overridden"
 FAIL_OVERRIDE = "f-override"
-CHECK_DUNDERS = "--check-dunders"
 FAIL = "f"
 
 

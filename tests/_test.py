@@ -14,10 +14,6 @@ import docsig.messages
 
 from . import (
     CHECK,
-    CHECK_CLASS,
-    CHECK_DUNDERS,
-    CHECK_OVERRIDDEN,
-    CHECK_PROTECTED,
     CROSS,
     E10,
     ERR_GROUP,
@@ -30,11 +26,13 @@ from . import (
     TEMPLATE,
     InitFileFixtureType,
     MockMainType,
+    long,
+    short,
 )
 from ._utils import NoColorCapsys, errors, hints
 
 
-@pytest.mark.parametrize("arg", ("-v", "--version"))
+@pytest.mark.parametrize("arg", (short.v, long.version))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     main: MockMainType,
@@ -77,10 +75,10 @@ def test_main_args(
     """
     file = init_file(template)
     assert main(
-        CHECK_CLASS,
-        CHECK_PROTECTED,
-        CHECK_OVERRIDDEN,
-        CHECK_DUNDERS,
+        long.check_class,
+        long.check_protected,
+        long.check_overridden,
+        long.check_dunders,
         file.parent,
     ) == int(name.startswith(FAIL))
 
@@ -109,10 +107,10 @@ def test_main_output(
     """
     file = init_file(template.template)
     main(
-        CHECK_CLASS,
-        CHECK_PROTECTED,
-        CHECK_DUNDERS,
-        CHECK_OVERRIDDEN,
+        long.check_class,
+        long.check_protected,
+        long.check_dunders,
+        long.check_overridden,
         file.parent,
     )
     assert template.expected in nocolorcapsys.readouterr()[0]
@@ -357,11 +355,11 @@ def test_main_str(
     :param template: Contents to write to file.
     """
     assert main(
-        CHECK_CLASS,
-        CHECK_PROTECTED,
-        CHECK_OVERRIDDEN,
-        CHECK_DUNDERS,
-        "--string",
+        long.check_class,
+        long.check_protected,
+        long.check_overridden,
+        long.check_dunders,
+        long.string,
         template,
     ) == int(name.startswith(FAIL))
 
@@ -387,11 +385,11 @@ def test_main_str_out(
     :param template: String data.
     """
     main(
-        CHECK_CLASS,
-        CHECK_DUNDERS,
-        CHECK_PROTECTED,
-        CHECK_OVERRIDDEN,
-        "--string",
+        long.check_class,
+        long.check_dunders,
+        long.check_protected,
+        long.check_overridden,
+        long.string,
         template.template,
     )
     assert template.expected in nocolorcapsys.readouterr()[0]
@@ -451,7 +449,7 @@ def test_only_init_flag(
     """
     template = templates.registered.getbyname("f-init-s")
     file = init_file(template.template)
-    assert main(CHECK_CLASS, file.parent) == 1
+    assert main(long.check_class, file.parent) == 1
 
 
 @pytest.mark.parametrize(
@@ -473,7 +471,7 @@ def test_only_protected_flag(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(CHECK_PROTECTED, file.parent) == 1
+    assert main(long.check_protected, file.parent) == 1
 
 
 @pytest.mark.parametrize(
@@ -521,7 +519,7 @@ def test_only_overridden_flag(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(CHECK_OVERRIDDEN, file.parent) == 1
+    assert main(long.check_overridden, file.parent) == 1
 
 
 @pytest.mark.parametrize(
@@ -586,11 +584,11 @@ def test_main_sum(
     file = init_file(template)
     assert (
         main(
-            "--summary",
-            CHECK_CLASS,
-            CHECK_PROTECTED,
-            CHECK_OVERRIDDEN,
-            CHECK_DUNDERS,
+            long.summary,
+            long.check_class,
+            long.check_protected,
+            long.check_overridden,
+            long.check_dunders,
             file.parent,
         )
         == 1
@@ -624,11 +622,11 @@ def test_no_ansi(
     file = init_file(template)
     assert (
         main(
-            "--no-ansi",
-            CHECK_CLASS,
-            CHECK_PROTECTED,
-            CHECK_OVERRIDDEN,
-            CHECK_DUNDERS,
+            long.no_ansi,
+            long.check_class,
+            long.check_protected,
+            long.check_overridden,
+            long.check_dunders,
             file.parent,
         )
         == 1
