@@ -9,8 +9,7 @@ import textwrap as _textwrap
 import typing as _t
 
 import astroid as _ast
-from sphinxcontrib.napoleon import GoogleDocstring as _GoogleDocstring
-from sphinxcontrib.napoleon import NumpyDocstring as _NumpyDocstring
+import sphinxcontrib.napoleon as _s
 
 from ._utils import get_index as _get_index
 from ._utils import lstrip_quant as _lstrip_quant
@@ -21,6 +20,35 @@ class Param(_t.NamedTuple):
 
     declaration: str
     description: str | None
+
+
+class _GoogleDocstring(str):
+    def __new__(cls, string: str) -> _GoogleDocstring:
+        return super().__new__(cls, str(_s.GoogleDocstring(string)))
+
+
+class _NumpyDocstring(str):
+    def __new__(cls, string: str) -> _NumpyDocstring:
+        return super().__new__(cls, str(_s.NumpyDocstring(string)))
+
+
+class _DocFmt(str):
+    def __new__(cls, string: str) -> _DocFmt:
+        return super().__new__(
+            cls,
+            _textwrap.dedent("\n".join(string.splitlines()[1:])).replace(
+                "*", ""
+            ),
+        )
+
+
+class RawDocstring(str):
+    """Instantiate a `Sphinx` docstring from available types."""
+
+    def __new__(cls, string: str) -> RawDocstring:
+        return super().__new__(
+            cls, _NumpyDocstring(_GoogleDocstring(_DocFmt(string)))
+        )
 
 
 class Docstring:
@@ -35,10 +63,7 @@ class Docstring:
         self._string = None
         self._args: list[Param] = []
         if node is not None:
-            string = _textwrap.dedent("\n".join(node.value.splitlines()[1:]))
-            string = string.replace("*", "")
-            string = "\n".join(_NumpyDocstring(string).lines())
-            self._string = "\n".join(_GoogleDocstring(string).lines())
+            self._string = RawDocstring(node.value)
             keys = 0
             for line in self._string.splitlines():
                 line = _lstrip_quant(line, 4)
@@ -66,7 +91,7 @@ class Docstring:
                     self._args.append(Param(key, value))
 
     @property
-    def string(self) -> str | None:
+    def string(self) -> RawDocstring | None:
         """The raw documentation string, if it exists, else None."""
         return self._string
 
