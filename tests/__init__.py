@@ -2427,7 +2427,8 @@ def function(param1, **kwargs) -> None:
     ----------
         **kwargs : int
             Passes
-        param1 : int Fail
+        param1 : int
+            Fail
     \"\"\"
 """
 
@@ -4193,7 +4194,8 @@ def function(param1, **kwargs) -> None:
     ----------
     **kwargs : int
         Passes
-    param1 : int Fail
+    param1 : int
+        Fail
     \"\"\"
 """
 
