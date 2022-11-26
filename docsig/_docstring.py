@@ -12,7 +12,6 @@ import astroid as _ast
 import sphinxcontrib.napoleon as _s
 
 from ._utils import get_index as _get_index
-from ._utils import lstrip_quant as _lstrip_quant
 
 
 class Param(_t.NamedTuple):
@@ -57,38 +56,24 @@ class Docstring:
     :param node: Docstring's abstract syntax tree.
     """
 
-    PARAM_KEYS = ("param", "key", "keyword", "return", "returns")
-
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
         self._args: list[Param] = []
         if node is not None:
             self._string = RawDocstring(node.value)
-            keys = 0
             for line in self._string.splitlines():
-                line = _lstrip_quant(line, 4)
                 match = _re.match(":(.*?): ", line)
-                if (
-                    match is not None
-                    and line.startswith(match.group(0))
-                    and any(
-                        match.group(1).startswith(inc)
-                        for inc in self.PARAM_KEYS
-                    )
-                ):
-                    string_list = match.group(1).split()
-                    key, value = string_list[0], _get_index(1, string_list)
-                    if key in ("return", "returns"):
-                        continue
+                if match is not None:
+                    param = match.group(1).split()
+                    key = param[0]
+                    keys = ("key", "keyword")
+                    if key == "param":
+                        self._args.append(Param(key, _get_index(1, param)))
 
-                    if key in ("key", "keyword"):
-                        if keys == 1:
-                            continue
-
-                        keys = 1
-                        value = "(**)"
-
-                    self._args.append(Param(key, value))
+                    elif key in keys and not any(
+                        i in y for y in self._args for i in keys
+                    ):
+                        self._args.append(Param(key, "(**)"))
 
     @property
     def string(self) -> RawDocstring | None:
