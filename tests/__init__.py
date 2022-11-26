@@ -4830,3 +4830,384 @@ def function(param) -> None:
     @property
     def expected(self) -> str:
         return messages.E112
+
+
+@_templates.register
+class _PassRetTypeSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> int:
+    \"\"\"Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    :param param3: Passes.
+    :returns: Passes.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FRetTypeDocsSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :returns: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FNoRetDocsNoTypeSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3):
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :returns: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FE104RetTypeDocs1SumSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :returns: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E104
+
+
+@_templates.register
+class _PassOnlyParamsSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+    \"\"\"Proper docstring.
+
+    :param reduce: :func:`~lsfiles.utils._Tree.reduce`
+    :returns: Tuple of `Path` objects or str repr.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PassReturnAnySRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+    \"\"\"Proper docstring.
+
+    :param args: Manipulate string(s).
+    :key format: Return a string instead of a tuple if strings are
+        passed as tuple.
+    :returns: Colored string or None.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FMsgPoorIndentSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_post(
+        id: int, version: t.Optional[int] = None, checkauthor: bool = True
+) -> Post:
+    \"\"\"Get post by post's ID or abort with ``404: Not Found.``
+
+    Standard behaviour would be to return None, so do not bypass
+     silently.
+
+     :param id: The post's ID.
+     :param version: If provided populate session object with
+        version.
+     :param checkauthor: Rule whether to check for author ID.
+     :returns: Post's connection object.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H101
+
+
+@_templates.register
+class _PassBinOpSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+    \"\"\"Fet index without throwing an error if index does not exist.
+
+    :param index: Index to get.
+    :param seq: Sequence object that can be indexed.
+    :returns: Item from index else None.
+    \"\"\"
+    try:
+        return seq[index]
+    except IndexError:
+        return None
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FBinOpReprSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_index(index: int) -> _T | None:
+    \"\"\"Get index without throwing an error if index does not exist.
+
+    :returns: Item from index else None.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""
+def get_index({CROSS}index) -> {CHECK}_T | None:
+    \"\"\"...
+
+    :param None: {CROSS}
+    :return: {CHECK}
+    \"\"\"
+"""
+
+
+@_templates.register
+class _FPropertyReturnSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    @property
+    def function(*_, **__) -> int:
+        \"\"\"Proper docstring.
+        
+        :returns: Returncode.
+        \"\"\"
+        return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E108
+
+
+@_templates.register
+class _FHintMissingReturnSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def get_post() -> Post:
+    \"\"\"Proper docstring.
+
+     return: Post's connection object.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H103
+
+
+@_templates.register
+class _PassInconsistentSpaceSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@pytest.fixture(name="main")
+def fixture_main(monkeypatch) -> t.Callable[..., None]:
+    \"\"\"Function for passing mock ``main`` commandline arguments
+    to package's main function.
+
+    :param monkeypatch: ``pytest`` fixture for mocking attributes.
+    :returns:            Function for using this fixture.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _FE109WRetQuestionSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function():
+    \"\"\"Docstring.
+    
+    :returns: Does it?
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E109
+
+
+@_templates.register
+class _PassKWOnlyArgsSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def docsig(
+    *path: _Path,
+    targets: _t.List[str] | None = None,
+    disable: _t.List[str] | None = None,
+) -> bool:
+    \"\"\"...
+
+    :param path: Path(s) to check.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
+    :returns: Boolean value for whether there were any failures or not.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return """"""
+
+
+@_templates.register
+class _FInitRetNoneSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :returns: Fails
+    \"\"\"
+
+    def __init__(self, param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""
+class Klass:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
+"""
+
+
+@_templates.register
+class _FE111SRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :returns: Fails
+    \"\"\"
+
+    def __init__(param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E111
+
+
+@_templates.register
+class _PassFuncPropReturnSRs(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+@property
+def function(*_, **__) -> int:
+    \"\"\"Docstring.
+
+    :returns: Returncode.
+    \"\"\"
+    return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

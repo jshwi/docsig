@@ -47,7 +47,7 @@ class _DocStyle(_BaseDocStyle):
 
 class _SphinxStyle(_DocStyle):
 
-    PARAM_KEYS = ("param", "key", "keyword", "return")
+    PARAM_KEYS = ("param", "key", "keyword", "return", "returns")
 
     def __init__(self, string: str) -> None:
         super().__init__(string)
@@ -64,7 +64,7 @@ class _SphinxStyle(_DocStyle):
             ):
                 string_list = match.group(1).split()
                 key, value = string_list[0], _get_index(1, string_list)
-                if key == "return":
+                if key in ("return", "returns"):
                     self._returns = True
                     continue
 

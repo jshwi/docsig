@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.23.4...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- Accept `returns` keyword for return
 
 [0.23.4](https://github.com/jshwi/docsig/releases/tag/v0.23.4) - 2022-11-25
 ------------------------------------------------------------------------
