@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.23.4...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Add support for `Google` docstrings
+
 ### Fixed
 - Accept `returns` keyword for return
 

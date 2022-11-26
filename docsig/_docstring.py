@@ -8,6 +8,7 @@ import re as _re
 import textwrap as _textwrap
 
 import astroid as _ast
+from sphinxcontrib.napoleon import GoogleDocstring as _GoogleDocstring
 from sphinxcontrib.napoleon import NumpyDocstring as _NumpyDocstring
 
 from ._utils import get_index as _get_index
@@ -29,6 +30,7 @@ class Docstring:
         if node is not None:
             string = _textwrap.dedent("\n".join(node.value.splitlines()[1:]))
             string = "\n".join(_NumpyDocstring(string).lines())
+            string = "\n".join(_GoogleDocstring(string).lines())
             self._string = (
                 string.replace("\\*", "")
                 .replace(":return:", ":return: ")
