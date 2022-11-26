@@ -843,6 +843,17 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "pockets"
+version = "0.9.1"
+description = "A collection of helpful Python tools!"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = ">=1.5.2"
+
+[[package]]
 name = "prompt-toolkit"
 version = "3.0.33"
 description = "Library for building powerful interactive command lines in Python"
@@ -1207,7 +1218,7 @@ typing-extensions = ">=3.7.4.3"
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -1409,6 +1420,18 @@ python-versions = ">=3.5"
 
 [package.extras]
 test = ["flake8", "mypy", "pytest"]
+
+[[package]]
+name = "sphinxcontrib-napoleon"
+version = "0.7"
+description = "Sphinx \"napoleon\" extension."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pockets = ">=0.3"
+six = ">=1.5.2"
 
 [[package]]
 name = "sphinxcontrib-programoutput"
@@ -1625,7 +1648,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "761b1a732625f89639011835b4bf0c9580b4ffc720014e523be3b9f210b2b934"
+content-hash = "1203fdc83656009d6b40db0c057b0e5f2d515dad6bacb13e3994604d231c1194"
 
 [metadata.files]
 alabaster = [
@@ -2092,6 +2115,10 @@ pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
 ]
+pockets = [
+    {file = "pockets-0.9.1-py2.py3-none-any.whl", hash = "sha256:68597934193c08a08eb2bf6a1d85593f627c22f9b065cc727a4f03f669d96d86"},
+    {file = "pockets-0.9.1.tar.gz", hash = "sha256:9320f1a3c6f7a9133fe3b571f283bcf3353cd70249025ae8d618e40e9f7e92b3"},
+]
 prompt-toolkit = [
     {file = "prompt_toolkit-3.0.33-py3-none-any.whl", hash = "sha256:ced598b222f6f4029c0800cefaa6a17373fb580cd093223003475ce32805c35b"},
     {file = "prompt_toolkit-3.0.33.tar.gz", hash = "sha256:535c29c31216c77302877d5120aef6c94ff573748a5b5ca5b1b1f76f5e700c73"},
@@ -2275,6 +2302,10 @@ sphinxcontrib-htmlhelp = [
 sphinxcontrib-jsmath = [
     {file = "sphinxcontrib-jsmath-1.0.1.tar.gz", hash = "sha256:a9925e4a4587247ed2191a22df5f6970656cb8ca2bd6284309578f2153e0c4b8"},
     {file = "sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl", hash = "sha256:2ec2eaebfb78f3f2078e73666b1415417a116cc848b72e5172e596c871103178"},
+]
+sphinxcontrib-napoleon = [
+    {file = "sphinxcontrib-napoleon-0.7.tar.gz", hash = "sha256:407382beed396e9f2d7f3043fad6afda95719204a1e1a231ac865f40abcbfcf8"},
+    {file = "sphinxcontrib_napoleon-0.7-py2.py3-none-any.whl", hash = "sha256:711e41a3974bdf110a484aec4c1a556799eb0b3f3b897521a018ad7e2db13fef"},
 ]
 sphinxcontrib-programoutput = [
     {file = "sphinxcontrib-programoutput-0.17.tar.gz", hash = "sha256:300ee9b8caee8355d25cc74b4d1c7efd12e608d2ad165e3141d31e6fbc152b7f"},
