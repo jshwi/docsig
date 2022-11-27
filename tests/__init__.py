@@ -23,7 +23,7 @@ long = _VarPrefix("--", "-")
 CHECK = "\u2713"
 CROSS = "\u2716"
 
-MULTI = "multi"
+MULTI = "m"
 NAME = "name"
 TEMPLATE = "template"
 ERR_GROUP = "f-e-1-0"
@@ -612,7 +612,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _MultiFailS(_BaseTemplate):
+class _MFailS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2219,7 +2219,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _MultiFailN(_BaseTemplate):
+class _MFailN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4003,7 +4003,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _MultiFailNI(_BaseTemplate):
+class _MFailNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5731,7 +5731,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _MultiFailG(_BaseTemplate):
+class _MFailG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """

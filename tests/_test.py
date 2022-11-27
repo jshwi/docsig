@@ -332,7 +332,7 @@ def test_lineno(
     :param nocolorcapsys: Capture system output while stripping ANSI
         color codes.
     """
-    init_file(templates.registered.getbyname("multi-fail-s").template)
+    init_file(templates.registered.getbyname("m-fail-s").template)
     main(".")
     out = nocolorcapsys.stdout()
     assert "module/file.py::2" in out
