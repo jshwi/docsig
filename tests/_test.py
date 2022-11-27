@@ -122,7 +122,7 @@ def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    contents = templates.registered.getbyname("pass-no-params-s").template
+    contents = templates.registered.getbyname("p-no-params-s").template
     file = init_file(contents)
     with pytest.warns(None) as record:  # type: ignore
         main(file.parent)

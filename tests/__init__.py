@@ -35,7 +35,7 @@ FAIL = "f"
 
 
 @_templates.register
-class _PassParamS(_BaseTemplate):
+class _PParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -121,7 +121,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassNoParamsS(_BaseTemplate):
+class _PNoParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -135,7 +135,7 @@ def function() -> None:
 
 
 @_templates.register
-class _PassUnderscoreParamS(_BaseTemplate):
+class _PUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -181,7 +181,7 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
 
 
 @_templates.register
-class _PassRetTypeS(_BaseTemplate):
+class _PRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -522,7 +522,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassWithArgsS(_BaseTemplate):
+class _PWithArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -567,7 +567,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PassWithKwargsS(_BaseTemplate):
+class _PWithKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -707,7 +707,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassClassSelfS(_BaseTemplate):
+class _PClassSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -726,7 +726,7 @@ class Klass:
 
 
 @_templates.register
-class _PassClassPropertyS(_BaseTemplate):
+class _PClassPropertyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -744,7 +744,7 @@ class Klass:
 
 
 @_templates.register
-class _PassWithKwargsKeyS(_BaseTemplate):
+class _PWithKwargsKeyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -782,7 +782,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PassDualColonS(_BaseTemplate):
+class _PDualColonS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -810,7 +810,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _PassOnlyParamsS(_BaseTemplate):
+class _POnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -828,7 +828,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAnyS(_BaseTemplate):
+class _PReturnAnyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -891,7 +891,7 @@ def function(param1) -> None:
 
 
 @_templates.register
-class _PassBinOpS(_BaseTemplate):
+class _PBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -938,7 +938,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _PassDoubleUnderscoreParamS(_BaseTemplate):
+class _PDoubleUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -956,7 +956,7 @@ def function(param1, param2, __) -> None:
 
 
 @_templates.register
-class _PassUnderscoreArgsKwargsS(_BaseTemplate):
+class _PUnderscoreArgsKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -970,7 +970,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _PassPropertyNoReturnS(_BaseTemplate):
+class _PPropertyNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1075,7 +1075,7 @@ def function() -> int:
 
 
 @_templates.register
-class _PassInconsistentSpaceS(_BaseTemplate):
+class _PInconsistentSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1164,7 +1164,7 @@ class Klass:
 
 
 @_templates.register
-class _PassKWOnlyArgsS(_BaseTemplate):
+class _PKWOnlyArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1220,7 +1220,7 @@ class Klass:
 
 
 @_templates.register
-class _PassPropNoRetTypeS(_BaseTemplate):
+class _PPropNoRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1238,7 +1238,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitNoRetS(_BaseTemplate):
+class _PInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1259,7 +1259,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitBadRetS(_BaseTemplate):
+class _PInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1381,7 +1381,7 @@ def function(self) -> int:
 
 
 @_templates.register
-class _PassFuncPropReturnS(_BaseTemplate):
+class _PFuncPropReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1433,7 +1433,7 @@ def __init__(param1, param2) -> None:
 
 
 @_templates.register
-class _PassStaticSelfS(_BaseTemplate):
+class _PStaticSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1453,7 +1453,7 @@ class _PassStaticSelfS(_BaseTemplate):
 
 
 @_templates.register
-class _PassClassNoSelfS(_BaseTemplate):
+class _PClassNoSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1571,7 +1571,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _PassParamN(_BaseTemplate):
+class _PParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1671,7 +1671,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassNoParamsN(_BaseTemplate):
+class _PNoParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1685,7 +1685,7 @@ def function() -> None:
 
 
 @_templates.register
-class _PassUnderscoreParamN(_BaseTemplate):
+class _PUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1740,7 +1740,7 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
 
 
 @_templates.register
-class _PassRetTypeN(_BaseTemplate):
+class _PRetTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2111,7 +2111,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassWithArgsN(_BaseTemplate):
+class _PWithArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2165,7 +2165,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PassWithKwargsN(_BaseTemplate):
+class _PWithKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2332,7 +2332,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassClassSelfN(_BaseTemplate):
+class _PClassSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2354,7 +2354,7 @@ class Klass:
 
 
 @_templates.register
-class _PassClassPropertyN(_BaseTemplate):
+class _PClassPropertyN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2372,7 +2372,7 @@ class Klass:
 
 
 @_templates.register
-class _PassWithKwargsKeyN(_BaseTemplate):
+class _PWithKwargsKeyN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2438,7 +2438,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PassDualColonN(_BaseTemplate):
+class _PDualColonN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2471,7 +2471,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _PassOnlyParamsN(_BaseTemplate):
+class _POnlyParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2496,7 +2496,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAnyN(_BaseTemplate):
+class _PReturnAnyN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2523,7 +2523,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _PassBinOpN(_BaseTemplate):
+class _PBinOpN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2582,7 +2582,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _PassDoubleUnderscoreParamN(_BaseTemplate):
+class _PDoubleUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2604,7 +2604,7 @@ def function(param1, param2, __) -> None:
 
 
 @_templates.register
-class _PassUnderscoreArgsKwargsN(_BaseTemplate):
+class _PUnderscoreArgsKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2618,7 +2618,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _PassPropertyNoReturnN(_BaseTemplate):
+class _PPropertyNoReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2790,7 +2790,7 @@ class Klass:
 
 
 @_templates.register
-class _PassKWOnlyArgsN(_BaseTemplate):
+class _PKWOnlyArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2860,7 +2860,7 @@ class Klass:
 
 
 @_templates.register
-class _PassPropNoRetTypeN(_BaseTemplate):
+class _PPropNoRetTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2878,7 +2878,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitNoRetN(_BaseTemplate):
+class _PInitNoRetN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2903,7 +2903,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitBadRetN(_BaseTemplate):
+class _PInitBadRetN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3053,7 +3053,7 @@ def function(self) -> int:
 
 
 @_templates.register
-class _PassFuncPropReturnN(_BaseTemplate):
+class _PFuncPropReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3111,7 +3111,7 @@ def __init__(param1, param2) -> None:
 
 
 @_templates.register
-class _PassStaticSelfN(_BaseTemplate):
+class _PStaticSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3135,7 +3135,7 @@ class _PassStaticSelfN(_BaseTemplate):
 
 
 @_templates.register
-class _PassClassNoSelfN(_BaseTemplate):
+class _PClassNoSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3265,7 +3265,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _PassSphinxWNumpy(_BaseTemplate):
+class _PSphinxWNumpy(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3383,7 +3383,7 @@ def check_stuff(str_lin: str) -> bool:
 
 
 @_templates.register
-class _PassParamNI(_BaseTemplate):
+class _PParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3469,7 +3469,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _PassUnderscoreParamNI(_BaseTemplate):
+class _PUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3524,7 +3524,7 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
 
 
 @_templates.register
-class _PassRetTypeNI(_BaseTemplate):
+class _PRetTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3895,7 +3895,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassWithArgsNI(_BaseTemplate):
+class _PWithArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3949,7 +3949,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PassWithKwargsNI(_BaseTemplate):
+class _PWithKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4116,7 +4116,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassClassSelfNI(_BaseTemplate):
+class _PClassSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4138,7 +4138,7 @@ class Klass:
 
 
 @_templates.register
-class _PassWithKwargsKeyNI(_BaseTemplate):
+class _PWithKwargsKeyNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4205,7 +4205,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PassDualColonNI(_BaseTemplate):
+class _PDualColonNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4238,7 +4238,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _PassOnlyParamsNI(_BaseTemplate):
+class _POnlyParamsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4263,7 +4263,7 @@ def function(reduce: bool = False) -> tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAnyNI(_BaseTemplate):
+class _PReturnAnyNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4290,7 +4290,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _PassBinOpNI(_BaseTemplate):
+class _PBinOpNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4349,7 +4349,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _PassDoubleUnderscoreParamNI(_BaseTemplate):
+class _PDoubleUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4437,7 +4437,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _PassKWOnlyArgsNI(_BaseTemplate):
+class _PKWOnlyArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4507,7 +4507,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitNoRetNI(_BaseTemplate):
+class _PInitNoRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4532,7 +4532,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitBadRetNI(_BaseTemplate):
+class _PInitBadRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4682,7 +4682,7 @@ def function(self) -> int:
 
 
 @_templates.register
-class _PassFuncPropReturnNI(_BaseTemplate):
+class _PFuncPropReturnNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4726,7 +4726,7 @@ def method(self):
 
 
 @_templates.register
-class _PassStaticSelfNI(_BaseTemplate):
+class _PStaticSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4835,7 +4835,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _PassRetTypeSRs(_BaseTemplate):
+class _PRetTypeSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4934,7 +4934,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassOnlyParamsSRs(_BaseTemplate):
+class _POnlyParamsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4952,7 +4952,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAnySRs(_BaseTemplate):
+class _PReturnAnySRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4998,7 +4998,7 @@ def get_post(
 
 
 @_templates.register
-class _PassBinOpSRs(_BaseTemplate):
+class _PBinOpSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5082,7 +5082,7 @@ def get_post() -> Post:
 
 
 @_templates.register
-class _PassInconsistentSpaceSRs(_BaseTemplate):
+class _PInconsistentSpaceSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5119,7 +5119,7 @@ def function():
 
 
 @_templates.register
-class _PassKWOnlyArgsSRs(_BaseTemplate):
+class _PKWOnlyArgsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5197,7 +5197,7 @@ class Klass:
 
 
 @_templates.register
-class _PassFuncPropReturnSRs(_BaseTemplate):
+class _PFuncPropReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5216,7 +5216,7 @@ def function(*_, **__) -> int:
 
 
 @_templates.register
-class _PassParamG(_BaseTemplate):
+class _PParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5320,7 +5320,7 @@ def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
 
 
 @_templates.register
-class _PassRetTypeG(_BaseTemplate):
+class _PRetTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5637,7 +5637,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PassWithArgsG(_BaseTemplate):
+class _PWithArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5684,7 +5684,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PassWithKwargsG(_BaseTemplate):
+class _PWithKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5830,7 +5830,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PassClassSelfG(_BaseTemplate):
+class _PClassSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5850,7 +5850,7 @@ class Klass:
 
 
 @_templates.register
-class _PassWithKwargsKeyG(_BaseTemplate):
+class _PWithKwargsKeyG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5908,7 +5908,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PassDualColonG(_BaseTemplate):
+class _PDualColonG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5937,7 +5937,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _PassOnlyParamsG(_BaseTemplate):
+class _POnlyParamsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5958,7 +5958,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PassReturnAnyG(_BaseTemplate):
+class _PReturnAnyG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5981,7 +5981,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
 
 
 @_templates.register
-class _PassBinOpG(_BaseTemplate):
+class _PBinOpG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6033,7 +6033,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _PassDoubleUnderscoreParamG(_BaseTemplate):
+class _PDoubleUnderscoreParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6110,7 +6110,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _PassKWOnlyArgsG(_BaseTemplate):
+class _PKWOnlyArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6170,7 +6170,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitNoRetG(_BaseTemplate):
+class _PInitNoRetG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6192,7 +6192,7 @@ class Klass:
 
 
 @_templates.register
-class _PassInitBadRetG(_BaseTemplate):
+class _PInitBadRetG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6323,7 +6323,7 @@ def function(self) -> int:
 
 
 @_templates.register
-class _PassFuncPropReturnG(_BaseTemplate):
+class _PFuncPropReturnG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6363,7 +6363,7 @@ def method(self):
 
 
 @_templates.register
-class _PassStaticSelfG(_BaseTemplate):
+class _PStaticSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6460,7 +6460,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _PassEscapedKwargS(_BaseTemplate):
+class _PEscapedKwargS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
