@@ -33,16 +33,12 @@ class Docstring:
 
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
-        self._returns = False
         self._args: list[Param] = []
         if node is not None:
             string = _textwrap.dedent("\n".join(node.value.splitlines()[1:]))
             string = string.replace("*", "")
             string = "\n".join(_NumpyDocstring(string).lines())
-            string = "\n".join(_GoogleDocstring(string).lines())
-            self._string = string.replace(":return:", ":return: ").replace(
-                ":returns:", ":returns: "
-            )
+            self._string = "\n".join(_GoogleDocstring(string).lines())
             keys = 0
             for line in self._string.splitlines():
                 line = _lstrip_quant(line, 4)
@@ -58,7 +54,6 @@ class Docstring:
                     string_list = match.group(1).split()
                     key, value = string_list[0], _get_index(1, string_list)
                     if key in ("return", "returns"):
-                        self._returns = True
                         continue
 
                     if key in ("key", "keyword"):
@@ -83,4 +78,8 @@ class Docstring:
     @property
     def returns(self) -> bool:
         """Check that docstring return is documented."""
-        return self._returns
+        return (
+            False
+            if self._string is None
+            else any(i in self._string for i in (":return:", ":returns:"))
+        )
