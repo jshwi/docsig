@@ -29,12 +29,11 @@ class Docstring:
         self._args: list[tuple[str, str | None]] = []
         if node is not None:
             string = _textwrap.dedent("\n".join(node.value.splitlines()[1:]))
+            string = string.replace("*", "")
             string = "\n".join(_NumpyDocstring(string).lines())
             string = "\n".join(_GoogleDocstring(string).lines())
-            self._string = (
-                string.replace("\\*", "")
-                .replace(":return:", ":return: ")
-                .replace(":returns:", ":returns: ")
+            self._string = string.replace(":return:", ":return: ").replace(
+                ":returns:", ":returns: "
             )
             keys = 0
             for line in self._string.splitlines():

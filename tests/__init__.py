@@ -6457,3 +6457,31 @@ def function(param) -> None:
     @property
     def expected(self) -> str:
         return messages.E112
+
+
+@_templates.register
+class _PassEscapedKwargS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(attachments, sync, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    Note: Keyword args (dict) to pass to ``attachments``:
+
+        See ``flask_mail.Message.attach``.
+
+        * filename:     filename of attachment
+        * content_type: file mimetype
+        * data:         the raw file data
+
+    :param attachments: Iterable of kwargs to construct attachment.
+    :param sync: Don't thread if True: Defaults to False.
+    :param **kwargs: Keyword args to pass to ``Message``:
+        See ``flask_mail.Message``.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
