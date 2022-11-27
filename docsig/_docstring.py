@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import re as _re
 import textwrap as _textwrap
+import typing as _t
 
 import astroid as _ast
 from sphinxcontrib.napoleon import GoogleDocstring as _GoogleDocstring
@@ -13,6 +14,13 @@ from sphinxcontrib.napoleon import NumpyDocstring as _NumpyDocstring
 
 from ._utils import get_index as _get_index
 from ._utils import lstrip_quant as _lstrip_quant
+
+
+class Param(_t.NamedTuple):
+    """A tuple of param declarations and descriptions."""
+
+    declaration: str
+    description: str | None
 
 
 class Docstring:
@@ -26,7 +34,7 @@ class Docstring:
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
         self._returns = False
-        self._args: list[tuple[str, str | None]] = []
+        self._args: list[Param] = []
         if node is not None:
             string = _textwrap.dedent("\n".join(node.value.splitlines()[1:]))
             string = string.replace("*", "")
@@ -60,7 +68,7 @@ class Docstring:
                         keys = 1
                         value = "(**)"
 
-                    self._args.append((key, value))
+                    self._args.append(Param(key, value))
 
     @property
     def string(self) -> str | None:
@@ -68,7 +76,7 @@ class Docstring:
         return self._string
 
     @property
-    def args(self) -> tuple[tuple[str, str | None], ...]:
+    def args(self) -> tuple[Param, ...]:
         """Docstring args."""
         return tuple(self._args)
 
