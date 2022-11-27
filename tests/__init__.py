@@ -3282,7 +3282,7 @@ def function() -> str:
 
 
 @_templates.register
-class _NumpyNoIdent(_BaseTemplate):
+class _PNoIdentN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3302,7 +3302,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _NumpyColonSpace(_BaseTemplate):
+class _PColonSpaceN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3322,7 +3322,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _Issue36Param(_BaseTemplate):
+class _PIssue36ParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3353,7 +3353,7 @@ def modify(numericString: Union[str, int]) -> str:
 
 
 @_templates.register
-class _Issue36Return(_BaseTemplate):
+class _PIssue36ReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
