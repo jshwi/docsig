@@ -61,6 +61,21 @@ class _Matches(_MutableSequence[Param]):
         super().extend(Param(i[0], _get_index(1, i)) for i in params)
 
 
+class _Params(_MutableSequence[Param]):
+    _param = "param"
+    _keys = ("key", "keyword")
+    _kwarg_value = "(**)"
+
+    def insert(self, index: int, value: Param) -> None:
+        if value.declaration == self._param:
+            super().insert(index, value)
+
+        elif value.declaration in self._keys and not any(
+            i in y for y in self for i in self._keys
+        ):
+            super().insert(index, Param(value.declaration, self._kwarg_value))
+
+
 class Docstring:
     """Represents docstring.
 
@@ -69,19 +84,10 @@ class Docstring:
 
     def __init__(self, node: _ast.Const | None = None) -> None:
         self._string = None
-        self._args: list[Param] = []
+        self._args = _Params()
         if node is not None:
             self._string = RawDocstring(node.value)
-            matches = _Matches(self._string)
-            for match in matches:
-                keys = ("key", "keyword")
-                if match.declaration == "param":
-                    self._args.append(match)
-
-                elif match.declaration in keys and not any(
-                    i in y for y in self._args for i in keys
-                ):
-                    self._args.append(Param(match.declaration, "(**)"))
+            self._args.extend(_Matches(self._string))
 
     @property
     def string(self) -> RawDocstring | None:
