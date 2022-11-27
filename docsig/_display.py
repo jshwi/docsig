@@ -9,20 +9,23 @@ import typing as _t
 from ._ansi import ANSI as _ANSI
 from ._ansi import color as _color
 from ._objects import MutableMapping as _MutableMapping
+from ._objects import MutableSequence as _MutableSequence
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 
-FailedDocList = _t.List[_t.Tuple[_FuncStr, int, _Report]]
+
+class Failures(_MutableSequence[_t.Tuple[_FuncStr, int, _Report]]):
+    """Sequence of failed functions."""
 
 
-class _DisplaySequence(_MutableMapping[str, _t.List[FailedDocList]]):
+class _DisplaySequence(_MutableMapping[str, _t.List[Failures]]):
     """Sequence for collection of report info.
 
     If an attempt is made to append a report to a list whose key does
     not exist then the key and its list value will be added first.
     """
 
-    def __getitem__(self, key: str) -> list[FailedDocList]:
+    def __getitem__(self, key: str) -> list[Failures]:
         if key not in super().__iter__():
             super().__setitem__(key, [])
 

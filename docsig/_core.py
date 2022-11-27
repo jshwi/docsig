@@ -8,7 +8,7 @@ from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
 from ._display import Display as _Display
-from ._display import FailedDocList as _FailedDocList
+from ._display import Failures as _Failures
 from ._function import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
@@ -79,8 +79,8 @@ def _run_check(  # pylint: disable=too-many-arguments
     no_ansi: bool = False,
     targets: list[str] | None = None,
     disable: list[str] | None = None,
-) -> _FailedDocList:
-    failures = []
+) -> _Failures:
+    failures = _Failures()
     for func in parent:
         if not (func.kind.isoverridden and not check_overridden) and (
             not (func.kind.isprotected and not check_protected)
