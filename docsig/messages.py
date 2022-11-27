@@ -13,6 +13,7 @@ docsig.messages
 | E110: documented parameter not equal to its respective argument
 | E111: return statement documented for class
 | E112: spelling error found in documented parameter
+| E113: function is missing a docstring"
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -28,11 +29,11 @@ E109 = "E109: cannot determine whether a return statement should exist or not"
 E110 = "E110: documented parameter not equal to its respective argument"
 E111 = "E111: return statement documented for class"
 E112 = "E112: spelling error found in documented parameter"
+E113 = "E113: function is missing a docstring"
 
 # Hxxx: Hint
 # H1xx: Docstring
 H101 = "hint: there appears to be a syntax error that could be causing this"
 H102 = "hint: documentation is sufficient as a getter is the value returned"
 H103 = "hint: it is possible a syntax error could be causing this"
-H104 = "hint: function is missing a docstring"
-H105 = "hint: a class does not return a value during instantiation"
+H104 = "hint: a class does not return a value during instantiation"

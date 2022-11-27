@@ -88,14 +88,17 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.kind.isdunder and not check_dunders)
         ):
             report = _Report(func, targets, disable)
-            report.exists()
-            report.missing()
-            report.duplicates()
-            report.extra_return()
-            report.return_not_typed()
-            report.missing_return()
-            report.property_return()
-            report.class_return()
+            report.missing_docstring()
+            if func.docstring.string is not None:
+                report.exists()
+                report.missing()
+                report.duplicates()
+                report.extra_return()
+                report.return_not_typed()
+                report.missing_return()
+                report.property_return()
+                report.class_return()
+
             func_str = _construct_func(func, report, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))

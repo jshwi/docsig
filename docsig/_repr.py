@@ -30,14 +30,25 @@ class FuncStr(_UserString):
         self._parent_name = func.parent_name
         self._isinit = func.kind.isinit
         self.data = ""
+        self._is_string = func.docstring.string is not None
         if self._isinit:
             self.data += self.TAB
 
         self.data += self._ansi.get_syntax(f"def {func.name}(")
-        self._docstring = (
-            f"{self._ansi.get_syntax(f'{self.TAB}{self.TRIPLE_QUOTES}...')}\n"
-        )
+        if self._is_string:
+            self._docstring = "{}\n".format(
+                self._ansi.get_syntax(f"{self.TAB}{self.TRIPLE_QUOTES}...")
+            )
+        else:
+            self._docstring = "{}{}\n".format(
+                self.TAB, self._ansi.get_color("...", _color.red)
+            )
+
         self._mark = self._ansi.get_color(self.CHECK, _color.green)
+
+    def _cat_docstring(self, string: str) -> None:
+        if self._is_string:
+            self._docstring += string
 
     def set_mark(self, failed: bool = False) -> None:
         """Set mark to a cross or a check.
@@ -62,7 +73,7 @@ class FuncStr(_UserString):
         """
         self.set_mark(failed)
         self.data += f"{self._mark}{arg}"
-        self._docstring += f"\n{self.TAB}:{kind} {doc}: {self._mark}"
+        self._cat_docstring(f"\n{self.TAB}:{kind} {doc}: {self._mark}")
 
     def add_return(self, failed: bool = False) -> None:
         """Add return statement to docstring.
@@ -70,7 +81,7 @@ class FuncStr(_UserString):
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)
-        self._docstring += f"\n{self.TAB}:return: {self._mark}"
+        self._cat_docstring(f"\n{self.TAB}:return: {self._mark}")
 
     def close_sig(self, arg: str | None) -> None:
         """Close function signature.
@@ -97,7 +108,7 @@ class FuncStr(_UserString):
 
     def close_docstring(self) -> None:
         """Close docstring."""
-        self._docstring += (
+        self._cat_docstring(
             f"\n{self.TAB}{self._ansi.get_syntax(self.TRIPLE_QUOTES)}\n"
         )
 

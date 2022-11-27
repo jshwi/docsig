@@ -117,7 +117,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.H104
+        return messages.E113
 
 
 @_templates.register
@@ -1057,7 +1057,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register
@@ -1071,7 +1071,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return messages.H104
+        return messages.E113
 
 
 @_templates.register
@@ -1429,7 +1429,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register
@@ -1522,7 +1522,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register
@@ -1667,7 +1667,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.H104
+        return messages.E113
 
 
 @_templates.register
@@ -2692,7 +2692,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register
@@ -2706,7 +2706,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return messages.H104
+        return messages.E113
 
 
 @_templates.register
@@ -3107,7 +3107,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register
@@ -3208,7 +3208,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E113
 
 
 @_templates.register

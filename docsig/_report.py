@@ -94,15 +94,17 @@ class Report(_MessageSequence):
         if len(self._func.docstring.args) > len(self._func.signature.args):
             self.append("E102")
 
+    def missing_docstring(self) -> None:
+        """Test that docstring is not missing from func."""
+        if self._func.docstring.string is None:
+            self.append("E113")
+
     def missing(self) -> None:
         """Test that parameter is not missing from documentation."""
         if len(self._func.signature.args) > len(self._func.docstring.args):
             self.append("E103")
             docstring = self._func.docstring.string
-            if docstring is None:
-                self.append("H104")
-
-            elif docstring is not None and all(
+            if docstring is not None and all(
                 f"param {i}" in docstring for i in self._func.signature.args
             ):
                 self.append("H101")
@@ -149,10 +151,7 @@ class Report(_MessageSequence):
         ):
             self.append("E105")
             docstring = self._func.docstring.string
-            if docstring is None:
-                self.append("H104")
-
-            elif docstring is not None and "return" in docstring:
+            if docstring is not None and "return" in docstring:
                 self.append("H103")
 
     def incorrect(self, arg: str | None, doc: str | None) -> None:
@@ -180,7 +179,7 @@ class Report(_MessageSequence):
         """Check that return is not documented for __init__."""
         if self._func.docstring.returns and self._func.kind.isinit:
             self.append("E111")
-            self.append("H105")
+            self.append("H104")
 
     def misspelled(self, arg: str | None, doc: str | None) -> None:
         """Test whether there is a spelling error in documentation.

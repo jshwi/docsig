@@ -1,5 +1,5 @@
-H102  # unused variable (docsig/messages.py:35)
-H105  # unused variable (docsig/messages.py:38)
+H102  # unused variable (docsig/messages.py:37)
+H104  # unused variable (docsig/messages.py:39)
 _FBinOpReprG  # unused class (tests/__init__.py:6009)
 _FBinOpReprN  # unused class (tests/__init__.py:2556)
 _FBinOpReprNI  # unused class (tests/__init__.py:4323)

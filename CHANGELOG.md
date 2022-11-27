@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.24.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Add `E113` error for missing docstring
+
 ### Fixed
 - Fix error code displayed for `E112`
 
