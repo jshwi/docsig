@@ -11,6 +11,7 @@ import typing as _t
 import astroid as _ast
 import sphinxcontrib.napoleon as _s
 
+from ._objects import MutableSequence as _MutableSequence
 from ._utils import get_index as _get_index
 
 
@@ -50,6 +51,16 @@ class RawDocstring(str):
         )
 
 
+class _Matches(_MutableSequence[Param]):
+    _pattern = _re.compile(":(.*?): ")
+
+    def __init__(self, string: str) -> None:
+        super().__init__()
+        matches = [self._pattern.match(i) for i in string.splitlines()]
+        params = [i.group(1).split() for i in matches if i is not None]
+        super().extend(Param(i[0], _get_index(1, i)) for i in params)
+
+
 class Docstring:
     """Represents docstring.
 
@@ -61,19 +72,16 @@ class Docstring:
         self._args: list[Param] = []
         if node is not None:
             self._string = RawDocstring(node.value)
-            for line in self._string.splitlines():
-                match = _re.match(":(.*?): ", line)
-                if match is not None:
-                    param = match.group(1).split()
-                    key = param[0]
-                    keys = ("key", "keyword")
-                    if key == "param":
-                        self._args.append(Param(key, _get_index(1, param)))
+            matches = _Matches(self._string)
+            for match in matches:
+                keys = ("key", "keyword")
+                if match.declaration == "param":
+                    self._args.append(match)
 
-                    elif key in keys and not any(
-                        i in y for y in self._args for i in keys
-                    ):
-                        self._args.append(Param(key, "(**)"))
+                elif match.declaration in keys and not any(
+                    i in y for y in self._args for i in keys
+                ):
+                    self._args.append(Param(match.declaration, "(**)"))
 
     @property
     def string(self) -> RawDocstring | None:
