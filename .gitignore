@@ -2,6 +2,7 @@
 *build/
 *coverage*
 *venv
+.DS_Store
 .env
 __pycache__/
 dist/
