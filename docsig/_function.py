@@ -85,14 +85,14 @@ class _Signature:
 
     :param arguments: Argument's abstract syntax tree.
     :param returns: Function's return value.
-    :param kind: Kind of function.
     """
 
     def __init__(
         self,
         arguments: _ast.Arguments,
         returns: _ast.Module,
-        kind: _FunctionKind,
+        ismethod: bool = False,
+        isstaticmethod: bool = False,
     ) -> None:
         self._arguments = arguments
         self._args = [
@@ -103,7 +103,7 @@ class _Signature:
             self._return_value is not None and self._return_value != "None"
         )
         self._get_args_kwargs()
-        if kind.ismethod and not kind.isstaticmethod and self._args:
+        if ismethod and not isstaticmethod and self._args:
             self._args.pop(0)
 
     def _get_args_kwargs(self) -> None:
@@ -178,7 +178,12 @@ class Function:
         if self._kind.isinit:
             doc_node = parent.doc_node
 
-        self._signature = _Signature(node.args, node.returns, self._kind)
+        self._signature = _Signature(
+            node.args,
+            node.returns,
+            self._kind.ismethod,
+            self._kind.isstaticmethod,
+        )
         self._docstring = _Docstring(doc_node)
 
     @property
