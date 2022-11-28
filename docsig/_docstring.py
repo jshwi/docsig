@@ -6,20 +6,14 @@ from __future__ import annotations
 
 import re as _re
 import textwrap as _textwrap
-import typing as _t
 
 import astroid as _ast
 import sphinxcontrib.napoleon as _s
 
 from ._objects import MutableSequence as _MutableSequence
+from ._params import Param as _Param
+from ._params import Params as _Params
 from ._utils import get_index as _get_index
-
-
-class Param(_t.NamedTuple):
-    """A tuple of param types and their names."""
-
-    kind: str
-    name: str | None
 
 
 class _GoogleDocstring(str):
@@ -51,29 +45,14 @@ class RawDocstring(str):
         )
 
 
-class _Matches(_MutableSequence[Param]):
+class _Matches(_MutableSequence[_Param]):
     _pattern = _re.compile(":(.*?): ")
 
     def __init__(self, string: str) -> None:
         super().__init__()
         matches = [self._pattern.match(i) for i in string.splitlines()]
         params = [i.group(1).split() for i in matches if i is not None]
-        super().extend(Param(i[0], _get_index(1, i)) for i in params)
-
-
-class _Params(_MutableSequence[Param]):
-    _param = "param"
-    _keys = ("key", "keyword")
-    _kwarg_value = "(**)"
-
-    def insert(self, index: int, value: Param) -> None:
-        if value.kind == self._param:
-            super().insert(index, value)
-
-        elif value.kind in self._keys and not any(
-            i in y for y in self for i in self._keys
-        ):
-            super().insert(index, Param(value.kind, self._kwarg_value))
+        super().extend(_Param(i[0], _get_index(1, i)) for i in params)
 
 
 class Docstring:
@@ -95,7 +74,7 @@ class Docstring:
         return self._string
 
     @property
-    def args(self) -> tuple[Param, ...]:
+    def args(self) -> tuple[_Param, ...]:
         """Docstring args."""
         return tuple(self._args)
 
