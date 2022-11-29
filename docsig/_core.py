@@ -40,6 +40,7 @@ def _construct_func(
         longest = max([len(func.signature.args), len(func.docstring.args)])
         arg = func.signature.args.get(count)
         doc = func.docstring.args.get(count)
+        report.description_syntax(doc)
         if _compare_args(arg, doc):
             func_str.add_param(arg, doc)
         else:

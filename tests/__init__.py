@@ -881,7 +881,7 @@ def get_post(
 
 
 @_templates.register
-class _FE103NoSpaceS(_BaseTemplate):
+class _FE115NoSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -894,7 +894,7 @@ def function(param1) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return messages.E115
 
 
 @_templates.register

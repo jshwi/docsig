@@ -205,6 +205,14 @@ class Report(_MessageSequence):
         ):
             self.append("E112")
 
+    def description_syntax(self, doc: _Param) -> None:
+        """Test whether docstring description has correct spacing.
+
+        :param doc: Docstring argument.
+        """
+        if doc.description is not None and not doc.description.startswith(" "):
+            self.append("E115")
+
     def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.
 

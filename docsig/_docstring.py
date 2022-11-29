@@ -45,7 +45,7 @@ class RawDocstring(str):
 
 
 class _Matches(_MutableSequence[_Param]):
-    _pattern = _re.compile(":(.*?): ")
+    _pattern = _re.compile(":(.*?):")
 
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -55,13 +55,14 @@ class _Matches(_MutableSequence[_Param]):
                 if match:
                     name = description = None
                     kinds = match[0].split()
-                    if len(kinds) > 1:
-                        name = kinds[1]
+                    if kinds:
+                        if len(kinds) > 1:
+                            name = kinds[1]
 
-                    if len(match) > 1:
-                        description = match[1]
+                        if len(match) > 1:
+                            description = match[1]
 
-                    super().append(_Param(kinds[0], name, description))
+                        super().append(_Param(kinds[0], name, description))
 
 
 class Docstring:

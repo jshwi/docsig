@@ -15,6 +15,7 @@ docsig.messages
 | E112: spelling error found in documented parameter
 | E113: function is missing a docstring
 | E114: class is missing a docstring
+| E115: syntax error in description
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -32,6 +33,7 @@ E111 = "E111: return statement documented for class"
 E112 = "E112: spelling error found in documented parameter"
 E113 = "E113: function is missing a docstring"
 E114 = "E114: class is missing a docstring"
+E115 = "E115: syntax error in description"
 
 # Hxxx: Hint
 # H1xx: Docstring
