@@ -85,13 +85,15 @@ def test_main_args(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.filtergroup(MULTI),
+    templates.registered.filtergroup(MULTI).filtergroup("p"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
-        for i in templates.registered.filtergroup(MULTI).getids()
+        for i in templates.registered.filtergroup(MULTI)
+        .filtergroup("p")
+        .getids()
     ],
 )
-def test_main_output(
+def test_main_output_negative(
     init_file: InitFileFixtureType,
     main: MockMainType,
     nocolorcapsys: NoColorCapsys,
@@ -113,6 +115,7 @@ def test_main_output(
         long.check_overridden,
         file.parent,
     )
+    assert template.expected != ""
     assert template.expected in nocolorcapsys.readouterr()[0]
 
 
@@ -632,3 +635,33 @@ def test_no_ansi(
         == 1
     )
     assert "\x1b" not in capsys.readouterr()[0]
+
+
+@pytest.mark.parametrize(
+    TEMPLATE,
+    templates.registered.getgroup("p"),
+    ids=templates.registered.getgroup("p").getids(),
+)
+def test_main_output_positive(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    template: Template,
+) -> None:
+    """Test main for stdout.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: String data.
+    """
+    file = init_file(template.template)
+    main(
+        long.check_class,
+        long.check_protected,
+        long.check_dunders,
+        long.check_overridden,
+        file.parent,
+    )
+    assert template.expected == nocolorcapsys.readouterr()[0]
