@@ -6532,3 +6532,46 @@ class Klass:
     @property
     def expected(self) -> str:
         return messages.E114
+
+
+@_templates.register
+class _FIssue36OffIndentN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def check_stuff(str_lin: str, a: str) -> bool:
+    \"\"\"Check if "A" or "B".
+
+    The function checks whether the string is "A" or "B".
+
+    Parameters
+    ----------
+    str_lin: str
+        special string produced by function_of_y ["a"]
+            a second wrong indent line
+    a: str
+        string stuff
+
+    Returns
+    -------
+    bool
+        Returns True, else false
+    \"\"\"
+    if any(s in str_lin for s in ["A", "B"]):
+        return True
+    return False
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
+    \"\"\"...
+
+    :param str_lin: {CHECK}
+    :param a: {CHECK}
+    :return: {CHECK}
+    \"\"\"
+
+E115: syntax error in description
+"""
