@@ -74,9 +74,9 @@ class Docstring:
         return self._string
 
     @property
-    def args(self) -> tuple[_Param, ...]:
+    def args(self) -> _Params:
         """Docstring args."""
-        return tuple(self._args)
+        return self._args
 
     @property
     def returns(self) -> bool:
