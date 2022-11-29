@@ -877,7 +877,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return messages.H101
+        return messages.E116
 
 
 @_templates.register
@@ -1027,7 +1027,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return messages.H103
+        return messages.H102
 
 
 @_templates.register
@@ -5001,7 +5001,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return messages.H101
+        return messages.E116
 
 
 @_templates.register
@@ -5085,7 +5085,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return messages.H103
+        return messages.H102
 
 
 @_templates.register

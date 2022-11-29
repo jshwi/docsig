@@ -108,12 +108,6 @@ class Report(_MessageSequence):
         """Test that parameter is not missing from documentation."""
         if len(self._func.signature.args) > len(self._func.docstring.args):
             self.append("E103")
-            docstring = self._func.docstring.string
-            if docstring is not None and all(
-                f"{i.kind} {i.name}" in docstring
-                for i in self._func.signature.args
-            ):
-                self.append("H101")
 
     def duplicates(self) -> None:
         """Test that there are no duplicate parameters in docstring."""
@@ -136,7 +130,7 @@ class Report(_MessageSequence):
         """Check that return is not documented for property."""
         if self._func.docstring.returns and self._func.kind.isproperty:
             self.append("E108")
-            self.append("H102")
+            self.append("H101")
 
     def return_not_typed(self) -> None:
         """Check that return is not documented when no type provided."""
@@ -158,7 +152,7 @@ class Report(_MessageSequence):
             self.append("E105")
             docstring = self._func.docstring.string
             if docstring is not None and "return" in docstring:
-                self.append("H103")
+                self.append("H102")
 
     def incorrect(self, arg: _Param, doc: _Param) -> None:
         """Test that proper syntax is used when documenting parameters.
@@ -185,7 +179,7 @@ class Report(_MessageSequence):
         """Check that return is not documented for __init__."""
         if self._func.docstring.returns and self._func.kind.isinit:
             self.append("E111")
-            self.append("H104")
+            self.append("H103")
 
     def misspelled(self, arg: _Param, doc: _Param) -> None:
         """Test whether there is a spelling error in documentation.
@@ -212,6 +206,14 @@ class Report(_MessageSequence):
         """
         if doc.description is not None and not doc.description.startswith(" "):
             self.append("E115")
+
+    def indent_syntax(self, doc: _Param) -> None:
+        """Test whether docstring description is indented correctly.
+
+        :param doc: Docstring argument.
+        """
+        if doc.indent > 0:
+            self.append("E116")
 
     def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.

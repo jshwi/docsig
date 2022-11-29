@@ -15,6 +15,7 @@ class Param(_t.NamedTuple):
     kind: str
     name: str | None
     description: str | None
+    indent: int
 
 
 class Params(_MutableSequence[Param]):
@@ -42,7 +43,8 @@ class Params(_MutableSequence[Param]):
             i in y for y in self for i in self._keys
         ):
             super().insert(
-                index, Param(value.kind, self._kwarg_value, value.description)
+                index,
+                Param(value.kind, self._kwarg_value, value.description, 0),
             )
 
     def get(self, index: int) -> Param:
@@ -57,4 +59,4 @@ class Params(_MutableSequence[Param]):
         try:
             return self[index]
         except IndexError:
-            return Param(self._param, None, None)
+            return Param(self._param, None, None, 0)

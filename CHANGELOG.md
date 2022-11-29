@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.25.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- Add `E116` error for poor indentation
 - Add `E115` error for syntax errors in description
 - Add `E114` error for missing class docstring
 - Add `messages` to `__all__`

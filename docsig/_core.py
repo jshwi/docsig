@@ -41,6 +41,7 @@ def _construct_func(
         arg = func.signature.args.get(count)
         doc = func.docstring.args.get(count)
         report.description_syntax(doc)
+        report.indent_syntax(doc)
         if _compare_args(arg, doc):
             func_str.add_param(arg, doc)
         else:

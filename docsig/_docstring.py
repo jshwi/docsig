@@ -50,19 +50,20 @@ class _Matches(_MutableSequence[_Param]):
     def __init__(self, string: str) -> None:
         super().__init__()
         for line in string.splitlines():
-            if not line.startswith(" "):
-                match = self._pattern.split(line)[1:]
-                if match:
-                    name = description = None
-                    kinds = match[0].split()
-                    if kinds:
-                        if len(kinds) > 1:
-                            name = kinds[1]
+            strip_line = line.lstrip()
+            indent = len(line) - len(strip_line)
+            match = self._pattern.split(strip_line)[1:]
+            if match:
+                name = description = None
+                kinds = match[0].split()
+                if kinds:
+                    if len(kinds) > 1:
+                        name = kinds[1]
 
-                        if len(match) > 1:
-                            description = match[1]
+                    if len(match) > 1:
+                        description = match[1]
 
-                        super().append(_Param(kinds[0], name, description))
+                    super().append(_Param(kinds[0], name, description, indent))
 
 
 class Docstring:
