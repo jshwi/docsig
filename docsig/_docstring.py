@@ -16,10 +16,10 @@ from ._utils import get_index as _get_index
 
 
 class Param(_t.NamedTuple):
-    """A tuple of param declarations and descriptions."""
+    """A tuple of param types and their names."""
 
-    declaration: str
-    description: str | None
+    kind: str
+    name: str | None
 
 
 class _GoogleDocstring(str):
@@ -67,13 +67,13 @@ class _Params(_MutableSequence[Param]):
     _kwarg_value = "(**)"
 
     def insert(self, index: int, value: Param) -> None:
-        if value.declaration == self._param:
+        if value.kind == self._param:
             super().insert(index, value)
 
-        elif value.declaration in self._keys and not any(
+        elif value.kind in self._keys and not any(
             i in y for y in self for i in self._keys
         ):
-            super().insert(index, Param(value.declaration, self._kwarg_value))
+            super().insert(index, Param(value.kind, self._kwarg_value))
 
 
 class Docstring:
