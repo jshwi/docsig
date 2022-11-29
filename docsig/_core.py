@@ -36,19 +36,15 @@ def _construct_func(
     ):
         longest = max([len(func.signature.args), len(func.docstring.args)])
         arg = _get_index(count, func.signature.args)
-        doc_info = _get_index(count, func.docstring.args)
-        if doc_info is not None:
-            kind, doc = doc_info
+        doc = func.docstring.args.get(count)
+        if _compare_args(arg, doc.name, doc.kind):
+            func_str.add_param(arg, doc.name, doc.kind)
         else:
-            kind, doc = "param", None
-        if _compare_args(arg, doc, kind):
-            func_str.add_param(arg, doc, kind)
-        else:
-            func_str.add_param(arg, doc, kind, failed=True)
-            report.order(arg, doc)
-            report.incorrect(arg, doc)
-            report.misspelled(arg, doc)
-            report.not_equal(arg, doc)
+            func_str.add_param(arg, doc.name, doc.kind, failed=True)
+            report.order(arg, doc.name)
+            report.incorrect(arg, doc.name)
+            report.misspelled(arg, doc.name)
+            report.not_equal(arg, doc.name)
 
         if count + 1 != longest:
             func_str.add_comma()

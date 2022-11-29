@@ -41,3 +41,17 @@ class Params(_MutableSequence[Param]):
             i in y for y in self for i in self._keys
         ):
             super().insert(index, Param(value.kind, self._kwarg_value))
+
+    def get(self, index: int) -> Param:
+        """Get a param.
+
+        If the index does not exist return a `Param` with None as
+        `Param.name`.
+
+        :param index: Index of param to get.
+        :return: Param belonging to the index.
+        """
+        try:
+            return self[index]
+        except IndexError:
+            return Param(self._param, None)
