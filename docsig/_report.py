@@ -83,9 +83,8 @@ class Report(_MessageSequence):
         :param arg: Signature argument.
         :param doc: Docstring argument.
         """
-        if (
-            arg in self._func.docstring.args
-            or doc in self._func.signature.args
+        if any(arg == i.name for i in self._func.docstring.args) or any(
+            doc == i.name for i in self._func.signature.args
         ):
             self.append("E101")
 
@@ -105,7 +104,8 @@ class Report(_MessageSequence):
             self.append("E103")
             docstring = self._func.docstring.string
             if docstring is not None and all(
-                f"param {i}" in docstring for i in self._func.signature.args
+                f"{i.kind} {i.name}" in docstring
+                for i in self._func.signature.args
             ):
                 self.append("H101")
 

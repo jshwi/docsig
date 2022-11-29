@@ -14,7 +14,6 @@ from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
-from ._utils import get_index as _get_index
 
 
 def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
@@ -35,16 +34,16 @@ def _construct_func(
         _zip_longest(func.signature.args, func.docstring.args)
     ):
         longest = max([len(func.signature.args), len(func.docstring.args)])
-        arg = _get_index(count, func.signature.args)
+        arg = func.signature.args.get(count)
         doc = func.docstring.args.get(count)
-        if _compare_args(arg, doc.name, doc.kind):
-            func_str.add_param(arg, doc.name, doc.kind)
+        if _compare_args(arg.name, doc.name, doc.kind):
+            func_str.add_param(arg.name, doc.name, doc.kind)
         else:
-            func_str.add_param(arg, doc.name, doc.kind, failed=True)
-            report.order(arg, doc.name)
-            report.incorrect(arg, doc.name)
-            report.misspelled(arg, doc.name)
-            report.not_equal(arg, doc.name)
+            func_str.add_param(arg.name, doc.name, doc.kind, failed=True)
+            report.order(arg.name, doc.name)
+            report.incorrect(arg.name, doc.name)
+            report.misspelled(arg.name, doc.name)
+            report.not_equal(arg.name, doc.name)
 
         if count + 1 != longest:
             func_str.add_comma()

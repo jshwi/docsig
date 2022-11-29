@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import astroid as _ast
 
+from ._params import Param as _Param
+from ._params import Params as _Params
 from ._utils import isprotected as _isprotected
 
 
@@ -16,6 +18,8 @@ class Signature:
     :param returns: Function's return value.
     """
 
+    _param = "param"
+
     def __init__(
         self,
         arguments: _ast.Arguments,
@@ -24,9 +28,12 @@ class Signature:
         isstaticmethod: bool = False,
     ) -> None:
         self._arguments = arguments
-        self._args = [
-            a.name for a in self._arguments.args if not _isprotected(a.name)
-        ]
+        self._args = _Params()
+        self._args.extend(
+            _Param(self._param, a.name)
+            for a in self._arguments.args
+            if not _isprotected(a.name)
+        )
         self._return_value = self._get_returns(returns)
         self._returns = (
             self._return_value is not None and self._return_value != "None"
@@ -38,14 +45,16 @@ class Signature:
     def _get_args_kwargs(self) -> None:
         vararg = self._arguments.vararg
         if vararg is not None and not _isprotected(vararg):
-            self._args.append(f"*{vararg}")
+            self._args.append(_Param(self._param, f"*{vararg}"))
 
         if self._arguments.kwonlyargs:
-            self._args.extend([k.name for k in self._arguments.kwonlyargs])
+            self._args.extend(
+                _Param(self._param, k.name) for k in self._arguments.kwonlyargs
+            )
 
         kwarg = self._arguments.kwarg
         if kwarg is not None and not _isprotected(kwarg):
-            self._args.append(f"**{kwarg}")
+            self._args.append(_Param(self._param, f"**{kwarg}"))
 
     def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):
@@ -72,9 +81,9 @@ class Signature:
         return None
 
     @property
-    def args(self) -> tuple[str, ...]:
+    def args(self) -> _Params:
         """Tuple of signature parameters."""
-        return tuple(self._args)
+        return self._args
 
     @property
     def return_value(self) -> str | None:
