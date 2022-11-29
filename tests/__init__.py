@@ -6492,3 +6492,27 @@ def function(attachments, sync, **kwargs) -> None:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FNoKwargsIncludedS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, **kwargs) -> None:
+    \"\"\"Proper docstring.
+
+    :param param1: Fail
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""
+def function({CHECK}param1, {CROSS}**kwargs) -> {CHECK}None:
+    \"\"\"...
+
+    :param param1: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+"""
