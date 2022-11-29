@@ -9,6 +9,7 @@ from collections import Counter as _Counter
 from . import messages as _messages
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
+from ._params import Param as _Param
 from ._utils import almost_equal as _almost_equal
 
 _MIN_MATCH = 0.8
@@ -77,14 +78,14 @@ class Report(_MessageSequence):
         super().__init__(targets, disable)
         self._func = func
 
-    def order(self, arg: str | None, doc: str | None) -> None:
+    def order(self, arg: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
 
         :param arg: Signature argument.
         :param doc: Docstring argument.
         """
-        if any(arg == i.name for i in self._func.docstring.args) or any(
-            doc == i.name for i in self._func.signature.args
+        if any(arg.name == i.name for i in self._func.docstring.args) or any(
+            doc.name == i.name for i in self._func.signature.args
         ):
             self.append("E101")
 
@@ -154,16 +155,16 @@ class Report(_MessageSequence):
             if docstring is not None and "return" in docstring:
                 self.append("H103")
 
-    def incorrect(self, arg: str | None, doc: str | None) -> None:
+    def incorrect(self, arg: _Param, doc: _Param) -> None:
         """Test that proper syntax is used when documenting parameters.
 
         :param arg: Signature argument.
         :param doc: Docstring argument.
         """
-        if arg is None and doc is None:
+        if arg.name is None and doc.name is None:
             self.append("E107")
 
-    def not_equal(self, arg: str | None, doc: str | None) -> None:
+    def not_equal(self, arg: _Param, doc: _Param) -> None:
         """Final catch-all.
 
         Only applies if no other errors, including disabled, have been
@@ -172,7 +173,7 @@ class Report(_MessageSequence):
         :param arg: Signature argument.
         :param doc: Docstring argument.
         """
-        if arg is not None and doc is not None and not self._errors:
+        if arg.name is not None and doc.name is not None and not self._errors:
             self.append("E110")
 
     def class_return(self) -> None:
@@ -181,7 +182,7 @@ class Report(_MessageSequence):
             self.append("E111")
             self.append("H104")
 
-    def misspelled(self, arg: str | None, doc: str | None) -> None:
+    def misspelled(self, arg: _Param, doc: _Param) -> None:
         """Test whether there is a spelling error in documentation.
 
         To avoid false positives also check whether doc param is almost
@@ -192,10 +193,10 @@ class Report(_MessageSequence):
         :param doc: Docstring argument.
         """
         if (
-            arg is not None
-            and doc is not None
+            arg.name is not None
+            and doc.name is not None
             and not self._errors
-            and _almost_equal(arg, doc, _MIN_MATCH, _MAX_MATCH)
+            and _almost_equal(arg.name, doc.name, _MIN_MATCH, _MAX_MATCH)
         ):
             self.append("E112")
 

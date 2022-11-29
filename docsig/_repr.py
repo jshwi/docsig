@@ -9,6 +9,7 @@ from collections import UserString as _UserString
 from ._ansi import ANSI as _ANSI
 from ._ansi import color as _color
 from ._function import Function as _Function
+from ._params import Param as _Param
 
 
 class FuncStr(_UserString):
@@ -62,18 +63,19 @@ class FuncStr(_UserString):
         )
 
     def add_param(
-        self, arg: str | None, doc: str | None, kind: str, failed: bool = False
+        self, arg: _Param, doc: _Param, failed: bool = False
     ) -> None:
         """Add parameters to docstring.
 
         :param arg: Signature argument.
         :param doc: Docstring argument.
-        :param kind: Type of docstring parameter.
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)
-        self.data += f"{self._mark}{arg}"
-        self._cat_docstring(f"\n{self.TAB}:{kind} {doc}: {self._mark}")
+        self.data += f"{self._mark}{arg.name}"
+        self._cat_docstring(
+            f"\n{self.TAB}:{doc.kind} {doc.name}: {self._mark}"
+        )
 
     def add_return(self, failed: bool = False) -> None:
         """Add return statement to docstring.

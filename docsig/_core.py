@@ -12,18 +12,22 @@ from ._display import Failures as _Failures
 from ._function import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
+from ._params import Param as _Param
 from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 
 
-def _compare_args(arg: str | None, doc: str | None, kind: str) -> bool:
-    if kind in ("key", "keyword") and arg is not None:
-        return arg[:2] == "**"
+def _compare_args(arg: _Param, doc: _Param) -> bool:
+    if doc.kind in ("key", "keyword") and arg.name is not None:
+        return arg.name[:2] == "**"
 
-    if isinstance(arg, str):
-        arg = arg.replace("*", "")
+    arg_name = arg.name
+    if isinstance(arg_name, str):
+        arg_name = arg_name.replace("*", "")
 
-    return arg == doc and arg is not None and doc is not None
+    return (
+        arg_name == doc.name and arg_name is not None and doc.name is not None
+    )
 
 
 def _construct_func(
@@ -36,14 +40,14 @@ def _construct_func(
         longest = max([len(func.signature.args), len(func.docstring.args)])
         arg = func.signature.args.get(count)
         doc = func.docstring.args.get(count)
-        if _compare_args(arg.name, doc.name, doc.kind):
-            func_str.add_param(arg.name, doc.name, doc.kind)
+        if _compare_args(arg, doc):
+            func_str.add_param(arg, doc)
         else:
-            func_str.add_param(arg.name, doc.name, doc.kind, failed=True)
-            report.order(arg.name, doc.name)
-            report.incorrect(arg.name, doc.name)
-            report.misspelled(arg.name, doc.name)
-            report.not_equal(arg.name, doc.name)
+            func_str.add_param(arg, doc, failed=True)
+            report.order(arg, doc)
+            report.incorrect(arg, doc)
+            report.misspelled(arg, doc)
+            report.not_equal(arg, doc)
 
         if count + 1 != longest:
             func_str.add_comma()
