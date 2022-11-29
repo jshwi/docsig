@@ -87,7 +87,8 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.kind.isdunder and not check_dunders)
         ):
             report = _Report(func, targets, disable)
-            report.missing_docstring()
+            report.missing_class_docstring()
+            report.missing_func_docstring()
             if func.docstring.string is not None:
                 report.exists()
                 report.missing()

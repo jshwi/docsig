@@ -94,10 +94,15 @@ class Report(_MessageSequence):
         if len(self._func.docstring.args) > len(self._func.signature.args):
             self.append("E102")
 
-    def missing_docstring(self) -> None:
+    def missing_func_docstring(self) -> None:
         """Test that docstring is not missing from func."""
-        if self._func.docstring.string is None:
+        if not self._func.kind.isinit and self._func.docstring.string is None:
             self.append("E113")
+
+    def missing_class_docstring(self) -> None:
+        """Test that docstring is not missing from class."""
+        if self._func.kind.isinit and self._func.docstring.string is None:
+            self.append("E114")
 
     def missing(self) -> None:
         """Test that parameter is not missing from documentation."""

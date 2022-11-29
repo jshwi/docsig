@@ -6516,3 +6516,19 @@ def function({CHECK}param1, {CROSS}**kwargs) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 """
+
+
+@_templates.register
+class _FNoDocClassS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    
+    def __init__(param1, param2, param3) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E114

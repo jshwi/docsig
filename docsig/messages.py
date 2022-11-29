@@ -14,6 +14,7 @@ docsig.messages
 | E111: return statement documented for class
 | E112: spelling error found in documented parameter
 | E113: function is missing a docstring
+| E114: class is missing a docstring
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -30,6 +31,7 @@ E110 = "E110: documented parameter not equal to its respective argument"
 E111 = "E111: return statement documented for class"
 E112 = "E112: spelling error found in documented parameter"
 E113 = "E113: function is missing a docstring"
+E114 = "E114: class is missing a docstring"
 
 # Hxxx: Hint
 # H1xx: Docstring
