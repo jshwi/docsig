@@ -778,7 +778,14 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return ""
+        return f"""
+def function({CROSS}param1, {CROSS}**kwargs) -> {CHECK}None:
+    \"\"\"...
+
+    :keyword (**): {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+"""
 
 
 @_templates.register
