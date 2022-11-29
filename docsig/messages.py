@@ -13,7 +13,7 @@ docsig.messages
 | E110: documented parameter not equal to its respective argument
 | E111: return statement documented for class
 | E112: spelling error found in documented parameter
-| E113: function is missing a docstring"
+| E113: function is missing a docstring
 """
 # Exxx: Error
 # E1xx: Docstring
