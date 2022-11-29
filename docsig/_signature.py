@@ -30,7 +30,7 @@ class Signature:
         self._arguments = arguments
         self._args = _Params()
         self._args.extend(
-            _Param(self._param, a.name)
+            _Param(self._param, a.name, None)
             for a in self._arguments.args
             if not _isprotected(a.name)
         )
@@ -45,16 +45,17 @@ class Signature:
     def _get_args_kwargs(self) -> None:
         vararg = self._arguments.vararg
         if vararg is not None and not _isprotected(vararg):
-            self._args.append(_Param(self._param, f"*{vararg}"))
+            self._args.append(_Param(self._param, f"*{vararg}", None))
 
         if self._arguments.kwonlyargs:
             self._args.extend(
-                _Param(self._param, k.name) for k in self._arguments.kwonlyargs
+                _Param(self._param, k.name, None)
+                for k in self._arguments.kwonlyargs
             )
 
         kwarg = self._arguments.kwarg
         if kwarg is not None and not _isprotected(kwarg):
-            self._args.append(_Param(self._param, f"**{kwarg}"))
+            self._args.append(_Param(self._param, f"**{kwarg}", None))
 
     def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):

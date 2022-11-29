@@ -14,6 +14,7 @@ class Param(_t.NamedTuple):
 
     kind: str
     name: str | None
+    description: str | None
 
 
 class Params(_MutableSequence[Param]):
@@ -40,7 +41,9 @@ class Params(_MutableSequence[Param]):
         elif value.kind in self._keys and not any(
             i in y for y in self for i in self._keys
         ):
-            super().insert(index, Param(value.kind, self._kwarg_value))
+            super().insert(
+                index, Param(value.kind, self._kwarg_value, value.description)
+            )
 
     def get(self, index: int) -> Param:
         """Get a param.
@@ -54,4 +57,4 @@ class Params(_MutableSequence[Param]):
         try:
             return self[index]
         except IndexError:
-            return Param(self._param, None)
+            return Param(self._param, None, None)

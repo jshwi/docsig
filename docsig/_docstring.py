@@ -13,7 +13,6 @@ import sphinxcontrib.napoleon as _s
 from ._objects import MutableSequence as _MutableSequence
 from ._params import Param as _Param
 from ._params import Params as _Params
-from ._utils import get_index as _get_index
 
 
 class _GoogleDocstring(str):
@@ -50,9 +49,19 @@ class _Matches(_MutableSequence[_Param]):
 
     def __init__(self, string: str) -> None:
         super().__init__()
-        matches = [self._pattern.match(i) for i in string.splitlines()]
-        params = [i.group(1).split() for i in matches if i is not None]
-        super().extend(_Param(i[0], _get_index(1, i)) for i in params)
+        for line in string.splitlines():
+            if not line.startswith(" "):
+                match = self._pattern.split(line)[1:]
+                if match:
+                    name = description = None
+                    kinds = match[0].split()
+                    if len(kinds) > 1:
+                        name = kinds[1]
+
+                    if len(match) > 1:
+                        description = match[1]
+
+                    super().append(_Param(kinds[0], name, description))
 
 
 class Docstring:
@@ -66,7 +75,8 @@ class Docstring:
         self._args = _Params()
         if node is not None:
             self._string = RawDocstring(node.value)
-            self._args.extend(_Matches(self._string))
+            matches = _Matches(self._string)
+            self._args.extend(matches)
 
     @property
     def string(self) -> RawDocstring | None:
