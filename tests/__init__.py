@@ -16,6 +16,7 @@ from docsig import messages
 
 MockMainType = t.Callable[..., int]
 InitFileFixtureType = t.Callable[[str], Path]
+MakeTreeFixture = t.Callable[[Path, t.Dict[t.Any, t.Any]], None]
 
 short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
@@ -6575,3 +6576,86 @@ def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
 
 E115: syntax error in description
 """
+
+
+@_templates.register
+class _FOverrideAncestorsMultipleS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from __future__ import annotations
+
+import typing as _t
+
+T = _t.TypeVar("T")
+KT = _t.TypeVar("KT")
+VT = _t.TypeVar("VT")
+
+
+class _MutableSequence(_t.MutableSequence[T]):
+    \"\"\"List-object to inherit from.\"\"\"
+
+    def __init__(self) -> None:
+        self._list: list[T] = []
+
+    def insert(self, index: int, value: T) -> None:
+        self._list.insert(index, value)
+
+    @_t.overload
+    def __getitem__(self, i: int) -> T:
+        ...
+
+    @_t.overload
+    def __getitem__(self, s: slice) -> _t.MutableSequence[T]:
+        ...
+
+    def __getitem__(self, i):
+        return self._list.__getitem__(i)
+
+    @_t.overload
+    def __setitem__(self, i: int, o: T) -> None:
+        ...
+
+    @_t.overload
+    def __setitem__(self, s: slice, o: _t.Iterable[T]) -> None:
+        ...
+
+    def __setitem__(self, i, o):
+        return self._list.__setitem__(i, o)
+
+    @_t.overload
+    def __delitem__(self, i: int) -> None:
+        ...
+
+    @_t.overload
+    def __delitem__(self, i: slice) -> None:
+        ...
+
+    def __delitem__(self, i):
+        return self._list.__delitem__(i)
+
+    def __len__(self):
+        return self._list.__len__()
+
+
+# without this, the test will fail (not ideal)
+# TODO: remove this to test for why
+class Param(_t.NamedTuple):
+    \"\"\"A tuple of param types and their names.\"\"\"
+
+    kind: str = "param"
+    name: str | None = None
+    description: str | None = None
+    indent: int = 0
+
+
+class Params(_MutableSequence[Param]):
+    \"\"\"Represents collection of parameters.\"\"\"
+
+    def insert(self, index: int, value: Param) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E113
