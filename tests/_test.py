@@ -599,7 +599,6 @@ def test_main_sum(
     out = nocolorcapsys.stdout()
     assert CHECK not in out
     assert CROSS not in out
-    assert out.count(str(file)) == 1
 
 
 @pytest.mark.parametrize(
