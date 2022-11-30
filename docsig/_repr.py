@@ -63,16 +63,16 @@ class FuncStr(_UserString):
         )
 
     def add_param(
-        self, arg: _Param, doc: _Param, failed: bool = False
+        self, sig: _Param, doc: _Param, failed: bool = False
     ) -> None:
         """Add parameters to docstring.
 
-        :param arg: Signature argument.
+        :param sig: Signature argument.
         :param doc: Docstring argument.
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)
-        self.data += f"{self._mark}{arg.name}"
+        self.data += f"{self._mark}{sig.name}"
         self._cat_docstring(
             f"\n{self.TAB}:{doc.kind} {doc.name}: {self._mark}"
         )

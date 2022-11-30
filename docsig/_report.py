@@ -78,13 +78,13 @@ class Report(_MessageSequence):
         super().__init__(targets, disable)
         self._func = func
 
-    def order(self, arg: _Param, doc: _Param) -> None:
+    def order(self, sig: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
 
-        :param arg: Signature argument.
+        :param sig: Signature argument.
         :param doc: Docstring argument.
         """
-        if any(arg.name == i.name for i in self._func.docstring.args) or any(
+        if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
             self.append("E101")
@@ -154,25 +154,25 @@ class Report(_MessageSequence):
             if docstring is not None and "return" in docstring:
                 self.append("H102")
 
-    def incorrect(self, arg: _Param, doc: _Param) -> None:
+    def incorrect(self, sig: _Param, doc: _Param) -> None:
         """Test that proper syntax is used when documenting parameters.
 
-        :param arg: Signature argument.
+        :param sig: Signature argument.
         :param doc: Docstring argument.
         """
-        if arg.name is None and doc.name is None:
+        if sig.name is None and doc.name is None:
             self.append("E107")
 
-    def not_equal(self, arg: _Param, doc: _Param) -> None:
+    def not_equal(self, sig: _Param, doc: _Param) -> None:
         """Final catch-all.
 
         Only applies if no other errors, including disabled, have been
         triggered
 
-        :param arg: Signature argument.
+        :param sig: Signature argument.
         :param doc: Docstring argument.
         """
-        if arg.name is not None and doc.name is not None and not self._errors:
+        if sig.name is not None and doc.name is not None and not self._errors:
             self.append("E110")
 
     def class_return(self) -> None:
@@ -181,21 +181,21 @@ class Report(_MessageSequence):
             self.append("E111")
             self.append("H103")
 
-    def misspelled(self, arg: _Param, doc: _Param) -> None:
+    def misspelled(self, sig: _Param, doc: _Param) -> None:
         """Test whether there is a spelling error in documentation.
 
         To avoid false positives also check whether doc param is almost
         equal amongst its sibling params. If params are too similarly
         named then this error won't be raised.
 
-        :param arg: Signature argument.
+        :param sig: Signature argument.
         :param doc: Docstring argument.
         """
         if (
-            arg.name is not None
+            sig.name is not None
             and doc.name is not None
             and not self._errors
-            and _almost_equal(arg.name, doc.name, _MIN_MATCH, _MAX_MATCH)
+            and _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH)
         ):
             self.append("E112")
 

@@ -17,16 +17,16 @@ from ._report import Report as _Report
 from ._repr import FuncStr as _FuncStr
 
 
-def _compare_args(arg: _Param, doc: _Param) -> bool:
-    if doc.kind in ("key", "keyword") and arg.name is not None:
-        return arg.name[:2] == "**"
+def _compare_args(sig: _Param, doc: _Param) -> bool:
+    if doc.kind in ("key", "keyword") and sig.name is not None:
+        return sig.name[:2] == "**"
 
-    arg_name = arg.name
-    if isinstance(arg_name, str):
-        arg_name = arg_name.replace("*", "")
+    sig_name = sig.name
+    if isinstance(sig_name, str):
+        sig_name = sig_name.replace("*", "")
 
     return (
-        arg_name == doc.name and arg_name is not None and doc.name is not None
+        sig_name == doc.name and sig_name is not None and doc.name is not None
     )
 
 
