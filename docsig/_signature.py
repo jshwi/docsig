@@ -22,8 +22,6 @@ class Signature:
         for a static method or not.
     """
 
-    _param = "param"
-
     def __init__(
         self,
         arguments: _ast.Arguments,
@@ -34,7 +32,7 @@ class Signature:
         self._arguments = arguments
         self._args = _Params()
         self._args.extend(
-            _Param(self._param, a.name, None, 0)
+            _Param(name=a.name)
             for a in self._arguments.args
             if not _isprotected(a.name)
         )
@@ -49,17 +47,16 @@ class Signature:
     def _get_args_kwargs(self) -> None:
         vararg = self._arguments.vararg
         if vararg is not None and not _isprotected(vararg):
-            self._args.append(_Param(self._param, f"*{vararg}", None, 0))
+            self._args.append(_Param(name=f"*{vararg}"))
 
         if self._arguments.kwonlyargs:
             self._args.extend(
-                _Param(self._param, k.name, None, 0)
-                for k in self._arguments.kwonlyargs
+                _Param(name=k.name) for k in self._arguments.kwonlyargs
             )
 
         kwarg = self._arguments.kwarg
         if kwarg is not None and not _isprotected(kwarg):
-            self._args.append(_Param(self._param, f"**{kwarg}", None, 0))
+            self._args.append(_Param(name=f"**{kwarg}"))
 
     def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):
