@@ -16,6 +16,10 @@ class Signature:
 
     :param arguments: Argument's abstract syntax tree.
     :param returns: Function's return value.
+    :param ismethod: Boolean value for whether this signature is for a
+        class method or not.
+    :param isstaticmethod: Boolean value for whether this signature is
+        for a static method or not.
     """
 
     _param = "param"
