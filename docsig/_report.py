@@ -4,8 +4,6 @@ docsig._report
 """
 from __future__ import annotations
 
-from collections import Counter as _Counter
-
 from . import messages as _messages
 from ._function import Function as _Function
 from ._objects import MutableSequence as _MutableSequence
@@ -111,9 +109,7 @@ class Report(_MessageSequence):
 
     def duplicates(self) -> None:
         """Test that there are no duplicate parameters in docstring."""
-        if any(
-            k for k, v in _Counter(self._func.docstring.args).items() if v > 1
-        ):
+        if self._func.docstring.args.duplicated:
             self.append("E106")
 
     def extra_return(self) -> None:

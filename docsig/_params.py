@@ -5,6 +5,7 @@ docsig._params
 from __future__ import annotations
 
 import typing as _t
+from collections import Counter as _Counter
 
 from ._objects import MutableSequence as _MutableSequence
 
@@ -59,3 +60,8 @@ class Params(_MutableSequence[Param]):
             return self[index]
         except IndexError:
             return Param()
+
+    @property
+    def duplicated(self) -> bool:
+        """Boolean value for whether there are duplicate parameters."""
+        return any(k for k, v in _Counter(self).items() if v > 1)
