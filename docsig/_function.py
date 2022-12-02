@@ -220,18 +220,33 @@ class _Docstring:
         )
 
 
-class _FunctionKind:
-    """Check node for kinds of functions.
+class Function:
+    """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
     """
 
     def __init__(self, node: _ast.FunctionDef) -> None:
-        self._node = node
+        self._name = node.name
         self._parent = node.parent.frame()
+        self._parent_name = self._parent.name
+        self._lineno = node.lineno or 0
+        self._decorators = node.decorators
+        doc_node = node.doc_node
+        if self.isinit:
+            doc_node = self._parent.doc_node
+
+        self._signature = _Signature(
+            node.args, node.returns, self.ismethod, self.isstaticmethod
+        )
+        self._docstring = _Docstring(doc_node)
+
+    def __len__(self) -> int:
+        """Length of the longest sequence of args."""
+        return max([len(self.signature.args), len(self.docstring.args)])
 
     def _by_decorated(self, name: str) -> bool:
-        decorators = self._node.decorators
+        decorators = self._decorators
         if decorators is not None:
             for dec in decorators.nodes:
                 if isinstance(dec, _ast.Name) and dec.name == name:
@@ -252,15 +267,15 @@ class _FunctionKind:
     @property
     def isinit(self) -> bool:
         """Boolean value for whether function is a class constructor."""
-        return self.ismethod and self._node.name == "__init__"
+        return self.ismethod and self.name == "__init__"
 
     @property
     def isoverridden(self) -> bool:
         """Boolean value for whether function is overridden."""
         if self.ismethod and not self.isinit:
             for ancestor in self._parent.ancestors():
-                if self._node.name in ancestor and isinstance(
-                    ancestor[self._node.name], _ast.nodes.FunctionDef
+                if self.name in ancestor and isinstance(
+                    ancestor[self.name], _ast.nodes.FunctionDef
                 ):
                     return True
 
@@ -270,9 +285,7 @@ class _FunctionKind:
     def isprotected(self) -> bool:
         """Boolean value for whether function is protected."""
         return (
-            _isprotected(self._node.name)
-            and not self.isinit
-            and not self.isdunder
+            _isprotected(self.name) and not self.isinit and not self.isdunder
         )
 
     @property
@@ -286,37 +299,8 @@ class _FunctionKind:
         return (
             self.ismethod
             and not self.isinit
-            and self._node.name[:2] + self._node.name[-2:] == "____"
+            and self.name[:2] + self.name[-2:] == "____"
         )
-
-
-class Function:
-    """Represents a function with signature and docstring parameters.
-
-    :param node: Function's abstract syntax tree.
-    """
-
-    def __init__(self, node: _ast.FunctionDef) -> None:
-        self._kind = _FunctionKind(node)
-        self._name = node.name
-        parent = node.parent.frame()
-        self._parent_name = parent.name
-        self._lineno = node.lineno or 0
-        doc_node = node.doc_node
-        if self._kind.isinit:
-            doc_node = parent.doc_node
-
-        self._signature = _Signature(
-            node.args,
-            node.returns,
-            self._kind.ismethod,
-            self._kind.isstaticmethod,
-        )
-        self._docstring = _Docstring(doc_node)
-
-    def __len__(self) -> int:
-        """Length of the longest sequence of args."""
-        return max([len(self.signature.args), len(self.docstring.args)])
 
     @property
     def name(self) -> str:
@@ -332,11 +316,6 @@ class Function:
     def lineno(self) -> int:
         """Line number of function declaration."""
         return self._lineno
-
-    @property
-    def kind(self) -> _FunctionKind:
-        """Kind of function."""
-        return self._kind
 
     @property
     def signature(self) -> _Signature:

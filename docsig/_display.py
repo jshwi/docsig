@@ -75,7 +75,7 @@ class FuncStr(_UserString):
         super().__init__(func.name)
         self._ansi = _ANSI(no_ansi)
         self._parent_name = func.parent_name
-        self._isinit = func.kind.isinit
+        self._isinit = func.isinit
         self.data = ""
         self._is_string = func.docstring.string is not None
         if self._isinit:

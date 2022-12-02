@@ -94,12 +94,12 @@ class Report(_MessageSequence):
 
     def missing_func_docstring(self) -> None:
         """Test that docstring is not missing from func."""
-        if not self._func.kind.isinit and self._func.docstring.string is None:
+        if not self._func.isinit and self._func.docstring.string is None:
             self.append("E113")
 
     def missing_class_docstring(self) -> None:
         """Test that docstring is not missing from class."""
-        if self._func.kind.isinit and self._func.docstring.string is None:
+        if self._func.isinit and self._func.docstring.string is None:
             self.append("E114")
 
     def missing(self) -> None:
@@ -117,14 +117,14 @@ class Report(_MessageSequence):
         if (
             self._func.docstring.returns
             and self._func.signature.return_value == "None"
-            and not self._func.kind.isproperty
-            and not self._func.kind.isinit
+            and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E104")
 
     def property_return(self) -> None:
         """Check that return is not documented for property."""
-        if self._func.docstring.returns and self._func.kind.isproperty:
+        if self._func.docstring.returns and self._func.isproperty:
             self.append("E108")
             self.append("H101")
 
@@ -132,8 +132,8 @@ class Report(_MessageSequence):
         """Check that return is not documented when no type provided."""
         if (
             self._func.signature.return_value is None
-            and not self._func.kind.isproperty
-            and not self._func.kind.isinit
+            and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E109")
 
@@ -142,8 +142,8 @@ class Report(_MessageSequence):
         if (
             self._func.signature.returns
             and not self._func.docstring.returns
-            and not self._func.kind.isproperty
-            and not self._func.kind.isinit
+            and not self._func.isproperty
+            and not self._func.isinit
         ):
             self.append("E105")
             docstring = self._func.docstring.string
@@ -173,7 +173,7 @@ class Report(_MessageSequence):
 
     def class_return(self) -> None:
         """Check that return is not documented for __init__."""
-        if self._func.docstring.returns and self._func.kind.isinit:
+        if self._func.docstring.returns and self._func.isinit:
             self.append("E111")
             self.append("H103")
 
