@@ -30,23 +30,13 @@ def _compare_args(sig: _Param, doc: _Param) -> bool:
 
 
 def _construct_func(
-    func: _Function, report: _Report, no_ansi: bool = False
+    func: _Function, longest: int, no_ansi: bool = False
 ) -> _FuncStr:
     func_str = _FuncStr(func, no_ansi)
-    longest = max([len(func.signature.args), len(func.docstring.args)])
     for index in range(longest):
         arg = func.signature.args.get(index)
         doc = func.docstring.args.get(index)
-        report.description_syntax(doc)
-        report.indent_syntax(doc)
-        result = _compare_args(arg, doc)
-        if not result:
-            report.order(arg, doc)
-            report.incorrect(arg, doc)
-            report.misspelled(arg, doc)
-            report.not_equal(arg, doc)
-
-        func_str.add_param(arg, doc, not result)
+        func_str.add_param(arg, doc, not _compare_args(arg, doc))
         if index + 1 != longest:
             func_str.add_comma()
 
@@ -67,6 +57,35 @@ def _construct_func(
     return func_str
 
 
+def _generate_report(
+    func: _Function, targets: list[str], disable: list[str], longest: int
+):
+    report = _Report(func, targets, disable)
+    report.missing_class_docstring()
+    report.missing_func_docstring()
+    if func.docstring.string is not None:
+        report.exists()
+        report.missing()
+        report.duplicates()
+        report.extra_return()
+        report.return_not_typed()
+        report.missing_return()
+        report.property_return()
+        report.class_return()
+        for index in range(longest):
+            arg = func.signature.args.get(index)
+            doc = func.docstring.args.get(index)
+            report.description_syntax(doc)
+            report.indent_syntax(doc)
+            if not _compare_args(arg, doc):
+                report.order(arg, doc)
+                report.incorrect(arg, doc)
+                report.misspelled(arg, doc)
+                report.not_equal(arg, doc)
+
+    return report
+
+
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool = False,
@@ -84,20 +103,11 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.kind.isinit and not check_class)
             and not (func.kind.isdunder and not check_dunders)
         ):
-            report = _Report(func, targets, disable)
-            report.missing_class_docstring()
-            report.missing_func_docstring()
-            if func.docstring.string is not None:
-                report.exists()
-                report.missing()
-                report.duplicates()
-                report.extra_return()
-                report.return_not_typed()
-                report.missing_return()
-                report.property_return()
-                report.class_return()
-
-            func_str = _construct_func(func, report, no_ansi)
+            longest = max([len(func.signature.args), len(func.docstring.args)])
+            report = _generate_report(
+                func, targets or [], disable or [], longest
+            )
+            func_str = _construct_func(func, longest, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
 
