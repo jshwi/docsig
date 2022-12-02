@@ -88,13 +88,13 @@ def _generate_report(
 
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
-    check_class: bool = False,
-    check_dunders: bool = False,
-    check_overridden: bool = False,
-    check_protected: bool = False,
-    no_ansi: bool = False,
-    targets: list[str] | None = None,
-    disable: list[str] | None = None,
+    check_class: bool,
+    check_dunders: bool,
+    check_overridden: bool,
+    check_protected: bool,
+    no_ansi: bool,
+    targets: list[str],
+    disable: list[str],
 ) -> _Failures:
     failures = _Failures()
     for func in parent:
@@ -104,9 +104,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.kind.isdunder and not check_dunders)
         ):
             longest = max([len(func.signature.args), len(func.docstring.args)])
-            report = _generate_report(
-                func, targets or [], disable or [], longest
-            )
+            report = _generate_report(func, targets, disable, longest)
             func_str = _construct_func(func, longest, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
@@ -159,8 +157,8 @@ def docsig(
                     check_overridden,
                     check_protected,
                     no_ansi,
-                    targets,
-                    disable,
+                    targets or [],
+                    disable or [],
                 )
                 if failures:
                     display[top_level.path].append(failures)
