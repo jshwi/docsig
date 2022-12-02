@@ -29,15 +29,13 @@ def _compare_args(sig: _Param, doc: _Param) -> bool:
     )
 
 
-def _construct_func(
-    func: _Function, longest: int, no_ansi: bool = False
-) -> _FuncStr:
+def _construct_func(func: _Function, no_ansi: bool = False) -> _FuncStr:
     func_str = _FuncStr(func, no_ansi)
-    for index in range(longest):
+    for index in range(len(func)):
         arg = func.signature.args.get(index)
         doc = func.docstring.args.get(index)
         func_str.add_param(arg, doc, not _compare_args(arg, doc))
-        if index + 1 != longest:
+        if index + 1 != len(func):
             func_str.add_comma()
 
     func_str.set_mark()
@@ -57,9 +55,7 @@ def _construct_func(
     return func_str
 
 
-def _generate_report(
-    func: _Function, targets: list[str], disable: list[str], longest: int
-):
+def _generate_report(func: _Function, targets: list[str], disable: list[str]):
     report = _Report(func, targets, disable)
     report.missing_class_docstring()
     report.missing_func_docstring()
@@ -72,7 +68,7 @@ def _generate_report(
         report.missing_return()
         report.property_return()
         report.class_return()
-        for index in range(longest):
+        for index in range(len(func)):
             arg = func.signature.args.get(index)
             doc = func.docstring.args.get(index)
             report.description_syntax(doc)
@@ -103,9 +99,8 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.kind.isinit and not check_class)
             and not (func.kind.isdunder and not check_dunders)
         ):
-            longest = max([len(func.signature.args), len(func.docstring.args)])
-            report = _generate_report(func, targets, disable, longest)
-            func_str = _construct_func(func, longest, no_ansi)
+            report = _generate_report(func, targets, disable)
+            func_str = _construct_func(func, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
 

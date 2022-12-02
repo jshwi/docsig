@@ -105,6 +105,10 @@ class Function:
         )
         self._docstring = _Docstring(doc_node)
 
+    def __len__(self) -> int:
+        """Length of the longest sequence of args."""
+        return max([len(self.signature.args), len(self.docstring.args)])
+
     @property
     def name(self) -> str:
         """The name of the function."""
