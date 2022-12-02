@@ -227,30 +227,23 @@ class Function:
     """
 
     def __init__(self, node: _ast.FunctionDef) -> None:
-        self._name = node.name
+        self._node = node
         self._parent = node.parent.frame()
-        self._parent_name = self._parent.name
-        self._lineno = node.lineno or 0
-        self._decorators = node.decorators
-        doc_node = node.doc_node
-        if self.isinit:
-            doc_node = self._parent.doc_node
-
         self._signature = _Signature(
             node.args, node.returns, self.ismethod, self.isstaticmethod
         )
-        self._docstring = _Docstring(doc_node)
+        self._docstring = _Docstring(
+            node.doc_node if not self.isinit else self._parent.doc_node
+        )
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""
         return max([len(self.signature.args), len(self.docstring.args)])
 
-    def _by_decorated(self, name: str) -> bool:
-        decorators = self._decorators
-        if decorators is not None:
-            for dec in decorators.nodes:
-                if isinstance(dec, _ast.Name) and dec.name == name:
-                    return True
+    def _decorated_with(self, name: str) -> bool:
+        if self._node.decorators is not None:
+            for dec in self._node.decorators.nodes:
+                return isinstance(dec, _ast.Name) and dec.name == name
 
         return False
 
@@ -262,7 +255,7 @@ class Function:
     @property
     def isproperty(self) -> bool:
         """Boolean value for whether function is a property."""
-        return self.ismethod and self._by_decorated("property")
+        return self.ismethod and self._decorated_with("property")
 
     @property
     def isinit(self) -> bool:
@@ -275,7 +268,7 @@ class Function:
         if self.ismethod and not self.isinit:
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
-                    ancestor[self.name], _ast.nodes.FunctionDef
+                    ancestor[self.name], _ast.FunctionDef
                 ):
                     return True
 
@@ -291,7 +284,7 @@ class Function:
     @property
     def isstaticmethod(self) -> bool:
         """Boolean value for whether function is a static method."""
-        return self.ismethod and self._by_decorated("staticmethod")
+        return self.ismethod and self._decorated_with("staticmethod")
 
     @property
     def isdunder(self) -> bool:
@@ -305,17 +298,19 @@ class Function:
     @property
     def name(self) -> str:
         """The name of the function."""
-        return self._name
+        return self._node.name
 
     @property
-    def parent_name(self) -> str:
-        """The name of the function's parent."""
-        return self._parent_name
+    def parent(
+        self,
+    ) -> _ast.FunctionDef | _ast.Module | _ast.ClassDef | _ast.Lambda:
+        """Function's parent node."""
+        return self._parent
 
     @property
     def lineno(self) -> int:
         """Line number of function declaration."""
-        return self._lineno
+        return self._node.lineno or 0
 
     @property
     def signature(self) -> _Signature:

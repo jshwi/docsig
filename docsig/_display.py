@@ -74,7 +74,7 @@ class FuncStr(_UserString):
     def __init__(self, func: _Function, no_ansi: bool = False) -> None:
         super().__init__(func.name)
         self._ansi = _ANSI(no_ansi)
-        self._parent_name = func.parent_name
+        self._parent_name = func.parent.name
         self._isinit = func.isinit
         self.data = ""
         self._is_string = func.docstring.string is not None
