@@ -8,12 +8,12 @@ from pathlib import Path as _Path
 
 from ._display import Display as _Display
 from ._display import Failures as _Failures
+from ._display import FuncStr as _FuncStr
 from ._function import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._params import Param as _Param
 from ._report import Report as _Report
-from ._repr import FuncStr as _FuncStr
 
 
 def _compare_args(sig: _Param, doc: _Param) -> bool:

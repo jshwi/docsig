@@ -7,7 +7,7 @@ from pathlib import Path as _Path
 
 from arcon import ArgumentParser as _ArgumentParser
 
-from ._ansi import color as _color
+from ._display import color as _color
 from ._version import __version__
 
 NAME = __name__.split(".", maxsplit=1)[0]
