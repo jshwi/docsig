@@ -36,10 +36,8 @@ class _DocFmt(str):
         )
 
 
-class RawDocstring(str):
-    """Instantiate a `Sphinx` docstring from available types."""
-
-    def __new__(cls, string: str) -> RawDocstring:
+class _RawDocstring(str):
+    def __new__(cls, string: str) -> _RawDocstring:
         return super().__new__(
             cls, _NumpyDocstring(_GoogleDocstring(_DocFmt(string)))
         )
@@ -199,12 +197,12 @@ class _Docstring:
         self._string = None
         self._args = _Params()
         if node is not None:
-            self._string = RawDocstring(node.value)
+            self._string = _RawDocstring(node.value)
             matches = _Matches(self._string)
             self._args.extend(matches)
 
     @property
-    def string(self) -> RawDocstring | None:
+    def string(self) -> _RawDocstring | None:
         """The raw documentation string, if it exists, else None."""
         return self._string
 
