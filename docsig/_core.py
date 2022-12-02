@@ -59,12 +59,12 @@ def _generate_report(func: _Function, targets: list[str], disable: list[str]):
     report = _Report(func, targets, disable)
     report.missing_class_docstring()
     report.missing_func_docstring()
+    report.return_not_typed()
     if func.docstring.string is not None:
         report.exists()
         report.missing()
         report.duplicates()
         report.extra_return()
-        report.return_not_typed()
         report.missing_return()
         report.property_return()
         report.class_return()
