@@ -12,10 +12,14 @@ VT = _t.TypeVar("VT")
 
 
 class MutableSequence(_t.MutableSequence[T]):
-    """List-object to inherit from."""
+    """List-object to inherit from.
 
-    def __init__(self) -> None:
+    :param iterable: Initial iterable to to construct sequence with.
+    """
+
+    def __init__(self, iterable: _t.Iterable[T] = ()) -> None:
         self._list: list[T] = []
+        self.extend(iterable)
 
     def insert(self, index: int, value: T) -> None:
         self._list.insert(index, value)

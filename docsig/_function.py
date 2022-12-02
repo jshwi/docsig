@@ -120,8 +120,7 @@ class _Signature:
         isstaticmethod: bool = False,
     ) -> None:
         self._arguments = arguments
-        self._args = _Params()
-        self._args.extend(
+        self._args = _Params(
             Param(name=a.name)
             for a in self._arguments.args
             if not _isprotected(a.name)
