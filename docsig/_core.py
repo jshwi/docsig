@@ -4,7 +4,6 @@ docsig._core
 """
 from __future__ import annotations
 
-from itertools import zip_longest as _zip_longest
 from pathlib import Path as _Path
 
 from ._display import Display as _Display
@@ -34,24 +33,21 @@ def _construct_func(
     func: _Function, report: _Report, no_ansi: bool = False
 ) -> _FuncStr:
     func_str = _FuncStr(func, no_ansi)
-    for count, _ in enumerate(
-        _zip_longest(func.signature.args, func.docstring.args)
-    ):
-        longest = max([len(func.signature.args), len(func.docstring.args)])
-        arg = func.signature.args.get(count)
-        doc = func.docstring.args.get(count)
+    longest = max([len(func.signature.args), len(func.docstring.args)])
+    for index in range(longest):
+        arg = func.signature.args.get(index)
+        doc = func.docstring.args.get(index)
         report.description_syntax(doc)
         report.indent_syntax(doc)
-        if _compare_args(arg, doc):
-            func_str.add_param(arg, doc)
-        else:
-            func_str.add_param(arg, doc, failed=True)
+        result = _compare_args(arg, doc)
+        if not result:
             report.order(arg, doc)
             report.incorrect(arg, doc)
             report.misspelled(arg, doc)
             report.not_equal(arg, doc)
 
-        if count + 1 != longest:
+        func_str.add_param(arg, doc, not result)
+        if index + 1 != longest:
             func_str.add_comma()
 
     func_str.set_mark()
