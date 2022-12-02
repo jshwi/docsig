@@ -6,8 +6,8 @@ from __future__ import annotations
 
 from . import messages as _messages
 from ._function import Function as _Function
+from ._function import Param as _Param
 from ._objects import MutableSequence as _MutableSequence
-from ._params import Param as _Param
 from ._utils import almost_equal as _almost_equal
 
 _MIN_MATCH = 0.8

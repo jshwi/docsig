@@ -17,9 +17,9 @@ from pygments.formatters.terminal256 import (
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
 from ._function import Function as _Function
+from ._function import Param as _Param
 from ._objects import MutableMapping as _MutableMapping
 from ._objects import MutableSequence as _MutableSequence
-from ._params import Param as _Param
 from ._report import Report as _Report
 
 color = _Color()
