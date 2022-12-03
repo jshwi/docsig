@@ -35,31 +35,28 @@ class _ANSI:
     def __init__(self, no_ansi: bool = False) -> None:
         self._no_ansi = no_ansi
 
-    def get_color(self, obj: _t.Any, color_obj: _Color) -> str:
+    def color(self, obj: _t.Any, color_obj: _Color) -> str:
         """Get string with selected color.
 
         :param obj: Any object, represented as ``__str__``.
         :param color_obj: Instantiated ``Color`` object.
         :return: Colored string or string as was supplied.
         """
-        string = str(obj)
-        if self._no_ansi:
-            return string
+        return str(obj) if self._no_ansi else color_obj.get(obj)
 
-        return color_obj.get(obj)
-
-    def get_syntax(self, obj: _t.Any) -> str:
+    def syntax(self, obj: _t.Any) -> str:
         """Get code representation with syntax highlighting.
 
         :param obj: Any object, represented as ``__str__``.
         :return: Colored string or string as was supplied.
         """
-        string = str(obj)
-        if self._no_ansi:
-            return string
-
-        formatter = _Terminal256Formatter(style="monokai")
-        return _highlight(string, _PythonLexer(), formatter).strip()
+        return (
+            str(obj)
+            if self._no_ansi
+            else _highlight(
+                obj, _PythonLexer(), _Terminal256Formatter(style="monokai")
+            ).strip()
+        )
 
 
 class FuncStr(_UserString):
@@ -84,17 +81,13 @@ class FuncStr(_UserString):
         if self._isinit:
             self.data += TAB
 
-        self.data += self._ansi.get_syntax(f"def {func.name}(")
+        self.data += self._ansi.syntax(f"def {func.name}(")
         if self._is_string:
-            self._docstring = self._ansi.get_syntax(
-                f"{TAB}{self.TRIPLE_QUOTES}"
-            )
+            self._docstring = self._ansi.syntax(f"{TAB}{self.TRIPLE_QUOTES}")
         else:
-            self._docstring = "{}{}\n".format(
-                TAB, self._ansi.get_color("...", color.red)
-            )
+            self._docstring = f"{TAB}{self._ansi.color('...', color.red)}\n"
 
-        self._mark = self._ansi.get_color(self.CHECK, color.green)
+        self._mark = self._ansi.color(self.CHECK, color.green)
 
     def _cat_docstring(self, string: str) -> None:
         if self._is_string:
@@ -106,9 +99,9 @@ class FuncStr(_UserString):
         :param failed: Boolean to test that check failed.
         """
         self._mark = (
-            self._ansi.get_color(self.CROSS, color.red)
+            self._ansi.color(self.CROSS, color.red)
             if failed
-            else self._ansi.get_color(self.CHECK, color.green)
+            else self._ansi.color(self.CHECK, color.green)
         )
 
     def add_param(
@@ -150,33 +143,33 @@ class FuncStr(_UserString):
         """
         if arg is not None:
             self.data += "{}{}{}{}".format(
-                self._ansi.get_syntax(") -> "),
+                self._ansi.syntax(") -> "),
                 self._mark,
                 arg,
-                self._ansi.get_syntax(":"),
+                self._ansi.syntax(":"),
             )
         else:
             self.data += "{}{}{}".format(
-                self._ansi.get_syntax(")"),
-                self._ansi.get_color("?", color.red),
-                self._ansi.get_syntax(":"),
+                self._ansi.syntax(")"),
+                self._ansi.color("?", color.red),
+                self._ansi.syntax(":"),
             )
 
     def add_comma(self) -> None:
         """Add comma between parenthesis."""
-        self.data += self._ansi.get_syntax(", ")
+        self.data += self._ansi.syntax(", ")
 
     def close_docstring(self) -> None:
         """Close docstring."""
         self._cat_docstring(
-            f"\n{TAB}{self._ansi.get_syntax(self.TRIPLE_QUOTES)}\n"
+            f"\n{TAB}{self._ansi.syntax(self.TRIPLE_QUOTES)}\n"
         )
 
     def render(self) -> None:
         """Render final string by adding docstring to function."""
         if self._isinit:
             self.data = (
-                self._ansi.get_syntax(f"class {self._parent_name}:")
+                self._ansi.syntax(f"class {self._parent_name}:")
                 + f"\n{self._docstring}"
                 + f"\n{self.data}\n"
             )
@@ -218,7 +211,7 @@ class Display(_DisplaySequence):
             for failures in value:
                 for func_str, lineno, report in failures:
                     header = f"{key}{lineno}"
-                    print(self._ansi.get_color(header, color.magenta))
+                    print(self._ansi.color(header, color.magenta))
                     print(len(header) * "-")
                     print(func_str)
                     print(report.get_report())
@@ -227,14 +220,14 @@ class Display(_DisplaySequence):
         """Display report summary if any checks have failed."""
         for key, value in self.items():
             path = key[:-2]
-            print(self._ansi.get_color(path, color.magenta))
+            print(self._ansi.color(path, color.magenta))
             print(len(path) * "-")
             for failures in value:
                 for _, lineno, report in failures:
-                    pipe = self._ansi.get_color("|", color.cyan)
+                    pipe = self._ansi.color("|", color.cyan)
                     print(
                         "{}\t{} {}\n".format(
-                            self._ansi.get_color(lineno, color.yellow),
+                            self._ansi.color(lineno, color.yellow),
                             pipe,
                             report.get_report("\t{} ".format(pipe)).strip(),
                         )
