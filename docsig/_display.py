@@ -26,6 +26,8 @@ color = _Color()
 
 color.populate_colors()
 
+TAB = "    "
+
 
 class _ANSI:
     def __init__(self, no_ansi: bool = False) -> None:
@@ -69,7 +71,6 @@ class FuncStr(_UserString):
     CHECK = "\u2713"
     CROSS = "\u2716"
     TRIPLE_QUOTES = '"""'
-    TAB = "    "
 
     def __init__(self, func: _Function, no_ansi: bool = False) -> None:
         super().__init__(func.name)
@@ -79,16 +80,16 @@ class FuncStr(_UserString):
         self.data = ""
         self._is_string = func.docstring.string is not None
         if self._isinit:
-            self.data += self.TAB
+            self.data += TAB
 
         self.data += self._ansi.get_syntax(f"def {func.name}(")
         if self._is_string:
             self._docstring = "{}\n".format(
-                self._ansi.get_syntax(f"{self.TAB}{self.TRIPLE_QUOTES}...")
+                self._ansi.get_syntax(f"{TAB}{self.TRIPLE_QUOTES}...")
             )
         else:
             self._docstring = "{}{}\n".format(
-                self.TAB, self._ansi.get_color("...", color.red)
+                TAB, self._ansi.get_color("...", color.red)
             )
 
         self._mark = self._ansi.get_color(self.CHECK, color.green)
@@ -119,9 +120,7 @@ class FuncStr(_UserString):
         """
         self.set_mark(failed)
         self.data += f"{self._mark}{sig.name}"
-        self._cat_docstring(
-            f"\n{self.TAB}:{doc.kind} {doc.name}: {self._mark}"
-        )
+        self._cat_docstring(f"\n{TAB}:{doc.kind} {doc.name}: {self._mark}")
 
     def add_return(self, failed: bool = False) -> None:
         """Add return statement to docstring.
@@ -129,7 +128,7 @@ class FuncStr(_UserString):
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)
-        self._cat_docstring(f"\n{self.TAB}:return: {self._mark}")
+        self._cat_docstring(f"\n{TAB}:return: {self._mark}")
 
     def close_sig(self, arg: str | None) -> None:
         """Close function signature.
@@ -157,7 +156,7 @@ class FuncStr(_UserString):
     def close_docstring(self) -> None:
         """Close docstring."""
         self._cat_docstring(
-            f"\n{self.TAB}{self._ansi.get_syntax(self.TRIPLE_QUOTES)}\n"
+            f"\n{TAB}{self._ansi.get_syntax(self.TRIPLE_QUOTES)}\n"
         )
 
     def render(self) -> None:

@@ -5,6 +5,7 @@ docsig._report
 from __future__ import annotations
 
 from . import messages as _messages
+from ._function import RETURN as _RETURN
 from ._function import Function as _Function
 from ._function import Param as _Param
 from ._objects import MutableSequence as _MutableSequence
@@ -147,7 +148,7 @@ class Report(_MessageSequence):
         ):
             self.append("E105")
             docstring = self._func.docstring.string
-            if docstring is not None and "return" in docstring:
+            if docstring is not None and _RETURN in docstring:
                 self.append("H102")
 
     def incorrect(self, sig: _Param, doc: _Param) -> None:

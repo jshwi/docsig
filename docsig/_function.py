@@ -15,6 +15,11 @@ import sphinxcontrib.napoleon as _s
 from ._objects import MutableSequence as _MutableSequence
 from ._utils import isprotected as _isprotected
 
+PARAM = "param"
+KEYWORD = "keyword"
+KEY = "key"
+RETURN = "return"
+
 
 class _GoogleDocstring(str):
     def __new__(cls, string: str) -> _GoogleDocstring:
@@ -46,7 +51,7 @@ class _RawDocstring(str):
 class Param(_t.NamedTuple):
     """A tuple of param types and their names."""
 
-    kind: str = "param"
+    kind: str = PARAM
     name: str | None = None
     description: str | None = None
     indent: int = 0
@@ -54,7 +59,7 @@ class Param(_t.NamedTuple):
 
 class _Matches(_MutableSequence[Param]):
     _pattern = _re.compile(":(.*?):")
-    _normalize = {"keyword": "key"}
+    _normalize = {KEYWORD: KEY}
 
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -87,17 +92,13 @@ class _Matches(_MutableSequence[Param]):
 
 class _Params(_MutableSequence[Param]):
 
-    _param = "param"
-    _key = "key"
     _kwarg_value = "(**)"
 
     def insert(self, index: int, value: Param) -> None:
-        if value.kind == self._param:
+        if value.kind == PARAM:
             super().insert(index, value)
 
-        elif value.kind == self._key and not any(
-            i.kind == self._key for i in self
-        ):
+        elif value.kind == KEY and not any(i.kind == KEY for i in self):
             super().insert(
                 index, Param(value.kind, self._kwarg_value, value.description)
             )
