@@ -72,8 +72,7 @@ def function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -98,8 +97,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -172,8 +170,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -221,8 +218,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -250,8 +246,7 @@ def function(param1, param2, param3) -> int:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -298,8 +293,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -326,8 +320,7 @@ def function(param1) -> t.Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -352,8 +345,7 @@ def function(param1) -> Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -397,8 +389,7 @@ def function(param1) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param None: {CROSS}
     \"\"\"
@@ -558,8 +549,7 @@ def function(param1, param2, *args) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -603,8 +593,7 @@ def function(param1, param2, **kwargs) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -646,8 +635,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -657,8 +645,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -668,8 +655,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -698,8 +684,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -781,8 +766,7 @@ def function(param1, **kwargs) -> None:
     def expected(self) -> str:
         return f"""
 def function({CROSS}param1, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :key (**): {CROSS}
     :param param1: {CROSS}
     \"\"\"
@@ -937,8 +921,7 @@ def get_index(index: int) -> _T | None:
     def expected(self) -> str:
         return f"""
 def get_index({CROSS}index) -> {CHECK}_T | None:
-    \"\"\"...
-
+    \"\"\"
     :param None: {CROSS}
     :return: {CHECK}
     \"\"\"
@@ -1216,8 +1199,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -1309,8 +1291,7 @@ class Klass:
     def expected(self) -> str:
         return f"""
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :return: {CROSS}
@@ -1360,8 +1341,7 @@ def _function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -1498,8 +1478,7 @@ class _Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -1552,8 +1531,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -1625,8 +1603,7 @@ def function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -1655,8 +1632,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -1738,8 +1714,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -1805,8 +1780,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -1839,8 +1813,7 @@ def function(param1, param2, param3) -> int:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -1900,8 +1873,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -1931,8 +1903,7 @@ def function(param1) -> t.Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -1960,8 +1931,7 @@ def function(param1) -> Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -2163,8 +2133,7 @@ def function(param1, param2, *args) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -2217,8 +2186,7 @@ def function(param1, param2, **kwargs) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -2274,8 +2242,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -2285,8 +2252,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -2296,8 +2262,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -2330,8 +2295,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -2581,8 +2545,7 @@ def get_index(index: int) -> _T | None:
     def expected(self) -> str:
         return f"""
 def get_index({CROSS}index) -> {CHECK}_T | None:
-    \"\"\"...
-
+    \"\"\"
     :param None: {CROSS}
     :return: {CHECK}
     \"\"\"
@@ -2856,8 +2819,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -2965,8 +2927,7 @@ class Klass:
     def expected(self) -> str:
         return f"""
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :return: {CROSS}
@@ -3029,8 +2990,7 @@ def _function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -3184,8 +3144,7 @@ class _Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -3243,8 +3202,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -3437,8 +3395,7 @@ def function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -3467,8 +3424,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -3522,8 +3478,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -3589,8 +3544,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -3623,8 +3577,7 @@ def function(param1, param2, param3) -> int:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -3684,8 +3637,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -3715,8 +3667,7 @@ def function(param1) -> t.Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -3744,8 +3695,7 @@ def function(param1) -> Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -3947,8 +3897,7 @@ def function(param1, param2, *args) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -4001,8 +3950,7 @@ def function(param1, param2, **kwargs) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -4058,8 +4006,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -4069,8 +4016,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -4080,8 +4026,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -4114,8 +4059,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -4348,8 +4292,7 @@ def get_index(index: int) -> _T | None:
     def expected(self) -> str:
         return f"""
 def get_index({CROSS}index) -> {CHECK}_T | None:
-    \"\"\"...
-
+    \"\"\"
     :param None: {CROSS}
     :return: {CHECK}
     \"\"\"
@@ -4503,8 +4446,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -4594,8 +4536,7 @@ class Klass:
     def expected(self) -> str:
         return f"""
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :return: {CROSS}
@@ -4658,8 +4599,7 @@ def _function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -4780,8 +4720,7 @@ class _Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -4813,8 +4752,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -4882,8 +4820,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -4911,8 +4848,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -5044,8 +4980,7 @@ def get_index(index: int) -> _T | None:
     def expected(self) -> str:
         return f"""
 def get_index({CROSS}index) -> {CHECK}_T | None:
-    \"\"\"...
-
+    \"\"\"
     :param None: {CROSS}
     :return: {CHECK}
     \"\"\"
@@ -5171,8 +5106,7 @@ class Klass:
     def expected(self) -> str:
         return f"""
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :return: {CROSS}
@@ -5262,8 +5196,7 @@ def function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -5289,8 +5222,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -5318,8 +5250,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -5373,8 +5304,7 @@ def function(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -5403,8 +5333,7 @@ def function(param1, param2, param3) -> int:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -5455,8 +5384,7 @@ def function(param1, param2, param3):
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CHECK}
@@ -5484,8 +5412,7 @@ def function(param1) -> t.Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -5511,8 +5438,7 @@ def function(param1) -> Optional[str]:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1) -> {CROSS}Optional[str]:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :return: {CROSS}
     \"\"\"
@@ -5682,8 +5608,7 @@ def function(param1, param2, *args) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -5729,8 +5654,7 @@ def function(param1, param2, **kwargs) -> None:
     def expected(self) -> str:
         return f"""\
 def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -5775,8 +5699,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param2: {CROSS}
     :param param3: {CROSS}
     :param param1: {CROSS}
@@ -5786,8 +5709,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -5797,8 +5719,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -5828,8 +5749,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -6032,8 +5952,7 @@ def get_index(index: int) -> _T | None:
     def expected(self) -> str:
         return f"""
 def get_index({CROSS}index) -> {CHECK}_T | None:
-    \"\"\"...
-
+    \"\"\"
     :param None: {CROSS}
     :return: {CHECK}
     \"\"\"
@@ -6166,8 +6085,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -6246,8 +6164,7 @@ class Klass:
     def expected(self) -> str:
         return f"""
 class Klass:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :return: {CROSS}
@@ -6301,8 +6218,7 @@ def _function(param1, param2) -> None:
     def expected(self) -> str:
         return f"""\
 def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -6411,8 +6327,7 @@ class _Klass:
     def expected(self) -> str:
         return f"""\
 def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param None: {CROSS}
@@ -6440,8 +6355,7 @@ class Klass:
     def expected(self) -> str:
         return f"""\
 def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param param2: {CHECK}
     :param param3: {CROSS}
@@ -6511,8 +6425,7 @@ def function(param1, **kwargs) -> None:
     def expected(self) -> str:
         return f"""
 def function({CHECK}param1, {CROSS}**kwargs) -> {CHECK}None:
-    \"\"\"...
-
+    \"\"\"
     :param param1: {CHECK}
     :param None: {CROSS}
     \"\"\"
@@ -6567,8 +6480,7 @@ def check_stuff(str_lin: str, a: str) -> bool:
     def expected(self) -> str:
         return f"""\
 def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
-    \"\"\"...
-
+    \"\"\"
     :param str_lin: {CHECK}
     :param a: {CHECK}
     :return: {CHECK}

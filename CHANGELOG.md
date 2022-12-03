@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.26.1...HEAD)
 ------------------------------------------------------------------------
 ### Changed
+- Update display of docstring
 - Display `key` for docstring kwargs
 
 [0.26.1](https://github.com/jshwi/docsig/releases/tag/v0.26.1) - 2022-11-30

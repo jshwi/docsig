@@ -124,8 +124,7 @@ API
     2
     -
     def function(✓param1, ✓param2, ✖None) -> ✓None:
-        """...
-    <BLANKLINE>
+        """
         :param param1: ✓
         :param param2: ✓
         :param param3: ✖
@@ -162,8 +161,7 @@ This check will check documentation of `__init__` under the class docstring, and
     Klass::11
     ---------
     class Klass:
-        """...
-    <BLANKLINE>
+        """
         :param param1: ✓
         :param param2: ✓
         :param param3: ✖

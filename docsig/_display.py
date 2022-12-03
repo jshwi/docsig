@@ -86,8 +86,8 @@ class FuncStr(_UserString):
 
         self.data += self._ansi.get_syntax(f"def {func.name}(")
         if self._is_string:
-            self._docstring = "{}\n".format(
-                self._ansi.get_syntax(f"{TAB}{self.TRIPLE_QUOTES}...")
+            self._docstring = self._ansi.get_syntax(
+                f"{TAB}{self.TRIPLE_QUOTES}"
             )
         else:
             self._docstring = "{}{}\n".format(
