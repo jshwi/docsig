@@ -119,33 +119,22 @@ class _Signature:
         ismethod: bool = False,
         isstaticmethod: bool = False,
     ) -> None:
-        self._arguments = arguments
+        if ismethod and not isstaticmethod and arguments.args:
+            arguments.args.pop(0)
+
         self._args = _Params(
             Param(name=a.name)
-            for a in self._arguments.args
+            for a in arguments.args
             if not _isprotected(a.name)
         )
+        if arguments.vararg is not None and not _isprotected(arguments.vararg):
+            self._args.append(Param(name=f"*{arguments.vararg}"))
+
+        self._args.extend(Param(name=k.name) for k in arguments.kwonlyargs)
+        if arguments.kwarg is not None and not _isprotected(arguments.kwarg):
+            self._args.append(Param(name=f"**{arguments.kwarg}"))
+
         self._return_value = self._get_returns(returns)
-        self._returns = (
-            self._return_value is not None and self._return_value != "None"
-        )
-        self._get_args_kwargs()
-        if ismethod and not isstaticmethod and self._args:
-            self._args.pop(0)
-
-    def _get_args_kwargs(self) -> None:
-        vararg = self._arguments.vararg
-        if vararg is not None and not _isprotected(vararg):
-            self._args.append(Param(name=f"*{vararg}"))
-
-        if self._arguments.kwonlyargs:
-            self._args.extend(
-                Param(name=k.name) for k in self._arguments.kwonlyargs
-            )
-
-        kwarg = self._arguments.kwarg
-        if kwarg is not None and not _isprotected(kwarg):
-            self._args.append(Param(name=f"**{kwarg}"))
 
     def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):
@@ -188,7 +177,7 @@ class _Signature:
     @property
     def returns(self) -> bool:
         """Check that a function returns a value."""
-        return self._returns
+        return self._return_value is not None and self._return_value != "None"
 
 
 class _Docstring:
