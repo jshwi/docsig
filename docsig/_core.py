@@ -18,8 +18,8 @@ from ._report import Report as _Report
 
 
 def _compare_args(sig: _Param, doc: _Param) -> bool:
-    if doc.kind == _KEY and sig.name is not None:
-        return sig.name[:2] == "**"
+    if all(i.kind == _KEY for i in (doc, sig)):
+        return True
 
     sig_name = sig.name
     if isinstance(sig_name, str):

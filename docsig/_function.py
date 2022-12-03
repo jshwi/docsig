@@ -91,17 +91,11 @@ class _Matches(_MutableSequence[Param]):
 
 
 class _Params(_MutableSequence[Param]):
-
-    _kwarg_value = "(**)"
-
     def insert(self, index: int, value: Param) -> None:
-        if value.kind == PARAM:
+        if value.kind == PARAM or (
+            value.kind == KEY and not any(i.kind == KEY for i in self)
+        ):
             super().insert(index, value)
-
-        elif value.kind == KEY and not any(i.kind == KEY for i in self):
-            super().insert(
-                index, Param(value.kind, self._kwarg_value, value.description)
-            )
 
     def get(self, index: int) -> Param:
         """Get a param.
@@ -144,7 +138,7 @@ class _Signature:
 
         self._args.extend(Param(name=k.name) for k in arguments.kwonlyargs)
         if arguments.kwarg is not None and not _isprotected(arguments.kwarg):
-            self._args.append(Param(name=f"**{arguments.kwarg}"))
+            self._args.append(Param(KEY, name=arguments.kwarg))
 
         self._return_value = self._get_returns(returns)
 

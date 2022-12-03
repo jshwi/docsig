@@ -16,6 +16,7 @@ from pygments.formatters.terminal256 import (
 # noinspection PyUnresolvedReferences
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
+from ._function import KEY as _KEY
 from ._function import Function as _Function
 from ._function import Param as _Param
 from ._objects import MutableMapping as _MutableMapping
@@ -119,8 +120,16 @@ class FuncStr(_UserString):
         :param failed: Boolean to test that check failed.
         """
         self.set_mark(failed)
-        self.data += f"{self._mark}{sig.name}"
-        self._cat_docstring(f"\n{TAB}:{doc.kind} {doc.name}: {self._mark}")
+        sig_name = sig.name
+        if sig.kind == _KEY:
+            sig_name = f"**{sig_name}"
+
+        self.data += f"{self._mark}{sig_name}"
+        doc_name = doc.name
+        if doc.kind == _KEY:
+            doc_name = "(**)"
+
+        self._cat_docstring(f"\n{TAB}:{doc.kind} {doc_name}: {self._mark}")
 
     def add_return(self, failed: bool = False) -> None:
         """Add return statement to docstring.
