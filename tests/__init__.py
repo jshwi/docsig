@@ -783,7 +783,7 @@ def function(param1, **kwargs) -> None:
 def function({CROSS}param1, {CROSS}**kwargs) -> {CHECK}None:
     \"\"\"...
 
-    :keyword (**): {CROSS}
+    :key (**): {CROSS}
     :param param1: {CROSS}
     \"\"\"
 """

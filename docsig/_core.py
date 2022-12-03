@@ -17,7 +17,7 @@ from ._report import Report as _Report
 
 
 def _compare_args(sig: _Param, doc: _Param) -> bool:
-    if doc.kind in ("key", "keyword") and sig.name is not None:
+    if doc.kind == "key" and sig.name is not None:
         return sig.name[:2] == "**"
 
     sig_name = sig.name

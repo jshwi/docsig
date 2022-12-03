@@ -54,6 +54,7 @@ class Param(_t.NamedTuple):
 
 class _Matches(_MutableSequence[Param]):
     _pattern = _re.compile(":(.*?):")
+    _normalize = {"keyword": "key"}
 
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -65,27 +66,31 @@ class _Matches(_MutableSequence[Param]):
                 name = description = None
                 kinds = match[0].split()
                 if kinds:
+                    kind = kinds[0]
+                    for substring, replace in self._normalize.items():
+                        kind = kind.replace(substring, replace)
+
                     if len(kinds) > 1:
                         name = kinds[1]
 
                     if len(match) > 1:
                         description = match[1]
 
-                    super().append(Param(kinds[0], name, description, indent))
+                    super().append(Param(kind, name, description, indent))
 
 
 class _Params(_MutableSequence[Param]):
 
     _param = "param"
-    _keys = ("key", "keyword")
+    _key = "key"
     _kwarg_value = "(**)"
 
     def insert(self, index: int, value: Param) -> None:
         if value.kind == self._param:
             super().insert(index, value)
 
-        elif value.kind in self._keys and not any(
-            i in y for y in self for i in self._keys
+        elif value.kind == self._key and not any(
+            i.kind == self._key for i in self
         ):
             super().insert(
                 index, Param(value.kind, self._kwarg_value, value.description)
