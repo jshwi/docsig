@@ -18,11 +18,9 @@ from ._report import Report as _Report
 
 
 def _compare_args(sig: _Param, doc: _Param) -> bool:
-    if all(i.kind == _KEY for i in (doc, sig)):
-        return True
-
-    return (
-        sig.name == doc.name and sig.name is not None and doc.name is not None
+    args = doc, sig
+    return all(i.kind == _KEY for i in args) or (
+        sig.name == doc.name and all(i.name is not None for i in args)
     )
 
 
