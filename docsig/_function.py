@@ -93,8 +93,9 @@ class _Matches(_MutableSequence[Param]):
 
 class _Params(_MutableSequence[Param]):
     def insert(self, index: int, value: Param) -> None:
-        if value.kind in (PARAM, ARG) or (
-            value.kind == KEY and not any(i.kind == KEY for i in self)
+        if not _isprotected(value.name) and (
+            value.kind in (PARAM, ARG)
+            or (value.kind == KEY and not any(i.kind == KEY for i in self))
         ):
             super().insert(index, value)
 
@@ -129,16 +130,12 @@ class _Signature:
         if ismethod and not isstaticmethod and arguments.args:
             arguments.args.pop(0)
 
-        self._args = _Params(
-            Param(name=a.name)
-            for a in arguments.args
-            if not _isprotected(a.name)
-        )
-        if arguments.vararg is not None and not _isprotected(arguments.vararg):
+        self._args = _Params(Param(name=a.name) for a in arguments.args)
+        if arguments.vararg is not None:
             self._args.append(Param(ARG, name=arguments.vararg))
 
         self._args.extend(Param(name=k.name) for k in arguments.kwonlyargs)
-        if arguments.kwarg is not None and not _isprotected(arguments.kwarg):
+        if arguments.kwarg is not None:
             self._args.append(Param(KEY, name=arguments.kwarg))
 
         self._return_value = self._get_returns(returns)
