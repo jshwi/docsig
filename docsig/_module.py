@@ -55,7 +55,6 @@ class Class(Parent):
 
     def __init__(self, node: _ast.ClassDef, path: _Path | None = None) -> None:
         super().__init__(node, path)
-        self._name = node.name
         self._path = f"{self._path}{self.name}::"
 
 
