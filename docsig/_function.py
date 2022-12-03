@@ -60,7 +60,6 @@ class _Matches(_MutableSequence[Param]):
         super().__init__()
         for line in string.splitlines():
             strip_line = line.lstrip()
-            indent = len(line) - len(strip_line)
             match = self._pattern.split(strip_line)[1:]
             if match:
                 name = description = None
@@ -76,7 +75,14 @@ class _Matches(_MutableSequence[Param]):
                     if len(match) > 1:
                         description = match[1]
 
-                    super().append(Param(kind, name, description, indent))
+                    super().append(
+                        Param(
+                            kind,
+                            name,
+                            description,
+                            len(line) - len(strip_line),
+                        )
+                    )
 
 
 class _Params(_MutableSequence[Param]):
