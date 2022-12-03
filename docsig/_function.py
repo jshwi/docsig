@@ -19,6 +19,7 @@ PARAM = "param"
 KEYWORD = "keyword"
 KEY = "key"
 RETURN = "return"
+ARG = "arg"
 
 
 class _GoogleDocstring(str):
@@ -92,7 +93,7 @@ class _Matches(_MutableSequence[Param]):
 
 class _Params(_MutableSequence[Param]):
     def insert(self, index: int, value: Param) -> None:
-        if value.kind == PARAM or (
+        if value.kind in (PARAM, ARG) or (
             value.kind == KEY and not any(i.kind == KEY for i in self)
         ):
             super().insert(index, value)
@@ -134,7 +135,7 @@ class _Signature:
             if not _isprotected(a.name)
         )
         if arguments.vararg is not None and not _isprotected(arguments.vararg):
-            self._args.append(Param(name=f"*{arguments.vararg}"))
+            self._args.append(Param(ARG, name=arguments.vararg))
 
         self._args.extend(Param(name=k.name) for k in arguments.kwonlyargs)
         if arguments.kwarg is not None and not _isprotected(arguments.kwarg):

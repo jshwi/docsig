@@ -21,12 +21,8 @@ def _compare_args(sig: _Param, doc: _Param) -> bool:
     if all(i.kind == _KEY for i in (doc, sig)):
         return True
 
-    sig_name = sig.name
-    if isinstance(sig_name, str):
-        sig_name = sig_name.replace("*", "")
-
     return (
-        sig_name == doc.name and sig_name is not None and doc.name is not None
+        sig.name == doc.name and sig.name is not None and doc.name is not None
     )
 
 

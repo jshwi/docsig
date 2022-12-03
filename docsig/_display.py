@@ -16,6 +16,7 @@ from pygments.formatters.terminal256 import (
 # noinspection PyUnresolvedReferences
 from pygments.lexers.python import PythonLexer as _PythonLexer
 
+from ._function import ARG as _ARG
 from ._function import KEY as _KEY
 from ._function import Function as _Function
 from ._function import Param as _Param
@@ -123,6 +124,9 @@ class FuncStr(_UserString):
         sig_name = sig.name
         if sig.kind == _KEY:
             sig_name = f"**{sig_name}"
+
+        if sig.kind == _ARG:
+            sig_name = f"*{sig_name}"
 
         self.data += f"{self._mark}{sig_name}"
         doc_name = doc.name
