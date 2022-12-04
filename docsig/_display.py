@@ -198,7 +198,15 @@ class FuncStr(_UserString):
             self.data += f"\n{self._docstring}"
 
 
-class Failures(_MutableSequence[_t.Tuple[FuncStr, int, _Report]]):
+class Failure(_t.NamedTuple):
+    """Failed function data."""
+
+    func_str: FuncStr
+    lineno: int
+    report: _Report
+
+
+class Failures(_MutableSequence[Failure]):
     """Sequence of failed functions."""
 
 
@@ -230,12 +238,12 @@ class Display(_DisplaySequence):
         """Display report if any checks have failed."""
         for key, value in self.items():
             for failures in value:
-                for func_str, lineno, report in failures:
-                    header = f"{key}{lineno}"
+                for failure in failures:
+                    header = f"{key}{failure.lineno}"
                     print(self._ansi.color(header, color.magenta))
                     print(len(header) * "-")
-                    print(func_str)
-                    print(report.get_report())
+                    print(failure.func_str)
+                    print(failure.report.get_report())
 
     def summarise(self) -> None:
         """Display report summary if any checks have failed."""
@@ -244,12 +252,14 @@ class Display(_DisplaySequence):
             print(self._ansi.color(path, color.magenta))
             print(len(path) * "-")
             for failures in value:
-                for _, lineno, report in failures:
+                for failure in failures:
                     pipe = self._ansi.color("|", color.cyan)
                     print(
                         "{}\t{} {}\n".format(
-                            self._ansi.color(lineno, color.yellow),
+                            self._ansi.color(failure.lineno, color.yellow),
                             pipe,
-                            report.get_report("\t{} ".format(pipe)).strip(),
+                            failure.report.get_report(
+                                "\t{} ".format(pipe)
+                            ).strip(),
                         )
                     )

@@ -7,6 +7,7 @@ from __future__ import annotations
 from pathlib import Path as _Path
 
 from ._display import Display as _Display
+from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
 from ._function import Function as _Function
@@ -62,7 +63,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             report = _generate_report(func, targets, disable)
             func_str = _FuncStr(func, no_ansi)
             if report:
-                failures.append((func_str, func.lineno, report))
+                failures.append(_Failure(func_str, func.lineno, report))
 
     return failures
 
