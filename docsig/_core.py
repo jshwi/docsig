@@ -9,19 +9,10 @@ from pathlib import Path as _Path
 from ._display import Display as _Display
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
-from ._function import KEY as _KEY
 from ._function import Function as _Function
-from ._function import Param as _Param
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
-
-
-def _compare_args(sig: _Param, doc: _Param) -> bool:
-    args = doc, sig
-    return all(i.kind == _KEY for i in args) or (
-        sig.name == doc.name and all(i.name is not None for i in args)
-    )
 
 
 def _construct_func(func: _Function, no_ansi: bool = False) -> _FuncStr:
@@ -29,7 +20,7 @@ def _construct_func(func: _Function, no_ansi: bool = False) -> _FuncStr:
     for index in range(len(func)):
         arg = func.signature.args.get(index)
         doc = func.docstring.args.get(index)
-        func_str.add_param(arg, doc, not _compare_args(arg, doc))
+        func_str.add_param(arg, doc, arg != doc)
         if index + 1 != len(func):
             func_str.add_comma()
 
@@ -68,7 +59,7 @@ def _generate_report(func: _Function, targets: list[str], disable: list[str]):
             doc = func.docstring.args.get(index)
             report.description_syntax(doc)
             report.indent_syntax(doc)
-            if not _compare_args(arg, doc):
+            if arg != doc:
                 report.order(arg, doc)
                 report.incorrect(arg, doc)
                 report.misspelled(arg, doc)

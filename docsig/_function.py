@@ -57,6 +57,18 @@ class Param(_t.NamedTuple):
     description: str | None = None
     indent: int = 0
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Param):
+            return False
+
+        args = self, other
+        return all(i.kind == KEY for i in args) or (
+            self.name == other.name and all(i.name is not None for i in args)
+        )
+
+    def __ne__(self, other: object) -> bool:
+        return not self.__eq__(other)
+
     @property
     def isprotected(self) -> bool:
         """Boolean value for whether parameter is protected."""

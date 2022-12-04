@@ -664,3 +664,9 @@ def test_main_output_positive(
         file.parent,
     )
     assert template.expected == nocolorcapsys.readouterr()[0]
+
+
+def test_param_ne() -> None:
+    """Get coverage on `Param.__eq__`."""
+    # noinspection PyUnresolvedReferences
+    assert docsig._function.Param() != object
