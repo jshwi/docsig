@@ -88,6 +88,27 @@ class FuncStr(_UserString):
             self._docstring = f"{TAB}{self._ansi.color('...', color.red)}\n"
 
         self._mark = self._ansi.color(self.CHECK, color.green)
+        for index in range(len(func)):
+            arg = func.signature.args.get(index)
+            doc = func.docstring.args.get(index)
+            self.add_param(arg, doc, arg != doc)
+            if index + 1 != len(func):
+                self.add_comma()
+
+        self.set_mark()
+        if func.docstring.returns and func.signature.returns:
+            self.add_return()
+        elif (
+            func.docstring.returns
+            and not func.signature.returns
+            or func.signature.returns
+            and not func.docstring.returns
+        ):
+            self.add_return(failed=True)
+
+        self.close_sig(func.signature.return_value)
+        self.close_docstring()
+        self.render()
 
     def _cat_docstring(self, string: str) -> None:
         if self._is_string:

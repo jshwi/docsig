@@ -15,32 +15,6 @@ from ._module import Parent as _Parent
 from ._report import Report as _Report
 
 
-def _construct_func(func: _Function, no_ansi: bool = False) -> _FuncStr:
-    func_str = _FuncStr(func, no_ansi)
-    for index in range(len(func)):
-        arg = func.signature.args.get(index)
-        doc = func.docstring.args.get(index)
-        func_str.add_param(arg, doc, arg != doc)
-        if index + 1 != len(func):
-            func_str.add_comma()
-
-    func_str.set_mark()
-    if func.docstring.returns and func.signature.returns:
-        func_str.add_return()
-    elif (
-        func.docstring.returns
-        and not func.signature.returns
-        or func.signature.returns
-        and not func.docstring.returns
-    ):
-        func_str.add_return(failed=True)
-
-    func_str.close_sig(func.signature.return_value)
-    func_str.close_docstring()
-    func_str.render()
-    return func_str
-
-
 def _generate_report(func: _Function, targets: list[str], disable: list[str]):
     report = _Report(func, targets, disable)
     report.missing_class_docstring()
@@ -86,7 +60,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.isdunder and not check_dunders)
         ):
             report = _generate_report(func, targets, disable)
-            func_str = _construct_func(func, no_ansi)
+            func_str = _FuncStr(func, no_ansi)
             if report:
                 failures.append((func_str, func.lineno, report))
 
