@@ -33,9 +33,10 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.isdunder and not check_dunders)
         ):
             report = _generate_report(func, targets, disable)
-            func_str = _FuncStr(func, no_ansi)
             if report:
-                failures.append(_Failure(func_str, func.lineno, report))
+                failures.append(
+                    _Failure(_FuncStr(func, no_ansi), func.lineno, report)
+                )
 
     return failures
 
