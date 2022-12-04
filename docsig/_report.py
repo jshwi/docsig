@@ -219,3 +219,39 @@ class Report(_MessageSequence):
         :return: Current report.
         """
         return f"\n{prefix}".join(self) + "\n"
+
+
+def generate_report(
+    func: _Function, targets: list[str], disable: list[str]
+) -> Report:
+    """Generate report if function or method has failed.
+
+    :param func: Function object.
+    :param targets: List of errors to target.
+    :param disable: List of errors to disable.
+    :return: Compiled report.
+    """
+    report = Report(func, targets, disable)
+    report.missing_class_docstring()
+    report.missing_func_docstring()
+    report.return_not_typed()
+    if func.docstring.string is not None:
+        report.exists()
+        report.missing()
+        report.duplicates()
+        report.extra_return()
+        report.missing_return()
+        report.property_return()
+        report.class_return()
+        for index in range(len(func)):
+            arg = func.signature.args.get(index)
+            doc = func.docstring.args.get(index)
+            report.description_syntax(doc)
+            report.indent_syntax(doc)
+            if arg != doc:
+                report.order(arg, doc)
+                report.incorrect(arg, doc)
+                report.misspelled(arg, doc)
+                report.not_equal(arg, doc)
+
+    return report

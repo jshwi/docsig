@@ -10,37 +10,9 @@ from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
-from ._function import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
-from ._report import Report as _Report
-
-
-def _generate_report(func: _Function, targets: list[str], disable: list[str]):
-    report = _Report(func, targets, disable)
-    report.missing_class_docstring()
-    report.missing_func_docstring()
-    report.return_not_typed()
-    if func.docstring.string is not None:
-        report.exists()
-        report.missing()
-        report.duplicates()
-        report.extra_return()
-        report.missing_return()
-        report.property_return()
-        report.class_return()
-        for index in range(len(func)):
-            arg = func.signature.args.get(index)
-            doc = func.docstring.args.get(index)
-            report.description_syntax(doc)
-            report.indent_syntax(doc)
-            if arg != doc:
-                report.order(arg, doc)
-                report.incorrect(arg, doc)
-                report.misspelled(arg, doc)
-                report.not_equal(arg, doc)
-
-    return report
+from ._report import generate_report as _generate_report
 
 
 def _run_check(  # pylint: disable=too-many-arguments
