@@ -57,6 +57,11 @@ class Param(_t.NamedTuple):
     description: str | None = None
     indent: int = 0
 
+    @property
+    def isprotected(self) -> bool:
+        """Boolean value for whether parameter is protected."""
+        return str(self.name).startswith("_")
+
 
 class _Matches(_MutableSequence[Param]):
     _pattern = _re.compile(":(.*?):")
@@ -93,7 +98,7 @@ class _Matches(_MutableSequence[Param]):
 
 class _Params(_MutableSequence[Param]):
     def insert(self, index: int, value: Param) -> None:
-        if not _isprotected(value.name) and (
+        if not value.isprotected and (
             value.kind in (PARAM, ARG)
             or (value.kind == KEY and not any(i.kind == KEY for i in self))
         ):
