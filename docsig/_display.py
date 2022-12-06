@@ -106,7 +106,7 @@ class FuncStr(_UserString):
         ):
             self.add_return(failed=True)
 
-        self.close_sig(func.signature.return_value)
+        self.close_sig(func.signature.rettype)
         self.close_docstring()
         self.render()
 

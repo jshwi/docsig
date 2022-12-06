@@ -155,9 +155,9 @@ class _Signature:
         if arguments.kwarg is not None:
             self._args.append(Param(KEY, name=arguments.kwarg))
 
-        self._return_value = self._get_returns(returns)
+        self._rettype = self._get_rettype(returns)
 
-    def _get_returns(self, returns: _ast.NodeNG | None) -> str | None:
+    def _get_rettype(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):
             return returns.name
 
@@ -169,14 +169,14 @@ class _Signature:
 
         if isinstance(returns, _ast.Subscript):
             return "{}[{}]".format(
-                self._get_returns(returns.value),
-                self._get_returns(returns.slice),
+                self._get_rettype(returns.value),
+                self._get_rettype(returns.slice),
             )
 
         if isinstance(returns, _ast.BinOp):
             return "{} | {}".format(
-                self._get_returns(returns.left),
-                self._get_returns(returns.right),
+                self._get_rettype(returns.left),
+                self._get_rettype(returns.right),
             )
 
         return None
@@ -187,18 +187,18 @@ class _Signature:
         return self._args
 
     @property
-    def return_value(self) -> str | None:
+    def rettype(self) -> str | None:
         """Function's return value.
 
         If a function is typed to return None, return str(None). If no
         typehint exists then return None (NoneType).
         """
-        return self._return_value
+        return self._rettype
 
     @property
     def returns(self) -> bool:
         """Check that a function returns a value."""
-        return self._return_value is not None and self._return_value != "None"
+        return self._rettype is not None and self._rettype != "None"
 
 
 class _Docstring:

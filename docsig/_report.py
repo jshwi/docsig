@@ -117,7 +117,7 @@ class Report(_MessageSequence):
         """Check that return is not documented when there is none."""
         if (
             self._func.docstring.returns
-            and self._func.signature.return_value == "None"
+            and self._func.signature.rettype == "None"
             and not self._func.isproperty
             and not self._func.isinit
         ):
@@ -132,7 +132,7 @@ class Report(_MessageSequence):
     def return_not_typed(self) -> None:
         """Check that return is not documented when no type provided."""
         if (
-            self._func.signature.return_value is None
+            self._func.signature.rettype is None
             and not self._func.isproperty
             and not self._func.isinit
         ):
