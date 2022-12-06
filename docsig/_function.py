@@ -198,7 +198,7 @@ class _Signature:
     @property
     def returns(self) -> bool:
         """Check that a function returns a value."""
-        return self._rettype is not None and self._rettype != "None"
+        return str(self._rettype) != "None"
 
 
 class _Docstring:
