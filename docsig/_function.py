@@ -223,10 +223,8 @@ class _Docstring:
     @property
     def returns(self) -> bool:
         """Check that docstring return is documented."""
-        return (
-            False
-            if self._string is None
-            else any(i in self._string for i in (":return:", ":returns:"))
+        return self._string is not None and bool(
+            _re.search(":returns?:", self._string)
         )
 
 
