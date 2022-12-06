@@ -136,7 +136,23 @@ class _Params(_MutableSequence[Param]):
         return any(k for k, v in _Counter(self).items() if v > 1)
 
 
-class _Signature:
+class _DocSig:
+    def __init__(self) -> None:
+        self._args = _Params()
+        self._returns = False
+
+    @property
+    def args(self) -> _Params:
+        """Collection of `Param` types."""
+        return self._args
+
+    @property
+    def returns(self) -> bool:
+        """Boolean value for whether this returns a value."""
+        return self._returns
+
+
+class _Signature(_DocSig):
     def __init__(
         self,
         arguments: _ast.Arguments,
@@ -144,10 +160,11 @@ class _Signature:
         ismethod: bool = False,
         isstaticmethod: bool = False,
     ) -> None:
+        super().__init__()
         if ismethod and not isstaticmethod and arguments.args:
             arguments.args.pop(0)
 
-        self._args = _Params(Param(name=a.name) for a in arguments.args)
+        self._args.extend(Param(name=a.name) for a in arguments.args)
         if arguments.vararg is not None:
             self._args.append(Param(ARG, name=arguments.vararg))
 
@@ -156,6 +173,7 @@ class _Signature:
             self._args.append(Param(KEY, name=arguments.kwarg))
 
         self._rettype = self._get_rettype(returns)
+        self._returns = str(self._rettype) != "None"
 
     def _get_rettype(self, returns: _ast.NodeNG | None) -> str | None:
         if isinstance(returns, _ast.Name):
@@ -182,11 +200,6 @@ class _Signature:
         return None
 
     @property
-    def args(self) -> _Params:
-        """Tuple of signature parameters."""
-        return self._args
-
-    @property
     def rettype(self) -> str | None:
         """Function's return value.
 
@@ -195,36 +208,23 @@ class _Signature:
         """
         return self._rettype
 
-    @property
-    def returns(self) -> bool:
-        """Check that a function returns a value."""
-        return str(self._rettype) != "None"
 
-
-class _Docstring:
+class _Docstring(_DocSig):
     def __init__(self, node: _ast.Const | None = None) -> None:
+        super().__init__()
         self._string = None
-        self._args = _Params()
         if node is not None:
             self._string = _RawDocstring(node.value)
             self._args.extend(_Matches(self._string))
+
+        self._returns = self._string is not None and bool(
+            _re.search(":returns?:", self._string)
+        )
 
     @property
     def string(self) -> _RawDocstring | None:
         """The raw documentation string, if it exists, else None."""
         return self._string
-
-    @property
-    def args(self) -> _Params:
-        """Docstring args."""
-        return self._args
-
-    @property
-    def returns(self) -> bool:
-        """Check that docstring return is documented."""
-        return self._string is not None and bool(
-            _re.search(":returns?:", self._string)
-        )
 
 
 class Function:
