@@ -207,8 +207,7 @@ class _Docstring:
         self._args = _Params()
         if node is not None:
             self._string = _RawDocstring(node.value)
-            matches = _Matches(self._string)
-            self._args.extend(matches)
+            self._args.extend(_Matches(self._string))
 
     @property
     def string(self) -> _RawDocstring | None:
