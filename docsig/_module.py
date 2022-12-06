@@ -41,7 +41,7 @@ class Parent(_MutableSequence[_Function]):
         return _isprotected(self._name)
 
 
-class Module(_MutableSequence[Parent]):
+class _Module(_MutableSequence[Parent]):
     """Represents a module with top level functions and classes.
 
     :param node: Module's abstract syntax tree.
@@ -56,7 +56,7 @@ class Module(_MutableSequence[Parent]):
                 self.append(Parent(subnode, path))
 
 
-class Modules(_MutableSequence[Module]):
+class Modules(_MutableSequence[_Module]):
     """Sequence of ``Module`` objects parsed from Python modules or str.
 
     Recursively collect Python files from within all dirs that exist
@@ -71,14 +71,14 @@ class Modules(_MutableSequence[Module]):
     def __init__(self, *paths: _Path, string: str | None = None) -> None:
         super().__init__()
         if string is not None:
-            self.append(Module(_ast.parse(string)))
+            self.append(_Module(_ast.parse(string)))
         else:
             for path in paths:
                 self._populate(path)
 
     def _populate(self, root: _Path) -> None:
         if root.is_file() and root.name.endswith(".py"):
-            self.append(Module(_ast.parse(root.read_text()), root))
+            self.append(_Module(_ast.parse(root.read_text()), root))
 
         if root.is_dir():
             for path in root.iterdir():
