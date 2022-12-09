@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.30.0](https://github.com/jshwi/docsig/releases/tag/v0.30.0) - 2022-12-09
 ------------------------------------------------------------------------
 ### Added
-- add: Add support for `pre-commit`
+- Add support for `pre-commit`
 
 [0.29.0](https://github.com/jshwi/docsig/releases/tag/v0.29.0) - 2022-12-09
 ------------------------------------------------------------------------
