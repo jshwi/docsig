@@ -23,6 +23,7 @@ def main() -> int:
         check_dunders=parser.args.check_dunders,
         check_overridden=parser.args.check_overridden,
         check_protected=parser.args.check_protected,
+        check_property_returns=parser.args.check_property_returns,
         ignore_no_params=parser.args.ignore_no_params,
         no_ansi=parser.args.no_ansi,
         summary=parser.args.summary,

@@ -62,6 +62,12 @@ class Parser(_ArgumentParser):
             help="check protected functions and classes",
         )
         self.add_argument(
+            "-P",
+            "--check-property-returns",
+            action="store_true",
+            help="check property return values",
+        )
+        self.add_argument(
             "-i",
             "--ignore-no-params",
             action="store_true",

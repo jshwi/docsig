@@ -78,6 +78,7 @@ def test_main_args(
         long.check_protected,
         long.check_overridden,
         long.check_dunders,
+        long.check_property_returns,
         file.parent,
     ) == int(name.startswith(FAIL))
 
@@ -112,6 +113,7 @@ def test_main_output_negative(
         long.check_protected,
         long.check_dunders,
         long.check_overridden,
+        long.check_property_returns,
         file.parent,
     )
     assert template.expected != ""
@@ -200,7 +202,7 @@ def test_main_multi(
 
 def test_mutable_sequence() -> None:
     """Get coverage on ``MutableSequence``."""
-    report = docsig._report.Report(DummyFunc(), [], [])  # type: ignore
+    report = docsig._report.Report(DummyFunc(), [], [], False)  # type: ignore
     report.append(errors[0])
     assert getattr(docsig.messages, errors[0]) in report
     assert len(report) == 1
@@ -300,7 +302,10 @@ def test_target_report(message: str) -> None:
     """
     # noinspection PyUnresolvedReferences
     report = docsig._report.Report(
-        DummyFunc(), targets=[message], disable=[]  # type: ignore
+        DummyFunc(),  # type: ignore
+        targets=[message],
+        disable=[],
+        check_property_returns=False,
     )
     report.extend(errors)
     assert getattr(docsig.messages, message) in report
@@ -315,7 +320,10 @@ def test_disable_report(message: str) -> None:
     """
     # noinspection PyUnresolvedReferences
     report = docsig._report.Report(
-        DummyFunc(), targets=[], disable=[message]  # type: ignore
+        DummyFunc(),  # type: ignore
+        targets=[],
+        disable=[message],
+        check_property_returns=False,
     )
     report.extend(errors)
     assert getattr(docsig.messages, message) not in report
@@ -361,6 +369,7 @@ def test_main_str(
         long.check_protected,
         long.check_overridden,
         long.check_dunders,
+        long.check_property_returns,
         long.string,
         template,
     ) == int(name.startswith(FAIL))
@@ -391,6 +400,7 @@ def test_main_str_out(
         long.check_dunders,
         long.check_protected,
         long.check_overridden,
+        long.check_property_returns,
         long.string,
         template.template,
     )
@@ -591,6 +601,7 @@ def test_main_sum(
             long.check_protected,
             long.check_overridden,
             long.check_dunders,
+            long.check_property_returns,
             file.parent,
         )
         == 1
@@ -628,6 +639,7 @@ def test_no_ansi(
             long.check_protected,
             long.check_overridden,
             long.check_dunders,
+            long.check_property_returns,
             file.parent,
         )
         == 1
@@ -660,6 +672,7 @@ def test_main_output_positive(
         long.check_protected,
         long.check_dunders,
         long.check_overridden,
+        long.check_property_returns,
         file.parent,
     )
     assert template.expected == nocolorcapsys.readouterr()[0]
@@ -737,3 +750,57 @@ def test_ignore_no_params(
         and returncode == 0
     )
     assert expected in out or no_params
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup("f-property-no-return"),
+    ids=templates.registered.getgroup("f-property-no-return").getids(),
+)
+def test_no_check_property_returns_flag_wo(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test that failing property passes without ``-P`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert main(file.parent) == 0
+    assert not nocolorcapsys.stdout()
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "__"],
+    templates.registered.getgroup("p-property-return"),
+    ids=templates.registered.getgroup("p-property-return").getids(),
+)
+def test_no_check_property_returns_flag_w(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    _: str,
+    template: str,
+    __: str,
+) -> None:
+    """Test that passing property fails without ``-P`` flag.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert main(file.parent) == 1
+    out = nocolorcapsys.stdout()
+    assert docsig.messages.E108 in out
+    assert docsig.messages.H101 in out

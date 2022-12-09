@@ -66,14 +66,20 @@ class Report(_MessageSequence):
     :param func: Function object.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
+    :param check_property_returns: Run return checks on properties.
     """
 
     def __init__(
-        self, func: _Function, targets: list[str], disable: list[str]
+        self,
+        func: _Function,
+        targets: list[str],
+        disable: list[str],
+        check_property_returns: bool,
     ) -> None:
         super().__init__(targets, disable)
         self._func = func
-        self._no_returns = func.isinit or func.isproperty
+        self._no_prop_return = func.isproperty and not check_property_returns
+        self._no_returns = func.isinit or self._no_prop_return
 
     def order(self, sig: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
@@ -122,7 +128,7 @@ class Report(_MessageSequence):
 
     def property_return(self) -> None:
         """Check that return is not documented for property."""
-        if self._func.docstring.returns and self._func.isproperty:
+        if self._func.docstring.returns and self._no_prop_return:
             self.append("E108")
             self.append("H101")
 
@@ -214,16 +220,20 @@ class Report(_MessageSequence):
 
 
 def generate_report(
-    func: _Function, targets: list[str], disable: list[str]
+    func: _Function,
+    targets: list[str],
+    disable: list[str],
+    check_property_returns: bool,
 ) -> Report:
     """Generate report if function or method has failed.
 
     :param func: Function object.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
+    :param check_property_returns: Run return checks on properties.
     :return: Compiled report.
     """
-    report = Report(func, targets, disable)
+    report = Report(func, targets, disable, check_property_returns)
     report.missing_class_docstring()
     report.missing_func_docstring()
     if func.docstring.string is not None:

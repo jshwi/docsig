@@ -42,26 +42,27 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-i] [-n] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-n] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                     directories or files to check (default: .)
+      path                          directories or files to check (default: .)
 
     optional arguments:
-      -h, --help               show this help message and exit
-      -v, --version            show version and exit
-      -c, --check-class        check class docstrings
-      -D, --check-dunders      check dunder methods
-      -o, --check-overridden   check overridden methods
-      -p, --check-protected    check protected functions and classes
-      -i, --ignore-no-params   ignore docstrings where parameters are not documented
-      -n, --no-ansi            disable ansi output
-      -S, --summary            print a summarised report
-      -s STR, --string STR     string to parse instead of files
-      -d LIST, --disable LIST  comma separated list of rules to disable
-      -t LIST, --target LIST   comma separated list of rules to target
+      -h, --help                    show this help message and exit
+      -v, --version                 show version and exit
+      -c, --check-class             check class docstrings
+      -D, --check-dunders           check dunder methods
+      -o, --check-overridden        check overridden methods
+      -p, --check-protected         check protected functions and classes
+      -P, --check-property-returns  check property return values
+      -i, --ignore-no-params        ignore docstrings where parameters are not documented
+      -n, --no-ansi                 disable ansi output
+      -S, --summary                 print a summarised report
+      -s STR, --string STR          string to parse instead of files
+      -d LIST, --disable LIST       comma separated list of rules to disable
+      -t LIST, --target LIST        comma separated list of rules to target
 
 Options can also be configured with the pyproject.toml file
 

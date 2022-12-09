@@ -710,7 +710,7 @@ class Klass:
 
 
 @_templates.register
-class _PClassPropertyS(_BaseTemplate):
+class _FPropertyNoReturnClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -724,7 +724,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E105
 
 
 @_templates.register
@@ -959,7 +959,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _PPropertyNoReturnS(_BaseTemplate):
+class _FPropertyNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -972,11 +972,11 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E105
 
 
 @_templates.register
-class _FPropertyReturnS(_BaseTemplate):
+class _PPropertyReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -992,7 +992,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E108
+        return ""
 
 
 @_templates.register
@@ -1208,7 +1208,7 @@ class Klass:
 
 
 @_templates.register
-class _PPropNoRetTypeS(_BaseTemplate):
+class _FPropertyNoReturnTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1222,7 +1222,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E109
 
 
 @_templates.register
@@ -2324,7 +2324,7 @@ class Klass:
 
 
 @_templates.register
-class _PClassPropertyN(_BaseTemplate):
+class _FPropertyNoReturnClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2338,7 +2338,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E105
 
 
 @_templates.register
@@ -2587,7 +2587,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _PPropertyNoReturnN(_BaseTemplate):
+class _FPropertyNoReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2600,11 +2600,11 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E105
 
 
 @_templates.register
-class _FPropertyReturnN(_BaseTemplate):
+class _PPropertyReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2624,7 +2624,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E108
+        return ""
 
 
 @_templates.register
@@ -2828,7 +2828,7 @@ class Klass:
 
 
 @_templates.register
-class _PPropNoRetTypeN(_BaseTemplate):
+class _FPropertyNoReturnTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2842,7 +2842,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return messages.E109
 
 
 @_templates.register
@@ -4320,7 +4320,7 @@ def function(param1, param2, __) -> None:
 
 
 @_templates.register
-class _FPropertyReturnNI(_BaseTemplate):
+class _PPropertyReturnNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4340,7 +4340,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E108
+        return ""
 
 
 @_templates.register
@@ -4986,7 +4986,7 @@ def get_index({CROSS}index) -> {CHECK}_T | None:
 
 
 @_templates.register
-class _FPropertyReturnSRs(_BaseTemplate):
+class _PPropertyReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5002,7 +5002,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E108
+        return ""
 
 
 @_templates.register
@@ -5977,7 +5977,7 @@ def function(param1, param2, __) -> None:
 
 
 @_templates.register
-class _FPropertyReturnG(_BaseTemplate):
+class _PPropertyReturnG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5994,7 +5994,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E108
+        return ""
 
 
 @_templates.register
