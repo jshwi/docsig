@@ -16,7 +16,6 @@ from docsig import messages
 
 MockMainType = t.Callable[..., int]
 InitFileFixtureType = t.Callable[[str], Path]
-MakeTreeFixture = t.Callable[[Path, t.Dict[t.Any, t.Any]], None]
 
 short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
