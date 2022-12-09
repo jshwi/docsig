@@ -248,18 +248,13 @@ class Display(_DisplaySequence):
     def summarise(self) -> None:
         """Display report summary if any checks have failed."""
         for key, value in self.items():
-            path = key[:-2]
-            print(self._ansi.color(path, color.magenta))
-            print(len(path) * "-")
             for failures in value:
                 for failure in failures:
-                    pipe = self._ansi.color("|", color.cyan)
                     print(
-                        "{}\t{} {}\n".format(
-                            self._ansi.color(failure.lineno, color.yellow),
-                            pipe,
-                            failure.report.get_report(
-                                "\t{} ".format(pipe)
-                            ).strip(),
+                        "{}\n\t{}".format(
+                            self._ansi.color(
+                                f"{key}{failure.lineno}", color.magenta
+                            ),
+                            failure.report.get_report("\t").strip(),
                         )
                     )

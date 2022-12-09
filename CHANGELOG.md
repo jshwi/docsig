@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.28.0...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- Update display for `-s/--summary`
 
 [0.28.0](https://github.com/jshwi/docsig/releases/tag/v0.28.0) - 2022-12-04
 ------------------------------------------------------------------------
