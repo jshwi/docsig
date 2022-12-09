@@ -73,6 +73,7 @@ class Report(_MessageSequence):
     ) -> None:
         super().__init__(targets, disable)
         self._func = func
+        self._no_returns = func.isinit or func.isproperty
 
     def order(self, sig: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
@@ -115,8 +116,7 @@ class Report(_MessageSequence):
         if (
             self._func.docstring.returns
             and self._func.signature.rettype == "None"
-            and not self._func.isproperty
-            and not self._func.isinit
+            and not self._no_returns
         ):
             self.append("E104")
 
@@ -128,11 +128,7 @@ class Report(_MessageSequence):
 
     def return_not_typed(self) -> None:
         """Check that return is not documented when no type provided."""
-        if (
-            self._func.signature.rettype is None
-            and not self._func.isproperty
-            and not self._func.isinit
-        ):
+        if self._func.signature.rettype is None and not self._no_returns:
             self.append("E109")
 
     def missing_return(self) -> None:
@@ -140,8 +136,7 @@ class Report(_MessageSequence):
         if (
             self._func.signature.returns
             and not self._func.docstring.returns
-            and not self._func.isproperty
-            and not self._func.isinit
+            and not self._no_returns
         ):
             self.append("E105")
             docstring = self._func.docstring.string
