@@ -69,10 +69,7 @@ class Report(_MessageSequence):
     """
 
     def __init__(
-        self,
-        func: _Function,
-        targets: list[str] | None = None,
-        disable: list[str] | None = None,
+        self, func: _Function, targets: list[str], disable: list[str]
     ) -> None:
         super().__init__(targets, disable)
         self._func = func
