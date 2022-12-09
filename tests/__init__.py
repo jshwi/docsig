@@ -6608,3 +6608,25 @@ def example(some_input: int) -> int:
     @property
     def expected(self) -> str:
         return messages.E103
+
+
+@_templates.register
+class _FClassReturnHintS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :return: Fails
+    \"\"\"
+
+    def __init__(param1, param2) -> None:
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.H103
