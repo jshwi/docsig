@@ -1,0 +1,6 @@
+- id: docsig
+  name: docsig
+  entry: docsig
+  language: python
+  types: [python]
+  require_serial: true

@@ -179,3 +179,28 @@ Checking class docstrings can be permanently enabled in the pyproject.toml file
 
     [tool.docsig]
     check-class = true
+
+pre-commit
+##########
+
+`docsig` can be used as a `pre-commit <https://pre-commit.com>`_ hook
+
+It can be added to your .pre-commit-config.yaml as follows:
+
+.. code-block:: yaml
+
+    repos:
+      - repo: https://github.com/jshwi/docsig
+        rev: v0.30.0
+        hooks:
+          - id: docsig
+            name: docsig
+            entry: docsig
+            language: system
+            types: [python]
+            args:
+              - "--check-class"
+              - "--check-dunders"
+              - "--check-overridden"
+              - "--check-protected"
+              - "--summary"
