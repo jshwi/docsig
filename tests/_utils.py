@@ -2,6 +2,7 @@
 tests._utils
 ============
 """
+# pylint: disable=too-few-public-methods
 import re
 import typing as t
 
@@ -67,3 +68,11 @@ errors = [
 hints = [
     i for i in dir(messages) if not i.startswith("__") and i.startswith("H")
 ]
+
+
+class DummyFunc:
+    """Mock `docsig._function.Function` object."""
+
+    def __init__(self) -> None:
+        self.isinit = True
+        self.isproperty = True
