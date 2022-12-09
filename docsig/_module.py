@@ -25,15 +25,10 @@ class Parent(_MutableSequence[_Function]):
     ) -> None:
         super().__init__()
         self._name = node.name
-        self._path = f"{path}::" if path is not None else ""
+        self._path = f"{path}:" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
                 self.append(_Function(subnode))
-
-    @property
-    def name(self) -> str:
-        """Name of parent."""
-        return self._name
 
     @property
     def path(self) -> str:
@@ -44,18 +39,6 @@ class Parent(_MutableSequence[_Function]):
     def isprotected(self) -> bool:
         """Boolean value for whether class is protected."""
         return _isprotected(self._name)
-
-
-class Class(Parent):
-    """Represents a class and its methods.
-
-    :param node: Class's abstract syntax tree.
-    :param path: Path to base path representation on.
-    """
-
-    def __init__(self, node: _ast.ClassDef, path: _Path | None = None) -> None:
-        super().__init__(node, path)
-        self._path = f"{self._path}{self.name}::"
 
 
 class Module(_MutableSequence[Parent]):
@@ -70,7 +53,7 @@ class Module(_MutableSequence[Parent]):
         self.append(Parent(node, path))
         for subnode in node.body:
             if isinstance(subnode, _ast.ClassDef):
-                self.append(Class(subnode, path))
+                self.append(Parent(subnode, path))
 
 
 class Modules(_MutableSequence[Module]):

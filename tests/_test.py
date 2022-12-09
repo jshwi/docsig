@@ -338,9 +338,9 @@ def test_lineno(
     init_file(templates.registered.getbyname("m-fail-s").template)
     main(".")
     out = nocolorcapsys.stdout()
-    assert "module/file.py::2" in out
-    assert "module/file.py::11" in out
-    assert "module/file.py::19" in out
+    assert "module/file.py:2" in out
+    assert "module/file.py:11" in out
+    assert "module/file.py:19" in out
 
 
 @pytest.mark.parametrize(

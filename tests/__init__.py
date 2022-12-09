@@ -1151,7 +1151,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return "module/file.py::Klass::4"
+        return "module/file.py:4 in Klass"
 
 
 @_templates.register
@@ -2757,7 +2757,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return "module/file.py::Klass::4"
+        return "module/file.py:4 in Klass"
 
 
 @_templates.register

@@ -158,8 +158,8 @@ This check will check documentation of `__init__` under the class docstring, and
     ...         pass
     ... """
     >>> docsig(string=string, check_class=True)
-    Klass::11
-    ---------
+    11 in Klass
+    -----------
     class Klass:
         """
         :param param1: ✓
