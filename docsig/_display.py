@@ -201,8 +201,8 @@ class FuncStr(_UserString):
 class Failure(_t.NamedTuple):
     """Failed function data."""
 
+    func: _Function
     func_str: FuncStr
-    lineno: int
     report: _Report
 
 
@@ -239,7 +239,7 @@ class Display(_DisplaySequence):
         for key, value in self.items():
             for failures in value:
                 for failure in failures:
-                    header = f"{key}{failure.lineno}"
+                    header = f"{key}{failure.func.lineno}"
                     print(self._ansi.color(header, color.magenta))
                     print(len(header) * "-")
                     print(failure.func_str)
@@ -253,7 +253,7 @@ class Display(_DisplaySequence):
                     print(
                         "{}\n\t{}".format(
                             self._ansi.color(
-                                f"{key}{failure.lineno}", color.magenta
+                                f"{key}{failure.func.lineno}", color.magenta
                             ),
                             failure.report.get_report("\t").strip(),
                         )
