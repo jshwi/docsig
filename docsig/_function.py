@@ -183,7 +183,7 @@ class _Signature(_DocSig):
             return returns.attrname
 
         if isinstance(returns, _ast.Const):
-            return str(returns.kind)
+            return str(returns.value)
 
         if isinstance(returns, _ast.Subscript):
             return "{}[{}]".format(

@@ -6571,3 +6571,26 @@ class Params(_MutableSequence[Param]):
     @property
     def expected(self) -> str:
         return messages.E113
+
+
+@_templates.register
+class _PStringAnnotation(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def example(some_input: int) -> "int":
+    \"\"\"
+    Do something.
+
+    Args:
+        some_input: Random integer
+
+    Returns:
+        Unchanged input
+    \"\"\"
+    return some_input
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
