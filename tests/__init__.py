@@ -6594,3 +6594,18 @@ def example(some_input: int) -> "int":
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FNoParamS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def example(some_input: int) -> int:
+    \"\"\"Return input.\"\"\"
+    return some_input
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103

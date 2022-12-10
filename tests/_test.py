@@ -670,3 +670,71 @@ def test_param_ne() -> None:
     """Get coverage on `Param.__eq__`."""
     # noinspection PyUnresolvedReferences
     assert docsig._function.Param() != object
+
+
+@pytest.mark.parametrize(
+    ["_", TEMPLATE, "expected"],
+    templates.registered.filtergroup(MULTI),
+    ids=templates.registered.filtergroup(MULTI).getids(),
+)
+def test_ignore_no_params(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    nocolorcapsys: NoColorCapsys,
+    _: str,
+    template: str,
+    expected: str,
+) -> None:
+    """Test that failing func passes with ``--ignore-no-params`` flag.
+
+    `E103`, `E105`, `109`, and `H102` all indicate parameters missing
+    from docstring. These should not trigger with this argument.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param nocolorcapsys: Capture system output while stripping ANSI
+        color codes.
+    :param template: String data.
+    :param expected: Expected output.
+    """
+    # messages that indicate missing parameters from docstring, which
+    # will not trigger when choosing to ignore docstrings that have no
+    # parameters documented (only if docstring has no parameter info)
+    missing_messages = (
+        docsig.messages.E103,  # parameters missing
+        docsig.messages.E105,  # return missing from docstring
+        docsig.messages.E109,  # cannot determine whether a return ...
+        docsig.messages.H102,  # it is possible a syntax error ...
+    )
+    parameter_keys = (
+        ":param",
+        ":return:",
+        ":key:",
+        ":keyword:",
+        "Parameters",
+        "Returns",
+        "Args:",
+        "Returns:",
+    )
+    file = init_file(template)
+    returncode = main(
+        long.check_class,
+        long.check_protected,
+        long.check_dunders,
+        long.check_overridden,
+        long.ignore_no_params,
+        file.parent,
+    )
+    out = nocolorcapsys.readouterr()[0]
+
+    # expected result one of the messages indicating missing params
+    # does not include any strings indicating that params are documented
+    # output should be none and the should result with a zero exit
+    # status
+    no_params = (
+        expected in missing_messages
+        and not any(i in template for i in parameter_keys)
+        and out == ""
+        and returncode == 0
+    )
+    assert expected in out or no_params

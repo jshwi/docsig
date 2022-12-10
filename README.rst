@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-n] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-i] [-n] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
 
     Check signature params for proper documentation
 
@@ -56,6 +56,7 @@ Commandline
       -D, --check-dunders      check dunder methods
       -o, --check-overridden   check overridden methods
       -p, --check-protected    check protected functions and classes
+      -i, --ignore-no-params   ignore docstrings where parameters are not documented
       -n, --no-ansi            disable ansi output
       -S, --summary            print a summarised report
       -s STR, --string STR     string to parse instead of files

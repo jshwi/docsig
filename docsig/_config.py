@@ -62,6 +62,12 @@ class Parser(_ArgumentParser):
             help="check protected functions and classes",
         )
         self.add_argument(
+            "-i",
+            "--ignore-no-params",
+            action="store_true",
+            help="ignore docstrings where parameters are not documented",
+        )
+        self.add_argument(
             "-n", "--no-ansi", action="store_true", help="disable ansi output"
         )
         self.add_argument(

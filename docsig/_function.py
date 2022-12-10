@@ -226,6 +226,14 @@ class _Docstring(_DocSig):
         """The raw documentation string, if it exists, else None."""
         return self._string
 
+    @property
+    def bare(self) -> bool:
+        """Boolean value for whether params are documented.
+
+        Docstring has to exist for docstring to be considered bare.
+        """
+        return self._string is not None and not self._args and not self.returns
+
 
 class Function:
     """Represents a function with signature and docstring parameters.

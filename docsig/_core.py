@@ -21,6 +21,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_dunders: bool,
     check_overridden: bool,
     check_protected: bool,
+    ignore_no_params: bool,
     no_ansi: bool,
     targets: list[str],
     disable: list[str],
@@ -31,6 +32,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             not (func.isprotected and not check_protected)
             and not (func.isinit and not check_class)
             and not (func.isdunder and not check_dunders)
+            and not (func.docstring.bare and ignore_no_params)
         ):
             report = _generate_report(func, targets, disable)
             if report:
@@ -41,13 +43,14 @@ def _run_check(  # pylint: disable=too-many-arguments
     return failures
 
 
-def docsig(
+def docsig(  # pylint: disable=too-many-locals
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
     check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
+    ignore_no_params: bool = False,
     no_ansi: bool = False,
     summary: bool = False,
     targets: list[str] | None = None,
@@ -68,6 +71,8 @@ def docsig(
     :param check_dunders: Check dunder methods
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
+    :param ignore_no_params: Ignore docstrings where parameters are not
+        documented
     :param no_ansi: Disable ANSI output.
     :param summary: Print a summarised report.
     :param targets: List of errors to target.
@@ -85,6 +90,7 @@ def docsig(
                     check_dunders,
                     check_overridden,
                     check_protected,
+                    ignore_no_params,
                     no_ansi,
                     targets or [],
                     disable or [],

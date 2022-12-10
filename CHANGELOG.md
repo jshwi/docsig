@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.30.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- Add `-i/--ignore-no-params` argument
+
 ### Changed
 - `E109` raised only if docstring exists
 
