@@ -6275,7 +6275,7 @@ class _FFuncPropNoRetTypeG(_BaseTemplate):
 def method(self):
     \"\"\"Docstring.
     
-    Returns
+    Returns:
         int: Returncode.
     \"\"\"
     return self._method
