@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.30.1...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- `E109` raised only if docstring exists
 
 [0.30.1](https://github.com/jshwi/docsig/releases/tag/v0.30.1) - 2022-12-10
 ------------------------------------------------------------------------

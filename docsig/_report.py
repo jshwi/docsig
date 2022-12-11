@@ -234,8 +234,8 @@ def generate_report(
     report = Report(func, targets, disable)
     report.missing_class_docstring()
     report.missing_func_docstring()
-    report.return_not_typed()
     if func.docstring.string is not None:
+        report.return_not_typed()
         report.exists()
         report.missing()
         report.duplicates()
