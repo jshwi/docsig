@@ -65,7 +65,7 @@ maintainers = [
 name = "docsig"
 readme = "README.rst"
 repository = "https://github.com/jshwi/docsig"
-version = "0.30.1"
+version = "0.31.0"
 
 [tool.poetry.dependencies]
 arcon = "^0.1.1"
