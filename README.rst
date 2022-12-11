@@ -42,7 +42,9 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-n] [-S] [-s STR] [-d LIST] [-t LIST] [path [path ...]]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-n] [-S] [-s STR] [-d LIST]
+                             [-t LIST]
+                             [path [path ...]]
 
     Check signature params for proper documentation
 
@@ -51,7 +53,7 @@ Commandline
 
     optional arguments:
       -h, --help                    show this help message and exit
-      -v, --version                 show version and exit
+      -v, --version                 show program's version number and exit
       -c, --check-class             check class docstrings
       -D, --check-dunders           check dunder methods
       -o, --check-overridden        check overridden methods
