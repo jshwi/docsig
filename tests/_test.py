@@ -32,6 +32,7 @@ from . import (
     CHECK_ARGS,
     CROSS,
     E10,
+    EXPECTED,
     FAIL,
     MULTI,
     NAME,
@@ -80,7 +81,7 @@ def test_exit_status(
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    ["_", TEMPLATE, EXPECTED],
     templates.registered.filtergroup(MULTI).filtergroup(PASS),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -93,7 +94,9 @@ def test_stdout(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    template: Template,
+    _: str,
+    template: str,
+    expected: str,
 ) -> None:
     """Test stdout of failing tests.
 
@@ -114,16 +117,17 @@ def test_stdout(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     :param template: String data.
+    :param expected: Expected output.
     """
-    init_file(template.template)
+    init_file(template)
     main(*CHECK_ARGS)
     std = capsys.readouterr()
-    assert template.expected
-    assert template.expected in std.out
+    assert expected
+    assert expected in std.out
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    ["_", TEMPLATE, EXPECTED],
     [i for i in templatest.templates.registered if i.name.endswith("1-sum-s")],
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -135,7 +139,9 @@ def test_error_codes(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    template: Template,
+    _: str,
+    template: str,
+    expected: str,
 ) -> None:
     """Test expected error codes are emitted to stdout.
 
@@ -148,20 +154,19 @@ def test_error_codes(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     :param template: String data.
+    :param expected: Expected output.
     """
-    init_file(template.template)
-    messages = [
-        i for i in errors if getattr(docsig.messages, i) != template.expected
-    ]
+    init_file(template)
+    messages = [i for i in errors if getattr(docsig.messages, i) != expected]
     main()
     std = capsys.readouterr()
-    assert template.expected in std.out
-    assert std.out.count(template.expected) == 1
+    assert expected in std.out
+    assert std.out.count(expected) == 1
     assert not any(getattr(docsig.messages, i) in std.out for i in messages)
 
 
 @pytest.mark.parametrize(
-    "expected",
+    EXPECTED,
     templates.registered.getgroup(MULTI)[0].expected.split("\n\n\n"),
     ids=(
         c
@@ -253,7 +258,7 @@ def test_str_returncode(
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    ["_", TEMPLATE, EXPECTED],
     templates.registered.filtergroup(MULTI).filtergroup(fail.method_header),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -263,17 +268,22 @@ def test_str_returncode(
     ],
 )
 def test_str_out(
-    capsys: pytest.CaptureFixture, main: MockMainType, template: Template
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    _: str,
+    template: str,
+    expected: str,
 ) -> None:
     """Test main for stdout with strings.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     :param template: String data.
+    :param expected: Expected output.
     """
-    main(*CHECK_ARGS, long.string, template.template)
+    main(*CHECK_ARGS, long.string, template)
     std = capsys.readouterr()
-    assert template.expected in std.out
+    assert expected in std.out
 
 
 def test_no_check_init_flag(
@@ -295,7 +305,7 @@ def test_no_check_init_flag(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.protect),
     ids=templates.registered.getgroup(fail.protect).getids(),
 )
@@ -303,9 +313,7 @@ def test_no_check_protected_flag(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test that failing func passes without ``--check-protected`` flag.
 
@@ -314,7 +322,7 @@ def test_no_check_protected_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main() == 0
     std = capsys.readouterr()
     assert not std.out
@@ -334,16 +342,12 @@ def test_only_init_flag(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.protect),
     ids=templates.registered.getgroup(fail.protect).getids(),
 )
 def test_only_protected_flag(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    init_file: InitFileFixtureType, main: MockMainType, template: Template
 ) -> None:
     """Test that failing func passes with only ``--check-protected``.
 
@@ -351,12 +355,12 @@ def test_only_protected_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main(long.check_protected) == 1
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.overridden),
     ids=templates.registered.getgroup(fail.overridden).getids(),
 )
@@ -364,9 +368,7 @@ def test_no_check_overridden_flag(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test that failing func passes without ``--check-overridden``.
 
@@ -375,23 +377,19 @@ def test_no_check_overridden_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.overridden),
     ids=templates.registered.getgroup(fail.overridden).getids(),
 )
 def test_only_overridden_flag(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    init_file: InitFileFixtureType, main: MockMainType, template: Template
 ) -> None:
     """Test that failing func passes with only ``--check-overridden``.
 
@@ -399,12 +397,12 @@ def test_only_overridden_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main(long.check_overridden) == 1
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.dunder),
     ids=templates.registered.getgroup(fail.dunder).getids(),
 )
@@ -412,9 +410,7 @@ def test_no_check_dunder_flag(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test that failing func passes without ``--check-dunders`` flag.
 
@@ -423,14 +419,14 @@ def test_no_check_dunder_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(FAIL),
     ids=templates.registered.getgroup(FAIL).getids(),
 )
@@ -438,9 +434,7 @@ def test_summary(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test main for passing and failing checks with ``--summary``.
 
@@ -452,7 +446,7 @@ def test_summary(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main(*CHECK_ARGS, long.summary) == 1
     std = capsys.readouterr()
     assert CHECK not in std.out
@@ -487,7 +481,7 @@ def test_no_stdout(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "expected"],
+    ["_", TEMPLATE, EXPECTED],
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
@@ -551,7 +545,7 @@ def test_ignore_no_params(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(fail.property_returns),
     ids=templates.registered.getgroup(fail.property_returns).getids(),
 )
@@ -559,9 +553,7 @@ def test_no_check_property_returns_flag_wo(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test that failing property passes without ``-P`` flag.
 
@@ -570,14 +562,14 @@ def test_no_check_property_returns_flag_wo(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
+    TEMPLATE,
     templates.registered.getgroup(passed.property_return),
     ids=templates.registered.getgroup(passed.property_return).getids(),
 )
@@ -585,9 +577,7 @@ def test_no_check_property_returns_flag(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
-    template: str,
-    __: str,
+    template: Template,
 ) -> None:
     """Test that passing property fails without ``-P`` flag.
 
@@ -602,7 +592,7 @@ def test_no_check_property_returns_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    init_file(template.template)
     assert main() == 1
     std = capsys.readouterr()
     assert docsig.messages.E108 in std.out
