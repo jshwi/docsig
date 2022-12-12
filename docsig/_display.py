@@ -20,7 +20,6 @@ from ._function import ARG as _ARG
 from ._function import KEY as _KEY
 from ._function import Function as _Function
 from ._function import Param as _Param
-from ._objects import MutableMapping as _MutableMapping
 from ._objects import MutableSequence as _MutableSequence
 from ._report import Report as _Report
 
@@ -210,7 +209,7 @@ class Failures(_MutableSequence[Failure]):
     """Sequence of failed functions."""
 
 
-class _DisplaySequence(_MutableMapping[str, _t.List[Failures]]):
+class _DisplaySequence(_t.Dict[str, _t.List[Failures]]):
     """Sequence for collection of report info.
 
     If an attempt is made to append a report to a list whose key does
