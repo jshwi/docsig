@@ -29,29 +29,29 @@ from . import (
     long,
     short,
 )
-from ._utils import DummyFunc, NoColorCapsys, errors, hints
+from ._utils import DummyFunc, errors, hints
 
 
 @pytest.mark.parametrize("arg", (short.v, long.version))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     arg: str,
 ) -> None:
     """Test printing of version on commandline.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
     :param main: Patch package entry point.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param arg: Version argument.
     """
     monkeypatch.setattr("docsig._config.__version__", "1.0.0")
     with pytest.raises(SystemExit):
         main(arg)
 
-    assert nocolorcapsys.stdout().strip() == "1.0.0"
+    std = capsys.readouterr()
+    assert std.out.strip() == "1.0.0"
 
 
 @pytest.mark.parametrize(
@@ -95,17 +95,16 @@ def test_main_args(
     ],
 )
 def test_main_output_negative(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     template: Template,
 ) -> None:
     """Test main for stdout.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: String data.
     """
     file = init_file(template.template)
@@ -117,8 +116,9 @@ def test_main_output_negative(
         long.check_property_returns,
         file.parent,
     )
+    std = capsys.readouterr()
     assert template.expected != ""
-    assert template.expected in nocolorcapsys.readouterr()[0]
+    assert template.expected in std.out
 
 
 @pytest.mark.parametrize(
@@ -131,17 +131,16 @@ def test_main_output_negative(
     ],
 )
 def test_main_no_sum(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     template: Template,
 ) -> None:
     """Test main for stdout.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: String data.
     """
     file = init_file(template.template)
@@ -149,11 +148,11 @@ def test_main_no_sum(
         i for i in errors if getattr(docsig.messages, i) != template.expected
     ]
     main(file.parent)
-    out = nocolorcapsys.readouterr()[0]
-    assert template.expected in out
-    assert out.count(template.expected) == 1
+    std = capsys.readouterr()
+    assert template.expected in std.out
+    assert std.out.count(template.expected) == 1
     for message in messages:
-        assert not getattr(docsig.messages, message) in out
+        assert not getattr(docsig.messages, message) in std.out
 
 
 @pytest.mark.parametrize(
@@ -167,24 +166,23 @@ def test_main_no_sum(
     ),
 )
 def test_main_multi(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     expected: str,
 ) -> None:
     """Test output correct for modules with multiple funcs.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param expected: Expected result.
     """
     file = init_file(templates.registered.getgroup(MULTI)[0].template)
     main(file.parent)
-    out = nocolorcapsys.readouterr()[0]
+    std = capsys.readouterr()
     # all_expected = expected.split("\n\n\n")
-    assert expected in out
+    assert expected in std.out
 
 
 def test_mutable_sequence() -> None:
@@ -318,23 +316,22 @@ def test_disable_report(message: str) -> None:
 
 
 def test_lineno(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
 ) -> None:
     """Test printing of three function errors with line number.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     """
     init_file(templates.registered.getbyname("m-fail-s").template)
     main(".")
-    out = nocolorcapsys.stdout()
-    assert "module/file.py:2" in out
-    assert "module/file.py:11" in out
-    assert "module/file.py:19" in out
+    std = capsys.readouterr()
+    assert "module/file.py:2" in std.out
+    assert "module/file.py:11" in std.out
+    assert "module/file.py:19" in std.out
 
 
 @pytest.mark.parametrize(
@@ -373,13 +370,12 @@ def test_main_str(
     ],
 )
 def test_main_str_out(
-    main: MockMainType, nocolorcapsys: NoColorCapsys, template: Template
+    capsys: pytest.CaptureFixture, main: MockMainType, template: Template
 ) -> None:
     """Test main for stdout with strings.
 
+    :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: String data.
     """
     main(
@@ -391,25 +387,26 @@ def test_main_str_out(
         long.string,
         template.template,
     )
-    assert template.expected in nocolorcapsys.readouterr()[0]
+    std = capsys.readouterr()
+    assert template.expected in std.out
 
 
 def test_no_check_init_flag(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
 ) -> None:
     """Test that failing class passes without ``--check-init`` flag.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     """
     template = templates.registered.getbyname("f-init-s")
     file = init_file(template.template)
     assert main(file.parent) == 0
-    assert not nocolorcapsys.stdout()
+    std = capsys.readouterr()
+    assert not std.out
 
 
 @pytest.mark.parametrize(
@@ -418,24 +415,24 @@ def test_no_check_init_flag(
     ids=templates.registered.getgroup(FAIL_PROTECT).getids(),
 )
 def test_no_check_protected_flag(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test that failing func passes without ``--check-protected`` flag.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
     assert main(file.parent) == 0
-    assert not nocolorcapsys.stdout()
+    std = capsys.readouterr()
+    assert not std.out
 
 
 def test_only_init_flag(
@@ -479,24 +476,24 @@ def test_only_protected_flag(
     ids=templates.registered.getgroup(FAIL_OVERRIDE).getids(),
 )
 def test_no_check_overridden_flag(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test that failing func passes without ``--check-overridden``.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
     assert main(file.parent) == 0
-    assert not nocolorcapsys.stdout()
+    std = capsys.readouterr()
+    assert not std.out
 
 
 @pytest.mark.parametrize(
@@ -527,24 +524,24 @@ def test_only_overridden_flag(
     ids=templates.registered.getgroup("f-dunder").getids(),
 )
 def test_no_check_dunder_flag(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test that failing func passes without ``--check-dunders`` flag.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
     assert main(file.parent) == 0
-    assert not nocolorcapsys.stdout()
+    std = capsys.readouterr()
+    assert not std.out
 
 
 @pytest.mark.parametrize(
@@ -553,19 +550,18 @@ def test_no_check_dunder_flag(
     ids=templates.registered.getgroup(FAIL).getids(),
 )
 def test_main_sum(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test main for passing and failing checks with ``--summary``.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
@@ -581,45 +577,9 @@ def test_main_sum(
         )
         == 1
     )
-    out = nocolorcapsys.stdout()
-    assert CHECK not in out
-    assert CROSS not in out
-
-
-@pytest.mark.parametrize(
-    ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(FAIL),
-    ids=templates.registered.getgroup(FAIL).getids(),
-)
-def test_no_ansi(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
-    capsys: pytest.CaptureFixture,
-    _: str,
-    template: str,
-    __: str,
-) -> None:
-    """Test main for failing checks with the ``--no-ansi`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param capsys: Capture and return stdout and stderr stream.
-    :param template: Contents to write to file.
-    """
-    file = init_file(template)
-    assert (
-        main(
-            long.no_ansi,
-            long.check_class,
-            long.check_protected,
-            long.check_overridden,
-            long.check_dunders,
-            long.check_property_returns,
-            file.parent,
-        )
-        == 1
-    )
-    assert "\x1b" not in capsys.readouterr()[0]
+    std = capsys.readouterr()
+    assert CHECK not in std.out
+    assert CROSS not in std.out
 
 
 @pytest.mark.parametrize(
@@ -628,17 +588,16 @@ def test_no_ansi(
     ids=templates.registered.getgroup(PASS).getids(),
 )
 def test_main_output_positive(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     template: Template,
 ) -> None:
     """Test main for stdout.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: String data.
     """
     file = init_file(template.template)
@@ -650,7 +609,8 @@ def test_main_output_positive(
         long.check_property_returns,
         file.parent,
     )
-    assert template.expected == nocolorcapsys.readouterr()[0]
+    std = capsys.readouterr()
+    assert template.expected == std.out
 
 
 def test_param_ne() -> None:
@@ -665,9 +625,9 @@ def test_param_ne() -> None:
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
 def test_ignore_no_params(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     expected: str,
@@ -677,10 +637,9 @@ def test_ignore_no_params(
     `E103`, `E105`, `109`, and `H102` all indicate parameters missing
     from docstring. These should not trigger with this argument.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: String data.
     :param expected: Expected output.
     """
@@ -712,7 +671,7 @@ def test_ignore_no_params(
         long.ignore_no_params,
         file.parent,
     )
-    out = nocolorcapsys.readouterr()[0]
+    std = capsys.readouterr()
 
     # expected result one of the messages indicating missing params
     # does not include any strings indicating that params are documented
@@ -721,10 +680,10 @@ def test_ignore_no_params(
     no_params = (
         expected in missing_messages
         and not any(i in template for i in parameter_keys)
-        and out == ""
+        and std.out == ""
         and returncode == 0
     )
-    assert expected in out or no_params
+    assert expected in std.out or no_params
 
 
 @pytest.mark.parametrize(
@@ -733,24 +692,24 @@ def test_ignore_no_params(
     ids=templates.registered.getgroup("f-property-no-return").getids(),
 )
 def test_no_check_property_returns_flag_wo(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test that failing property passes without ``-P`` flag.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
     assert main(file.parent) == 0
-    assert not nocolorcapsys.stdout()
+    std = capsys.readouterr()
+    assert not std.out
 
 
 @pytest.mark.parametrize(
@@ -759,26 +718,25 @@ def test_no_check_property_returns_flag_wo(
     ids=templates.registered.getgroup("p-property-return").getids(),
 )
 def test_no_check_property_returns_flag_w(
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    nocolorcapsys: NoColorCapsys,
     _: str,
     template: str,
     __: str,
 ) -> None:
     """Test that passing property fails without ``-P`` flag.
 
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param nocolorcapsys: Capture system output while stripping ANSI
-        color codes.
     :param template: Contents to write to file.
     """
     file = init_file(template)
     assert main(file.parent) == 1
-    out = nocolorcapsys.stdout()
-    assert docsig.messages.E108 in out
-    assert docsig.messages.H101 in out
+    std = capsys.readouterr()
+    assert docsig.messages.E108 in std.out
+    assert docsig.messages.H101 in std.out
 
 
 @pytest.mark.parametrize(

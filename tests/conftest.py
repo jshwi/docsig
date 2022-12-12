@@ -8,8 +8,7 @@ import pytest
 
 import docsig
 
-from . import InitFileFixtureType, MockMainType
-from ._utils import NoColorCapsys
+from . import InitFileFixtureType, MockMainType, long
 
 
 @pytest.fixture(name="environment", autouse=True)
@@ -35,23 +34,12 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     def _main(*args: str) -> int:
         """Run main with custom args."""
         monkeypatch.setattr(
-            "sys.argv", [docsig.__name__, *[str(a) for a in args]]
+            "sys.argv",
+            [docsig.__name__, long.no_ansi, *[str(a) for a in args]],
         )
         return docsig.main()
 
     return _main
-
-
-@pytest.fixture(name="nocolorcapsys")
-def fixture_nocolorcapsys(capsys: pytest.CaptureFixture) -> NoColorCapsys:
-    """Instantiate capsys with the regex method.
-
-    :param capsys: Capture ``sys`` stdout and stderr..
-    :return: Instantiated ``NoColorCapsys`` object for capturing output
-        stream and sanitizing the string if it contains ANSI escape
-        codes.
-    """
-    return NoColorCapsys(capsys)
 
 
 @pytest.fixture(name="init_file")
