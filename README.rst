@@ -4,11 +4,14 @@ docsig
     :target: https://opensource.org/licenses/MIT
     :alt: License
 .. image:: https://img.shields.io/pypi/v/docsig
-    :target: https://img.shields.io/pypi/v/docsig
-    :alt: pypi
+    :target: https://pypi.org/project/docsig/
+    :alt: PyPI
 .. image:: https://github.com/jshwi/docsig/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/jshwi/docsig/actions/workflows/ci.yml
     :alt: CI
+.. image:: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml/badge.svg
+    :target: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml
+    :alt: CodeQL
 .. image:: https://codecov.io/gh/jshwi/docsig/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/jshwi/docsig
     :alt: codecov.io
@@ -20,7 +23,7 @@ docsig
     :alt: python3.8
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
-    :alt: black
+    :alt: Black
 
 Check signature params for proper documentation
 -----------------------------------------------
