@@ -224,7 +224,7 @@ def test_main_cli_disable(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main("--disable", name.replace("-", "").upper()[1:5]) == 0
+    assert main(long.disable, name.replace("-", "").upper()[1:5]) == 0
 
 
 @pytest.mark.parametrize("message", errors)
