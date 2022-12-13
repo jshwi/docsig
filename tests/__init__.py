@@ -671,7 +671,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassWKwargsS(_BaseTemplate):
+class _FMethodWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1140,7 +1140,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _FClassHeaderWKwargsS(_BaseTemplate):
+class _FMethodHeaderWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2278,7 +2278,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassWKwargsN(_BaseTemplate):
+class _FMethodWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2742,7 +2742,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _FClassHeaderWKwargsN(_BaseTemplate):
+class _FMethodHeaderWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4042,7 +4042,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassWKwargsNI(_BaseTemplate):
+class _FMethodWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5735,7 +5735,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassWKwargsG(_BaseTemplate):
+class _FMethodWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6617,7 +6617,7 @@ def example(some_input: int) -> int:
 
 
 @_templates.register
-class _FClassReturnHintS(_BaseTemplate):
+class _FMethodReturnHintS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """

@@ -101,7 +101,7 @@ def test_main_output_negative(
     init_file(template.template)
     main(*CHECK_ARGS)
     std = capsys.readouterr()
-    assert template.expected != ""
+    assert template.expected
     assert template.expected in std.out
 
 
@@ -284,11 +284,11 @@ def test_main_str(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.filtergroup(MULTI).filtergroup(fail.class_header),
+    templates.registered.filtergroup(MULTI).filtergroup(fail.method_header),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI)
-        .filtergroup(fail.class_header)
+        .filtergroup(fail.method_header)
         .getids()
     ],
 )
