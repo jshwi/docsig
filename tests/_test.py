@@ -71,8 +71,8 @@ def test_main_args(
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(*CHECK_ARGS, file.parent) == int(name.startswith(FAIL))
+    init_file(template)
+    assert main(*CHECK_ARGS) == int(name.startswith(FAIL))
 
 
 @pytest.mark.parametrize(
@@ -98,8 +98,8 @@ def test_main_output_negative(
     :param main: Mock ``main`` function.
     :param template: String data.
     """
-    file = init_file(template.template)
-    main(*CHECK_ARGS, file.parent)
+    init_file(template.template)
+    main(*CHECK_ARGS)
     std = capsys.readouterr()
     assert template.expected != ""
     assert template.expected in std.out
@@ -127,11 +127,11 @@ def test_main_no_sum(
     :param main: Mock ``main`` function.
     :param template: String data.
     """
-    file = init_file(template.template)
+    init_file(template.template)
     messages = [
         i for i in errors if getattr(docsig.messages, i) != template.expected
     ]
-    main(file.parent)
+    main()
     std = capsys.readouterr()
     assert template.expected in std.out
     assert std.out.count(template.expected) == 1
@@ -162,8 +162,8 @@ def test_main_multi(
     :param main: Mock ``main`` function.
     :param expected: Expected result.
     """
-    file = init_file(templates.registered.getgroup(MULTI)[0].template)
-    main(file.parent)
+    init_file(templates.registered.getgroup(MULTI)[0].template)
+    main()
     std = capsys.readouterr()
     assert expected in std.out
 
@@ -224,7 +224,7 @@ def test_main_cli_disable(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", "--disable", name.replace("-", "").upper()[1:5]) == 0
+    assert main("--disable", name.replace("-", "").upper()[1:5]) == 0
 
 
 @pytest.mark.parametrize("message", errors)
@@ -257,7 +257,7 @@ def test_lineno(
     :param main: Mock ``main`` function.
     """
     init_file(templates.registered.getbyname("m-fail-s").template)
-    main(".")
+    main()
     std = capsys.readouterr()
     assert "module/file.py:2" in std.out
     assert "module/file.py:11" in std.out
@@ -319,8 +319,8 @@ def test_no_check_init_flag(
     :param main: Mock ``main`` function.
     """
     template = templates.registered.getbyname(fail.init_s)
-    file = init_file(template.template)
-    assert main(file.parent) == 0
+    init_file(template.template)
+    assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
@@ -345,8 +345,8 @@ def test_no_check_protected_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(file.parent) == 0
+    init_file(template)
+    assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
@@ -360,8 +360,8 @@ def test_only_init_flag(
     :param main: Mock ``main`` function.
     """
     template = templates.registered.getbyname(fail.init_s)
-    file = init_file(template.template)
-    assert main(long.check_class, file.parent) == 1
+    init_file(template.template)
+    assert main(long.check_class) == 1
 
 
 @pytest.mark.parametrize(
@@ -382,8 +382,8 @@ def test_only_protected_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(long.check_protected, file.parent) == 1
+    init_file(template)
+    assert main(long.check_protected) == 1
 
 
 @pytest.mark.parametrize(
@@ -406,8 +406,8 @@ def test_no_check_overridden_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(file.parent) == 0
+    init_file(template)
+    assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
@@ -430,8 +430,8 @@ def test_only_overridden_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(long.check_overridden, file.parent) == 1
+    init_file(template)
+    assert main(long.check_overridden) == 1
 
 
 @pytest.mark.parametrize(
@@ -454,8 +454,8 @@ def test_no_check_dunder_flag(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(file.parent) == 0
+    init_file(template)
+    assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
@@ -480,8 +480,8 @@ def test_main_sum(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(*CHECK_ARGS, long.summary, file.parent) == 1
+    init_file(template)
+    assert main(*CHECK_ARGS, long.summary) == 1
     std = capsys.readouterr()
     assert CHECK not in std.out
     assert CROSS not in std.out
@@ -505,8 +505,8 @@ def test_main_output_positive(
     :param main: Mock ``main`` function.
     :param template: String data.
     """
-    file = init_file(template.template)
-    main(*CHECK_ARGS, file.parent)
+    init_file(template.template)
+    main(*CHECK_ARGS)
     std = capsys.readouterr()
     assert template.expected == std.out
 
@@ -560,8 +560,8 @@ def test_ignore_no_params(
         "Args:",
         "Returns:",
     )
-    file = init_file(template)
-    returncode = main(*CHECK_ARGS, long.ignore_no_params, file.parent)
+    init_file(template)
+    returncode = main(*CHECK_ARGS, long.ignore_no_params)
     std = capsys.readouterr()
 
     # expected result one of the messages indicating missing params
@@ -597,8 +597,8 @@ def test_no_check_property_returns_flag_wo(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(file.parent) == 0
+    init_file(template)
+    assert main() == 0
     std = capsys.readouterr()
     assert not std.out
 
@@ -623,8 +623,8 @@ def test_no_check_property_returns_flag_w(
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(file.parent) == 1
+    init_file(template)
+    assert main() == 1
     std = capsys.readouterr()
     assert docsig.messages.E108 in std.out
     assert docsig.messages.H101 in std.out
