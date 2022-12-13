@@ -31,6 +31,7 @@ E10 = "e-1-0"
 FAIL_PROTECT = "f-protect"
 FAIL_OVERRIDE = "f-override"
 FAIL = "f"
+PASS = "p"
 
 
 @_templates.register

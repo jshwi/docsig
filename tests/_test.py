@@ -22,6 +22,7 @@ from . import (
     FAIL_PROTECT,
     MULTI,
     NAME,
+    PASS,
     TEMPLATE,
     InitFileFixtureType,
     MockMainType,
@@ -85,11 +86,11 @@ def test_main_args(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.filtergroup(MULTI).filtergroup("p"),
+    templates.registered.filtergroup(MULTI).filtergroup(PASS),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI)
-        .filtergroup("p")
+        .filtergroup(PASS)
         .getids()
     ],
 )
@@ -649,8 +650,8 @@ def test_no_ansi(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.getgroup("p"),
-    ids=templates.registered.getgroup("p").getids(),
+    templates.registered.getgroup(PASS),
+    ids=templates.registered.getgroup(PASS).getids(),
 )
 def test_main_output_positive(
     init_file: InitFileFixtureType,
