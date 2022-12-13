@@ -165,7 +165,6 @@ def test_main_multi(
     file = init_file(templates.registered.getgroup(MULTI)[0].template)
     main(file.parent)
     std = capsys.readouterr()
-    # all_expected = expected.split("\n\n\n")
     assert expected in std.out
 
 
