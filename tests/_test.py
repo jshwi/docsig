@@ -286,55 +286,6 @@ def test_str_out(
     assert expected in std.out
 
 
-def test_only_init_flag(
-    init_file: InitFileFixtureType, main: MockMainType
-) -> None:
-    """Test that failing class passes with only ``--check-init`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    """
-    template = templates.registered.getbyname(fail.class_s)
-    init_file(template.template)
-    assert main(long.check_class) == 1
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(fail.protect),
-    ids=templates.registered.getgroup(fail.protect).getids(),
-)
-def test_only_protected_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing func passes with only ``--check-protected``.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main(long.check_protected) == 1
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(fail.overridden),
-    ids=templates.registered.getgroup(fail.overridden).getids(),
-)
-def test_only_overridden_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing func passes with only ``--check-overridden``.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main(long.check_overridden) == 1
-
-
 @pytest.mark.parametrize(
     TEMPLATE,
     templates.registered.getgroup(FAIL),
@@ -590,3 +541,32 @@ def test_no_flag(
     """
     init_file(template.template)
     assert main() == 0
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.getgroup(*FAIL_CHECK_ARGS),
+    ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
+)
+def test_single_flag(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    name: str,
+    template: str,
+    _: str,
+) -> None:
+    """Test that failing templates pass with only corresponding flag.
+
+    This tests that boolean expressions are all evaluated properly on
+    their own.
+
+    All tests that fail such as with `--check-class` should be prefixed
+    with `FClass`, and these particular tests should all fail.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    init_file(template)
+    assert main(f"--check-{name.split('-')[1]}") == 1
