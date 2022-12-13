@@ -2,7 +2,6 @@
 tests.conftest
 ==============
 """
-import warnings
 from pathlib import Path
 
 import pytest
@@ -33,16 +32,12 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     :return: Function for using this fixture.
     """
 
-    def _main(*args: str, catch_warnings: bool = True) -> int:
+    def _main(*args: str) -> int:
         """Run main with custom args."""
         monkeypatch.setattr(
             "sys.argv", [docsig.__name__, *[str(a) for a in args]]
         )
-        with warnings.catch_warnings():
-            if catch_warnings:
-                warnings.simplefilter("ignore")
-
-            return docsig.main()
+        return docsig.main()
 
     return _main
 

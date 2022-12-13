@@ -121,20 +121,6 @@ def test_main_output_negative(
     assert template.expected in nocolorcapsys.readouterr()[0]
 
 
-def test_no_params(init_file: InitFileFixtureType, main: MockMainType) -> None:
-    """Test main for function without params.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    """
-    contents = templates.registered.getbyname("p-no-params-s").template
-    file = init_file(contents)
-    with pytest.warns(None) as record:  # type: ignore
-        main(file.parent)
-
-    assert len(record) == 0
-
-
 @pytest.mark.parametrize(
     TEMPLATE,
     [i for i in templatest.templates.registered if i.name.endswith("1-sum-s")],
