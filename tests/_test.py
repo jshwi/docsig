@@ -135,8 +135,7 @@ def test_main_no_sum(
     std = capsys.readouterr()
     assert template.expected in std.out
     assert std.out.count(template.expected) == 1
-    for message in messages:
-        assert not getattr(docsig.messages, message) in std.out
+    assert not any(getattr(docsig.messages, i) in std.out for i in messages)
 
 
 @pytest.mark.parametrize(
