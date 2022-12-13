@@ -423,7 +423,7 @@ def test_summary(
     :param template: Contents to write to file.
     """
     init_file(template.template)
-    assert main(*CHECK_ARGS, long.summary) == 1
+    main(*CHECK_ARGS, long.summary)
     std = capsys.readouterr()
     assert CHECK not in std.out
     assert CROSS not in std.out
@@ -562,7 +562,7 @@ def test_no_check_property_returns_flag(
     :param template: Contents to write to file.
     """
     init_file(template.template)
-    assert main() == 1
+    main()
     std = capsys.readouterr()
     assert docsig.messages.E108 in std.out
     assert docsig.messages.H101 in std.out
