@@ -287,7 +287,7 @@ def test_no_stdout(
     init_file(template.template)
     main(*CHECK_ARGS)
     std = capsys.readouterr()
-    assert template.expected == std.out
+    assert not std.out
 
 
 @pytest.mark.parametrize(
