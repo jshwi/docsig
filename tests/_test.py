@@ -236,57 +236,6 @@ def test_disable_rule(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
-    templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
-)
-def test_str_returncode(
-    main: MockMainType, name: str, template: str, _: str
-) -> None:
-    """Test main for zero and non-zero returncodes for strings provided.
-
-    If ``name`` starts with a fail prefix then a non-zero returncode is
-    expected.
-
-    :param main: Mock ``main`` function.
-    :param name: Name of test.
-    :param template: Contents to write to file.
-    """
-    assert main(*CHECK_ARGS, long.string, template) == int(
-        name.startswith(FAIL)
-    )
-
-
-@pytest.mark.parametrize(
-    ["_", TEMPLATE, EXPECTED],
-    templates.registered.filtergroup(MULTI).filtergroup(fail.method_header),
-    ids=[
-        i.replace("-", "").upper()[4:8] if E10 in i else i
-        for i in templates.registered.filtergroup(MULTI)
-        .filtergroup(fail.method_header)
-        .getids()
-    ],
-)
-def test_str_out(
-    capsys: pytest.CaptureFixture,
-    main: MockMainType,
-    _: str,
-    template: str,
-    expected: str,
-) -> None:
-    """Test main for stdout with strings.
-
-    :param capsys: Capture sys out.
-    :param main: Mock ``main`` function.
-    :param template: String data.
-    :param expected: Expected output.
-    """
-    main(*CHECK_ARGS, long.string, template)
-    std = capsys.readouterr()
-    assert expected in std.out
-
-
-@pytest.mark.parametrize(
     TEMPLATE,
     templates.registered.getgroup(FAIL),
     ids=templates.registered.getgroup(FAIL).getids(),
@@ -570,3 +519,42 @@ def test_single_flag(
     """
     init_file(template)
     assert main(f"--check-{name.split('-')[1]}") == 1
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, EXPECTED],
+    templates.registered.filtergroup(MULTI).filtergroup(fail.method_header),
+    ids=[
+        i.replace("-", "").upper()[4:8] if E10 in i else i
+        for i in templates.registered.filtergroup(MULTI)
+        .filtergroup(fail.method_header)
+        .getids()
+    ],
+)
+def test_string_argument(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    name: str,
+    template: str,
+    expected: str,
+) -> None:
+    """Test for passing and failing checks with ``-s/--string``.
+
+    A combination of the test for exit status and the test for stdout.
+    As this test could be done for every single test where the file is
+    checked, without the ``-s/--string`` argument and with the path
+    positional argument, this will only test those two. As long as the
+    tests pass and are consistent with the result that the tests for a
+    file produce, this test should be enough.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: String data.
+    :param expected: Expected output.
+    """
+    assert main(*CHECK_ARGS, long.string, template) == int(
+        name.startswith(FAIL)
+    )
+    std = capsys.readouterr()
+    assert expected in std.out
