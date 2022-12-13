@@ -32,6 +32,13 @@ FAIL_PROTECT = "f-protect"
 FAIL_OVERRIDE = "f-override"
 FAIL = "f"
 PASS = "p"
+CHECK_ARGS = (
+    long.check_class,
+    long.check_protected,
+    long.check_overridden,
+    long.check_dunders,
+    long.check_property_returns,
+)
 
 
 @_templates.register

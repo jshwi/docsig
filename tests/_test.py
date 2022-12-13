@@ -12,6 +12,7 @@ import docsig.messages
 
 from . import (
     CHECK,
+    CHECK_ARGS,
     CROSS,
     E10,
     ERR_GROUP,
@@ -72,14 +73,7 @@ def test_main_args(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(
-        long.check_class,
-        long.check_protected,
-        long.check_overridden,
-        long.check_dunders,
-        long.check_property_returns,
-        file.parent,
-    ) == int(name.startswith(FAIL))
+    assert main(*CHECK_ARGS, file.parent) == int(name.startswith(FAIL))
 
 
 @pytest.mark.parametrize(
@@ -106,14 +100,7 @@ def test_main_output_negative(
     :param template: String data.
     """
     file = init_file(template.template)
-    main(
-        long.check_class,
-        long.check_protected,
-        long.check_dunders,
-        long.check_overridden,
-        long.check_property_returns,
-        file.parent,
-    )
+    main(*CHECK_ARGS, file.parent)
     std = capsys.readouterr()
     assert template.expected != ""
     assert template.expected in std.out
@@ -293,15 +280,9 @@ def test_main_str(
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    assert main(
-        long.check_class,
-        long.check_protected,
-        long.check_overridden,
-        long.check_dunders,
-        long.check_property_returns,
-        long.string,
-        template,
-    ) == int(name.startswith(FAIL))
+    assert main(*CHECK_ARGS, long.string, template) == int(
+        name.startswith(FAIL)
+    )
 
 
 @pytest.mark.parametrize(
@@ -323,15 +304,7 @@ def test_main_str_out(
     :param main: Mock ``main`` function.
     :param template: String data.
     """
-    main(
-        long.check_class,
-        long.check_dunders,
-        long.check_protected,
-        long.check_overridden,
-        long.check_property_returns,
-        long.string,
-        template.template,
-    )
+    main(*CHECK_ARGS, long.string, template.template)
     std = capsys.readouterr()
     assert template.expected in std.out
 
@@ -510,18 +483,7 @@ def test_main_sum(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert (
-        main(
-            long.summary,
-            long.check_class,
-            long.check_protected,
-            long.check_overridden,
-            long.check_dunders,
-            long.check_property_returns,
-            file.parent,
-        )
-        == 1
-    )
+    assert main(*CHECK_ARGS, long.summary, file.parent) == 1
     std = capsys.readouterr()
     assert CHECK not in std.out
     assert CROSS not in std.out
@@ -546,14 +508,7 @@ def test_main_output_positive(
     :param template: String data.
     """
     file = init_file(template.template)
-    main(
-        long.check_class,
-        long.check_protected,
-        long.check_dunders,
-        long.check_overridden,
-        long.check_property_returns,
-        file.parent,
-    )
+    main(*CHECK_ARGS, file.parent)
     std = capsys.readouterr()
     assert template.expected == std.out
 
@@ -608,14 +563,7 @@ def test_ignore_no_params(
         "Returns:",
     )
     file = init_file(template)
-    returncode = main(
-        long.check_class,
-        long.check_protected,
-        long.check_dunders,
-        long.check_overridden,
-        long.ignore_no_params,
-        file.parent,
-    )
+    returncode = main(*CHECK_ARGS, long.ignore_no_params, file.parent)
     std = capsys.readouterr()
 
     # expected result one of the messages indicating missing params
@@ -708,15 +656,7 @@ def test_ignore_args(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(
-        long.check_class,
-        long.check_protected,
-        long.check_overridden,
-        long.check_dunders,
-        long.check_property_returns,
-        long.ignore_args,
-        file.parent,
-    ) == int(
+    assert main(*CHECK_ARGS, long.ignore_args, file.parent) == int(
         name.startswith(FAIL)
         and "w-args" not in name
         or name.startswith(PASS)
@@ -748,15 +688,7 @@ def test_ignore_kwargs(
     :param template: Contents to write to file.
     """
     file = init_file(template)
-    assert main(
-        long.check_class,
-        long.check_protected,
-        long.check_overridden,
-        long.check_dunders,
-        long.check_property_returns,
-        long.ignore_kwargs,
-        file.parent,
-    ) == int(
+    assert main(*CHECK_ARGS, long.ignore_kwargs, file.parent) == int(
         name.startswith(FAIL)
         and "w-kwargs" not in name
         or name.startswith(PASS)
