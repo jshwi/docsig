@@ -39,6 +39,7 @@ CHECK_ARGS = (
     long.check_dunders,
     long.check_property_returns,
 )
+FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 
 
 @_templates.register
