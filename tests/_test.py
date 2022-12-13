@@ -34,6 +34,7 @@ from . import (
     E10,
     EXPECTED,
     FAIL,
+    FAIL_CHECK_ARGS,
     MULTI,
     NAME,
     PASS,
@@ -285,37 +286,6 @@ def test_str_out(
     assert expected in std.out
 
 
-def test_no_check_init_flag(
-    init_file: InitFileFixtureType, main: MockMainType
-) -> None:
-    """Test that failing class passes without ``--check-init`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    """
-    template = templates.registered.getbyname(fail.class_s)
-    init_file(template.template)
-    assert main() == 0
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(fail.protect),
-    ids=templates.registered.getgroup(fail.protect).getids(),
-)
-def test_no_check_protected_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing func passes without ``--check-protected`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main() == 0
-
-
 def test_only_init_flag(
     init_file: InitFileFixtureType, main: MockMainType
 ) -> None:
@@ -352,24 +322,6 @@ def test_only_protected_flag(
     templates.registered.getgroup(fail.overridden),
     ids=templates.registered.getgroup(fail.overridden).getids(),
 )
-def test_no_check_overridden_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing func passes without ``--check-overridden``.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main() == 0
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(fail.overridden),
-    ids=templates.registered.getgroup(fail.overridden).getids(),
-)
 def test_only_overridden_flag(
     init_file: InitFileFixtureType, main: MockMainType, template: Template
 ) -> None:
@@ -381,24 +333,6 @@ def test_only_overridden_flag(
     """
     init_file(template.template)
     assert main(long.check_overridden) == 1
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(fail.dunder),
-    ids=templates.registered.getgroup(fail.dunder).getids(),
-)
-def test_no_check_dunder_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing func passes without ``--check-dunders`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main() == 0
 
 
 @pytest.mark.parametrize(
@@ -521,24 +455,6 @@ def test_ignore_no_params(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.getgroup(fail.property_returns),
-    ids=templates.registered.getgroup(fail.property_returns).getids(),
-)
-def test_no_check_property_returns_flag_wo(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
-) -> None:
-    """Test that failing property passes without ``-P`` flag.
-
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    assert main() == 0
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
     templates.registered.getgroup(passed.property_return),
     ids=templates.registered.getgroup(passed.property_return).getids(),
 )
@@ -652,3 +568,25 @@ def test_ignore_kwargs(
         or name.startswith(PASS)
         and "w-kwargs" in name
     )
+
+
+@pytest.mark.parametrize(
+    TEMPLATE,
+    templates.registered.getgroup(*FAIL_CHECK_ARGS),
+    ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
+)
+def test_no_flag(
+    init_file: InitFileFixtureType, main: MockMainType, template: Template
+) -> None:
+    """Test that failing tests pass without their corresponding flag.
+
+    All tests that fail such as with ``--check-class`` should be
+    prefixed with ``FClass``, and these particular tests should all
+    pass.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param template: Contents to write to file.
+    """
+    init_file(template.template)
+    assert main() == 0
