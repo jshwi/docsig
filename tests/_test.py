@@ -129,11 +129,11 @@ def test_stdout(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, EXPECTED],
-    [i for i in templatest.templates.registered if i.name.endswith("1-sum-s")],
+    [i for i in templatest.templates.registered if "single-error" in i.name],
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templatest.templates.registered.getids()
-        if i.endswith("1-sum-s")
+        if "single-error" in i
     ],
 )
 def test_error_codes(
@@ -146,7 +146,7 @@ def test_error_codes(
 ) -> None:
     """Test expected error codes are emitted to stdout.
 
-    All templates containing ``1SumS`` are tested for error codes.
+    All templates containing ``SingleError`` are tested for error codes.
 
     Expected result for these tests are derived from
     ``docsig.messages``.
