@@ -24,6 +24,7 @@ from . import (
     MockMainType,
     fail,
     long,
+    passed,
     short,
 )
 from ._utils import DummyFunc, errors, hints
@@ -605,8 +606,8 @@ def test_no_check_property_returns_flag_wo(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup("p-property-return"),
-    ids=templates.registered.getgroup("p-property-return").getids(),
+    templates.registered.getgroup(passed.property_return),
+    ids=templates.registered.getgroup(passed.property_return).getids(),
 )
 def test_no_check_property_returns_flag_w(
     capsys: pytest.CaptureFixture,

@@ -19,6 +19,7 @@ InitFileFixtureType = t.Callable[[str], Path]
 
 short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
+passed = _VarPrefix("p-", "-")
 fail = _VarPrefix("f-", "-")
 
 CHECK = "\u2713"
