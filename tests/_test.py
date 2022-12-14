@@ -297,24 +297,6 @@ def test_target_report(message: str) -> None:
     assert len(report) == 1
 
 
-@pytest.mark.parametrize("message", errors)
-def test_disable_report(message: str) -> None:
-    """Test report adds all errors provided except for the disabled one.
-
-    :param message: Error message code.
-    """
-    # noinspection PyUnresolvedReferences
-    report = docsig._report.Report(
-        DummyFunc(),  # type: ignore
-        targets=[],
-        disable=[message],
-        check_property_returns=False,
-    )
-    report.extend(errors)
-    assert getattr(docsig.messages, message) not in report
-    assert len(report) == len(errors) - 1
-
-
 def test_lineno(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
