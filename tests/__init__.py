@@ -717,7 +717,7 @@ class Klass:
 
 
 @_templates.register
-class _FPropertyNoReturnClassS(_BaseTemplate):
+class _FPropertyReturnsClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -966,7 +966,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _FPropertyNoReturnS(_BaseTemplate):
+class _FPropertyReturnsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1020,7 +1020,7 @@ def get_post() -> Post:
 
 
 @_templates.register
-class _FOverrideS(_BaseTemplate):
+class _FOverriddenS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1184,7 +1184,7 @@ def docsig(
 
 
 @_templates.register
-class _FInitS(_BaseTemplate):
+class _FClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1215,7 +1215,7 @@ class Klass:
 
 
 @_templates.register
-class _FPropertyNoReturnTypeS(_BaseTemplate):
+class _FPropertyReturnsTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1276,7 +1276,7 @@ class Klass:
 
 
 @_templates.register
-class _FInitRetNoneS(_BaseTemplate):
+class _FClassRetNoneS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1492,7 +1492,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _FDunderS(_BaseTemplate):
+class _FDundersS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1518,7 +1518,7 @@ class MutableSet:
 
 
 @_templates.register
-class _FDunderParamS(_BaseTemplate):
+class _FDundersParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2331,7 +2331,7 @@ class Klass:
 
 
 @_templates.register
-class _FPropertyNoReturnClassN(_BaseTemplate):
+class _FPropertyReturnsClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2594,7 +2594,7 @@ def function(*_, **__) -> None:
 
 
 @_templates.register
-class _FPropertyNoReturnN(_BaseTemplate):
+class _FPropertyReturnsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2635,7 +2635,7 @@ class Klass:
 
 
 @_templates.register
-class _FOverrideN(_BaseTemplate):
+class _FOverriddenN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2799,7 +2799,7 @@ def docsig(
 
 
 @_templates.register
-class _FInitN(_BaseTemplate):
+class _FClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2835,7 +2835,7 @@ class Klass:
 
 
 @_templates.register
-class _FPropertyNoReturnTypeN(_BaseTemplate):
+class _FPropertyReturnsTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2904,7 +2904,7 @@ class Klass:
 
 
 @_templates.register
-class _FInitRetNoneN(_BaseTemplate):
+class _FClassRetNoneN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3158,7 +3158,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _FDunderN(_BaseTemplate):
+class _FDundersN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3184,7 +3184,7 @@ class MutableSet:
 
 
 @_templates.register
-class _FDunderParamN(_BaseTemplate):
+class _FDundersParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4426,7 +4426,7 @@ def docsig(
 
 
 @_templates.register
-class _FInitNI(_BaseTemplate):
+class _FClassNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4513,7 +4513,7 @@ class Klass:
 
 
 @_templates.register
-class _FInitRetNoneNI(_BaseTemplate):
+class _FClassRetNoneNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4734,7 +4734,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _FDunderParamNI(_BaseTemplate):
+class _FDundersParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5091,7 +5091,7 @@ def docsig(
 
 
 @_templates.register
-class _FInitRetNoneSRs(_BaseTemplate):
+class _FClassRetNoneSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6069,7 +6069,7 @@ def docsig(
 
 
 @_templates.register
-class _FInitG(_BaseTemplate):
+class _FClassG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6146,7 +6146,7 @@ class Klass:
 
 
 @_templates.register
-class _FInitRetNoneG(_BaseTemplate):
+class _FClassRetNoneG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6341,7 +6341,7 @@ def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _FDunderParamG(_BaseTemplate):
+class _FDundersParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6496,7 +6496,7 @@ E115: syntax error in description
 
 
 @_templates.register
-class _FOverrideAncestorsMultipleS(_BaseTemplate):
+class _FOverriddenAncestorsMultipleS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """

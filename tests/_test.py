@@ -317,7 +317,7 @@ def test_no_check_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname(fail.init_s)
+    template = templates.registered.getbyname(fail.class_s)
     init_file(template.template)
     assert main() == 0
     std = capsys.readouterr()
@@ -358,7 +358,7 @@ def test_only_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname(fail.init_s)
+    template = templates.registered.getbyname(fail.class_s)
     init_file(template.template)
     assert main(long.check_class) == 1
 
@@ -387,8 +387,8 @@ def test_only_protected_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(fail.override),
-    ids=templates.registered.getgroup(fail.override).getids(),
+    templates.registered.getgroup(fail.overridden),
+    ids=templates.registered.getgroup(fail.overridden).getids(),
 )
 def test_no_check_overridden_flag(
     capsys: pytest.CaptureFixture,
@@ -413,8 +413,8 @@ def test_no_check_overridden_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(fail.override),
-    ids=templates.registered.getgroup(fail.override).getids(),
+    templates.registered.getgroup(fail.overridden),
+    ids=templates.registered.getgroup(fail.overridden).getids(),
 )
 def test_only_overridden_flag(
     init_file: InitFileFixtureType,
@@ -578,8 +578,8 @@ def test_ignore_no_params(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(fail.property_no_return),
-    ids=templates.registered.getgroup(fail.property_no_return).getids(),
+    templates.registered.getgroup(fail.property_returns),
+    ids=templates.registered.getgroup(fail.property_returns).getids(),
 )
 def test_no_check_property_returns_flag_wo(
     capsys: pytest.CaptureFixture,
