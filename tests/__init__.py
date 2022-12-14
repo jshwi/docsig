@@ -19,6 +19,7 @@ InitFileFixtureType = t.Callable[[str], Path]
 
 short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
+fail = _VarPrefix("f-", "-")
 
 CHECK = "\u2713"
 CROSS = "\u2716"
@@ -26,10 +27,7 @@ CROSS = "\u2716"
 MULTI = "m"
 NAME = "name"
 TEMPLATE = "template"
-ERR_GROUP = "f-e-1-0"
 E10 = "e-1-0"
-FAIL_PROTECT = "f-protect"
-FAIL_OVERRIDE = "f-override"
 FAIL = "f"
 PASS = "p"
 CHECK_ARGS = (

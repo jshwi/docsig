@@ -15,16 +15,14 @@ from . import (
     CHECK_ARGS,
     CROSS,
     E10,
-    ERR_GROUP,
     FAIL,
-    FAIL_OVERRIDE,
-    FAIL_PROTECT,
     MULTI,
     NAME,
     PASS,
     TEMPLATE,
     InitFileFixtureType,
     MockMainType,
+    fail,
     long,
     short,
 )
@@ -205,10 +203,10 @@ def test_message_sequence() -> None:
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.getgroup(ERR_GROUP),
+    templates.registered.getgroup(fail.e_1_0),
     ids=[
         i.replace("-", "").upper()[4:8]
-        for i in templates.registered.getgroup(ERR_GROUP).getids()
+        for i in templates.registered.getgroup(fail.e_1_0).getids()
     ],
 )
 def test_main_cli_disable(
@@ -287,11 +285,11 @@ def test_main_str(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.filtergroup(MULTI).filtergroup("f-class-header"),
+    templates.registered.filtergroup(MULTI).filtergroup(fail.class_header),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI)
-        .filtergroup("f-class-header")
+        .filtergroup(fail.class_header)
         .getids()
     ],
 )
@@ -320,7 +318,7 @@ def test_no_check_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname("f-init-s")
+    template = templates.registered.getbyname(fail.init_s)
     file = init_file(template.template)
     assert main(file.parent) == 0
     std = capsys.readouterr()
@@ -329,8 +327,8 @@ def test_no_check_init_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(FAIL_PROTECT),
-    ids=templates.registered.getgroup(FAIL_PROTECT).getids(),
+    templates.registered.getgroup(fail.protect),
+    ids=templates.registered.getgroup(fail.protect).getids(),
 )
 def test_no_check_protected_flag(
     capsys: pytest.CaptureFixture,
@@ -361,15 +359,15 @@ def test_only_init_flag(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = templates.registered.getbyname("f-init-s")
+    template = templates.registered.getbyname(fail.init_s)
     file = init_file(template.template)
     assert main(long.check_class, file.parent) == 1
 
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(FAIL_PROTECT),
-    ids=templates.registered.getgroup(FAIL_PROTECT).getids(),
+    templates.registered.getgroup(fail.protect),
+    ids=templates.registered.getgroup(fail.protect).getids(),
 )
 def test_only_protected_flag(
     init_file: InitFileFixtureType,
@@ -390,8 +388,8 @@ def test_only_protected_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(FAIL_OVERRIDE),
-    ids=templates.registered.getgroup(FAIL_OVERRIDE).getids(),
+    templates.registered.getgroup(fail.override),
+    ids=templates.registered.getgroup(fail.override).getids(),
 )
 def test_no_check_overridden_flag(
     capsys: pytest.CaptureFixture,
@@ -416,8 +414,8 @@ def test_no_check_overridden_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup(FAIL_OVERRIDE),
-    ids=templates.registered.getgroup(FAIL_OVERRIDE).getids(),
+    templates.registered.getgroup(fail.override),
+    ids=templates.registered.getgroup(fail.override).getids(),
 )
 def test_only_overridden_flag(
     init_file: InitFileFixtureType,
@@ -438,8 +436,8 @@ def test_only_overridden_flag(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup("f-dunder"),
-    ids=templates.registered.getgroup("f-dunder").getids(),
+    templates.registered.getgroup(fail.dunder),
+    ids=templates.registered.getgroup(fail.dunder).getids(),
 )
 def test_no_check_dunder_flag(
     capsys: pytest.CaptureFixture,
@@ -581,8 +579,8 @@ def test_ignore_no_params(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, "__"],
-    templates.registered.getgroup("f-property-no-return"),
-    ids=templates.registered.getgroup("f-property-no-return").getids(),
+    templates.registered.getgroup(fail.property_no_return),
+    ids=templates.registered.getgroup(fail.property_no_return).getids(),
 )
 def test_no_check_property_returns_flag_wo(
     capsys: pytest.CaptureFixture,
