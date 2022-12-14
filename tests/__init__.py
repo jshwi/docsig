@@ -360,7 +360,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrder1SumS(_BaseTemplate):
+class _FE101OutOfOrderSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -404,7 +404,7 @@ def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
 
 
 @_templates.register
-class _FE102ParamDocs1SumS(_BaseTemplate):
+class _FE102ParamDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -423,7 +423,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSig1SumS(_BaseTemplate):
+class _FE103ParamSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -441,7 +441,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocs1SumS(_BaseTemplate):
+class _FE104RetTypeDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -461,7 +461,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSig1SumS(_BaseTemplate):
+class _FE105RetTypeSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1947,7 +1947,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrder1SumN(_BaseTemplate):
+class _FE101OutOfOrderSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1972,7 +1972,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocs1SumN(_BaseTemplate):
+class _FE102ParamDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1996,7 +1996,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSig1SumN(_BaseTemplate):
+class _FE103ParamSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2018,7 +2018,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocs1SumN(_BaseTemplate):
+class _FE104RetTypeDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2047,7 +2047,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSig1SumN(_BaseTemplate):
+class _FE105RetTypeSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3713,7 +3713,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrder1SumNI(_BaseTemplate):
+class _FE101OutOfOrderSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3738,7 +3738,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocs1SumNI(_BaseTemplate):
+class _FE102ParamDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3762,7 +3762,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSig1SumNI(_BaseTemplate):
+class _FE103ParamSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3784,7 +3784,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocs1SumNI(_BaseTemplate):
+class _FE104RetTypeDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3813,7 +3813,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSig1SumNI(_BaseTemplate):
+class _FE105RetTypeSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4869,7 +4869,7 @@ def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
 
 
 @_templates.register
-class _FE104RetTypeDocs1SumSRs(_BaseTemplate):
+class _FE104RetTypeDocsSingleErrorSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5457,7 +5457,7 @@ def function({CHECK}param1) -> {CROSS}Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrder1SumG(_BaseTemplate):
+class _FE101OutOfOrderSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5478,7 +5478,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocs1SumG(_BaseTemplate):
+class _FE102ParamDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5498,7 +5498,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSig1SumG(_BaseTemplate):
+class _FE103ParamSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5517,7 +5517,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocs1SumG(_BaseTemplate):
+class _FE104RetTypeDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5540,7 +5540,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSig1SumG(_BaseTemplate):
+class _FE105RetTypeSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
