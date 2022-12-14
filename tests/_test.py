@@ -3,11 +3,9 @@ tests._test
 ===========
 """
 # pylint: disable=protected-access
-from pathlib import Path
 
 import pytest
 import templatest
-import tomli_w
 from templatest import Template, templates
 
 import docsig.messages
@@ -216,41 +214,6 @@ def test_message_sequence() -> None:
     assert getattr(docsig.messages, errors[1]) in msg_seq
     assert getattr(docsig.messages, hints[0]) in msg_seq
     assert getattr(docsig.messages, hints[1]) in msg_seq
-
-
-@pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
-    templates.registered.getgroup(ERR_GROUP),
-    ids=[
-        i.replace("-", "").upper()[4:8]
-        for i in templates.registered.getgroup(ERR_GROUP).getids()
-    ],
-)
-def test_main_toml_disable(
-    tmp_path: Path,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
-    name: str,
-    template: str,
-    _: str,
-) -> None:
-    """Test main for disabling errors via pyproject.toml file.
-
-    :param tmp_path: Create and return temporary directory.
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param name: Name of test.
-    :param template: Contents to write to file.
-    """
-    pyproject_file = tmp_path / "pyproject.toml"
-    pyproject_obj = {
-        "tool": {
-            docsig.__name__: {"disable": [name.replace("-", "").upper()[1:5]]}
-        }
-    }
-    init_file(template)
-    pyproject_file.write_text(tomli_w.dumps(pyproject_obj))
-    assert main(".") == 0
 
 
 @pytest.mark.parametrize(
