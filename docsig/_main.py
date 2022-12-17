@@ -26,6 +26,7 @@ def main() -> int:
         check_property_returns=parser.args.check_property_returns,
         ignore_no_params=parser.args.ignore_no_params,
         ignore_args=parser.args.ignore_args,
+        ignore_kwargs=parser.args.ignore_kwargs,
         no_ansi=parser.args.no_ansi,
         summary=parser.args.summary,
         targets=parser.args.target,

@@ -56,6 +56,7 @@ def docsig(  # pylint: disable=too-many-locals
     check_property_returns: bool = False,
     ignore_no_params: bool = False,
     ignore_args: bool = False,
+    ignore_kwargs: bool = False,
     no_ansi: bool = False,
     summary: bool = False,
     targets: list[str] | None = None,
@@ -80,13 +81,19 @@ def docsig(  # pylint: disable=too-many-locals
     :param ignore_no_params: Ignore docstrings where parameters are not
         documented
     :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param no_ansi: Disable ANSI output.
     :param summary: Print a summarised report.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
-    modules = _Modules(*path, string=string, ignore_args=ignore_args)
+    modules = _Modules(
+        *path,
+        string=string,
+        ignore_args=ignore_args,
+        ignore_kwargs=ignore_kwargs,
+    )
     display = _Display(no_ansi)
     for module in modules:
         for top_level in module:

@@ -42,8 +42,8 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-n] [-S] [-s STR] [-d LIST]
-                             [-t LIST]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n] [-S] [-s STR]
+                             [-d LIST] [-t LIST]
                              [path [path ...]]
 
     Check signature params for proper documentation
@@ -61,6 +61,7 @@ Commandline
       -P, --check-property-returns  check property return values
       -i, --ignore-no-params        ignore docstrings where parameters are not documented
       -a, --ignore-args             ignore args prefixed with an asterisk
+      -k, --ignore-kwargs           ignore kwargs prefixed with two asterisks
       -n, --no-ansi                 disable ansi output
       -S, --summary                 print a summarised report
       -s STR, --string STR          string to parse instead of files

@@ -19,6 +19,7 @@ class Parent(_MutableSequence[_Function]):
     :param node: Parent's abstract syntax tree.
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
     def __init__(
@@ -26,13 +27,14 @@ class Parent(_MutableSequence[_Function]):
         node: _ast.Module | _ast.ClassDef,
         path: _Path | None = None,
         ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
-                self.append(_Function(subnode, ignore_args))
+                self.append(_Function(subnode, ignore_args, ignore_kwargs))
 
     @property
     def path(self) -> str:
@@ -57,12 +59,13 @@ class _Module(_MutableSequence[Parent]):
         node: _ast.Module,
         path: _Path | None = None,
         ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
-        self.append(Parent(node, path, ignore_args))
+        self.append(Parent(node, path, ignore_args, ignore_kwargs))
         for subnode in node.body:
             if isinstance(subnode, _ast.ClassDef):
-                self.append(Parent(subnode, path, ignore_args))
+                self.append(Parent(subnode, path, ignore_args, ignore_kwargs))
 
 
 class Modules(_MutableSequence[_Module]):
@@ -76,6 +79,7 @@ class Modules(_MutableSequence[_Module]):
     :param paths: Path(s) to pase ``Module``(s) from.
     :param string: String to parse if provided.
     :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
     def __init__(
@@ -83,11 +87,19 @@ class Modules(_MutableSequence[_Module]):
         *paths: _Path,
         string: str | None = None,
         ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
         self._ignore_args = ignore_args
+        self._ignore_kwargs = ignore_kwargs
         if string is not None:
-            self.append(_Module(_ast.parse(string), ignore_args=ignore_args))
+            self.append(
+                _Module(
+                    _ast.parse(string),
+                    ignore_args=ignore_args,
+                    ignore_kwargs=ignore_kwargs,
+                )
+            )
         else:
             for path in paths:
                 self._populate(path)
@@ -95,7 +107,12 @@ class Modules(_MutableSequence[_Module]):
     def _populate(self, root: _Path) -> None:
         if root.is_file() and root.name.endswith(".py"):
             self.append(
-                _Module(_ast.parse(root.read_text()), root, self._ignore_args)
+                _Module(
+                    _ast.parse(root.read_text()),
+                    root,
+                    self._ignore_args,
+                    self._ignore_kwargs,
+                )
             )
 
         if root.is_dir():

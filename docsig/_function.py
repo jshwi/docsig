@@ -109,16 +109,23 @@ class _Matches(_MutableSequence[Param]):
 
 
 class _Params(_MutableSequence[Param]):
-    def __init__(self, ignore_args: bool = False) -> None:
+    def __init__(
+        self, ignore_args: bool = False, ignore_kwargs: bool = False
+    ) -> None:
         super().__init__()
         self._ignore_args = ignore_args
+        self._ignore_kwargs = ignore_kwargs
 
     # pylint: disable=too-many-boolean-expressions
     def insert(self, index: int, value: Param) -> None:
         if not value.isprotected and (
             value.kind == PARAM
             or (value.kind == ARG and not self._ignore_args)
-            or (value.kind == KEY and not any(i.kind == KEY for i in self))
+            or (
+                value.kind == KEY
+                and not self._ignore_kwargs
+                and not any(i.kind == KEY for i in self)
+            )
         ):
             super().insert(index, value)
 
@@ -143,8 +150,10 @@ class _Params(_MutableSequence[Param]):
 
 
 class _DocSig:
-    def __init__(self, ignore_args: bool = False) -> None:
-        self._args = _Params(ignore_args)
+    def __init__(
+        self, ignore_args: bool = False, ignore_kwargs: bool = False
+    ) -> None:
+        self._args = _Params(ignore_args, ignore_kwargs)
         self._returns = False
 
     @property
@@ -166,8 +175,9 @@ class _Signature(_DocSig):
         ismethod: bool = False,
         isstaticmethod: bool = False,
         ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
-        super().__init__(ignore_args)
+        super().__init__(ignore_args, ignore_kwargs)
         if ismethod and not isstaticmethod and arguments.args:
             arguments.args.pop(0)
 
@@ -218,9 +228,12 @@ class _Signature(_DocSig):
 
 class _Docstring(_DocSig):
     def __init__(
-        self, node: _ast.Const | None = None, ignore_args: bool = False
+        self,
+        node: _ast.Const | None = None,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
-        super().__init__(ignore_args)
+        super().__init__(ignore_args, ignore_kwargs)
         self._string = None
         if node is not None:
             self._string = _RawDocstring(node.value)
@@ -249,10 +262,14 @@ class Function:
 
     :param node: Function's abstract syntax tree.
     :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
     def __init__(
-        self, node: _ast.FunctionDef, ignore_args: bool = False
+        self,
+        node: _ast.FunctionDef,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         self._node = node
         self._parent = node.parent.frame()
@@ -262,10 +279,11 @@ class Function:
             self.ismethod,
             self.isstaticmethod,
             ignore_args,
+            ignore_kwargs,
         )
         self._docstring = _Docstring(
             node.doc_node if not self.isinit else self._parent.doc_node,
-            ignore_args,
+            ignore_kwargs,
         )
 
     def __len__(self) -> int:
