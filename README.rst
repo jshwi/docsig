@@ -42,7 +42,7 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-n] [-S] [-s STR] [-d LIST]
+    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-n] [-S] [-s STR] [-d LIST]
                              [-t LIST]
                              [path [path ...]]
 
@@ -60,6 +60,7 @@ Commandline
       -p, --check-protected         check protected functions and classes
       -P, --check-property-returns  check property return values
       -i, --ignore-no-params        ignore docstrings where parameters are not documented
+      -a, --ignore-args             ignore args prefixed with an asterisk
       -n, --no-ansi                 disable ansi output
       -S, --summary                 print a summarised report
       -s STR, --string STR          string to parse instead of files

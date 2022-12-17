@@ -805,3 +805,43 @@ def test_no_check_property_returns_flag_w(
     out = nocolorcapsys.stdout()
     assert docsig.messages.E108 in out
     assert docsig.messages.H101 in out
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.filtergroup(MULTI),
+    ids=templates.registered.filtergroup(MULTI).getids(),
+)
+def test_ignore_args(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    name: str,
+    template: str,
+    _: str,
+) -> None:
+    """Test docstrings without args don't fail wih ``-a/--ignore_args``.
+
+    Passing tests will fail and failing tests will pass, as tests which
+    generally pass will have args documented, which shouldn't be with
+    this argument.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    file = init_file(template)
+    assert main(
+        long.check_class,
+        long.check_protected,
+        long.check_overridden,
+        long.check_dunders,
+        long.check_property_returns,
+        long.ignore_args,
+        file.parent,
+    ) == int(
+        name.startswith(FAIL)
+        and "w-args" not in name
+        or name.startswith(PASS)
+        and "w-args" in name
+    )

@@ -74,6 +74,12 @@ class Parser(_ArgumentParser):
             help="ignore docstrings where parameters are not documented",
         )
         self.add_argument(
+            "-a",
+            "--ignore-args",
+            action="store_true",
+            help="ignore args prefixed with an asterisk",
+        )
+        self.add_argument(
             "-n", "--no-ansi", action="store_true", help="disable ansi output"
         )
         self.add_argument(
