@@ -557,7 +557,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PWithKwargsS(_BaseTemplate):
+class _PWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -576,7 +576,7 @@ def function(param1, param2, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsS(_BaseTemplate):
+class _FWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -665,7 +665,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassS(_BaseTemplate):
+class _FClassWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -729,7 +729,7 @@ class Klass:
 
 
 @_templates.register
-class _PWithKwargsKeyS(_BaseTemplate):
+class _PWKwargsKeyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -748,7 +748,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderS(_BaseTemplate):
+class _FKwargsOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -773,7 +773,7 @@ def function({CROSS}param1, {CROSS}**kwargs) -> {CHECK}None:
 
 
 @_templates.register
-class _PDualColonS(_BaseTemplate):
+class _PDualColonWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -819,7 +819,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyWArgsS(_BaseTemplate):
+class _PReturnAnyWArgsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1134,7 +1134,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _FClassHeaderS(_BaseTemplate):
+class _FClassHeaderWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1459,7 +1459,7 @@ class Klass:
 
 
 @_templates.register
-class _FProtectClsS(_BaseTemplate):
+class _FProtectClsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2141,7 +2141,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PWithKwargsN(_BaseTemplate):
+class _PWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2165,7 +2165,7 @@ def function(param1, param2, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsN(_BaseTemplate):
+class _FWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2272,7 +2272,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassN(_BaseTemplate):
+class _FClassWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2343,7 +2343,7 @@ class Klass:
 
 
 @_templates.register
-class _PWithKwargsKeyN(_BaseTemplate):
+class _PWKwargsKeyN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2365,7 +2365,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfSectN(_BaseTemplate):
+class _FKwargsOutOfSectN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2387,7 +2387,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderN(_BaseTemplate):
+class _FKwargsOutOfOrderN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2409,7 +2409,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PDualColonN(_BaseTemplate):
+class _PDualColonWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2467,7 +2467,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyWArgsN(_BaseTemplate):
+class _PReturnAnyWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2736,7 +2736,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _FClassHeaderN(_BaseTemplate):
+class _FClassHeaderWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3121,7 +3121,7 @@ class Klass:
 
 
 @_templates.register
-class _FProtectClsN(_BaseTemplate):
+class _FProtectClsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3905,7 +3905,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PWithKwargsNI(_BaseTemplate):
+class _PWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3929,7 +3929,7 @@ def function(param1, param2, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsNI(_BaseTemplate):
+class _FWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4036,7 +4036,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassNI(_BaseTemplate):
+class _FClassWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4089,7 +4089,7 @@ class Klass:
 
 
 @_templates.register
-class _PWithKwargsKeyNI(_BaseTemplate):
+class _PWKwargsKeyNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4111,7 +4111,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfSectNI(_BaseTemplate):
+class _FWKwargsOutOfSectNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4134,7 +4134,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderNI(_BaseTemplate):
+class _FKwargsOutOfOrderNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4156,7 +4156,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PDualColonNI(_BaseTemplate):
+class _PDualColonWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4214,7 +4214,7 @@ def function(reduce: bool = False) -> tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyWArgsNI(_BaseTemplate):
+class _PReturnAnyWArgsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4697,7 +4697,7 @@ class _PStaticSelfNI(_BaseTemplate):
 
 
 @_templates.register
-class _FProtectClsNI(_BaseTemplate):
+class _FProtectClsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4895,7 +4895,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyWArgsSRs(_BaseTemplate):
+class _PReturnAnyWArgsWKwargsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5616,7 +5616,7 @@ def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
 
 
 @_templates.register
-class _PWithKwargsG(_BaseTemplate):
+class _PWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5636,7 +5636,7 @@ def function(param1, param2, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsG(_BaseTemplate):
+class _FWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5729,7 +5729,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 
 @_templates.register
-class _FClassG(_BaseTemplate):
+class _FClassWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5777,7 +5777,7 @@ class Klass:
 
 
 @_templates.register
-class _PWithKwargsKeyG(_BaseTemplate):
+class _PWKwargsKeyG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5796,7 +5796,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfSectG(_BaseTemplate):
+class _FWKwargsOutOfSectG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5816,7 +5816,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _FWithKwargsOutOfOrderG(_BaseTemplate):
+class _FKwargsOutOfOrderG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5835,7 +5835,7 @@ def function(param1, **kwargs) -> None:
 
 
 @_templates.register
-class _PDualColonG(_BaseTemplate):
+class _PDualColonWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5885,7 +5885,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyWArgsG(_BaseTemplate):
+class _PReturnAnyWArgsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6307,7 +6307,7 @@ class _PStaticSelfG(_BaseTemplate):
 
 
 @_templates.register
-class _FProtectClsG(_BaseTemplate):
+class _FProtectClsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6381,7 +6381,7 @@ def function(param) -> None:
 
 
 @_templates.register
-class _PEscapedKwargS(_BaseTemplate):
+class _PEscapedKwargWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6409,7 +6409,7 @@ def function(attachments, sync, **kwargs) -> None:
 
 
 @_templates.register
-class _FNoKwargsIncludedS(_BaseTemplate):
+class _FNoKwargsIncludedWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
