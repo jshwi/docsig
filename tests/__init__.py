@@ -513,7 +513,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PWithArgsS(_BaseTemplate):
+class _PWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -532,7 +532,7 @@ def function(param1, param2, *args) -> None:
 
 
 @_templates.register
-class _FWithArgsS(_BaseTemplate):
+class _FWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -819,7 +819,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyS(_BaseTemplate):
+class _PReturnAnyWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -1154,7 +1154,7 @@ class Klass:
 
 
 @_templates.register
-class _PKWOnlyArgsS(_BaseTemplate):
+class _PKWOnlyArgsWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2088,7 +2088,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PWithArgsN(_BaseTemplate):
+class _PWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2112,7 +2112,7 @@ def function(param1, param2, *args) -> None:
 
 
 @_templates.register
-class _FWithArgsN(_BaseTemplate):
+class _FWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2467,7 +2467,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyN(_BaseTemplate):
+class _PReturnAnyWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -2760,7 +2760,7 @@ class Klass:
 
 
 @_templates.register
-class _PKWOnlyArgsN(_BaseTemplate):
+class _PKWOnlyArgsWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3852,7 +3852,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PWithArgsNI(_BaseTemplate):
+class _PWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -3876,7 +3876,7 @@ def function(param1, param2, *args) -> None:
 
 
 @_templates.register
-class _FWithArgsNI(_BaseTemplate):
+class _FWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4214,7 +4214,7 @@ def function(reduce: bool = False) -> tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyNI(_BaseTemplate):
+class _PReturnAnyWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4387,7 +4387,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _PKWOnlyArgsNI(_BaseTemplate):
+class _PKWOnlyArgsWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -4895,7 +4895,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnySRs(_BaseTemplate):
+class _PReturnAnyWArgsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5061,7 +5061,7 @@ def function():
 
 
 @_templates.register
-class _PKWOnlyArgsSRs(_BaseTemplate):
+class _PKWOnlyArgsWArgsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5570,7 +5570,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _PWithArgsG(_BaseTemplate):
+class _PWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5590,7 +5590,7 @@ def function(param1, param2, *args) -> None:
 
 
 @_templates.register
-class _FWithArgsG(_BaseTemplate):
+class _FWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -5885,7 +5885,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
 
 
 @_templates.register
-class _PReturnAnyG(_BaseTemplate):
+class _PReturnAnyWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
@@ -6036,7 +6036,7 @@ def function(arg, param2) -> None:
 
 
 @_templates.register
-class _PKWOnlyArgsG(_BaseTemplate):
+class _PKWOnlyArgsWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
