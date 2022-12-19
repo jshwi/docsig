@@ -1140,7 +1140,7 @@ class _FClassHeaderS(_BaseTemplate):
         return """
 
 class Klass:
-    def method(param1, param2, **kwargs) -> None:
+    def method(self, param1, param2, **kwargs) -> None:
         \"\"\"Proper docstring.
 
         :param param1: Pass.
@@ -2742,7 +2742,7 @@ class _FClassHeaderN(_BaseTemplate):
         return """
 
 class Klass:
-    def method(param1, param2, **kwargs) -> None:
+    def method(self, param1, param2, **kwargs) -> None:
         \"\"\"Proper docstring.
 
         Parameters
