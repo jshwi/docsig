@@ -203,9 +203,7 @@ It can be added to your .pre-commit-config.yaml as follows:
         rev: v0.30.0
         hooks:
           - id: docsig
-            name: docsig
-            entry: docsig
-            language: system
+            language: python
             types: [python]
             args:
               - "--check-class"

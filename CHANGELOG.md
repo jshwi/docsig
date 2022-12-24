@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.33.0...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- Fix incorrect `pre-commit` documentation
 
 [0.33.0](https://github.com/jshwi/docsig/releases/tag/v0.33.0) - 2022-12-21
 ------------------------------------------------------------------------
