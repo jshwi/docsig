@@ -1,0 +1,32 @@
+policies:
+  - type: commit
+    spec:
+      header:
+        length: 72
+        imperative: true
+        invalidLastCharacters: .
+      dco: true
+      gpg:
+        required: true
+      spellcheck:
+        locale: US
+      conventional:
+        types:
+          - add
+          - build
+          - bump
+          - change
+          - chore
+          - ci
+          - doc
+          - fix
+          - hack
+          - refactor
+          - security
+          - style
+          - test
+          - remove
+        scopes:
+          - deps
+          - deps-dev
+        descriptionLength: 72
