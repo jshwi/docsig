@@ -9,6 +9,9 @@ docsig
 .. image:: https://github.com/jshwi/docsig/actions/workflows/ci.yml/badge.svg
     :target: https://github.com/jshwi/docsig/actions/workflows/ci.yml
     :alt: CI
+.. image:: https://results.pre-commit.ci/badge/github/jshwi/docsig/master.svg
+   :target: https://results.pre-commit.ci/latest/github/jshwi/docsig/master
+   :alt: pre-commit.ci status
 .. image:: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml/badge.svg
     :target: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml
     :alt: CodeQL
@@ -24,11 +27,14 @@ docsig
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
     :alt: Black
+.. image:: https://img.shields.io/badge/linting-pylint-yellowgreen
+    :target: https://github.com/PyCQA/pylint
+    :alt: pylint
 
 Check signature params for proper documentation
 -----------------------------------------------
 
-Supports reStructuredText (Sphinx), `numpy`, and `Google`
+Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 
 Installation
 ------------
@@ -149,7 +155,7 @@ Classes
 #######
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone
 
-This check will check documentation of `__init__` under the class docstring, and not under `__init__` itself
+This check will check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
 
 .. code-block:: python
 
@@ -190,9 +196,9 @@ Checking class docstrings can be permanently enabled in the pyproject.toml file
     check-class = true
 
 pre-commit
-##########
+**********
 
-`docsig` can be used as a `pre-commit <https://pre-commit.com>`_ hook
+``docsig`` can be used as a `pre-commit <https://pre-commit.com>`_ hook
 
 It can be added to your .pre-commit-config.yaml as follows:
 
@@ -203,8 +209,6 @@ It can be added to your .pre-commit-config.yaml as follows:
         rev: v0.30.0
         hooks:
           - id: docsig
-            language: python
-            types: [python]
             args:
               - "--check-class"
               - "--check-dunders"
