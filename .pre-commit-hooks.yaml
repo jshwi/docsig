@@ -1,6 +1,6 @@
 - id: docsig
   name: docsig
   entry: docsig
+  description: check signature params for proper documentation
   language: python
   types: [python]
-  require_serial: true
