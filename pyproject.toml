@@ -17,9 +17,14 @@ exclude = '''
 line-length = 79
 skip-magic-trailing-comma = true
 
-[tool.constcheck.ignore_from]
-"docsig/_config.py" = [
+[tool.codespell]
+ignore-words-list = "astroid"
+
+[tool.constcheck]
+ignore_strings = [
+    "store",
     "store_true",
+    "utf-8",
 ]
 
 [tool.coverage.report]
@@ -35,15 +40,24 @@ omit = [
 ]
 
 [tool.docsig]
-summary = true
 check-class = true
+summary = true
+
+[tool.isort]
+ensure_newline_before_comments = true
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 79
+multi_line_output = 3
+profile = "black"
+use_parentheses = true
 
 [tool.poetry]
 authors = [
     "jshwi <stephen@jshwisolutions.com>",
 ]
 description = "Check signature params for proper documentation"
-documentation = "https://docsig.readthedocs.io/en/latest/?badge=latest"
+documentation = "https://docsig.readthedocs.io/en/latest"
 homepage = "https://pypi.org/project/docsig/"
 keywords = [
     "docstring",
@@ -62,10 +76,10 @@ repository = "https://github.com/jshwi/docsig"
 version = "0.33.1"
 
 [tool.poetry.dependencies]
+Pygments = "^2.13.0"
 arcon = "^0.1.1"
 astroid = "^2.11.6"
 object-colors = "^2.1.0"
-Pygments = "^2.13.0"
 python = "^3.8"
 sphinxcontrib-napoleon = "^0.7"
 
@@ -89,9 +103,7 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud.audit]
 modules = [
-    "toc",
-    "whitelist",
-    "sort-pyproject",
+    "files",
     "format",
     "format-docs",
     "format-str",
@@ -107,9 +119,9 @@ modules = [
 
 [tool.pyaud.clean]
 exclude = [
-    "*.egg*",
     ".mypy_cache",
     ".env",
+    "node_modules",
 ]
 
 [tool.pyaud.indexing]
@@ -152,8 +164,8 @@ addopts = [
 filterwarnings = "ignore::DeprecationWarning"
 norecursedirs = [
     "docs",
-    "*.egg-info",
     ".git",
     ".mypy_cache",
     ".idea",
+    ".pytest_cache"
 ]
