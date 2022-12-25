@@ -619,7 +619,7 @@ def function_1(param1, param2, param3) -> None:
     :param param1: Fails.
     \"\"\"
     return 0
-    
+
 def function_2(param1, param2) -> None:
     \"\"\"...
 
@@ -627,7 +627,7 @@ def function_2(param1, param2) -> None:
     :param param2: Fails.
     :param param3: Fails.
     \"\"\"
-    
+
 def function_3(param1, param2, param3) -> None:
     \"\"\"Not proper docstring.
 
@@ -991,7 +991,7 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         \"\"\"Proper docstring.
-        
+
         :return: Returncode.
         \"\"\"
         return 0
@@ -1097,7 +1097,7 @@ class _FE109WRetQuestionS(_BaseTemplate):
         return """
 def function():
     \"\"\"Docstring.
-    
+
     :return: Does it?
     \"\"\"
 """
@@ -1128,7 +1128,7 @@ class _FE110NES(_BaseTemplate):
         return """
 def function(arg, param2) -> None:
     \"\"\"Docstring.
-    
+
     :param param1: not equal.
     :param para2: not equal.
     \"\"\"
@@ -1195,7 +1195,7 @@ class Klass:
     :param param2: Fails.
     :param param3: Fails.
     \"\"\"
-    
+
     def __init__(self, param1, param2) -> None:
         pass
 """
@@ -1362,7 +1362,7 @@ class _FFuncPropS(_BaseTemplate):
 @property
 def function(self) -> int:
     \"\"\"Docstring.
-    
+
     :param self: Fails.
     \"\"\"
     return self._method
@@ -1400,7 +1400,7 @@ class _FFuncPropNoRetTypeS(_BaseTemplate):
 @property
 def method(self):
     \"\"\"Docstring.
-    
+
     :param self: Fails.
     \"\"\"
     return self._method
@@ -1743,7 +1743,7 @@ def function(param1, param2, param3) -> int:
             Passes.
         param3 : int
             Passes.
-    
+
     Returns
     -------
         int
@@ -2217,7 +2217,7 @@ def function_1(param1, param2, param3) -> None:
             Fails.
     \"\"\"
     return 0
-    
+
 def function_2(param1, param2) -> None:
     \"\"\"...
 
@@ -2230,7 +2230,7 @@ def function_2(param1, param2) -> None:
         param3 : int
             Fails.
     \"\"\"
-    
+
 def function_3(param1, param2, param3) -> None:
     \"\"\"Not proper docstring.
 
@@ -2619,7 +2619,7 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         \"\"\"Proper docstring.
-        
+
 
         Returns
         -------
@@ -2726,7 +2726,7 @@ class _FE110NEN(_BaseTemplate):
         return """
 def function(arg, param2) -> None:
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
         param1 : int
@@ -2815,7 +2815,7 @@ class Klass:
         param3 : int
             Fails.
     \"\"\"
-    
+
     def __init__(self, param1, param2) -> None:
         pass
 """
@@ -3011,7 +3011,7 @@ class _FFuncPropN(_BaseTemplate):
 @property
 def function(self) -> int:
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
         self : Klass
@@ -3055,7 +3055,7 @@ class _FFuncPropNoRetTypeN(_BaseTemplate):
 @property
 def method(self):
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
         self : Klass
@@ -3507,7 +3507,7 @@ def function(param1, param2, param3) -> int:
         Passes.
     param3: int
         Passes.
-    
+
     Returns
     -------
     int
@@ -3981,7 +3981,7 @@ def function_1(param1, param2, param3) -> None:
         Fails.
     \"\"\"
     return 0
-    
+
 def function_2(param1, param2) -> None:
     \"\"\"...
 
@@ -3994,7 +3994,7 @@ def function_2(param1, param2) -> None:
     param3: int
         Fails.
     \"\"\"
-    
+
 def function_3(param1, param2, param3) -> None:
     \"\"\"Not proper docstring.
 
@@ -4335,7 +4335,7 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         \"\"\"Proper docstring.
-        
+
 
         Returns
         -------
@@ -4377,7 +4377,7 @@ class _FE110NENI(_BaseTemplate):
         return """
 def function(arg, param2) -> None:
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
     param1: int
@@ -4442,7 +4442,7 @@ class Klass:
     param3: int
         Fails.
     \"\"\"
-    
+
     def __init__(self, param1, param2) -> None:
         pass
 """
@@ -4620,7 +4620,7 @@ class _FFuncPropNI(_BaseTemplate):
 @property
 def function(self) -> int:
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
     self: Klass
@@ -4664,7 +4664,7 @@ class _FFuncPropNoRetTypeNI(_BaseTemplate):
 @property
 def method(self):
     \"\"\"Docstring.
-    
+
     Parameters
     ----------
     self: Klass
@@ -5001,7 +5001,7 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         \"\"\"Proper docstring.
-        
+
         :returns: Returncode.
         \"\"\"
         return 0
@@ -5056,7 +5056,7 @@ class _FE109WRetQuestionSRs(_BaseTemplate):
         return """
 def function():
     \"\"\"Docstring.
-    
+
     :returns: Does it?
     \"\"\"
 """
@@ -5275,7 +5275,7 @@ def function(param1, param2, param3) -> int:
         param1 (int): Pass.
         param2 (int): Pass.
         param3 (int): Pass.
-    
+
     Returns:
         bool: Pass.
     \"\"\"
@@ -5299,7 +5299,7 @@ def function(param1, param2, param3) -> None:
         param1 (int): Fails.
         param2 (int): Fails.
         param3 (int): Fails.
-    
+
     Returns:
         bool: Fails.
     \"\"\"
@@ -5379,7 +5379,7 @@ def function(param1, param2, param3):
         param1 (int): Fails.
         param2 (int): Fails.
         param3 (int): Fails.
-    
+
     Returns:
         bool: Fails.
     \"\"\"
@@ -5478,7 +5478,7 @@ class _FE102ParamDocs1SumG(_BaseTemplate):
         return """
 def function(param1, param2) -> None:
     \"\"\"...
-    
+
     Args:
         param1 (int): Fails.
         param2 (int): Fails.
@@ -5681,7 +5681,7 @@ def function_1(param1, param2, param3) -> None:
         param1 (int): Fails.
     \"\"\"
     return 0
-    
+
 def function_2(param1, param2) -> None:
     \"\"\"...
 
@@ -5690,7 +5690,7 @@ def function_2(param1, param2) -> None:
         param2 (int): Fails.
         param3 (int): Fails.
     \"\"\"
-    
+
 def function_3(param1, param2, param3) -> None:
     \"\"\"Not proper docstring.
 
@@ -5859,7 +5859,7 @@ def function(attachments, sync, **kwargs) -> None:
     Args:
         attachments (int): Iterable of kwargs to construct attachment.
         sync (int): Don't thread if True: Defaults to False.
-        **kwargs (int): Keyword args to pass to ``Message``: See 
+        **kwargs (int): Keyword args to pass to ``Message``: See
             ``flask_mail.Message``.
     \"\"\"
 """
@@ -6029,7 +6029,7 @@ class _FE110NEG(_BaseTemplate):
         return """
 def function(arg, param2) -> None:
     \"\"\"Docstring.
-    
+
     Args:
         param1 (int): Not equal.
         para2 (int): Not equal.
@@ -6081,7 +6081,7 @@ class Klass:
         param2 (int): Fails.
         param3 (int): Fails.
     \"\"\"
-    
+
     def __init__(self, param1, param2) -> None:
         pass
 """
@@ -6186,7 +6186,7 @@ class _FE111G(_BaseTemplate):
         return """
 class Klass:
     \"\"\"...
-    
+
     Args:
         param1 (int): Fails.
         param2 (int): Fails.
@@ -6239,7 +6239,7 @@ class _FFuncPropG(_BaseTemplate):
 @property
 def function(self) -> int:
     \"\"\"Docstring.
-    
+
     Args:
         self (Klass): Fails.
     \"\"\"
@@ -6279,7 +6279,7 @@ class _FFuncPropNoRetTypeG(_BaseTemplate):
 @property
 def method(self):
     \"\"\"Docstring.
-    
+
     Returns:
         int: Returncode.
     \"\"\"
@@ -6443,7 +6443,7 @@ class _FNoDocClassS(_BaseTemplate):
     def template(self) -> str:
         return """
 class Klass:
-    
+
     def __init__(param1, param2, param3) -> None:
         pass
 """
