@@ -83,6 +83,7 @@ sphinxcontrib-napoleon = "^0.7"
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
 ipython = "^8.6.0"
+pre-commit = "^2.21.0"
 prompt-toolkit = "^3.0.33"
 pyaud = "^4.0.2"
 pylint = "2.15.9"
