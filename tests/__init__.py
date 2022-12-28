@@ -1030,7 +1030,7 @@ T = _t.TypeVar("T")
 
 
 class MutableSet(_t.MutableSet[T]):
-    \"\"\"Set objet to inherit from.\"\"\"
+    \"\"\"Set object to inherit from.\"\"\"
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -1497,7 +1497,7 @@ class _FDundersS(_BaseTemplate):
     def template(self) -> str:
         return """
 class MutableSet:
-    \"\"\"Set objet to inherit from.\"\"\"
+    \"\"\"Set object to inherit from.\"\"\"
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -2645,7 +2645,7 @@ T = _t.TypeVar("T")
 
 
 class MutableSet(_t.MutableSet[T]):
-    \"\"\"Set objet to inherit from.\"\"\"
+    \"\"\"Set object to inherit from.\"\"\"
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -3163,7 +3163,7 @@ class _FDundersN(_BaseTemplate):
     def template(self) -> str:
         return """
 class MutableSet:
-    \"\"\"Set objet to inherit from.\"\"\"
+    \"\"\"Set object to inherit from.\"\"\"
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -6056,7 +6056,7 @@ def docsig(
     Args:
         path (int): Path(s) to check.
         targets (int): List of errors to target.
-        disable (int): ist of errors to disable.
+        disable (int): List of errors to disable.
 
     Returns:
         int: Boolean value for whether there were any failures or not.

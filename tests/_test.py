@@ -641,7 +641,7 @@ def test_ignore_args(
     template: str,
     _: str,
 ) -> None:
-    """Test docstrings without args don't fail wih ``-a/--ignore_args``.
+    """Test docs without args don't fail with ``-a/--ignore_args``.
 
     Passing tests will fail and failing tests will pass, as tests which
     generally pass will have args documented, which shouldn't be with
@@ -673,7 +673,7 @@ def test_ignore_kwargs(
     template: str,
     _: str,
 ) -> None:
-    """Test docstrings without kwargs don't fail wih ``-k``.
+    """Test docstrings without kwargs don't fail with ``-k``.
 
     Passing tests will fail and failing tests will pass, as tests which
     generally pass will have kwargs documented, which shouldn't be with
