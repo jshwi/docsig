@@ -1,0 +1,198 @@
+ci:
+  skip:
+    - pylint
+    - doctest-package
+    - doctest-readme
+    - mypy
+    - docsig
+    - vulture
+    - tests
+    - toc
+default_language_version:
+  python: python3.8
+default_stages:
+  - commit
+exclude: |
+  (?x)^(
+    | poetry\.lock
+    | package-lock\.json
+    | migrations/.*
+    | \.bumpversion\.cfg
+    | whitelist\.py
+  )$
+repos:
+  - repo: local
+    hooks:
+      # local so package can be imported to lint
+      - id: pylint
+        name: pylint
+        entry: poetry run pylint
+        language: system
+        types:
+          - python
+        exclude: ^(docs/conf\.py)$
+      # no hooks found for `doctest`
+      - id: doctest-package
+        name: doctest docstrings
+        language: system
+        entry: poetry run pyaud doctest-package
+        pass_filenames: false
+      # no hooks found for `doctest`
+      - id: doctest-readme
+        name: doctest readme
+        language: system
+        entry: poetry run pyaud doctest-readme
+        pass_filenames: false
+      # script installs stubs if necessary
+      - id: mypy
+        name: check types
+        language: system
+        entry: poetry run pyaud typecheck
+        pass_filenames: false
+      # infer imports for overridden methods
+      - id: docsig
+        name: check signature documentation
+        language: system
+        entry: poetry run pyaud params
+        pass_filenames: false
+      # analyze all files for reliable result
+      - id: vulture
+        name: check for unused code
+        language: system
+        entry: poetry run pyaud unused
+        pass_filenames: false
+      # script also handles coverage
+      - id: tests
+        name: test source code
+        language: system
+        entry: poetry run pyaud test
+        pass_filenames: false
+      # script written for specific format
+      - id: toc
+        name: update docs toctree
+        language: system
+        entry: poetry run pyaud toc --fix
+        pass_filenames: false
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.4.0"
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+        exclude: ^(.*\.rst)$
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: detect-private-key
+        exclude: ^(.*/test.key)$
+      - id: forbid-submodules
+      - id: no-commit-to-branch
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: requirements-txt-fixer
+      - id: pretty-format-json
+        args:
+          - "--autofix"
+      - id: fix-encoding-pragma
+        args:
+          - "--remove"
+  - repo: https://github.com/ikamensh/flynt
+    rev: "0.77"
+    hooks:
+      - id: flynt
+        args:
+          - "--line-length"
+          - "79"
+          - "--transform-concats"
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v2.7.1"
+    hooks:
+      - id: prettier
+        args:
+          - "--write"
+  - repo: https://github.com/PyCQA/docformatter
+    rev: "v1.5.1"
+    hooks:
+      - id: docformatter
+        args:
+          - "--recursive"
+          - "--wrap-summaries"
+          - "72"
+  - repo: https://github.com/pappasam/toml-sort
+    rev: "v0.20.1"
+    hooks:
+      - id: toml-sort
+        args:
+          - "--in-place"
+          - "--all"
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: "v1.9.0"
+    hooks:
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+  - repo: https://github.com/codespell-project/codespell
+    rev: "b11cd233331056e7a30b42e065b2d3500627a692"
+    hooks:
+      - id: codespell
+        exclude: ^(.*/messages\.po)$
+        additional_dependencies:
+          - tomli==2.0.1
+  - repo: https://github.com/jshwi/constcheck
+    rev: "v0.7.0"
+    hooks:
+      - id: constcheck
+  - repo: https://github.com/pre-commit/pre-commit
+    rev: "v2.20.0"
+    hooks:
+      - id: validate_manifest
+  - repo: https://github.com/siderolabs/conform
+    rev: "v0.1.0-alpha.27"
+    hooks:
+      - id: conform
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args:
+          - "--recursive"
+          - "-lll"
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - "--py38-plus"
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        exclude: ^(.*/_?templates\.py)$
+        additional_dependencies:
+          - flake8-bugbear==22.12.6
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        args:
+          - "--config-data"
+          - "{rules: {line-length: {max: 79}}}"
+  - repo: https://github.com/psf/black
+    rev: "22.12.0"
+    hooks:
+      - id: black
+        additional_dependencies:
+          - tomli==2.0.1
+  - repo: https://github.com/pycqa/isort
+    rev: 5.5.2
+    hooks:
+      - id: isort
