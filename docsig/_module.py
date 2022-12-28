@@ -76,7 +76,7 @@ class Modules(_MutableSequence[_Module]):
 
     If string is provided, ignore paths.
 
-    :param paths: Path(s) to pase ``Module``(s) from.
+    :param paths: Path(s) to parse ``Module``(s) from.
     :param string: String to parse if provided.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
