@@ -1,2 +1,0 @@
-[logging.handlers.default]
-class = "logging.StreamHandler"
