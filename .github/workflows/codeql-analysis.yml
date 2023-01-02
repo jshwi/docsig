@@ -1,5 +1,4 @@
 name: CodeQL
-
 on:
   push:
     branches: [master]
@@ -16,33 +15,18 @@ jobs:
       actions: read
       contents: read
       security-events: write
-
     strategy:
       fail-fast: false
       matrix:
         language: [python]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
-
-      # ℹ️ Command-line programs to run using the OS shell.
-      # 📚 https://git.io/JvXDl
-
-      # ✏️ If the Autobuild fails above, remove it and uncomment the
-      #   following three lines and modify them (or add more) to build
-      #   your code if your project uses a compiled language
-
-      #- run: |
-      #   make bootstrap
-      #   make release
-
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
