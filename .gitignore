@@ -1,4 +1,3 @@
-*.egg-info/
 *build/
 *coverage*
 *venv
@@ -6,5 +5,4 @@
 .env
 __pycache__/
 dist/
-node_modules
-reqlib-metadata/
+node_modules/
