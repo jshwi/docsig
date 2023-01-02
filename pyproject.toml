@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = [
-    "poetry-core>=1.0.0",
+  "poetry-core>=1.0.0"
 ]
 
 [tool.black]
@@ -22,21 +22,21 @@ ignore-words-list = "astroid"
 
 [tool.constcheck]
 ignore_strings = [
-    "store",
-    "store_true",
-    "utf-8",
+  "store",
+  "store_true",
+  "utf-8"
 ]
 
 [tool.coverage.report]
 exclude_lines = [
-    "@_t.overload",
+  "@_t.overload"
 ]
 fail_under = 100
 
 [tool.coverage.run]
 omit = [
-    "whitelist.py",
-    "docsig/__main__.py",
+  "docsig/__main__.py",
+  "whitelist.py"
 ]
 
 [tool.docsig]
@@ -54,21 +54,21 @@ use_parentheses = true
 
 [tool.poetry]
 authors = [
-    "jshwi <stephen@jshwisolutions.com>",
+  "jshwi <stephen@jshwisolutions.com>"
 ]
 description = "Check signature params for proper documentation"
 documentation = "https://docsig.readthedocs.io/en/latest"
 homepage = "https://pypi.org/project/docsig/"
 keywords = [
-    "docstring",
-    "signature",
-    "params",
-    "check",
-    "docs",
+  "check",
+  "docs",
+  "docstring",
+  "params",
+  "signature"
 ]
 license = "MIT"
 maintainers = [
-    "jshwi <stephen@jshwisolutions.com>",
+  "jshwi <stephen@jshwisolutions.com>"
 ]
 name = "docsig"
 readme = "README.rst"
@@ -104,31 +104,31 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud.audit]
 modules = [
-    "files",
-    "format",
-    "format-docs",
-    "format-str",
-    "imports",
-    "typecheck",
-    "unused",
-    "lint",
-    "const",
-    "params",
-    "test",
-    "docs",
+  "const",
+  "docs",
+  "files",
+  "format",
+  "format-docs",
+  "format-str",
+  "imports",
+  "lint",
+  "params",
+  "test",
+  "typecheck",
+  "unused"
 ]
 
 [tool.pyaud.clean]
 exclude = [
-    ".mypy_cache",
-    ".env",
-    "node_modules",
+  ".env",
+  ".mypy_cache",
+  "node_modules"
 ]
 
 [tool.pyaud.indexing]
 exclude = [
-    "whitelist.py",
-    "conf.py",
+  "conf.py",
+  "whitelist.py"
 ]
 
 [tool.pyaud.logging]
@@ -147,26 +147,26 @@ when = "d"
 
 [tool.pyaud.logging.root]
 handlers = [
-    "default",
+  "default"
 ]
 level = "DEBUG"
 propagate = false
 
 [tool.pytest.ini_options]
 addopts = [
-    "--durations=5",
-    "-vv",
-    "--color=yes",
-    "--cov-report",
-    "term-missing",
-    "-n",
-    "auto",
+  "--color=yes",
+  "--cov-report",
+  "--durations=5",
+  "-n",
+  "-vv",
+  "auto",
+  "term-missing"
 ]
 filterwarnings = "ignore::DeprecationWarning"
 norecursedirs = [
-    "docs",
-    ".git",
-    ".mypy_cache",
-    ".idea",
-    ".pytest_cache"
+  ".git",
+  ".idea",
+  ".mypy_cache",
+  ".pytest_cache",
+  "docs"
 ]
