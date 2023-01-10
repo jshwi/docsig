@@ -1,9 +1,11 @@
 name: CI
 on:
   push:
-    branches: [master]
+    branches:
+      - master
   pull_request:
-    branches: [master]
+    branches:
+      - master
 jobs:
   ci:
     name: >
@@ -17,9 +19,12 @@ jobs:
       PYAUD_GH_TOKEN: ${{ secrets.PYAUD_GH_TOKEN }}
     strategy:
       matrix:
-        python-version: [3.8]
-        node-version: [16.x.x]
-        os: [ubuntu-latest]
+        python-version:
+          - 3.8
+        node-version:
+          - 16.x.x
+        os:
+          - ubuntu-latest
     steps:
       - name: Checkout build
         id: checkout-build
@@ -52,5 +57,4 @@ jobs:
         id: upload-coverage
         uses: codecov/codecov-action@v3
         with:
-          files: ./coverage.xml
           fail_ci_if_error: true
