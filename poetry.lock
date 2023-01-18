@@ -1806,14 +1806,14 @@ files = [
 
 [[package]]
 name = "readme-renderer"
-version = "37.3"
+version = "36.0"
 description = "readme_renderer is a library for rendering \"readme\" descriptions for Warehouse"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "readme_renderer-37.3-py3-none-any.whl", hash = "sha256:f67a16caedfa71eef48a31b39708637a6f4664c4394801a7b0d6432d13907343"},
-    {file = "readme_renderer-37.3.tar.gz", hash = "sha256:cd653186dfc73055656f090f227f5cb22a046d7f71a841dfa305f55c9a513273"},
+    {file = "readme_renderer-36.0-py3-none-any.whl", hash = "sha256:2c37e472ca96755caba6cc58bcbf673a5574bc033385a2ac91d85dfef2799876"},
+    {file = "readme_renderer-36.0.tar.gz", hash = "sha256:f71aeef9a588fcbed1f4cc001ba611370e94a0cd27c75b1140537618ec78f0a2"},
 ]
 
 [package.dependencies]
@@ -1880,20 +1880,20 @@ docutils = ">=0.11,<1.0"
 
 [[package]]
 name = "restview"
-version = "3.0.0"
+version = "3.0.1"
 description = "ReStructuredText viewer"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "restview-3.0.0-py2.py3-none-any.whl", hash = "sha256:9cd358c3ddf7ef82174d90a64e82e8c1b82630269cb750c166ef94bd73cf3162"},
-    {file = "restview-3.0.0.tar.gz", hash = "sha256:2b989610aaed2fd42da64f6cdc539cf3ee70ce370bcba872db72421ad515dd1e"},
+    {file = "restview-3.0.1-py2.py3-none-any.whl", hash = "sha256:16783ed371379e43d1f8dd31f93b10a1edffa5a718e1486357d578813bad3122"},
+    {file = "restview-3.0.1.tar.gz", hash = "sha256:8c1a171c159d46d15d5569f77021828883a121d6f9baf758d641fc1e54b05ae5"},
 ]
 
 [package.dependencies]
 docutils = "*"
 pygments = "*"
-readme-renderer = "*"
+readme-renderer = "<37"
 
 [[package]]
 name = "ruamel.yaml"
