@@ -10,7 +10,7 @@ import typing as _t
 from collections import Counter as _Counter
 
 import astroid as _ast
-import sphinxcontrib.napoleon as _s
+import sphinx.ext.napoleon as _s
 
 from ._objects import MutableSequence as _MutableSequence
 from ._utils import isprotected as _isprotected

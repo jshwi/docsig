@@ -17,7 +17,7 @@ jobs:
       PYAUD_GH_TOKEN: ${{ secrets.PYAUD_GH_TOKEN }}
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: ["3.8", "3.9", "3.10"]
         node-version: [16.x.x]
         os: [ubuntu-latest]
     steps:

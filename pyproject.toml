@@ -74,11 +74,11 @@ version = "0.33.2"
 
 [tool.poetry.dependencies]
 Pygments = "^2.13.0"
+Sphinx = "^4.3.2"
 arcon = "^0"
 astroid = "^2.11.6"
 object-colors = "^2.1.0"
 python = "^3.8"
-sphinxcontrib-napoleon = "^0.7"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
