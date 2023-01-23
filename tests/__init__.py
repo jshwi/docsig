@@ -1870,7 +1870,8 @@ def function(param1, param2, param3):
 
     Returns
     -------
-    :return: Fails.
+        int
+            :return: Fails.
     \"\"\"
 """
 
@@ -2033,7 +2034,8 @@ def function(param1, param2, param3) -> None:
 
     Returns
     -------
-    :return: Fails.
+    int
+        :return: Fails.
     \"\"\"
 """
 
@@ -3634,7 +3636,8 @@ def function(param1, param2, param3):
 
     Returns
     -------
-    :return: Fails.
+    int
+        :return: Fails.
     \"\"\"
 """
 
@@ -3797,7 +3800,8 @@ def function(param1, param2, param3) -> None:
 
     Returns
     -------
-    :return: Fails.
+    int
+        :return: Fails.
     \"\"\"
 """
 
