@@ -136,7 +136,7 @@ repos:
           - "--recursive"
           - "--wrap-summaries=72"
   - repo: https://github.com/pappasam/toml-sort
-    rev: "v0.22.1"
+    rev: "v0.22.3"
     hooks:
       - id: toml-sort
         args:
