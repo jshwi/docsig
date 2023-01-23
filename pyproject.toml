@@ -154,6 +154,7 @@ addopts = [
   "--color=yes",
   "--cov-report=term-missing",
   "--durations=5",
+  "-n=auto",
   "-vv"
 ]
 filterwarnings = "ignore::DeprecationWarning"
