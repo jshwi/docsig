@@ -342,7 +342,7 @@ class Function:
         return (
             self.ismethod
             and not self.isinit
-            and self.name[:2] + self.name[-2:] == "____"
+            and bool(_re.match(r"__(.*)__", self.name))
         )
 
     @property
