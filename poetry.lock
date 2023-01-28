@@ -792,6 +792,18 @@ all = ["coincidence (>=0.2.0)", "pytest (>=6.0.0)"]
 testing = ["coincidence (>=0.2.0)", "pytest (>=6.0.0)"]
 
 [[package]]
+name = "html2text"
+version = "2020.1.16"
+description = "Turn HTML into equivalent Markdown-structured text."
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
+    {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
+]
+
+[[package]]
 name = "html5lib"
 version = "1.1"
 description = "HTML parser based on the WHATWG HTML specification"
@@ -1582,6 +1594,21 @@ toml-sort = ">=0.20,<0.23"
 vulture = ">=2.3,<3.0"
 
 [[package]]
+name = "pydash"
+version = "5.1.2"
+description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "pydash-5.1.2-py3-none-any.whl", hash = "sha256:a2e0c0900fc5a3cc16c9556d34d7e8a59caa9adebcf319876c9a3ccc35dc545f"},
+    {file = "pydash-5.1.2.tar.gz", hash = "sha256:0556062f6583c21fa70dd9a2c1a4e63bbe8cd54e14fecdfb579b46c36d93836f"},
+]
+
+[package.extras]
+dev = ["Sphinx", "black", "build", "coverage", "docformatter", "flake8", "flake8-black", "flake8-bugbear", "flake8-isort", "invoke", "isort", "pylint", "pytest", "pytest-cov", "sphinx-rtd-theme", "tox", "twine", "wheel"]
+
+[[package]]
 name = "pygments"
 version = "2.14.0"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2140,6 +2167,25 @@ jinja2 = ">=2.10"
 markupsafe = ">=1"
 
 [[package]]
+name = "sphinx-markdown-builder"
+version = "0.5.5"
+description = "sphinx builder that outputs markdown files"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "sphinx-markdown-builder-0.5.5.tar.gz", hash = "sha256:6ead53c08d8835329e32418dcdbac4db710a1c4e5e8db687d23b9e88882d9d16"},
+    {file = "sphinx_markdown_builder-0.5.5-py2.py3-none-any.whl", hash = "sha256:3c8909579dfa83ce5a8fb48e2d01dc257fc0676931170cb92cd528f9fceee76f"},
+]
+
+[package.dependencies]
+html2text = "*"
+pydash = "*"
+sphinx = "*"
+unify = "*"
+yapf = "*"
+
+[[package]]
 name = "sphinx-prompt"
 version = "1.5.0"
 description = "Sphinx directive to add unselectable prompt"
@@ -2486,6 +2532,20 @@ files = [
 ]
 
 [[package]]
+name = "unify"
+version = "0.5"
+description = "Modifies strings to all use the same (single/double) quote where possible."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "unify-0.5.tar.gz", hash = "sha256:8ddce812b2457212b7598fe574c9e6eb3ad69710f445391338270c7f8a71723c"},
+]
+
+[package.dependencies]
+untokenize = "*"
+
+[[package]]
 name = "untokenize"
 version = "0.1.1"
 description = "Transforms tokens into original source code (while preserving whitespace)."
@@ -2648,6 +2708,18 @@ files = [
 ]
 
 [[package]]
+name = "yapf"
+version = "0.32.0"
+description = "A formatter for Python code."
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "yapf-0.32.0-py2.py3-none-any.whl", hash = "sha256:8fea849025584e486fd06d6ba2bed717f396080fd3cc236ba10cb97c4c51cf32"},
+    {file = "yapf-0.32.0.tar.gz", hash = "sha256:a3f5085d37ef7e3e004c4ba9f9b3e40c54ff1901cd111f05145ae313a7c67d1b"},
+]
+
+[[package]]
 name = "zipp"
 version = "3.12.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -2666,4 +2738,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "104aac0e289643e5bd3483c433470490de896a4ba904eb4ad422b0a8cde1eeef"
+content-hash = "25a088bab1ab3cbbacad51ecccc967987e71589c8f27624fa1b420e7d5ff3b56"

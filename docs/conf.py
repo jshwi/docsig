@@ -40,6 +40,7 @@ extensions = [
     "sphinxcontrib.fulltoc",
     "sphinxcontrib.programoutput",
     "sphinx_toolbox.more_autodoc.autonamedtuple",
+    "sphinx_markdown_builder",
 ]
 
 

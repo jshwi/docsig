@@ -21,6 +21,8 @@ exclude: |
     | \.bumpversion\.cfg
     | whitelist\.py
     | \.idea
+    | tests\/TESTS\.md
+    | \.github\/COMMIT_POLICY\.md
   )$
 repos:
   - repo: local
@@ -83,6 +85,16 @@ repos:
         entry: deptry .
         language: system
         always_run: true
+        pass_filenames: false
+      - id: gen-test-docs
+        name: gen test docs
+        language: system
+        entry: bash scripts/gen-test-docs.sh
+        pass_filenames: false
+      - id: gen-commit-policy
+        name: gen commit policy
+        language: system
+        entry: bash scripts/gen-commit-policy.sh
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
