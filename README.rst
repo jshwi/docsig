@@ -6,8 +6,8 @@ docsig
 .. image:: https://img.shields.io/pypi/v/docsig
     :target: https://pypi.org/project/docsig/
     :alt: PyPI
-.. image:: https://github.com/jshwi/docsig/actions/workflows/ci.yml/badge.svg
-    :target: https://github.com/jshwi/docsig/actions/workflows/ci.yml
+.. image:: https://github.com/jshwi/docsig/actions/workflows/build.yaml/badge.svg
+    :target: https://github.com/jshwi/docsig/actions/workflows/build.yaml
     :alt: CI
 .. image:: https://results.pre-commit.ci/badge/github/jshwi/docsig/master.svg
    :target: https://results.pre-commit.ci/latest/github/jshwi/docsig/master
