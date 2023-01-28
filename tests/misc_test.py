@@ -71,6 +71,11 @@ def test_message_sequence() -> None:
 def test_target_report(message: str) -> None:
     """Test report only adds the target error provided.
 
+    The test should fail as it matches with the selected target.
+
+    Assert that the error appears in the report to confirm it has
+    triggered.
+
     :param message: Error message code.
     """
     # noinspection PyUnresolvedReferences
