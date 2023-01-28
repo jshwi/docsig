@@ -82,6 +82,7 @@ python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
+deptry = "^0.8.0"
 ipython = "^8.6.0"
 pre-commit = "^2.21.0"
 prompt-toolkit = "^3.0.33"
