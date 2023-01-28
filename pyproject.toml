@@ -102,6 +102,8 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud.audit]
 modules = [
+  "about-tests",
+  "commit-policy",
   "const",
   "docs",
   "files",
