@@ -19,7 +19,8 @@ exclude: |
     | migrations\/.*
     | \.bumpversion\.cfg
     | whitelist\.py
-    | \.idea
+    | \.idea\/.*
+    | docs\/conf\.py
   )$
 repos:
   - repo: local
@@ -74,14 +75,6 @@ repos:
         language: system
         entry: poetry run pyaud toc --fix
         pass_filenames: false
-      # audit commits between HEAD and origin/master
-      - id: audit
-        name: audit repo
-        language: system
-        entry: bash scripts/audit.sh
-        pass_filenames: false
-        stages:
-          - push
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
     hooks:
