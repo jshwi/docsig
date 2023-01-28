@@ -39,6 +39,10 @@ Check signature params for proper documentation
 
 Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 
+Contributing
+------------
+If you are interested in contributing to ``docsig`` please read about contributing `here <https://github.com/jshwi/docsig/blob/master/CONTRIBUTING.md>`__
+
 Installation
 ------------
 
@@ -152,7 +156,7 @@ API
     <BLANKLINE>
     1
 
-A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`_
+A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
 
 Classes
 #######
