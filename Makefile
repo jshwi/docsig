@@ -1,6 +1,10 @@
 all: install
-install: install-deps install-hooks
-remove: remove-hooks remove-deps
+install: install-poetry install-deps install-hooks
+remove: remove-poetry remove-hooks remove-deps
+
+install-poetry:
+	@command -v poetry >/dev/null 2>&1 \
+		|| curl -sSL https://install.python-poetry.org | python3 -
 
 install-deps:
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 poetry install
@@ -35,3 +39,7 @@ remove-hooks: install-pre-commit
 
 remove-deps:
 	rm -rf $(shell dirname $(shell dirname $(shell poetry run which python)))
+
+remove-poetry:
+	@command -v poetry >/dev/null 2>&1 \
+		|| curl -sSL https://install.python-poetry.org | python3 - --uninstall
