@@ -51,7 +51,7 @@ from ._utils import errors
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
-def test_main_args(
+def test_exit_status(
     init_file: InitFileFixtureType,
     main: MockMainType,
     name: str,
@@ -89,7 +89,7 @@ def test_main_args(
         .getids()
     ],
 )
-def test_main_output_negative(
+def test_stdout(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
@@ -131,7 +131,7 @@ def test_main_output_negative(
         if i.endswith("1-sum-s")
     ],
 )
-def test_main_no_sum(
+def test_error_codes(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
@@ -170,7 +170,7 @@ def test_main_no_sum(
         )
     ),
 )
-def test_main_multi(
+def test_multiple(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
@@ -201,7 +201,7 @@ def test_main_multi(
         for i in templates.registered.getgroup(fail.e_1_0).getids()
     ],
 )
-def test_disable_via_cli(
+def test_disable_rule(
     init_file: InitFileFixtureType,
     main: MockMainType,
     name: str,
@@ -235,7 +235,7 @@ def test_disable_via_cli(
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
-def test_main_str(
+def test_str_returncode(
     main: MockMainType, name: str, template: str, _: str
 ) -> None:
     """Test main for zero and non-zero returncodes for strings provided.
@@ -262,7 +262,7 @@ def test_main_str(
         .getids()
     ],
 )
-def test_main_str_out(
+def test_str_out(
     capsys: pytest.CaptureFixture, main: MockMainType, template: Template
 ) -> None:
     """Test main for stdout with strings.
@@ -434,7 +434,7 @@ def test_no_check_dunder_flag(
     templates.registered.getgroup(FAIL),
     ids=templates.registered.getgroup(FAIL).getids(),
 )
-def test_main_sum(
+def test_summary(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
@@ -464,7 +464,7 @@ def test_main_sum(
     templates.registered.getgroup(PASS),
     ids=templates.registered.getgroup(PASS).getids(),
 )
-def test_main_output_positive(
+def test_no_stdout(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
@@ -581,7 +581,7 @@ def test_no_check_property_returns_flag_wo(
     templates.registered.getgroup(passed.property_return),
     ids=templates.registered.getgroup(passed.property_return).getids(),
 )
-def test_no_check_property_returns_flag_w(
+def test_no_check_property_returns_flag(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
