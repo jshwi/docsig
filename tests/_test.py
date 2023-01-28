@@ -1,6 +1,23 @@
-"""
-tests._test
-===========
+"""Test suite of docsig.
+
+Most tests run with all the args that start with ``check``, so passing
+or failing of most tests depend on these passing. This means, by
+default, that templates including classes, magic methods, overridden
+methods, protected methods, and property returns, will be checked, even
+though by default they aren't.
+
+There are separate tests written to exclude these particular flags.
+Their templates contain a specific string to include them in these
+special case tests.
+
+Some tests overlap, which is why some templates are found by their
+prefix, their suffix, or whether they simply contain a substring.
+
+All templates ending with ``S`` are ``Sphinx`` style docstrings, all
+templates ending with ``N`` are ``NumPy`` style docstrings, all
+templates ending with ``NI`` are ``NumPy`` style docstrings with an
+unusual indent, and all templates ending with ``G`` are ``Google`` style
+docstrings.
 """
 # pylint: disable=protected-access
 
@@ -41,7 +58,17 @@ def test_main_args(
     template: str,
     _: str,
 ) -> None:
-    """Test main for passing and failing checks.
+    """Test for passing and failing checks.
+
+    All templates prefixed with ``P`` will be tested for zero exit
+    status.
+
+    All templates prefixed with ``F`` will be tested for non-zero exit
+    status.
+
+    All templates prefixed with ``M`` will be excluded from this test,
+    as this tests multiple functions in a file, some that may pass and
+    some that may fail.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -68,7 +95,20 @@ def test_main_output_negative(
     main: MockMainType,
     template: Template,
 ) -> None:
-    """Test main for stdout.
+    """Test stdout of failing tests.
+
+    Passing tests will not print to stdout.
+
+    All templates prefixed with ``P`` will be tested for no output.
+    As passing templates return an empty str as their expected results,
+    this test will confirm that tests that are not meant to pass do not
+    include this, as "" will always be True for being in a str object.
+
+    All templates prefixed with ``F`` will be tested for output.
+
+    All templates prefixed with ``M`` will be excluded from this test,
+    as this tests multiple functions in a file, some that may produce
+    output and some that may not.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -97,7 +137,12 @@ def test_main_no_sum(
     main: MockMainType,
     template: Template,
 ) -> None:
-    """Test main for stdout.
+    """Test expected error codes are emitted to stdout.
+
+    All templates containing ``1SumS`` are tested for error codes.
+
+    Expected result for these tests are derived from
+    ``docsig.messages``.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -131,7 +176,11 @@ def test_main_multi(
     main: MockMainType,
     expected: str,
 ) -> None:
-    """Test output correct for modules with multiple funcs.
+    """Test for correct output for modules with multiple functions.
+
+    Only test templates prefixed with ``M``, as these are designated
+    templates containing 2 or more functions. There templates are
+    generally excluded from other tests.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -152,14 +201,25 @@ def test_main_multi(
         for i in templates.registered.getgroup(fail.e_1_0).getids()
     ],
 )
-def test_main_cli_disable(
+def test_disable_via_cli(
     init_file: InitFileFixtureType,
     main: MockMainType,
     name: str,
     template: str,
     _: str,
 ) -> None:
-    """Test main for disabling errors via the commandline.
+    """Test disabling of errors.
+
+    Confirm that templates testing specific error codes, passed as a
+    disable argument, do not result in a failed run.
+
+    Any of the tests that would normally raise the particular error
+    should pass with the error disabled.
+
+    This test only tests templates prefixed with ``F<ERROR_CODE>``.
+
+    Expected result for these tests are derived from
+    ``docsig.messages``.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -178,7 +238,10 @@ def test_main_cli_disable(
 def test_main_str(
     main: MockMainType, name: str, template: str, _: str
 ) -> None:
-    """Test main for passing and failing checks with strings.
+    """Test main for zero and non-zero returncodes for strings provided.
+
+    If ``name`` starts with a fail prefix then a non-zero returncode is
+    expected.
 
     :param main: Mock ``main`` function.
     :param name: Name of test.
@@ -381,6 +444,9 @@ def test_main_sum(
 ) -> None:
     """Test main for passing and failing checks with ``--summary``.
 
+    Test for the differences and similarities in a standard run where
+    the full function diagram is emitted.
+
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -404,7 +470,10 @@ def test_main_output_positive(
     main: MockMainType,
     template: Template,
 ) -> None:
-    """Test main for stdout.
+    """Test that all tests emit no output.
+
+    Only test templates prefixed with `P` are collected for  this test,
+    and all tests should pass.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -430,10 +499,14 @@ def test_ignore_no_params(
     template: str,
     expected: str,
 ) -> None:
-    """Test that failing func passes with ``--ignore-no-params`` flag.
+    """Test that failing funcs pass with `-i/--ignore-no-params` flag.
 
-    `E103`, `E105`, `109`, and `H102` all indicate parameters missing
-    from docstring. These should not trigger with this argument.
+    ``E103``, ``E105``, ``E109``, and ``H102`` all indicate parameters
+    missing from docstring. These should not trigger with this argument.
+
+    All templates prefixed with ``M`` will be excluded from this test,
+    as this tests multiple functions in a file, some that may pass and
+    some that may fail.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -518,6 +591,12 @@ def test_no_check_property_returns_flag_w(
 ) -> None:
     """Test that passing property fails without ``-P`` flag.
 
+    Only test templates prefixed with ``PProperty`` are collected for
+    this test, and all tests should fail.
+
+    All tests will be tested for ``E108`` and ``H101``, which property
+    related errors.
+
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -542,11 +621,22 @@ def test_ignore_args(
     template: str,
     _: str,
 ) -> None:
-    """Test docs without args don't fail with ``-a/--ignore_args``.
+    """Test that for passing/failing tests with ``-a/--ignore-args``.
 
-    Passing tests will fail and failing tests will pass, as tests which
-    generally pass will have args documented, which shouldn't be with
-    this argument.
+    Test that docs without args, where the signature contains args,
+    don’t fail with ``-a/--ignore-args``.
+
+    All templates containing args in their signature must have `WArgs` in
+    their name.
+
+    Passing templates with ``WArgs`` will fail and failing tests with
+    ``WArgs`` will pass, as tests which pass will have args documented,
+    which shouldn’t be to pass with this check. All other tests will
+    have the usual result.
+
+    All templates prefixed with ``M`` will be excluded from this test,
+    as this tests multiple functions in a file, some that may pass and
+    some that may fail.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -574,11 +664,22 @@ def test_ignore_kwargs(
     template: str,
     _: str,
 ) -> None:
-    """Test docstrings without kwargs don't fail with ``-k``.
+    """Test that for passing/failing tests with ``-k/--ignore-kwargs``.
 
-    Passing tests will fail and failing tests will pass, as tests which
-    generally pass will have kwargs documented, which shouldn't be with
-    this argument.
+    Test that docs without args, where the signature contains args,
+    don’t fail with ``-k/--ignore-kwargs``.
+
+    All templates containing args in their signature must have
+    ``WKwargs`` their name.
+
+    Passing templates with ``WKwargs`` will fail and failing tests with
+    ``WKwargs`` will pass, as tests which pass will have args documented,
+    which shouldn’t be to pass with this check. All other tests will
+    have the usual result.
+
+    All templates prefixed with ``M`` will be excluded from this test,
+    as this tests multiple functions in a file, some that may pass and
+    some that may fail.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
