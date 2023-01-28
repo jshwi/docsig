@@ -1,4 +1,4 @@
-name: CI
+name: Build
 on:
   push:
     branches:
@@ -7,24 +7,15 @@ on:
     branches:
       - master
 jobs:
-  ci:
-    name: >
-      ${{ matrix.os }}
-      -python${{ matrix.python-version }}
-      -node@${{ matrix.node-version }}
+  build:
+    name: ${{ matrix.os }}-python${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
-    env:
-      PYAUD_GH_NAME: jshwi
-      PYAUD_GH_EMAIL: stephen@jshwisolutions.com
-      PYAUD_GH_TOKEN: ${{ secrets.PYAUD_GH_TOKEN }}
     strategy:
       matrix:
         python-version:
           - "3.8"
           - "3.9"
           - "3.10"
-        node-version:
-          - 16.x.x
         os:
           - ubuntu-latest
     steps:
@@ -40,21 +31,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: poetry
-      - name: Setup Node
-        id: setup-node
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
       - name: Install Python Packages
         id: install-python-packages
         run: poetry install
-      - name: Install Node Packages
-        id: install-node-packages
-        run: npm install
       - name: Audit
         id: audit
-        run: npm run audit
+        run: poetry run pyaud audit
       - name: Upload coverage
         id: upload-coverage
         uses: codecov/codecov-action@v3
