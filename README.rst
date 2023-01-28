@@ -6,9 +6,9 @@ docsig
 .. image:: https://img.shields.io/pypi/v/docsig
     :target: https://pypi.org/project/docsig/
     :alt: PyPI
-.. image:: https://github.com/jshwi/docsig/actions/workflows/ci.yml/badge.svg
-    :target: https://github.com/jshwi/docsig/actions/workflows/ci.yml
-    :alt: CI
+.. image:: https://github.com/jshwi/docsig/actions/workflows/build.yaml/badge.svg
+    :target: https://github.com/jshwi/docsig/actions/workflows/build.yaml
+    :alt: Build
 .. image:: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml/badge.svg
     :target: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml
     :alt: CodeQL
