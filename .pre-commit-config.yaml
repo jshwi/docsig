@@ -168,7 +168,7 @@ repos:
     hooks:
       - id: constcheck
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v3.0.2"
+    rev: "v3.0.4"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -202,7 +202,7 @@ repos:
         args:
           - "--config-data={rules: {line-length: {max: 79}}}"
   - repo: https://github.com/psf/black
-    rev: "22.12.0"
+    rev: "23.1.0"
     hooks:
       - id: black
         additional_dependencies:
