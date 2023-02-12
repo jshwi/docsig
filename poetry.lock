@@ -1095,14 +1095,14 @@ files = [
 
 [[package]]
 name = "lsfiles"
-version = "0.1.2"
+version = "0.3.0"
 description = "Path object VC index"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "lsfiles-0.1.2-py3-none-any.whl", hash = "sha256:2b45f7a12af5c8ba3124875bf7bc2e410c991dd3152f29dad95483d776d5f96e"},
-    {file = "lsfiles-0.1.2.tar.gz", hash = "sha256:0555f777cb3d6117639bdc900362db0df5838cc92bf5a517ebe4505ec3bf798d"},
+    {file = "lsfiles-0.3.0-py3-none-any.whl", hash = "sha256:2eaf64daa1016f50956e1253f3e62ceebe601a69b0b3308d0b4dbc4bdc56d65d"},
+    {file = "lsfiles-0.3.0.tar.gz", hash = "sha256:2bbb8d0023b244224db61f4a0b0782066a45d1713e83150da293955fac686dda"},
 ]
 
 [package.dependencies]
@@ -1584,37 +1584,34 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "4.1.0"
+version = "5.0.1"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-4.1.0-py3-none-any.whl", hash = "sha256:3fdc5f39cd92913238578b16b218ffb006703cb17ff8a30c6bf8af076ea98b73"},
-    {file = "pyaud-4.1.0.tar.gz", hash = "sha256:a4853644ec3fe502515d5ee0b77951ca1d0c8e2dc67dd94370018ecca3718a7f"},
+    {file = "pyaud-5.0.1-py3-none-any.whl", hash = "sha256:caa6dce30ae2895e70ead10af66dd65bc3e8d49c30cf4cfacd2a189654c77d27"},
+    {file = "pyaud-5.0.1.tar.gz", hash = "sha256:288b600d2377fdd5667ec86bb9f16d211d9af111a1bb21b2058512e4ae646183"},
 ]
 
 [package.dependencies]
-appdirs = ">=1.4.4,<2.0.0"
-environs = ">=9.4.0,<10.0.0"
-gitspy = ">=0,<1"
-lsfiles = ">=0,<1"
+arcon = ">=0.2.1,<0.3.0"
+gitpython = ">=3.1.30,<4.0.0"
+lsfiles = ">=0.3"
 object-colors = ">=2.0.1,<3.0.0"
 pyaud-plugins = ">=0.8"
 spall = ">=0,<1"
-tomli = ">=2.0.1,<3.0.0"
-tomli-w = ">=1.0.0,<2.0.0"
 
 [[package]]
 name = "pyaud-plugins"
-version = "0.13.1"
+version = "0.14.0"
 description = "Plugin package for Pyaud"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud_plugins-0.13.1-py3-none-any.whl", hash = "sha256:24ef324bc0324bc5f632f1725ce1379eddc0ea014a6dba2b6fe66383d35467b9"},
-    {file = "pyaud_plugins-0.13.1.tar.gz", hash = "sha256:28cbd30902c4548dcbaf3257c89afcc0fbc0cc039be9a69241694fb6b9e01e20"},
+    {file = "pyaud_plugins-0.14.0-py3-none-any.whl", hash = "sha256:345ab6784775a55bd372e7bfd3642b72599156cf7d44842658380660ebc0f1bf"},
+    {file = "pyaud_plugins-0.14.0.tar.gz", hash = "sha256:0713691c0b16464fa4813c90ec5fbf96a50a38c3b3910a1b172806e66c44a2d7"},
 ]
 
 [package.dependencies]
@@ -1624,7 +1621,7 @@ codecov = ">=2.1.12,<3.0.0"
 constcheck = ">=0,<1"
 coverage = ">=6.2,<8.0"
 docformatter = ">=1.4,<2.0"
-docsig = ">=0,<1"
+docsig = ">=0.34.0"
 environs = ">=9.4.0,<10.0.0"
 flynt = ">=0.75,<0.77"
 gitpython = ">=3.1.30,<4.0.0"
@@ -1632,11 +1629,11 @@ isort = ">=5.10.1,<6.0.0"
 mypy = ">=0.930,<1.1"
 object-colors = ">=2.0.1,<3.0.0"
 pipfile-requirements = ">=0.3.0,<0.4.0"
-pyaud = ">=4.0.2,<6.0.0"
+pyaud = ">=5.0.1,<7.0.0"
 pylint = ">=2.12.2,<3.0.0"
 pytest = ">=7.2.0,<8.0.0"
 pytest-cov = ">=3,<5"
-python-dotenv = ">=0.19.2,<0.22.0"
+python-dotenv = ">=0.19.2,<1.1.0"
 pyyaml = ">=6.0,<7.0"
 readmetester = ">=1.0.1,<3.0.0"
 setuptools = ">=67.2.0,<68.0.0"
@@ -1836,14 +1833,14 @@ testing = ["filelock"]
 
 [[package]]
 name = "python-dotenv"
-version = "0.21.1"
+version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 category = "dev"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "python-dotenv-0.21.1.tar.gz", hash = "sha256:1c93de8f636cde3ce377292818d0e440b6e45a82f215c3744979151fa8151c49"},
-    {file = "python_dotenv-0.21.1-py3-none-any.whl", hash = "sha256:41e12e0318bebc859fcc4d97d4db8d20ad21721a6aa5047dd59f090391cb549a"},
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
 ]
 
 [package.extras]
@@ -2817,4 +2814,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "5eac7b8af6f30fcee895139223b36a15d9e97ebe1b12d4d96abe31a5293f1c59"
+content-hash = "b1193866269e622331df8b7bbcf018b8e5c48e477fa3f8234fbc23d15d9da084"
