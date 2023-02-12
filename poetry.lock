@@ -2339,14 +2339,14 @@ widechars = ["wcwidth"]
 
 [[package]]
 name = "templatest"
-version = "0.7.0"
+version = "0.8.0"
 description = "Templates for testing with strings"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "templatest-0.7.0-py3-none-any.whl", hash = "sha256:77f72d43c1844904196b196aa66c35ab0a7d1535eb3bbd880d3d2621c41c1c5c"},
-    {file = "templatest-0.7.0.tar.gz", hash = "sha256:8a8cf03ceeb6e4bbfdd698aa648a630519aeb5e74cadfb5dde3ed29d8bb308c1"},
+    {file = "templatest-0.8.0-py3-none-any.whl", hash = "sha256:aa9c3b918915f57f1751bdf961b06577630e2c741b8f207ff5f985def64750b0"},
+    {file = "templatest-0.8.0.tar.gz", hash = "sha256:c808360bf0791cc5629f6baf8002f48159c11bd18f6b53096cc089ceada91dd2"},
 ]
 
 [[package]]
@@ -2676,4 +2676,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "722afdfee9c2c71046db9159adc42a8fe7856d31a36ef5139a826da7be8d99c7"
+content-hash = "4e603289538de41fbdcc67d6aba14e6e04e8d42a37167b051767e4b17731ccae"

@@ -94,7 +94,7 @@ pytest-sugar = "^0.9.6"
 pytest-xdist = "^3.0.2"
 restview = "^3.0.0"
 sphinx-toolbox = "^3.2.0"
-templatest = "^0.7.0"
+templatest = "^0.8.0"
 tomli-w = "^1.0.0"
 
 [tool.poetry.scripts]
