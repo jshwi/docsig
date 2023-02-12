@@ -101,7 +101,9 @@ def test_lineno(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    init_file(templates.registered.getbyname("m-fail-s").template)
+    init_file(
+        templates.registered.getbyname("m-fail-s").template  # type: ignore
+    )
     main()
     std = capsys.readouterr()
     assert "module/file.py:2" in std.out
