@@ -1577,26 +1577,23 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "4.1.0"
+version = "5.0.1"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-4.1.0-py3-none-any.whl", hash = "sha256:3fdc5f39cd92913238578b16b218ffb006703cb17ff8a30c6bf8af076ea98b73"},
-    {file = "pyaud-4.1.0.tar.gz", hash = "sha256:a4853644ec3fe502515d5ee0b77951ca1d0c8e2dc67dd94370018ecca3718a7f"},
+    {file = "pyaud-5.0.1-py3-none-any.whl", hash = "sha256:caa6dce30ae2895e70ead10af66dd65bc3e8d49c30cf4cfacd2a189654c77d27"},
+    {file = "pyaud-5.0.1.tar.gz", hash = "sha256:288b600d2377fdd5667ec86bb9f16d211d9af111a1bb21b2058512e4ae646183"},
 ]
 
 [package.dependencies]
-appdirs = ">=1.4.4,<2.0.0"
-environs = ">=9.4.0,<10.0.0"
-gitspy = ">=0,<1"
-lsfiles = ">=0,<1"
+arcon = ">=0.2.1,<0.3.0"
+gitpython = ">=3.1.30,<4.0.0"
+lsfiles = ">=0.3"
 object-colors = ">=2.0.1,<3.0.0"
 pyaud-plugins = ">=0.8"
 spall = ">=0,<1"
-tomli = ">=2.0.1,<3.0.0"
-tomli-w = ">=1.0.0,<2.0.0"
 
 [[package]]
 name = "pyaud-plugins"
@@ -2797,4 +2794,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "25066793a82e8fee64db4327969f39ebd03abd2c244d13574f951de18bea620c"
+content-hash = "cf71384b956ddc7c55b4bd2aec2fa371a5bedf63554abadc4968db4fb9bf2e28"
