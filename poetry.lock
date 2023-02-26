@@ -791,33 +791,18 @@ smmap = ">=3.0.1,<6"
 
 [[package]]
 name = "gitpython"
-version = "3.1.30"
-description = "GitPython is a python library used to interact with Git repositories"
+version = "3.1.31"
+description = "GitPython is a Python library used to interact with Git repositories"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "GitPython-3.1.30-py3-none-any.whl", hash = "sha256:cd455b0000615c60e286208ba540271af9fe531fa6a87cc590a7298785ab2882"},
-    {file = "GitPython-3.1.30.tar.gz", hash = "sha256:769c2d83e13f5d938b7688479da374c4e3d49f71549aaf462b646db9602ea6f8"},
+    {file = "GitPython-3.1.31-py3-none-any.whl", hash = "sha256:f04893614f6aa713a60cbbe1e6a97403ef633103cdd0ef5eb6efe0deb98dbe8d"},
+    {file = "GitPython-3.1.31.tar.gz", hash = "sha256:8ce3bcf69adfdf7c7d503e78fd3b1c492af782d58893b650adb2ac8912ddd573"},
 ]
 
 [package.dependencies]
 gitdb = ">=4.0.1,<5"
-
-[[package]]
-name = "gitspy"
-version = "0.3.0"
-description = "Intuitive Git for Python"
-category = "dev"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "gitspy-0.3.0-py3-none-any.whl", hash = "sha256:8ca2e79c39d95d1a374d35bd3f31741fec168884fb58243adda65ea4bdfbe13d"},
-    {file = "gitspy-0.3.0.tar.gz", hash = "sha256:74e582d2f13001f61133e02c5ceb252a1511d3859cfdff16637e50ba0f3091bd"},
-]
-
-[package.dependencies]
-spall = ">=0,<1"
 
 [[package]]
 name = "handy-archives"
@@ -1095,18 +1080,18 @@ files = [
 
 [[package]]
 name = "lsfiles"
-version = "0.3.0"
+version = "0.5.0"
 description = "Path object VC index"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "lsfiles-0.3.0-py3-none-any.whl", hash = "sha256:2eaf64daa1016f50956e1253f3e62ceebe601a69b0b3308d0b4dbc4bdc56d65d"},
-    {file = "lsfiles-0.3.0.tar.gz", hash = "sha256:2bbb8d0023b244224db61f4a0b0782066a45d1713e83150da293955fac686dda"},
+    {file = "lsfiles-0.5.0-py3-none-any.whl", hash = "sha256:374283b331ce8188ad47fd3241aba1365d9aab245a5210289a1c70be262f5bc5"},
+    {file = "lsfiles-0.5.0.tar.gz", hash = "sha256:81f5fa7695a1017aadc43dd7c5f7e0d4db86822f5ba5ce77dd30ddc3d9d7b048"},
 ]
 
 [package.dependencies]
-gitspy = ">=0,<1"
+gitpython = ">=3.1.31,<4.0.0"
 
 [[package]]
 name = "markupsafe"
@@ -1577,34 +1562,34 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "5.0.1"
+version = "6.1.2"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-5.0.1-py3-none-any.whl", hash = "sha256:caa6dce30ae2895e70ead10af66dd65bc3e8d49c30cf4cfacd2a189654c77d27"},
-    {file = "pyaud-5.0.1.tar.gz", hash = "sha256:288b600d2377fdd5667ec86bb9f16d211d9af111a1bb21b2058512e4ae646183"},
+    {file = "pyaud-6.1.2-py3-none-any.whl", hash = "sha256:14d8e327b1b158f19fc696f6acb6bc0938285d4b7e5e895541ed0d11189154ea"},
+    {file = "pyaud-6.1.2.tar.gz", hash = "sha256:768328617c8a02cfad4804bf8c3b6e9e39795e7000eb2a46df48c5d1b313793a"},
 ]
 
 [package.dependencies]
 arcon = ">=0.2.1,<0.3.0"
 gitpython = ">=3.1.30,<4.0.0"
-lsfiles = ">=0.3"
+lsfiles = ">=0.5"
 object-colors = ">=2.0.1,<3.0.0"
-pyaud-plugins = ">=0.8"
+pyaud-plugins = ">=0.13.3"
 spall = ">=0,<1"
 
 [[package]]
 name = "pyaud-plugins"
-version = "0.12.0"
+version = "0.13.3"
 description = "Plugin package for Pyaud"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud_plugins-0.12.0-py3-none-any.whl", hash = "sha256:c40b2952333021810b2c1d6ddb01118a728fda463d2eddc9544e57960e3a4015"},
-    {file = "pyaud_plugins-0.12.0.tar.gz", hash = "sha256:fc9123c15fd4547ac538823b55822040d67a86c83cd7a997551f2ca1c6feec2f"},
+    {file = "pyaud_plugins-0.13.3-py3-none-any.whl", hash = "sha256:4391231a1fd9f915a5ff078be8e09137a69c16af35494b57eafa1224e18008ad"},
+    {file = "pyaud_plugins-0.13.3.tar.gz", hash = "sha256:18ed35b87e653b3042e1716909961dcfba1ddb9537d639a9538a0cb3d93b14ae"},
 ]
 
 [package.dependencies]
@@ -1618,16 +1603,18 @@ docsig = ">=0,<1"
 environs = ">=9.4.0,<10.0.0"
 flynt = ">=0.75,<0.77"
 gitpython = ">=3.1.30,<4.0.0"
-gitspy = ">=0,<1"
 isort = ">=5.10.1,<6.0.0"
-mypy = ">=0.930,<0.992"
+mypy = ">=0.930,<1.1"
 object-colors = ">=2.0.1,<3.0.0"
 pipfile-requirements = ">=0.3.0,<0.4.0"
+pyaud = ">=5.0.1,<7.0.0"
 pylint = ">=2.12.2,<3.0.0"
 pytest = ">=7.2.0,<8.0.0"
 pytest-cov = ">=3,<5"
-python-dotenv = ">=0.19.2,<0.22.0"
+python-dotenv = ">=0.19.2,<1.1.0"
+pyyaml = ">=6.0,<7.0"
 readmetester = ">=1.0.1,<3.0.0"
+setuptools = ">=67.2.0,<68.0.0"
 Sphinx = ">=4.3.2,<7.0.0"
 sphinx-markdown-builder = ">=0.5.5,<0.6.0"
 sphinxcontrib-fulltoc = ">=1.2.0,<2.0.0"
@@ -2794,4 +2781,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "b4dba2b31307ec4abc6eb3289a50e9a3d056a92bc8c753eeabf6fbfa29e92bb9"
+content-hash = "a30a8cdead8d5e631b0c580a45f18f4a9d3076a0703c65fbc0c8963922bfe9d0"
