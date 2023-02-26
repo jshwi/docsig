@@ -791,14 +791,14 @@ smmap = ">=3.0.1,<6"
 
 [[package]]
 name = "gitpython"
-version = "3.1.30"
-description = "GitPython is a python library used to interact with Git repositories"
+version = "3.1.31"
+description = "GitPython is a Python library used to interact with Git repositories"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "GitPython-3.1.30-py3-none-any.whl", hash = "sha256:cd455b0000615c60e286208ba540271af9fe531fa6a87cc590a7298785ab2882"},
-    {file = "GitPython-3.1.30.tar.gz", hash = "sha256:769c2d83e13f5d938b7688479da374c4e3d49f71549aaf462b646db9602ea6f8"},
+    {file = "GitPython-3.1.31-py3-none-any.whl", hash = "sha256:f04893614f6aa713a60cbbe1e6a97403ef633103cdd0ef5eb6efe0deb98dbe8d"},
+    {file = "GitPython-3.1.31.tar.gz", hash = "sha256:8ce3bcf69adfdf7c7d503e78fd3b1c492af782d58893b650adb2ac8912ddd573"},
 ]
 
 [package.dependencies]
@@ -1095,18 +1095,18 @@ files = [
 
 [[package]]
 name = "lsfiles"
-version = "0.3.0"
+version = "0.5.0"
 description = "Path object VC index"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "lsfiles-0.3.0-py3-none-any.whl", hash = "sha256:2eaf64daa1016f50956e1253f3e62ceebe601a69b0b3308d0b4dbc4bdc56d65d"},
-    {file = "lsfiles-0.3.0.tar.gz", hash = "sha256:2bbb8d0023b244224db61f4a0b0782066a45d1713e83150da293955fac686dda"},
+    {file = "lsfiles-0.5.0-py3-none-any.whl", hash = "sha256:374283b331ce8188ad47fd3241aba1365d9aab245a5210289a1c70be262f5bc5"},
+    {file = "lsfiles-0.5.0.tar.gz", hash = "sha256:81f5fa7695a1017aadc43dd7c5f7e0d4db86822f5ba5ce77dd30ddc3d9d7b048"},
 ]
 
 [package.dependencies]
-gitspy = ">=0,<1"
+gitpython = ">=3.1.31,<4.0.0"
 
 [[package]]
 name = "markupsafe"
@@ -1577,20 +1577,20 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "5.0.1"
+version = "6.1.1"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-5.0.1-py3-none-any.whl", hash = "sha256:caa6dce30ae2895e70ead10af66dd65bc3e8d49c30cf4cfacd2a189654c77d27"},
-    {file = "pyaud-5.0.1.tar.gz", hash = "sha256:288b600d2377fdd5667ec86bb9f16d211d9af111a1bb21b2058512e4ae646183"},
+    {file = "pyaud-6.1.1-py3-none-any.whl", hash = "sha256:7859dbdd2f4729a619a8965757a7213c6c18d8976d0273e2f97e63b6122c5f9a"},
+    {file = "pyaud-6.1.1.tar.gz", hash = "sha256:83cf966e148f3bc0db7e7db5c984a08b31fc07a1d91eeb18bfbcdc34a18ef025"},
 ]
 
 [package.dependencies]
 arcon = ">=0.2.1,<0.3.0"
 gitpython = ">=3.1.30,<4.0.0"
-lsfiles = ">=0.3"
+lsfiles = ">=0.5"
 object-colors = ">=2.0.1,<3.0.0"
 pyaud-plugins = ">=0.8"
 spall = ">=0,<1"
@@ -2794,4 +2794,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "b4dba2b31307ec4abc6eb3289a50e9a3d056a92bc8c753eeabf6fbfa29e92bb9"
+content-hash = "8cbbee092d76c56512784f67e925e838216e3cd33462f9548ee06676c01baa71"
