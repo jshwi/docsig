@@ -1,4 +1,4 @@
 sphinx-markdown-builder==0.5.5
-sphinx-toolbox==3.2.0
+sphinx-toolbox==3.4.0
 sphinxcontrib-fulltoc==1.2.0
 sphinxcontrib-programoutput==0.17
