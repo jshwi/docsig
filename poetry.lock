@@ -1562,14 +1562,14 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "6.1.2"
+version = "6.2.1"
 description = "Framework for writing Python package audits"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-6.1.2-py3-none-any.whl", hash = "sha256:14d8e327b1b158f19fc696f6acb6bc0938285d4b7e5e895541ed0d11189154ea"},
-    {file = "pyaud-6.1.2.tar.gz", hash = "sha256:768328617c8a02cfad4804bf8c3b6e9e39795e7000eb2a46df48c5d1b313793a"},
+    {file = "pyaud-6.2.1-py3-none-any.whl", hash = "sha256:cb0b20c63b7e6b938a1e02826c36e51166c4f47399e4b18cea637fc78d6f3958"},
+    {file = "pyaud-6.2.1.tar.gz", hash = "sha256:57ddc5d3c0e7832a76ce97affee5594998430e63d2fb2837cf4017441d6e2fa2"},
 ]
 
 [package.dependencies]
@@ -1577,19 +1577,19 @@ arcon = ">=0.2.1,<0.3.0"
 gitpython = ">=3.1.30,<4.0.0"
 lsfiles = ">=0.5"
 object-colors = ">=2.0.1,<3.0.0"
-pyaud-plugins = ">=0.13.3"
+pyaud-plugins = ">=0.14.0"
 spall = ">=0,<1"
 
 [[package]]
 name = "pyaud-plugins"
-version = "0.13.3"
+version = "0.14.0"
 description = "Plugin package for Pyaud"
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud_plugins-0.13.3-py3-none-any.whl", hash = "sha256:4391231a1fd9f915a5ff078be8e09137a69c16af35494b57eafa1224e18008ad"},
-    {file = "pyaud_plugins-0.13.3.tar.gz", hash = "sha256:18ed35b87e653b3042e1716909961dcfba1ddb9537d639a9538a0cb3d93b14ae"},
+    {file = "pyaud_plugins-0.14.0-py3-none-any.whl", hash = "sha256:345ab6784775a55bd372e7bfd3642b72599156cf7d44842658380660ebc0f1bf"},
+    {file = "pyaud_plugins-0.14.0.tar.gz", hash = "sha256:0713691c0b16464fa4813c90ec5fbf96a50a38c3b3910a1b172806e66c44a2d7"},
 ]
 
 [package.dependencies]
@@ -1599,7 +1599,7 @@ codecov = ">=2.1.12,<3.0.0"
 constcheck = ">=0,<1"
 coverage = ">=6.2,<8.0"
 docformatter = ">=1.4,<2.0"
-docsig = ">=0,<1"
+docsig = ">=0.34.0"
 environs = ">=9.4.0,<10.0.0"
 flynt = ">=0.75,<0.77"
 gitpython = ">=3.1.30,<4.0.0"
@@ -2781,4 +2781,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "239680d0b0b7fbfe8c6fa9662e30c06d041baca25023b058ffb5dbdfcda18892"
+content-hash = "25139fb84565015fb3f0c63651b5a32d03ed21211a584b14fbb001e0c5a001eb"
