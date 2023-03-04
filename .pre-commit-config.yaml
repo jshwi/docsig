@@ -80,6 +80,7 @@ repos:
         language: system
         entry: poetry run pyaud toc --fix
         pass_filenames: false
+      # check imports against dependencies
       - id: deptry
         name: deptry
         description: |
@@ -89,11 +90,13 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+      # check tests/TESTS.md is up-to-date
       - id: about-tests
         name: about tests
         language: system
         entry: poetry run pyaud about-tests
         pass_filenames: false
+      # check .github/COMMIT_POLICY.md is up-to-date
       - id: commit-policy
         name: commit policy
         language: system
