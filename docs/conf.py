@@ -73,6 +73,7 @@ html_sidebars = {"**": ["globaltoc.html", "searchbox.html"]}
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ["_static"]
 
+# material theme options
 html_theme_options = {
     "icon": {
         "repo": "fontawesome/brands/github",
@@ -86,24 +87,55 @@ html_theme_options = {
     "globaltoc_collapse": True,
     "features": [
         "navigation.expand",
+        # "navigation.tabs",
+        # "toc.integrate",
         "navigation.sections",
+        # "navigation.instant",
+        # "header.autohide",
         "navigation.top",
+        # "navigation.tracking",
+        # "search.highlight",
         "search.share",
         "toc.follow",
         "toc.sticky",
         "content.tabs.link",
         "announce.dismiss",
     ],
-    "palette": {
-        "scheme": "slate",
-        "primary": "deep-orange",
-        "accent": "lime",
-        "toggle": {
-            "icon": "material/lightbulb",
-            "name": "Switch to light mode",
-        },
-    },
+    "palette": [
+        # {
+        #     "media": "(prefers-color-scheme: light)",
+        #     "scheme": "default",
+        #     "primary": "light-green",
+        #     "accent": "light-blue",
+        #     "toggle": {
+        #         "icon": "material/lightbulb-outline",
+        #         "name": "Switch to dark mode",
+        #     },
+        # },
+        {
+            # "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "deep-orange",
+            "accent": "lime",
+            # "toggle": {
+            #     "icon": "material/lightbulb",
+            #     "name": "Switch to light mode",
+            # },
+        }
+    ],
     "version_dropdown": True,
+    # "version_info": [
+    #     {
+    #         "version": "docsig.readthedocs.io",
+    #         "title": "ReadTheDocs",
+    #         "aliases": [],
+    #     },
+    #     {
+    #         "version": "https://jshwi.github.io/docsig",
+    #         "title": "Github Pages",
+    #         "aliases": [],
+    #     },
+    # ],
     "toc_title_is_page_title": True,
     "social": [
         {
