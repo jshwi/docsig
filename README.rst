@@ -43,8 +43,8 @@ docsig
     :target: https://snyk.io/test/github/jshwi/docsig/badge.svg
     :alt: Known Vulnerabilities
 .. image:: https://snyk.io/advisor/python/docsig/badge.svg
-  :target: https://snyk.io/advisor/python/docsig
-  :alt: docsig
+    :target: https://snyk.io/advisor/python/docsig
+    :alt: docsig
 
 Check signature params for proper documentation
 -----------------------------------------------
