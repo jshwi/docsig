@@ -10,6 +10,7 @@ ci:
     - tests
     - toc
     - about-tests
+    - commit-policy
 default_language_version:
   python: python3.8
 default_stages:
@@ -24,6 +25,7 @@ exclude: |
     | \.idea\/.*
     | docs\/conf\.py
     | tests\/TESTS\.md
+    | \.github\/COMMIT_POLICY\.md
   )$
 repos:
   - repo: local
@@ -93,6 +95,12 @@ repos:
         name: about tests
         language: system
         entry: poetry run pyaud about-tests
+        pass_filenames: false
+      # check .github/COMMIT_POLICY.md is up-to-date
+      - id: commit-policy
+        name: commit policy
+        language: system
+        entry: poetry run pyaud commit-policy
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
