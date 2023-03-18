@@ -107,6 +107,7 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud]
 audit = [
+  "about-tests",
   "const",
   "docs",
   "files",
