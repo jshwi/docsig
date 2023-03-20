@@ -79,7 +79,7 @@ version = "0.34.0"
 
 [tool.poetry.dependencies]
 Pygments = "^2.13.0"
-Sphinx = "^4.3.2"
+Sphinx = ">=4.3.2,<7.0.0"
 arcon = "^0"
 astroid = "^2.11.6"
 object-colors = "^2.1.0"
