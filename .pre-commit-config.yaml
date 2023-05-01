@@ -143,13 +143,13 @@ repos:
           - "--line-length=79"
           - "--transform-concats"
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v3.0.0-alpha.6"
+    rev: "v3.0.0-alpha.9-for-vscode"
     hooks:
       - id: prettier
         args:
           - "--write"
   - repo: https://github.com/PyCQA/docformatter
-    rev: "v1.5.1"
+    rev: "v1.6.4"
     hooks:
       - id: docformatter
         args:
@@ -187,7 +187,7 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.3.1"
+    rev: "v3.3.2"
     hooks:
       - id: pyupgrade
         args:
@@ -200,7 +200,7 @@ repos:
         additional_dependencies:
           - flake8-bugbear==22.12.6
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: "v1.30.0"
+    rev: "v1.31.0"
     hooks:
       - id: yamllint
         args:
