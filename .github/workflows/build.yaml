@@ -19,6 +19,11 @@ jobs:
         os:
           - ubuntu-latest
     steps:
+      - name: Documentation
+        id: Documentation
+        uses: readthedocs/actions/preview@v1
+        with:
+          project-slug: docsig
       - name: Checkout build
         id: checkout-build
         uses: actions/checkout@v3
