@@ -149,7 +149,7 @@ repos:
         args:
           - "--write"
   - repo: https://github.com/PyCQA/docformatter
-    rev: "v1.5.1"
+    rev: "v1.7.1"
     hooks:
       - id: docformatter
         args:
