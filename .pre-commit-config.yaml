@@ -155,6 +155,7 @@ repos:
         args:
           - "--recursive"
           - "--wrap-summaries=72"
+          - "--in-place"
   - repo: https://github.com/pappasam/toml-sort
     rev: "v0.23.1"
     hooks:
