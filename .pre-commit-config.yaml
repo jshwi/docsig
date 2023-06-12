@@ -23,9 +23,9 @@ exclude: |
     | \.bumpversion\.cfg
     | whitelist\.py
     | \.idea\/.*
-    | docs\/conf\.py
     | tests\/TESTS\.md
     | \.github\/COMMIT_POLICY\.md
+    | docs\/conf\.py
   )$
 repos:
   - repo: local
@@ -86,7 +86,7 @@ repos:
         description: |
           deptry is a command line tool to check for issues with dependencies
           in a Python project, such as obsolete or missing dependencies.
-        entry: deptry .
+        entry: poetry run deptry .
         language: system
         always_run: true
         pass_filenames: false
