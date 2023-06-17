@@ -4,6 +4,7 @@ policies:
       header:
         length: 72
         imperative: true
+        case: lower
         invalidLastCharacters: .
       dco: true
       gpg:

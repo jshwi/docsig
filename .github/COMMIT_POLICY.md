@@ -9,6 +9,8 @@ Length: 72
 
 Imperative: True
 
+Case: lower
+
 Invalid last characters: .
 
 ## Dco
