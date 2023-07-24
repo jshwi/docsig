@@ -92,7 +92,7 @@ pytest-randomly = "^3.13.0"
 pytest-sugar = "^0.9.6"
 pytest-xdist = "^3.3.1"
 restview = "^3.0.0"
-sphinx-toolbox = "^3.4.0"
+sphinx-toolbox = "^3.5.0"
 templatest = "^0.8.0"
 
 [tool.poetry.scripts]
