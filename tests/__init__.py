@@ -6642,3 +6642,40 @@ class Klass:
     @property
     def expected(self) -> str:
         return messages.H103
+
+
+@_templates.register
+class _PIssue114PosOnlyArgsWArgsWKwargsN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def starmap(
+    fun: Callable[..., Any],
+    iterable: Sequence[Sequence[Any]],
+    /,
+    *args: Any,
+    timeout: float = 0,
+    show_progress: bool | None = None,
+    **kwargs: Any,
+) -> list[Job]:
+    \"\"\"Submits many jobs to the queue.
+
+    One for each sequence in the iterable.
+    Waits for all to finish, then returns the results.
+
+    Args:
+        fun: ...
+        iterable: ...
+        *args: static arguments passed to the function.
+        timeout: ...
+        show_progress: ...
+        **kwargs: static keyword-arguments passed to the function.
+
+    Returns:
+        ...
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
