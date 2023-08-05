@@ -181,13 +181,17 @@ class _Signature(_DocSig):
         if ismethod and not isstaticmethod and arguments.args:
             arguments.args.pop(0)
 
-        self._args.extend(Param(name=a.name) for a in arguments.args)
-        if arguments.vararg is not None:
-            self._args.append(Param(ARG, name=arguments.vararg))
-
-        self._args.extend(Param(name=k.name) for k in arguments.kwonlyargs)
-        if arguments.kwarg is not None:
-            self._args.append(Param(KEY, name=arguments.kwarg))
+        self._args.extend(
+            a if isinstance(a, Param) else Param(name=a.name)
+            for a in [
+                *arguments.posonlyargs,
+                *arguments.args,
+                Param(ARG, name=arguments.vararg),
+                *arguments.kwonlyargs,
+                Param(KEY, name=arguments.kwarg),
+            ]
+            if a is not None and a.name
+        )
 
         self._rettype = self._get_rettype(returns)
         self._returns = str(self._rettype) != "None"
