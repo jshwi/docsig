@@ -178,12 +178,8 @@ class _Signature(_DocSig):
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__(ignore_args, ignore_kwargs)
-
-        if ismethod and not isstaticmethod:
-            if arguments.posonlyargs:
-                arguments.posonlyargs.pop(0)
-            elif arguments.args:
-                arguments.args.pop(0)
+        if ismethod and not isstaticmethod and arguments.args:
+            arguments.args.pop(0)
 
         self._args.extend(
             a if isinstance(a, Param) else Param(name=a.name)
