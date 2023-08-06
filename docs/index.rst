@@ -6,6 +6,5 @@ docsig docs
    :name: mastertoc
 
    docsig
-   readme
 
 This documentation was last updated on |today|
