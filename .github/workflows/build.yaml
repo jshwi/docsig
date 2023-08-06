@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - master
+permissions:
+  contents: write
 jobs:
   build:
     name: ${{ matrix.os }}-python${{ matrix.python-version }}
@@ -41,3 +43,8 @@ jobs:
       - name: Upload coverage
         id: upload-coverage
         uses: codecov/codecov-action@v3
+      - name: Deploy docs
+        id: deploy-docs
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/_build/html
