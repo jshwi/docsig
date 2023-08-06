@@ -1,5 +1,9 @@
-docsig
-======
+.. image:: docs/static/docsig.svg
+   :width: 50%
+   :align: center
+
+|
+
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT
     :alt: License
