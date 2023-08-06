@@ -1,5 +1,12 @@
-docsig
-======
+|
+
+.. image:: https://raw.githubusercontent.com/jshwi/docsig/master/docs/static/docsig.svg
+   :alt: docsig logo
+   :width: 50%
+   :align: center
+
+|
+
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT
     :alt: License
