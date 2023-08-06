@@ -17,6 +17,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 ## Table of Contents
 
+- [Code of Conduct](#code-of-conduct)
 - [I Have a Question](#i-have-a-question)
 - [Reporting Bugs](#reporting-bugs)
 - [Suggesting Enhancements](#suggesting-enhancements)
@@ -24,6 +25,13 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 - [Testing](#testing)
 - [Styleguides](#styleguides)
 - [Commit Messages](#commit-messages)
+
+## Code of Conduct
+
+This project and everyone participating in it is governed by the
+[docsig Code of Conduct](https://github.com/jshwi/docsig/blob/master/CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behaviour
+to <stephen@jshwisolutions.com>.
 
 ## I Have a Question
 
