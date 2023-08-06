@@ -40,6 +40,7 @@ extensions = [
     "sphinxcontrib.fulltoc",
     "sphinxcontrib.programoutput",
     "sphinx_toolbox.more_autodoc.autonamedtuple",
+    "sphinx_immaterial",
 ]
 
 
@@ -59,15 +60,53 @@ pygments_style = "monokai"
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "graphite"
+html_theme = "sphinx_immaterial"
 html_domain_indices = True
 html_use_index = True
 html_show_sourcelink = True
 html_show_sphinx = False
-html_theme_path = ["_themes"]
 html_sidebars = {"**": ["globaltoc.html", "searchbox.html"]}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ["_static"]
+
+# material theme options
+html_theme_options = {
+    "icon": {
+        "repo": "fontawesome/brands/github",
+        "edit": "material/file-edit-outline",
+    },
+    "site_url": "https://docsig.readthedocs.io/",
+    "repo_url": "https://github.com/jshwi/docsig/",
+    "repo_name": "docsig",
+    "edit_uri": "blob/master/docs",
+    "globaltoc_collapse": True,
+    "features": [
+        "navigation.expand",
+        "navigation.sections",
+        "navigation.top",
+        "search.share",
+        "toc.follow",
+        "toc.sticky",
+        "content.tabs.link",
+        "announce.dismiss",
+    ],
+    "palette": [
+        {"scheme": "slate", "primary": "deep-orange", "accent": "lime"}
+    ],
+    "version_dropdown": True,
+    "toc_title_is_page_title": True,
+    "social": [
+        {
+            "icon": "fontawesome/brands/github",
+            "link": "https://github.com/jshwi/docsig/",
+            "name": "Source on github.com",
+        },
+        {
+            "icon": "fontawesome/brands/python",
+            "link": "https://pypi.org/project/docsig/",
+        },
+    ],
+}
