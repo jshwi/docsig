@@ -8,50 +8,50 @@
 |
 
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
-    :target: https://opensource.org/licenses/MIT
-    :alt: License
+   :target: https://opensource.org/licenses/MIT
+   :alt: License
 .. image:: https://img.shields.io/pypi/v/docsig
-    :target: https://pypi.org/project/docsig/
-    :alt: PyPI
+   :target: https://pypi.org/project/docsig/
+   :alt: PyPI
 .. image:: https://github.com/jshwi/docsig/actions/workflows/build.yaml/badge.svg
-    :target: https://github.com/jshwi/docsig/actions/workflows/build.yaml
-    :alt: CI
+   :target: https://github.com/jshwi/docsig/actions/workflows/build.yaml
+   :alt: CI
 .. image:: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml/badge.svg
-    :target: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml
-    :alt: CodeQL
+   :target: https://github.com/jshwi/docsig/actions/workflows/codeql-analysis.yml
+   :alt: CodeQL
 .. image:: https://results.pre-commit.ci/badge/github/jshwi/docsig/master.svg
    :target: https://results.pre-commit.ci/latest/github/jshwi/docsig/master
    :alt: pre-commit.ci status
 .. image:: https://codecov.io/gh/jshwi/docsig/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/jshwi/docsig
-    :alt: codecov.io
+   :target: https://codecov.io/gh/jshwi/docsig
+   :alt: codecov.io
 .. image:: https://readthedocs.org/projects/docsig/badge/?version=latest
-    :target: https://docsig.readthedocs.io/en/latest/?badge=latest
-    :alt: readthedocs.org
+   :target: https://docsig.readthedocs.io/en/latest/?badge=latest
+   :alt: readthedocs.org
 .. image:: https://img.shields.io/badge/python-3.8-blue.svg
-    :target: https://www.python.org/downloads/release/python-380
-    :alt: python3.8
+   :target: https://www.python.org/downloads/release/python-380
+   :alt: python3.8
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
-    :alt: Black
+   :target: https://github.com/psf/black
+   :alt: Black
 .. image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
-    :target: https://pycqa.github.io/isort/
-    :alt: isort
+   :target: https://pycqa.github.io/isort/
+   :alt: isort
 .. image:: https://img.shields.io/badge/%20formatter-docformatter-fedcba.svg
-    :target: https://github.com/PyCQA/docformatter
-    :alt: docformatter
+   :target: https://github.com/PyCQA/docformatter
+   :alt: docformatter
 .. image:: https://img.shields.io/badge/linting-pylint-yellowgreen
-    :target: https://github.com/PyCQA/pylint
-    :alt: pylint
+   :target: https://github.com/PyCQA/pylint
+   :alt: pylint
 .. image:: https://img.shields.io/badge/security-bandit-yellow.svg
-    :target: https://github.com/PyCQA/bandit
-    :alt: Security Status
+   :target: https://github.com/PyCQA/bandit
+   :alt: Security Status
 .. image:: https://snyk.io/test/github/jshwi/docsig/badge.svg
-    :target: https://snyk.io/test/github/jshwi/docsig/badge.svg
-    :alt: Known Vulnerabilities
+   :target: https://snyk.io/test/github/jshwi/docsig/badge.svg
+   :alt: Known Vulnerabilities
 .. image:: https://snyk.io/advisor/python/docsig/badge.svg
-    :target: https://snyk.io/advisor/python/docsig
-    :alt: docsig
+   :target: https://snyk.io/advisor/python/docsig
+   :alt: docsig
 
 Check signature params for proper documentation
 -----------------------------------------------
