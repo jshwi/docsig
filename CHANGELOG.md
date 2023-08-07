@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.34.1...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- recognize positional-only arguments with methods
 
 [0.34.1](https://github.com/jshwi/docsig/releases/tag/v0.34.1) - 2023-08-05
 ------------------------------------------------------------------------
