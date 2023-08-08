@@ -6679,3 +6679,42 @@ def starmap(
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _PIssue114PosOnlyArgsSelfWArgsWKwargsN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    def starmap(
+        self,
+        fun: Callable[..., Any],
+        iterable: Sequence[Sequence[Any]],
+        /,
+        *args: Any,
+        timeout: float = 0,
+        show_progress: bool | None = None,
+        **kwargs: Any,
+    ) -> list[Job]:
+        \"\"\"Submits many jobs to the queue.
+
+        One for each sequence in the iterable.
+        Waits for all to finish, then returns the results.
+
+        Args:
+            fun: ...
+            iterable: ...
+            *args: static arguments passed to the function.
+            timeout: ...
+            show_progress: ...
+            **kwargs: static keyword-arguments passed to the function.
+
+        Returns:
+            ...
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
