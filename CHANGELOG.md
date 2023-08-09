@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.34.2...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- remove default value for positional arguments
 
 [0.34.2](https://github.com/jshwi/docsig/releases/tag/v0.34.2) - 2023-08-08
 ------------------------------------------------------------------------

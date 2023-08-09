@@ -104,7 +104,7 @@ def test_lineno(
     init_file(
         templates.registered.getbyname("m-fail-s").template  # type: ignore
     )
-    main()
+    main(".")
     std = capsys.readouterr()
     assert "module/file.py:2" in std.out
     assert "module/file.py:11" in std.out

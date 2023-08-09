@@ -78,7 +78,7 @@ def test_exit_status(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(*CHECK_ARGS) == int(name.startswith(FAIL))
+    assert main(".", *CHECK_ARGS) == int(name.startswith(FAIL))
 
 
 @pytest.mark.parametrize(
@@ -121,7 +121,7 @@ def test_stdout(
     :param expected: Expected output.
     """
     init_file(template)
-    main(*CHECK_ARGS)
+    main(".", *CHECK_ARGS)
     std = capsys.readouterr()
     assert expected
     assert expected in std.out
@@ -159,7 +159,7 @@ def test_error_codes(
     """
     init_file(template)
     messages = [i for i in errors if getattr(docsig.messages, i) != expected]
-    main()
+    main(".")
     std = capsys.readouterr()
     assert std.out.count(expected) == 1
     assert not any(getattr(docsig.messages, i) in std.out for i in messages)
@@ -193,7 +193,7 @@ def test_multiple(
     :param expected: Expected result.
     """
     init_file(templates.registered.getgroup(MULTI)[0].template)
-    main()
+    main(".")
     std = capsys.readouterr()
     assert expected in std.out
 
@@ -232,7 +232,7 @@ def test_disable_rule(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(long.disable, name.replace("-", "").upper()[1:5]) == 0
+    assert main(".", long.disable, name.replace("-", "").upper()[1:5]) == 0
 
 
 @pytest.mark.parametrize(
@@ -257,7 +257,7 @@ def test_summary(
     :param template: Contents to write to file.
     """
     init_file(template.template)
-    main(*CHECK_ARGS, long.summary)
+    main(".", *CHECK_ARGS, long.summary)
     std = capsys.readouterr()
     assert CHECK not in std.out
     assert CROSS not in std.out
@@ -285,7 +285,7 @@ def test_no_stdout(
     :param template: String data.
     """
     init_file(template.template)
-    main(*CHECK_ARGS)
+    main(".", *CHECK_ARGS)
     std = capsys.readouterr()
     assert not std.out
 
@@ -338,7 +338,7 @@ def test_ignore_no_params(
         "Returns:",
     )
     init_file(template)
-    returncode = main(*CHECK_ARGS, long.ignore_no_params)
+    returncode = main(".", *CHECK_ARGS, long.ignore_no_params)
     std = capsys.readouterr()
 
     # expected result one of the messages indicating missing params
@@ -378,7 +378,7 @@ def test_no_check_property_returns_flag(
     :param template: Contents to write to file.
     """
     init_file(template.template)
-    main()
+    main(".")
     std = capsys.readouterr()
     assert docsig.messages.E108 in std.out
     assert docsig.messages.H101 in std.out
@@ -489,7 +489,7 @@ def test_no_flag(
     :param template: Contents to write to file.
     """
     init_file(template.template)
-    assert main() == 0
+    assert main(".") == 0
 
 
 @pytest.mark.parametrize(
@@ -518,7 +518,7 @@ def test_single_flag(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(f"--check-{name.split('-')[1]}") == 1
+    assert main(".", f"--check-{name.split('-')[1]}") == 1
 
 
 @pytest.mark.parametrize(
@@ -553,7 +553,7 @@ def test_string_argument(
     :param template: String data.
     :param expected: Expected output.
     """
-    assert main(*CHECK_ARGS, long.string, template) == int(
+    assert main(".", *CHECK_ARGS, long.string, template) == int(
         name.startswith(FAIL)
     )
     std = capsys.readouterr()

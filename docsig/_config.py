@@ -31,11 +31,10 @@ class Parser(_ArgumentParser):
     def _add_arguments(self) -> None:
         self.add_argument(
             "path",
-            nargs="*",
+            nargs="+",
             action="store",
             type=_Path,
-            default=[_Path(".")],
-            help="directories or files to check (default: .)",
+            help="directories or files to check",
         )
         self.add_argument(
             "-c",
