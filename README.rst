@@ -79,12 +79,12 @@ Commandline
 
     usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n] [-S] [-s STR]
                              [-d LIST] [-t LIST]
-                             [path [path ...]]
+                             path [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                          directories or files to check (default: .)
+      path                          directories or files to check
 
     optional arguments:
       -h, --help                    show this help message and exit
