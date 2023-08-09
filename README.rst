@@ -79,12 +79,12 @@ Commandline
 
     usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n] [-S] [-s STR]
                              [-d LIST] [-t LIST]
-                             [path [path ...]]
+                             path [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                          directories or files to check (default: .)
+      path                          directories or files to check
 
     optional arguments:
       -h, --help                    show this help message and exit
@@ -136,9 +136,7 @@ API
 
     >>> string = """
     ... def function(param1, param2, param3) -> None:
-    ...     '''Summary for passing docstring...
-    ...
-    ...     Explanation for passing docstring...
+    ...     '''
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
@@ -152,9 +150,7 @@ API
 
     >>> string = """
     ... def function(param1, param2) -> None:
-    ...     '''Summary for failing docstring...
-    ...
-    ...     Explanation for failing docstring...
+    ...     '''
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
@@ -178,7 +174,7 @@ API
 A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
 
 Classes
-#######
+*******
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone
 
 This check will check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
@@ -187,9 +183,7 @@ This check will check documentation of ``__init__`` under the class docstring, a
 
     >>> string = """
     ... class Klass:
-    ...     '''Summary for failing docstring...
-    ...
-    ...     Explanation for failing docstring...
+    ...     '''
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
@@ -199,8 +193,8 @@ This check will check documentation of ``__init__`` under the class docstring, a
     ...         pass
     ... """
     >>> docsig(string=string, check_class=True)
-    11 in Klass
-    -----------
+    9 in Klass
+    ----------
     class Klass:
         """
         :param param1: ✓
