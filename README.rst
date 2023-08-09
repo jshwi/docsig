@@ -79,12 +79,12 @@ Commandline
 
     usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n] [-S] [-s STR]
                              [-d LIST] [-t LIST]
-                             [path [path ...]]
+                             path [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                          directories or files to check (default: .)
+      path                          directories or files to check
 
     optional arguments:
       -h, --help                    show this help message and exit
@@ -178,7 +178,7 @@ API
 A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
 
 Classes
-#######
+*******
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone
 
 This check will check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
