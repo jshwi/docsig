@@ -11,6 +11,7 @@ ci:
     - toc
     - about-tests
     - commit-policy
+    - readme-help
 default_language_version:
   python: python3.8
 default_stages:
@@ -101,6 +102,12 @@ repos:
         name: commit policy
         language: system
         entry: poetry run pyaud commit-policy
+        pass_filenames: false
+      # test commandline help is up-to-date
+      - id: readme-help
+        name: readme help
+        language: system
+        entry: poetry run pyaud readme-help
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"

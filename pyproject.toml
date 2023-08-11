@@ -112,6 +112,7 @@ audit = [
   "imports",
   "lint",
   "params",
+  "readme-help",
   "test",
   "typecheck",
   "unused"
