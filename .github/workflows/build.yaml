@@ -40,4 +40,4 @@ jobs:
         run: poetry run pyaud audit
       - name: Upload coverage
         id: upload-coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
