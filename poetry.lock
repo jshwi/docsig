@@ -1038,6 +1038,30 @@ files = [
 gitpython = ">=3.1.31,<4.0.0"
 
 [[package]]
+name = "markdown-it-py"
+version = "3.0.0"
+description = "Python port of markdown-it. Markdown parsing, done right!"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "markdown-it-py-3.0.0.tar.gz", hash = "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb"},
+    {file = "markdown_it_py-3.0.0-py3-none-any.whl", hash = "sha256:355216845c60bd96232cd8d8c40e8f9765cc86f46880e43a8fd22dc1a1a8cab1"},
+]
+
+[package.dependencies]
+mdurl = ">=0.1,<1.0"
+
+[package.extras]
+benchmarking = ["psutil", "pytest", "pytest-benchmark"]
+code-style = ["pre-commit (>=3.0,<4.0)"]
+compare = ["commonmark (>=0.9,<1.0)", "markdown (>=3.4,<4.0)", "mistletoe (>=1.0,<2.0)", "mistune (>=2.0,<3.0)", "panflute (>=2.3,<3.0)"]
+linkify = ["linkify-it-py (>=1,<3)"]
+plugins = ["mdit-py-plugins"]
+profiling = ["gprof2dot"]
+rtd = ["jupyter_sphinx", "mdit-py-plugins", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
+testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
+
+[[package]]
 name = "markupsafe"
 version = "2.1.3"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -1149,6 +1173,17 @@ python-versions = ">=3.6"
 files = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
+]
+
+[[package]]
+name = "mdurl"
+version = "0.1.2"
+description = "Markdown URL utilities"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
+    {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
 ]
 
 [[package]]
@@ -1485,13 +1520,13 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyaud"
-version = "6.2.2"
+version = "7.1.0"
 description = "Framework for writing Python package audits"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud-6.2.2-py3-none-any.whl", hash = "sha256:df7db9ae4d7e40a18be804037329fe4a154771fc14285473e272f5f4a34da932"},
-    {file = "pyaud-6.2.2.tar.gz", hash = "sha256:dec60a822cc90098543b3745cabd8d5f3b83677e7bfb6853ddd28b82d152af36"},
+    {file = "pyaud-7.1.0-py3-none-any.whl", hash = "sha256:4b1e2e7c03e3bd8fe5147d550c2ee21dab958a9fe28608887baf13ff33dbbb41"},
+    {file = "pyaud-7.1.0.tar.gz", hash = "sha256:6dccfb47a18f2582c047b40323f2ecee3f14c4a1bf39c710b37da21f48518132"},
 ]
 
 [package.dependencies]
@@ -1500,17 +1535,17 @@ gitpython = ">=3.1.30,<4.0.0"
 lsfiles = ">=0.5"
 object-colors = ">=2.0.1,<3.0.0"
 pyaud-plugins = ">=0.14.0"
-spall = ">=0,<1"
+rich = ">=13.5.2,<14.0.0"
 
 [[package]]
 name = "pyaud-plugins"
-version = "0.15.3"
+version = "0.17.1"
 description = "Plugin package for Pyaud"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "pyaud_plugins-0.15.3-py3-none-any.whl", hash = "sha256:053067aa6017a3bb0e9df0e43384ebb9bae0904b25fe543c6ed27f121377c077"},
-    {file = "pyaud_plugins-0.15.3.tar.gz", hash = "sha256:7b51ee18e2a5c2373dd1ee8074abd3d489a7d07b6285e5876152cc2017397cfa"},
+    {file = "pyaud_plugins-0.17.1-py3-none-any.whl", hash = "sha256:022dafadd68390de707d37dfb7b1b6fc8ec891d6948a3d2469df9eaccedebf9b"},
+    {file = "pyaud_plugins-0.17.1.tar.gz", hash = "sha256:fc1cb9f3943aed81366a037134d6b71886a147932966313462af789e3effd15e"},
 ]
 
 [package.dependencies]
@@ -1523,13 +1558,14 @@ environs = ">=9.4.0,<10.0.0"
 flynt = ">=0.75,<1.1"
 gitpython = ">=3.1.30,<4.0.0"
 isort = ">=5.10.1,<6.0.0"
-mypy = ">=0.930,<1.5"
-object-colors = ">=2.0.1,<3.0.0"
-pyaud = ">=5.0.1,<7.0.0"
+mypy = ">=0.930,<1.6"
+pyaud = ">=6.2.2,<8.0.0"
+pygments = ">=2.16.1,<3.0.0"
 pylint = ">=2.12.2,<3.0.0"
 pytest = ">=7.2.0,<8.0.0"
 pytest-cov = ">=3,<5"
 pyyaml = ">=6.0,<7.0"
+rich = ">=13.5.2,<14.0.0"
 setuptools = ">=67.2,<69.0"
 Sphinx = ">=4.3.2,<7.0.0"
 sphinx-markdown-builder = ">=0.5.5,<0.6.0"
@@ -1983,6 +2019,25 @@ pygments = "*"
 readme-renderer = "<37"
 
 [[package]]
+name = "rich"
+version = "13.5.2"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+optional = false
+python-versions = ">=3.7.0"
+files = [
+    {file = "rich-13.5.2-py3-none-any.whl", hash = "sha256:146a90b3b6b47cac4a73c12866a499e9817426423f57c5a66949c086191a8808"},
+    {file = "rich-13.5.2.tar.gz", hash = "sha256:fb9d6c0a0f643c99eed3875b5377a184132ba9be4d61516a55273d3554d75a39"},
+]
+
+[package.dependencies]
+markdown-it-py = ">=2.2.0"
+pygments = ">=2.13.0,<3.0.0"
+typing-extensions = {version = ">=4.0.0,<5.0", markers = "python_version < \"3.9\""}
+
+[package.extras]
+jupyter = ["ipywidgets (>=7.5.1,<9)"]
+
+[[package]]
 name = "ruamel-yaml"
 version = "0.17.32"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
@@ -2104,17 +2159,6 @@ python-versions = ">=3.7"
 files = [
     {file = "soupsieve-2.4.1-py3-none-any.whl", hash = "sha256:1c1bfee6819544a3447586c889157365a27e10d88cde3ad3da0cf0ddf646feb8"},
     {file = "soupsieve-2.4.1.tar.gz", hash = "sha256:89d12b2d5dfcd2c9e8c22326da9d9aa9cb3dfab0a83a024f05704076ee8d35ea"},
-]
-
-[[package]]
-name = "spall"
-version = "0.6.0"
-description = "Object-oriented commandline"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "spall-0.6.0-py3-none-any.whl", hash = "sha256:e35f418be5398490bc624f0e1defa627d0f295c23b651e8be6850b318be1cb13"},
-    {file = "spall-0.6.0.tar.gz", hash = "sha256:64cd0fceab9fac1fdedd63a18e765ba0433c84f8e8999ef5c249821ccb636c8a"},
 ]
 
 [[package]]
@@ -2757,4 +2801,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "e4cfce2b8e900b371c03f021fa1e45847fae62dca51904cead35e7a59510cb84"
+content-hash = "07e63ab027c07cbfef3d13663222f390daac27d9d8054fe15cf2fecb1d353184"
