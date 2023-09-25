@@ -1353,13 +1353,13 @@ setuptools = "*"
 
 [[package]]
 name = "object-colors"
-version = "2.2.0"
+version = "2.3.1"
 description = "Object-oriented library for stylizing terminal output"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "object-colors-2.2.0.tar.gz", hash = "sha256:2fb3972d45a93b9bc8e9cd8d0717459b83316eed3fa13ad2cde09fdb95c94724"},
-    {file = "object_colors-2.2.0-py3-none-any.whl", hash = "sha256:b0f883b3b5013f7834800a320d062c18cda54064b2e2f2968300cf0dae70c2d0"},
+    {file = "object_colors-2.3.1-py3-none-any.whl", hash = "sha256:be4484add2dcc380a3bef6f19684a96b2a0a578285453fa2a44b9e37949d4f84"},
+    {file = "object_colors-2.3.1.tar.gz", hash = "sha256:05edbd30bb3adc8257c804162df0acb05191d3237786e528801f4aba048205b9"},
 ]
 
 [package.dependencies]
