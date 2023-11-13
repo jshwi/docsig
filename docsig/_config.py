@@ -10,8 +10,6 @@ from arcon import ArgumentParser as _ArgumentParser
 from ._display import color as _color
 from ._version import __version__
 
-NAME = __name__.split(".", maxsplit=1)[0]
-
 
 class Parser(_ArgumentParser):
     """Parse commandline arguments."""
@@ -19,7 +17,7 @@ class Parser(_ArgumentParser):
     def __init__(self) -> None:
         super().__init__(
             version=__version__,
-            prog=_color.cyan.get(NAME),
+            prog=_color.cyan.get(__package__),
             formatter_class=lambda prog: _HelpFormatter(
                 prog, max_help_position=45
             ),
