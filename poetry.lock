@@ -2474,14 +2474,17 @@ widechars = ["wcwidth"]
 
 [[package]]
 name = "templatest"
-version = "0.8.0"
+version = "0.10.1"
 description = "Templates for testing with strings"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "templatest-0.8.0-py3-none-any.whl", hash = "sha256:aa9c3b918915f57f1751bdf961b06577630e2c741b8f207ff5f985def64750b0"},
-    {file = "templatest-0.8.0.tar.gz", hash = "sha256:c808360bf0791cc5629f6baf8002f48159c11bd18f6b53096cc089ceada91dd2"},
+    {file = "templatest-0.10.1-py3-none-any.whl", hash = "sha256:cee4d29d1939ef735a0c9f2c64778f8db6c8559a04096ee435684172e04f48de"},
+    {file = "templatest-0.10.1.tar.gz", hash = "sha256:bbc61ca7fc77127f9f7761af7a9db08ed4b4963887b41a01fe7715543e02991a"},
 ]
+
+[package.dependencies]
+typing-extensions = ">=4.8.0,<5.0.0"
 
 [[package]]
 name = "termcolor"
@@ -2779,4 +2782,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "bd54263f256f7bd1c8e773cb03b7c4163abb06b406c3a4b19912b64b2f82a035"
+content-hash = "76138c6a9ea717036f969a53daed986d24790f84c4bef3c8187f04b6708408df"
