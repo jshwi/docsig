@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Checkout build
         id: checkout-build
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Poetry
         id: install-poetry
         run: pipx install poetry
