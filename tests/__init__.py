@@ -641,6 +641,8 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
+module/file.py:2
+----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param2: {CROSS}
@@ -650,7 +652,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E101}
 
-
+module/file.py:11
+-----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -660,7 +663,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {messages.E102}
 
-
+module/file.py:19
+-----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -669,6 +673,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {messages.E103}
+
 """
 
 
@@ -2250,6 +2255,8 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
+module/file.py:2
+----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param2: {CROSS}
@@ -2259,7 +2266,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E101}
 
-
+module/file.py:16
+-----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -2269,7 +2277,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {messages.E102}
 
-
+module/file.py:29
+-----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -2278,6 +2287,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {messages.E103}
+
 """
 
 
@@ -4016,6 +4026,8 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
+module/file.py:2
+----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param2: {CROSS}
@@ -4025,7 +4037,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E101}
 
-
+module/file.py:16
+-----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -4035,7 +4048,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {messages.E102}
 
-
+module/file.py:29
+-----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -4044,6 +4058,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {messages.E103}
+
 """
 
 
@@ -5709,6 +5724,8 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
+module/file.py:2
+----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param2: {CROSS}
@@ -5718,7 +5735,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E101}
 
-
+module/file.py:12
+-----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -5728,7 +5746,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {messages.E102}
 
-
+module/file.py:21
+-----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
     :param param1: {CHECK}
@@ -5737,6 +5756,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {messages.E103}
+
 """
 
 

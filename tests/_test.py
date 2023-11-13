@@ -166,12 +166,12 @@ def test_error_codes(
 
 
 @pytest.mark.parametrize(
-    EXPECTED,
-    templates.registered.getgroup(MULTI)[0].expected.split("\n\n\n"),
+    ["_", TEMPLATE, EXPECTED],
+    templates.registered.getgroup(MULTI),
     ids=(
         c
         for c, _ in enumerate(
-            templates.registered.getgroup(MULTI)[0].expected.split("\n\n\n")
+            templates.registered.getgroup(MULTI)[0].expected.split("\n\n")
         )
     ),
 )
@@ -179,6 +179,8 @@ def test_multiple(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
+    _: str,
+    template: str,
     expected: str,
 ) -> None:
     """Test for correct output for modules with multiple functions.
@@ -190,12 +192,13 @@ def test_multiple(
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
+    :param template: Contents to write to file.
     :param expected: Expected result.
     """
-    init_file(templates.registered.getgroup(MULTI)[0].template)
+    init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert expected in std.out
+    assert std.out == expected
 
 
 @pytest.mark.parametrize(
