@@ -210,12 +210,6 @@ class Failures(_MutableSequence[Failure]):
 
 
 class _DisplaySequence(_t.Dict[str, _t.List[Failures]]):
-    """Sequence for collection of report info.
-
-    If an attempt is made to append a report to a list whose key does
-    not exist then the key and its list value will be added first.
-    """
-
     def __getitem__(self, key: str) -> list[Failures]:
         if key not in super().__iter__():
             super().__setitem__(key, [])

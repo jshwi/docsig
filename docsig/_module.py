@@ -48,12 +48,6 @@ class Parent(_MutableSequence[_Function]):
 
 
 class _Module(_MutableSequence[Parent]):
-    """Represents a module with top level functions and classes.
-
-    :param node: Module's abstract syntax tree.
-    :param path: Path for naming module and classes.
-    """
-
     def __init__(
         self,
         node: _ast.Module,
