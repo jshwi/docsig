@@ -50,14 +50,15 @@ class Parent(_MutableSequence[_Function]):
 class _Module(_MutableSequence[Parent]):
     def __init__(
         self,
-        node: _ast.Module,
+        string: str,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
-        self.append(Parent(node, path, ignore_args, ignore_kwargs))
-        for subnode in node.body:
+        ast = _ast.parse(string)
+        self.append(Parent(ast, path, ignore_args, ignore_kwargs))
+        for subnode in ast.body:
             if isinstance(subnode, _ast.ClassDef):
                 self.append(Parent(subnode, path, ignore_args, ignore_kwargs))
 
@@ -89,7 +90,7 @@ class Modules(_MutableSequence[_Module]):
         if string is not None:
             self.append(
                 _Module(
-                    _ast.parse(string),
+                    string,
                     ignore_args=ignore_args,
                     ignore_kwargs=ignore_kwargs,
                 )
@@ -102,7 +103,7 @@ class Modules(_MutableSequence[_Module]):
         if root.is_file() and root.name.endswith(".py"):
             self.append(
                 _Module(
-                    _ast.parse(root.read_text()),
+                    root.read_text(),
                     root,
                     self._ignore_args,
                     self._ignore_kwargs,
