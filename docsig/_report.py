@@ -11,6 +11,10 @@ from ._function import Param as _Param
 from ._objects import MutableSequence as _MutableSequence
 from ._utils import almost_equal as _almost_equal
 
+ERRORS = tuple(
+    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E")
+)
+
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
@@ -28,12 +32,8 @@ class _MessageSequence(_MutableSequence[str]):
         self._errors: list[str] = []
 
     def _resolve_targeted(self, targets: list[str]) -> None:
-        errors = [
-            i
-            for i in dir(_messages)
-            if not i.startswith("__") and i.startswith("E")
-        ]
         if targets:
+            errors = list(ERRORS)
             for target in targets:
                 errors.remove(target)
 
