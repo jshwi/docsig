@@ -32,9 +32,20 @@ class Parent(_MutableSequence[_Function]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
+        overloads = []
+        returns = None
         for subnode in node.body:
             if isinstance(subnode, _ast.FunctionDef):
-                self.append(_Function(subnode, ignore_args, ignore_kwargs))
+                func = _Function(subnode, ignore_args, ignore_kwargs)
+                if func.isoverloaded:
+                    overloads.append(func.name)
+                    returns = func.signature.rettype
+                else:
+                    if func.name in overloads:
+                        subnode.returns = returns
+                        func = _Function(subnode, ignore_kwargs, ignore_kwargs)
+
+                    self.append(func)
 
     @property
     def path(self) -> str:

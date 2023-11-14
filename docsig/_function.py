@@ -171,7 +171,7 @@ class _Signature(_DocSig):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         arguments: _ast.Arguments,
-        returns: _ast.Module,
+        returns: _ast.Module | str,
         ismethod: bool = False,
         isstaticmethod: bool = False,
         ignore_args: bool = False,
@@ -197,7 +197,9 @@ class _Signature(_DocSig):
             if a is not None and a.name
         )
 
-        self._rettype = self._get_rettype(returns)
+        self._rettype = (
+            returns if isinstance(returns, str) else self._get_rettype(returns)
+        )
         self._returns = str(self._rettype) != "None"
 
     def _get_rettype(self, returns: _ast.NodeNG | None) -> str | None:
@@ -314,6 +316,11 @@ class Function:
     def isproperty(self) -> bool:
         """Boolean value for whether function is a property."""
         return self.ismethod and self._decorated_with("property")
+
+    @property
+    def isoverloaded(self) -> bool:
+        """Boolean value for whether function is a property."""
+        return self._decorated_with("overload")
 
     @property
     def isinit(self) -> bool:
