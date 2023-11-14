@@ -29,6 +29,7 @@ def _run_check(  # pylint: disable=too-many-arguments
 ) -> _Failures:
     failures = _Failures()
     for func in parent:
+        disable_func = list({*disable, *func.disabled})
         if not (func.isoverridden and not check_overridden) and (
             not (func.isprotected and not check_protected)
             and not (func.isinit and not check_class)
@@ -36,7 +37,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.docstring.bare and ignore_no_params)
         ):
             report = _generate_report(
-                func, targets, disable, check_property_returns
+                func, targets, disable_func, check_property_returns
             )
             if report:
                 failures.append(

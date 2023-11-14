@@ -7006,3 +7006,400 @@ def process({CHECK}response) -> {CROSS}None:
 {messages.E104}
 
 """
+
+
+@_templates.register
+class _PParamDocsCommentModuleS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+def function(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PParamDocsCommentFuncS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2) -> None:  # docsig: disable
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _MFailCommentDisableFuncS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3) -> None:  # docsig: disable
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:11
+-----------------
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+
+{messages.E102}
+
+module/file.py:19
+-----------------
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
+
+"""
+
+
+@_templates.register
+class _MPassCommentDisableModuleFirstS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _MFailCommentDisableModuleSecondS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+# docsig: disable
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:2
+----------------
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+
+{messages.E101}
+
+"""
+
+
+@_templates.register
+class _MFailCommentDisableModuleThirdS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+# docsig: disable
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:2
+----------------
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+
+{messages.E101}
+
+module/file.py:11
+-----------------
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+
+{messages.E102}
+
+"""
+
+
+@_templates.register
+class _MFailCommentDisableModuleEnableS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+# docsig: disable
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+# docsig: enable
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:2
+----------------
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+
+{messages.E101}
+
+module/file.py:21
+-----------------
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
+
+"""
+
+
+@_templates.register
+class _MFailCommentDisableMixedS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+# docsig: disable
+def function_2(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+# docsig: enable
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+def function_4(param1, param2, param3) -> None:  # docsig: disable
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+# docsig: disable
+def function_5(param1, param2) -> None:
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+# docsig: enable
+
+def function_6(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:2
+----------------
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
+    \"\"\"
+
+{messages.E101}
+
+module/file.py:21
+-----------------
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
+
+module/file.py:47
+-----------------
+def function_6({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
+
+"""

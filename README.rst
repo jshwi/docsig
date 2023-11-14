@@ -173,6 +173,140 @@ API
 
 A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
 
+Message Control
+***************
+
+To control checks `docsig` accepts disable and enable directives
+
+To disable individual function checks add an inline comment similar to the example below
+
+.. code-block:: python
+
+    >>> string = """
+    ... def function_1(param1, param2, param3) -> None:  # docsig: disable
+    ...     '''
+    ...
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     :param param1: Fails.
+    ...     '''
+    ...
+    ... def function_2(param1, param2) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_3(param1, param2, param3) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    10
+    --
+    def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+        """
+        :param param1: ✓
+        :param param2: ✓
+        :param param3: ✖
+        """
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    <BLANKLINE>
+    18
+    --
+    def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+        """
+        :param param1: ✓
+        :param param2: ✓
+        :param None: ✖
+        """
+    <BLANKLINE>
+    E103: parameters missing
+    <BLANKLINE>
+    1
+
+To disable all function checks add a module level comment similar to the example below
+
+.. code-block:: python
+
+    >>> string = """
+    ... # docsig: disable
+    ... def function_1(param1, param2, param3) -> None:
+    ...     '''
+    ...
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     :param param1: Fails.
+    ...     '''
+    ...
+    ... def function_2(param1, param2) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_3(param1, param2, param3) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    0
+
+To disable multiple function checks add a module level disable and enable comment similar to the example below
+
+.. code-block:: python
+
+    >>> string = """
+    ... # docsig: disable
+    ... def function_1(param1, param2, param3) -> None:
+    ...     '''
+    ...
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     :param param1: Fails.
+    ...     '''
+    ...
+    ... def function_2(param1, param2) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ... # docsig: enable
+    ...
+    ... def function_3(param1, param2, param3) -> None:
+    ...     '''
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    20
+    --
+    def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+        """
+        :param param1: ✓
+        :param param2: ✓
+        :param None: ✖
+        """
+    <BLANKLINE>
+    E103: parameters missing
+    <BLANKLINE>
+    1
+
 Classes
 *******
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone

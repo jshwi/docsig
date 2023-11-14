@@ -271,6 +271,7 @@ class Function:
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
+    :param disabled: List of disabled checks specific to this function.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
@@ -278,10 +279,12 @@ class Function:
     def __init__(
         self,
         node: _ast.FunctionDef,
+        disabled: list[str],
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         self._node = node
+        self._disabled = disabled
         self._parent = node.parent.frame()
         self._signature = _Signature(
             node.args,
@@ -386,3 +389,8 @@ class Function:
     def docstring(self) -> _Docstring:
         """The function's docstring."""
         return self._docstring
+
+    @property
+    def disabled(self) -> list[str]:
+        """List of disabled checks specific to this function."""
+        return self._disabled
