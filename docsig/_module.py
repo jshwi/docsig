@@ -74,16 +74,17 @@ class Parent(_t.List[_Function]):
 
 
 class _Module(_t.List[Parent]):
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         string: str,
+        disable: list[str],
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
         ast = _ast.parse(string)
-        disabled = _Disabled(string)
+        disabled = _Disabled(string, disable)
         self.append(Parent(ast, disabled, path, ignore_args, ignore_kwargs))
         for subnode in ast.body:
             if isinstance(subnode, _ast.ClassDef):
@@ -101,6 +102,7 @@ class Modules(_t.List[_Module]):
     If string is provided, ignore paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
+    :param disable: List of checks to disable.
     :param string: String to parse if provided.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -109,17 +111,20 @@ class Modules(_t.List[_Module]):
     def __init__(
         self,
         *paths: _Path,
+        disable: list[str],
         string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
+        self._disable = disable
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         if string is not None:
             self.append(
                 _Module(
                     string,
+                    disable,
                     ignore_args=ignore_args,
                     ignore_kwargs=ignore_kwargs,
                 )
@@ -136,6 +141,7 @@ class Modules(_t.List[_Module]):
             self.append(
                 _Module(
                     root.read_text(),
+                    self._disable,
                     root,
                     self._ignore_args,
                     self._ignore_kwargs,

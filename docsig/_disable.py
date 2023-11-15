@@ -15,15 +15,17 @@ class Disabled(_t.Dict[int, _t.List[str]]):
     """Data for lines which are excluded from checks.
 
     :param text: Python code.
+    :param disable: List of checks to disable.
     """
 
-    def __init__(self, text: str) -> None:
+    def __init__(self, text: str, disable: list[str]) -> None:
         super().__init__()
         fin = _StringIO(text)
         module_is_disabled = False
         for line in _tokenize.generate_tokens(fin.readline):
             lineno = line.start[0]
             col = line.start[1]
+            self[lineno] = list(disable)
             if line.type == _tokenize.COMMENT:
                 if line.string.startswith(f"# {__package__}:"):
                     string = line.string.split(": ")[1]
@@ -37,11 +39,11 @@ class Disabled(_t.Dict[int, _t.List[str]]):
 
                     # otherwise, inline comments
                     elif string == "disable":
-                        self[lineno] = list(_ERRORS)
+                        self[lineno].extend(_ERRORS)
 
             # keep appending disabled lines as long as this is true
             if module_is_disabled:
-                self[lineno] = list(_ERRORS)
+                self[lineno].extend(_ERRORS)
 
     def __setitem__(self, key: int, value: list[str]) -> None:
         if key not in self:

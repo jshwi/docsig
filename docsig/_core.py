@@ -36,11 +36,9 @@ def _run_check(  # pylint: disable=too-many-arguments
     ignore_no_params: bool,
     no_ansi: bool,
     targets: list[str],
-    disable: list[str],
 ) -> _Failures:
     failures = _Failures()
     for func in parent:
-        disable_func = list({*disable, *func.disabled})
         if not (func.isoverridden and not check_overridden) and (
             not (func.isprotected and not check_protected)
             and not (func.isinit and not check_class)
@@ -48,7 +46,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (func.docstring.bare and ignore_no_params)
         ):
             report = _generate_report(
-                func, targets, disable_func, check_property_returns
+                func, targets, func.disabled, check_property_returns
             )
             if report:
                 failures.append(
@@ -102,6 +100,7 @@ def docsig(  # pylint: disable=too-many-locals
     """
     modules = _Modules(
         *path,
+        disable=disable or [],
         string=string,
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
@@ -120,7 +119,6 @@ def docsig(  # pylint: disable=too-many-locals
                     ignore_no_params,
                     no_ansi,
                     targets or [],
-                    disable or [],
                 )
                 if failures:
                     display[top_level.path].append(failures)
