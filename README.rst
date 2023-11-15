@@ -307,6 +307,67 @@ To disable multiple function checks add a module level disable and enable commen
     <BLANKLINE>
     1
 
+The same can be done for disabling individual rules
+
+.. code-block:: python
+
+    >>> string = """
+    ... # docsig: disable=E101
+    ... def function_1(param1, param2, param3) -> int:
+    ...     '''E105.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_2(param1, param2, param3) -> None:  # docsig: disable=E102,E106
+    ...     '''E101,E102,E106.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_3(param1, param2, param3) -> None:
+    ...     '''E101,E102,E106,E107.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param: Fails.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    3
+    -
+    def function_1(✓param1, ✓param2, ✓param3) -> ✖int:
+        """
+        :param param1: ✓
+        :param param2: ✓
+        :param param3: ✓
+        :return: ✖
+        """
+    <BLANKLINE>
+    E105: return missing from docstring
+    <BLANKLINE>
+    20
+    --
+    def function_3(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+        """
+        :param param1: ✓
+        :param param1: ✖
+        :param param2: ✖
+        :param None: ✖
+        """
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    E106: duplicate parameters found
+    E107: parameter appears to be incorrectly documented
+    <BLANKLINE>
+    1
+
 Classes
 *******
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone

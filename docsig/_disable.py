@@ -4,6 +4,7 @@ docsig._disable
 """
 from __future__ import annotations as _
 
+import re as _re
 import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
@@ -18,8 +19,16 @@ class _Directive:
 
     def __init__(self, kind: str, col: int) -> None:
         self._ismodule = col == 0
-        self._rules = list(_ERRORS)
+        self._rules = []
         self._kind = kind
+        delimiter = _re.search(r"\W+", kind)
+        if delimiter and delimiter[0] == "=":
+            self._kind, value = kind.split("=")
+            self._rules.extend(
+                [value] if "," not in value else value.split(",")
+            )
+        else:
+            self._rules.extend(_ERRORS)
 
     @property
     def rules(self) -> list[str]:
