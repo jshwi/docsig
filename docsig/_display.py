@@ -2,7 +2,7 @@
 docsig._display
 ===============
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 import typing as _t
 from collections import UserString as _UserString

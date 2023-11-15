@@ -2,7 +2,7 @@
 docsig._report
 ==============
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 from . import messages as _messages
 from ._function import RETURN as _RETURN

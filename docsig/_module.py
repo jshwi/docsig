@@ -2,7 +2,7 @@
 docsig._module
 ==============
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 from pathlib import Path as _Path
 

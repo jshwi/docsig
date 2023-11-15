@@ -2,16 +2,16 @@
 docsig._disable
 ===============
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 import tokenize as _tokenize
-import typing as t
+import typing as _t
 from io import StringIO as _StringIO
 
 from ._report import ERRORS as _ERRORS
 
 
-class Disabled(t.Dict[int, t.List[str]]):
+class Disabled(_t.Dict[int, _t.List[str]]):
     """Data for lines which are excluded from checks.
 
     :param text: Python code.

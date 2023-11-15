@@ -2,7 +2,7 @@
 docsig._function
 ================
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 import re as _re
 import textwrap as _textwrap

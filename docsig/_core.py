@@ -2,7 +2,7 @@
 docsig._core
 ============
 """
-from __future__ import annotations
+from __future__ import annotations as _
 
 import sys as _sys
 from os import environ as _e
