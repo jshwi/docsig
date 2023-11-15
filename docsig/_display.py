@@ -20,7 +20,6 @@ from ._function import ARG as _ARG
 from ._function import KEY as _KEY
 from ._function import Function as _Function
 from ._function import Param as _Param
-from ._objects import MutableSequence as _MutableSequence
 from ._report import Report as _Report
 
 color = _Color()
@@ -205,7 +204,7 @@ class Failure(_t.NamedTuple):
     report: _Report
 
 
-class Failures(_MutableSequence[Failure]):
+class Failures(_t.List[Failure]):
     """Sequence of failed functions."""
 
 

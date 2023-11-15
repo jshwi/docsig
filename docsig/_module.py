@@ -4,19 +4,17 @@ docsig._module
 """
 from __future__ import annotations as _
 
+import typing as _t
 from pathlib import Path as _Path
 
 import astroid as _ast
 
 from ._disable import Disabled as _Disabled
 from ._function import Function as _Function
-from ._objects import MutableSequence as _MutableSequence
 from ._utils import isprotected as _isprotected
 
 
-class Parent(  # pylint: disable=too-many-arguments
-    _MutableSequence[_Function]
-):
+class Parent(_t.List[_Function]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
@@ -26,7 +24,7 @@ class Parent(  # pylint: disable=too-many-arguments
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.Module | _ast.ClassDef,
         disabled: _Disabled,
@@ -75,7 +73,7 @@ class Parent(  # pylint: disable=too-many-arguments
         return _isprotected(self._name)
 
 
-class _Module(_MutableSequence[Parent]):
+class _Module(_t.List[Parent]):
     def __init__(
         self,
         string: str,
@@ -94,7 +92,7 @@ class _Module(_MutableSequence[Parent]):
                 )
 
 
-class Modules(_MutableSequence[_Module]):
+class Modules(_t.List[_Module]):
     """Sequence of ``Module`` objects parsed from Python modules or str.
 
     Recursively collect Python files from within all dirs that exist

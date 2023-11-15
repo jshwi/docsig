@@ -75,7 +75,7 @@ class Param(_t.NamedTuple):
         return str(self.name).startswith("_")
 
 
-class _Matches(_MutableSequence[Param]):
+class _Matches(_t.List[Param]):
     _pattern = _re.compile(":(.*?):")
     _normalize = {KEYWORD: KEY}
 
