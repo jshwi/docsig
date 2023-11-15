@@ -1,4 +1,3 @@
-_._directives  # unused attribute (docsig/_module.py:40)
 _FBinOpReprG  # unused class (tests/__init__.py:5968)
 _FBinOpReprN  # unused class (tests/__init__.py:2547)
 _FBinOpReprNI  # unused class (tests/__init__.py:4301)

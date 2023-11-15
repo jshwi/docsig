@@ -37,7 +37,6 @@ class Parent(  # pylint: disable=too-many-arguments
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
-        self._directives = disabled
         overloads = []
         returns = None
         for subnode in node.body:
