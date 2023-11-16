@@ -7009,6 +7009,253 @@ def process({CHECK}response) -> {CROSS}None:
 
 
 @_templates.register
+class _MPassOverloadMethodS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> str:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :param response: the response to process
+        :return: something depending on what the response is
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> str:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :param response: the response to process
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:17 in SomeClass
+------------------------------
+def process({CHECK}response) -> {CROSS}str:
+    \"\"\"
+    :param response: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{messages.E105}
+
+"""
+
+
+@_templates.register
+class _MFailOverloadMethodMissingParamS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> str:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :return: something depending on what the response is
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:17 in SomeClass
+------------------------------
+def process({CROSS}response) -> {CHECK}str:
+    \"\"\"
+    :param None: {CROSS}
+    :return: {CHECK}
+    \"\"\"
+
+{messages.E103}
+
+"""
+
+
+@_templates.register
+class _MPassOverloadMethodNoReturnS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> None:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :param response: the response to process
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _MPassMultiOverloadMethodsS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> str:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :param response: the response to process
+        :return: something depending on what the response is
+        \"\"\"
+
+    @overload
+    def another_process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def another_process(self, response: bool) -> None:
+        ...
+
+    @overload
+    def another_process(self, response: str) -> int:
+        ...
+
+    def another_process(self, response):
+        \"\"\"process another response.
+
+        :param response: the response to process
+        :return: something depending on what the response is
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _MFailOverloadMethodNoReturnDocumentedS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+from typing import overload
+
+class SomeClass:
+    @overload
+    def process(self, response: None) -> None:
+        ...
+
+    @overload
+    def process(self, response: int) -> tuple[int, str]:
+        ...
+
+    @overload
+    def process(self, response: bytes) -> None:
+        ...
+
+    def process(self, response):
+        \"\"\"process a response.
+
+        :param response: the response to process
+        :return: NoneType
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:17 in SomeClass
+------------------------------
+def process({CHECK}response) -> {CROSS}None:
+    \"\"\"
+    :param response: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{messages.E104}
+
+"""
+
+
+@_templates.register
 class _PParamDocsCommentModuleS(_BaseTemplate):
     @property
     def template(self) -> str:

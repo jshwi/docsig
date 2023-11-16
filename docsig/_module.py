@@ -54,11 +54,13 @@ class Parent(  # pylint: disable=too-many-arguments
                 else:
                     if func.name in overloads:
                         subnode.returns = returns
-                        func = _Function(
-                            subnode,
-                            disabled.get(subnode.lineno, []),
-                            ignore_args,
-                            ignore_kwargs,
+                        func._signature._rettype = (
+                            returns
+                            if isinstance(returns, str)
+                            else func._signature._get_rettype(returns)
+                        )
+                        func._signature._returns = (
+                            str(func._signature._rettype) != "None"
                         )
 
                     self.append(func)
