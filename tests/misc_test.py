@@ -115,3 +115,14 @@ def test_param_ne() -> None:
     """Get coverage on `Param.__eq__`."""
     # noinspection PyUnresolvedReferences
     assert docsig._function.Param() != object
+
+
+def test_file_not_found_error(main: MockMainType) -> None:
+    """Test file not found error for incorrect path arg.
+
+    :param main: Mock ``main`` function.
+    """
+    with pytest.raises(FileNotFoundError) as err:
+        main("does-not-exist")
+
+    assert str(err.value) == "does-not-exist"

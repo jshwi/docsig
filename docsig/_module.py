@@ -131,6 +131,9 @@ class Modules(_MutableSequence[_Module]):
                 self._populate(path)
 
     def _populate(self, root: _Path) -> None:
+        if not root.exists():
+            raise FileNotFoundError(root)
+
         if root.is_file() and root.name.endswith(".py"):
             self.append(
                 _Module(
