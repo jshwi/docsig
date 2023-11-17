@@ -7650,3 +7650,41 @@ def function_6({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 {messages.E103}
 
 """
+
+
+@_templates.register
+class _PParamDocsCommentNoSpaceAfterCommentS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2) -> None:  #docsig:disable
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PParamDocsCommentNoSpaceAfterColonS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function(param1, param2) -> None:  # docsig:disable
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

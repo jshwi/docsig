@@ -27,8 +27,8 @@ class Disabled(_t.Dict[int, _t.List[str]]):
             col = line.start[1]
             self[lineno] = list(disable)
             if line.type == _tokenize.COMMENT:
-                if line.string.startswith(f"# {__package__}:"):
-                    string = line.string.split(": ")[1]
+                if line.string[1:].strip().startswith(f"{__package__}:"):
+                    string = line.string.split(":")[1].strip()
 
                     # module level comments
                     if col == 0:

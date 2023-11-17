@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - raise error if file not found
 - add user friendly errors for the commandline
 
+### Fixed
+- fix index error raised with alternative comment formats
+
 [0.36.1](https://github.com/jshwi/docsig/releases/tag/v0.36.1) - 2023-11-17
 ------------------------------------------------------------------------
 ### Fixed
