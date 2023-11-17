@@ -548,6 +548,75 @@ def function_7(param1, param2, param3) -> None:
     \"\"\"
 
 """
+ENABLE_FILE_2 = """
+
+# docsig: disable
+def function_1(param1, param2, param3) -> None:  # docsig: enable
+    \"\"\"E101.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+
+def function_2(param1, param2) -> None:
+    \"\"\"E102.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"E103.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+
+def function_4(param1, param2, param3) -> None:
+    \"\"\"E104.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+
+
+def function_5(param1, param2, param3) -> int:
+    \"\"\"E105.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_6(param1, param2, param3) -> None:
+    \"\"\"E106.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_7(param1, param2, param3) -> None:
+    \"\"\"E107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+
+
+"""
 ENABLE_FILE_3 = """
 # docsig: disable
 # docsig: enable=E101
@@ -685,6 +754,144 @@ def function_7(param1, param2, param3) -> None:
     \"\"\"
 
 """
+ENABLE_FILE_5 = """
+
+# docsig: disable
+def function_1(param1, param2, param3) -> None:  # docsig: enable=E101
+    \"\"\"E101.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+
+def function_2(param1, param2) -> None:
+    \"\"\"E102.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"E103.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+
+def function_4(param1, param2, param3) -> None:
+    \"\"\"E104.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+
+
+def function_5(param1, param2, param3) -> int:
+    \"\"\"E105.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_6(param1, param2, param3) -> None:
+    \"\"\"E101,E102,E106,e107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_7(param1, param2, param3) -> None:
+    \"\"\"E107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+
+"""
+ENABLE_FILE_6 = """
+
+# docsig: disable
+def function_1(param1, param2, param3) -> None:
+    \"\"\"E101.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+
+def function_2(param1, param2) -> None:
+    \"\"\"E102.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"E103.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+
+def function_4(param1, param2, param3) -> None:
+    \"\"\"E104.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+
+
+def function_5(param1, param2, param3) -> int:
+    \"\"\"E105.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_6(  # docsig: enable=E101,E102,E106,E107
+    param1, param2, param3
+) -> None:
+    \"\"\"E101,E102,E106,e107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_7(param1, param2, param3) -> None:
+    \"\"\"E107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+
+"""
 INLINE_DISABLE_TEMPLATE = """
 def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
     \"\"\"E101
@@ -796,6 +1003,66 @@ def function_6(param1, param2, param3) -> None:
     \"\"\"
 
 def function_7(param1, param2, param3) -> None:
+    \"\"\"E107
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+"""
+INLINE_ENABLE_TEMPLATE = """
+# docsig: disable
+def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
+    \"\"\"E101
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+def function_2(param1, param2) -> None:  # docsig: enable={rules}
+    \"\"\"E102
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_3(param1, param2, param3) -> None:  # docsig: enable={rules}
+    \"\"\"E103
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
+    \"\"\"E104
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+
+def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
+    \"\"\"E105
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
+    \"\"\"E106
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_7(param1, param2, param3) -> None:  # docsig: enable={rules}
     \"\"\"E107
 
     :param param1: Fails.
@@ -1030,6 +1297,26 @@ def test_module_enables(
     assert all(i in std.out for i in ES)
 
 
+def test_single_function_enable(
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+) -> None:
+    """Test enabling entire module with enable comment.
+
+    Prior to enable add disable directive.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file(ENABLE_FILE_2)
+    main(".")
+    std = capsys.readouterr()
+    assert function[1] in std.out
+    assert not any(f"function_{i}" in std.out for i in range(2, 8))
+
+
 def test_module_single_error_enables(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -1069,6 +1356,46 @@ def test_module_comma_separated_error_enables(
     included = ES[0], ES[1]
     assert all(i in std.out for i in included)
     assert not any(i in std.out for i in ES if i not in included)
+
+
+def test_single_function_single_error_enable(
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+) -> None:
+    """Test enabling single function with specific enable comment.
+
+    Prior to enable add disable directive.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file(ENABLE_FILE_5)
+    main(".")
+    std = capsys.readouterr()
+    assert function[1] in std.out
+    assert not any(f"function_{i}" in std.out for i in range(2, 8))
+
+
+def test_single_function_comma_separated_error_enable(
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+) -> None:
+    """Test enabling function with comment of several specific errors.
+
+    Prior to enable add disable directive.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file(ENABLE_FILE_6)
+    main(".")
+    std = capsys.readouterr()
+    assert "function_6" in std.out
+    assert not any(f"function_{i}" in std.out for i in range(1, 8) if i != 6)
 
 
 @pytest.mark.parametrize(RULE, ES)
@@ -1189,6 +1516,66 @@ def test_comma_separated_module_disable_checks(
     std = capsys.readouterr()
     assert not any(i in std.out for i in comma_separated_rules)
     assert all(i in std.out for i in enabled_rules)
+
+
+@pytest.mark.parametrize(RULE, ES)
+def test_individual_inline_enable_checks(
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    rule: str,
+) -> None:
+    """Test individual inline enable checks.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param rule: Rule to comment.
+    """
+    disabled_rules = [i for i in ES if i != rule]
+    init_file(INLINE_ENABLE_TEMPLATE.format(rules=rule))
+    main(".")
+    std = capsys.readouterr()
+    assert rule in std.out
+    assert not any(i in std.out for i in disabled_rules)
+
+
+@pytest.mark.parametrize(
+    RULES,
+    [
+        f"{ES[0]},{ES[1]}",
+        f"{ES[0]},{ES[1]},{ES[2]}",
+        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
+        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
+        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+        f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+        f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+        f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+        f"{ES[4]},{ES[5]},{ES[6]}",
+        f"{ES[5]},{ES[6]}",
+    ],
+)
+def test_comma_separated_inline_enable_checks(
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    rules: str,
+) -> None:
+    """Test multiple inline enable checks.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param rules: Rules to comment.
+    """
+    all_rules = list(ES)
+    comma_separated_rules = rules.split(",")
+    disabled_rules = [i for i in all_rules if i not in comma_separated_rules]
+    init_file(INLINE_ENABLE_TEMPLATE.format(rules=rules))
+    main(".")
+    std = capsys.readouterr()
+    assert all(i in std.out for i in comma_separated_rules)
+    assert not any(i in std.out for i in disabled_rules)
 
 
 @pytest.mark.parametrize(RULE, ES)

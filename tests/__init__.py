@@ -7688,3 +7688,51 @@ def function(param1, param2) -> None:  # docsig:disable
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _MFailCommentDisableEnableOneFuncS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+def function_1(param1, param2, param3) -> None:
+    \"\"\"Proper docstring.
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+    return 0
+
+def function_2(param1, param2) -> None:  # docsig: enable
+    \"\"\"...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_3(param1, param2, param3) -> None:
+    \"\"\"Not proper docstring.
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:12
+-----------------
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
+    \"\"\"
+
+{messages.E102}
+
+"""

@@ -368,6 +368,56 @@ The same can be done for disabling individual rules
     <BLANKLINE>
     1
 
+Individual rules can also be re-enabled
+
+Module level directives will be evaluated separately to inline directives and providing no rules will disable and enable all rules
+
+.. code-block:: python
+
+    >>> string = """
+    ... # docsig: disable
+    ... def function_1(param1, param2, param3) -> int:
+    ...     '''E105.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_2(param1, param2, param3) -> None:  # docsig: enable=E102,E106
+    ...     '''E101,E102,E106.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param param3: Fails.
+    ...     '''
+    ...
+    ... def function_3(param1, param2, param3) -> None:
+    ...     '''E101,E102,E106,E107.
+    ...
+    ...     :param param1: Fails.
+    ...     :param param1: Fails.
+    ...     :param param2: Fails.
+    ...     :param: Fails.
+    ...     '''
+    ... """
+    >>> docsig(string=string)
+    11
+    --
+    def function_2(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+        """
+        :param param1: ✓
+        :param param1: ✖
+        :param param2: ✖
+        :param param3: ✖
+        """
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    E106: duplicate parameters found
+    <BLANKLINE>
+    1
+
 Classes
 *******
 Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone

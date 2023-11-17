@@ -91,6 +91,12 @@ class Disabled(_t.Dict[int, _t.List[str]]):
                     else:
                         if directive.disable:
                             self[lineno] = [*directive.rules, *module_disables]
+                        else:
+                            self[lineno] = [
+                                i
+                                for i in module_disables
+                                if i not in directive.rules
+                            ]
 
             self[lineno] = list(module_disables)
 
