@@ -51,11 +51,13 @@ class Parent(_t.List[_Function]):
                 else:
                     if func.name in overloads:
                         subnode.returns = returns
+                        # noinspection PyProtectedMember
                         func._signature._rettype = (
                             returns
                             if isinstance(returns, str)
                             else func._signature._get_rettype(returns)
                         )
+                        # noinspection PyProtectedMember
                         func._signature._returns = (
                             str(func._signature._rettype) != "None"
                         )
