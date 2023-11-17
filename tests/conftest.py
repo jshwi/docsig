@@ -20,6 +20,7 @@ def fixture_environment(
     :param monkeypatch: Mock patch environment and attributes.
     :param tmp_path: Create and return temporary directory.
     """
+    monkeypatch.setenv("DOCSIG_DEBUG", "0")
     monkeypatch.chdir(tmp_path)
 
 

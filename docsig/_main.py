@@ -6,6 +6,7 @@ Contains package entry point.
 """
 from ._config import Parser as _Parser
 from ._core import docsig as _docsig
+from ._core import pretty_print_error as _pretty_print_error
 
 
 def main() -> int:
@@ -16,6 +17,7 @@ def main() -> int:
     :return: Exit status for whether test failed or not.
     """
     parser = _Parser()
+    _pretty_print_error()
     return _docsig(
         *parser.args.path,
         string=parser.args.string,
