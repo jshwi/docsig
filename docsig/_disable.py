@@ -8,7 +8,47 @@ import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
 
+from typing_extensions import Self as _Self
+
 from ._report import ERRORS as _ERRORS
+
+
+class _Directive:
+    _valid_kinds = "enable", "disable"
+
+    def __init__(self, kind: str, col: int) -> None:
+        self._ismodule = col == 0
+        self._rules = list(_ERRORS)
+        self._kind = kind
+
+    @property
+    def rules(self) -> list[str]:
+        """The rules, if any, associated with this directive."""
+        return self._rules
+
+    @property
+    def ismodule(self) -> bool:
+        """Whether this is a module level directive or not."""
+        return self._ismodule
+
+    @property
+    def disable(self) -> bool:
+        """Whether this is a disable directive or not."""
+        return self._kind == self._valid_kinds[1]
+
+    @classmethod
+    def parse(cls, comment: str, col: int) -> _Self | None:
+        """Parse string into directive object if possible.
+
+        :param comment: Comment to parse.
+        :param col: Column of comment to instantiate directive.
+        :return: Instantiated directive object if valid directive or
+            None if not a valid directive.
+        """
+        if comment[1:].strip().startswith(f"{__package__}:"):
+            return cls(comment.split(":")[1].strip(), col)
+
+        return None
 
 
 class Disabled(_t.Dict[int, _t.List[str]]):
@@ -21,30 +61,30 @@ class Disabled(_t.Dict[int, _t.List[str]]):
     def __init__(self, text: str, disable: list[str]) -> None:
         super().__init__()
         fin = _StringIO(text)
-        module_is_disabled = False
+        module_disables = list(disable)
         for line in _tokenize.generate_tokens(fin.readline):
-            lineno = line.start[0]
-            col = line.start[1]
-            self[lineno] = list(disable)
+            if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
+                continue
+
+            lineno, col = line.start
             if line.type == _tokenize.COMMENT:
-                if line.string[1:].strip().startswith(f"{__package__}:"):
-                    string = line.string.split(":")[1].strip()
+                directive = _Directive.parse(line.string, col)
+                if directive is not None:
+                    if directive.ismodule:
+                        if directive.disable:
+                            module_disables.extend(directive.rules)
+                        else:
+                            module_disables = [
+                                i
+                                for i in module_disables
+                                if i not in directive.rules
+                            ]
+                    else:
+                        if directive.disable:
+                            self[lineno] = [*directive.rules, *module_disables]
 
-                    # module level comments
-                    if col == 0:
-                        if string == "disable":
-                            module_is_disabled = True
-                        elif string == "enable":
-                            module_is_disabled = False
+            self[lineno] = list(module_disables)
 
-                    # otherwise, inline comments
-                    elif string == "disable":
-                        self[lineno].extend(_ERRORS)
-
-            # keep appending disabled lines as long as this is true
-            if module_is_disabled:
-                self[lineno].extend(_ERRORS)
-
-    def __setitem__(self, key: int, value: list[str]) -> None:
+    def __setitem__(self, key, value) -> None:
         if key not in self:
             super().__setitem__(key, value)
