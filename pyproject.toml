@@ -70,7 +70,7 @@ maintainers = [
 name = "docsig"
 readme = "README.rst"
 repository = "https://github.com/jshwi/docsig"
-version = "0.37.0"
+version = "0.38.0"
 
 [tool.poetry.dependencies]
 Pygments = "^2.13.0"
