@@ -176,7 +176,7 @@ A full list of checks can be found `here <https://docsig.readthedocs.io/en/lates
 Message Control
 ***************
 
-To control checks `docsig` accepts disable and enable directives
+To control checks ``docsig`` accepts disable and enable directives
 
 To disable individual function checks add an inline comment similar to the example below
 
