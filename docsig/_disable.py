@@ -31,6 +31,11 @@ class _Directive:
             self._rules.extend(_ERRORS)
 
     @property
+    def isvalid(self) -> bool:
+        """Whether this directive is valid or not."""
+        return self._kind in self._valid_kinds
+
+    @property
     def rules(self) -> list[str]:
         """The rules, if any, associated with this directive."""
         return self._rules
@@ -83,28 +88,21 @@ class Disabled(_t.Dict[int, _t.List[str]]):
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
                 directive = _Directive.parse(line.string, col)
-                if directive is not None:
+                if directive is not None and directive.isvalid:
+                    update = module_disables
+                    if directive.disable:
+                        update = directive.rules + module_disables
+                    elif directive.enable:
+                        update = [
+                            i
+                            for i in module_disables
+                            if i not in directive.rules
+                        ]
+
                     if directive.ismodule:
-                        if directive.disable:
-                            module_disables.extend(directive.rules)
-                        elif directive.enable:
-                            module_disables = [
-                                i
-                                for i in module_disables
-                                if i not in directive.rules
-                            ]
+                        module_disables = update
                     else:
-                        if directive.disable:
-                            self[lineno] = [*directive.rules, *module_disables]
-                        elif directive.enable:
-                            self[lineno] = [
-                                i
-                                for i in module_disables
-                                if i not in directive.rules
-                            ]
+                        self[lineno] = update
 
-            self[lineno] = list(module_disables)
-
-    def __setitem__(self, key, value) -> None:
-        if key not in self:
-            super().__setitem__(key, value)
+            if lineno not in self:
+                self[lineno] = list(module_disables)
