@@ -11,7 +11,11 @@ from io import StringIO as _StringIO
 
 from typing_extensions import Self as _Self
 
-from ._report import ERRORS as _ERRORS
+from . import messages as _messages
+
+ERRORS = tuple(
+    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E")
+)
 
 
 class _Directive:
@@ -28,7 +32,7 @@ class _Directive:
                 [value] if "," not in value else value.split(",")
             )
         else:
-            self._rules.extend(_ERRORS)
+            self._rules.extend(ERRORS)
 
     @property
     def isvalid(self) -> bool:

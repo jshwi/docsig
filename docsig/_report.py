@@ -7,14 +7,11 @@ from __future__ import annotations as _
 import typing as _t
 
 from . import messages as _messages
+from ._disable import ERRORS as _ERRORS
 from ._function import RETURN as _RETURN
 from ._function import Function as _Function
 from ._function import Param as _Param
 from ._utils import almost_equal as _almost_equal
-
-ERRORS = tuple(
-    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E")
-)
 
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
@@ -30,7 +27,7 @@ class _MessageSequence(_t.List[str]):
         self._disable = disable or []
         self._disabled = False
         if targets:
-            errors = list(ERRORS)
+            errors = list(_ERRORS)
             for target in targets:
                 errors.remove(target)
 
