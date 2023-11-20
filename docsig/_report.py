@@ -251,4 +251,5 @@ def generate_report(
                 report.misspelled(arg, doc)
                 report.not_equal(arg, doc)
 
+    report.sort()
     return report
