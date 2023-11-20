@@ -4,11 +4,12 @@ docsig._report
 """
 from __future__ import annotations as _
 
+import typing as _t
+
 from . import messages as _messages
 from ._function import RETURN as _RETURN
 from ._function import Function as _Function
 from ._function import Param as _Param
-from ._objects import MutableSequence as _MutableSequence
 from ._utils import almost_equal as _almost_equal
 
 ERRORS = tuple(
@@ -19,7 +20,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class _MessageSequence(_MutableSequence[str]):
+class _MessageSequence(_t.List[str]):
     def __init__(
         self,
         targets: list[str] | None = None,
@@ -28,10 +29,6 @@ class _MessageSequence(_MutableSequence[str]):
         super().__init__()
         self._disable = disable or []
         self._disabled = False
-        self._resolve_targeted(targets or [])
-        self._errors: list[str] = []
-
-    def _resolve_targeted(self, targets: list[str]) -> None:
         if targets:
             errors = list(ERRORS)
             for target in targets:
@@ -39,25 +36,23 @@ class _MessageSequence(_MutableSequence[str]):
 
             self._disable.extend(errors)
 
-    def _lock(self, value: str) -> None:
+        self._errors: list[str] = []
+
+    def append(self, value: str) -> None:
         # if the last code to be disabled was an error then all
         # following hints are disabled until a new error is evaluated
         if value.startswith("E"):
             self._disabled = False
+            self._errors.append(value)
 
         if value in self._disable:
             self._disabled = True
-
-    def insert(self, index: int, value: str) -> None:
-        self._lock(value)
-        if value.startswith("E"):
-            self._errors.append(value)
 
         message = getattr(_messages, value)
         if not self._disabled and not (
             value.startswith("E") and message in self
         ):
-            super().insert(index, message)
+            super().append(message)
 
 
 class Report(_MessageSequence):

@@ -12,7 +12,6 @@ from collections import Counter as _Counter
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
-from ._objects import MutableSequence as _MutableSequence
 from ._utils import isprotected as _isprotected
 
 PARAM = "param"
@@ -108,7 +107,7 @@ class _Matches(_t.List[Param]):
                     )
 
 
-class _Params(_MutableSequence[Param]):
+class _Params(_t.List[Param]):
     def __init__(
         self, ignore_args: bool = False, ignore_kwargs: bool = False
     ) -> None:
@@ -117,7 +116,7 @@ class _Params(_MutableSequence[Param]):
         self._ignore_kwargs = ignore_kwargs
 
     # pylint: disable=too-many-boolean-expressions
-    def insert(self, index: int, value: Param) -> None:
+    def append(self, value: Param) -> None:
         if not value.isprotected and (
             value.kind == PARAM
             or (value.kind == ARG and not self._ignore_args)
@@ -127,7 +126,7 @@ class _Params(_MutableSequence[Param]):
                 and not any(i.kind == KEY for i in self)
             )
         ):
-            super().insert(index, value)
+            super().append(value)
 
     def get(self, index: int) -> Param:
         """Get a param.
@@ -185,7 +184,7 @@ class _Signature(_DocSig):
             elif arguments.args:
                 arguments.args.pop(0)
 
-        self._args.extend(
+        for i in [
             a if isinstance(a, Param) else Param(name=a.name)
             for a in [
                 *arguments.posonlyargs,
@@ -195,7 +194,8 @@ class _Signature(_DocSig):
                 Param(KEY, name=arguments.kwarg),
             ]
             if a is not None and a.name
-        )
+        ]:
+            self.args.append(i)
 
         self._rettype = (
             returns if isinstance(returns, str) else self._get_rettype(returns)
@@ -247,7 +247,8 @@ class _Docstring(_DocSig):
         self._string = None
         if node is not None:
             self._string = _RawDocstring(node.value)
-            self._args.extend(_Matches(self._string))
+            for i in _Matches(self._string):
+                self._args.append(i)
 
         self._returns = self._string is not None and bool(
             _re.search(":returns?:", self._string)

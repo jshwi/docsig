@@ -9,7 +9,6 @@ from templatest import templates
 import docsig.messages
 
 from . import InitFileFixtureType, MockMainType, long, short
-from ._utils import DummyFunc, errors, hints
 
 
 @pytest.mark.parametrize("arg", (short.v, long.version))
@@ -34,41 +33,13 @@ def test_print_version(
     assert std.out.strip() == "1.0.0"
 
 
-def test_mutable_sequence() -> None:
-    """Get coverage on ``MutableSequence``."""
-    report = docsig._report.Report(DummyFunc(), [], [], False)  # type: ignore
-    report.append(errors[0])
-    assert getattr(docsig.messages, errors[0]) in report
-    assert len(report) == 1
-    report[0] = errors[1]
-    report.pop()
-    assert errors[1] not in report
-
-
-def test_message_sequence() -> None:
-    """Test disabling of error messages.
-
-    Assert that all following hints are disabled, until a new error
-    message that has not been disabled is appended to the sequence.
-    """
-    # noinspection PyUnresolvedReferences
-    msg_seq = docsig._report._MessageSequence(disable=[errors[0]])
-    msg_seq.append(errors[0])
-    msg_seq.append(hints[0])
-    msg_seq.append(hints[1])
-    assert getattr(docsig.messages, errors[0]) not in msg_seq
-    assert getattr(docsig.messages, hints[1]) not in msg_seq
-    assert getattr(docsig.messages, hints[1]) not in msg_seq
-    msg_seq.append(errors[1])
-    msg_seq.append(hints[0])
-    msg_seq.append(hints[1])
-    assert getattr(docsig.messages, errors[1]) in msg_seq
-    assert getattr(docsig.messages, hints[0]) in msg_seq
-    assert getattr(docsig.messages, hints[1]) in msg_seq
-
-
-@pytest.mark.parametrize("message", errors)
-def test_target_report(message: str) -> None:
+@pytest.mark.parametrize("error", ["E101", "E102", "E106", "E107"])
+def test_target_report(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    error: str,
+) -> None:
     """Test report only adds the target error provided.
 
     The test should fail as it matches with the selected target.
@@ -76,18 +47,27 @@ def test_target_report(message: str) -> None:
     Assert that the error appears in the report to confirm it has
     triggered.
 
-    :param message: Error message code.
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param error: Error to target.
     """
-    # noinspection PyUnresolvedReferences
-    report = docsig._report.Report(
-        DummyFunc(),  # type: ignore
-        targets=[message],
-        disable=[],
-        check_property_returns=False,
-    )
-    report.extend(errors)
-    assert getattr(docsig.messages, message) in report
-    assert len(report) == 1
+    template = """
+def function_3(param1, param2, param3) -> None:
+    '''E101,E102,E106,E107.
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    '''
+"""
+    _errors = "E101", "E102", "E106", "E107"
+    init_file(template)
+    main(".", "--target", error)
+    std = capsys.readouterr()
+    assert error in std.out
+    assert not any(e in std.out for e in _errors if e != error)
 
 
 def test_lineno(
