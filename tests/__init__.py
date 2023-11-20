@@ -7736,3 +7736,31 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 {messages.E102}
 
 """
+
+
+@_templates.register
+class _MPassBadInlineDirective(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+def function_1(param1, param2, param3) -> None:  # docsig: ena
+    \"\"\"
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+def function_2(param1, param2) -> None:  # docsig: ena
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

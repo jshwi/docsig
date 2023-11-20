@@ -41,6 +41,11 @@ class _Directive:
         return self._ismodule
 
     @property
+    def enable(self) -> bool:
+        """Whether this is a enable directive or not."""
+        return self._kind == self._valid_kinds[0]
+
+    @property
     def disable(self) -> bool:
         """Whether this is a disable directive or not."""
         return self._kind == self._valid_kinds[1]
@@ -82,7 +87,7 @@ class Disabled(_t.Dict[int, _t.List[str]]):
                     if directive.ismodule:
                         if directive.disable:
                             module_disables.extend(directive.rules)
-                        else:
+                        elif directive.enable:
                             module_disables = [
                                 i
                                 for i in module_disables
@@ -91,7 +96,7 @@ class Disabled(_t.Dict[int, _t.List[str]]):
                     else:
                         if directive.disable:
                             self[lineno] = [*directive.rules, *module_disables]
-                        else:
+                        elif directive.enable:
                             self[lineno] = [
                                 i
                                 for i in module_disables
