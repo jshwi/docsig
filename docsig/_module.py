@@ -9,7 +9,7 @@ from pathlib import Path as _Path
 
 import astroid as _ast
 
-from ._directives import Disabled as _Disabled
+from ._directives import Directives as _Directives
 from ._function import Function as _Function
 from ._utils import isprotected as _isprotected
 
@@ -18,7 +18,7 @@ class Parent(_t.List[_Function]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
-    :param disabled: Data for lines which are excluded from checks.
+    :param directives: Data for lines which are excluded from checks.
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -27,7 +27,7 @@ class Parent(_t.List[_Function]):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.Module | _ast.ClassDef,
-        disabled: _Disabled,
+        directives: _Directives,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
@@ -41,7 +41,7 @@ class Parent(_t.List[_Function]):
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(
                     subnode,
-                    disabled.get(subnode.lineno, []),
+                    directives.get(subnode.lineno, []),
                     ignore_args,
                     ignore_kwargs,
                 )
@@ -86,12 +86,14 @@ class _Module(_t.List[Parent]):
     ) -> None:
         super().__init__()
         ast = _ast.parse(string)
-        disabled = _Disabled(string, disable)
-        self.append(Parent(ast, disabled, path, ignore_args, ignore_kwargs))
+        directives = _Directives(string, disable)
+        self.append(Parent(ast, directives, path, ignore_args, ignore_kwargs))
         for subnode in ast.body:
             if isinstance(subnode, _ast.ClassDef):
                 self.append(
-                    Parent(subnode, disabled, path, ignore_args, ignore_kwargs)
+                    Parent(
+                        subnode, directives, path, ignore_args, ignore_kwargs
+                    )
                 )
 
 

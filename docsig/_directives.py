@@ -74,8 +74,11 @@ class _Directive:
         return None
 
 
-class Disabled(_t.Dict[int, _t.List[str]]):
-    """Data for lines which are excluded from checks.
+class Directives(_t.Dict[int, _t.List[str]]):
+    """Data for directives:
+
+    Dict like object with the line number of directive as the key and
+    total errors which are excluded from function checks.
 
     :param text: Python code.
     :param disable: List of checks to disable.
