@@ -217,6 +217,14 @@ class Report(_MessageSequence):
                 err = f"E20{1 if directive.ismodule else 2}"
                 self.add(err, directive=directive.kind)
 
+    def invalid_directive_options(self) -> None:
+        """Report on any invalid directive options belonging to this."""
+        for directive in self._func.directives:
+            if directive.rules.unknown:
+                err = f"E20{3 if directive.ismodule else 4}"
+                for rule in directive.rules.unknown:
+                    self.add(err, directive=directive.kind, option=rule)
+
     def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.
 
@@ -242,6 +250,7 @@ def generate_report(
     """
     report = Report(func, targets, disable, check_property_returns)
     report.invalid_directive()
+    report.invalid_directive_options()
     report.missing_class_docstring()
     report.missing_func_docstring()
     if func.docstring.string is not None:

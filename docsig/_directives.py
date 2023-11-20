@@ -18,6 +18,37 @@ ERRORS = tuple(
 )
 
 
+class _Rules(_t.List[str]):
+    def __init__(self, kind: str) -> None:
+        super().__init__()
+        self._unknown = []
+        self._kind = kind
+        delimiter = _re.search(r"\W+", kind)
+        if delimiter and delimiter[0] == "=":
+            self._kind, option = kind.split("=")
+            if "," in option:
+                values = option.split(",")
+                for value in values:
+                    if value in ERRORS:
+                        self.append(value)
+                    else:
+                        self._unknown.append(value)
+            else:
+                self.append(option)
+        else:
+            self.extend(ERRORS)
+
+    @property
+    def kind(self) -> str:
+        """The type of the directive these rules belong to."""
+        return self._kind
+
+    @property
+    def unknown(self) -> list[str]:
+        """List of unknown directive options if any."""
+        return self._unknown
+
+
 class Directive:
     """Represents a comment directive.
 
@@ -29,16 +60,8 @@ class Directive:
 
     def __init__(self, kind: str, col: int) -> None:
         self._ismodule = col == 0
-        self._rules = []
-        self._kind = kind
-        delimiter = _re.search(r"\W+", kind)
-        if delimiter and delimiter[0] == "=":
-            self._kind, value = kind.split("=")
-            self._rules.extend(
-                [value] if "," not in value else value.split(",")
-            )
-        else:
-            self._rules.extend(ERRORS)
+        self._rules = _Rules(kind)
+        self._kind = self._rules.kind
 
     @property
     def kind(self) -> str:
@@ -51,7 +74,7 @@ class Directive:
         return self._kind in self._valid_kinds
 
     @property
-    def rules(self) -> list[str]:
+    def rules(self) -> _Rules:
         """The rules, if any, associated with this directive."""
         return self._rules
 

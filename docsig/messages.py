@@ -19,6 +19,8 @@ docsig.messages
 | E116: param not indented correctly
 | E201: unknown module comment directive '{directive}'
 | E202: unknown inline comment directive '{directive}'
+| E203: unknown module comment option for {directive} '{option}'
+| E204: unknown inline comment option for {directive} '{option}'
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -42,6 +44,8 @@ E116 = "E116: param not indented correctly"
 # E2xx: Config
 E201 = "E201: unknown module comment directive '{directive}'"
 E202 = "E202: unknown inline comment directive '{directive}'"
+E203 = "E203: unknown module comment option for {directive} '{option}'"
+E204 = "E204: unknown inline comment option for {directive} '{option}'"
 
 # Hxxx: Hint
 # H1xx: Docstring
