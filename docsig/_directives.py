@@ -14,7 +14,7 @@ from typing_extensions import Self as _Self
 from . import messages as _messages
 
 ERRORS = tuple(
-    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E")
+    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E1")
 )
 
 
