@@ -17,6 +17,8 @@ docsig.messages
 | E114: class is missing a docstring
 | E115: syntax error in description
 | E116: param not indented correctly
+| E201: unknown module comment directive '{directive}'
+| E202: unknown inline comment directive '{directive}'
 """
 # Exxx: Error
 # E1xx: Docstring
@@ -36,6 +38,10 @@ E113 = "E113: function is missing a docstring"
 E114 = "E114: class is missing a docstring"
 E115 = "E115: syntax error in description"
 E116 = "E116: param not indented correctly"
+
+# E2xx: Config
+E201 = "E201: unknown module comment directive '{directive}'"
+E202 = "E202: unknown inline comment directive '{directive}'"
 
 # Hxxx: Hint
 # H1xx: Docstring

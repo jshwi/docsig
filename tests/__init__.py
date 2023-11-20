@@ -7763,4 +7763,254 @@ def function_2(param1, param2) -> None:  # docsig: ena
 
     @property
     def expected(self) -> str:
-        return ""
+        return """\
+module/file.py:3
+----------------
+def function_1(✖param1, ✖param2, ✖param3) -> ✓None:
+    \"\"\"
+    :param param2: ✖
+    :param param3: ✖
+    :param param1: ✖
+    \"\"\"
+
+E202: unknown inline comment directive 'ena'
+
+module/file.py:11
+-----------------
+def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param param3: ✖
+    \"\"\"
+
+E202: unknown inline comment directive 'ena'
+
+"""
+
+
+@_templates.register
+class _MPassBadModuleDirective(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disa
+def function_1(param1, param2) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+def function_2(param1, param2, param3) -> None:
+    \"\"\"
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+module/file.py:3
+----------------
+def function_1(✓param1, ✓param2, ✖None) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param param3: ✖
+    \"\"\"
+
+E102: includes parameters that do not exist
+E201: unknown module comment directive 'disa'
+
+module/file.py:11
+-----------------
+def function_2(✖param1, ✖param2, ✖param3) -> ✓None:
+    \"\"\"
+    :param param2: ✖
+    :param param3: ✖
+    :param param1: ✖
+    \"\"\"
+
+E101: parameters out of order
+E201: unknown module comment directive 'disa'
+
+"""
+
+
+@_templates.register
+class _MPylintDirective(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: unknown
+def function_1(param1, param2, param3) -> None:  # pylint: disable
+    \"\"\"
+
+
+    :param param2: Fails.
+    :param param3: Fails.
+    :param param1: Fails.
+    \"\"\"
+
+
+# pylint: disable=unknown,unknown-the-third
+def function_2(param1, param2) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_3(  # docsig: enable=unknown,unknown-the-third
+    param1, param2, param3
+) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+
+
+def function_4(param1, param2, param3) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    :return: Fails.
+    \"\"\"
+
+
+def function_5(param1, param2, param3) -> int:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_6(param1, param2, param3) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    \"\"\"
+
+
+def function_7(param1, param2, param3) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param1: Fails.
+    :param param2: Fails.
+    :param: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+module/file.py:3
+----------------
+def function_1(✖param1, ✖param2, ✖param3) -> ✓None:
+    \"\"\"
+    :param param2: ✖
+    :param param3: ✖
+    :param param1: ✖
+    \"\"\"
+
+E101: parameters out of order
+E201: unknown module comment directive 'unknown'
+
+module/file.py:14
+-----------------
+def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param param3: ✖
+    \"\"\"
+
+E102: includes parameters that do not exist
+E201: unknown module comment directive 'unknown'
+
+module/file.py:23
+-----------------
+def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param None: ✖
+    \"\"\"
+
+E103: parameters missing
+E201: unknown module comment directive 'unknown'
+
+module/file.py:33
+-----------------
+def function_4(✓param1, ✓param2, ✓param3) -> ✖None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param param3: ✓
+    :return: ✖
+    \"\"\"
+
+E104: return statement documented for None
+E201: unknown module comment directive 'unknown'
+
+module/file.py:43
+-----------------
+def function_5(✓param1, ✓param2, ✓param3) -> ✖int:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param param3: ✓
+    :return: ✖
+    \"\"\"
+
+E105: return missing from docstring
+E201: unknown module comment directive 'unknown'
+
+module/file.py:52
+-----------------
+def function_6(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param1: ✖
+    :param param2: ✖
+    :param param3: ✖
+    \"\"\"
+
+E101: parameters out of order
+E102: includes parameters that do not exist
+E106: duplicate parameters found
+E201: unknown module comment directive 'unknown'
+
+module/file.py:62
+-----------------
+def function_7(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param1: ✖
+    :param param2: ✖
+    :param None: ✖
+    \"\"\"
+
+E101: parameters out of order
+E102: includes parameters that do not exist
+E106: duplicate parameters found
+E107: parameter appears to be incorrectly documented
+E201: unknown module comment directive 'unknown'
+
+"""

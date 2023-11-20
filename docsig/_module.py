@@ -18,7 +18,8 @@ class Parent(_t.List[_Function]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
-    :param directives: Data for lines which are excluded from checks.
+    :param directives: Data for directives and, subsequently, total of
+        errors which are excluded from function checks.
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -38,12 +39,10 @@ class Parent(_t.List[_Function]):
         overloads = []
         returns = None
         for subnode in node.body:
+            comments, disabled = directives.get(subnode.lineno, ([], []))
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(
-                    subnode,
-                    directives.get(subnode.lineno, []),
-                    ignore_args,
-                    ignore_kwargs,
+                    subnode, comments, disabled, ignore_args, ignore_kwargs
                 )
                 if func.isoverloaded:
                     overloads.append(func.name)

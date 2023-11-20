@@ -12,6 +12,7 @@ from collections import Counter as _Counter
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
+from ._directives import Directive as _Directive
 from ._utils import isprotected as _isprotected
 
 PARAM = "param"
@@ -268,10 +269,11 @@ class _Docstring(_DocSig):
         return self._string is not None and not self._args and not self.returns
 
 
-class Function:
+class Function:  # pylint: disable=too-many-arguments
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
+    :param directives: Directive, if any, belonging to this function.
     :param disabled: List of disabled checks specific to this function.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -280,11 +282,13 @@ class Function:
     def __init__(
         self,
         node: _ast.FunctionDef,
+        directives: _t.List[_Directive],
         disabled: list[str],
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         self._node = node
+        self._directives = directives
         self._disabled = disabled
         self._parent = node.parent.frame()
         self._signature = _Signature(
@@ -395,3 +399,8 @@ class Function:
     def disabled(self) -> list[str]:
         """List of disabled checks specific to this function."""
         return self._disabled
+
+    @property
+    def directives(self) -> _t.List[_Directive]:
+        """Directive, if any, belonging to this function."""
+        return self._directives

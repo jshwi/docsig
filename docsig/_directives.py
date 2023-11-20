@@ -18,7 +18,13 @@ ERRORS = tuple(
 )
 
 
-class _Directive:
+class Directive:
+    """Represents a comment directive.
+
+    :param kind: The type of this directive.
+    :param col: The column this directive is positioned at.
+    """
+
     _valid_kinds = "enable", "disable"
 
     def __init__(self, kind: str, col: int) -> None:
@@ -33,6 +39,11 @@ class _Directive:
             )
         else:
             self._rules.extend(ERRORS)
+
+    @property
+    def kind(self) -> str:
+        """The type of this directive."""
+        return self._kind
 
     @property
     def isvalid(self) -> bool:
@@ -74,7 +85,7 @@ class _Directive:
         return None
 
 
-class Directives(_t.Dict[int, _t.List[str]]):
+class Directives(_t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[str]]]):
     """Data for directives:
 
     Dict like object with the line number of directive as the key and
@@ -88,28 +99,36 @@ class Directives(_t.Dict[int, _t.List[str]]):
         super().__init__()
         fin = _StringIO(text)
         module_disables = list(disable)
+        module_directives: list[Directive] = []
+        directive = None
         for line in _tokenize.generate_tokens(fin.readline):
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
-                directive = _Directive.parse(line.string, col)
-                if directive is not None and directive.isvalid:
+                # ensure previous directive as backup assignment because
+                # if this is just a regular comment it will override a
+                # valid module directive, making it None
+                directive = Directive.parse(line.string, col) or directive
+                if directive is not None:
+                    update_directives = [directive] + module_directives
                     update = module_disables
-                    if directive.disable:
-                        update = directive.rules + module_disables
-                    elif directive.enable:
-                        update = [
-                            i
-                            for i in module_disables
-                            if i not in directive.rules
-                        ]
+                    if directive.isvalid:
+                        if directive.disable:
+                            update = directive.rules + module_disables
+                        elif directive.enable:
+                            update = [
+                                i
+                                for i in module_disables
+                                if i not in directive.rules
+                            ]
 
                     if directive.ismodule:
                         module_disables = update
+                        module_directives = update_directives
                     else:
-                        self[lineno] = update
+                        self[lineno] = update_directives, update
 
             if lineno not in self:
-                self[lineno] = list(module_disables)
+                self[lineno] = list(module_directives), list(module_disables)

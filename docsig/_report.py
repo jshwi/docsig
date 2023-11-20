@@ -35,10 +35,11 @@ class _MessageSequence(_t.List[str]):
 
         self._errors: list[str] = []
 
-    def add(self, value: str) -> None:
+    def add(self, value: str, **kwargs) -> None:
         """Add an error to the container.
 
         :param value: Value to add.
+        :param kwargs: Variable(s) if format string.
         """
         # if the last code to be disabled was an error then all
         # following hints are disabled until a new error is evaluated
@@ -50,6 +51,9 @@ class _MessageSequence(_t.List[str]):
             self._disabled = True
 
         message = getattr(_messages, value)
+        if kwargs:
+            message = message.format(**kwargs)
+
         if not self._disabled and not (
             value.startswith("E") and message in self
         ):
@@ -206,6 +210,13 @@ class Report(_MessageSequence):
         if doc.indent > 0:
             self.add("E116")
 
+    def invalid_directive(self) -> None:
+        """Report on any invalid directives belonging to this func."""
+        for directive in self._func.directives:
+            if not directive.isvalid:
+                err = f"E20{1 if directive.ismodule else 2}"
+                self.add(err, directive=directive.kind)
+
     def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.
 
@@ -230,6 +241,7 @@ def generate_report(
     :return: Compiled report.
     """
     report = Report(func, targets, disable, check_property_returns)
+    report.invalid_directive()
     report.missing_class_docstring()
     report.missing_func_docstring()
     if func.docstring.string is not None:
