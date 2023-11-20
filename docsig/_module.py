@@ -9,7 +9,7 @@ from pathlib import Path as _Path
 
 import astroid as _ast
 
-from ._disable import Disabled as _Disabled
+from ._directives import Disabled as _Disabled
 from ._function import Function as _Function
 from ._utils import isprotected as _isprotected
 

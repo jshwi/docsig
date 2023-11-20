@@ -7,7 +7,7 @@ from __future__ import annotations as _
 import typing as _t
 
 from . import messages as _messages
-from ._disable import ERRORS as _ERRORS
+from ._directives import ERRORS as _ERRORS
 from ._function import RETURN as _RETURN
 from ._function import Function as _Function
 from ._function import Param as _Param
