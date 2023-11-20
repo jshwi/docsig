@@ -38,7 +38,11 @@ class _MessageSequence(_t.List[str]):
 
         self._errors: list[str] = []
 
-    def append(self, value: str) -> None:
+    def add(self, value: str) -> None:
+        """Add an error to the container.
+
+        :param value: Value to add.
+        """
         # if the last code to be disabled was an error then all
         # following hints are disabled until a new error is evaluated
         if value.startswith("E"):
@@ -85,32 +89,32 @@ class Report(_MessageSequence):
         if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
-            self.append("E101")
+            self.add("E101")
 
     def exists(self) -> None:
         """Test that non-existing parameter is not documented."""
         if len(self._func.docstring.args) > len(self._func.signature.args):
-            self.append("E102")
+            self.add("E102")
 
     def missing_func_docstring(self) -> None:
         """Test that docstring is not missing from func."""
         if not self._func.isinit and self._func.docstring.string is None:
-            self.append("E113")
+            self.add("E113")
 
     def missing_class_docstring(self) -> None:
         """Test that docstring is not missing from class."""
         if self._func.isinit and self._func.docstring.string is None:
-            self.append("E114")
+            self.add("E114")
 
     def missing(self) -> None:
         """Test that parameter is not missing from documentation."""
         if len(self._func.signature.args) > len(self._func.docstring.args):
-            self.append("E103")
+            self.add("E103")
 
     def duplicates(self) -> None:
         """Test that there are no duplicate parameters in docstring."""
         if self._func.docstring.args.duplicated:
-            self.append("E106")
+            self.add("E106")
 
     def extra_return(self) -> None:
         """Check that return is not documented when there is none."""
@@ -119,18 +123,18 @@ class Report(_MessageSequence):
             and self._func.signature.rettype == "None"
             and not self._no_returns
         ):
-            self.append("E104")
+            self.add("E104")
 
     def property_return(self) -> None:
         """Check that return is not documented for property."""
         if self._func.docstring.returns and self._no_prop_return:
-            self.append("E108")
-            self.append("H101")
+            self.add("E108")
+            self.add("H101")
 
     def return_not_typed(self) -> None:
         """Check that return is not documented when no type provided."""
         if self._func.signature.rettype is None and not self._no_returns:
-            self.append("E109")
+            self.add("E109")
 
     def missing_return(self) -> None:
         """Check that return is documented when func returns value."""
@@ -139,10 +143,10 @@ class Report(_MessageSequence):
             and not self._func.docstring.returns
             and not self._no_returns
         ):
-            self.append("E105")
+            self.add("E105")
             docstring = self._func.docstring.string
             if docstring is not None and _RETURN in docstring:
-                self.append("H102")
+                self.add("H102")
 
     def incorrect(self, sig: _Param, doc: _Param) -> None:
         """Test that proper syntax is used when documenting parameters.
@@ -151,7 +155,7 @@ class Report(_MessageSequence):
         :param doc: Docstring argument.
         """
         if sig.name is None and doc.name is None:
-            self.append("E107")
+            self.add("E107")
 
     def not_equal(self, sig: _Param, doc: _Param) -> None:
         """Final catch-all.
@@ -163,13 +167,13 @@ class Report(_MessageSequence):
         :param doc: Docstring argument.
         """
         if sig.name is not None and doc.name is not None and not self._errors:
-            self.append("E110")
+            self.add("E110")
 
     def class_return(self) -> None:
         """Check that return is not documented for __init__."""
         if self._func.docstring.returns and self._func.isinit:
-            self.append("E111")
-            self.append("H103")
+            self.add("E111")
+            self.add("H103")
 
     def misspelled(self, sig: _Param, doc: _Param) -> None:
         """Test whether there is a spelling error in documentation.
@@ -187,7 +191,7 @@ class Report(_MessageSequence):
             and not self._errors
             and _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH)
         ):
-            self.append("E112")
+            self.add("E112")
 
     def description_syntax(self, doc: _Param) -> None:
         """Test whether docstring description has correct spacing.
@@ -195,7 +199,7 @@ class Report(_MessageSequence):
         :param doc: Docstring argument.
         """
         if doc.description is not None and not doc.description.startswith(" "):
-            self.append("E115")
+            self.add("E115")
 
     def indent_syntax(self, doc: _Param) -> None:
         """Test whether docstring description is indented correctly.
@@ -203,7 +207,7 @@ class Report(_MessageSequence):
         :param doc: Docstring argument.
         """
         if doc.indent > 0:
-            self.append("E116")
+            self.add("E116")
 
     def get_report(self, prefix: str = "") -> str:
         """Get report compiled as a string.
