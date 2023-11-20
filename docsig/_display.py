@@ -246,11 +246,11 @@ class Display(_DisplaySequence):
             for failures in value:
                 for failure in failures:
                     header = f"{key}{failure.func.lineno}"
+                    function = failure.func.name
                     if failure.func.parent.name:
-                        header += " in {}.{}".format(
-                            failure.func.parent.name, failure.func.name
-                        )
+                        function = f"{failure.func.parent.name}.{function}"
 
+                    header += f" in {function}"
                     print(
                         "{}\n\t{}".format(
                             self._ansi.color(header, color.magenta),
