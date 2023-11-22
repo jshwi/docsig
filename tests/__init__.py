@@ -8339,3 +8339,35 @@ class Klass:
     @property
     def expected(self) -> str:
         return messages.E103
+
+
+@_templates.register
+class _MInvalidSingleModuleDirectiveOptions(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: enable=unknown
+def function_3(param1, param2, param3) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:3
+----------------
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
+    \"\"\"
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
+    \"\"\"
+
+{messages.E103}
+{messages.E203.format(directive="enable", option="unknown")}
+
+"""
