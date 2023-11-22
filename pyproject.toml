@@ -15,7 +15,6 @@ exclude = '''
 )/
 '''
 line-length = 79
-skip-magic-trailing-comma = true
 
 [tool.constcheck]
 ignore_strings = [
