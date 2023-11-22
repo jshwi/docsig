@@ -6517,7 +6517,7 @@ def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
     :return: {CHECK}
     \"\"\"
 
-E115: syntax error in description
+{messages.E115}
 """
 
 
@@ -7763,28 +7763,28 @@ def function_2(param1, param2) -> None:  # docsig: ena
 
     @property
     def expected(self) -> str:
-        return """\
+        return f"""\
 module/file.py:3
 ----------------
-def function_1(✖param1, ✖param2, ✖param3) -> ✓None:
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param2: ✖
-    :param param3: ✖
-    :param param1: ✖
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
     \"\"\"
 
-E202: unknown inline comment directive 'ena'
+{messages.E202.format(directive="ena")}
 
 module/file.py:11
 -----------------
-def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
     \"\"\"
 
-E202: unknown inline comment directive 'ena'
+{messages.E202.format(directive="ena")}
 
 """
 
@@ -7814,30 +7814,30 @@ def function_2(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return """\
+        return f"""\
 module/file.py:3
 ----------------
-def function_1(✓param1, ✓param2, ✖None) -> ✓None:
+def function_1({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
     \"\"\"
 
-E102: includes parameters that do not exist
-E201: unknown module comment directive 'disa'
+{messages.E102}
+{messages.E201.format(directive="disa")}
 
 module/file.py:11
 -----------------
-def function_2(✖param1, ✖param2, ✖param3) -> ✓None:
+def function_2({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param2: ✖
-    :param param3: ✖
-    :param param1: ✖
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E201: unknown module comment directive 'disa'
+{messages.E101}
+{messages.E201.format(directive="disa")}
 
 """
 
@@ -7897,21 +7897,21 @@ def function_5(param1, param2, param3) -> int:
     \"\"\"
 
 
-def function_6(param1, param2, param3) -> None:
+def f6(param, param2, param3) -> None:
     \"\"\"
 
-    :param param1: Fails.
-    :param param1: Fails.
+    :param param: Fails.
+    :param param: Fails.
     :param param2: Fails.
     :param param3: Fails.
     \"\"\"
 
 
-def function_7(param1, param2, param3) -> None:
+def f7(param, param2, param3) -> None:
     \"\"\"
 
-    :param param1: Fails.
-    :param param1: Fails.
+    :param param: Fails.
+    :param param: Fails.
     :param param2: Fails.
     :param: Fails.
     \"\"\"
@@ -7919,101 +7919,101 @@ def function_7(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return """\
+        return f"""\
 module/file.py:3
 ----------------
-def function_1(✖param1, ✖param2, ✖param3) -> ✓None:
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param2: ✖
-    :param param3: ✖
-    :param param1: ✖
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:14
 -----------------
-def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
     \"\"\"
 
-E102: includes parameters that do not exist
-E201: unknown module comment directive 'unknown'
+{messages.E102}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:23
 -----------------
-def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param None: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
     \"\"\"
 
-E103: parameters missing
-E201: unknown module comment directive 'unknown'
-E204: unknown inline comment option for enable 'unknown'
-E204: unknown inline comment option for enable 'unknown-the-third'
+{messages.E103}
+{messages.E201.format(directive="unknown")}
+{messages.E204.format(directive="enable", option="unknown")}
+{messages.E204.format(directive="enable", option="unknown-the-third")}
 
 module/file.py:33
 -----------------
-def function_4(✓param1, ✓param2, ✓param3) -> ✖None:
+def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✓
-    :return: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
     \"\"\"
 
-E104: return statement documented for None
-E201: unknown module comment directive 'unknown'
+{messages.E104}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:43
 -----------------
-def function_5(✓param1, ✓param2, ✓param3) -> ✖int:
+def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✓
-    :return: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
     \"\"\"
 
-E105: return missing from docstring
-E201: unknown module comment directive 'unknown'
+{messages.E105}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:52
 -----------------
-def function_6(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param1: ✖
-    :param param2: ✖
-    :param param3: ✖
+    :param param: {CHECK}
+    :param param: {CROSS}
+    :param param2: {CROSS}
+    :param param3: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E102: includes parameters that do not exist
-E106: duplicate parameters found
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E102}
+{messages.E106}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:62
 -----------------
-def function_7(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param1: ✖
-    :param param2: ✖
-    :param None: ✖
+    :param param: {CHECK}
+    :param param: {CROSS}
+    :param param2: {CROSS}
+    :param None: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E102: includes parameters that do not exist
-E106: duplicate parameters found
-E107: parameter appears to be incorrectly documented
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E102}
+{messages.E106}
+{messages.E107}
+{messages.E201.format(directive="unknown")}
 
 """
 
@@ -8073,21 +8073,21 @@ def function_5(param1, param2, param3) -> int:
     \"\"\"
 
 
-def function_6(param1, param2, param3) -> None:
+def f6(param, param2, param3) -> None:
     \"\"\"
 
-    :param param1: Fails.
-    :param param1: Fails.
+    :param param: Fails.
+    :param param: Fails.
     :param param2: Fails.
     :param param3: Fails.
     \"\"\"
 
 
-def function_7(param1, param2, param3) -> None:
+def f7(param, param2, param3) -> None:
     \"\"\"
 
-    :param param1: Fails.
-    :param param1: Fails.
+    :param param: Fails.
+    :param param: Fails.
     :param param2: Fails.
     :param: Fails.
     \"\"\"
@@ -8095,101 +8095,101 @@ def function_7(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return """\
+        return f"""\
 module/file.py:3
 ----------------
-def function_1(✖param1, ✖param2, ✖param3) -> ✓None:
+def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param2: ✖
-    :param param3: ✖
-    :param param1: ✖
+    :param param2: {CROSS}
+    :param param3: {CROSS}
+    :param param1: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:14
 -----------------
-def function_2(✓param1, ✓param2, ✖None) -> ✓None:
+def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CROSS}
     \"\"\"
 
-E102: includes parameters that do not exist
-E201: unknown module comment directive 'unknown'
+{messages.E102}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:23
 -----------------
-def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param None: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
     \"\"\"
 
-E103: parameters missing
-E201: unknown module comment directive 'unknown'
-E204: unknown inline comment option for enable 'unknown'
-E204: unknown inline comment option for enable 'unknown-the-third'
+{messages.E103}
+{messages.E201.format(directive="unknown")}
+{messages.E204.format(directive="enable", option="unknown")}
+{messages.E204.format(directive="enable", option="unknown-the-third")}
 
 module/file.py:33
 -----------------
-def function_4(✓param1, ✓param2, ✓param3) -> ✖None:
+def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✓
-    :return: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
     \"\"\"
 
-E104: return statement documented for None
-E201: unknown module comment directive 'unknown'
+{messages.E104}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:43
 -----------------
-def function_5(✓param1, ✓param2, ✓param3) -> ✖int:
+def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param param3: ✓
-    :return: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param param3: {CHECK}
+    :return: {CROSS}
     \"\"\"
 
-E105: return missing from docstring
-E201: unknown module comment directive 'unknown'
+{messages.E105}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:52
 -----------------
-def function_6(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param1: ✖
-    :param param2: ✖
-    :param param3: ✖
+    :param param: {CHECK}
+    :param param: {CROSS}
+    :param param2: {CROSS}
+    :param param3: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E102: includes parameters that do not exist
-E106: duplicate parameters found
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E102}
+{messages.E106}
+{messages.E201.format(directive="unknown")}
 
 module/file.py:62
 -----------------
-def function_7(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
+def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param1: ✖
-    :param param2: ✖
-    :param None: ✖
+    :param param: {CHECK}
+    :param param: {CROSS}
+    :param param2: {CROSS}
+    :param None: {CROSS}
     \"\"\"
 
-E101: parameters out of order
-E102: includes parameters that do not exist
-E106: duplicate parameters found
-E107: parameter appears to be incorrectly documented
-E201: unknown module comment directive 'unknown'
+{messages.E101}
+{messages.E102}
+{messages.E106}
+{messages.E107}
+{messages.E201.format(directive="unknown")}
 
 """
 
@@ -8211,18 +8211,18 @@ def function_3(  # docsig: enable=unknown
 
     @property
     def expected(self) -> str:
-        return """\
+        return f"""\
 module/file.py:2
 ----------------
-def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
-    :param param1: ✓
-    :param param2: ✓
-    :param None: ✖
+    :param param1: {CHECK}
+    :param param2: {CHECK}
+    :param None: {CROSS}
     \"\"\"
 
-E103: parameters missing
-E204: unknown inline comment option for enable 'unknown'
+{messages.E103}
+{messages.E204.format(directive="enable", option="unknown")}
 
 """
 

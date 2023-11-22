@@ -1,7 +1,4 @@
-E201  # unused variable (docsig/messages.py:45)
-E202  # unused variable (docsig/messages.py:46)
 E203  # unused variable (docsig/messages.py:47)
-E204  # unused variable (docsig/messages.py:48)
 _.excepthook  # unused attribute (docsig/_core.py:24)
 _FBinOpReprG  # unused class (tests/__init__.py:5968)
 _FBinOpReprN  # unused class (tests/__init__.py:2547)
