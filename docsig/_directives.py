@@ -33,6 +33,8 @@ class _Rules(_t.List[str]):
                         self.append(value)
                     else:
                         self._unknown.append(value)
+            elif option not in ERRORS:
+                self._unknown.append(option)
             else:
                 self.append(option)
         else:

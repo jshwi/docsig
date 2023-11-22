@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.39.0...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- catch unknown single options
 
 [0.39.0](https://github.com/jshwi/docsig/releases/tag/v0.39.0) - 2023-11-20
 ------------------------------------------------------------------------

@@ -8192,3 +8192,36 @@ E107: parameter appears to be incorrectly documented
 E201: unknown module comment directive 'unknown'
 
 """
+
+
+@_templates.register
+class _MInvalidSingleDirectiveOptions(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+def function_3(  # docsig: enable=unknown
+    param1, param2, param3
+) -> None:
+    \"\"\"
+
+    :param param1: Fails.
+    :param param2: Fails.
+    \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+module/file.py:2
+----------------
+def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
+    \"\"\"
+    :param param1: ✓
+    :param param2: ✓
+    :param None: ✖
+    \"\"\"
+
+E103: parameters missing
+E204: unknown inline comment option for enable 'unknown'
+
+"""
