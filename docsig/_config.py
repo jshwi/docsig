@@ -90,7 +90,10 @@ class Parser(_ArgumentParser):
             help="ignore kwargs prefixed with two asterisks",
         )
         self.add_argument(
-            "-n", "--no-ansi", action="store_true", help="disable ansi output"
+            "-n",
+            "--no-ansi",
+            action="store_true",
+            help="disable ansi output",
         )
         self.add_argument(
             "-S",
