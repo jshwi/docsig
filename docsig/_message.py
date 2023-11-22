@@ -12,6 +12,7 @@ class Message(_t.NamedTuple):
 
     code: str
     description: str
+    symbolic: str = ""
     hint: _t.Optional[str] = None
 
     def fstring(self, template: str) -> str:
@@ -23,6 +24,7 @@ class Message(_t.NamedTuple):
         return template.format(
             code=self.code,
             description=self.description,
+            symbolic=self.symbolic,
         )
 
 

@@ -172,7 +172,7 @@ API
         :param param3: ✖
         """
     <BLANKLINE>
-    E102: includes parameters that do not exist
+    E102: includes parameters that do not exist (params-do-not-exist)
     <BLANKLINE>
     1
 
@@ -221,7 +221,7 @@ To disable individual function checks add an inline comment similar to the examp
         :param param3: ✖
         """
     <BLANKLINE>
-    E102: includes parameters that do not exist
+    E102: includes parameters that do not exist (params-do-not-exist)
     <BLANKLINE>
     18
     --
@@ -232,7 +232,7 @@ To disable individual function checks add an inline comment similar to the examp
         :param None: ✖
         """
     <BLANKLINE>
-    E103: parameters missing
+    E103: parameters missing (params-missing)
     <BLANKLINE>
     1
 
@@ -308,7 +308,7 @@ To disable multiple function checks add a module level disable and enable commen
         :param None: ✖
         """
     <BLANKLINE>
-    E103: parameters missing
+    E103: parameters missing (params-missing)
     <BLANKLINE>
     1
 
@@ -355,7 +355,7 @@ The same can be done for disabling individual rules
         :return: ✖
         """
     <BLANKLINE>
-    E105: return missing from docstring
+    E105: return missing from docstring (return-missing)
     <BLANKLINE>
     20
     --
@@ -367,9 +367,9 @@ The same can be done for disabling individual rules
         :param None: ✖
         """
     <BLANKLINE>
-    E102: includes parameters that do not exist
-    E106: duplicate parameters found
-    E107: parameter appears to be incorrectly documented
+    E102: includes parameters that do not exist (params-do-not-exist)
+    E106: duplicate parameters found (duplicate-params-found)
+    E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     <BLANKLINE>
     1
 
@@ -418,8 +418,8 @@ Module level directives will be evaluated separately to inline directives and pr
         :param param3: ✖
         """
     <BLANKLINE>
-    E102: includes parameters that do not exist
-    E106: duplicate parameters found
+    E102: includes parameters that do not exist (params-do-not-exist)
+    E106: duplicate parameters found (duplicate-params-found)
     <BLANKLINE>
     1
 
@@ -453,7 +453,7 @@ This check will either check the documentation of ``__init__``, or check documen
     <BLANKLINE>
         def __init__(✓param1, ✓param2, ✖None) -> ✓None:
     <BLANKLINE>
-    E102: includes parameters that do not exist
+    E102: includes parameters that do not exist (params-do-not-exist)
     <BLANKLINE>
     1
 
@@ -482,7 +482,7 @@ This check will either check the documentation of ``__init__``, or check documen
     <BLANKLINE>
         def __init__(✓param1, ✓param2, ✖None) -> ✓None:
     <BLANKLINE>
-    E102: includes parameters that do not exist
+    E102: includes parameters that do not exist (params-do-not-exist)
     <BLANKLINE>
     1
 
