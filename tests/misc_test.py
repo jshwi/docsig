@@ -90,6 +90,17 @@ def function_3(param1, param2, param3) -> None:
     assert not any(e in std.out for e in _errors if e != error)
 
 
+def test_invalid_target(main: MockMainType) -> None:
+    """Test invalid target provided.
+
+    :param main: Mock ``main`` function.
+    """
+    with pytest.raises(ValueError) as err:
+        main(".", long.target, "unknown")
+
+    assert str(err.value) == "unknown option to target 'unknown'"
+
+
 def test_lineno(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,

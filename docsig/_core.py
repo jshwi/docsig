@@ -121,6 +121,12 @@ def docsig(  # pylint: disable=too-many-locals
                 f"unknown option to disable '{message.description}'",
             )
 
+    for message in target_args:
+        if not message.isknown:
+            raise ValueError(
+                f"unknown option to target '{message.description}'",
+            )
+
     modules = _Modules(
         *path,
         disable=disabled_args,
