@@ -8,7 +8,7 @@ from templatest.utils import VarSeq
 
 from docsig.messages import E
 
-from . import InitFileFixtureType, MockMainType
+from . import InitFileFixtureType, MockMainType, long
 
 function = VarSeq("function", "_")
 
@@ -1187,6 +1187,17 @@ def test_commandline_disables(
     std = capsys.readouterr()
     assert symbolic not in std.out
     assert all(i[1] in std.out for i in SYMBOLIC if i[1] != symbolic)
+
+
+def test_unknown_commandline_disables(main: MockMainType) -> None:
+    """Test invalid disable option provided.
+
+    :param main: Mock ``main`` function.
+    """
+    with pytest.raises(ValueError) as err:
+        main(".", long.disable, "unknown")
+
+    assert str(err.value) == "unknown option to disable 'unknown'"
 
 
 def test_module_disables(
