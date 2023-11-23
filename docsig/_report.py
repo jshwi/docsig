@@ -20,11 +20,11 @@ _MAX_MATCH = 1.0
 class _MessageSequence(_t.List[str]):
     def __init__(
         self,
-        targets: list[str] | None = None,
-        disable: list[str] | None = None,
+        targets: list[str],
+        disable: list[str],
     ) -> None:
         super().__init__()
-        self._disable = disable or []
+        self._disable = disable
         self._disabled = False
         if targets:
             errors = list(_ERRORS)
