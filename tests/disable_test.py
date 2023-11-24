@@ -1285,7 +1285,7 @@ def test_module_enables(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test individual  checks.
+    """Test individual checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
