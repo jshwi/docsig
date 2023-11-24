@@ -77,31 +77,34 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n] [-S] [-s STR]
-                             [-d LIST] [-t LIST]
+    usage: docsig [-h] [-v] [-c | -C] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n]
+                             [-S] [-s STR] [-d LIST] [-t LIST]
                              path [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                          directories or files to check
+      path                           directories or files to check
 
     optional arguments:
-      -h, --help                    show this help message and exit
-      -v, --version                 show program's version number and exit
-      -c, --check-class             check class docstrings
-      -D, --check-dunders           check dunder methods
-      -o, --check-overridden        check overridden methods
-      -p, --check-protected         check protected functions and classes
-      -P, --check-property-returns  check property return values
-      -i, --ignore-no-params        ignore docstrings where parameters are not documented
-      -a, --ignore-args             ignore args prefixed with an asterisk
-      -k, --ignore-kwargs           ignore kwargs prefixed with two asterisks
-      -n, --no-ansi                 disable ansi output
-      -S, --summary                 print a summarised report
-      -s STR, --string STR          string to parse instead of files
-      -d LIST, --disable LIST       comma separated list of rules to disable
-      -t LIST, --target LIST        comma separated list of rules to target
+      -h, --help                     show this help message and exit
+      -v, --version                  show program's version number and exit
+      -c, --check-class              check class docstrings
+      -C, --check-class-constructor  check __init__ methods. Note: mutually incompatible
+                                     with -c
+      -D, --check-dunders            check dunder methods
+      -o, --check-overridden         check overridden methods
+      -p, --check-protected          check protected functions and classes
+      -P, --check-property-returns   check property return values
+      -i, --ignore-no-params         ignore docstrings where parameters are not
+                                     documented
+      -a, --ignore-args              ignore args prefixed with an asterisk
+      -k, --ignore-kwargs            ignore kwargs prefixed with two asterisks
+      -n, --no-ansi                  disable ansi output
+      -S, --summary                  print a summarised report
+      -s STR, --string STR           string to parse instead of files
+      -d LIST, --disable LIST        comma separated list of rules to disable
+      -t LIST, --target LIST         comma separated list of rules to target
 
 Options can also be configured with the pyproject.toml file
 
@@ -420,9 +423,37 @@ Module level directives will be evaluated separately to inline directives and pr
 
 Classes
 *******
-Checking a class docstring is not enabled by default, as this check is opinionated, and won't suite everyone
+Checking a class docstring is not enabled by default, as there are two mutually exclusive choices to choose from.
 
-This check will check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
+This check will either check the documentation of ``__init__``, or check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
+
+.. code-block:: python
+
+    >>> string = """
+    ... class Klass:
+    ...     def __init__(self, param1, param2) -> None:
+    ...         '''
+    ...
+    ...         :param param1: About param1.
+    ...         :param param2: About param2.
+    ...         :param param3: About param3.
+    ...         '''
+    ... """
+    >>> docsig(string=string, check_class_constructor=True)
+    3 in Klass
+    ----------
+    class Klass:
+        """
+        :param param1: ✓
+        :param param2: ✓
+        :param param3: ✖
+        """
+    <BLANKLINE>
+        def __init__(✓param1, ✓param2, ✖None) -> ✓None:
+    <BLANKLINE>
+    E102: includes parameters that do not exist
+    <BLANKLINE>
+    1
 
 .. code-block:: python
 
@@ -454,6 +485,13 @@ This check will check documentation of ``__init__`` under the class docstring, a
     1
 
 Checking class docstrings can be permanently enabled in the pyproject.toml file
+
+.. code-block:: toml
+
+    [tool.docsig]
+    check-class-constructor = true
+
+Or
 
 .. code-block:: toml
 
