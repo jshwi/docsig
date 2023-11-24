@@ -29,6 +29,7 @@ def pretty_print_error() -> None:
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool,
+    check_class_constructor: bool,
     check_dunders: bool,
     check_overridden: bool,
     check_protected: bool,
@@ -41,7 +42,9 @@ def _run_check(  # pylint: disable=too-many-arguments
     for func in parent:
         if not (func.isoverridden and not check_overridden) and (
             not (func.isprotected and not check_protected)
-            and not (func.isinit and not check_class)
+            and not (
+                func.isinit and not (check_class or check_class_constructor)
+            )
             and not (func.isdunder and not check_dunders)
             and not (func.docstring.bare and ignore_no_params)
         ):
@@ -60,6 +63,7 @@ def docsig(  # pylint: disable=too-many-locals
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,
+    check_class_constructor: bool = False,
     check_dunders: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
@@ -84,6 +88,8 @@ def docsig(  # pylint: disable=too-many-locals
     :param path: Path(s) to check.
     :param string: String to check.
     :param check_class: Check class docstrings.
+    :param check_class_constructor: Check ``__init__`` methods. Note that this
+        is mutually incompatible with check_class.
     :param check_dunders: Check dunder methods
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
@@ -104,6 +110,7 @@ def docsig(  # pylint: disable=too-many-locals
         string=string,
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
+        check_class_constructor=check_class_constructor,
     )
     display = _Display(no_ansi)
     for module in modules:
@@ -112,6 +119,7 @@ def docsig(  # pylint: disable=too-many-locals
                 failures = _run_check(
                     top_level,
                     check_class,
+                    check_class_constructor,
                     check_dunders,
                     check_overridden,
                     check_protected,

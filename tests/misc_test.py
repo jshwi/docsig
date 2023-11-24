@@ -33,6 +33,22 @@ def test_print_version(
     assert std.out.strip() == "1.0.0"
 
 
+def test_class_and_class_constructor(
+    capsys: pytest.CaptureFixture, main: MockMainType
+) -> None:
+    """Test that docsig command lines errors when passed incompatible
+    options.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    """
+    with pytest.raises(SystemExit):
+        main(".", "--check-class", "--check-class-constructor")
+
+    std = capsys.readouterr()
+    assert "not allowed with argument" in std.err.strip()
+
+
 @pytest.mark.parametrize("error", ["E101", "E102", "E106", "E107"])
 def test_target_report(
     main: MockMainType,

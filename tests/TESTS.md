@@ -25,6 +25,19 @@ unusual indent, and all templates ending with `G` are `Google` style
 docstrings.
 
 
+### Check class constructor
+
+Test behaviour of `--check-class-constructor`.
+
+These tests all fail under the default setup with `--check-class`,
+because they are missing parameters from the `__init__` under that
+regime.
+
+Tests that should fail when checked with `--check-class-constructor` have
+an ‘F’ just before the final part of the name relating to the docstring
+style. Otherwise, the test should pass.
+
+
 ### Disable rule
 
 Test disabling of errors.

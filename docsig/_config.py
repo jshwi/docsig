@@ -34,11 +34,18 @@ class Parser(_ArgumentParser):
             type=_Path,
             help="directories or files to check",
         )
-        self.add_argument(
+        group = self.add_mutually_exclusive_group(required=False)
+        group.add_argument(
             "-c",
             "--check-class",
             action="store_true",
             help="check class docstrings",
+        )
+        group.add_argument(
+            "-C",
+            "--check-class-constructor",
+            action="store_true",
+            help="check __init__ methods. Note: mutually incompatible with -c",
         )
         self.add_argument(
             "-D",

@@ -277,15 +277,19 @@ class Function:  # pylint: disable=too-many-arguments
     :param disabled: List of disabled checks specific to this function.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param check_class_constructor: If the function is the class
+        constructor, use its own docstring. Otherwise, use the class
+        level docstring for the constructor function.
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
         directives: _t.List[_Directive],
         disabled: list[str],
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
     ) -> None:
         self._node = node
         self._directives = directives
@@ -299,10 +303,12 @@ class Function:  # pylint: disable=too-many-arguments
             ignore_args,
             ignore_kwargs,
         )
-        self._docstring = _Docstring(
-            node.doc_node if not self.isinit else self._parent.doc_node,
-            ignore_kwargs,
-        )
+        if self.isinit and not check_class_constructor:
+            # docstring for __init__ is expected on the class docstring
+            relevant_doc_node = self._parent.doc_node
+        else:
+            relevant_doc_node = node.doc_node
+        self._docstring = _Docstring(relevant_doc_node, ignore_kwargs)
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""
