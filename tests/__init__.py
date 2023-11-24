@@ -8225,3 +8225,117 @@ E103: parameters missing
 E204: unknown inline comment option for enable 'unknown'
 
 """
+
+
+@_templates.register
+class _FWClassConstructorFS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...\"\"\"
+
+    def __init__(self, param1, param2) -> None:
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        :param param3: Fails.
+        \"\"\"
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
+
+
+@_templates.register
+class _FWClassConstructorInitNoRetS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...\"\"\"
+
+    def __init__(self, param1, param2):
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        \"\"\"
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
+
+
+@_templates.register
+class _FWClassConstructorInitBadRetS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...\"\"\"
+
+    # bad typing, but leave that up to mypy
+    def __init__(self, param1, param2) -> int:
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        \"\"\"
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
+
+
+@_templates.register
+class _FWClassConstructorRetNoneFS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...\"\"\"
+
+    def __init__(self, param1, param2) -> None:
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        :return: Fails
+        \"\"\"
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103
+
+
+@_templates.register
+class _FWClassConstructorE111FS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class Klass:
+    \"\"\"...\"\"\"
+
+    def __init__(param1, param2) -> None:
+        \"\"\"...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        :return: Fails
+        \"\"\"
+        pass
+"""
+
+    @property
+    def expected(self) -> str:
+        return messages.E103

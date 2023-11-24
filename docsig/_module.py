@@ -23,6 +23,9 @@ class Parent(_t.List[_Function]):
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param check_class_constructor: Check the class constructor's
+        docstring. Otherwise, expect the constructor's documentation to
+        be on the class level docstring.
     """
 
     def __init__(  # pylint: disable=too-many-arguments
@@ -32,6 +35,7 @@ class Parent(_t.List[_Function]):
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
     ) -> None:
         super().__init__()
         self._name = node.name
@@ -42,7 +46,12 @@ class Parent(_t.List[_Function]):
             comments, disabled = directives.get(subnode.lineno, ([], []))
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(
-                    subnode, comments, disabled, ignore_args, ignore_kwargs
+                    subnode,
+                    comments,
+                    disabled,
+                    ignore_args,
+                    ignore_kwargs,
+                    check_class_constructor,
                 )
                 if func.isoverloaded:
                     overloads.append(func.name)
@@ -82,6 +91,7 @@ class _Module(_t.List[Parent]):
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
     ) -> None:
         super().__init__()
         ast = _ast.parse(string)
@@ -91,7 +101,12 @@ class _Module(_t.List[Parent]):
             if isinstance(subnode, _ast.ClassDef):
                 self.append(
                     Parent(
-                        subnode, directives, path, ignore_args, ignore_kwargs
+                        subnode,
+                        directives,
+                        path,
+                        ignore_args,
+                        ignore_kwargs,
+                        check_class_constructor,
                     )
                 )
 
@@ -109,6 +124,9 @@ class Modules(_t.List[_Module]):
     :param string: String to parse if provided.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param check_class_constructor: Check the class constructor's
+        docstring. Otherwise, expect the constructor's documentation to
+        be on the class level docstring.
     """
 
     def __init__(
@@ -118,11 +136,13 @@ class Modules(_t.List[_Module]):
         string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
     ) -> None:
         super().__init__()
         self._disable = disable
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
+        self.check_class_constructor = check_class_constructor
         if string is not None:
             self.append(
                 _Module(
@@ -130,6 +150,7 @@ class Modules(_t.List[_Module]):
                     disable,
                     ignore_args=ignore_args,
                     ignore_kwargs=ignore_kwargs,
+                    check_class_constructor=check_class_constructor,
                 )
             )
         else:
@@ -148,6 +169,7 @@ class Modules(_t.List[_Module]):
                     root,
                     self._ignore_args,
                     self._ignore_kwargs,
+                    self.check_class_constructor,
                 )
             )
 

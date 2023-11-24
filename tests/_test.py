@@ -289,15 +289,15 @@ def test_no_stdout(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, EXPECTED],
+    [NAME, TEMPLATE, EXPECTED],
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
-def test_ignore_no_params(
+def test_ignore_no_params(  # pylint: disable=too-many-arguments
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    _: str,
+    name: str,
     template: str,
     expected: str,
 ) -> None:
@@ -313,6 +313,7 @@ def test_ignore_no_params(
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
+    :param name: Name of test.
     :param template: String data.
     :param expected: Expected output.
     """
@@ -345,7 +346,13 @@ def test_ignore_no_params(
     # status
     no_params = (
         expected in missing_messages
-        and not any(i in template for i in parameter_keys)
+        and (
+            not any(i in template for i in parameter_keys)
+            # these tests have no :param: in the class docstring
+            # but do in the __init__ docstring, which breaks
+            # the above check within the template
+            or "w-class-constructor" in name
+        )
         and returncode == 0
     )
     assert expected in std.out or no_params
@@ -517,6 +524,41 @@ def test_single_flag(
     """
     init_file(template)
     assert main(".", f"--check-{name.split('-')[1]}") == 1
+
+
+@pytest.mark.parametrize(
+    [NAME, TEMPLATE, "_"],
+    templates.registered.getgroup("f-w-class-constructor"),
+    ids=templates.registered.getgroup("f-w-class-constructor").getids(),
+)
+def test_check_class_constructor(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    name: str,
+    template: str,
+    _: str,
+) -> None:
+    """Test behaviour of ``--check-class-constructor``.
+
+    These tests all fail under the default setup with ``--check-class``,
+    because they are missing parameters from the ``__init__`` under that
+    regime.
+
+    Tests that should fail when checked with ``--check-class-constructor`` have
+    an 'F' just before the final part of the name relating to the docstring
+    style. Otherwise, the test should pass.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    :param name: Name of test.
+    :param template: Contents to write to file.
+    """
+    init_file(template)
+    # exclude --check-class from CHECK_ARGS, because this is
+    # mutually incompatible with --check-class-constructor
+    assert main(".", *CHECK_ARGS[1:], "--check-class-constructor") == int(
+        name[: name.rindex("-")].endswith(FAIL)
+    )
 
 
 @pytest.mark.parametrize(
