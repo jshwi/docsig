@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.39.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- option to check `__init__` against its own docstring
 
 [0.39.1](https://github.com/jshwi/docsig/releases/tag/v0.39.1) - 2023-11-23
 ------------------------------------------------------------------------
