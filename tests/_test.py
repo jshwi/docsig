@@ -274,7 +274,7 @@ def test_no_stdout(
 ) -> None:
     """Test that all tests emit no output.
 
-    Only test templates prefixed with `P` are collected for  this test,
+    Only test templates prefixed with `P` are collected for this test,
     and all tests should pass.
 
     :param capsys: Capture sys out.
