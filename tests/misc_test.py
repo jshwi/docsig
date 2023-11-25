@@ -9,7 +9,8 @@ import pytest
 from templatest import templates
 
 import docsig
-from docsig.messages import E105
+from docsig.messages import TEMPLATE as T
+from docsig.messages import E
 
 from . import CHECK, CROSS, InitFileFixtureType, MockMainType, long, short
 
@@ -143,7 +144,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
     :return: {CROSS}
     \"\"\"
 
-{E105}
+{E[105].fstring(T)}
 
 module/file.py:12 in _Messages
 ------------------------------
@@ -153,7 +154,7 @@ def all({CHECK}category) -> {CROSS}tuple[None]:
     :return: {CROSS}
     \"\"\"
 
-{E105}
+{E[105].fstring(T)}
 
 """,
         ],
@@ -168,7 +169,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
     :return: {CROSS}
     \"\"\"
 
-{E105}
+{E[105].fstring(T)}
 
 module/file.py:12 in _Messages
 ------------------------------
@@ -178,7 +179,7 @@ def all({CHECK}category) -> {CROSS}tuple[None]:
     :return: {CROSS}
     \"\"\"
 
-{E105}
+{E[105].fstring(T)}
 
 """,
         ],

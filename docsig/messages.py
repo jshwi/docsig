@@ -138,29 +138,3 @@ E = _Messages(
         ),
     }
 )
-
-
-# Exxx: Error
-# E1xx: Docstring
-E101 = str(E[101].fstring(TEMPLATE))
-E102 = str(E[102].fstring(TEMPLATE))
-E103 = str(E[103].fstring(TEMPLATE))
-E104 = str(E[104].fstring(TEMPLATE))
-E105 = str(E[105].fstring(TEMPLATE))
-E106 = str(E[106].fstring(TEMPLATE))
-E107 = str(E[107].fstring(TEMPLATE))
-E108 = str(E[108].fstring(TEMPLATE))
-E109 = str(E[109].fstring(TEMPLATE))
-E110 = str(E[110].fstring(TEMPLATE))
-E111 = str(E[111].fstring(TEMPLATE))
-E112 = str(E[112].fstring(TEMPLATE))
-E113 = str(E[113].fstring(TEMPLATE))
-E114 = str(E[114].fstring(TEMPLATE))
-E115 = str(E[115].fstring(TEMPLATE))
-E116 = str(E[116].fstring(TEMPLATE))
-
-# E2xx: Config
-E201 = str(E[201].fstring(TEMPLATE))
-E202 = str(E[202].fstring(TEMPLATE))
-E203 = str(E[203].fstring(TEMPLATE))
-E204 = str(E[204].fstring(TEMPLATE))
