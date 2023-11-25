@@ -30,3 +30,13 @@ class Message(_t.NamedTuple):
 
 class Messages(_t.Dict[int, Message]):
     """Object for storing and retrieving message objects."""
+
+    def all(self, category: int) -> tuple[Message, ...]:
+        """Get all messages belonging to a category.
+
+        :param category: Index of message category.
+        :return: Tuple of all message objects belonging to category.
+        """
+        return tuple(
+            v for k, v in self.items() if str(k).startswith(str(category))
+        )

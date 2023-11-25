@@ -11,11 +11,7 @@ from io import StringIO as _StringIO
 
 from typing_extensions import Self as _Self
 
-from . import messages as _messages
-
-ERRORS = tuple(
-    i for i in dir(_messages) if not i.startswith("__") and i.startswith("E1")
-)
+from .messages import E as _E
 
 
 class _Rules(_t.List[str]):
@@ -24,21 +20,22 @@ class _Rules(_t.List[str]):
         self._unknown = []
         self._kind = kind
         delimiter = _re.search(r"\W+", kind)
+        errors = [i.code for i in _E.all(1)]
         if delimiter and delimiter[0] == "=":
             self._kind, option = kind.split("=")
             if "," in option:
                 values = option.split(",")
                 for value in values:
-                    if value in ERRORS:
+                    if value in errors:
                         self.append(value)
                     else:
                         self._unknown.append(value)
-            elif option not in ERRORS:
+            elif option not in errors:
                 self._unknown.append(option)
             else:
                 self.append(option)
         else:
-            self.extend(ERRORS)
+            self.extend(errors)
 
     @property
     def kind(self) -> str:
