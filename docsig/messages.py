@@ -26,7 +26,6 @@ from ._message import Message as _Message
 from ._message import Messages as _Messages
 
 TEMPLATE = "{code}: {description} ({symbolic})"
-_HINT_TEMPLATE = "hint: {hint}"
 
 
 # Exxx: Error
@@ -165,9 +164,3 @@ E201 = str(E[201].fstring(TEMPLATE))
 E202 = str(E[202].fstring(TEMPLATE))
 E203 = str(E[203].fstring(TEMPLATE))
 E204 = str(E[204].fstring(TEMPLATE))
-
-# Hxxx: Hint
-# H1xx: Docstring
-H101 = _HINT_TEMPLATE.format(hint=E[108].hint)
-H102 = _HINT_TEMPLATE.format(hint=E[105].hint)
-H103 = _HINT_TEMPLATE.format(hint=E[111].hint)

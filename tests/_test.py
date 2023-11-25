@@ -25,7 +25,7 @@ import pytest
 import templatest
 from templatest import Template, templates
 
-from docsig.messages import E103, E105, E108, E109, H101, H102, E
+from docsig.messages import E103, E105, E108, E109, E
 
 from . import (
     CHECK,
@@ -323,7 +323,7 @@ def test_ignore_no_params(  # pylint: disable=too-many-arguments
         E103,  # parameters missing
         E105,  # return missing from docstring
         E109,  # cannot determine whether a return ...
-        H102,  # it is possible a syntax error ...
+        E[105].hint,  # it is possible a syntax error ...
     )
     parameter_keys = (
         ":param",
@@ -385,7 +385,7 @@ def test_no_check_property_returns_flag(
     main(".")
     std = capsys.readouterr()
     assert E108 in std.out
-    assert H101 in std.out
+    assert E[108].hint in std.out
 
 
 @pytest.mark.parametrize(

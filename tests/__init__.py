@@ -32,8 +32,7 @@ from docsig.messages import (
     E202,
     E203,
     E204,
-    H102,
-    H103,
+    E,
 )
 
 MockMainType = t.Callable[..., int]
@@ -1046,7 +1045,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return H102
+        return E[105].hint or ""
 
 
 @_templates.register
@@ -5070,7 +5069,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return H102
+        return E[105].hint or ""
 
 
 @_templates.register
@@ -6684,7 +6683,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return H103
+        return E[111].hint or ""
 
 
 @_templates.register
