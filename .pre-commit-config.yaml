@@ -11,8 +11,6 @@ ci:
     - toc
     - about-tests
     - commit-policy
-default_language_version:
-  python: python3.8
 default_stages:
   - commit
 exclude: |
