@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.40.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- default template for error messages
 - error object to `docsig.messages`
 - option to check methods belonging to protected classes
 
