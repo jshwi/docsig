@@ -45,7 +45,6 @@ from . import (
     long,
     passed,
 )
-from ._utils import errors
 
 
 @pytest.mark.parametrize(
@@ -158,11 +157,13 @@ def test_error_codes(
     :param expected: Expected output.
     """
     init_file(template)
-    messages = [i for i in errors if getattr(docsig.messages, i) != expected]
+    messages = [
+        v.code for _, v in docsig.messages.E.items() if v.code not in expected
+    ]
     main(".")
     std = capsys.readouterr()
     assert std.out.count(expected) == 1
-    assert not any(getattr(docsig.messages, i) in std.out for i in messages)
+    assert not any(i in std.out for i in messages)
 
 
 @pytest.mark.parametrize(
