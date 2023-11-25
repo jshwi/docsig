@@ -11,6 +11,7 @@ import astroid as _ast
 
 from ._directives import Directives as _Directives
 from ._function import Function as _Function
+from ._message import Message as _Message
 from ._utils import isprotected as _isprotected
 
 
@@ -87,7 +88,7 @@ class _Module(_t.List[Parent]):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         string: str,
-        disable: list[str],
+        disable: list[_Message],
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
@@ -132,7 +133,7 @@ class Modules(_t.List[_Module]):
     def __init__(
         self,
         *paths: _Path,
-        disable: list[str],
+        disable: list[_Message],
         string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,

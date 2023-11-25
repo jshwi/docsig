@@ -13,9 +13,11 @@ from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
 from ._display import color as _color
+from ._message import Message as _Message
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import generate_report as _generate_report
+from .messages import E as _E
 
 
 def pretty_print_error() -> None:
@@ -36,7 +38,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_property_returns: bool,
     ignore_no_params: bool,
     no_ansi: bool,
-    targets: list[str],
+    targets: list[_Message],
 ) -> _Failures:
     failures = _Failures()
     for func in parent:
@@ -111,9 +113,11 @@ def docsig(  # pylint: disable=too-many-locals
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
+    disabled_args = list(_E.fromcodes(disable or []))
+    target_args = list(_E.fromcodes(targets or []))
     modules = _Modules(
         *path,
-        disable=disable or [],
+        disable=disabled_args,
         string=string,
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
@@ -137,7 +141,7 @@ def docsig(  # pylint: disable=too-many-locals
                     check_property_returns,
                     ignore_no_params,
                     no_ansi,
-                    targets or [],
+                    target_args,
                 )
                 if failures:
                     display[top_level.path].append(failures)

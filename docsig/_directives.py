@@ -11,10 +11,11 @@ from io import StringIO as _StringIO
 
 from typing_extensions import Self as _Self
 
+from ._message import Message as _Message
 from .messages import E as _E
 
 
-class _Rules(_t.List[str]):
+class _Rules(_t.List[_Message]):
     def __init__(self, kind: str) -> None:
         super().__init__()
         self._unknown = []
@@ -28,15 +29,15 @@ class _Rules(_t.List[str]):
                 for value in values:
                     message = _E.fromref(value)
                     if message.isknown:
-                        self.append(message.code)
+                        self.append(message)
                     else:
-                        self._unknown.append(value)
+                        self._unknown.append(message)
             elif message.isknown:
-                self.append(message.code)
+                self.append(message)
             else:
-                self._unknown.append(option)
+                self._unknown.append(message)
         else:
-            self.extend(i.code for i in _E.all(1))
+            self.extend(_E.all(1))
 
     @property
     def kind(self) -> str:
@@ -44,7 +45,7 @@ class _Rules(_t.List[str]):
         return self._kind
 
     @property
-    def unknown(self) -> list[str]:
+    def unknown(self) -> list[_Message]:
         """List of unknown directive options if any."""
         return self._unknown
 
@@ -108,7 +109,9 @@ class Directive:
         return None
 
 
-class Directives(_t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[str]]]):
+class Directives(
+    _t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[_Message]]]
+):
     """Data for directives:
 
     Dict like object with the line number of directive as the key and
@@ -118,12 +121,10 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[str]]]):
     :param disable: List of checks to disable.
     """
 
-    def __init__(self, text: str, disable: list[str]) -> None:
+    def __init__(self, text: str, disable: list[_Message]) -> None:
         super().__init__()
         fin = _StringIO(text)
-        module_disables = list(
-            i.code for i in _E.fromcodes(disable) if i.isknown
-        )
+        module_disables = list(disable)
         module_directives: list[Directive] = []
         directive = None
         for line in _tokenize.generate_tokens(fin.readline):

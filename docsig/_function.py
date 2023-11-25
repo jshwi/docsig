@@ -13,6 +13,7 @@ import astroid as _ast
 import sphinx.ext.napoleon as _s
 
 from ._directives import Directive as _Directive
+from ._message import Message as _Message
 from ._utils import isprotected as _isprotected
 
 PARAM = "param"
@@ -286,7 +287,7 @@ class Function:  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
         directives: _t.List[_Directive],
-        disabled: list[str],
+        disabled: list[_Message],
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
@@ -402,7 +403,7 @@ class Function:  # pylint: disable=too-many-arguments
         return self._docstring
 
     @property
-    def disabled(self) -> list[str]:
+    def disabled(self) -> list[_Message]:
         """List of disabled checks specific to this function."""
         return self._disabled
 
