@@ -38,6 +38,7 @@ CHECK_ARGS = (
     long.check_overridden,
     long.check_dunders,
     long.check_property_returns,
+    long.check_protected_class_methods,
 )
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 
@@ -8369,5 +8370,46 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 {messages.E103}
 {messages.E203.format(directive="enable", option="unknown")}
+
+"""
+
+
+@_templates.register
+class _MFailProtectedMethods(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class _Messages(_t.Dict[int, Message]):
+    def __init__(self) -> None:
+        self._this_should_not_need_a_docstring
+
+    def fromcode(self, ref: str) -> Message:
+        \"\"\"
+
+        :param ref: Codes or symbolic reference.
+        \"\"\"
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+module/file.py:3 in _Messages
+-----------------------------
+class _Messages:
+    ...
+
+    def __init__() -> ✓None:
+
+{messages.E114}
+
+module/file.py:6 in _Messages
+-----------------------------
+def fromcode({CHECK}ref) -> {CROSS}Message:
+    \"\"\"
+    :param ref: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{messages.E105}
 
 """

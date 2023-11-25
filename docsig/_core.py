@@ -43,7 +43,11 @@ def _run_check(  # pylint: disable=too-many-arguments
         if not (func.isoverridden and not check_overridden) and (
             not (func.isprotected and not check_protected)
             and not (
-                func.isinit and not (check_class or check_class_constructor)
+                func.isinit
+                and not (
+                    (check_class or check_class_constructor)
+                    and not (parent.isprotected and not check_protected)
+                )
             )
             and not (func.isdunder and not check_dunders)
             and not (func.docstring.bare and ignore_no_params)
@@ -65,6 +69,7 @@ def docsig(  # pylint: disable=too-many-locals
     check_class: bool = False,
     check_class_constructor: bool = False,
     check_dunders: bool = False,
+    check_protected_class_methods: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
     check_property_returns: bool = False,
@@ -91,6 +96,8 @@ def docsig(  # pylint: disable=too-many-locals
     :param check_class_constructor: Check ``__init__`` methods. Note that this
         is mutually incompatible with check_class.
     :param check_dunders: Check dunder methods
+    :param check_protected_class_methods: Check public methods belonging
+        to protected classes.
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param check_property_returns: Run return checks on properties.
@@ -115,7 +122,11 @@ def docsig(  # pylint: disable=too-many-locals
     display = _Display(no_ansi)
     for module in modules:
         for top_level in module:
-            if not top_level.isprotected or check_protected:
+            if (
+                not top_level.isprotected
+                or check_protected
+                or check_protected_class_methods
+            ):
                 failures = _run_check(
                     top_level,
                     check_class,

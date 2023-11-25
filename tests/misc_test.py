@@ -3,12 +3,14 @@ tests.misc_test
 ===============
 """
 # pylint: disable=protected-access
+from __future__ import annotations
+
 import pytest
 from templatest import templates
 
 import docsig.messages
 
-from . import InitFileFixtureType, MockMainType, long, short
+from . import CHECK, CROSS, InitFileFixtureType, MockMainType, long, short
 
 
 @pytest.mark.parametrize("arg", (short.v, long.version))
@@ -122,3 +124,104 @@ def test_file_not_found_error(main: MockMainType) -> None:
         main("does-not-exist")
 
     assert str(err.value) == "does-not-exist"
+
+
+@pytest.mark.parametrize(
+    "args,expected",
+    [
+        [(long.check_class,), ""],
+        [(long.check_class_constructor,), ""],
+        [
+            (long.check_protected_class_methods, long.check_class),
+            f"""\
+module/file.py:6 in _Messages
+-----------------------------
+def fromcode({CHECK}ref) -> {CROSS}Message:
+    \"\"\"
+    :param ref: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{docsig.messages.E105}
+
+module/file.py:12 in _Messages
+------------------------------
+def all({CHECK}category) -> {CROSS}tuple[None]:
+    \"\"\"
+    :param category: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{docsig.messages.E105}
+
+""",
+        ],
+        [
+            (long.check_protected_class_methods, long.check_class_constructor),
+            f"""\
+module/file.py:6 in _Messages
+-----------------------------
+def fromcode({CHECK}ref) -> {CROSS}Message:
+    \"\"\"
+    :param ref: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{docsig.messages.E105}
+
+module/file.py:12 in _Messages
+------------------------------
+def all({CHECK}category) -> {CROSS}tuple[None]:
+    \"\"\"
+    :param category: {CHECK}
+    :return: {CROSS}
+    \"\"\"
+
+{docsig.messages.E105}
+
+""",
+        ],
+    ],
+    ids=[
+        "no-arg-check-class",
+        "no-arg=check-class-constructor",
+        "arg-check-class",
+        "arg=check-class-constructor",
+    ],
+)
+def test_check_protected_class_methods(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    args: tuple[str],
+    expected: str,
+) -> None:
+    """Test methods are flagged for protected class.
+
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param args: Args to pass to main.
+    :param expected: Expected stdout.
+    """
+    template = """
+class _Messages(_t.Dict[int, Message]):
+    def __init__(self) -> None:
+        self._this_should_not_need_a_docstring
+
+    def fromcode(self, ref: str) -> Message:
+        \"\"\"
+
+        :param ref: Codes or symbolic reference.
+        \"\"\"
+
+    def all(self, category: int) -> tuple[Message, ...]:
+        \"\"\"
+
+        :param category: Category to get.
+        \"\"\"
+"""
+    init_file(template)
+    main(".", *args)
+    std = capsys.readouterr()
+    assert std.out == expected

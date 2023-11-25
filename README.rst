@@ -77,34 +77,36 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c | -C] [-D] [-o] [-p] [-P] [-i] [-a] [-k] [-n]
+    usage: docsig [-h] [-v] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k] [-n]
                              [-S] [-s STR] [-d LIST] [-t LIST]
                              path [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
-      path                           directories or files to check
+      path                                 directories or files to check
 
     optional arguments:
-      -h, --help                     show this help message and exit
-      -v, --version                  show program's version number and exit
-      -c, --check-class              check class docstrings
-      -C, --check-class-constructor  check __init__ methods. Note: mutually incompatible
-                                     with -c
-      -D, --check-dunders            check dunder methods
-      -o, --check-overridden         check overridden methods
-      -p, --check-protected          check protected functions and classes
-      -P, --check-property-returns   check property return values
-      -i, --ignore-no-params         ignore docstrings where parameters are not
-                                     documented
-      -a, --ignore-args              ignore args prefixed with an asterisk
-      -k, --ignore-kwargs            ignore kwargs prefixed with two asterisks
-      -n, --no-ansi                  disable ansi output
-      -S, --summary                  print a summarised report
-      -s STR, --string STR           string to parse instead of files
-      -d LIST, --disable LIST        comma separated list of rules to disable
-      -t LIST, --target LIST         comma separated list of rules to target
+      -h, --help                           show this help message and exit
+      -v, --version                        show program's version number and exit
+      -c, --check-class                    check class docstrings
+      -C, --check-class-constructor        check __init__ methods. Note: mutually
+                                           incompatible with -c
+      -D, --check-dunders                  check dunder methods
+      -m, --check-protected-class-methods  check public methods belonging to protected
+                                           classes
+      -o, --check-overridden               check overridden methods
+      -p, --check-protected                check protected functions and classes
+      -P, --check-property-returns         check property return values
+      -i, --ignore-no-params               ignore docstrings where parameters are not
+                                           documented
+      -a, --ignore-args                    ignore args prefixed with an asterisk
+      -k, --ignore-kwargs                  ignore kwargs prefixed with two asterisks
+      -n, --no-ansi                        disable ansi output
+      -S, --summary                        print a summarised report
+      -s STR, --string STR                 string to parse instead of files
+      -d LIST, --disable LIST              comma separated list of rules to disable
+      -t LIST, --target LIST               comma separated list of rules to target
 
 Options can also be configured with the pyproject.toml file
 

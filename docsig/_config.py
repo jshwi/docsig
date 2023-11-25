@@ -54,6 +54,12 @@ class Parser(_ArgumentParser):
             help="check dunder methods",
         )
         self.add_argument(
+            "-m",
+            "--check-protected-class-methods",
+            action="store_true",
+            help="check public methods belonging to protected classes",
+        )
+        self.add_argument(
             "-o",
             "--check-overridden",
             action="store_true",
