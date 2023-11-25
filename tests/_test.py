@@ -191,7 +191,7 @@ def test_multiple(
     :param expected: Expected result.
     """
     init_file(template)
-    main(".")
+    main(".", *CHECK_ARGS)
     std = capsys.readouterr()
     assert std.out == expected
 
