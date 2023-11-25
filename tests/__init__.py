@@ -12,7 +12,29 @@ from templatest import BaseTemplate as _BaseTemplate
 from templatest import templates as _templates
 from templatest.utils import VarPrefix as _VarPrefix
 
-from docsig import messages
+from docsig.messages import (
+    E101,
+    E102,
+    E103,
+    E104,
+    E105,
+    E106,
+    E107,
+    E109,
+    E110,
+    E111,
+    E112,
+    E113,
+    E114,
+    E115,
+    E116,
+    E201,
+    E202,
+    E203,
+    E204,
+    H102,
+    H103,
+)
 
 MockMainType = t.Callable[..., int]
 InitFileFixtureType = t.Callable[[str], Path]
@@ -124,7 +146,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -279,7 +301,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -377,7 +399,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -420,7 +442,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E102
+        return E102
 
 
 @_templates.register
@@ -438,7 +460,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -458,7 +480,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E104
+        return E104
 
 
 @_templates.register
@@ -478,7 +500,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -498,7 +520,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E106
+        return E106
 
 
 @_templates.register
@@ -518,7 +540,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E107
+        return E107
 
 
 @_templates.register
@@ -651,7 +673,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:11
 -----------------
@@ -662,7 +684,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 module/file.py:19
 -----------------
@@ -673,7 +695,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -739,7 +761,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -875,7 +897,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return messages.E116
+        return E116
 
 
 @_templates.register
@@ -892,7 +914,7 @@ def function(param1) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E115
+        return E115
 
 
 @_templates.register
@@ -987,7 +1009,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -1024,7 +1046,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return messages.H102
+        return H102
 
 
 @_templates.register
@@ -1061,7 +1083,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -1075,7 +1097,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -1112,7 +1134,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -1126,7 +1148,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -1144,7 +1166,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E110
+        return E110
 
 
 @_templates.register
@@ -1237,7 +1259,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -1333,7 +1355,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E111
+        return E111
 
 
 @_templates.register
@@ -1378,7 +1400,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -1416,7 +1438,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -1430,7 +1452,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -1522,7 +1544,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -1566,7 +1588,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E112
+        return E112
 
 
 @_templates.register
@@ -1664,7 +1686,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -1856,7 +1878,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -1974,7 +1996,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -1998,7 +2020,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E102
+        return E102
 
 
 @_templates.register
@@ -2020,7 +2042,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -2049,7 +2071,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E104
+        return E104
 
 
 @_templates.register
@@ -2074,7 +2096,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -2100,7 +2122,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E106
+        return E106
 
 
 @_templates.register
@@ -2265,7 +2287,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:16
 -----------------
@@ -2276,7 +2298,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 module/file.py:29
 -----------------
@@ -2287,7 +2309,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -2360,7 +2382,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -2404,7 +2426,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -2426,7 +2448,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -2622,7 +2644,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -2683,7 +2705,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -2697,7 +2719,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -2717,7 +2739,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -2731,7 +2753,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -2753,7 +2775,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E110
+        return E110
 
 
 @_templates.register
@@ -2864,7 +2886,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -2984,7 +3006,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E111
+        return E111
 
 
 @_templates.register
@@ -3037,7 +3059,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -3081,7 +3103,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -3095,7 +3117,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -3195,7 +3217,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -3247,7 +3269,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E112
+        return E112
 
 
 @_templates.register
@@ -3627,7 +3649,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -3745,7 +3767,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -3769,7 +3791,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E102
+        return E102
 
 
 @_templates.register
@@ -3791,7 +3813,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -3820,7 +3842,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E104
+        return E104
 
 
 @_templates.register
@@ -3845,7 +3867,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -3871,7 +3893,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E106
+        return E106
 
 
 @_templates.register
@@ -4036,7 +4058,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:16
 -----------------
@@ -4047,7 +4069,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 module/file.py:29
 -----------------
@@ -4058,7 +4080,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -4158,7 +4180,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -4180,7 +4202,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -4389,7 +4411,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -4411,7 +4433,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E110
+        return E110
 
 
 @_templates.register
@@ -4600,7 +4622,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E111
+        return E111
 
 
 @_templates.register
@@ -4653,7 +4675,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -4697,7 +4719,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -4804,7 +4826,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E112
+        return E112
 
 
 @_templates.register
@@ -4901,7 +4923,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E104
+        return E104
 
 
 @_templates.register
@@ -4965,7 +4987,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return messages.E116
+        return E116
 
 
 @_templates.register
@@ -5048,7 +5070,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return messages.H102
+        return H102
 
 
 @_templates.register
@@ -5085,7 +5107,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -5162,7 +5184,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E111
+        return E111
 
 
 @_templates.register
@@ -5386,7 +5408,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -5490,7 +5512,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -5510,7 +5532,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E102
+        return E102
 
 
 @_templates.register
@@ -5529,7 +5551,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -5552,7 +5574,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E104
+        return E104
 
 
 @_templates.register
@@ -5573,7 +5595,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -5594,7 +5616,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E106
+        return E106
 
 
 @_templates.register
@@ -5734,7 +5756,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:12
 -----------------
@@ -5745,7 +5767,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 module/file.py:21
 -----------------
@@ -5756,7 +5778,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -5845,7 +5867,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -5864,7 +5886,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E101
+        return E101
 
 
 @_templates.register
@@ -6046,7 +6068,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -6065,7 +6087,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E110
+        return E110
 
 
 @_templates.register
@@ -6228,7 +6250,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E111
+        return E111
 
 
 @_templates.register
@@ -6275,7 +6297,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E105
+        return E105
 
 
 @_templates.register
@@ -6315,7 +6337,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return messages.E109
+        return E109
 
 
 @_templates.register
@@ -6410,7 +6432,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return messages.E112
+        return E112
 
 
 @_templates.register
@@ -6477,7 +6499,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E114
+        return E114
 
 
 @_templates.register
@@ -6518,7 +6540,7 @@ def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
     :return: {CHECK}
     \"\"\"
 
-{messages.E115}
+{E115}
 """
 
 
@@ -6602,7 +6624,7 @@ class Params(_MutableSequence[Param]):
 
     @property
     def expected(self) -> str:
-        return messages.E113
+        return E113
 
 
 @_templates.register
@@ -6640,7 +6662,7 @@ def example(some_input: int) -> int:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -6662,7 +6684,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.H103
+        return H103
 
 
 @_templates.register
@@ -6818,7 +6840,7 @@ def process({CHECK}response) -> {CROSS}str:
     :return: {CROSS}
     \"\"\"
 
-{messages.E105}
+{E105}
 
 """
 
@@ -6864,7 +6886,7 @@ def process({CROSS}response) -> {CHECK}str:
     :return: {CHECK}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -7004,7 +7026,7 @@ def process({CHECK}response) -> {CROSS}None:
     :return: {CROSS}
     \"\"\"
 
-{messages.E104}
+{E104}
 
 """
 
@@ -7080,7 +7102,7 @@ def process({CHECK}response) -> {CROSS}str:
     :return: {CROSS}
     \"\"\"
 
-{messages.E105}
+{E105}
 
 """
 
@@ -7123,7 +7145,7 @@ def process({CROSS}response) -> {CHECK}str:
     :return: {CHECK}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -7251,7 +7273,7 @@ def process({CHECK}response) -> {CROSS}None:
     :return: {CROSS}
     \"\"\"
 
-{messages.E104}
+{E104}
 
 """
 
@@ -7337,7 +7359,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 module/file.py:19
 -----------------
@@ -7348,7 +7370,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -7432,7 +7454,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 """
 
@@ -7480,7 +7502,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:11
 -----------------
@@ -7491,7 +7513,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 """
 
@@ -7540,7 +7562,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:21
 -----------------
@@ -7551,7 +7573,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -7626,7 +7648,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
+{E101}
 
 module/file.py:21
 -----------------
@@ -7637,7 +7659,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 module/file.py:47
 -----------------
@@ -7648,7 +7670,7 @@ def function_6({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
+{E103}
 
 """
 
@@ -7734,7 +7756,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
+{E102}
 
 """
 
@@ -7774,7 +7796,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E202.format(directive="ena")}
+{E202.format(directive="ena")}
 
 module/file.py:11
 -----------------
@@ -7785,7 +7807,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E202.format(directive="ena")}
+{E202.format(directive="ena")}
 
 """
 
@@ -7825,8 +7847,8 @@ def function_1({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
-{messages.E201.format(directive="disa")}
+{E102}
+{E201.format(directive="disa")}
 
 module/file.py:11
 -----------------
@@ -7837,8 +7859,8 @@ def function_2({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E201.format(directive="disa")}
+{E101}
+{E201.format(directive="disa")}
 
 """
 
@@ -7930,8 +7952,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E201.format(directive="unknown")}
 
 module/file.py:14
 -----------------
@@ -7942,8 +7964,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
-{messages.E201.format(directive="unknown")}
+{E102}
+{E201.format(directive="unknown")}
 
 module/file.py:23
 -----------------
@@ -7954,10 +7976,10 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
-{messages.E201.format(directive="unknown")}
-{messages.E204.format(directive="enable", option="unknown")}
-{messages.E204.format(directive="enable", option="unknown-the-third")}
+{E103}
+{E201.format(directive="unknown")}
+{E204.format(directive="enable", option="unknown")}
+{E204.format(directive="enable", option="unknown-the-third")}
 
 module/file.py:33
 -----------------
@@ -7969,8 +7991,8 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     :return: {CROSS}
     \"\"\"
 
-{messages.E104}
-{messages.E201.format(directive="unknown")}
+{E104}
+{E201.format(directive="unknown")}
 
 module/file.py:43
 -----------------
@@ -7982,8 +8004,8 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     :return: {CROSS}
     \"\"\"
 
-{messages.E105}
-{messages.E201.format(directive="unknown")}
+{E105}
+{E201.format(directive="unknown")}
 
 module/file.py:52
 -----------------
@@ -7995,10 +8017,10 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E102}
-{messages.E106}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E102}
+{E106}
+{E201.format(directive="unknown")}
 
 module/file.py:62
 -----------------
@@ -8010,11 +8032,11 @@ def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E102}
-{messages.E106}
-{messages.E107}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E102}
+{E106}
+{E107}
+{E201.format(directive="unknown")}
 
 """
 
@@ -8106,8 +8128,8 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     :param param1: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E201.format(directive="unknown")}
 
 module/file.py:14
 -----------------
@@ -8118,8 +8140,8 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E102}
-{messages.E201.format(directive="unknown")}
+{E102}
+{E201.format(directive="unknown")}
 
 module/file.py:23
 -----------------
@@ -8130,10 +8152,10 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
-{messages.E201.format(directive="unknown")}
-{messages.E204.format(directive="enable", option="unknown")}
-{messages.E204.format(directive="enable", option="unknown-the-third")}
+{E103}
+{E201.format(directive="unknown")}
+{E204.format(directive="enable", option="unknown")}
+{E204.format(directive="enable", option="unknown-the-third")}
 
 module/file.py:33
 -----------------
@@ -8145,8 +8167,8 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     :return: {CROSS}
     \"\"\"
 
-{messages.E104}
-{messages.E201.format(directive="unknown")}
+{E104}
+{E201.format(directive="unknown")}
 
 module/file.py:43
 -----------------
@@ -8158,8 +8180,8 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     :return: {CROSS}
     \"\"\"
 
-{messages.E105}
-{messages.E201.format(directive="unknown")}
+{E105}
+{E201.format(directive="unknown")}
 
 module/file.py:52
 -----------------
@@ -8171,10 +8193,10 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     :param param3: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E102}
-{messages.E106}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E102}
+{E106}
+{E201.format(directive="unknown")}
 
 module/file.py:62
 -----------------
@@ -8186,11 +8208,11 @@ def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E101}
-{messages.E102}
-{messages.E106}
-{messages.E107}
-{messages.E201.format(directive="unknown")}
+{E101}
+{E102}
+{E106}
+{E107}
+{E201.format(directive="unknown")}
 
 """
 
@@ -8222,8 +8244,8 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
-{messages.E204.format(directive="enable", option="unknown")}
+{E103}
+{E204.format(directive="enable", option="unknown")}
 
 """
 
@@ -8248,7 +8270,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -8270,7 +8292,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -8293,7 +8315,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -8316,7 +8338,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -8339,7 +8361,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return messages.E103
+        return E103
 
 
 @_templates.register
@@ -8368,8 +8390,8 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     :param None: {CROSS}
     \"\"\"
 
-{messages.E103}
-{messages.E203.format(directive="enable", option="unknown")}
+{E103}
+{E203.format(directive="enable", option="unknown")}
 
 """
 
@@ -8400,7 +8422,7 @@ class _Messages:
 
     def __init__() -> ✓None:
 
-{messages.E114}
+{E114}
 
 module/file.py:6 in _Messages
 -----------------------------
@@ -8410,6 +8432,6 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
     :return: {CROSS}
     \"\"\"
 
-{messages.E105}
+{E105}
 
 """

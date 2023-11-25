@@ -8,7 +8,8 @@ from __future__ import annotations
 import pytest
 from templatest import templates
 
-import docsig.messages
+import docsig
+from docsig.messages import E105
 
 from . import CHECK, CROSS, InitFileFixtureType, MockMainType, long, short
 
@@ -142,7 +143,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
     :return: {CROSS}
     \"\"\"
 
-{docsig.messages.E105}
+{E105}
 
 module/file.py:12 in _Messages
 ------------------------------
@@ -152,7 +153,7 @@ def all({CHECK}category) -> {CROSS}tuple[None]:
     :return: {CROSS}
     \"\"\"
 
-{docsig.messages.E105}
+{E105}
 
 """,
         ],
@@ -167,7 +168,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
     :return: {CROSS}
     \"\"\"
 
-{docsig.messages.E105}
+{E105}
 
 module/file.py:12 in _Messages
 ------------------------------
@@ -177,7 +178,7 @@ def all({CHECK}category) -> {CROSS}tuple[None]:
     :return: {CROSS}
     \"\"\"
 
-{docsig.messages.E105}
+{E105}
 
 """,
         ],
