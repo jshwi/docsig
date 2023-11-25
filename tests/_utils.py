@@ -9,9 +9,3 @@ from docsig import messages
 errors = [
     i for i in dir(messages) if not i.startswith("__") and i.startswith("E")
 ]
-
-
-#: Hint message codes.
-hints = [
-    i for i in dir(messages) if not i.startswith("__") and i.startswith("H")
-]
