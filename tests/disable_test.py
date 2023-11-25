@@ -6,13 +6,23 @@ tests.disable_test.py
 import pytest
 from templatest.utils import VarSeq
 
+from docsig.messages import E
+
 from . import InitFileFixtureType, MockMainType
 
 function = VarSeq("function", "_")
 
-RULE = "rule"
 RULES = "rules"
+ARGS = "code,symbolic"
 ES = "E101", "E102", "E103", "E104", "E105", "E106", "E107"
+SYMBOLIC = [
+    (E[101].code, E[101].symbolic),
+    (E[102].code, E[102].symbolic),
+    (E[103].code, E[103].symbolic),
+    (E[104].code, E[104].symbolic),
+    (E[105].code, E[105].symbolic),
+    (E[106].code, E[106].symbolic),
+]
 DISABLE_FILE_1 = """
 def function_1(param1, param2, param3) -> None:
     \"\"\"E101.
@@ -1151,25 +1161,32 @@ def test_no_disables(
     assert all(i in std.out for i in ES)
 
 
-@pytest.mark.parametrize(RULE, ES)
+@pytest.mark.parametrize(ARGS, SYMBOLIC)
 def test_commandline_disables(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    rule: str,
+    code: str,
+    symbolic: str,
 ) -> None:
     """Test series of functions with disable commandline arg.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param rule: Rule to disable.
+    :param code: Rule to disable.
+    :param symbolic: Rule symbolic code to comment.
     """
     init_file(DISABLE_FILE_1)
-    main(".", "--disable", rule)
+    main(".", "--disable", code)
     std = capsys.readouterr()
-    assert rule not in std.out
-    assert all(i in std.out for i in ES if i != rule)
+    assert code not in std.out
+    assert all(i[0] in std.out for i in SYMBOLIC if i[0] != code)
+    init_file(DISABLE_FILE_1)
+    main(".", "--disable", symbolic)
+    std = capsys.readouterr()
+    assert symbolic not in std.out
+    assert all(i[1] in std.out for i in SYMBOLIC if i[1] != symbolic)
 
 
 def test_module_disables(
@@ -1398,25 +1415,33 @@ def test_single_function_comma_separated_error_enable(
     assert not any(f"function_{i}" in std.out for i in range(1, 8) if i != 6)
 
 
-@pytest.mark.parametrize(RULE, ES)
+@pytest.mark.parametrize(ARGS, SYMBOLIC)
 def test_individual_inline_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    rule: str,
+    code: str,
+    symbolic: str,
 ) -> None:
     """Test individual inline disable checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param rule: Rule to comment.
+    :param code: Rule code to comment.
+    :param symbolic: Rule symbolic code to comment.
     """
-    enabled_rules = [i for i in ES if i != rule]
-    init_file(INLINE_DISABLE_TEMPLATE.format(rules=rule))
+    enabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
+    init_file(INLINE_DISABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert rule not in std.out
+    assert code not in std.out
+    assert all(i in std.out for i in enabled_rules)
+    enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
+    init_file(INLINE_DISABLE_TEMPLATE.format(rules=symbolic))
+    main(".")
+    std = capsys.readouterr()
+    assert symbolic not in std.out
     assert all(i in std.out for i in enabled_rules)
 
 
@@ -1458,25 +1483,33 @@ def test_comma_separated_inline_disable_checks(
     assert all(i in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(RULE, ES)
+@pytest.mark.parametrize(ARGS, SYMBOLIC)
 def test_individual_module_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    rule: str,
+    code: str,
+    symbolic: str,
 ) -> None:
     """Test individual module disable checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param rule: Rule to comment.
+    :param code: Rule code to comment.
+    :param symbolic: Rule symbolic code to comment.
     """
-    enabled_rules = [i for i in ES if i != rule]
-    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=rule))
+    enabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
+    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert rule not in std.out
+    assert code not in std.out
+    assert all(i in std.out for i in enabled_rules)
+    enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
+    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=symbolic))
+    main(".")
+    std = capsys.readouterr()
+    assert code not in std.out
     assert all(i in std.out for i in enabled_rules)
 
 
@@ -1518,25 +1551,33 @@ def test_comma_separated_module_disable_checks(
     assert all(i in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(RULE, ES)
+@pytest.mark.parametrize(ARGS, SYMBOLIC)
 def test_individual_inline_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    rule: str,
+    code: str,
+    symbolic: str,
 ) -> None:
     """Test individual inline enable checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param rule: Rule to comment.
+    :param code: Rule code to comment.
+    :param symbolic: Rule symbolic code to comment.
     """
-    disabled_rules = [i for i in ES if i != rule]
-    init_file(INLINE_ENABLE_TEMPLATE.format(rules=rule))
+    disabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
+    init_file(INLINE_ENABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert rule in std.out
+    assert code in std.out
+    assert not any(i in std.out for i in disabled_rules)
+    disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
+    init_file(INLINE_ENABLE_TEMPLATE.format(rules=symbolic))
+    main(".")
+    std = capsys.readouterr()
+    assert symbolic in std.out
     assert not any(i in std.out for i in disabled_rules)
 
 
@@ -1578,25 +1619,33 @@ def test_comma_separated_inline_enable_checks(
     assert not any(i in std.out for i in disabled_rules)
 
 
-@pytest.mark.parametrize(RULE, ES)
+@pytest.mark.parametrize(ARGS, SYMBOLIC)
 def test_individual_module_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
-    rule: str,
+    code: str,
+    symbolic: str,
 ) -> None:
     """Test individual module enable checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
-    :param rule: Rule to comment.
+    :param code: Rule code to comment.
+    :param symbolic: Rule symbolic code to comment.
     """
-    disabled_rules = [i for i in ES if i != rule]
-    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=rule))
+    disabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
+    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert rule in std.out
+    assert code in std.out
+    assert not any(i in std.out for i in disabled_rules)
+    disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
+    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=symbolic))
+    main(".")
+    std = capsys.readouterr()
+    assert symbolic in std.out
     assert not any(i in std.out for i in disabled_rules)
 
 

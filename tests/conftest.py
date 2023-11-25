@@ -53,7 +53,7 @@ def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
 
     def _init_file(contents: str) -> Path:
         file = tmp_path / "module" / "file.py"
-        file.parent.mkdir()
+        file.parent.mkdir(exist_ok=True)
         file.write_text(contents)
         return file
 

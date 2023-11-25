@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.40.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- functionality to disable checks by symbolic reference
 - symbolic field to messages
 - default template for error messages
 - error object to `docsig.messages`

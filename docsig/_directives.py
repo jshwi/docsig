@@ -20,22 +20,23 @@ class _Rules(_t.List[str]):
         self._unknown = []
         self._kind = kind
         delimiter = _re.search(r"\W+", kind)
-        errors = [i.code for i in _E.all(1)]
         if delimiter and delimiter[0] == "=":
             self._kind, option = kind.split("=")
+            message = _E.fromref(option)
             if "," in option:
                 values = option.split(",")
                 for value in values:
-                    if value in errors:
-                        self.append(value)
+                    message = _E.fromref(value)
+                    if message.isknown:
+                        self.append(message.code)
                     else:
                         self._unknown.append(value)
-            elif option not in errors:
-                self._unknown.append(option)
+            elif message.isknown:
+                self.append(message.code)
             else:
-                self.append(option)
+                self._unknown.append(option)
         else:
-            self.extend(errors)
+            self.extend(i.code for i in _E.all(1))
 
     @property
     def kind(self) -> str:
@@ -120,7 +121,9 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[str]]]):
     def __init__(self, text: str, disable: list[str]) -> None:
         super().__init__()
         fin = _StringIO(text)
-        module_disables = list(disable)
+        module_disables = list(
+            i.code for i in _E.fromcodes(disable) if i.isknown
+        )
         module_directives: list[Directive] = []
         directive = None
         for line in _tokenize.generate_tokens(fin.readline):
