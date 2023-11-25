@@ -37,6 +37,7 @@ omit = [
 
 [tool.docsig]
 check-class = true
+check-protected-class-methods = true
 summary = true
 
 [tool.isort]
