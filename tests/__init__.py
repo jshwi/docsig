@@ -42,6 +42,8 @@ CHECK_ARGS = (
     long.check_protected_class_methods,
 )
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
+ENABLE = "enable"
+UNKNOWN = "unknown"
 
 
 @_templates.register
@@ -7932,7 +7934,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[101].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:14
 -----------------
@@ -7944,7 +7946,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
 
 {E[102].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:23
 -----------------
@@ -7956,9 +7958,9 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[103].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
-{E[204].fstring(T).format(directive="enable", option="unknown")}
-{E[204].fstring(T).format(directive="enable", option="unknown-the-third")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
+{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+{E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
 
 module/file.py:33
 -----------------
@@ -7971,7 +7973,7 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
 
 {E[104].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:43
 -----------------
@@ -7984,7 +7986,7 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
 
 {E[105].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:52
 -----------------
@@ -7999,7 +8001,7 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[101].fstring(T)}
 {E[102].fstring(T)}
 {E[106].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:62
 -----------------
@@ -8015,7 +8017,7 @@ def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[102].fstring(T)}
 {E[106].fstring(T)}
 {E[107].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 """
 
@@ -8108,7 +8110,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[101].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:14
 -----------------
@@ -8120,7 +8122,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
 
 {E[102].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:23
 -----------------
@@ -8132,9 +8134,9 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[103].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
-{E[204].fstring(T).format(directive="enable", option="unknown")}
-{E[204].fstring(T).format(directive="enable", option="unknown-the-third")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
+{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+{E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
 
 module/file.py:33
 -----------------
@@ -8147,7 +8149,7 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
 
 {E[104].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:43
 -----------------
@@ -8160,7 +8162,7 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
 
 {E[105].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:52
 -----------------
@@ -8175,7 +8177,7 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[101].fstring(T)}
 {E[102].fstring(T)}
 {E[106].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 module/file.py:62
 -----------------
@@ -8191,7 +8193,7 @@ def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[102].fstring(T)}
 {E[106].fstring(T)}
 {E[107].fstring(T)}
-{E[201].fstring(T).format(directive="unknown")}
+{E[201].fstring(T).format(directive=UNKNOWN)}
 
 """
 
@@ -8224,7 +8226,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[103].fstring(T)}
-{E[204].fstring(T).format(directive="enable", option="unknown")}
+{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
 
 """
 
@@ -8370,7 +8372,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
 
 {E[103].fstring(T)}
-{E[203].fstring(T).format(directive="enable", option="unknown")}
+{E[203].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
 
 """
 
