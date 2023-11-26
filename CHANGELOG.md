@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - error object to `docsig.messages`
 - option to check methods belonging to protected classes
 
+### Fixed
+- use system agnostic root when finding pyproject.toml
+
 ### Removed
 - error constants in `docsig.messages`
 - hint constants in `docsig.messages`
