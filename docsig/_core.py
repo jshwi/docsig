@@ -65,7 +65,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     return failures
 
 
-def docsig(  # pylint: disable=too-many-locals
+def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: _Path,
     string: str | None = None,
     check_class: bool = False,

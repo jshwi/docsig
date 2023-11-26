@@ -130,7 +130,7 @@ class Modules(_t.List[_Module]):
         be on the class level docstring.
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
         disable: list[_Message],
