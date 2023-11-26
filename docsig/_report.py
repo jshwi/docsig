@@ -227,7 +227,8 @@ class Report(_MessageSequence):
         :param prefix: Prefix report.
         :return: Current report.
         """
-        return f"\n{prefix}".join(self) + "\n"
+        report = f"\n{prefix}".join(self)
+        return f"{report}\n"
 
 
 def generate_report(
