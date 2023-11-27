@@ -165,7 +165,7 @@ class Modules(_t.List[_Module]):
         if root.is_file() and root.name.endswith(".py"):
             self.append(
                 _Module(
-                    root.read_text(),
+                    root.read_text(encoding="utf-8"),
                     self._disable,
                     root,
                     self._ignore_args,
