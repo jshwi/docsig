@@ -28,6 +28,22 @@ def pretty_print_error() -> None:
         )
 
 
+def _check_provided_lists(
+    disabled_args: list[_Message], target_args: list[_Message]
+) -> None:
+    for message in disabled_args:
+        if not message.isknown:
+            raise ValueError(
+                f"unknown option to disable '{message.description}'",
+            )
+
+    for message in target_args:
+        if not message.isknown:
+            raise ValueError(
+                f"unknown option to target '{message.description}'",
+            )
+
+
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool,
@@ -115,18 +131,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     """
     disabled_args = list(_E.fromcodes(disable or []))
     target_args = list(_E.fromcodes(targets or []))
-    for message in disabled_args:
-        if not message.isknown:
-            raise ValueError(
-                f"unknown option to disable '{message.description}'",
-            )
-
-    for message in target_args:
-        if not message.isknown:
-            raise ValueError(
-                f"unknown option to target '{message.description}'",
-            )
-
+    _check_provided_lists(disabled_args, target_args)
     modules = _Modules(
         *path,
         disable=disabled_args,
