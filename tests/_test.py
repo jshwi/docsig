@@ -593,7 +593,7 @@ def test_string_argument(
     :param template: String data.
     :param expected: Expected output.
     """
-    assert main(".", *CHECK_ARGS, long.string, template) == int(
+    assert main(*CHECK_ARGS, long.string, template) == int(
         name.startswith(FAIL)
     )
     std = capsys.readouterr()

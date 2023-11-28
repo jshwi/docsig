@@ -79,7 +79,7 @@ Commandline
 
     usage: docsig [-h] [-v] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k] [-n]
                              [-S] [-s STR] [-d LIST] [-t LIST]
-                             path [path ...]
+                             [path [path ...]]
 
     Check signature params for proper documentation
 

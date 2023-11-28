@@ -28,6 +28,13 @@ def pretty_print_error() -> None:
         )
 
 
+def _check_required_args(path: tuple[str | _Path, ...], string: str | None):
+    if not path and not string:
+        raise ValueError(
+            "the following arguments are required: path(s) or string",
+        )
+
+
 def _check_provided_lists(
     disabled_args: list[_Message], target_args: list[_Message]
 ) -> None:
@@ -129,6 +136,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
+    _check_required_args(path, string)
     disabled_args = list(_E.fromcodes(disable or []))
     target_args = list(_E.fromcodes(targets or []))
     _check_provided_lists(disabled_args, target_args)

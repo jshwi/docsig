@@ -29,7 +29,7 @@ class Parser(_ArgumentParser):
     def _add_arguments(self) -> None:
         self.add_argument(
             "path",
-            nargs="+",
+            nargs="*",
             action="store",
             type=_Path,
             help="directories or files to check",

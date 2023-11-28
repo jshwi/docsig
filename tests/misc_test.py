@@ -246,3 +246,17 @@ class _Messages(_t.Dict[int, Message]):
     main(".", *args)
     std = capsys.readouterr()
     assert std.out == expected
+
+
+def test_no_path_or_string(main: MockMainType) -> None:
+    """Test error raised when missing essential arguments.
+
+    :param main: Mock ``main`` function.
+    """
+    with pytest.raises(ValueError) as err:
+        main()
+
+    assert (
+        str(err.value)
+        == "the following arguments are required: path(s) or string"
+    )
