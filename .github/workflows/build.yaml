@@ -6,6 +6,10 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  PYTHONIOENCODING: utf-8
+
 jobs:
   build:
     name: ${{ matrix.os }}-python${{ matrix.python-version }}
@@ -21,6 +25,7 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
+          - windows-latest
     steps:
       - name: Checkout build
         id: checkout-build
