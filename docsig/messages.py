@@ -134,7 +134,7 @@ E = _Messages(
         204: _Message(
             "E204",
             "unknown inline comment option for {directive} '{option}'",
-            "unknown-module-directive-option",
+            "unknown-inline-directive-option",
         ),
     }
 )

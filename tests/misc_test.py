@@ -270,3 +270,21 @@ def test_str_path_via_api() -> None:
         AttributeError: 'str' object has no attribute 'exists'
     """
     docsig.docsig(".")
+
+
+def test_no_duplicate_codes() -> None:
+    """Test there are no accidental duplicate codes."""
+    codes = [i.code for i in E.values()]
+    assert not any(codes.count(x) > 1 for x in codes)
+
+
+def test_no_duplicate_descriptions() -> None:
+    """Test there are no accidental duplicate descriptions."""
+    descriptions = [i.description for i in E.values()]
+    assert not any(descriptions.count(x) > 1 for x in descriptions)
+
+
+def test_no_duplicate_symbolic_messages() -> None:
+    """Test there are no accidental duplicate symbolic messages."""
+    symbolic_messages = [i.symbolic for i in E.values()]
+    assert not any(symbolic_messages.count(x) > 1 for x in symbolic_messages)
