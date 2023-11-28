@@ -89,7 +89,7 @@ def _run_check(  # pylint: disable=too-many-arguments
 
 
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
-    *path: _Path,
+    *path: str | _Path,
     string: str | None = None,
     check_class: bool = False,
     check_class_constructor: bool = False,
@@ -141,7 +141,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     target_args = list(_E.fromcodes(targets or []))
     _check_provided_lists(disabled_args, target_args)
     modules = _Modules(
-        *path,
+        *tuple(_Path(i) for i in path),
         disable=disabled_args,
         string=string,
         ignore_args=ignore_args,

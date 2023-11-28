@@ -260,3 +260,13 @@ def test_no_path_or_string(main: MockMainType) -> None:
         str(err.value)
         == "the following arguments are required: path(s) or string"
     )
+
+
+def test_str_path_via_api() -> None:
+    """Test passing a path as a string when using api.
+
+    No need to make any assertions, just need to avoid the following:
+
+        AttributeError: 'str' object has no attribute 'exists'
+    """
+    docsig.docsig(".")

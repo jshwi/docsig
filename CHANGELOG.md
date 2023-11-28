@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.42.1...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- allow paths as strings when using api
 - allow for passing string argument via commandline
 
 [0.42.1](https://github.com/jshwi/docsig/releases/tag/v0.42.1) - 2023-11-27
