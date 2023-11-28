@@ -111,7 +111,6 @@ audit = [
   "format-str",
   "imports",
   "lint",
-  "params",
   "test",
   "typecheck",
   "unused"

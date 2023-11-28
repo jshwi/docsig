@@ -40,6 +40,9 @@ jobs:
       - name: Audit
         id: audit
         run: poetry run pyaud audit
+      - name: check signature documentation
+        id: check-signature-documentation
+        run: poetry run docsig docsig tests
       - name: Upload coverage
         id: upload-coverage
         uses: codecov/codecov-action@v3
