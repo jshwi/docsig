@@ -12,7 +12,15 @@ import docsig
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK, CROSS, InitFileFixtureType, MockMainType, long, short
+from . import (
+    CHECK,
+    CROSS,
+    PATH,
+    InitFileFixtureType,
+    MockMainType,
+    long,
+    short,
+)
 
 
 @pytest.mark.parametrize("arg", (short.v, long.version))
@@ -117,9 +125,9 @@ def test_lineno(
     )
     main(".")
     std = capsys.readouterr()
-    assert "module/file.py:2" in std.out
-    assert "module/file.py:11" in std.out
-    assert "module/file.py:19" in std.out
+    assert f"{PATH}:2" in std.out
+    assert f"{PATH}:11" in std.out
+    assert f"{PATH}:19" in std.out
 
 
 def test_param_ne() -> None:
@@ -147,7 +155,7 @@ def test_file_not_found_error(main: MockMainType) -> None:
         [
             (long.check_protected_class_methods, long.check_class),
             f"""\
-module/file.py:6 in _Messages
+{PATH}:6 in _Messages
 -----------------------------
 def fromcode({CHECK}ref) -> {CROSS}Message:
     \"\"\"
@@ -157,7 +165,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
 
 {E[105].fstring(T)}
 
-module/file.py:12 in _Messages
+{PATH}:12 in _Messages
 ------------------------------
 def all({CHECK}category) -> {CROSS}tuple[None]:
     \"\"\"
@@ -172,7 +180,7 @@ def all({CHECK}category) -> {CROSS}tuple[None]:
         [
             (long.check_protected_class_methods, long.check_class_constructor),
             f"""\
-module/file.py:6 in _Messages
+{PATH}:6 in _Messages
 -----------------------------
 def fromcode({CHECK}ref) -> {CROSS}Message:
     \"\"\"
@@ -182,7 +190,7 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
 
 {E[105].fstring(T)}
 
-module/file.py:12 in _Messages
+{PATH}:12 in _Messages
 ------------------------------
 def all({CHECK}category) -> {CROSS}tuple[None]:
     \"\"\"

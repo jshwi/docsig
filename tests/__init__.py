@@ -44,6 +44,7 @@ CHECK_ARGS = (
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 ENABLE = "enable"
 UNKNOWN = "unknown"
+PATH = Path("module") / "file.py"
 
 
 @_templates.register
@@ -645,7 +646,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -656,7 +657,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:11
+{PATH}:11
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -667,7 +668,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {E[102].fstring(T)}
 
-module/file.py:19
+{PATH}:19
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -1167,7 +1168,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return "module/file.py:4 in Klass"
+        return f"{PATH}:4 in Klass"
 
 
 @_templates.register
@@ -2259,7 +2260,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -2270,7 +2271,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:16
+{PATH}:16
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -2281,7 +2282,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {E[102].fstring(T)}
 
-module/file.py:29
+{PATH}:29
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -2780,7 +2781,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return "module/file.py:4 in Klass"
+        return f"{PATH}:4 in Klass"
 
 
 @_templates.register
@@ -4030,7 +4031,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -4041,7 +4042,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:16
+{PATH}:16
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -4052,7 +4053,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {E[102].fstring(T)}
 
-module/file.py:29
+{PATH}:29
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -5728,7 +5729,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -5739,7 +5740,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:12
+{PATH}:12
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -5750,7 +5751,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {E[102].fstring(T)}
 
-module/file.py:21
+{PATH}:21
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -6813,7 +6814,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:20
+{PATH}:20
 -----------------
 def process({CHECK}response) -> {CROSS}str:
     \"\"\"
@@ -6859,7 +6860,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:20
+{PATH}:20
 -----------------
 def process({CROSS}response) -> {CHECK}str:
     \"\"\"
@@ -6999,7 +7000,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:20
+{PATH}:20
 -----------------
 def process({CHECK}response) -> {CROSS}None:
     \"\"\"
@@ -7075,7 +7076,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:17 in SomeClass
+{PATH}:17 in SomeClass
 ------------------------------
 def process({CHECK}response) -> {CROSS}str:
     \"\"\"
@@ -7118,7 +7119,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:17 in SomeClass
+{PATH}:17 in SomeClass
 ------------------------------
 def process({CROSS}response) -> {CHECK}str:
     \"\"\"
@@ -7246,7 +7247,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:17 in SomeClass
+{PATH}:17 in SomeClass
 ------------------------------
 def process({CHECK}response) -> {CROSS}None:
     \"\"\"
@@ -7331,7 +7332,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:11
+{PATH}:11
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7342,7 +7343,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 
 {E[102].fstring(T)}
 
-module/file.py:19
+{PATH}:19
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7426,7 +7427,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7474,7 +7475,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7485,7 +7486,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:11
+{PATH}:11
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7534,7 +7535,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7545,7 +7546,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:21
+{PATH}:21
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7620,7 +7621,7 @@ def function_6(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7631,7 +7632,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[101].fstring(T)}
 
-module/file.py:21
+{PATH}:21
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7642,7 +7643,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[103].fstring(T)}
 
-module/file.py:47
+{PATH}:47
 -----------------
 def function_6({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7728,7 +7729,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:12
+{PATH}:12
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7768,7 +7769,7 @@ def function_2(param1, param2) -> None:  # docsig: ena
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3
+{PATH}:3
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7779,7 +7780,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 
 {E[202].fstring(T).format(directive="ena")}
 
-module/file.py:11
+{PATH}:11
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7819,7 +7820,7 @@ def function_2(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3
+{PATH}:3
 ----------------
 def function_1({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7831,7 +7832,7 @@ def function_1({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 {E[102].fstring(T)}
 {E[201].fstring(T).format(directive="disa")}
 
-module/file.py:11
+{PATH}:11
 -----------------
 def function_2({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7924,7 +7925,7 @@ def f7(param, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3
+{PATH}:3
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7936,7 +7937,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 {E[101].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:14
+{PATH}:14
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -7948,7 +7949,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 {E[102].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:23
+{PATH}:23
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -7962,7 +7963,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
 {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
 
-module/file.py:33
+{PATH}:33
 -----------------
 def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
@@ -7975,7 +7976,7 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
 {E[104].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:43
+{PATH}:43
 -----------------
 def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
@@ -7988,7 +7989,7 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
 {E[105].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:52
+{PATH}:52
 -----------------
 def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -8003,7 +8004,7 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[106].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:62
+{PATH}:62
 -----------------
 def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -8100,7 +8101,7 @@ def f7(param, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3
+{PATH}:3
 ----------------
 def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -8112,7 +8113,7 @@ def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
 {E[101].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:14
+{PATH}:14
 -----------------
 def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -8124,7 +8125,7 @@ def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
 {E[102].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:23
+{PATH}:23
 -----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -8138,7 +8139,7 @@ def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
 {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
 {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
 
-module/file.py:33
+{PATH}:33
 -----------------
 def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
     \"\"\"
@@ -8151,7 +8152,7 @@ def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
 {E[104].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:43
+{PATH}:43
 -----------------
 def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
     \"\"\"
@@ -8164,7 +8165,7 @@ def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
 {E[105].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:52
+{PATH}:52
 -----------------
 def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -8179,7 +8180,7 @@ def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
 {E[106].fstring(T)}
 {E[201].fstring(T).format(directive=UNKNOWN)}
 
-module/file.py:62
+{PATH}:62
 -----------------
 def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
     \"\"\"
@@ -8216,7 +8217,7 @@ def function_3(  # docsig: enable=unknown
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:2
+{PATH}:2
 ----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -8362,7 +8363,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3
+{PATH}:3
 ----------------
 def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
     \"\"\"
@@ -8396,7 +8397,7 @@ class _Messages(_t.Dict[int, Message]):
     @property
     def expected(self) -> str:
         return f"""\
-module/file.py:3 in _Messages
+{PATH}:3 in _Messages
 -----------------------------
 class _Messages:
     ...
@@ -8405,7 +8406,7 @@ class _Messages:
 
 {E[114].fstring(T)}
 
-module/file.py:6 in _Messages
+{PATH}:6 in _Messages
 -----------------------------
 def fromcode({CHECK}ref) -> {CROSS}Message:
     \"\"\"
