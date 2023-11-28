@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.42.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- option to list checks and their messages
+
 ### Fixed
 - correct symbolic message for E204
 - allow paths as strings when using api

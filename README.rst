@@ -77,8 +77,8 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-v] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k] [-n]
-                             [-S] [-s STR] [-d LIST] [-t LIST]
+    usage: docsig [-h] [-v] [-l] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k]
+                             [-n] [-S] [-s STR] [-d LIST] [-t LIST]
                              [path [path ...]]
 
     Check signature params for proper documentation
@@ -89,6 +89,7 @@ Commandline
     optional arguments:
       -h, --help                           show this help message and exit
       -v, --version                        show program's version number and exit
+      -l, --list-checks                    display a list of all checks and their messages
       -c, --check-class                    check class docstrings
       -C, --check-class-constructor        check __init__ methods. Note: mutually
                                            incompatible with -c

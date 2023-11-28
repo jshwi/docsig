@@ -1,4 +1,4 @@
-_.excepthook  # unused attribute (docsig/_core.py:26)
+_.excepthook  # unused attribute (docsig/_core.py:27)
 _FBinOpReprG  # unused class (tests/__init__.py:5973)
 _FBinOpReprN  # unused class (tests/__init__.py:2552)
 _FBinOpReprNI  # unused class (tests/__init__.py:4306)

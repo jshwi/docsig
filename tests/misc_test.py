@@ -288,3 +288,16 @@ def test_no_duplicate_symbolic_messages() -> None:
     """Test there are no accidental duplicate symbolic messages."""
     symbolic_messages = [i.symbolic for i in E.values()]
     assert not any(symbolic_messages.count(x) > 1 for x in symbolic_messages)
+
+
+def test_list_checks(
+    main: MockMainType, capsys: pytest.CaptureFixture
+) -> None:
+    """Test listing of all available checks.
+
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    """
+    main(long.list_checks)
+    std = capsys.readouterr()
+    assert all(i.code in std.out for i in E.values())

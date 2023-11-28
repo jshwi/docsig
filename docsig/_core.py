@@ -17,6 +17,7 @@ from ._message import Message as _Message
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import generate_report as _generate_report
+from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 
 
@@ -26,6 +27,11 @@ def pretty_print_error() -> None:
         _sys.excepthook = lambda x, y, _: print(
             f"{_color.red.bold.get(x.__name__)}: {y}"
         )
+
+
+def _print_checks() -> None:
+    for msg in _E.values():
+        print(msg.fstring(_TEMPLATE))
 
 
 def _check_required_args(path: tuple[str | _Path, ...], string: str | None):
@@ -91,6 +97,7 @@ def _run_check(  # pylint: disable=too-many-arguments
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
     string: str | None = None,
+    list_checks: bool = False,
     check_class: bool = False,
     check_class_constructor: bool = False,
     check_dunders: bool = False,
@@ -117,6 +124,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
     :param path: Path(s) to check.
     :param string: String to check.
+    :param list_checks: Display a list of all checks and their messages.
     :param check_class: Check class docstrings.
     :param check_class_constructor: Check ``__init__`` methods. Note that this
         is mutually incompatible with check_class.
@@ -136,6 +144,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param disable: List of errors to disable.
     :return: Exit status for whether test failed or not.
     """
+    if list_checks:
+        return int(bool(_print_checks()))  # type: ignore
+
     _check_required_args(path, string)
     disabled_args = list(_E.fromcodes(disable or []))
     target_args = list(_E.fromcodes(targets or []))

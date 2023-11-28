@@ -34,6 +34,12 @@ class Parser(_ArgumentParser):
             type=_Path,
             help="directories or files to check",
         )
+        self.add_argument(
+            "-l",
+            "--list-checks",
+            action="store_true",
+            help="display a list of all checks and their messages",
+        )
         group = self.add_mutually_exclusive_group(required=False)
         group.add_argument(
             "-c",
