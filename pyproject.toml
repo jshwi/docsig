@@ -18,8 +18,10 @@ line-length = 79
 
 [tool.constcheck]
 ignore_strings = [
+  "disable",
   "store",
   "store_true",
+  "targets",
   "utf-8"
 ]
 

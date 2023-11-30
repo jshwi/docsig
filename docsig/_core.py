@@ -24,29 +24,6 @@ def _print_checks() -> None:
         print(msg.fstring(_TEMPLATE))
 
 
-def _check_required_args(path: tuple[str | _Path, ...], string: str | None):
-    if not path and not string:
-        raise ValueError(
-            "the following arguments are required: path(s) or string",
-        )
-
-
-def _check_provided_lists(
-    disabled_args: list[_Message] | None, target_args: list[_Message] | None
-) -> None:
-    for message in disabled_args or []:
-        if not message.isknown:
-            raise ValueError(
-                f"unknown option to disable '{message.description}'",
-            )
-
-    for message in target_args or []:
-        if not message.isknown:
-            raise ValueError(
-                f"unknown option to target '{message.description}'",
-            )
-
-
 def _run_check(  # pylint: disable=too-many-arguments
     parent: _Parent,
     check_class: bool,
@@ -85,6 +62,7 @@ def _run_check(  # pylint: disable=too-many-arguments
 
 
 @_decorators.parse_msgs
+@_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
     string: str | None = None,
@@ -138,8 +116,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    _check_required_args(path, string)
-    _check_provided_lists(disable, targets)
     modules = _Modules(
         *tuple(_Path(i) for i in path),
         disable=disable or [],
