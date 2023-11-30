@@ -61,6 +61,18 @@ def test_class_and_class_constructor(
     assert "not allowed with argument" in std.err.strip()
 
 
+def test_class_and_class_constructor_in_interpreter() -> None:
+    """Test that docsig errors when passed incompatible options."""
+    assert docsig.docsig(
+        string="def func(): pass",
+        check_class=True,
+        check_class_constructor=True,
+    ) == (
+        "argument to check class constructor not allowed with argument to"
+        " check class"
+    )
+
+
 @pytest.mark.parametrize("error", ["E101", "E102", "E106", "E107"])
 def test_target_report(
     main: MockMainType,

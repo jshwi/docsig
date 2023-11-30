@@ -57,6 +57,14 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
                         f"unknown option to target '{message.description}'",
                     )
 
+            if kwargs.get("check_class") and kwargs.get(
+                "check_class_constructor"
+            ):
+                stderr.append(
+                    "argument to check class constructor not allowed with"
+                    " argument to check class"
+                )
+
         return "\n".join(stderr) if stderr else func(*args, **kwargs)
 
     return _wrapper
