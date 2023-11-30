@@ -6,6 +6,7 @@ from __future__ import annotations as _
 
 from pathlib import Path as _Path
 
+from . import _decorators
 from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
@@ -31,15 +32,15 @@ def _check_required_args(path: tuple[str | _Path, ...], string: str | None):
 
 
 def _check_provided_lists(
-    disabled_args: list[_Message], target_args: list[_Message]
+    disabled_args: list[_Message] | None, target_args: list[_Message] | None
 ) -> None:
-    for message in disabled_args:
+    for message in disabled_args or []:
         if not message.isknown:
             raise ValueError(
                 f"unknown option to disable '{message.description}'",
             )
 
-    for message in target_args:
+    for message in target_args or []:
         if not message.isknown:
             raise ValueError(
                 f"unknown option to target '{message.description}'",
@@ -83,6 +84,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     return failures
 
 
+@_decorators.parse_msgs
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
     string: str | None = None,
@@ -99,8 +101,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_kwargs: bool = False,
     no_ansi: bool = False,
     summary: bool = False,
-    targets: list[str] | None = None,
-    disable: list[str] | None = None,
+    targets: list[_Message] | None = None,
+    disable: list[_Message] | None = None,
 ) -> int:
     """Package's core functionality.
 
@@ -137,12 +139,10 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return int(bool(_print_checks()))  # type: ignore
 
     _check_required_args(path, string)
-    disabled_args = list(_E.fromcodes(disable or []))
-    target_args = list(_E.fromcodes(targets or []))
-    _check_provided_lists(disabled_args, target_args)
+    _check_provided_lists(disable, targets)
     modules = _Modules(
         *tuple(_Path(i) for i in path),
-        disable=disabled_args,
+        disable=disable or [],
         string=string,
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
@@ -166,7 +166,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     check_property_returns,
                     ignore_no_params,
                     no_ansi,
-                    target_args,
+                    targets or [],
                 )
                 if failures:
                     display[top_level.path].append(failures)
