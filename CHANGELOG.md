@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.43.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- report all errors instead of just the first
+
 ### Changed
 - return string instead of raising for api
 - raise system exit instead of value error

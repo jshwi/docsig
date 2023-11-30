@@ -38,20 +38,25 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
     """
 
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> str | int:
+        stderr = []
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string"):
-                return (
+                stderr.append(
                     "the following arguments are required: path(s) or string"
                 )
 
             for message in kwargs.get("disable") or []:
                 if not message.isknown:
-                    return f"unknown option to disable '{message.description}'"
+                    stderr.append(
+                        f"unknown option to disable '{message.description}'"
+                    )
 
             for message in kwargs.get("targets") or []:
                 if not message.isknown:
-                    return f"unknown option to target '{message.description}'"
+                    stderr.append(
+                        f"unknown option to target '{message.description}'",
+                    )
 
-        return func(*args, **kwargs)
+        return "\n".join(stderr) if stderr else func(*args, **kwargs)
 
     return _wrapper
