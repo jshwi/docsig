@@ -4,29 +4,18 @@ docsig._core
 """
 from __future__ import annotations as _
 
-import sys as _sys
-from os import environ as _e
 from pathlib import Path as _Path
 
 from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
-from ._display import color as _color
 from ._message import Message as _Message
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import generate_report as _generate_report
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
-
-
-def pretty_print_error() -> None:
-    """Print user friendly commandline error if debug not enabled."""
-    if _e.get("DOCSIG_DEBUG", None) != "1":
-        _sys.excepthook = lambda x, y, _: print(
-            f"{_color.red.bold.get(x.__name__)}: {y}"
-        )
 
 
 def _print_checks() -> None:

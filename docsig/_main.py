@@ -6,7 +6,7 @@ Contains package entry point.
 """
 from ._config import Parser as _Parser
 from ._core import docsig as _docsig
-from ._core import pretty_print_error as _pretty_print_error
+from ._hooks import pretty_print_error as _pretty_print_error
 
 
 def main() -> int:
