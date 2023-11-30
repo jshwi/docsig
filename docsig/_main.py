@@ -4,12 +4,14 @@ docsig._main
 
 Contains package entry point.
 """
+from __future__ import annotations as _
+
 from ._config import Parser as _Parser
 from ._core import docsig as _docsig
 from ._hooks import pretty_print_error as _pretty_print_error
 
 
-def main() -> int:
+def main() -> str | int:
     """Main function for package.
 
     Collect config and arguments for the commandline.

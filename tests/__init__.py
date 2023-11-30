@@ -15,7 +15,7 @@ from templatest.utils import VarPrefix as _VarPrefix
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-MockMainType = t.Callable[..., int]
+MockMainType = t.Callable[..., t.Union[str, int]]
 InitFileFixtureType = t.Callable[[str], Path]
 
 short = _VarPrefix("-")

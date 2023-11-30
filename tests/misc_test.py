@@ -103,10 +103,10 @@ def test_invalid_target(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    with pytest.raises(SystemExit) as err:
+    assert (
         main(".", long.target, "unknown")
-
-    assert str(err.value) == "unknown option to target 'unknown'"
+        == "unknown option to target 'unknown'"
+    )
 
 
 def test_lineno(
@@ -253,13 +253,7 @@ def test_no_path_or_string(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    with pytest.raises(SystemExit) as err:
-        main()
-
-    assert (
-        str(err.value)
-        == "the following arguments are required: path(s) or string"
-    )
+    assert main() == "the following arguments are required: path(s) or string"
 
 
 def test_str_path_via_api() -> None:
