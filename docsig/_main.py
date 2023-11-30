@@ -37,5 +37,5 @@ def main() -> int:
         no_ansi=parser.args.no_ansi,
         summary=parser.args.summary,
         targets=parser.args.target,
-        disable=parser.args.disable
+        disable=parser.args.disable,
     )
