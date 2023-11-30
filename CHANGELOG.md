@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.43.0...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- raise system exit instead of value error
 
 [0.43.0](https://github.com/jshwi/docsig/releases/tag/v0.43.0) - 2023-11-28
 ------------------------------------------------------------------------

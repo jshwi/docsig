@@ -1194,7 +1194,7 @@ def test_unknown_commandline_disables(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(SystemExit) as err:
         main(".", long.disable, "unknown")
 
     assert str(err.value) == "unknown option to disable 'unknown'"

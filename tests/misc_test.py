@@ -103,7 +103,7 @@ def test_invalid_target(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(SystemExit) as err:
         main(".", long.target, "unknown")
 
     assert str(err.value) == "unknown option to target 'unknown'"
@@ -253,7 +253,7 @@ def test_no_path_or_string(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    with pytest.raises(ValueError) as err:
+    with pytest.raises(SystemExit) as err:
         main()
 
     assert (

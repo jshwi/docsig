@@ -39,19 +39,19 @@ def validate_args(func: _FuncType) -> _FuncType:
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> int:
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string", None):
-                raise ValueError(
+                raise SystemExit(
                     "the following arguments are required: path(s) or string",
                 )
 
             for message in kwargs.get("disable") or []:
                 if not message.isknown:
-                    raise ValueError(
+                    raise SystemExit(
                         f"unknown option to disable '{message.description}'",
                     )
 
             for message in kwargs.get("targets") or []:
                 if not message.isknown:
-                    raise ValueError(
+                    raise SystemExit(
                         f"unknown option to target '{message.description}'",
                     )
 
