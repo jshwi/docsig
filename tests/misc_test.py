@@ -5,6 +5,8 @@ tests.misc_test
 # pylint: disable=protected-access
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 from templatest import templates
 
@@ -70,6 +72,34 @@ def test_class_and_class_constructor_in_interpreter() -> None:
     ) == (
         "argument to check class constructor not allowed with argument to"
         " check class"
+    )
+
+
+def test_class_and_class_constructor_in_interpreter_with_config(
+    monkeypatch: pytest.MonkeyPatch,
+    main: MockMainType,
+) -> None:
+    """Test that docsig errors when passed incompatible options.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param main: Patch package entry point.
+    """
+    pyproject_toml = Path.cwd() / "pyproject.toml"
+    pyproject_toml.write_text(
+        """
+[tool.docsig]
+check-class = true
+check-class_constructor = true
+check-protected-class-methods = true
+summary = true
+""",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr("sys.stdin.isatty", lambda: True)
+    assert main(".") == (
+        "argument to check class constructor not allowed with argument to"
+        " check class\n"
+        "please check your pyproject.toml configuration"
     )
 
 

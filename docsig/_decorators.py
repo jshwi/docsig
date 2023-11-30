@@ -4,6 +4,7 @@ docsig._decorators
 """
 from __future__ import annotations as _
 
+import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
@@ -64,6 +65,16 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
                     "argument to check class constructor not allowed with"
                     " argument to check class"
                 )
+                # if we don't make it past this condition then we are
+                # running this using the python interpreter
+                if _sys.stdin and _sys.stdin.isatty():
+                    # otherwise, it is impossible to reach here by
+                    # passing both commandline args as argparse won't
+                    # allow it, therefore, this must be an issue with
+                    # the pyproject.toml configuration
+                    stderr.append(
+                        "please check your pyproject.toml configuration"
+                    )
 
         return "\n".join(stderr) if stderr else func(*args, **kwargs)
 

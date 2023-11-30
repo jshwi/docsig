@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.43.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- help when both class args are configured in pyproject.toml file
 - check for both class args when not running the commandline
 - report all errors instead of just the first
 
