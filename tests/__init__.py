@@ -8417,3 +8417,129 @@ def fromcode({CHECK}ref) -> {CROSS}Message:
 {E[105].fstring(T)}
 
 """
+
+
+@_templates.register
+class _MFDisableClassInlineCommentS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+class _MessageSequence(_t.List[str]):  # docsig: disable
+    def __init__(
+        self,
+        targets: list[_Message],
+        disable: list[_Message],
+    ) -> None:
+        pass
+
+    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+        \"\"\"Add an error to the container.
+
+        :param value: Value to add.
+        :param hint: Whether to print a hint or not.
+        :param kwargs: Variable(s) if format string.
+        \"\"\"
+
+
+class Report(_MessageSequence):
+    def order(self, sig: _Param, doc: _Param) -> None:
+        if any(sig.name == i.name for i in self._func.docstring.args) or any(
+            doc.name == i.name for i in self._func.signature.args
+        ):
+            self.add(_E[101])
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+{PATH}:20 in Report
+---------------------------
+def order({CROSS}sig, {CROSS}doc) -> {CHECK}None:
+    ...
+
+{E[113].fstring(T)}
+
+"""
+
+
+@_templates.register
+class _MFDisableClassModuleCommentDisableEnableS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+class _MessageSequence(_t.List[str]):
+    def __init__(
+        self,
+        targets: list[_Message],
+        disable: list[_Message],
+    ) -> None:
+        pass
+
+    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+        \"\"\"Add an error to the container.
+
+        :param value: Value to add.
+        :param hint: Whether to print a hint or not.
+        :param kwargs: Variable(s) if format string.
+        \"\"\"
+
+
+# docsig: enable
+
+
+class Report(_MessageSequence):
+    def order(self, sig: _Param, doc: _Param) -> None:
+        if any(sig.name == i.name for i in self._func.docstring.args) or any(
+            doc.name == i.name for i in self._func.signature.args
+        ):
+            self.add(_E[101])
+"""
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+{PATH}:24 in Report
+---------------------------
+def order({CROSS}sig, {CROSS}doc) -> {CHECK}None:
+    ...
+
+{E[113].fstring(T)}
+
+"""
+
+
+@_templates.register
+class _MFDisableClassModuleCommentDisableS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+# docsig: disable
+class _MessageSequence(_t.List[str]):
+    def __init__(
+        self,
+        targets: list[_Message],
+        disable: list[_Message],
+    ) -> None:
+        pass
+
+    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+        \"\"\"Add an error to the container.
+
+        :param value: Value to add.
+        :param hint: Whether to print a hint or not.
+        :param kwargs: Variable(s) if format string.
+        \"\"\"
+
+
+class Report(_MessageSequence):
+    def order(self, sig: _Param, doc: _Param) -> None:
+        if any(sig.name == i.name for i in self._func.docstring.args) or any(
+            doc.name == i.name for i in self._func.signature.args
+        ):
+            self.add(_E[101])
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""

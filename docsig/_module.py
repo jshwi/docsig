@@ -43,8 +43,13 @@ class Parent(_t.List[_Function]):
         self._path = f"{path}:" if path is not None else ""
         overloads = []
         returns = None
+        parent_comments, parent_disabled = directives.get(
+            node.lineno, ([], [])
+        )
         for subnode in node.body:
             comments, disabled = directives.get(subnode.lineno, ([], []))
+            comments.extend(parent_comments)
+            disabled.extend(parent_disabled)
             if isinstance(subnode, _ast.FunctionDef):
                 func = _Function(
                     subnode,
