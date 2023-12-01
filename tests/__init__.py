@@ -8402,7 +8402,7 @@ class _Messages(_t.Dict[int, Message]):
 class _Messages:
     ...
 
-    def __init__() -> ✓None:
+    def __init__() -> {CHECK}None:
 
 {E[114].fstring(T)}
 
