@@ -48,6 +48,9 @@ jobs:
       - name: check signature documentation
         id: check-signature-documentation
         run: poetry run docsig docsig tests
+      - name: doctest docs
+        id: doctest-docs
+        run: poetry run python -m doctest docs/readme/*
       - name: Upload coverage
         id: upload-coverage
         uses: codecov/codecov-action@v3

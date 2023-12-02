@@ -4,6 +4,7 @@ ci:
     - deptry
     - doctest-package
     - doctest-readme
+    - doctest docs
     - mypy
     - docsig
     - vulture
@@ -48,6 +49,12 @@ repos:
         language: system
         entry: poetry run pyaud doctest-readme
         pass_filenames: false
+      # no hooks found for `doctest`
+      - id: doctest-docs
+        name: doctest docstrings
+        language: system
+        entry: poetry run python -m doctest
+        files: docs\/readme\/.*
       # script installs stubs if necessary
       - id: mypy
         name: check types
