@@ -4,6 +4,7 @@ docsig._decorators
 """
 from __future__ import annotations as _
 
+import functools as _functools
 import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
@@ -21,6 +22,7 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
     :return: Wrapped function.
     """
 
+    @_functools.wraps(func)
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> str | int:
         disable = list(_E.fromcodes(kwargs.get("disable", []))) or None
         targets = list(_E.fromcodes(kwargs.get("targets", []))) or None
@@ -38,6 +40,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
     :return: Wrapped function.
     """
 
+    @_functools.wraps(func)
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> str | int:
         stderr = []
         if not kwargs.get("list_checks", False):
