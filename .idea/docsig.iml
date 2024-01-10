@@ -27,6 +27,9 @@
   <component name="ReSTService">
     <option name="DOC_DIR" value="$MODULE_DIR$/docs" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="4b292a89-087d-48f8-afab-2b50fe8a73ac" />
+  </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
   </component>
