@@ -12,6 +12,8 @@ ci:
     - about-tests
     - commit-policy
     - copyright-year
+default_language_version:
+  python: "3.9"
 default_stages:
   - commit
 exclude: |
