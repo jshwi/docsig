@@ -22,6 +22,7 @@ docsig.messages
 | E203: unknown module comment option for {directive} '{option}'
 | E204: unknown inline comment option for {directive} '{option}'
 """
+
 from ._message import Message as _Message
 from ._message import Messages as _Messages
 

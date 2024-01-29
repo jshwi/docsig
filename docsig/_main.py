@@ -4,6 +4,7 @@ docsig._main
 
 Contains package entry point.
 """
+
 from __future__ import annotations as _
 
 from ._config import Parser as _Parser

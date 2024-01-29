@@ -2,6 +2,7 @@
 docsig._decorators
 ==================
 """
+
 from __future__ import annotations as _
 
 import functools as _functools
