@@ -188,7 +188,7 @@ repos:
     hooks:
       - id: conform
   - repo: https://github.com/PyCQA/bandit
-    rev: "1.7.6"
+    rev: "1.7.7"
     hooks:
       - id: bandit
         args:
@@ -214,7 +214,7 @@ repos:
         args:
           - "--config-data={rules: {line-length: {max: 79}}}"
   - repo: https://github.com/psf/black
-    rev: "23.12.1"
+    rev: "24.1.1"
     hooks:
       - id: black
         additional_dependencies:
