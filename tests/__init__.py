@@ -4,6 +4,7 @@ tests
 
 Test package for ``docsig``.
 """
+
 # pylint: disable=too-many-lines
 import typing as t
 from pathlib import Path
