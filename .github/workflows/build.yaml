@@ -50,4 +50,4 @@ jobs:
         run: poetry run docsig docsig tests
       - name: Upload coverage
         id: upload-coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
