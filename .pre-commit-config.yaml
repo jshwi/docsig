@@ -12,6 +12,7 @@ ci:
     - about-tests
     - commit-policy
     - copyright-year
+    - doctest-examples
 default_language_version:
   python: "3.9"
 default_stages:
@@ -108,6 +109,11 @@ repos:
         name: copyright year
         language: system
         entry: poetry run pyaud copyright-year
+        pass_filenames: false
+      - id: doctest-examples
+        name: doctest examples
+        language: system
+        entry: poetry run pytest docs/examples --doctest-glob='*.rst'
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.5.0"
