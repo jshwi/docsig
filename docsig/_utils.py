@@ -2,6 +2,7 @@
 docsig._utils
 =============
 """
+
 from __future__ import annotations as _
 
 from difflib import SequenceMatcher as _SequenceMatcher

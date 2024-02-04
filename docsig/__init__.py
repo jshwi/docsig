@@ -1,4 +1,5 @@
 """Check signature params for proper documentation."""
+
 from . import messages
 from ._core import docsig
 from ._main import main

@@ -2,6 +2,7 @@
 docsig._core
 ============
 """
+
 from __future__ import annotations as _
 
 from pathlib import Path as _Path
