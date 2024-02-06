@@ -3,7 +3,7 @@ pygments>=2.15.0 # not directly required, pinned by Snyk to avoid a vulnerabilit
 requests>=2.31.0 # not directly required, pinned by Snyk to avoid a vulnerability
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 sphinx>=3.3.0 # not directly required, pinned by Snyk to avoid a vulnerability
-sphinx-immaterial==0.11.9
+sphinx-immaterial==0.11.10
 sphinx-toolbox==3.5.0
 sphinxcontrib-fulltoc==1.2.0
 sphinxcontrib-programoutput==0.17
