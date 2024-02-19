@@ -186,11 +186,11 @@ repos:
     hooks:
       - id: constcheck
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v3.6.1"
+    rev: "v3.6.2"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
-    rev: "v0.1.0-alpha.27"
+    rev: "v0.1.0-alpha.28"
     hooks:
       - id: conform
   - repo: https://github.com/PyCQA/bandit
@@ -201,7 +201,7 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.15.0"
+    rev: "v3.15.1"
     hooks:
       - id: pyupgrade
         args:
@@ -214,13 +214,13 @@ repos:
         additional_dependencies:
           - flake8-bugbear==22.12.6
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: "v1.34.0"
+    rev: "v1.35.1"
     hooks:
       - id: yamllint
         args:
           - "--config-data={rules: {line-length: {max: 79}}}"
   - repo: https://github.com/psf/black
-    rev: "24.1.1"
+    rev: "24.2.0"
     hooks:
       - id: black
         additional_dependencies:
