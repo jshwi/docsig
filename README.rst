@@ -200,7 +200,7 @@ It can be added to your .pre-commit-config.yaml as follows:
 
     repos:
       - repo: https://github.com/jshwi/docsig
-        rev: v0.44.2
+        rev: v0.44.3
         hooks:
           - id: docsig
             args:
