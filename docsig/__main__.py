@@ -4,6 +4,7 @@ docsig.__main__
 
 Module entry point.
 """
+
 import sys as _sys
 
 from docsig import main

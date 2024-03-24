@@ -19,6 +19,7 @@ templates ending with ``NI`` are ``NumPy`` style docstrings with an
 unusual indent, and all templates ending with ``G`` are ``Google`` style
 docstrings.
 """
+
 # pylint: disable=protected-access
 
 import pytest

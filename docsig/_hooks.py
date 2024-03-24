@@ -2,6 +2,7 @@
 docsig._hooks
 =============
 """
+
 import sys as _sys
 from os import environ as _e
 

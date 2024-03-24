@@ -2,6 +2,7 @@
 tests.disable_test.py
 =====================
 """
+
 # pylint: disable=too-many-lines
 import pytest
 from templatest.utils import VarSeq
