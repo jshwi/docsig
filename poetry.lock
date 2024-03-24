@@ -568,21 +568,29 @@ files = [
 
 [[package]]
 name = "deptry"
-version = "0.12.0"
+version = "0.14.2"
 description = "A command line utility to check for unused, missing and transitive dependencies in a Python project."
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = ">=3.8, <4.0"
 files = [
-    {file = "deptry-0.12.0-py3-none-any.whl", hash = "sha256:69c801a6ae1b39c7b8e0daf40dbe8b75f1f161277d206dd8f921f32cd22dad91"},
-    {file = "deptry-0.12.0.tar.gz", hash = "sha256:ac3cd32d149c92a9af12f63cd9486ddd1760f0277ed0cf306c6ef0388f57ff0a"},
+    {file = "deptry-0.14.2-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:6f451ac26990bcb3e4d517271b87f1f02e7272da6644e47755aa72bbb649a8dd"},
+    {file = "deptry-0.14.2-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:7b3eeeace8c3cdb2eafe14d7a0261bb2ec410d1887a4152091e9dcb73325b452"},
+    {file = "deptry-0.14.2-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cb4988bff104bfd3c0b13841f18dbddc6c818b88101cad97f662acc5827209ac"},
+    {file = "deptry-0.14.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8f61a6c1165e91753d029c2a598d0ff37b7e6cb436beff5cc3ba6c7b8b4acf93"},
+    {file = "deptry-0.14.2-cp38-abi3-win_amd64.whl", hash = "sha256:65d20f7316b2f2ff545430dd3c2dea6dc668cd6ee3b866dffdf78d39c3b07ee8"},
+    {file = "deptry-0.14.2-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:95901237482a390611370522d707931eeb1ea7172a56fe1bf84f0d4624b1dd4c"},
+    {file = "deptry-0.14.2-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6f531fd1cdcc980438647cc8c95115989f0a7efbf3456611174cfd54db721657"},
+    {file = "deptry-0.14.2-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:54182741d343bcca73116a13eb905b5bded80ef72e2d13cdb23081c72a486f17"},
+    {file = "deptry-0.14.2-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:6c9a2949d2c0c580981e22c8ceff0461e77e632b94dacd02307f81caaa35f93f"},
+    {file = "deptry-0.14.2.tar.gz", hash = "sha256:1c585d4a5f9ddc75ed0cb27f99e998edda4720d050ba7214503a2bfe5e85d7df"},
 ]
 
 [package.dependencies]
 chardet = ">=4.0.0"
-click = ">=8.0.0,<9.0.0"
+click = ">=8.0.0,<9"
 colorama = {version = ">=0.4.6", markers = "sys_platform == \"win32\""}
 pathspec = ">=0.9.0"
-tomli = {version = ">=2.0.1,<3.0.0", markers = "python_version < \"3.11\""}
+tomli = {version = ">=2.0.1", markers = "python_version < \"3.11\""}
 
 [[package]]
 name = "dict2css"
@@ -2661,4 +2669,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "c101535bde3b472ab035db52279179e64621c128b0ab683c16be4af4a78a95bf"
+content-hash = "94e7778f319b90e2973dc377dad208925e3f064b4daf771049f9930b1acee612"
