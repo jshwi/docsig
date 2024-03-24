@@ -372,8 +372,8 @@ def test_no_check_property_returns_flag(
 ) -> None:
     """Test that passing property fails without ``-P`` flag.
 
-    Only test templates prefixed with ``PProperty`` are collected for
-    this test, and all tests should fail.
+    Only test templates prefixed with ``PPropertyReturn`` are collected
+    for this test, and all tests should fail.
 
     All tests will be tested for ``E108`` and ``H101``, which property
     related errors.
