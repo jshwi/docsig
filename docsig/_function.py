@@ -331,7 +331,18 @@ class Function:  # pylint: disable=too-many-arguments
     @property
     def isproperty(self) -> bool:
         """Boolean value for whether function is a property."""
-        return self.ismethod and self._decorated_with("property")
+        valid_properties = [
+            "property",
+            # todo: this should be inferred as various import styles or
+            # todo: aliases won't be recognised
+            # todo:
+            # todo: it appears overloaded is inferred, if it isn't, look
+            # todo: at that too
+            "cached_property",
+        ]
+        return self.ismethod and any(
+            self._decorated_with(i) for i in valid_properties
+        )
 
     @property
     def isoverloaded(self) -> bool:

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.44.2...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- treat `functools.cached_property` as a property
 
 [0.44.2](https://github.com/jshwi/docsig/releases/tag/v0.44.2) - 2023-12-03
 ------------------------------------------------------------------------
