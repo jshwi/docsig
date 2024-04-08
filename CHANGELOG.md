@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.45.0...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- short form for version
 
 [0.45.0](https://github.com/jshwi/docsig/releases/tag/v0.45.0) - 2024-04-09
 ------------------------------------------------------------------------

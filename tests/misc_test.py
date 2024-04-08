@@ -27,7 +27,7 @@ from . import (
 )
 
 
-@pytest.mark.parametrize("arg", (short.v, long.version))
+@pytest.mark.parametrize("arg", (short.V, long.version))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,

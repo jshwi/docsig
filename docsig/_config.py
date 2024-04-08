@@ -23,6 +23,7 @@ class Parser(_ArgumentParser):
                 prog, max_help_position=45
             ),
             description="Check signature params for proper documentation",
+            version_short_form="-V",
         )
         self._add_arguments()
         self.args = self.parse_args()
