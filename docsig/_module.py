@@ -5,6 +5,7 @@ docsig._module
 
 from __future__ import annotations as _
 
+import re as _re
 import typing as _t
 from pathlib import Path as _Path
 
@@ -128,6 +129,8 @@ class Modules(_t.List[_Module]):
 
     :param paths: Path(s) to parse ``Module``(s) from.
     :param disable: List of checks to disable.
+    :param excludes: List pf regular expression of files and dirs to
+        exclude from checks.
     :param string: String to parse if provided.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -140,6 +143,7 @@ class Modules(_t.List[_Module]):
         self,
         *paths: _Path,
         disable: list[_Message],
+        excludes: list[str],
         string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
@@ -147,6 +151,7 @@ class Modules(_t.List[_Module]):
     ) -> None:
         super().__init__()
         self._disable = disable
+        self._excludes = excludes
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self.check_class_constructor = check_class_constructor
@@ -167,6 +172,11 @@ class Modules(_t.List[_Module]):
     def _populate(self, root: _Path) -> None:
         if not root.exists():
             raise FileNotFoundError(root)
+
+        if str(root) != "." and any(
+            _re.match(i, root.name) for i in self._excludes
+        ):
+            return
 
         if root.is_file() and root.name.endswith(".py"):
             self.append(

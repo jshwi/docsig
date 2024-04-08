@@ -133,3 +133,8 @@ class Parser(_ArgumentParser):
             metavar="LIST",
             help="comma separated list of rules to target",
         )
+        self.add_argument(
+            "-e",
+            "--exclude",
+            help="regular expression of files or dirs to exclude from checks",
+        )
