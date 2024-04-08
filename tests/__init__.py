@@ -2688,6 +2688,32 @@ class Klass:
 
 
 @_templates.register
+class _PPropertyReturnFunctoolsCachedN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+import functools
+
+class Klass:
+    @functools.cached_property
+    def function(*_, **__) -> int:
+        \"\"\"Proper docstring.
+
+
+        Returns
+        -------
+            int
+                Returncode.
+        \"\"\"
+        return 0
+"""
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
 class _FOverriddenN(_BaseTemplate):
     @property
     def template(self) -> str:

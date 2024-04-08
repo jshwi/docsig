@@ -319,7 +319,9 @@ class Function:  # pylint: disable=too-many-arguments
     def _decorated_with(self, name: str) -> bool:
         if self._node.decorators is not None:
             for dec in self._node.decorators.nodes:
-                return isinstance(dec, _ast.Name) and dec.name == name
+                return (isinstance(dec, _ast.Name) and dec.name == name) or (
+                    isinstance(dec, _ast.Attribute) and dec.attrname == name
+                )
 
         return False
 
@@ -333,11 +335,6 @@ class Function:  # pylint: disable=too-many-arguments
         """Boolean value for whether function is a property."""
         valid_properties = [
             "property",
-            # todo: this should be inferred as various import styles or
-            # todo: aliases won't be recognised
-            # todo:
-            # todo: it appears overloaded is inferred, if it isn't, look
-            # todo: at that too
             "cached_property",
         ]
         return self.ismethod and any(
