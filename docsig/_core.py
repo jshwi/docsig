@@ -19,6 +19,25 @@ from ._report import generate_report as _generate_report
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 
+_DEFAULT_EXCLUDES = """\
+(?x)^(
+  |\\.?venv
+  |\\.git
+  |\\.hg
+  |\\.idea
+  |\\.mypy_cache
+  |\\.nox
+  |\\.pytest_cache
+  |\\.svn
+  |\\.tox
+  |\\.vscode
+  |_?build
+  |__pycache__
+  |dist
+  |node_modules
+)$
+"""
+
 
 def _print_checks() -> None:
     for msg in _E.values():
@@ -120,7 +139,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    excludes = []
+    excludes = [_DEFAULT_EXCLUDES]
     if exclude is not None:
         excludes.append(exclude)
 

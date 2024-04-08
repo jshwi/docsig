@@ -370,3 +370,60 @@ new-ssl "${@}"
 """
     init_file(template)
     assert main(".", long.exclude, "file.py") == 0
+
+
+def test_exclude_defaults(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+) -> None:
+    """Test bash script is ignored when under __pycache__ directory.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = """
+#!/usr/bin/env bash
+new-ssl() {
+  domain="${1}"
+  config="${2:-"${domain}.conf"}"
+  openssl \
+    req \
+    -new \
+    -newkey \
+    rsa:2048 \
+    -nodes \
+    -sha256 \
+    -out "${domain}.csr" \
+    -keyout "${domain}.key" \
+    -config "${config}"
+}
+
+new-ssl "${@}"
+"""
+    init_file(template, Path("__pycache__") / "file.py")
+    assert main(".") == 0
+
+
+def test_bash_script(
+    main: MockMainType,
+) -> None:
+    """Test bash script.
+
+    :param main: Mock ``main`` function.
+    """
+    template = """
+#!/usr/bin/env bash
+pygmentize-cat() {
+  stdin="${1}"
+  if command -v pygmentize >/dev/null 2>&1; then
+    if pygmentize --help >/dev/null 2>&1; then
+      pygmentize -O style=monokai -f console256 -g "${stdin}"
+      return 0
+    fi
+  fi
+  cat "${stdin}"
+}
+
+pygmentize-cat "${@}"
+"""
+    assert main(long.string, template) == 0

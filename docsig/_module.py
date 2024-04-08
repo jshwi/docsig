@@ -10,6 +10,7 @@ import typing as _t
 from pathlib import Path as _Path
 
 import astroid as _ast
+from astroid import AstroidSyntaxError as _AstroidSyntaxError
 
 from ._directives import Directives as _Directives
 from ._function import Function as _Function
@@ -139,6 +140,35 @@ class Modules(_t.List[_Module]):
         be on the class level docstring.
     """
 
+    # handle errors here before appending a module
+    def _add_module(  # pylint: disable=too-many-arguments
+        self,
+        disable: list[_Message],
+        string: str | None = None,
+        root: _Path | None = None,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
+    ) -> None:
+        try:
+            if root is not None:
+                string = root.read_text(encoding="utf-8")
+
+            self.append(
+                _Module(
+                    # empty string won't happen but keeps the
+                    # typechecker happy
+                    string or "",
+                    disable,
+                    root,
+                    ignore_args,
+                    ignore_kwargs,
+                    check_class_constructor,
+                )
+            )
+        except (_AstroidSyntaxError, UnicodeDecodeError):
+            pass
+
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
@@ -156,14 +186,12 @@ class Modules(_t.List[_Module]):
         self._ignore_kwargs = ignore_kwargs
         self.check_class_constructor = check_class_constructor
         if string is not None:
-            self.append(
-                _Module(
-                    string,
-                    disable,
-                    ignore_args=ignore_args,
-                    ignore_kwargs=ignore_kwargs,
-                    check_class_constructor=check_class_constructor,
-                )
+            self._add_module(
+                disable,
+                string=string,
+                ignore_args=ignore_args,
+                ignore_kwargs=ignore_kwargs,
+                check_class_constructor=check_class_constructor,
             )
         else:
             for path in paths:
@@ -178,16 +206,13 @@ class Modules(_t.List[_Module]):
         ):
             return
 
-        if root.is_file() and root.name.endswith(".py"):
-            self.append(
-                _Module(
-                    root.read_text(encoding="utf-8"),
-                    self._disable,
-                    root,
-                    self._ignore_args,
-                    self._ignore_kwargs,
-                    self.check_class_constructor,
-                )
+        if root.is_file():
+            self._add_module(
+                self._disable,
+                root=root,
+                ignore_args=self._ignore_args,
+                ignore_kwargs=self._ignore_kwargs,
+                check_class_constructor=self.check_class_constructor,
             )
 
         if root.is_dir():
