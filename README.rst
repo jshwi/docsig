@@ -78,7 +78,7 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-v] [-l] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k]
-                             [-n] [-S] [-s STR] [-d LIST] [-t LIST]
+                             [-n] [-S] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
                              [path [path ...]]
 
     Check signature params for proper documentation
@@ -108,6 +108,8 @@ Commandline
       -s STR, --string STR                 string to parse instead of files
       -d LIST, --disable LIST              comma separated list of rules to disable
       -t LIST, --target LIST               comma separated list of rules to target
+      -e EXCLUDE, --exclude EXCLUDE        regular expression of files or dirs to exclude
+                                           from checks
 
 Options can also be configured with the pyproject.toml file
 

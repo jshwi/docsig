@@ -41,4 +41,5 @@ def main() -> str | int:
         summary=parser.args.summary,
         targets=parser.args.target,
         disable=parser.args.disable,
+        exclude=parser.args.exclude,
     )
