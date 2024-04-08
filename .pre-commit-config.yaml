@@ -116,7 +116,7 @@ repos:
         entry: poetry run pytest docs/examples --doctest-glob='*.rst'
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v4.5.0"
+    rev: "v4.6.0"
     hooks:
       - id: check-added-large-files
       - id: check-ast
