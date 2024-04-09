@@ -78,7 +78,7 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k]
-                             [-n] [-S] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
+                             [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
                              [path [path ...]]
 
     Check signature params for proper documentation
@@ -105,6 +105,7 @@ Commandline
       -k, --ignore-kwargs                  ignore kwargs prefixed with two asterisks
       -n, --no-ansi                        disable ansi output
       -S, --summary                        print a summarised report
+      -v, --verbose                        increase output verbosity
       -s STR, --string STR                 string to parse instead of files
       -d LIST, --disable LIST              comma separated list of rules to disable
       -t LIST, --target LIST               comma separated list of rules to target

@@ -116,6 +116,12 @@ class Parser(_ArgumentParser):
             help="print a summarised report",
         )
         self.add_argument(
+            "-v",
+            "--verbose",
+            action="store_true",
+            help="increase output verbosity",
+        )
+        self.add_argument(
             "-s",
             "--string",
             action="store",
