@@ -39,6 +39,7 @@ def main() -> str | int:
         ignore_kwargs=parser.args.ignore_kwargs,
         no_ansi=parser.args.no_ansi,
         summary=parser.args.summary,
+        verbose=parser.args.verbose,
         targets=parser.args.target,
         disable=parser.args.disable,
         exclude=parser.args.exclude,

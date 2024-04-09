@@ -99,6 +99,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_kwargs: bool = False,
     no_ansi: bool = False,
     summary: bool = False,
+    verbose: bool = False,
     targets: list[_Message] | None = None,
     disable: list[_Message] | None = None,
     exclude: str | None = None,
@@ -130,6 +131,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param no_ansi: Disable ANSI output.
     :param summary: Print a summarised report.
+    :param verbose: increase output verbosity.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :param exclude: Regular expression of files and dirs to exclude from
@@ -151,6 +153,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
         check_class_constructor=check_class_constructor,
+        verbose=verbose,
     )
     display = _Display(no_ansi)
     for module in modules:

@@ -16,6 +16,9 @@ from ._directives import Directives as _Directives
 from ._function import Function as _Function
 from ._message import Message as _Message
 from ._utils import isprotected as _isprotected
+from ._utils import vprint as _vprint
+
+_FILE_INFO = "{path}: {msg}"
 
 
 class Parent(_t.List[_Function]):
@@ -138,6 +141,7 @@ class Modules(_t.List[_Module]):
     :param check_class_constructor: Check the class constructor's
         docstring. Otherwise, expect the constructor's documentation to
         be on the class level docstring.
+    :param verbose: increase output verbosity.
     """
 
     # handle errors here before appending a module
@@ -178,6 +182,13 @@ class Modules(_t.List[_Module]):
                 # their suffix, will continue to fail
                 raise err
 
+            _vprint(
+                _FILE_INFO.format(
+                    path=root or "stdin", msg=str(err).replace("\n", " ")
+                ),
+                self._verbose,
+            )
+
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
@@ -187,6 +198,7 @@ class Modules(_t.List[_Module]):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
+        verbose: bool = False,
     ) -> None:
         super().__init__()
         self._disable = disable
@@ -194,6 +206,7 @@ class Modules(_t.List[_Module]):
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self.check_class_constructor = check_class_constructor
+        self._verbose = verbose
         if string is not None:
             self._add_module(
                 disable,
@@ -213,6 +226,10 @@ class Modules(_t.List[_Module]):
         if str(root) != "." and any(
             _re.match(i, root.name) for i in self._excludes
         ):
+            _vprint(
+                _FILE_INFO.format(path=root, msg="in exclude list, skipping"),
+                self._verbose,
+            )
             return
 
         if root.is_file():

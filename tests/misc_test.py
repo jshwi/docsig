@@ -448,3 +448,18 @@ pygmentize-cat() {
 pygmentize-cat "${@}"
 """
     assert main(long.string, template) == 0
+
+
+def test_verbose(main: MockMainType, capsys: pytest.CaptureFixture) -> None:
+    """Test verbose.
+
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    """
+    template = """\
+#!/bin/bash
+echo "Hello, world"
+"""
+    main(long.string, template, long.verbose)
+    std = capsys.readouterr()
+    assert "invalid syntax" in std.out
