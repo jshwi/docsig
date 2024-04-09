@@ -85,13 +85,13 @@ files = [
 
 [[package]]
 name = "arcon"
-version = "0.3.1"
+version = "0.4.0"
 description = "Persistent runtime config"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "arcon-0.3.1-py3-none-any.whl", hash = "sha256:164f91ea41b23dcc04570a620e23eb0ab1492ff5ff7c9059e0b8ddb6bdcfbd20"},
-    {file = "arcon-0.3.1.tar.gz", hash = "sha256:49e904f7675a62161f6b9e1bee6979772317f9c0d4c28ae4bd04c5d0e22d11d9"},
+    {file = "arcon-0.4.0-py3-none-any.whl", hash = "sha256:19488bca11b6facb59c2d3f587e8685aa6afc99764b0956fa2c2837fc0fff6a9"},
+    {file = "arcon-0.4.0.tar.gz", hash = "sha256:b243f265d5f1eacf0025d072ef4d3385b0f33c20b247d017a25948b3b19805b1"},
 ]
 
 [package.dependencies]
@@ -2657,4 +2657,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "dddc34e74f05f078b9a8dbbb13afc35289b325cec3d7baa933e646c014bcdaf8"
+content-hash = "b0a202ae20f190a4fb0b1a9e8d0d18c8713f141b866599bbfd7f0eca3160dc90"
