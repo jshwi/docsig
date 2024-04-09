@@ -54,8 +54,8 @@ def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
     :return: Function for using this fixture.
     """
 
-    def _init_file(contents: str) -> Path:
-        file = tmp_path / "module" / "file.py"
+    def _init_file(contents: str, path: Path | None = None) -> Path:
+        file = tmp_path / (path or Path("module") / "file.py")
         file.parent.mkdir(exist_ok=True)
         file.write_text(contents)
         return file

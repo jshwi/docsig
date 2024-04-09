@@ -17,7 +17,16 @@ from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
 MockMainType = t.Callable[..., t.Union[str, int]]
-InitFileFixtureType = t.Callable[[str], Path]
+
+
+class InitFileFixtureType(
+    t.Protocol
+):  # pylint: disable=too-few-public-methods
+    """Type for ``fixture_init_file``."""
+
+    def __call__(self, content: str, path: Path = ..., /) -> Path:
+        """Type for ``fixture_init_file``."""
+
 
 short = _VarPrefix("-")
 long = _VarPrefix("--", "-")

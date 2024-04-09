@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - exclude option
 
+### Fixed
+- allow checking of files not ending in .py
+
 [0.44.3](https://github.com/jshwi/docsig/releases/tag/v0.44.3) - 2024-03-24
 ------------------------------------------------------------------------
 ### Fixed
