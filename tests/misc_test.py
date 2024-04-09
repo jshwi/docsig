@@ -9,6 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+from astroid import AstroidSyntaxError
 from templatest import templates
 
 import docsig
@@ -370,3 +371,38 @@ new-ssl "${@}"
 """
     init_file(template)
     assert main(".", long.exclude, "file.py") == 0
+
+
+def test_bad_py_file(
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+) -> None:
+    """Test invalid syntax on .py file.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = """
+#!/usr/bin/env bash
+new-ssl() {
+  domain="${1}"
+  config="${2:-"${domain}.conf"}"
+  openssl \
+    req \
+    -new \
+    -newkey \
+    rsa:2048 \
+    -nodes \
+    -sha256 \
+    -out "${domain}.csr" \
+    -keyout "${domain}.key" \
+    -config "${config}"
+}
+
+new-ssl "${@}"
+"""
+    init_file(template)
+    with pytest.raises(AstroidSyntaxError) as err:
+        main(".")
+
+    assert "invalid syntax" in str(err.value)
