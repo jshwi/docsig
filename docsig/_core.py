@@ -57,25 +57,25 @@ def _run_check(  # pylint: disable=too-many-arguments
     targets: list[_Message],
     failures: _Failures,
 ) -> None:
-    for func in parent:
-        if not (func.isoverridden and not check_overridden) and (
-            not (func.isprotected and not check_protected)
+    for child in parent:
+        if not (child.isoverridden and not check_overridden) and (
+            not (child.isprotected and not check_protected)
             and not (
-                func.isinit
+                child.isinit
                 and not (
                     (check_class or check_class_constructor)
                     and not (parent.isprotected and not check_protected)
                 )
             )
-            and not (func.isdunder and not check_dunders)
-            and not (func.docstring.bare and ignore_no_params)
+            and not (child.isdunder and not check_dunders)
+            and not (child.docstring.bare and ignore_no_params)
         ):
             report = _generate_report(
-                func, targets, func.disabled, check_property_returns
+                child, targets, child.disabled, check_property_returns
             )
             if report:
                 failures.append(
-                    _Failure(func, _FuncStr(func, no_ansi), report)
+                    _Failure(child, _FuncStr(child, no_ansi), report)
                 )
 
 
