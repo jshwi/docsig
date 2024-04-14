@@ -14,9 +14,9 @@ from astroid import AstroidSyntaxError as _AstroidSyntaxError
 
 from ._directives import Directive as _Directive
 from ._directives import Directives as _Directives
-from ._function import Docstring as _Docstring
-from ._function import Signature as _Signature
 from ._message import Message as _Message
+from ._stub import Docstring as _Docstring
+from ._stub import Signature as _Signature
 from ._utils import isprotected as _isprotected
 from ._utils import vprint as _vprint
 

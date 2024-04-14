@@ -177,7 +177,7 @@ def test_lineno(
 def test_param_ne() -> None:
     """Get coverage on `Param.__eq__`."""
     # noinspection PyUnresolvedReferences
-    assert docsig._function.Param() != object
+    assert docsig._stub.Param() != object
 
 
 def test_file_not_found_error(main: MockMainType) -> None:
