@@ -17,7 +17,6 @@ from ._directives import Directives as _Directives
 from ._message import Message as _Message
 from ._stub import Docstring as _Docstring
 from ._stub import Signature as _Signature
-from ._utils import isprotected as _isprotected
 from ._utils import vprint as _vprint
 
 _FILE_INFO = "{path}: {msg}"
@@ -107,7 +106,7 @@ class Parent(_t.List["Parent"]):
     @property
     def isprotected(self) -> bool:
         """Boolean value for whether class is protected."""
-        return _isprotected(self._name)
+        return self._name.startswith("_")
 
 
 class Function(Parent):
@@ -217,9 +216,7 @@ class Function(Parent):
     @property
     def isprotected(self) -> bool:
         """Boolean value for whether function is protected."""
-        return (
-            _isprotected(self.name) and not self.isinit and not self.isdunder
-        )
+        return super().isprotected and not self.isinit and not self.isdunder
 
     @property
     def isstaticmethod(self) -> bool:
