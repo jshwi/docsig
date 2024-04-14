@@ -147,7 +147,7 @@ class _Params(_t.List[Param]):
         return any(k for k, v in _Counter(self).items() if v > 1)
 
 
-class _DocSig:
+class _Stub:
     def __init__(
         self, ignore_args: bool = False, ignore_kwargs: bool = False
     ) -> None:
@@ -165,7 +165,7 @@ class _DocSig:
         return self._returns
 
 
-class Signature(_DocSig):
+class Signature(_Stub):
     """Represents a function signature.
 
     :param arguments: Arguments provided to signature.
@@ -246,7 +246,7 @@ class Signature(_DocSig):
         return self._rettype
 
 
-class Docstring(_DocSig):
+class Docstring(_Stub):
     """Represents a function docstring.
 
     :param node: Docstring ast node.
