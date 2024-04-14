@@ -271,7 +271,7 @@ class _Docstring(_DocSig):
         return self._string is not None and not self._args and not self.returns
 
 
-class Function:  # pylint: disable=too-many-arguments
+class Function:
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
