@@ -98,18 +98,16 @@ class Parent(_t.List[_Function]):
 class _Module(_t.List[Parent]):
     def __init__(  # pylint: disable=too-many-arguments
         self,
-        string: str,
-        disable: list[_Message],
+        node: _ast.Module | _ast.ClassDef,
+        directives: _Directives,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
     ) -> None:
         super().__init__()
-        ast = _ast.parse(string)
-        directives = _Directives(string, disable)
-        self.append(Parent(ast, directives, path, ignore_args, ignore_kwargs))
-        for subnode in ast.body:
+        self.append(Parent(node, directives, path, ignore_args, ignore_kwargs))
+        for subnode in node.body:
             if isinstance(subnode, _ast.ClassDef):
                 self.append(
                     Parent(
@@ -158,12 +156,13 @@ class Modules(_t.List[_Module]):
             if root is not None:
                 string = root.read_text(encoding="utf-8")
 
+            # empty string won't happen but keeps the
+            # typechecker happy
+            string = string or ""
             self.append(
                 _Module(
-                    # empty string won't happen but keeps the
-                    # typechecker happy
-                    string or "",
-                    disable,
+                    _ast.parse(string),
+                    _Directives(string, disable),
                     root,
                     ignore_args,
                     ignore_kwargs,
