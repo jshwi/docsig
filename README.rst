@@ -77,8 +77,8 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-o] [-p] [-P] [-i] [-a] [-k]
-                             [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
+    usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a]
+                             [-k] [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
                              [path [path ...]]
 
     Check signature params for proper documentation
@@ -96,6 +96,7 @@ Commandline
       -D, --check-dunders                  check dunder methods
       -m, --check-protected-class-methods  check public methods belonging to protected
                                            classes
+      -N, --check-nested                   check nested functions and classes
       -o, --check-overridden               check overridden methods
       -p, --check-protected                check protected functions and classes
       -P, --check-property-returns         check property return values

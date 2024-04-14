@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.46.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- option for checking nested functions and classes
+
 ### Fixed
 - check indented functions and classes
 

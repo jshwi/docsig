@@ -51,6 +51,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_class: bool,
     check_class_constructor: bool,
     check_dunders: bool,
+    check_nested: bool,
     check_overridden: bool,
     check_protected: bool,
     check_property_returns: bool,
@@ -79,6 +80,24 @@ def _run_check(  # pylint: disable=too-many-arguments
                 failures.append(
                     _Failure(child, _FuncStr(child, no_ansi), report)
                 )
+
+        if check_nested:
+            for func in child:
+                _run_check(
+                    func,
+                    child,
+                    check_class,
+                    check_class_constructor,
+                    check_dunders,
+                    check_nested,
+                    check_overridden,
+                    check_protected,
+                    check_property_returns,
+                    ignore_no_params,
+                    no_ansi,
+                    targets,
+                    failures,
+                )
     else:
         for func in child:
             _run_check(
@@ -87,6 +106,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                 check_class,
                 check_class_constructor,
                 check_dunders,
+                check_nested,
                 check_overridden,
                 check_protected,
                 check_property_returns,
@@ -107,6 +127,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     check_class_constructor: bool = False,
     check_dunders: bool = False,
     check_protected_class_methods: bool = False,
+    check_nested: bool = False,
     check_overridden: bool = False,
     check_protected: bool = False,
     check_property_returns: bool = False,
@@ -138,6 +159,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param check_dunders: Check dunder methods
     :param check_protected_class_methods: Check public methods belonging
         to protected classes.
+    :param check_nested: Check nested functions and classes.
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param check_property_returns: Run return checks on properties.
@@ -186,6 +208,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     check_class,
                     check_class_constructor,
                     check_dunders,
+                    check_nested,
                     check_overridden,
                     check_protected,
                     check_property_returns,

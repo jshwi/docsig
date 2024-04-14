@@ -31,6 +31,7 @@ def main() -> str | int:
         check_protected_class_methods=(
             parser.args.check_protected_class_methods
         ),
+        check_nested=parser.args.check_nested,
         check_overridden=parser.args.check_overridden,
         check_protected=parser.args.check_protected,
         check_property_returns=parser.args.check_property_returns,

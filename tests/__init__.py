@@ -50,6 +50,7 @@ CHECK_ARGS = (
     long.check_dunders,
     long.check_property_returns,
     long.check_protected_class_methods,
+    long.check_nested,
 )
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 ENABLE = "enable"
@@ -8771,6 +8772,152 @@ for argument in container:
     @property
     def expected(self) -> str:
         return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+@_templates.register
+class _FNestedFuncN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+def my_function(argument: int = 42) -> int:
+    """
+    Function that prints a message and returns the argument + 1
+
+    Parameters
+    ----------
+    argument : int, optional
+        The input argument, by default 42
+
+    Returns
+    -------
+    int
+        The input argument + 1
+    """
+    print("Hello from a function")
+    print(argument)
+    def my_external_function(argument: int = 42) -> int:
+        print("Hello from an external function")
+        print(argument)
+        return argument + 42
+    return argument + 1
+'''
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+# starts with `M` for multi instead of `F` so we don't run
+# `test_single_flag` with this as it needs `-N/--check-nested` and
+# `-c/--check-class` to fail
+@_templates.register
+class _MNestedKlassNotMethodOkN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+def my_function(argument: int = 42) -> int:
+    """
+    Function that prints a message and returns the argument + 1
+
+    Parameters
+    ----------
+    argument : int, optional
+        The input argument, by default 42
+
+    Returns
+    -------
+    int
+        The input argument + 1
+    """
+    print("Hello from a function")
+    print(argument)
+    class Klass:
+        def __init__(self, this) -> None:
+            self.this = this
+        def my_external_function(self, argument: int = 42) -> int:
+            """This is a method.
+
+            :param argument: An int.
+            :return: An int.
+            """
+            print("Hello from an external function")
+            print(argument)
+            return argument + 42
+    return argument + 1
+'''
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+{PATH}:19 in Klass
+--------------------------
+class Klass:
+    ...
+
+    def __init__(✖this) -> ✓None:
+
+E114: class is missing a docstring (class-doc-missing)
+
+"""
+
+
+@_templates.register
+class _MNestedKlassNotMethodNotN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+def my_function(argument: int = 42) -> int:
+    """
+    Function that prints a message and returns the argument + 1
+
+    Parameters
+    ----------
+    argument : int, optional
+        The input argument, by default 42
+
+    Returns
+    -------
+    int
+        The input argument + 1
+    """
+    print("Hello from a function")
+    print(argument)
+    class Klass:
+        def __init__(self, this) -> None:
+            self.this = this
+        def my_external_function(self, argument: int = 42) -> int:
+            print("Hello from an external function")
+            print(argument)
+            return argument + 42
+    return argument + 1
+'''
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+{PATH}:19 in Klass
+--------------------------
+class Klass:
+    ...
+
+    def __init__(✖this) -> ✓None:
+
+E114: class is missing a docstring (class-doc-missing)
+
+{PATH}:21 in Klass
+--------------------------
 def my_external_function(✖argument) -> ✖int:
     ...
 

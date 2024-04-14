@@ -68,6 +68,12 @@ class Parser(_ArgumentParser):
             help="check public methods belonging to protected classes",
         )
         self.add_argument(
+            "-N",
+            "--check-nested",
+            action="store_true",
+            help="check nested functions and classes",
+        )
+        self.add_argument(
             "-o",
             "--check-overridden",
             action="store_true",
