@@ -170,6 +170,17 @@ class _DocSig:
 
 
 class _Signature(_DocSig):
+    """Represents a function signature.
+
+    :param arguments: Arguments provided to signature.
+    :param returns: Returns declared in signature.
+    :param ismethod: Whether this signature belongs to a method.
+    :param isstaticmethod: Whether this signature belongs to a static
+        method.
+    :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    """
+
     def __init__(  # pylint: disable=too-many-arguments
         self,
         arguments: _ast.Arguments,
@@ -240,6 +251,13 @@ class _Signature(_DocSig):
 
 
 class _Docstring(_DocSig):
+    """Represents a function docstring.
+
+    :param node: Docstring ast node.
+    :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    """
+
     def __init__(
         self,
         node: _ast.Const | None = None,
