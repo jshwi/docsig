@@ -8603,3 +8603,177 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FFuncInIfStatementN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+def my_function(argument: int = 42) -> int:
+    """
+    Function that prints a message and returns the argument + 1
+
+    Parameters
+    ----------
+    argument : int, optional
+        The input argument, by default 42
+
+    Returns
+    -------
+    int
+        The input argument + 1
+    """
+    print("Hello from a function")
+    print(argument)
+    return argument + 1
+
+
+if True:
+    my_function(42)
+    def my_external_function(argument: int = 42) -> int:
+        print("Hello from an external function")
+        print(argument)
+        return argument + 42
+'''
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+@_templates.register
+class _FKlassInIfStatementN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+if True:
+    class Klass:
+        """Class is OK."""
+        def my_external_function(self, argument: int = 42) -> int:
+            print("Hello from an external function")
+            print(argument)
+            return argument + 42
+'''
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+@_templates.register
+class _FFuncInIfInIfStatementN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+if True:
+    if True:
+        def my_external_function(argument: int = 42) -> int:
+            print("Hello from an external function")
+            print(argument)
+            return argument + 42
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+@_templates.register
+class _FKlassNotMethodOkN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+class Klass:
+    def __init__(self, this) -> None:
+        self.this = this
+    def my_external_function(self, argument: int = 42) -> int:
+        """This is a method.
+
+        :param argument: An int.
+        :return: An int.
+        """
+        print("Hello from an external function")
+        print(argument)
+        return argument + 42
+'''
+
+    @property
+    def expected(self) -> str:
+        return """\
+class Klass:
+    ...
+
+    def __init__(✖this) -> ✓None:
+
+E114: class is missing a docstring (class-doc-missing)
+"""
+
+
+@_templates.register
+class _FFuncInForLoopN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+container = []
+
+for argument in container:
+    def my_external_function(argument: int = 42) -> int:
+        print("Hello from an external function")
+        print(argument)
+        return argument + 42
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""
+
+
+@_templates.register
+class _FFuncInForLoopIfN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return """
+container = []
+
+for argument in container:
+    if argument > 0:
+        def my_external_function(argument: int = 42) -> int:
+            print("Hello from an external function")
+            print(argument)
+            return argument + 42
+"""
+
+    @property
+    def expected(self) -> str:
+        return """\
+def my_external_function(✖argument) -> ✖int:
+    ...
+
+E113: function is missing a docstring (function-doc-missing)
+
+"""

@@ -48,55 +48,89 @@ class Parent(_t.List["Parent"]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
-        overloads = []
+        overloads: list[str] = []
         returns = None
+        self._parse_ast(
+            node,
+            directives,
+            path,
+            ignore_args,
+            ignore_kwargs,
+            check_class_constructor,
+            overloads,
+            returns,
+        )
+
+    def _parse_ast(  # pylint: disable=protected-access,too-many-arguments
+        self,
+        node,
+        directives,
+        path,
+        ignore_args,
+        ignore_kwargs,
+        check_class_constructor,
+        overloads,
+        returns,
+    ) -> None:
         parent_comments, parent_disabled = directives.get(
             node.lineno, ([], [])
         )
-        for subnode in node.body:
-            comments, disabled = directives.get(subnode.lineno, ([], []))
-            comments.extend(parent_comments)
-            disabled.extend(parent_disabled)
-            if isinstance(subnode, _ast.FunctionDef):
-                func = Function(
-                    subnode,
-                    comments,
-                    directives,
-                    disabled,
-                    path,
-                    ignore_args,
-                    ignore_kwargs,
-                    check_class_constructor,
-                )
-                if func.isoverloaded:
-                    overloads.append(func.name)
-                    returns = func.signature.rettype
-                else:
-                    if func.name in overloads:
-                        subnode.returns = returns
-                        # noinspection PyProtectedMember
-                        func._signature._rettype = (
-                            returns
-                            if isinstance(returns, str)
-                            else func._signature._get_rettype(returns)
-                        )
-                        # noinspection PyProtectedMember
-                        func._signature._returns = (
-                            str(func._signature._rettype) != "None"
-                        )
+        if hasattr(node, "body"):
+            for subnode in node.body:
+                comments, disabled = directives.get(subnode.lineno, ([], []))
+                comments.extend(parent_comments)
+                disabled.extend(parent_disabled)
+                if isinstance(subnode, _ast.FunctionDef):
+                    func = Function(
+                        subnode,
+                        comments,
+                        directives,
+                        disabled,
+                        path,
+                        ignore_args,
+                        ignore_kwargs,
+                        check_class_constructor,
+                    )
+                    if func.isoverloaded:
+                        overloads.append(func.name)
+                        returns = func.signature.rettype
+                    else:
+                        if func.name in overloads:
+                            subnode.returns = returns
+                            # noinspection PyProtectedMember
+                            func._signature._rettype = (
+                                returns
+                                if isinstance(returns, str)
+                                else func._signature._get_rettype(returns)
+                            )
+                            # noinspection PyProtectedMember
+                            func._signature._returns = (
+                                str(func._signature._rettype) != "None"
+                            )
 
-                    self.append(func)
-            elif isinstance(subnode, _ast.ClassDef):
-                self.append(
-                    Parent(
+                        self.append(func)
+                elif isinstance(subnode, _ast.ClassDef):
+                    self.append(
+                        Parent(
+                            subnode,
+                            directives,
+                            path,
+                            ignore_args,
+                            ignore_kwargs,
+                            check_class_constructor,
+                        )
+                    )
+                else:
+                    self._parse_ast(
                         subnode,
                         directives,
                         path,
                         ignore_args,
                         ignore_kwargs,
                         check_class_constructor,
+                        overloads,
+                        returns,
                     )
-                )
 
     @property
     def path(self) -> str:
