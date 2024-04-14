@@ -13,10 +13,6 @@ from collections import Counter as _Counter
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
-from ._directives import Directive as _Directive
-from ._message import Message as _Message
-from ._utils import isprotected as _isprotected
-
 PARAM = "param"
 KEYWORD = "keyword"
 KEY = "key"
@@ -169,7 +165,7 @@ class _DocSig:
         return self._returns
 
 
-class _Signature(_DocSig):
+class Signature(_DocSig):
     """Represents a function signature.
 
     :param arguments: Arguments provided to signature.
@@ -250,7 +246,7 @@ class _Signature(_DocSig):
         return self._rettype
 
 
-class _Docstring(_DocSig):
+class Docstring(_DocSig):
     """Represents a function docstring.
 
     :param node: Docstring ast node.
@@ -287,154 +283,3 @@ class _Docstring(_DocSig):
         Docstring has to exist for docstring to be considered bare.
         """
         return self._string is not None and not self._args and not self.returns
-
-
-class Function:
-    """Represents a function with signature and docstring parameters.
-
-    :param node: Function's abstract syntax tree.
-    :param directives: Directive, if any, belonging to this function.
-    :param disabled: List of disabled checks specific to this function.
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param check_class_constructor: If the function is the class
-        constructor, use its own docstring. Otherwise, use the class
-        level docstring for the constructor function.
-    """
-
-    def __init__(  # pylint: disable=too-many-arguments
-        self,
-        node: _ast.FunctionDef,
-        directives: _t.List[_Directive],
-        disabled: list[_Message],
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-        check_class_constructor: bool = False,
-    ) -> None:
-        self._node = node
-        self._directives = directives
-        self._disabled = disabled
-        self._parent = node.parent.frame()
-        self._signature = _Signature(
-            node.args,
-            node.returns,
-            self.ismethod,
-            self.isstaticmethod,
-            ignore_args,
-            ignore_kwargs,
-        )
-        if self.isinit and not check_class_constructor:
-            # docstring for __init__ is expected on the class docstring
-            relevant_doc_node = self._parent.doc_node
-        else:
-            relevant_doc_node = node.doc_node
-        self._docstring = _Docstring(relevant_doc_node, ignore_kwargs)
-
-    def __len__(self) -> int:
-        """Length of the longest sequence of args."""
-        return max([len(self.signature.args), len(self.docstring.args)])
-
-    def _decorated_with(self, name: str) -> bool:
-        if self._node.decorators is not None:
-            for dec in self._node.decorators.nodes:
-                return (isinstance(dec, _ast.Name) and dec.name == name) or (
-                    isinstance(dec, _ast.Attribute) and dec.attrname == name
-                )
-
-        return False
-
-    @property
-    def ismethod(self) -> bool:
-        """Boolean value for whether function is a method."""
-        return isinstance(self._parent, _ast.ClassDef)
-
-    @property
-    def isproperty(self) -> bool:
-        """Boolean value for whether function is a property."""
-        valid_properties = [
-            "property",
-            "cached_property",
-        ]
-        return self.ismethod and any(
-            self._decorated_with(i) for i in valid_properties
-        )
-
-    @property
-    def isoverloaded(self) -> bool:
-        """Boolean value for whether function is a property."""
-        return self._decorated_with("overload")
-
-    @property
-    def isinit(self) -> bool:
-        """Boolean value for whether function is a class constructor."""
-        return self.ismethod and self.name == "__init__"
-
-    @property
-    def isoverridden(self) -> bool:
-        """Boolean value for whether function is overridden."""
-        if self.ismethod and not self.isinit:
-            for ancestor in self._parent.ancestors():
-                if self.name in ancestor and isinstance(
-                    ancestor[self.name], _ast.FunctionDef
-                ):
-                    return True
-
-        return False
-
-    @property
-    def isprotected(self) -> bool:
-        """Boolean value for whether function is protected."""
-        return (
-            _isprotected(self.name) and not self.isinit and not self.isdunder
-        )
-
-    @property
-    def isstaticmethod(self) -> bool:
-        """Boolean value for whether function is a static method."""
-        return self.ismethod and self._decorated_with("staticmethod")
-
-    @property
-    def isdunder(self) -> bool:
-        """Boolean value for whether function is a dunder method."""
-        return (
-            self.ismethod
-            and not self.isinit
-            and bool(_re.match(r"__(.*)__", self.name))
-        )
-
-    @property
-    def name(self) -> str:
-        """The name of the function."""
-        return self._node.name
-
-    @property
-    def parent(
-        self,
-    ) -> _ast.FunctionDef | _ast.Module | _ast.ClassDef | _ast.Lambda:
-        """Function's parent node."""
-        return self._parent
-
-    @property
-    def lineno(self) -> int:
-        """Line number of function declaration."""
-        return self._node.lineno or 0
-
-    @property
-    def signature(self) -> _Signature:
-        """The function's signature parameters."""
-        return self._signature
-
-    @property
-    def docstring(self) -> _Docstring:
-        """The function's docstring."""
-        return self._docstring
-
-    @property
-    def disabled(self) -> list[_Message]:
-        """List of disabled checks specific to this function."""
-        return self._disabled
-
-    @property
-    def directives(self) -> _t.List[_Directive]:
-        """Directive, if any, belonging to this function."""
-        return self._directives

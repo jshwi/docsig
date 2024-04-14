@@ -8,9 +8,9 @@ from __future__ import annotations as _
 import typing as _t
 
 from ._function import RETURN as _RETURN
-from ._function import Function as _Function
 from ._function import Param as _Param
 from ._message import Message as _Message
+from ._module import Function as _Function
 from ._utils import almost_equal as _almost_equal
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E

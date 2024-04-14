@@ -19,8 +19,8 @@ from pygments.lexers.python import PythonLexer as _PythonLexer
 
 from ._function import ARG as _ARG
 from ._function import KEY as _KEY
-from ._function import Function as _Function
 from ._function import Param as _Param
+from ._module import Function as _Function
 from ._report import Report as _Report
 
 color = _Color()
