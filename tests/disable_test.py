@@ -24,1125 +24,1125 @@ SYMBOLIC = [
     (E[105].code, E[105].symbolic),
     (E[106].code, E[106].symbolic),
 ]
-DISABLE_FILE_1 = """
+DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-DISABLE_FILE_2 = """
+    """
+'''
+DISABLE_FILE_2 = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-DISABLE_FILE_3 = """
+    """
+'''
+DISABLE_FILE_3 = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-DISABLE_FILE_4 = """
+    """
+'''
+DISABLE_FILE_4 = '''
 # docsig: disable=E101
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-DISABLE_FILE_5 = """
+'''
+DISABLE_FILE_5 = '''
 # docsig: disable=E101,E102
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-DISABLE_FILE_6 = """
+'''
+DISABLE_FILE_6 = '''
 
 def function_1(param1, param2, param3) -> None:  # docsig: disable=E101
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E101,E102,E106,e107.
+    """E101,E102,E106,e107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
 
-"""
-DISABLE_FILE_7 = """
+'''
+DISABLE_FILE_7 = '''
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(  # docsig: disable=E101,E102,E106,E107
     param1, param2, param3
 ) -> None:
-    \"\"\"E101,E102,E106,e107.
+    """E101,E102,E106,e107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
 
-"""
-ENABLE_FILE_1 = """
+'''
+ENABLE_FILE_1 = '''
 # docsig: disable
 # docsig: enable
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-ENABLE_FILE_2 = """
+'''
+ENABLE_FILE_2 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
 
-"""
-ENABLE_FILE_3 = """
+'''
+ENABLE_FILE_3 = '''
 # docsig: disable
 # docsig: enable=E101
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-ENABLE_FILE_4 = """
+'''
+ENABLE_FILE_4 = '''
 
 # docsig: disable
 # docsig: enable=E101,E102
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106.
+    """E106.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-ENABLE_FILE_5 = """
+'''
+ENABLE_FILE_5 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable=E101
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E101,E102,E106,e107.
+    """E101,E102,E106,e107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-ENABLE_FILE_6 = """
+'''
+ENABLE_FILE_6 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101.
+    """E101.
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102.
+    """E102.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103.
+    """E103.
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104.
+    """E104.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105.
+    """E105.
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_6(  # docsig: enable=E101,E102,E106,E107
     param1, param2, param3
 ) -> None:
-    \"\"\"E101,E102,E106,e107.
+    """E101,E102,E106,e107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107.
+    """E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
+    """
 
-"""
-INLINE_DISABLE_TEMPLATE = """
+'''
+INLINE_DISABLE_TEMPLATE = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
-    \"\"\"E101
+    """E101
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 def function_2(param1, param2) -> None:  # docsig: disable={rules}
-    \"\"\"E102
+    """E102
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_3(param1, param2, param3) -> None:  # docsig: disable={rules}
-    \"\"\"E103
+    """E103
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
-    \"\"\"E104
+    """E104
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
-    \"\"\"E105
+    """E105
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
-    \"\"\"E106
+    """E106
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
-    \"\"\"E107
+    """E107
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-MODULE_LEVEL_DISABLE_TEMPLATE = """
+    """
+'''
+MODULE_LEVEL_DISABLE_TEMPLATE = '''
 # docsig: disable={rules}
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101
+    """E101
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102
+    """E102
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103
+    """E103
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104
+    """E104
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105
+    """E105
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106
+    """E106
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107
+    """E107
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-INLINE_ENABLE_TEMPLATE = """
+    """
+'''
+INLINE_ENABLE_TEMPLATE = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
-    \"\"\"E101
+    """E101
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 def function_2(param1, param2) -> None:  # docsig: enable={rules}
-    \"\"\"E102
+    """E102
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_3(param1, param2, param3) -> None:  # docsig: enable={rules}
-    \"\"\"E103
+    """E103
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
-    \"\"\"E104
+    """E104
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
-    \"\"\"E105
+    """E105
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
-    \"\"\"E106
+    """E106
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_7(param1, param2, param3) -> None:  # docsig: enable={rules}
-    \"\"\"E107
+    """E107
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
-MODULE_LEVEL_ENABLE_TEMPLATE = """
+    """
+'''
+MODULE_LEVEL_ENABLE_TEMPLATE = '''
 # docsig: disable
 # docsig: enable={rules}
 def function_1(param1, param2, param3) -> None:
-    \"\"\"E101
+    """E101
 
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
-    \"\"\"
+    """
 
 def function_2(param1, param2) -> None:
-    \"\"\"E102
+    """E102
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_3(param1, param2, param3) -> None:
-    \"\"\"E103
+    """E103
 
     :param param1: Fails.
     :param param2: Fails.
-    \"\"\"
+    """
 
 def function_4(param1, param2, param3) -> None:
-    \"\"\"E104
+    """E104
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
     :return: Fails.
-    \"\"\"
+    """
 
 def function_5(param1, param2, param3) -> int:
-    \"\"\"E105
+    """E105
 
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_6(param1, param2, param3) -> None:
-    \"\"\"E106
+    """E106
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param param3: Fails.
-    \"\"\"
+    """
 
 def function_7(param1, param2, param3) -> None:
-    \"\"\"E107
+    """E107
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    \"\"\"
-"""
+    """
+'''
 
 
 def test_no_disables(

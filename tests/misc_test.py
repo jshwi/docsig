@@ -124,16 +124,16 @@ def test_target_report(
     :param init_file: Initialize a test file.
     :param error: Error to target.
     """
-    template = """
+    template = '''
 def function_3(param1, param2, param3) -> None:
-    '''E101,E102,E106,E107.
+    """E101,E102,E106,E107.
 
     :param param1: Fails.
     :param param1: Fails.
     :param param2: Fails.
     :param: Fails.
-    '''
-"""
+    """
+'''
     _errors = "E101", "E102", "E106", "E107"
     init_file(template)
     main(".", "--target", error)
@@ -198,53 +198,53 @@ def test_file_not_found_error(main: MockMainType) -> None:
         [(long.check_class_constructor,), ""],
         [
             (long.check_protected_class_methods, long.check_class),
-            f"""\
+            f'''\
 {PATH}:6 in _Messages
 -----------------------------
 def fromcode({CHECK}ref) -> {CROSS}Message:
-    \"\"\"
+    """
     :param ref: {CHECK}
     :return: {CROSS}
-    \"\"\"
+    """
 
 {E[105].fstring(T)}
 
 {PATH}:12 in _Messages
 ------------------------------
 def all({CHECK}category) -> {CROSS}tuple[None]:
-    \"\"\"
+    """
     :param category: {CHECK}
     :return: {CROSS}
-    \"\"\"
+    """
 
 {E[105].fstring(T)}
 
-""",
+''',
         ],
         [
             (long.check_protected_class_methods, long.check_class_constructor),
-            f"""\
+            f'''\
 {PATH}:6 in _Messages
 -----------------------------
 def fromcode({CHECK}ref) -> {CROSS}Message:
-    \"\"\"
+    """
     :param ref: {CHECK}
     :return: {CROSS}
-    \"\"\"
+    """
 
 {E[105].fstring(T)}
 
 {PATH}:12 in _Messages
 ------------------------------
 def all({CHECK}category) -> {CROSS}tuple[None]:
-    \"\"\"
+    """
     :param category: {CHECK}
     :return: {CROSS}
-    \"\"\"
+    """
 
 {E[105].fstring(T)}
 
-""",
+''',
         ],
     ],
     ids=[
@@ -269,23 +269,23 @@ def test_check_protected_class_methods(
     :param args: Args to pass to main.
     :param expected: Expected stdout.
     """
-    template = """
+    template = '''
 class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
     def fromcode(self, ref: str) -> Message:
-        \"\"\"
+        """
 
         :param ref: Codes or symbolic reference.
-        \"\"\"
+        """
 
     def all(self, category: int) -> tuple[Message, ...]:
-        \"\"\"
+        """
 
         :param category: Category to get.
-        \"\"\"
-"""
+        """
+'''
     init_file(template)
     main(".", *args)
     std = capsys.readouterr()
