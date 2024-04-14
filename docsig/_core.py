@@ -55,8 +55,8 @@ def _run_check(  # pylint: disable=too-many-arguments
     ignore_no_params: bool,
     no_ansi: bool,
     targets: list[_Message],
-) -> _Failures:
-    failures = _Failures()
+    failures: _Failures,
+) -> None:
     for func in parent:
         if not (func.isoverridden and not check_overridden) and (
             not (func.isprotected and not check_protected)
@@ -77,8 +77,6 @@ def _run_check(  # pylint: disable=too-many-arguments
                 failures.append(
                     _Failure(func, _FuncStr(func, no_ansi), report)
                 )
-
-    return failures
 
 
 @_decorators.parse_msgs
@@ -163,7 +161,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 or check_protected
                 or check_protected_class_methods
             ):
-                failures = _run_check(
+                failures = _Failures()
+                _run_check(
                     top_level,
                     check_class,
                     check_class_constructor,
@@ -174,6 +173,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     ignore_no_params,
                     no_ansi,
                     targets or [],
+                    failures,
                 )
                 if failures:
                     display[top_level.path].append(failures)
