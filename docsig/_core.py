@@ -13,6 +13,7 @@ from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
 from ._message import Message as _Message
+from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import generate_report as _generate_report
@@ -45,6 +46,7 @@ def _print_checks() -> None:
 
 
 def _run_check(  # pylint: disable=too-many-arguments
+    child: _Function | _Parent,
     parent: _Parent,
     check_class: bool,
     check_class_constructor: bool,
@@ -57,7 +59,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     targets: list[_Message],
     failures: _Failures,
 ) -> None:
-    for child in parent:
+    if isinstance(child, _Function):
         if not (child.isoverridden and not check_overridden) and (
             not (child.isprotected and not check_protected)
             and not (
@@ -77,6 +79,22 @@ def _run_check(  # pylint: disable=too-many-arguments
                 failures.append(
                     _Failure(child, _FuncStr(child, no_ansi), report)
                 )
+    else:
+        for func in child:
+            _run_check(
+                func,
+                child,
+                check_class,
+                check_class_constructor,
+                check_dunders,
+                check_overridden,
+                check_protected,
+                check_property_returns,
+                ignore_no_params,
+                no_ansi,
+                targets,
+                failures,
+            )
 
 
 @_decorators.parse_msgs
@@ -164,6 +182,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 failures = _Failures()
                 _run_check(
                     top_level,
+                    module,
                     check_class,
                     check_class_constructor,
                     check_dunders,

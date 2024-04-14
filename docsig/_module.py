@@ -23,7 +23,7 @@ from ._utils import vprint as _vprint
 _FILE_INFO = "{path}: {msg}"
 
 
-class Parent(_t.List["Function"]):
+class Parent(_t.List[_t.Union["Function", "Parent"]]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
@@ -39,7 +39,7 @@ class Parent(_t.List["Function"]):
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
-        node: _ast.Module | _ast.ClassDef,
+        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
         directives: _Directives,
         path: _Path | None = None,
         ignore_args: bool = False,
@@ -63,6 +63,7 @@ class Parent(_t.List["Function"]):
                     subnode,
                     comments,
                     disabled,
+                    path,
                     ignore_args,
                     ignore_kwargs,
                     check_class_constructor,
@@ -85,6 +86,17 @@ class Parent(_t.List["Function"]):
                         )
 
                     self.append(func)
+            elif isinstance(subnode, _ast.ClassDef):
+                self.append(
+                    Parent(
+                        subnode,
+                        directives,
+                        path,
+                        ignore_args,
+                        ignore_kwargs,
+                        check_class_constructor,
+                    )
+                )
 
     @property
     def path(self) -> str:
@@ -103,6 +115,7 @@ class Function:
     :param node: Function's abstract syntax tree.
     :param directives: Directive, if any, belonging to this function.
     :param disabled: List of disabled checks specific to this function.
+    :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param check_class_constructor: If the function is the class
@@ -115,6 +128,7 @@ class Function:
         node: _ast.FunctionDef,
         directives: _t.List[_Directive],
         disabled: list[_Message],
+        path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
@@ -131,6 +145,7 @@ class Function:
             ignore_args,
             ignore_kwargs,
         )
+        self._path = f"{path}:" if path is not None else ""
         if self.isinit and not check_class_constructor:
             # docstring for __init__ is expected on the class docstring
             relevant_doc_node = self._parent.doc_node
@@ -247,34 +262,13 @@ class Function:
         """Directive, if any, belonging to this function."""
         return self._directives
 
-
-class _Module(_t.List[Parent]):
-    def __init__(  # pylint: disable=too-many-arguments
-        self,
-        node: _ast.Module | _ast.ClassDef,
-        directives: _Directives,
-        path: _Path | None = None,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-        check_class_constructor: bool = False,
-    ) -> None:
-        super().__init__()
-        self.append(Parent(node, directives, path, ignore_args, ignore_kwargs))
-        for subnode in node.body:
-            if isinstance(subnode, _ast.ClassDef):
-                self.append(
-                    Parent(
-                        subnode,
-                        directives,
-                        path,
-                        ignore_args,
-                        ignore_kwargs,
-                        check_class_constructor,
-                    )
-                )
+    @property
+    def path(self) -> str:
+        """Representation of path to function."""
+        return self._path
 
 
-class Modules(_t.List[_Module]):
+class Modules(_t.List[Parent]):
     """Sequence of ``Module`` objects parsed from Python modules or str.
 
     Recursively collect Python files from within all dirs that exist
@@ -313,7 +307,7 @@ class Modules(_t.List[_Module]):
             # typechecker happy
             string = string or ""
             self.append(
-                _Module(
+                Parent(
                     _ast.parse(string),
                     _Directives(string, disable),
                     root,
