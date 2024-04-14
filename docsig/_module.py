@@ -23,7 +23,7 @@ from ._utils import vprint as _vprint
 _FILE_INFO = "{path}: {msg}"
 
 
-class Parent(_t.List[_t.Union["Function", "Parent"]]):
+class Parent(_t.List["Parent"]):
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
@@ -62,6 +62,7 @@ class Parent(_t.List[_t.Union["Function", "Parent"]]):
                 func = Function(
                     subnode,
                     comments,
+                    directives,
                     disabled,
                     path,
                     ignore_args,
@@ -109,10 +110,11 @@ class Parent(_t.List[_t.Union["Function", "Parent"]]):
         return _isprotected(self._name)
 
 
-class Function:
+class Function(Parent):
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
+    :param comments: Comments in list form containing directives.
     :param directives: Directive, if any, belonging to this function.
     :param disabled: List of disabled checks specific to this function.
     :param path: Path to base path representation on.
@@ -126,15 +128,24 @@ class Function:
     def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
-        directives: _t.List[_Directive],
+        comments: _t.List[_Directive],
+        directives: _Directives,
         disabled: list[_Message],
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
     ) -> None:
+        super().__init__(
+            node,
+            directives,
+            path,
+            ignore_args,
+            ignore_kwargs,
+            check_class_constructor,
+        )
         self._node = node
-        self._directives = directives
+        self._directives = comments
         self._disabled = disabled
         self._parent = node.parent.frame()
         self._signature = _Signature(
@@ -145,7 +156,6 @@ class Function:
             ignore_args,
             ignore_kwargs,
         )
-        self._path = f"{path}:" if path is not None else ""
         if self.isinit and not check_class_constructor:
             # docstring for __init__ is expected on the class docstring
             relevant_doc_node = self._parent.doc_node
@@ -261,11 +271,6 @@ class Function:
     def directives(self) -> _t.List[_Directive]:
         """Directive, if any, belonging to this function."""
         return self._directives
-
-    @property
-    def path(self) -> str:
-        """Representation of path to function."""
-        return self._path
 
 
 class Modules(_t.List[Parent]):

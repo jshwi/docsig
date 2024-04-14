@@ -46,7 +46,7 @@ def _print_checks() -> None:
 
 
 def _run_check(  # pylint: disable=too-many-arguments
-    child: _Function | _Parent,
+    child: _Parent,
     parent: _Parent,
     check_class: bool,
     check_class_constructor: bool,
