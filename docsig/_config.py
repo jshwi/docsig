@@ -149,5 +149,6 @@ class Parser(_ArgumentParser):
         self.add_argument(
             "-e",
             "--exclude",
+            metavar="PATTERN",
             help="regular expression of files or dirs to exclude from checks",
         )

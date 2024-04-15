@@ -110,7 +110,7 @@ Commandline
       -s STR, --string STR                 string to parse instead of files
       -d LIST, --disable LIST              comma separated list of rules to disable
       -t LIST, --target LIST               comma separated list of rules to target
-      -e EXCLUDE, --exclude EXCLUDE        regular expression of files or dirs to exclude
+      -e PATTERN, --exclude PATTERN        regular expression of files or dirs to exclude
                                            from checks
 
 Options can also be configured with the pyproject.toml file
