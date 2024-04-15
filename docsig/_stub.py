@@ -20,16 +20,19 @@ RETURN = "return"
 ARG = "arg"
 
 
+# noinspection PyTypeChecker
 class _GoogleDocstring(str):
     def __new__(cls, string: str) -> _GoogleDocstring:
         return super().__new__(cls, str(_s.GoogleDocstring(string)))
 
 
+# noinspection PyTypeChecker
 class _NumpyDocstring(str):
     def __new__(cls, string: str) -> _NumpyDocstring:
         return super().__new__(cls, str(_s.NumpyDocstring(string)))
 
 
+# noinspection PyTypeChecker
 class _DocFmt(str):
     def __new__(cls, string: str) -> _DocFmt:
         return super().__new__(
@@ -40,6 +43,7 @@ class _DocFmt(str):
         )
 
 
+# noinspection PyTypeChecker
 class _RawDocstring(str):
     def __new__(cls, string: str) -> _RawDocstring:
         return super().__new__(
