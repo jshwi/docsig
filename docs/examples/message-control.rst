@@ -35,7 +35,7 @@ To disable individual function checks add an inline comment similar to the examp
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     10
     --
     def function_2(✓param1, ✓param2, ✖None) -> ✓None:
@@ -89,7 +89,7 @@ To disable all function checks add a module level comment similar to the example
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     0
 
 To disable multiple function checks add a module level disable and enable comment similar to the example below
@@ -122,7 +122,7 @@ To disable multiple function checks add a module level disable and enable commen
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     20
     --
     def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
@@ -168,7 +168,7 @@ The same can be done for disabling individual rules
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     3
     -
     def function_1(✓param1, ✓param2, ✓param3) -> ✖int:
@@ -231,7 +231,7 @@ Module level directives will be evaluated separately to inline directives and pr
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     11
     --
     def function_2(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:

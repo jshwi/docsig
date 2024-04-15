@@ -153,7 +153,7 @@ API
     ...     :param param3: About param3.
     ...     '''
     ...     """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     0
 
 .. code-block:: python
@@ -167,7 +167,7 @@ API
     ...     :param param3: About param3.
     ...     '''
     ... """
-    >>> docsig(string=string)
+    >>> docsig(string=string, no_ansi=True)
     2
     -
     def function(✓param1, ✓param2, ✖None) -> ✓None:

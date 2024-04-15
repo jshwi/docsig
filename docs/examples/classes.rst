@@ -20,7 +20,7 @@ This check will either check the documentation of ``__init__``, or check documen
     ...         :param param3: About param3.
     ...         '''
     ... """
-    >>> docsig(string=string, check_class_constructor=True)
+    >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
     3 in Klass
     ----------
     class Klass:
@@ -49,7 +49,7 @@ This check will either check the documentation of ``__init__``, or check documen
     ...     def __init__(self, param1, param2) -> None:
     ...         pass
     ... """
-    >>> docsig(string=string, check_class=True)
+    >>> docsig(string=string, check_class=True, no_ansi=True)
     9 in Klass
     ----------
     class Klass:
