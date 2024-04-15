@@ -10,8 +10,6 @@ import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
 
-from typing_extensions import Self as _Self
-
 from ._message import Message as _Message
 from .messages import E as _E
 
@@ -96,7 +94,7 @@ class Directive:
         return self._kind == self._valid_kinds[1]
 
     @classmethod
-    def parse(cls, comment: str, col: int) -> _Self | None:
+    def parse(cls, comment: str, col: int) -> Directive | None:
         """Parse string into directive object if possible.
 
         :param comment: Comment to parse.
