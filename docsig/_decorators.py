@@ -59,7 +59,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
             for message in kwargs.get("targets") or []:
                 if not message.isknown:
                     stderr.append(
-                        f"unknown option to target '{message.description}'",
+                        f"unknown option to target '{message.description}'"
                     )
 
             if kwargs.get("check_class") and kwargs.get(
