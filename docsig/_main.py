@@ -19,29 +19,27 @@ def main() -> str | int:
 
     :return: Exit status for whether test failed or not.
     """
-    parser = _Parser()
+    p = _Parser()
     _pretty_print_error()
     return _docsig(
-        *parser.args.path,
-        string=parser.args.string,
-        list_checks=parser.args.list_checks,
-        check_class=parser.args.check_class,
-        check_class_constructor=parser.args.check_class_constructor,
-        check_dunders=parser.args.check_dunders,
-        check_protected_class_methods=(
-            parser.args.check_protected_class_methods
-        ),
-        check_nested=parser.args.check_nested,
-        check_overridden=parser.args.check_overridden,
-        check_protected=parser.args.check_protected,
-        check_property_returns=parser.args.check_property_returns,
-        ignore_no_params=parser.args.ignore_no_params,
-        ignore_args=parser.args.ignore_args,
-        ignore_kwargs=parser.args.ignore_kwargs,
-        no_ansi=parser.args.no_ansi,
-        summary=parser.args.summary,
-        verbose=parser.args.verbose,
-        targets=parser.args.target,
-        disable=parser.args.disable,
-        exclude=parser.args.exclude,
+        *p.args.path,
+        string=p.args.string,
+        list_checks=p.args.list_checks,
+        check_class=p.args.check_class,
+        check_class_constructor=p.args.check_class_constructor,
+        check_dunders=p.args.check_dunders,
+        check_protected_class_methods=p.args.check_protected_class_methods,
+        check_nested=p.args.check_nested,
+        check_overridden=p.args.check_overridden,
+        check_protected=p.args.check_protected,
+        check_property_returns=p.args.check_property_returns,
+        ignore_no_params=p.args.ignore_no_params,
+        ignore_args=p.args.ignore_args,
+        ignore_kwargs=p.args.ignore_kwargs,
+        no_ansi=p.args.no_ansi,
+        summary=p.args.summary,
+        verbose=p.args.verbose,
+        targets=p.args.target,
+        disable=p.args.disable,
+        exclude=p.args.exclude,
     )
