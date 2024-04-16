@@ -209,15 +209,7 @@ class Failures(_t.List[Failure]):
     """Sequence of failed functions."""
 
 
-class _DisplaySequence(_t.Dict[str, _t.List[Failures]]):
-    def __getitem__(self, key: str) -> list[Failures]:
-        if key not in super().__iter__():
-            super().__setitem__(key, [])
-
-        return super().__getitem__(key)
-
-
-class Display(_DisplaySequence):
+class Display(_t.Dict[str, _t.List[Failures]]):
     """Collect and display report.
 
     :param no_ansi: Disable ANSI output.
@@ -226,6 +218,12 @@ class Display(_DisplaySequence):
     def __init__(self, no_ansi: bool = False) -> None:
         super().__init__()
         self._ansi = _ANSI(no_ansi)
+
+    def __getitem__(self, key: str) -> list[Failures]:
+        if key not in super().__iter__():
+            super().__setitem__(key, [])
+
+        return super().__getitem__(key)
 
     def report(self) -> None:
         """Display report if any checks have failed."""
