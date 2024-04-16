@@ -201,7 +201,7 @@ class Failures(_t.List[Failure]):
     """Sequence of failed functions."""
 
 
-class Display(_t.Dict[str, _t.List[Failures]]):
+class Report(_t.Dict[str, _t.List[Failures]]):
     """Collect and display report."""
 
     def __getitem__(self, key: str) -> list[Failures]:
@@ -210,7 +210,7 @@ class Display(_t.Dict[str, _t.List[Failures]]):
 
         return super().__getitem__(key)
 
-    def report(self, no_ansi: bool = False) -> None:
+    def print(self, no_ansi: bool) -> None:
         """Display report summary if any checks have failed.
 
         :param no_ansi: Disable ANSI output.

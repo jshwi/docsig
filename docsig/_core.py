@@ -11,9 +11,9 @@ from . import _decorators
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
-from ._report import Display as _Display
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
+from ._report import Report as _Report
 from ._utils import print_checks as _print_checks
 from .messages import Messages as _Messages
 
@@ -188,7 +188,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         no_ansi=no_ansi,
         verbose=verbose,
     )
-    display = _Display()
+    report = _Report()
     for module in modules:
         for top_level in module:
             if (
@@ -213,7 +213,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     failures,
                 )
                 if failures:
-                    display[top_level.path].append(failures)
+                    report[top_level.path].append(failures)
 
-    display.report(no_ansi)
-    return max(int(bool(display)), modules.retcode)
+    report.print(no_ansi)
+    return max(int(bool(report)), modules.retcode)
