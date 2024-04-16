@@ -253,8 +253,8 @@ class Display(_DisplaySequence):
 
                     header += f" in {function}"
                     print(
-                        "{}\n\t{}".format(
+                        "{}\n    {}".format(
                             self._ansi.color(header, color.magenta),
-                            failure.report.get_report("\t").strip(),
+                            failure.report.get_report("    ").strip(),
                         )
                     )
