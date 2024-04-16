@@ -23,7 +23,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class Report(_t.List[str]):
+class Failure(_t.List[str]):
     """Compile and produce report.
 
     :param func: Function object.
@@ -191,12 +191,10 @@ class Report(_t.List[str]):
                         option=rule.description,
                     )
 
-
-class Failure(_t.NamedTuple):
-    """Failed function data."""
-
-    func: _Function
-    report: Report
+    @property
+    def func(self) -> _Function:
+        """Function this failure belongs to."""
+        return self._func
 
 
 class Failures(_t.List[Failure]):
@@ -229,7 +227,7 @@ class Display(_t.Dict[str, _t.List[Failures]]):
                     _click.echo(
                         "{}\n    {}".format(
                             _click.style(header, fg="magenta"),
-                            "\n    ".join(failure.report),
+                            "\n    ".join(failure),
                         ),
                         color=not no_ansi and _sys.stdout.isatty(),
                     )

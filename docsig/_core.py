@@ -14,7 +14,6 @@ from ._module import Parent as _Parent
 from ._report import Display as _Display
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
-from ._report import Report as _Report
 from ._utils import print_checks as _print_checks
 from .messages import Messages as _Messages
 
@@ -66,11 +65,11 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (child.isdunder and not check_dunders)
             and not (child.docstring.bare and ignore_no_params)
         ):
-            report = _Report(
+            failure = _Failure(
                 child, targets, child.messages, check_property_returns
             )
-            if report:
-                failures.append(_Failure(child, report))
+            if failure:
+                failures.append(failure)
 
         if check_nested:
             for func in child:
