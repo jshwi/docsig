@@ -51,7 +51,7 @@ class Display(_t.Dict[str, _t.List[Failures]]):
                     _click.echo(
                         "{}\n    {}".format(
                             _click.style(header, fg="magenta"),
-                            failure.report.get_report("    ").strip(),
+                            "\n    ".join(failure.report),
                         ),
                         color=not no_ansi and _sys.stdout.isatty(),
                     )

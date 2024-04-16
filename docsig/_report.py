@@ -187,12 +187,3 @@ class Report(_t.List[str]):
                         directive=comment.kind,
                         option=rule.description,
                     )
-
-    def get_report(self, prefix: str = "") -> str:
-        """Get report compiled as a string.
-
-        :param prefix: Prefix report.
-        :return: Current report.
-        """
-        report = f"\n{prefix}".join(self)
-        return f"{report}\n"
