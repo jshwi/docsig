@@ -8,12 +8,12 @@ from __future__ import annotations as _
 from pathlib import Path as _Path
 
 from . import _decorators
-from ._display import Display as _Display
-from ._display import Failure as _Failure
-from ._display import Failures as _Failures
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
+from ._report import Display as _Display
+from ._report import Failure as _Failure
+from ._report import Failures as _Failures
 from ._report import Report as _Report
 from ._utils import print_checks as _print_checks
 from .messages import Messages as _Messages
