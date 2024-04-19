@@ -48,39 +48,33 @@ class Report(_t.List[str]):
         self._func = func
         self._no_prop_return = func.isproperty and not check_property_returns
         self._no_returns = func.isinit or self._no_prop_return
-        self.invalid_directive()
-        self.invalid_directive_options()
-        self.missing_class_docstring()
-        self.missing_func_docstring()
+        self._invalid_directive()
+        self._invalid_directive_options()
+        self._missing_class_docstring()
+        self._missing_func_docstring()
         if func.docstring.string is not None:
-            self.return_not_typed()
-            self.exists()
-            self.missing()
-            self.duplicates()
-            self.extra_return()
-            self.missing_return()
-            self.property_return()
-            self.class_return()
+            self._return_not_typed()
+            self._exists()
+            self._missing()
+            self._duplicates()
+            self._extra_return()
+            self._missing_return()
+            self._property_return()
+            self._class_return()
             for index in range(len(func)):
                 arg = func.signature.args.get(index)
                 doc = func.docstring.args.get(index)
-                self.description_syntax(doc)
-                self.indent_syntax(doc)
+                self._description_syntax(doc)
+                self._indent_syntax(doc)
                 if arg != doc:
-                    self.order(arg, doc)
-                    self.incorrect(arg, doc)
-                    self.misspelled(arg, doc)
-                    self.not_equal(arg, doc)
+                    self._order(arg, doc)
+                    self._incorrect(arg, doc)
+                    self._misspelled(arg, doc)
+                    self._not_equal(arg, doc)
 
         self.sort()
 
-    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        """Add an error to the container.
-
-        :param value: Value to add.
-        :param hint: Whether to print a hint or not.
-        :param kwargs: Variable(s) if format string.
-        """
+    def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
         self._errors.append(value)
         message = value.fstring(_TEMPLATE)
         if kwargs:
@@ -92,63 +86,49 @@ class Report(_t.List[str]):
         if value not in self._disable and message not in self:
             super().append(message)
 
-    def order(self, sig: _Param, doc: _Param) -> None:
-        """Test for documented parameters and their order.
-
-        :param sig: Signature argument.
-        :param doc: Docstring argument.
-        """
+    def _order(self, sig: _Param, doc: _Param) -> None:
         if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
-            self.add(_E[101])
+            self._add(_E[101])
 
-    def exists(self) -> None:
-        """Test that non-existing parameter is not documented."""
+    def _exists(self) -> None:
         if len(self._func.docstring.args) > len(self._func.signature.args):
-            self.add(_E[102])
+            self._add(_E[102])
 
-    def missing_func_docstring(self) -> None:
-        """Test that docstring is not missing from func."""
+    def _missing_func_docstring(self) -> None:
         if not self._func.isinit and self._func.docstring.string is None:
-            self.add(_E[113])
+            self._add(_E[113])
 
-    def missing_class_docstring(self) -> None:
-        """Test that docstring is not missing from class."""
+    def _missing_class_docstring(self) -> None:
         if self._func.isinit and self._func.docstring.string is None:
-            self.add(_E[114])
+            self._add(_E[114])
 
-    def missing(self) -> None:
-        """Test that parameter is not missing from documentation."""
+    def _missing(self) -> None:
         if len(self._func.signature.args) > len(self._func.docstring.args):
-            self.add(_E[103])
+            self._add(_E[103])
 
-    def duplicates(self) -> None:
-        """Test that there are no duplicate parameters in docstring."""
+    def _duplicates(self) -> None:
         if self._func.docstring.args.duplicated:
-            self.add(_E[106])
+            self._add(_E[106])
 
-    def extra_return(self) -> None:
-        """Check that return is not documented when there is none."""
+    def _extra_return(self) -> None:
         if (
             self._func.docstring.returns
             and self._func.signature.rettype == "None"
             and not self._no_returns
         ):
-            self.add(_E[104])
+            self._add(_E[104])
 
-    def property_return(self) -> None:
-        """Check that return is not documented for property."""
+    def _property_return(self) -> None:
         if self._func.docstring.returns and self._no_prop_return:
-            self.add(_E[108], hint=True)
+            self._add(_E[108], hint=True)
 
-    def return_not_typed(self) -> None:
-        """Check that return is not documented when no type provided."""
+    def _return_not_typed(self) -> None:
         if self._func.signature.rettype is None and not self._no_returns:
-            self.add(_E[109])
+            self._add(_E[109])
 
-    def missing_return(self) -> None:
-        """Check that return is documented when func returns value."""
+    def _missing_return(self) -> None:
         hint = False
         if (
             self._func.signature.returns
@@ -159,82 +139,50 @@ class Report(_t.List[str]):
             if docstring is not None and _RETURN in docstring:
                 hint = True
 
-            self.add(_E[105], hint=hint)
+            self._add(_E[105], hint=hint)
 
-    def incorrect(self, sig: _Param, doc: _Param) -> None:
-        """Test that proper syntax is used when documenting parameters.
-
-        :param sig: Signature argument.
-        :param doc: Docstring argument.
-        """
+    def _incorrect(self, sig: _Param, doc: _Param) -> None:
         if sig.name is None and doc.name is None:
-            self.add(_E[107])
+            self._add(_E[107])
 
-    def not_equal(self, sig: _Param, doc: _Param) -> None:
-        """Final catch-all.
-
-        Only applies if no other errors, including disabled, have been
-        triggered
-
-        :param sig: Signature argument.
-        :param doc: Docstring argument.
-        """
+    # final catch-all
+    def _not_equal(self, sig: _Param, doc: _Param) -> None:
         if sig.name is not None and doc.name is not None and not self._errors:
-            self.add(_E[110])
+            self._add(_E[110])
 
-    def class_return(self) -> None:
-        """Check that return is not documented for __init__."""
+    def _class_return(self) -> None:
         if self._func.docstring.returns and self._func.isinit:
-            self.add(_E[111], hint=True)
+            self._add(_E[111], hint=True)
 
-    def misspelled(self, sig: _Param, doc: _Param) -> None:
-        """Test whether there is a spelling error in documentation.
-
-        To avoid false positives also check whether doc param is almost
-        equal amongst its sibling params. If params are too similarly
-        named then this error won't be raised.
-
-        :param sig: Signature argument.
-        :param doc: Docstring argument.
-        """
+    def _misspelled(self, sig: _Param, doc: _Param) -> None:
         if (
             sig.name is not None
             and doc.name is not None
             and not self._errors
             and _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH)
         ):
-            self.add(_E[112])
+            self._add(_E[112])
 
-    def description_syntax(self, doc: _Param) -> None:
-        """Test whether docstring description has correct spacing.
-
-        :param doc: Docstring argument.
-        """
+    def _description_syntax(self, doc: _Param) -> None:
         if doc.description is not None and not doc.description.startswith(" "):
-            self.add(_E[115])
+            self._add(_E[115])
 
-    def indent_syntax(self, doc: _Param) -> None:
-        """Test whether docstring description is indented correctly.
-
-        :param doc: Docstring argument.
-        """
+    def _indent_syntax(self, doc: _Param) -> None:
         if doc.indent > 0:
-            self.add(_E[116])
+            self._add(_E[116])
 
-    def invalid_directive(self) -> None:
-        """Report on any invalid directives belonging to this func."""
+    def _invalid_directive(self) -> None:
         for directive in self._func.directives:
             if not directive.isvalid:
                 err = _E[int(f"20{1 if directive.ismodule else 2}")]
-                self.add(err, directive=directive.kind)
+                self._add(err, directive=directive.kind)
 
-    def invalid_directive_options(self) -> None:
-        """Report on any invalid directive options belonging to this."""
+    def _invalid_directive_options(self) -> None:
         for directive in self._func.directives:
             if directive.rules.unknown:
                 err = _E[int(f"20{3 if directive.ismodule else 4}")]
                 for rule in directive.rules.unknown:
-                    self.add(
+                    self._add(
                         err, directive=directive.kind, option=rule.description
                     )
 
