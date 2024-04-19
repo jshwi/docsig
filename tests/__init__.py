@@ -93,14 +93,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -118,14 +111,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -191,14 +177,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-'''
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -239,15 +218,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[104].fstring(T)
 
 
 @_templates.register
@@ -267,15 +238,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -314,15 +277,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[109].fstring(T)
 
 
 @_templates.register
@@ -341,13 +296,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -366,13 +315,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -410,13 +353,7 @@ def function(param1) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -570,14 +507,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -614,14 +544,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -710,14 +633,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -792,13 +708,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def function({CROSS}param1, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :key (**): {CROSS}
-    :param param1: {CROSS}
-    """
-'''
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -947,13 +857,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def get_index({CROSS}index) -> {CHECK}_T | None:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -1225,16 +1129,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -1317,16 +1212,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :return: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
-'''
+        return E[111].fstring(T)
 
 
 @_templates.register
@@ -1367,14 +1253,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -1504,14 +1383,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -1557,14 +1429,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -1629,14 +1494,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -1658,14 +1516,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -1740,14 +1591,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-'''
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -1806,15 +1650,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[104].fstring(T)
 
 
 @_templates.register
@@ -1839,15 +1675,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -1900,15 +1728,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[109].fstring(T)
 
 
 @_templates.register
@@ -1930,13 +1750,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -1958,13 +1772,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -2161,14 +1969,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -2214,14 +2015,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -2328,14 +2122,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -2578,13 +2365,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def get_index({CROSS}index) -> {CHECK}_T | None:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -2902,16 +2683,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -3010,16 +2782,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :return: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
-'''
+        return E[111].fstring(T)
 
 
 @_templates.register
@@ -3073,14 +2836,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -3227,14 +2983,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -3285,14 +3034,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -3478,14 +3220,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -3507,14 +3242,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -3561,14 +3289,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-'''
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -3627,15 +3348,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[104].fstring(T)
 
 
 @_templates.register
@@ -3660,15 +3373,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -3721,15 +3426,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[109].fstring(T)
 
 
 @_templates.register
@@ -3751,13 +3448,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -3779,13 +3470,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -3982,14 +3667,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -4035,14 +3713,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -4149,14 +3820,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -4382,13 +4046,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def get_index({CROSS}index) -> {CHECK}_T | None:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -4536,16 +4194,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -4626,16 +4275,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :return: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
-'''
+        return E[111].fstring(T)
 
 
 @_templates.register
@@ -4689,14 +4329,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -4810,14 +4443,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -4842,14 +4468,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -4910,15 +4529,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[104].fstring(T)
 
 
 @_templates.register
@@ -4938,15 +4549,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[109].fstring(T)
 
 
 @_templates.register
@@ -5070,13 +4673,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def get_index({CROSS}index) -> {CHECK}_T | None:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -5196,16 +4793,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :return: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
-'''
+        return E[111].fstring(T)
 
 
 @_templates.register
@@ -5286,14 +4874,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -5312,14 +4893,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -5340,14 +4914,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CROSS}param1, {CROSS}param2, {CROSS}param3)?:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-'''
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -5394,15 +4961,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[104].fstring(T)
 
 
 @_templates.register
@@ -5423,15 +4982,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -5474,15 +5025,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CHECK}param3)?:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[109].fstring(T)
 
 
 @_templates.register
@@ -5502,13 +5045,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -5528,13 +5065,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1) -> {CROSS}Optional[str]:
-    """
-    :param param1: {CHECK}
-    :return: {CROSS}
-    """
-'''
+        return E[105].fstring(T)
 
 
 @_templates.register
@@ -5698,14 +5229,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}*args) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -5744,14 +5268,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def function({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -5844,14 +5361,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -6047,13 +5557,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def get_index({CROSS}index) -> {CHECK}_T | None:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -6180,16 +5684,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -6259,16 +5754,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''
-class Klass:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :return: {CROSS}
-    """
-
-    def __init__({CHECK}param1, {CHECK}param2) -> {CROSS}None:
-'''
+        return E[111].fstring(T)
 
 
 @_templates.register
@@ -6313,14 +5799,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def _function({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -6422,14 +5901,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def method({CHECK}param1, {CHECK}param2, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -6450,14 +5922,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def __dunder__({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-'''
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -6520,13 +5985,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''
-def function({CHECK}param1, {CROSS}**kwargs) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param None: {CROSS}
-    """
-'''
+        return E[103].fstring(T)
 
 
 @_templates.register
@@ -6575,16 +6034,7 @@ def check_stuff(str_lin: str, a: str) -> bool:
 
     @property
     def expected(self) -> str:
-        return f'''\
-def check_stuff({CHECK}str_lin, {CHECK}a) -> {CHECK}bool:
-    """
-    :param str_lin: {CHECK}
-    :param a: {CHECK}
-    :return: {CHECK}
-    """
-
-{E[115].fstring(T)}
-'''
+        return E[115].fstring(T)
 
 
 @_templates.register
@@ -8640,13 +8090,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 @_templates.register
@@ -8665,13 +8109,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 @_templates.register
@@ -8689,13 +8127,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 @_templates.register
@@ -8719,14 +8151,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return """\
-class Klass:
-    ...
-
-    def __init__(✖this) -> ✓None:
-
-E114: class is missing a docstring (class-doc-missing)
-"""
+        return E[114].fstring(T)
 
 
 @_templates.register
@@ -8745,13 +8170,7 @@ for argument in container:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 @_templates.register
@@ -8771,13 +8190,7 @@ for argument in container:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 @_templates.register
@@ -8810,13 +8223,7 @@ def my_function(argument: int = 42) -> int:
 
     @property
     def expected(self) -> str:
-        return """\
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
-"""
+        return E[113].fstring(T)
 
 
 # starts with `M` for multi instead of `F` so we don't run
