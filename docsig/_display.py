@@ -8,7 +8,7 @@ from __future__ import annotations as _
 import typing as _t
 from collections import UserString as _UserString
 
-from object_colors import Color as _Color
+import click as _click
 from pygments import highlight as _highlight
 from pygments.formatters.terminal256 import (
     Terminal256Formatter as _Terminal256Formatter,
@@ -23,39 +23,18 @@ from ._stub import ARG as _ARG
 from ._stub import KEY as _KEY
 from ._stub import Param as _Param
 
-color = _Color()
-
-color.populate_colors()
-
 TAB = "    "
 
 
-class _ANSI:
-    def __init__(self, no_ansi: bool = False) -> None:
-        self._no_ansi = no_ansi
+def syntax(obj: _t.Any) -> str:
+    """Get code representation with syntax highlighting.
 
-    def color(self, obj: _t.Any, color_obj: _Color) -> str:
-        """Get string with selected color.
-
-        :param obj: Any object, represented as ``__str__``.
-        :param color_obj: Instantiated ``Color`` object.
-        :return: Colored string or string as was supplied.
-        """
-        return str(obj) if self._no_ansi else color_obj.get(obj)
-
-    def syntax(self, obj: _t.Any) -> str:
-        """Get code representation with syntax highlighting.
-
-        :param obj: Any object, represented as ``__str__``.
-        :return: Colored string or string as was supplied.
-        """
-        return (
-            str(obj)
-            if self._no_ansi
-            else _highlight(
-                obj, _PythonLexer(), _Terminal256Formatter(style="monokai")
-            ).strip()
-        )
+    :param obj: Any object, represented as ``__str__``.
+    :return: Colored string or string as was supplied.
+    """
+    return _highlight(
+        obj, _PythonLexer(), _Terminal256Formatter(style="monokai")
+    ).strip()
 
 
 class FuncStr(_UserString):
@@ -63,16 +42,14 @@ class FuncStr(_UserString):
 
     :param func: Represents a function with signature and docstring
         parameters.
-    :param no_ansi: Disable ANSI output.
     """
 
     CHECK = "\u2713"
     CROSS = "\u2716"
     TRIPLE_QUOTES = '"""'
 
-    def __init__(self, func: _Function, no_ansi: bool = False) -> None:
+    def __init__(self, func: _Function) -> None:
         super().__init__(func.name)
-        self._ansi = _ANSI(no_ansi)
         self._parent_name = func.parent.name
         self._isinit = func.isinit
         self.data = ""
@@ -80,13 +57,13 @@ class FuncStr(_UserString):
         if self._isinit:
             self.data += TAB
 
-        self.data += self._ansi.syntax(f"def {func.name}(")
+        self.data += syntax(f"def {func.name}(")
         if self._is_string:
-            self._docstring = self._ansi.syntax(f"{TAB}{self.TRIPLE_QUOTES}")
+            self._docstring = syntax(f"{TAB}{self.TRIPLE_QUOTES}")
         else:
-            self._docstring = f"{TAB}{self._ansi.color('...', color.red)}\n"
+            self._docstring = f"{TAB}{_click.style('...', fg='red')}\n"
 
-        self._mark = self._ansi.color(self.CHECK, color.green)
+        self._mark = _click.style(self.CHECK, fg="green")
         for index in range(len(func)):
             arg = func.signature.args.get(index)
             doc = func.docstring.args.get(index)
@@ -119,9 +96,9 @@ class FuncStr(_UserString):
         :param failed: Boolean to test that check failed.
         """
         self._mark = (
-            self._ansi.color(self.CROSS, color.red)
+            _click.style(self.CROSS, fg="red")
             if failed
-            else self._ansi.color(self.CHECK, color.green)
+            else _click.style(self.CHECK, fg="green")
         )
 
     def add_param(
@@ -162,34 +139,27 @@ class FuncStr(_UserString):
         :param arg: Signature argument.
         """
         if arg is not None:
-            self.data += "{}{}{}{}".format(
-                self._ansi.syntax(") -> "),
-                self._mark,
-                arg,
-                self._ansi.syntax(":"),
-            )
+            self.data += f"{syntax(') -> ')}{self._mark}{arg}{syntax(':')}"
         else:
             self.data += "{}{}{}".format(
-                self._ansi.syntax(")"),
-                self._ansi.color("?", color.red),
-                self._ansi.syntax(":"),
+                syntax(")"),
+                _click.style("?", fg="red"),
+                syntax(":"),
             )
 
     def add_comma(self) -> None:
         """Add comma between parenthesis."""
-        self.data += self._ansi.syntax(", ")
+        self.data += syntax(", ")
 
     def close_docstring(self) -> None:
         """Close docstring."""
-        self._cat_docstring(
-            f"\n{TAB}{self._ansi.syntax(self.TRIPLE_QUOTES)}\n"
-        )
+        self._cat_docstring(f"\n{TAB}{syntax(self.TRIPLE_QUOTES)}\n")
 
     def render(self) -> None:
         """Render final string by adding docstring to function."""
         if self._isinit:
             self.data = (
-                self._ansi.syntax(f"class {self._parent_name}:")
+                syntax(f"class {self._parent_name}:")
                 + f"\n{self._docstring}"
                 + f"\n{self.data}\n"
             )
@@ -217,7 +187,7 @@ class Display(_t.Dict[str, _t.List[Failures]]):
 
     def __init__(self, no_ansi: bool = False) -> None:
         super().__init__()
-        self._ansi = _ANSI(no_ansi)
+        self._ansi = not no_ansi
 
     def __getitem__(self, key: str) -> list[Failures]:
         if key not in super().__iter__():
@@ -234,10 +204,12 @@ class Display(_t.Dict[str, _t.List[Failures]]):
                     if failure.func.parent.name:
                         header += f" in {failure.func.parent.name}"
 
-                    print(self._ansi.color(header, color.magenta))
-                    print(len(header) * "-")
-                    print(failure.func_str)
-                    print(failure.report.get_report())
+                    _click.echo(
+                        _click.style(header, fg="magenta"), color=self._ansi
+                    )
+                    _click.echo(len(header) * "-", color=self._ansi)
+                    _click.echo(failure.func_str, color=self._ansi)
+                    _click.echo(failure.report.get_report(), color=self._ansi)
 
     def summarise(self) -> None:
         """Display report summary if any checks have failed."""
@@ -250,9 +222,10 @@ class Display(_t.Dict[str, _t.List[Failures]]):
                         function = f"{failure.func.parent.name}.{function}"
 
                     header += f" in {function}"
-                    print(
+                    _click.echo(
                         "{}\n    {}".format(
-                            self._ansi.color(header, color.magenta),
+                            _click.style(header, fg="magenta"),
                             failure.report.get_report("    ").strip(),
-                        )
+                        ),
+                        color=self._ansi,
                     )

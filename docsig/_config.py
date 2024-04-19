@@ -6,9 +6,9 @@ docsig._config
 from argparse import HelpFormatter as _HelpFormatter
 from pathlib import Path as _Path
 
+import click as _click
 from arcon import ArgumentParser as _ArgumentParser
 
-from ._display import color as _color
 from ._version import __version__
 
 
@@ -18,7 +18,7 @@ class Parser(_ArgumentParser):
     def __init__(self) -> None:
         super().__init__(
             version=__version__,
-            prog=_color.cyan.get(__package__),
+            prog=_click.style(__package__, fg="cyan"),
             formatter_class=lambda prog: _HelpFormatter(
                 prog, max_help_position=45
             ),
