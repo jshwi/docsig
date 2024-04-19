@@ -167,18 +167,9 @@ API
     ...     :param param3: About param3.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
-    2
-    -
-    def function(✓param1, ✓param2, ✖None) -> ✓None:
-        """
-        :param param1: ✓
-        :param param2: ✓
-        :param param3: ✖
-        """
-    <BLANKLINE>
-    E102: includes parameters that do not exist (params-do-not-exist)
-    <BLANKLINE>
+    >>> docsig(string=string, summary=True, no_ansi=True)
+    2 in function
+        E102: includes parameters that do not exist (params-do-not-exist)
     1
 
 A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
