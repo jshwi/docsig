@@ -19,43 +19,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class _MessageSequence(_t.List[str]):
-    def __init__(
-        self,
-        targets: list[_Message],
-        disable: list[_Message],
-    ) -> None:
-        super().__init__()
-        self._disable = list(disable)
-        if targets:
-            errors = list(_E.all(1))
-            for target in targets:
-                errors.remove(target)
-
-            self._disable.extend(errors)
-
-        self._errors: list[_Message] = []
-
-    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        """Add an error to the container.
-
-        :param value: Value to add.
-        :param hint: Whether to print a hint or not.
-        :param kwargs: Variable(s) if format string.
-        """
-        self._errors.append(value)
-        message = value.fstring(_TEMPLATE)
-        if kwargs:
-            message = message.format(**kwargs)
-
-        if hint:
-            message += f"\nhint: {value.hint}"
-
-        if value not in self._disable and message not in self:
-            super().append(message)
-
-
-class Report(_MessageSequence):
+class Report(_t.List[str]):
     """Compile and produce report.
 
     :param func: Function object.
@@ -71,7 +35,16 @@ class Report(_MessageSequence):
         disable: list[_Message],
         check_property_returns: bool,
     ) -> None:
-        super().__init__(targets, disable)
+        super().__init__()
+        self._disable = list(disable)
+        if targets:
+            errors = list(_E.all(1))
+            for target in targets:
+                errors.remove(target)
+
+            self._disable.extend(errors)
+
+        self._errors: list[_Message] = []
         self._func = func
         self._no_prop_return = func.isproperty and not check_property_returns
         self._no_returns = func.isinit or self._no_prop_return
@@ -100,6 +73,24 @@ class Report(_MessageSequence):
                     self.not_equal(arg, doc)
 
         self.sort()
+
+    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+        """Add an error to the container.
+
+        :param value: Value to add.
+        :param hint: Whether to print a hint or not.
+        :param kwargs: Variable(s) if format string.
+        """
+        self._errors.append(value)
+        message = value.fstring(_TEMPLATE)
+        if kwargs:
+            message = message.format(**kwargs)
+
+        if hint:
+            message += f"\nhint: {value.hint}"
+
+        if value not in self._disable and message not in self:
+            super().append(message)
 
     def order(self, sig: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
