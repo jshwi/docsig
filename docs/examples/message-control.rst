@@ -35,29 +35,11 @@ To disable individual function checks add an inline comment similar to the examp
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
-    10
-    --
-    def function_2(✓param1, ✓param2, ✖None) -> ✓None:
-        """
-        :param param1: ✓
-        :param param2: ✓
-        :param param3: ✖
-        """
-    <BLANKLINE>
-    E102: includes parameters that do not exist (params-do-not-exist)
-    <BLANKLINE>
-    18
-    --
-    def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
-        """
-        :param param1: ✓
-        :param param2: ✓
-        :param None: ✖
-        """
-    <BLANKLINE>
-    E103: parameters missing (params-missing)
-    <BLANKLINE>
+    >>> docsig(string=string, summary=True, no_ansi=True)
+    10 in function_2
+        E102: includes parameters that do not exist (params-do-not-exist)
+    18 in function_3
+        E103: parameters missing (params-missing)
     1
 
 To disable all function checks add a module level comment similar to the example below
@@ -89,7 +71,7 @@ To disable all function checks add a module level comment similar to the example
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
+    >>> docsig(string=string, summary=True, no_ansi=True)
     0
 
 To disable multiple function checks add a module level disable and enable comment similar to the example below
@@ -122,18 +104,9 @@ To disable multiple function checks add a module level disable and enable commen
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
-    20
-    --
-    def function_3(✓param1, ✓param2, ✖param3) -> ✓None:
-        """
-        :param param1: ✓
-        :param param2: ✓
-        :param None: ✖
-        """
-    <BLANKLINE>
-    E103: parameters missing (params-missing)
-    <BLANKLINE>
+    >>> docsig(string=string, summary=True, no_ansi=True)
+    20 in function_3
+        E103: parameters missing (params-missing)
     1
 
 The same can be done for disabling individual rules
@@ -168,33 +141,13 @@ The same can be done for disabling individual rules
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
-    3
-    -
-    def function_1(✓param1, ✓param2, ✓param3) -> ✖int:
-        """
-        :param param1: ✓
-        :param param2: ✓
-        :param param3: ✓
-        :return: ✖
-        """
-    <BLANKLINE>
-    E105: return missing from docstring (return-missing)
-    <BLANKLINE>
-    20
-    --
-    def function_3(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
-        """
-        :param param1: ✓
-        :param param1: ✖
-        :param param2: ✖
-        :param None: ✖
-        """
-    <BLANKLINE>
-    E102: includes parameters that do not exist (params-do-not-exist)
-    E106: duplicate parameters found (duplicate-params-found)
-    E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
-    <BLANKLINE>
+    >>> docsig(string=string, summary=True, no_ansi=True)
+    3 in function_1
+        E105: return missing from docstring (return-missing)
+    20 in function_3
+        E102: includes parameters that do not exist (params-do-not-exist)
+        E106: duplicate parameters found (duplicate-params-found)
+        E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
 
 Individual rules can also be re-enabled
@@ -231,18 +184,8 @@ Module level directives will be evaluated separately to inline directives and pr
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, no_ansi=True)
-    11
-    --
-    def function_2(✓param1, ✖param2, ✖param3, ✖None) -> ✓None:
-        """
-        :param param1: ✓
-        :param param1: ✖
-        :param param2: ✖
-        :param param3: ✖
-        """
-    <BLANKLINE>
-    E102: includes parameters that do not exist (params-do-not-exist)
-    E106: duplicate parameters found (duplicate-params-found)
-    <BLANKLINE>
+    >>> docsig(string=string, summary=True, no_ansi=True)
+    11 in function_2
+        E102: includes parameters that do not exist (params-do-not-exist)
+        E106: duplicate parameters found (duplicate-params-found)
     1
