@@ -7,6 +7,8 @@ from __future__ import annotations as _
 
 from difflib import SequenceMatcher as _SequenceMatcher
 
+import click as _click
+
 
 def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
     """Show result for more than the minimum but less than the maximum.
@@ -28,4 +30,4 @@ def vprint(msg: str, verbose: bool = False) -> None:
     :param verbose: Whether verbose mode is enabled.
     """
     if verbose:
-        print(msg)
+        _click.echo(msg)

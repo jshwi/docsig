@@ -19,6 +19,7 @@ line-length = 79
 [tool.constcheck]
 ignore_strings = [
   "disable",
+  "red",
   "store",
   "store_true",
   "targets",
@@ -79,7 +80,7 @@ Pygments = "^2.13.0"
 Sphinx = "^7.0.0"
 arcon = ">=0.4.0"
 astroid = "^3.0.1"
-object-colors = "^2.1.0"
+click = "^8.1.7"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]

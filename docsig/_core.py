@@ -7,6 +7,8 @@ from __future__ import annotations as _
 
 from pathlib import Path as _Path
 
+import click as _click
+
 from . import _decorators
 from ._display import Display as _Display
 from ._display import Failure as _Failure
@@ -42,7 +44,7 @@ _DEFAULT_EXCLUDES = """\
 
 def _print_checks() -> None:
     for msg in _E.values():
-        print(msg.fstring(_TEMPLATE))
+        _click.echo(msg.fstring(_TEMPLATE))
 
 
 def _run_check(  # pylint: disable=too-many-arguments
@@ -77,9 +79,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                 child, targets, child.disabled, check_property_returns
             )
             if report:
-                failures.append(
-                    _Failure(child, _FuncStr(child, no_ansi), report)
-                )
+                failures.append(_Failure(child, _FuncStr(child), report))
 
         if check_nested:
             for func in child:
