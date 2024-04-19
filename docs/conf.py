@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "docsig"
-copyright = "2023, Stephen Whitlock"
+copyright = "2024, Stephen Whitlock"
 author = "Stephen Whitlock"
 
 # The full version, including alpha/beta/rc tags
