@@ -75,6 +75,31 @@ class Report(_MessageSequence):
         self._func = func
         self._no_prop_return = func.isproperty and not check_property_returns
         self._no_returns = func.isinit or self._no_prop_return
+        self.invalid_directive()
+        self.invalid_directive_options()
+        self.missing_class_docstring()
+        self.missing_func_docstring()
+        if func.docstring.string is not None:
+            self.return_not_typed()
+            self.exists()
+            self.missing()
+            self.duplicates()
+            self.extra_return()
+            self.missing_return()
+            self.property_return()
+            self.class_return()
+            for index in range(len(func)):
+                arg = func.signature.args.get(index)
+                doc = func.docstring.args.get(index)
+                self.description_syntax(doc)
+                self.indent_syntax(doc)
+                if arg != doc:
+                    self.order(arg, doc)
+                    self.incorrect(arg, doc)
+                    self.misspelled(arg, doc)
+                    self.not_equal(arg, doc)
+
+        self.sort()
 
     def order(self, sig: _Param, doc: _Param) -> None:
         """Test for documented parameters and their order.
@@ -230,46 +255,3 @@ class Report(_MessageSequence):
         """
         report = f"\n{prefix}".join(self)
         return f"{report}\n"
-
-
-def generate_report(
-    func: _Function,
-    targets: list[_Message],
-    disable: list[_Message],
-    check_property_returns: bool,
-) -> Report:
-    """Generate report if function or method has failed.
-
-    :param func: Function object.
-    :param targets: List of errors to target.
-    :param disable: List of errors to disable.
-    :param check_property_returns: Run return checks on properties.
-    :return: Compiled report.
-    """
-    report = Report(func, targets, disable, check_property_returns)
-    report.invalid_directive()
-    report.invalid_directive_options()
-    report.missing_class_docstring()
-    report.missing_func_docstring()
-    if func.docstring.string is not None:
-        report.return_not_typed()
-        report.exists()
-        report.missing()
-        report.duplicates()
-        report.extra_return()
-        report.missing_return()
-        report.property_return()
-        report.class_return()
-        for index in range(len(func)):
-            arg = func.signature.args.get(index)
-            doc = func.docstring.args.get(index)
-            report.description_syntax(doc)
-            report.indent_syntax(doc)
-            if arg != doc:
-                report.order(arg, doc)
-                report.incorrect(arg, doc)
-                report.misspelled(arg, doc)
-                report.not_equal(arg, doc)
-
-    report.sort()
-    return report

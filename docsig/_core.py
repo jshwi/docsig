@@ -16,7 +16,7 @@ from ._message import Message as _Message
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
-from ._report import generate_report as _generate_report
+from ._report import Report as _Report
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 
@@ -73,7 +73,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (child.isdunder and not check_dunders)
             and not (child.docstring.bare and ignore_no_params)
         ):
-            report = _generate_report(
+            report = _Report(
                 child, targets, child.disabled, check_property_returns
             )
             if report:
