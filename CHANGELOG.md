@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.49.0...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- apply no-ansi option to excepthook
 - ensure colors are removed when not running in a tty
 - ensure excepthook prints to stderr
 - use click echo for excepthook
