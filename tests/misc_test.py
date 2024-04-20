@@ -463,3 +463,31 @@ echo "Hello, world"
     main(long.string, template, long.verbose)
     std = capsys.readouterr()
     assert "invalid syntax" in std.out
+
+
+def test_no_color_with_pipe(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """Ensure colors are removed when piping output to a file.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    """
+    template = '''
+def function(param1, param2) -> None:
+    """...
+
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    """
+'''
+    monkeypatch.setattr("sys.stdout.isatty", lambda: True)
+    docsig.docsig(string=template)
+    std = capsys.readouterr()
+    assert "\033[35m" in std.out
+    monkeypatch.setattr("sys.stdout.isatty", lambda: False)
+    docsig.docsig(string=template)
+    std = capsys.readouterr()
+    assert "\033[35m" not in std.out

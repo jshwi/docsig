@@ -5,6 +5,7 @@ docsig._display
 
 from __future__ import annotations as _
 
+import sys as _sys
 import typing as _t
 from collections import UserString as _UserString
 
@@ -187,7 +188,7 @@ class Display(_t.Dict[str, _t.List[Failures]]):
 
     def __init__(self, no_ansi: bool = False) -> None:
         super().__init__()
-        self._ansi = not no_ansi
+        self._ansi = not no_ansi and _sys.stdout.isatty()
 
     def __getitem__(self, key: str) -> list[Failures]:
         if key not in super().__iter__():
