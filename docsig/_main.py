@@ -20,7 +20,7 @@ def main() -> str | int:
     :return: Exit status for whether test failed or not.
     """
     p = _Parser()
-    _pretty_print_error()
+    _pretty_print_error(p.args.no_ansi)
     return _docsig(
         *p.args.path,
         string=p.args.string,
