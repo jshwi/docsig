@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="tests.exclude_test" pattern="file:tests/exclude_test.py" />
+</component>
