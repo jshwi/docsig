@@ -11,7 +11,7 @@ import pytest
 
 import docsig
 
-from . import InitFileFixtureType, MockMainType, long
+from . import FixtureMakeTree, InitFileFixtureType, MockMainType, long
 
 
 @pytest.fixture(name="environment", autouse=True)
@@ -61,3 +61,22 @@ def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
         return file
 
     return _init_file
+
+
+@pytest.fixture(name="make_tree")
+def fixture_make_tree() -> FixtureMakeTree:
+    """Recursively create directory tree from dict mapping.
+
+    :return: Function for using this fixture.
+    """
+
+    def _make_tree(root: Path, obj: dict[str, object]) -> None:
+        for key, value in obj.items():
+            fullpath = root / key
+            if isinstance(value, dict):
+                fullpath.mkdir(exist_ok=True)
+                _make_tree(fullpath, value)
+            elif isinstance(value, list):
+                fullpath.write_text("\n".join(value), encoding="utf-8")
+
+    return _make_tree
