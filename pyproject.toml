@@ -16,16 +16,6 @@ exclude = '''
 '''
 line-length = 79
 
-[tool.constcheck]
-ignore_strings = [
-  "disable",
-  "red",
-  "store",
-  "store_true",
-  "targets",
-  "utf-8"
-]
-
 [tool.coverage.report]
 exclude_lines = [
   "@_t.overload"
@@ -104,7 +94,6 @@ docsig = "docsig.__main__:main"
 audit = [
   "about-tests",
   "commit-policy",
-  "const",
   "copyright-year",
   "docs",
   "files",
