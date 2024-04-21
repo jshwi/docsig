@@ -81,7 +81,7 @@ class Report(_t.List[str]):
             message = message.format(**kwargs)
 
         if hint:
-            message += f"\nhint: {value.hint}"
+            message += f"\n    hint: {value.hint}"
 
         if value not in self._disable and message not in self:
             super().append(message)
