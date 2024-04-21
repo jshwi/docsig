@@ -17,6 +17,7 @@ from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
 MockMainType = t.Callable[..., t.Union[str, int]]
+FixtureMakeTree = t.Callable[[Path, t.Dict[t.Any, t.Any]], None]
 
 
 class InitFileFixtureType(
