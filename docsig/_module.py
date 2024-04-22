@@ -352,6 +352,12 @@ class Modules(_t.List[Parent]):
                     check_class_constructor,
                 )
             )
+            _vprint(
+                _FILE_INFO.format(
+                    path=root or "stdin", msg="Parsing Python code successful"
+                ),
+                self._verbose,
+            )
         except (_AstroidSyntaxError, UnicodeDecodeError) as err:
             if root is not None and root.name.endswith(".py"):
                 # keep raising errors for .py files as was done prior to
