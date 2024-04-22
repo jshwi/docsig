@@ -10,6 +10,7 @@ import typing as _t
 from pathlib import Path as _Path
 
 import astroid as _ast
+import click as _click
 from astroid import AstroidSyntaxError as _AstroidSyntaxError
 
 from ._directives import Directive as _Directive
@@ -361,17 +362,17 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
                 self._verbose,
             )
         except (_AstroidSyntaxError, UnicodeDecodeError) as err:
+            msg = str(err).replace("\n", " ")
             if root is not None and root.name.endswith(".py"):
                 # pass by silently for files that do not end with .py,
                 # may result in a 123 syntax error exit status in the
                 # future
-                pretty_print_error(type(err), str(err), no_ansi=self._no_ansi)
+                _click.echo(root)
+                pretty_print_error(type(err), msg, no_ansi=self._no_ansi)
                 self._retcode = 1
 
             _vprint(
-                _FILE_INFO.format(
-                    path=root or "stdin", msg=str(err).replace("\n", " ")
-                ),
+                _FILE_INFO.format(path=root or "stdin", msg=msg),
                 self._verbose,
             )
 
