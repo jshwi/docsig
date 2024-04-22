@@ -78,8 +78,8 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a]
-                             [-k] [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e EXCLUDE]
-                             [path [path ...]]
+                           [-k] [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
+                           [path [path ...]]
 
     Check signature params for proper documentation
 
