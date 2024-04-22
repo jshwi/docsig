@@ -17,6 +17,7 @@ from ._directives import Directives as _Directives
 from ._message import Message as _Message
 from ._stub import Docstring as _Docstring
 from ._stub import Signature as _Signature
+from ._utils import pretty_print_error
 from ._utils import vprint as _vprint
 
 _FILE_INFO = "{path}: {msg}"
@@ -304,7 +305,7 @@ class Function(Parent):
         return self._directives
 
 
-class Modules(_t.List[Parent]):
+class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     """Sequence of ``Module`` objects parsed from Python modules or str.
 
     Recursively collect Python files from within all dirs that exist
@@ -322,6 +323,7 @@ class Modules(_t.List[Parent]):
     :param check_class_constructor: Check the class constructor's
         docstring. Otherwise, expect the constructor's documentation to
         be on the class level docstring.
+    :param no_ansi: Disable ANSI output.
     :param verbose: increase output verbosity.
     """
 
@@ -360,15 +362,11 @@ class Modules(_t.List[Parent]):
             )
         except (_AstroidSyntaxError, UnicodeDecodeError) as err:
             if root is not None and root.name.endswith(".py"):
-                # keep raising errors for .py files as was done prior to
-                # this change
                 # pass by silently for files that do not end with .py,
-                # which were not checked at all prior (these may result
-                # in a 123 syntax error exit status in the future)
-                # with this there should be no breaking change, and
-                # files that are supposed to be python, files evident by
-                # their suffix, will continue to fail
-                raise err
+                # may result in a 123 syntax error exit status in the
+                # future
+                pretty_print_error(type(err), str(err), no_ansi=self._no_ansi)
+                self._retcode = 1
 
             _vprint(
                 _FILE_INFO.format(
@@ -386,6 +384,7 @@ class Modules(_t.List[Parent]):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
+        no_ansi: bool = False,
         verbose: bool = False,
     ) -> None:
         super().__init__()
@@ -394,7 +393,9 @@ class Modules(_t.List[Parent]):
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self.check_class_constructor = check_class_constructor
+        self._no_ansi = no_ansi
         self._verbose = verbose
+        self._retcode = 0
         if string is not None:
             self._add_module(
                 disable,
@@ -432,3 +433,8 @@ class Modules(_t.List[Parent]):
         if root.is_dir():
             for path in root.iterdir():
                 self._populate(path)
+
+    @property
+    def retcode(self) -> int:
+        """Return code to propagate to main."""
+        return self._retcode

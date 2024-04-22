@@ -9,7 +9,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-from astroid import AstroidSyntaxError
 from templatest import templates
 
 import docsig
@@ -370,10 +369,7 @@ new-ssl() {
 new-ssl "${@}"
 """
     init_file(template)
-    with pytest.raises(AstroidSyntaxError) as err:
-        main(".")
-
-    assert "invalid syntax" in str(err.value)
+    assert main(".") == 1
 
 
 def test_bash_script(
