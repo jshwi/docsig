@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.50.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- exclude files in gitignore
+
 ### Fixed
 - send path in syntax error to stderr
 

@@ -71,6 +71,7 @@ Sphinx = "^7.0.0"
 arcon = ">=0.4.0"
 astroid = "^3.0.1"
 click = "^8.1.7"
+pathspec = "^0.12.1"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]

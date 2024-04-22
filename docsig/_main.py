@@ -33,6 +33,7 @@ def main() -> str | int:
         check_overridden=p.args.check_overridden,
         check_protected=p.args.check_protected,
         check_property_returns=p.args.check_property_returns,
+        include_ignored=p.args.include_ignored,
         ignore_no_params=p.args.ignore_no_params,
         ignore_args=p.args.ignore_args,
         ignore_kwargs=p.args.ignore_kwargs,

@@ -78,7 +78,8 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a]
-                           [-k] [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
+                           [-k] [-I] [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST]
+                           [-e PATTERN]
                            [path [path ...]]
 
     Check signature params for proper documentation
@@ -104,6 +105,8 @@ Commandline
                                            documented
       -a, --ignore-args                    ignore args prefixed with an asterisk
       -k, --ignore-kwargs                  ignore kwargs prefixed with two asterisks
+      -I, --include-ignored                check files even if they match a gitignore
+                                           pattern
       -n, --no-ansi                        disable ansi output
       -S, --summary                        print a summarised report
       -v, --verbose                        increase output verbosity

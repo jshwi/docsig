@@ -5,6 +5,7 @@ docsig._module
 
 from __future__ import annotations as _
 
+import os as _os
 import re as _re
 import sys as _sys
 import typing as _t
@@ -13,6 +14,8 @@ from pathlib import Path as _Path
 import astroid as _ast
 import click as _click
 from astroid import AstroidSyntaxError as _AstroidSyntaxError
+from pathspec import PathSpec as _PathSpec
+from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 
 from ._directives import Directive as _Directive
 from ._directives import Directives as _Directives
@@ -23,6 +26,50 @@ from ._utils import pretty_print_error
 from ._utils import vprint as _vprint
 
 _FILE_INFO = "{path}: {msg}"
+
+
+class _Gitignore(_PathSpec):
+    def _get_repo_relative_to(self, path: _Path) -> _Path | None:
+        if (path / ".git" / "HEAD").is_file():
+            return path
+
+        if str(path) == _os.path.abspath(_os.sep):
+            return None
+
+        return self._get_repo_relative_to(path.parent)
+
+    def __init__(self) -> None:
+        patterns = []
+        repo = self._get_repo_relative_to(_Path.cwd())
+        # only consider gitignore patterns valid if inside a git repo
+        # there might be stray gitignore files lying about
+        if repo is not None:
+            # add patterns from all gitignore files
+            # adjust patterns to account for their relative paths
+            for file in repo.rglob(".gitignore"):
+                for pattern in file.read_text(encoding="utf-8").splitlines():
+                    if pattern.startswith("#"):
+                        continue
+
+                    # if pattern starts with "/" then os.path.join will
+                    # consider it in the filesystem root, and it will
+                    # only ever return /pattern
+                    if pattern.startswith("/"):
+                        pattern = pattern[1:]
+
+                    # use os.path.dirname, so it joins without a leading
+                    # "./", like it does with pathlib parent
+                    # use os.path.join so trailing slash is preserved
+                    # replace sep with "/" as, even on windows,
+                    # gitignore patterns only ever use "/"
+                    patterns.append(
+                        _os.path.join(
+                            _os.path.dirname(file.relative_to(repo)),
+                            pattern.strip(),
+                        ).replace(_os.sep, "/")
+                    )
+
+        super().__init__(map(_GitWildMatchPattern, patterns))
 
 
 class Parent(_t.List["Parent"]):
@@ -320,6 +367,8 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     :param excludes: List pf regular expression of files and dirs to
         exclude from checks.
     :param string: String to parse if provided.
+    :param include_ignored: Check files even if they match a gitignore
+        pattern.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param check_class_constructor: Check the class constructor's
@@ -383,6 +432,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         disable: list[_Message],
         excludes: list[str],
         string: str | None = None,
+        include_ignored: bool = False,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
@@ -392,12 +442,14 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         super().__init__()
         self._disable = disable
         self._excludes = excludes
+        self._include_ignored = include_ignored
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self.check_class_constructor = check_class_constructor
         self._no_ansi = no_ansi
         self._verbose = verbose
         self._retcode = 0
+        self._gitignore = _Gitignore()
         if string is not None:
             self._add_module(
                 disable,
@@ -419,6 +471,13 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         ):
             _vprint(
                 _FILE_INFO.format(path=root, msg="in exclude list, skipping"),
+                self._verbose,
+            )
+            return
+
+        if not self._include_ignored and self._gitignore.match_file(root):
+            _vprint(
+                _FILE_INFO.format(path=root, msg="in gitignore, skipping"),
                 self._verbose,
             )
             return

@@ -131,6 +131,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     check_overridden: bool = False,
     check_protected: bool = False,
     check_property_returns: bool = False,
+    include_ignored: bool = False,
     ignore_no_params: bool = False,
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
@@ -163,6 +164,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param check_property_returns: Run return checks on properties.
+    :param include_ignored: Check files even if they match a gitignore
+        pattern.
     :param ignore_no_params: Ignore docstrings where parameters are not
         documented
     :param ignore_args: Ignore args prefixed with an asterisk.
@@ -188,6 +191,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         disable=disable or [],
         string=string,
         excludes=excludes,
+        include_ignored=include_ignored,
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
         check_class_constructor=check_class_constructor,

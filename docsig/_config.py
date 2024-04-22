@@ -110,6 +110,12 @@ class Parser(_ArgumentParser):
             help="ignore kwargs prefixed with two asterisks",
         )
         self.add_argument(
+            "-I",
+            "--include-ignored",
+            action="store_true",
+            help="check files even if they match a gitignore pattern",
+        )
+        self.add_argument(
             "-n",
             "--no-ansi",
             action="store_true",
