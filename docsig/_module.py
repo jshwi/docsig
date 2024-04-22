@@ -6,6 +6,7 @@ docsig._module
 from __future__ import annotations as _
 
 import re as _re
+import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
@@ -367,7 +368,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
                 # pass by silently for files that do not end with .py,
                 # may result in a 123 syntax error exit status in the
                 # future
-                _click.echo(root)
+                _click.echo(root, file=_sys.stderr)
                 pretty_print_error(type(err), msg, no_ansi=self._no_ansi)
                 self._retcode = 1
 
