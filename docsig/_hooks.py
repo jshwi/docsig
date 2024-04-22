@@ -6,7 +6,7 @@ docsig._hooks
 import sys as _sys
 from os import environ as _e
 
-import click as _click
+from ._utils import pretty_print_error
 
 
 def excepthook(no_ansi: bool = False) -> None:
@@ -15,8 +15,6 @@ def excepthook(no_ansi: bool = False) -> None:
     :param no_ansi: Disable ANSI output.
     """
     if _e.get("DOCSIG_DEBUG", None) != "1":
-        _sys.excepthook = lambda x, y, _: _click.echo(
-            f"{_click.style(x.__name__, fg='red', bold=True)}: {y}",
-            file=_sys.stderr,
-            color=not no_ansi and _sys.stderr.isatty(),
+        _sys.excepthook = lambda x, y, _: pretty_print_error(
+            x, str(y), no_ansi
         )

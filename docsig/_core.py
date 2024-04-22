@@ -191,6 +191,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ignore_args=ignore_args,
         ignore_kwargs=ignore_kwargs,
         check_class_constructor=check_class_constructor,
+        no_ansi=no_ansi,
         verbose=verbose,
     )
     display = _Display(no_ansi)
@@ -225,4 +226,4 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     else:
         display.report()
 
-    return int(bool(display))
+    return max(int(bool(display)), modules.retcode)
