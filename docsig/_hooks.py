@@ -9,7 +9,7 @@ from os import environ as _e
 import click as _click
 
 
-def pretty_print_error(no_ansi: bool = False) -> None:
+def excepthook(no_ansi: bool = False) -> None:
     """Print user friendly commandline error if debug not enabled.
 
     :param no_ansi: Disable ANSI output.

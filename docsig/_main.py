@@ -9,7 +9,7 @@ from __future__ import annotations as _
 
 from ._config import Parser as _Parser
 from ._core import docsig as _docsig
-from ._hooks import pretty_print_error as _pretty_print_error
+from ._hooks import excepthook as _excepthook
 
 
 def main() -> str | int:
@@ -20,7 +20,7 @@ def main() -> str | int:
     :return: Exit status for whether test failed or not.
     """
     p = _Parser()
-    _pretty_print_error(p.args.no_ansi)
+    _excepthook(p.args.no_ansi)
     return _docsig(
         *p.args.path,
         string=p.args.string,
