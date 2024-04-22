@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.49.2...HEAD)
 ------------------------------------------------------------------------
+### Added
+- successfully parsed file to verbose output
 
 [0.49.2](https://github.com/jshwi/docsig/releases/tag/v0.49.2) - 2024-04-21
 ------------------------------------------------------------------------
