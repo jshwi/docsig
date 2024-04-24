@@ -7,8 +7,6 @@ from __future__ import annotations as _
 
 from pathlib import Path as _Path
 
-import click as _click
-
 from . import _decorators
 from ._display import Display as _Display
 from ._display import Failure as _Failure
@@ -19,8 +17,7 @@ from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
-from .messages import TEMPLATE as _TEMPLATE
-from .messages import E as _E
+from ._utils import print_checks as _print_checks
 
 _DEFAULT_EXCLUDES = """\
 (?x)^(
@@ -40,11 +37,6 @@ _DEFAULT_EXCLUDES = """\
   |node_modules
 )$
 """
-
-
-def _print_checks() -> None:
-    for msg in _E.values():
-        _click.echo(msg.fstring(_TEMPLATE))
 
 
 def _run_check(  # pylint: disable=too-many-arguments

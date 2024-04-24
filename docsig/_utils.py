@@ -11,6 +11,9 @@ from difflib import SequenceMatcher as _SequenceMatcher
 
 import click as _click
 
+from .messages import TEMPLATE as _TEMPLATE
+from .messages import E as _E
+
 
 def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
     """Show result for more than the minimum but less than the maximum.
@@ -49,3 +52,9 @@ def pretty_print_error(
         file=_sys.stderr,
         color=not no_ansi and _sys.stderr.isatty(),
     )
+
+
+def print_checks() -> None:
+    """Print all available checks."""
+    for msg in _E.values():
+        _click.echo(msg.fstring(_TEMPLATE))
