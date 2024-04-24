@@ -9,6 +9,7 @@ import re as _re
 import textwrap as _textwrap
 import typing as _t
 from collections import Counter as _Counter
+from enum import Enum as _Enum
 
 import astroid as _ast
 import sphinx.ext.napoleon as _s
@@ -49,6 +50,38 @@ class _RawDocstring(str):
         return super().__new__(
             cls, _NumpyDocstring(_GoogleDocstring(_DocFmt(string)))
         )
+
+
+class RetType(_Enum):
+    """Defines the possible types of a return annotation."""
+
+    NONE = 1
+    SOME = 2
+    UNTYPED = 3
+
+    @classmethod
+    def from_ast(cls, returns: _ast.NodeNG | None) -> RetType:
+        """Construct a return type object from an AST node.
+
+        :param returns: Ast node or None.
+        :return: Constructed return type.
+        """
+        if isinstance(returns, _ast.Const) and returns.value is None:
+            return cls.NONE
+
+        if isinstance(
+            returns,
+            (
+                _ast.Const,
+                _ast.Name,
+                _ast.Attribute,
+                _ast.Subscript,
+                _ast.BinOp,
+            ),
+        ):
+            return cls.SOME
+
+        return cls.UNTYPED
 
 
 class Param(_t.NamedTuple):
@@ -211,37 +244,11 @@ class Signature(_Stub):
         ]:
             self.args.append(i)
 
-        self._rettype = (
-            returns if isinstance(returns, str) else self._get_rettype(returns)
-        )
-        self._returns = str(self._rettype) != "None"
-
-    def _get_rettype(self, returns: _ast.NodeNG | None) -> str | None:
-        if isinstance(returns, _ast.Name):
-            return returns.name
-
-        if isinstance(returns, _ast.Attribute):
-            return returns.attrname
-
-        if isinstance(returns, _ast.Const):
-            return str(returns.value)
-
-        if isinstance(returns, _ast.Subscript):
-            return "{}[{}]".format(
-                self._get_rettype(returns.value),
-                self._get_rettype(returns.slice),
-            )
-
-        if isinstance(returns, _ast.BinOp):
-            return "{} | {}".format(
-                self._get_rettype(returns.left),
-                self._get_rettype(returns.right),
-            )
-
-        return None
+        self._rettype = RetType.from_ast(returns)
+        self._returns = self._rettype == RetType.SOME
 
     @property
-    def rettype(self) -> str | None:
+    def rettype(self) -> RetType:
         """Function's return value.
 
         If a function is typed to return None, return str(None). If no
@@ -249,15 +256,13 @@ class Signature(_Stub):
         """
         return self._rettype
 
-    def overload(self, rettype: str | None) -> None:
+    def overload(self, rettype: RetType) -> None:
         """Overload signature with a ret type.
 
         :param rettype: Return type of overloaded signature.
         """
-        self._rettype = (
-            rettype if isinstance(rettype, str) else self._get_rettype(rettype)
-        )
-        self._returns = str(rettype) != "None"
+        self._rettype = rettype
+        self._returns = rettype != RetType.NONE
 
 
 class Docstring(_Stub):

@@ -13,6 +13,7 @@ import click as _click
 from ._module import Function as _Function
 from ._stub import RETURN as _RETURN
 from ._stub import Param as _Param
+from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
@@ -119,7 +120,7 @@ class Failure(_t.List[str]):
     def _extra_return(self) -> None:
         if (
             self._func.docstring.returns
-            and self._func.signature.rettype == "None"
+            and self._func.signature.rettype == _RetType.NONE
             and not self._no_returns
         ):
             self._add(_E[104])
@@ -129,7 +130,10 @@ class Failure(_t.List[str]):
             self._add(_E[108], hint=True)
 
     def _return_not_typed(self) -> None:
-        if self._func.signature.rettype is None and not self._no_returns:
+        if (
+            self._func.signature.rettype == _RetType.UNTYPED
+            and not self._no_returns
+        ):
             self._add(_E[109])
 
     def _missing_return(self) -> None:

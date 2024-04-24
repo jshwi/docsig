@@ -20,6 +20,7 @@ from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 from ._directives import Comment as _Comment
 from ._directives import Directives as _Directives
 from ._stub import Docstring as _Docstring
+from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
 from ._utils import pretty_print_error as _pretty_print_error
 from ._utils import vprint as _vprint
@@ -356,7 +357,7 @@ class Function(Parent):
         """Comments, if any, belonging to this function."""
         return self._comments
 
-    def overload(self, rettype: str | None) -> None:
+    def overload(self, rettype: _RetType) -> None:
         """Overload function with new signature return type.
 
         :param rettype: Return type of overloaded signature.
