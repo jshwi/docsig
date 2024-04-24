@@ -146,7 +146,6 @@ class Parent(_t.List["Parent"]):
                         returns = func.signature.rettype
                     else:
                         if func.name in overloads:
-                            subnode.returns = returns
                             # noinspection PyProtectedMember
                             func._signature._rettype = (
                                 returns
