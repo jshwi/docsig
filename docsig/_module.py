@@ -436,7 +436,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         self._include_ignored = include_ignored
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
-        self.check_class_constructor = check_class_constructor
+        self._check_class_constructor = check_class_constructor
         self._no_ansi = no_ansi
         self._verbose = verbose
         self._retcode = 0
@@ -479,7 +479,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
                 root=root,
                 ignore_args=self._ignore_args,
                 ignore_kwargs=self._ignore_kwargs,
-                check_class_constructor=self.check_class_constructor,
+                check_class_constructor=self._check_class_constructor,
             )
 
         if root.is_dir():
