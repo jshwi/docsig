@@ -22,7 +22,7 @@ from ._directives import Directives as _Directives
 from ._message import Message as _Message
 from ._stub import Docstring as _Docstring
 from ._stub import Signature as _Signature
-from ._utils import pretty_print_error
+from ._utils import pretty_print_error as _pretty_print_error
 from ._utils import vprint as _vprint
 
 _FILE_INFO = "{path}: {msg}"
@@ -417,7 +417,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
                 # may result in a 123 syntax error exit status in the
                 # future
                 _click.echo(root, file=_sys.stderr)
-                pretty_print_error(type(err), msg, no_ansi=self._no_ansi)
+                _pretty_print_error(type(err), msg, no_ansi=self._no_ansi)
                 self._retcode = 1
 
             _vprint(
