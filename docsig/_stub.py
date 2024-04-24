@@ -249,6 +249,16 @@ class Signature(_Stub):
         """
         return self._rettype
 
+    def overload(self, rettype: str | None) -> None:
+        """Overload signature with a ret type.
+
+        :param rettype: Return type of overloaded signature.
+        """
+        self._rettype = (
+            rettype if isinstance(rettype, str) else self._get_rettype(rettype)
+        )
+        self._returns = str(rettype) != "None"
+
 
 class Docstring(_Stub):
     """Represents a function docstring.

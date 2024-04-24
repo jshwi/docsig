@@ -144,16 +144,7 @@ class Parent(_t.List["Parent"]):
                         returns = func.signature.rettype
                     else:
                         if func.name in self._overloads:
-                            # noinspection PyProtectedMember
-                            func._signature._rettype = (
-                                returns
-                                if isinstance(returns, str)
-                                else func._signature._get_rettype(returns)
-                            )
-                            # noinspection PyProtectedMember
-                            func._signature._returns = (
-                                str(func._signature._rettype) != "None"
-                            )
+                            func.overload(returns)
 
                         self.append(func)
                 elif isinstance(subnode, _ast.ClassDef):
@@ -348,6 +339,13 @@ class Function(Parent):
     def directives(self) -> _t.List[_Directive]:
         """Directive, if any, belonging to this function."""
         return self._directives
+
+    def overload(self, rettype: str | None) -> None:
+        """Overload function with new signature return type.
+
+        :param rettype: Return type of overloaded signature.
+        """
+        self._signature.overload(rettype)
 
 
 class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
