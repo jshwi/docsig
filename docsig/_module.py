@@ -98,7 +98,7 @@ class Parent(_t.List["Parent"]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
-        overloads: list[str] = []
+        self._overloads: list[str] = []
         returns = None
         self._parse_ast(
             node,
@@ -107,7 +107,6 @@ class Parent(_t.List["Parent"]):
             ignore_args,
             ignore_kwargs,
             check_class_constructor,
-            overloads,
             returns,
         )
 
@@ -119,7 +118,6 @@ class Parent(_t.List["Parent"]):
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        overloads,
         returns,
     ) -> None:
         parent_comments, parent_disabled = directives.get(
@@ -142,10 +140,10 @@ class Parent(_t.List["Parent"]):
                         check_class_constructor,
                     )
                     if func.isoverloaded:
-                        overloads.append(func.name)
+                        self._overloads.append(func.name)
                         returns = func.signature.rettype
                     else:
-                        if func.name in overloads:
+                        if func.name in self._overloads:
                             # noinspection PyProtectedMember
                             func._signature._rettype = (
                                 returns
@@ -177,7 +175,6 @@ class Parent(_t.List["Parent"]):
                         ignore_args,
                         ignore_kwargs,
                         check_class_constructor,
-                        overloads,
                         returns,
                     )
 
