@@ -14,12 +14,6 @@ from enum import Enum as _Enum
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
-PARAM = "param"
-KEYWORD = "keyword"
-KEY = "key"
-RETURN = "return"
-ARG = "arg"
-
 
 # noinspection PyTypeChecker
 class _GoogleDocstring(str):
@@ -84,10 +78,34 @@ class RetType(_Enum):
         return cls.UNTYPED
 
 
+class DocType(_Enum):
+    """Defines the possible types of a docstring."""
+
+    PARAM = 1
+    ARG = 2
+    KWARG = 3
+    UNKNOWN = 4
+
+    @classmethod
+    def from_str(cls, docstring: str) -> DocType:
+        """Construct a doc type object from a docstring.
+
+        :param docstring: Docstring string.
+        :return: Constructed doc type.
+        """
+        try:
+            return cls[docstring.upper()]
+        except KeyError:
+            if docstring in ("key", "keyword"):
+                return cls.KWARG
+
+        return cls.UNKNOWN
+
+
 class Param(_t.NamedTuple):
     """A tuple of param types and their names."""
 
-    kind: str = PARAM
+    kind: DocType = DocType.PARAM
     name: str | None = None
     description: str | None = None
     indent: int = 0
@@ -97,7 +115,7 @@ class Param(_t.NamedTuple):
             return False
 
         args = self, other
-        return all(i.kind == KEY for i in args) or (
+        return all(i.kind == DocType.KWARG for i in args) or (
             self.name == other.name and all(i.name is not None for i in args)
         )
 
@@ -112,7 +130,6 @@ class Param(_t.NamedTuple):
 
 class _Matches(_t.List[Param]):
     _pattern = _re.compile(":(.*?):")
-    _normalize = {KEYWORD: KEY}
 
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -123,9 +140,7 @@ class _Matches(_t.List[Param]):
                 name = description = None
                 kinds = match[0].split()
                 if kinds:
-                    kind = kinds[0]
-                    for substring, replace in self._normalize.items():
-                        kind = kind.replace(substring, replace)
+                    kind = DocType.from_str(kinds[0])
 
                     if len(kinds) > 1:
                         name = kinds[1]
@@ -154,12 +169,12 @@ class _Params(_t.List[Param]):
     # pylint: disable=too-many-boolean-expressions
     def append(self, value: Param) -> None:
         if not value.isprotected and (
-            value.kind == PARAM
-            or (value.kind == ARG and not self._ignore_args)
+            value.kind == DocType.PARAM
+            or (value.kind == DocType.ARG and not self._ignore_args)
             or (
-                value.kind == KEY
+                value.kind == DocType.KWARG
                 and not self._ignore_kwargs
-                and not any(i.kind == KEY for i in self)
+                and not any(i.kind == DocType.KWARG for i in self)
             )
         ):
             super().append(value)
@@ -236,9 +251,9 @@ class Signature(_Stub):
             for a in [
                 *arguments.posonlyargs,
                 *arguments.args,
-                Param(ARG, name=arguments.vararg),
+                Param(DocType.ARG, name=arguments.vararg),
                 *arguments.kwonlyargs,
-                Param(KEY, name=arguments.kwarg),
+                Param(DocType.KWARG, name=arguments.kwarg),
             ]
             if a is not None and a.name
         ]:

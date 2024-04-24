@@ -11,7 +11,6 @@ import typing as _t
 import click as _click
 
 from ._module import Function as _Function
-from ._stub import RETURN as _RETURN
 from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
@@ -144,7 +143,7 @@ class Failure(_t.List[str]):
             and not self._no_returns
         ):
             docstring = self._func.docstring.string
-            if docstring is not None and _RETURN in docstring:
+            if docstring is not None and "return" in docstring:
                 hint = True
 
             self._add(_E[105], hint=hint)
