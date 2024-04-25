@@ -17,7 +17,7 @@ from astroid import AstroidSyntaxError as _AstroidSyntaxError
 from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 
-from ._directives import Directive as _Directive
+from ._directives import Comment as _Comment
 from ._directives import Directives as _Directives
 from ._message import Message as _Message
 from ._stub import Docstring as _Docstring
@@ -183,7 +183,7 @@ class Function(Parent):
     :param node: Function's abstract syntax tree.
     :param comments: Comments in list form containing directives.
     :param directives: Directive, if any, belonging to this function.
-    :param disabled: List of disabled checks specific to this function.
+    :param messages: List of disabled checks specific to this function.
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -195,9 +195,9 @@ class Function(Parent):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
-        comments: list[_Directive],
+        comments: list[_Comment],
         directives: _Directives,
-        disabled: list[_Message],
+        messages: list[_Message],
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
@@ -212,8 +212,8 @@ class Function(Parent):
             check_class_constructor,
         )
         self._node = node
-        self._directives = comments
-        self._disabled = disabled
+        self._comments = comments
+        self._messages = messages
         self._parent = node.parent.frame()
         self._signature = _Signature(
             node.args,
@@ -328,14 +328,14 @@ class Function(Parent):
         return self._docstring
 
     @property
-    def disabled(self) -> list[_Message]:
+    def messages(self) -> list[_Message]:
         """List of disabled checks specific to this function."""
-        return self._disabled
+        return self._messages
 
     @property
-    def directives(self) -> list[_Directive]:
-        """Directive, if any, belonging to this function."""
-        return self._directives
+    def comments(self) -> list[_Comment]:
+        """Comments, if any, belonging to this function."""
+        return self._comments
 
     def overload(self, rettype: str | None) -> None:
         """Overload function with new signature return type.

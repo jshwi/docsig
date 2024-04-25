@@ -49,7 +49,7 @@ class _Rules(_t.List[_Message]):
         return self._unknown
 
 
-class Directive:
+class Comment:
     """Represents a comment directive.
 
     :param kind: The type of this directive.
@@ -94,7 +94,7 @@ class Directive:
         return self._kind == self._valid_kinds[1]
 
     @classmethod
-    def parse(cls, comment: str, col: int) -> Directive | None:
+    def parse(cls, comment: str, col: int) -> Comment | None:
         """Parse string into directive object if possible.
 
         :param comment: Comment to parse.
@@ -108,24 +108,22 @@ class Directive:
         return None
 
 
-class Directives(
-    _t.Dict[int, _t.Tuple[_t.List[Directive], _t.List[_Message]]]
-):
+class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
     """Data for directives:
 
     Dict like object with the line number of directive as the key and
     total errors which are excluded from function checks.
 
     :param text: Python code.
-    :param disable: List of checks to disable.
+    :param messages: List of checks to disable.
     """
 
-    def __init__(self, text: str, disable: list[_Message]) -> None:
+    def __init__(self, text: str, messages: list[_Message]) -> None:
         super().__init__()
         fin = _StringIO(text)
-        module_disables = list(disable)
-        module_directives: list[Directive] = []
-        directive = None
+        module_messages = list(messages)
+        module_comments: list[Comment] = []
+        comment = None
         for line in _tokenize.generate_tokens(fin.readline):
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
@@ -135,25 +133,25 @@ class Directives(
                 # ensure previous directive as backup assignment because
                 # if this is just a regular comment it will override a
                 # valid module directive, making it None
-                directive = Directive.parse(line.string, col) or directive
-                if directive is not None:
-                    update_directives = [directive] + module_directives
-                    update = module_disables
-                    if directive.isvalid:
-                        if directive.disable:
-                            update = directive.rules + module_disables
-                        elif directive.enable:
-                            update = [
+                comment = Comment.parse(line.string, col) or comment
+                if comment is not None:
+                    update_comments = [comment] + module_comments
+                    update_messages = module_messages
+                    if comment.isvalid:
+                        if comment.disable:
+                            update_messages = comment.rules + module_messages
+                        elif comment.enable:
+                            update_messages = [
                                 i
-                                for i in module_disables
-                                if i not in directive.rules
+                                for i in module_messages
+                                if i not in comment.rules
                             ]
 
-                    if directive.ismodule:
-                        module_disables = update
-                        module_directives = update_directives
+                    if comment.ismodule:
+                        module_messages = update_messages
+                        module_comments = update_comments
                     else:
-                        self[lineno] = update_directives, update
+                        self[lineno] = update_comments, update_messages
 
             if lineno not in self:
-                self[lineno] = list(module_directives), list(module_disables)
+                self[lineno] = list(module_comments), list(module_messages)

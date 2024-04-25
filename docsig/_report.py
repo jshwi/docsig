@@ -172,18 +172,18 @@ class Report(_t.List[str]):
             self._add(_E[116])
 
     def _invalid_directive(self) -> None:
-        for directive in self._func.directives:
-            if not directive.isvalid:
-                err = _E[int(f"20{1 if directive.ismodule else 2}")]
-                self._add(err, directive=directive.kind)
+        for comment in self._func.comments:
+            if not comment.isvalid:
+                err = _E[int(f"20{1 if comment.ismodule else 2}")]
+                self._add(err, directive=comment.kind)
 
     def _invalid_directive_options(self) -> None:
-        for directive in self._func.directives:
-            if directive.rules.unknown:
-                err = _E[int(f"20{3 if directive.ismodule else 4}")]
-                for rule in directive.rules.unknown:
+        for comment in self._func.comments:
+            if comment.rules.unknown:
+                err = _E[int(f"20{3 if comment.ismodule else 4}")]
+                for rule in comment.rules.unknown:
                     self._add(
-                        err, directive=directive.kind, option=rule.description
+                        err, directive=comment.kind, option=rule.description
                     )
 
     def get_report(self, prefix: str = "") -> str:

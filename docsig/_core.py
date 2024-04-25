@@ -68,7 +68,7 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (child.docstring.bare and ignore_no_params)
         ):
             report = _Report(
-                child, targets, child.disabled, check_property_returns
+                child, targets, child.messages, check_property_returns
             )
             if report:
                 failures.append(_Failure(child, _FuncStr(child), report))
