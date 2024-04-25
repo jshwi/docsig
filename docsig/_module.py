@@ -195,7 +195,7 @@ class Function(Parent):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
-        comments: _t.List[_Directive],
+        comments: list[_Directive],
         directives: _Directives,
         disabled: list[_Message],
         path: _Path | None = None,
@@ -333,7 +333,7 @@ class Function(Parent):
         return self._disabled
 
     @property
-    def directives(self) -> _t.List[_Directive]:
+    def directives(self) -> list[_Directive]:
         """Directive, if any, belonging to this function."""
         return self._directives
 
