@@ -19,6 +19,7 @@ policies:
           - change
           - chore
           - ci
+          - deprecate
           - doc
           - fix
           - hack

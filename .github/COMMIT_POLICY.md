@@ -35,6 +35,7 @@ Locale: US
 - change
 - chore
 - ci
+- deprecate
 - doc
 - fix
 - hack
