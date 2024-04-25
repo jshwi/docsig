@@ -98,8 +98,7 @@ class Parent(_t.List["Parent"]):
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
-        self._overloads: list[str] = []
-        returns = None
+        self._overloads: dict[str, Function] = {}
         self._parse_ast(
             node,
             directives,
@@ -107,7 +106,6 @@ class Parent(_t.List["Parent"]):
             ignore_args,
             ignore_kwargs,
             check_class_constructor,
-            returns,
         )
 
     def _parse_ast(  # pylint: disable=protected-access,too-many-arguments
@@ -118,7 +116,6 @@ class Parent(_t.List["Parent"]):
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        returns,
     ) -> None:
         parent_comments, parent_disabled = directives.get(
             node.lineno, ([], [])
@@ -140,11 +137,12 @@ class Parent(_t.List["Parent"]):
                         check_class_constructor,
                     )
                     if func.isoverloaded:
-                        self._overloads.append(func.name)
-                        returns = func.signature.rettype
+                        self._overloads[func.name] = func
                     else:
                         if func.name in self._overloads:
-                            func.overload(returns)
+                            func.overload(
+                                self._overloads[func.name].signature.rettype
+                            )
 
                         self.append(func)
                 elif isinstance(subnode, _ast.ClassDef):
@@ -166,7 +164,6 @@ class Parent(_t.List["Parent"]):
                         ignore_args,
                         ignore_kwargs,
                         check_class_constructor,
-                        returns,
                     )
 
     @property
