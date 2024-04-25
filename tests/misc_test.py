@@ -397,3 +397,12 @@ def function(param1, param2) -> None:
     docsig.docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" not in std.out
+
+
+def test_deprecated(main: MockMainType) -> None:
+    """Test deprecation.
+
+    :param main: Mock ``main`` function.
+    """
+    with pytest.deprecated_call():
+        main(".", long.summary)

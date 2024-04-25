@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - output to summarised version
 - remove color from help
 
+### Deprecated
+- summary option as this is now the report format
+
 [0.52.0](https://github.com/jshwi/docsig/releases/tag/v0.52.0) - 2024-04-29
 ------------------------------------------------------------------------
 ### Added

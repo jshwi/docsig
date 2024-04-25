@@ -80,7 +80,7 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a] [-k] [-I]
-                  [-n] [-S] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
+                  [-n] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -106,7 +106,6 @@ Commandline
       -k, --ignore-kwargs                  ignore kwargs prefixed with two asterisks
       -I, --include-ignored                check files even if they match a gitignore pattern
       -n, --no-ansi                        disable ansi output
-      -S, --summary                        print a summarised report
       -v, --verbose                        increase output verbosity
       -s STR, --string STR                 string to parse instead of files
       -d LIST, --disable LIST              comma separated list of rules to disable
@@ -116,15 +115,12 @@ Commandline
 
 Options can also be configured with the pyproject.toml file
 
-If you find the output is too verbose then the report can be configured to display a summary
-
 .. code-block:: toml
 
     [tool.docsig]
     check-dunders = false
     check-overridden = false
     check-protected = false
-    summary = true
     disable = [
         "E101",
         "E102",
@@ -154,7 +150,7 @@ API
     ...     :param param3: About param3.
     ...     '''
     ...     """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     0
 
 .. code-block:: python
@@ -168,7 +164,7 @@ API
     ...     :param param3: About param3.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     2 in function
         E102: includes parameters that do not exist (params-do-not-exist)
     1
@@ -204,4 +200,3 @@ It can be added to your .pre-commit-config.yaml as follows:
               - "--check-dunders"
               - "--check-overridden"
               - "--check-protected"
-              - "--summary"

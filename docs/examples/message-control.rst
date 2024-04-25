@@ -35,7 +35,7 @@ To disable individual function checks add an inline comment similar to the examp
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     10 in function_2
         E102: includes parameters that do not exist (params-do-not-exist)
     18 in function_3
@@ -71,7 +71,7 @@ To disable all function checks add a module level comment similar to the example
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     0
 
 To disable multiple function checks add a module level disable and enable comment similar to the example below
@@ -104,7 +104,7 @@ To disable multiple function checks add a module level disable and enable commen
     ...     :param param2: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     20 in function_3
         E103: parameters missing (params-missing)
     1
@@ -141,7 +141,7 @@ The same can be done for disabling individual rules
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     3 in function_1
         E105: return missing from docstring (return-missing)
     20 in function_3
@@ -184,7 +184,7 @@ Module level directives will be evaluated separately to inline directives and pr
     ...     :param: Fails.
     ...     '''
     ... """
-    >>> docsig(string=string, summary=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     11 in function_2
         E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)

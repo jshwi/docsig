@@ -9,6 +9,7 @@ import functools as _functools
 import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
+from warnings import warn as _warn
 
 from .messages import E as _E
 
@@ -29,6 +30,28 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
         targets = _E.from_codes(kwargs.get("targets", [])) or None
         kwargs["disable"] = disable
         kwargs["targets"] = targets
+        return func(*args, **kwargs)
+
+    return _wrapper
+
+
+def handle_deprecations(func: _WrappedFuncType) -> _WrappedFuncType:
+    """Allow, but warn, of deprecated arguments.
+
+    :param func: Function to wrap.
+    :return: Wrapped function.
+    """
+
+    @_functools.wraps(func)
+    def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> str | int:
+        if kwargs.pop("summary", None):
+            _warn(
+                "summary is deprecated and will be removed in a future"
+                " version",
+                category=DeprecationWarning,
+                stacklevel=4,
+            )
+
         return func(*args, **kwargs)
 
     return _wrapper

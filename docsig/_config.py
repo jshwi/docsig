@@ -3,6 +3,7 @@ docsig._config
 ==============
 """
 
+from argparse import SUPPRESS as _SUPPRESS
 from argparse import HelpFormatter as _HelpFormatter
 from pathlib import Path as _Path
 
@@ -120,12 +121,6 @@ class Parser(_ArgumentParser):
             help="disable ansi output",
         )
         self.add_argument(
-            "-S",
-            "--summary",
-            action="store_true",
-            help="print a summarised report",
-        )
-        self.add_argument(
             "-v",
             "--verbose",
             action="store_true",
@@ -155,4 +150,12 @@ class Parser(_ArgumentParser):
             "--exclude",
             metavar="PATTERN",
             help="regular expression of files or dirs to exclude from checks",
+        )
+
+        # deprecated
+        self.add_argument(
+            "-S",
+            "--summary",
+            action="store_true",
+            help=_SUPPRESS,
         )

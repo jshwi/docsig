@@ -38,7 +38,7 @@ def main() -> str | int:
         ignore_args=p.args.ignore_args,
         ignore_kwargs=p.args.ignore_kwargs,
         no_ansi=p.args.no_ansi,
-        summary=p.args.summary,
+        summary=p.args.summary,  # deprecated
         verbose=p.args.verbose,
         targets=p.args.target,
         disable=p.args.disable,

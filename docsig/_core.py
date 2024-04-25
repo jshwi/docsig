@@ -110,6 +110,7 @@ def _run_check(  # pylint: disable=too-many-arguments
 
 
 @_decorators.parse_msgs
+@_decorators.handle_deprecations
 @_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
@@ -128,7 +129,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
     no_ansi: bool = False,
-    summary: bool = False,
     verbose: bool = False,
     targets: _Messages | None = None,
     disable: _Messages | None = None,
@@ -163,7 +163,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param no_ansi: Disable ANSI output.
-    :param summary: Print a summarised report.
     :param verbose: increase output verbosity.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
@@ -216,9 +215,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 )
                 if failures:
                     display[top_level.path].append(failures)
-
-    if summary:
-        pass
 
     display.report(no_ansi)
     return max(int(bool(display)), modules.retcode)
