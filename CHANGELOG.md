@@ -5,7 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-[Unreleased](https://github.com/jshwi/docsig/compare/v0.51.0...HEAD)
+[Unreleased](https://github.com/jshwi/docsig/compare/v0.51.1...HEAD)
+------------------------------------------------------------------------
+
+[0.51.1](https://github.com/jshwi/docsig/releases/tag/v0.51.1) - 2024-04-27
 ------------------------------------------------------------------------
 ### Fixed
 - import alias for imported decorators
