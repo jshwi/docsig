@@ -180,7 +180,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
     modules = _Modules(
         *tuple(_Path(i) for i in path),
-        disable=disable or [],
+        messages=disable or [],
         string=string,
         excludes=excludes,
         include_ignored=include_ignored,

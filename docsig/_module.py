@@ -370,7 +370,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     If string is provided, ignore paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
-    :param disable: List of checks to disable.
+    :param messages: List of checks to disable.
     :param excludes: List pf regular expression of files and dirs to
         exclude from checks.
     :param string: String to parse if provided.
@@ -388,7 +388,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     # handle errors here before appending a module
     def _add_module(  # pylint: disable=too-many-arguments
         self,
-        disable: list[_Message],
+        messages: list[_Message],
         string: str | None = None,
         root: _Path | None = None,
         ignore_args: bool = False,
@@ -405,7 +405,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
             self.append(
                 Parent(
                     _ast.parse(string),
-                    _Directives(string, disable),
+                    _Directives(string, messages),
                     root,
                     ignore_args,
                     ignore_kwargs,
@@ -436,7 +436,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
-        disable: list[_Message],
+        messages: list[_Message],
         excludes: list[str],
         string: str | None = None,
         include_ignored: bool = False,
@@ -447,7 +447,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         verbose: bool = False,
     ) -> None:
         super().__init__()
-        self._disable = disable
+        self._messages = messages
         self._excludes = excludes
         self._include_ignored = include_ignored
         self._ignore_args = ignore_args
@@ -459,7 +459,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         self._gitignore = _Gitignore()
         if string is not None:
             self._add_module(
-                disable,
+                messages,
                 string=string,
                 ignore_args=ignore_args,
                 ignore_kwargs=ignore_kwargs,
@@ -491,7 +491,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
 
         if root.is_file():
             self._add_module(
-                self._disable,
+                self._messages,
                 root=root,
                 ignore_args=self._ignore_args,
                 ignore_kwargs=self._ignore_kwargs,
