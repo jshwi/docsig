@@ -91,6 +91,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                     failures,
                 )
     else:
+        # this is a class
         for func in child:
             _run_check(
                 func,

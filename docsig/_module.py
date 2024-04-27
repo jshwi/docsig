@@ -125,6 +125,9 @@ class Parent(_t.List["Parent"]):
         ignore_kwargs,
         check_class_constructor,
     ) -> None:
+        # need to keep track of `comments` as, even though they are
+        # resolved in directives object, they are needed to notify user
+        # in the case that they are invalid
         parent_comments, parent_disabled = directives.get(
             node.lineno, ([], [])
         )
