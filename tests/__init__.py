@@ -8332,3 +8332,65 @@ def my_external_function(✖argument) -> ✖int:
 E113: function is missing a docstring (function-doc-missing)
 
 """
+
+
+@_templates.register
+class _MPassOverloadNoReturnAliasS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+from typing import overload as _overload
+
+
+@_overload
+def process(response: None) -> None:
+    ...
+
+
+@_overload
+def process(response: int) -> None:
+    ...
+
+
+@_overload
+def process(response: bytes) -> None:
+    ...
+
+
+@_overload
+def process(response):
+    """process a response.
+
+    :param response: the response to process
+    """
+'''
+
+    @property
+    def expected(self) -> str:
+        return ""
+
+
+@_templates.register
+class _PPropertyReturnFunctoolsCachedAliasN(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''
+from functools import cached_property as _cached_property
+
+class Klass:
+    @_cached_property
+    def function(*_, **__) -> int:
+        """Proper docstring.
+
+
+        Returns
+        -------
+            int
+                Returncode.
+        """
+        return 0
+'''
+
+    @property
+    def expected(self) -> str:
+        return ""

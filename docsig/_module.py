@@ -84,6 +84,7 @@ class Parent(_t.List["Parent"]):
     :param check_class_constructor: Check the class constructor's
         docstring. Otherwise, expect the constructor's documentation to
         be on the class level docstring.
+    :param imports: Imports within this scope.
     """
 
     def __init__(  # pylint: disable=too-many-arguments
@@ -94,11 +95,13 @@ class Parent(_t.List["Parent"]):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
+        imports: dict[str, str] | None = None,
     ) -> None:
         super().__init__()
         self._name = node.name
         self._path = f"{path}:" if path is not None else ""
         self._overloads: dict[str, Function] = {}
+        self._imports = imports or {}
         self._parse_ast(
             node,
             directives,
@@ -107,6 +110,11 @@ class Parent(_t.List["Parent"]):
             ignore_kwargs,
             check_class_constructor,
         )
+
+    def _parse_imports(self, names: list[tuple[str, str | None]]) -> None:
+        for name in names:
+            original, alias = name
+            self._imports[original] = alias or original
 
     def _parse_ast(  # pylint: disable=protected-access,too-many-arguments
         self,
@@ -125,7 +133,9 @@ class Parent(_t.List["Parent"]):
                 comments, disabled = directives.get(subnode.lineno, ([], []))
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
-                if isinstance(subnode, _ast.FunctionDef):
+                if isinstance(subnode, (_ast.Import, _ast.ImportFrom)):
+                    self._parse_imports(subnode.names)
+                elif isinstance(subnode, _ast.FunctionDef):
                     func = Function(
                         subnode,
                         comments,
@@ -135,6 +145,7 @@ class Parent(_t.List["Parent"]):
                         ignore_args,
                         ignore_kwargs,
                         check_class_constructor,
+                        self._imports,
                     )
                     if func.isoverloaded:
                         self._overloads[func.name] = func
@@ -154,6 +165,7 @@ class Parent(_t.List["Parent"]):
                             ignore_args,
                             ignore_kwargs,
                             check_class_constructor,
+                            self._imports,
                         )
                     )
                 else:
@@ -190,6 +202,7 @@ class Function(Parent):
     :param check_class_constructor: If the function is the class
         constructor, use its own docstring. Otherwise, use the class
         level docstring for the constructor function.
+    :param imports: Imports within this scope.
     """
 
     def __init__(  # pylint: disable=too-many-arguments
@@ -202,6 +215,7 @@ class Function(Parent):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
+        imports: dict[str, str] | None = None,
     ) -> None:
         super().__init__(
             node,
@@ -210,6 +224,7 @@ class Function(Parent):
             ignore_args,
             ignore_kwargs,
             check_class_constructor,
+            imports,
         )
         self._node = node
         self._comments = comments
@@ -235,6 +250,7 @@ class Function(Parent):
         return max([len(self.signature.args), len(self.docstring.args)])
 
     def _decorated_with(self, name: str) -> bool:
+        name = self._imports.get(name, name)
         if self._node.decorators is not None:
             for dec in self._node.decorators.nodes:
                 return (isinstance(dec, _ast.Name) and dec.name == name) or (
