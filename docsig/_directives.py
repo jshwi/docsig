@@ -100,9 +100,14 @@ class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
         fin = _StringIO(text)
         comments = _Comments()
         for line in _tokenize.generate_tokens(fin.readline):
+            # do nothing for these lines types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
+            # inherit the comments and messages defined in the global
+            # scope, but do not update the global comments and messages
+            # unless it is confirmed that the comment is a module level
+            # directive
             scoped_comments = _Comments(comments)
             scoped_messages = _Messages(messages)
             lineno, col = line.start
@@ -117,9 +122,13 @@ class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
                             i for i in messages if i not in comment
                         )
 
+                    # if module level directive then make changes
+                    # globally
                     if comment.ismodule:
                         messages = scoped_messages
                         comments = scoped_comments
 
+            # check that a scoped message has not updated this first, as
+            # they take precedence over global messages
             if lineno not in self:
                 self[lineno] = scoped_comments, scoped_messages
