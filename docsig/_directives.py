@@ -30,7 +30,7 @@ class Comment(_t.List[_Message]):
         if len(parts) == 1:
             self.extend(_E.all(1))
         else:
-            self.extend(_E.fromref(i) for i in parts[1].split(","))
+            self.extend(_E.from_ref(i) for i in parts[1].split(","))
 
     @property
     def kind(self) -> str:
