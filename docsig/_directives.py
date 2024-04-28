@@ -9,11 +9,11 @@ import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
 
-from ._message import Message as _Message
+from ._message import Messages as _Messages
 from .messages import E as _E
 
 
-class Comment(_t.List[_Message]):
+class Comment(_Messages):
     """Represents a comment directive.
 
     :param string: Text to construct comment from.
@@ -72,7 +72,7 @@ class Comment(_t.List[_Message]):
         return None
 
 
-class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
+class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _Messages]]):
     """Data for directives:
 
     Dict like object with the line number of directive as the key and
@@ -82,7 +82,7 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
     :param messages: List of checks to disable.
     """
 
-    def __init__(self, text: str, messages: list[_Message]) -> None:
+    def __init__(self, text: str, messages: _Messages) -> None:
         super().__init__()
         fin = _StringIO(text)
         comments: list[Comment] = []
@@ -91,7 +91,7 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
                 continue
 
             scoped_comments = list(comments)
-            scoped_messages = list(messages)
+            scoped_messages = _Messages(messages)
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
                 comment = Comment.parse(line.string, col)
@@ -100,7 +100,7 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
                     if comment.disable:
                         scoped_messages.extend(comment)
                     elif comment.enable:
-                        scoped_messages = list(
+                        scoped_messages = _Messages(
                             i for i in messages if i not in comment
                         )
 

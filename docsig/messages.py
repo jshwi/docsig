@@ -24,13 +24,13 @@ docsig.messages
 """
 
 from ._message import Message as _Message
-from ._message import Messages as _Messages
+from ._message import MessageMap as _MessageMap
 
 TEMPLATE = "{code}: {description} ({symbolic})"
 
 
 # Exxx: Error
-E = _Messages(
+E = _MessageMap(
     {
         # E1xx: Docstring
         101: _Message(

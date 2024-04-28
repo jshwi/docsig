@@ -12,7 +12,7 @@ from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
-from ._message import Message as _Message
+from ._message import Messages as _Messages
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
@@ -51,7 +51,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_property_returns: bool,
     ignore_no_params: bool,
     no_ansi: bool,
-    targets: list[_Message],
+    targets: _Messages,
     failures: _Failures,
 ) -> None:
     if isinstance(child, _Function):
@@ -130,8 +130,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     no_ansi: bool = False,
     summary: bool = False,
     verbose: bool = False,
-    targets: list[_Message] | None = None,
-    disable: list[_Message] | None = None,
+    targets: _Messages | None = None,
+    disable: _Messages | None = None,
     exclude: str | None = None,
 ) -> int:
     """Package's core functionality.
@@ -180,7 +180,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
     modules = _Modules(
         *tuple(_Path(i) for i in path),
-        messages=disable or [],
+        messages=disable or _Messages(),
         string=string,
         excludes=excludes,
         include_ignored=include_ignored,
@@ -211,7 +211,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     check_property_returns,
                     ignore_no_params,
                     no_ansi,
-                    targets or [],
+                    targets or _Messages(),
                     failures,
                 )
                 if failures:

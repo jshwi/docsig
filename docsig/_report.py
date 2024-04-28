@@ -8,6 +8,7 @@ from __future__ import annotations as _
 import typing as _t
 
 from ._message import Message as _Message
+from ._message import Messages as _Messages
 from ._module import Function as _Function
 from ._stub import RETURN as _RETURN
 from ._stub import Param as _Param
@@ -31,8 +32,8 @@ class Report(_t.List[str]):
     def __init__(
         self,
         func: _Function,
-        targets: list[_Message],
-        disable: list[_Message],
+        targets: _Messages,
+        disable: _Messages,
         check_property_returns: bool,
     ) -> None:
         super().__init__()
@@ -44,7 +45,7 @@ class Report(_t.List[str]):
 
             self._disable.extend(errors)
 
-        self._errors: list[_Message] = []
+        self._errors = _Messages()
         self._func = func
         self._no_prop_return = func.isproperty and not check_property_returns
         self._no_returns = func.isinit or self._no_prop_return
