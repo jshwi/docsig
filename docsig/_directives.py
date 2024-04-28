@@ -72,7 +72,11 @@ class Comment(_Messages):
         return None
 
 
-class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _Messages]]):
+class _Comments(_t.List[Comment]):
+    """List of comments."""
+
+
+class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
     """Data for directives:
 
     Dict like object with the line number of directive as the key and
@@ -85,12 +89,12 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _Messages]]):
     def __init__(self, text: str, messages: _Messages) -> None:
         super().__init__()
         fin = _StringIO(text)
-        comments: list[Comment] = []
+        comments = _Comments()
         for line in _tokenize.generate_tokens(fin.readline):
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
-            scoped_comments = list(comments)
+            scoped_comments = _Comments(comments)
             scoped_messages = _Messages(messages)
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
