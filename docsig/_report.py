@@ -179,11 +179,12 @@ class Report(_t.List[str]):
 
     def _invalid_directive_options(self) -> None:
         for comment in self._func.comments:
-            if comment.rules.unknown:
-                err = _E[int(f"20{3 if comment.ismodule else 4}")]
-                for rule in comment.rules.unknown:
+            for rule in comment.rules:
+                if not rule.isknown:
                     self._add(
-                        err, directive=comment.kind, option=rule.description
+                        _E[int(f"20{3 if comment.ismodule else 4}")],
+                        directive=comment.kind,
+                        option=rule.description,
                     )
 
     def get_report(self, prefix: str = "") -> str:
