@@ -19,11 +19,11 @@ from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 
 from ._directives import Comment as _Comment
 from ._directives import Directives as _Directives
-from ._message import Messages as _Messages
 from ._stub import Docstring as _Docstring
 from ._stub import Signature as _Signature
 from ._utils import pretty_print_error as _pretty_print_error
 from ._utils import vprint as _vprint
+from .messages import Messages as _Messages
 
 _FILE_INFO = "{path}: {msg}"
 
