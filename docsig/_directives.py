@@ -49,7 +49,7 @@ class Comment(_Messages):
 
     @property
     def enable(self) -> bool:
-        """Whether this is a enable directive or not."""
+        """Whether this is an enable directive or not."""
         return self._kind == self._valid_kinds[0]
 
     @property
@@ -79,8 +79,17 @@ class _Comments(_t.List[Comment]):
 class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
     """Data for directives:
 
-    Dict like object with the line number of directive as the key and
-    total errors which are excluded from function checks.
+    Dict like object with the line number of directive as the key a
+    tuple containing comments and messages.
+
+    Comments can be either disable or enable comments, and messages are
+    what messages are to be disabled.
+
+    Comments influence what messages can be added to the list, but are
+    different in that they communicate the directive, but the messages
+    are the final product of messages to disable.
+
+    Comments are collected here for later analysis.
 
     :param text: Python code.
     :param messages: List of checks to disable.
