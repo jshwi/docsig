@@ -19,7 +19,7 @@ from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 
 from ._directives import Comment as _Comment
 from ._directives import Directives as _Directives
-from ._message import Message as _Message
+from ._message import Messages as _Messages
 from ._stub import Docstring as _Docstring
 from ._stub import Signature as _Signature
 from ._utils import pretty_print_error as _pretty_print_error
@@ -210,7 +210,7 @@ class Function(Parent):
         node: _ast.FunctionDef,
         comments: list[_Comment],
         directives: _Directives,
-        messages: list[_Message],
+        messages: _Messages,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
@@ -344,7 +344,7 @@ class Function(Parent):
         return self._docstring
 
     @property
-    def messages(self) -> list[_Message]:
+    def messages(self) -> _Messages:
         """List of disabled checks specific to this function."""
         return self._messages
 
@@ -388,7 +388,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     # handle errors here before appending a module
     def _add_module(  # pylint: disable=too-many-arguments
         self,
-        messages: list[_Message],
+        messages: _Messages,
         string: str | None = None,
         root: _Path | None = None,
         ignore_args: bool = False,
@@ -436,7 +436,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
-        messages: list[_Message],
+        messages: _Messages,
         excludes: list[str],
         string: str | None = None,
         include_ignored: bool = False,

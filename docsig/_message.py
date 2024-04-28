@@ -36,7 +36,11 @@ class Message(_t.NamedTuple):
         )
 
 
-class Messages(_t.Dict[int, Message]):
+class Messages(_t.List[Message]):
+    """List of messages."""
+
+
+class MessageMap(_t.Dict[int, Message]):
     """Object for storing and retrieving message objects."""
 
     def from_ref(self, ref: str) -> Message:
@@ -51,20 +55,20 @@ class Messages(_t.Dict[int, Message]):
 
         return Message(UNKNOWN, ref)
 
-    def from_codes(self, refs: list[str]) -> tuple[Message, ...]:
-        """Get tuple of message types from codes or symbolic references.
+    def from_codes(self, refs: list[str]) -> Messages:
+        """Get list of message types from codes or symbolic references.
 
-        :param refs: Tuple of codes or symbolic references.
-        :return: Tuple of message types.
+        :param refs: List of codes or symbolic references.
+        :return: List of message types.
         """
-        return tuple(self.from_ref(i) for i in refs)
+        return Messages(self.from_ref(i) for i in refs)
 
-    def all(self, category: int) -> tuple[Message, ...]:
+    def all(self, category: int) -> Messages:
         """Get all messages belonging to a category.
 
         :param category: Index of message category.
-        :return: Tuple of all message objects belonging to category.
+        :return: List of all message objects belonging to category.
         """
-        return tuple(
+        return Messages(
             v for k, v in self.items() if str(k).startswith(str(category))
         )
