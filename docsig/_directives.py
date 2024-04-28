@@ -5,7 +5,6 @@ docsig._disable
 
 from __future__ import annotations as _
 
-import re as _re
 import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
@@ -17,28 +16,21 @@ from .messages import E as _E
 class Comment(_t.List[_Message]):
     """Represents a comment directive.
 
-    :param kind: The type of this directive.
+    :param string: Text to construct comment from.
     :param col: The column this directive is positioned at.
     """
 
     _valid_kinds = "enable", "disable"
 
-    def __init__(self, kind: str, col: int) -> None:
+    def __init__(self, string: str, col: int) -> None:
         super().__init__()
         self._ismodule = col == 0
-        self._kind = kind
-        delimiter = _re.search(r"\W+", kind)
-        if delimiter and delimiter[0] == "=":
-            self._kind, option = kind.split("=")
-            message = _E.fromref(option)
-            if "," in option:
-                values = option.split(",")
-                for value in values:
-                    message = _E.fromref(value)
-                    self.append(message)
-            self.append(message)
-        else:
+        parts = string.split("=")
+        self._kind = parts[0]
+        if len(parts) == 1:
             self.extend(_E.all(1))
+        else:
+            self.extend(_E.fromref(i) for i in parts[1].split(","))
 
     @property
     def kind(self) -> str:
