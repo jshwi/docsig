@@ -1,9 +1,12 @@
 .PHONY: all install remove install-poetry install-deps install-pre-commit
-.PHONY: install-hooks remove-hooks remove-deps remove-poetry
+.PHONY: install-hooks remove-hooks remove-deps remove-poetry docs
 
 all: install
 install: install-poetry install-deps install-hooks
 remove: remove-poetry remove-hooks remove-deps
+
+docs:
+	@cd docs && make html
 
 install-poetry:
 	@command -v poetry >/dev/null 2>&1 \
@@ -26,7 +29,7 @@ install-hooks: install-pre-commit
 		--hook-type post-commit \
 		--hook-type post-checkout \
 		--hook-type post-merge \
-		--hook-type post-rewrite
+		--hook-type post-rewritea
 
 remove-hooks: install-pre-commit
 	@poetry run pre-commit uninstall \
