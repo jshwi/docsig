@@ -48,6 +48,9 @@ jobs:
       - name: check signature documentation
         id: check-signature-documentation
         run: poetry run docsig docsig tests
+      - name: build documentation
+        id: build-documentation
+        run: poetry run make docs
       - name: doctest examples
         id: doctest-examples
         run: poetry run pytest docs/examples --doctest-glob='*.rst'

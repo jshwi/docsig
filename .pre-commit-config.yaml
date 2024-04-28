@@ -13,6 +13,7 @@ ci:
     - commit-policy
     - copyright-year
     - doctest-examples
+    - make-docs
 default_language_version:
   python: "3.9"
 default_stages:
@@ -114,6 +115,11 @@ repos:
         name: doctest examples
         language: system
         entry: poetry run pytest docs/examples --doctest-glob='*.rst'
+        pass_filenames: false
+      - id: make-docs
+        name: make docs
+        language: system
+        entry: poetry run make docs
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"

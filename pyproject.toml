@@ -96,7 +96,6 @@ audit = [
   "about-tests",
   "commit-policy",
   "copyright-year",
-  "docs",
   "files",
   "format",
   "format-docs",
