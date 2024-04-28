@@ -17,7 +17,6 @@ from .messages import E as _E
 class _Rules(_t.List[_Message]):
     def __init__(self, kind: str) -> None:
         super().__init__()
-        self._unknown = []
         self._kind = kind
         delimiter = _re.search(r"\W+", kind)
         if delimiter and delimiter[0] == "=":
@@ -27,14 +26,8 @@ class _Rules(_t.List[_Message]):
                 values = option.split(",")
                 for value in values:
                     message = _E.fromref(value)
-                    if message.isknown:
-                        self.append(message)
-                    else:
-                        self._unknown.append(message)
-            elif message.isknown:
-                self.append(message)
-            else:
-                self._unknown.append(message)
+                    self.append(message)
+            self.append(message)
         else:
             self.extend(_E.all(1))
 
@@ -42,11 +35,6 @@ class _Rules(_t.List[_Message]):
     def kind(self) -> str:
         """The type of the directive these rules belong to."""
         return self._kind
-
-    @property
-    def unknown(self) -> list[_Message]:
-        """List of unknown directive options if any."""
-        return self._unknown
 
 
 class Comment:
