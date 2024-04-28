@@ -179,7 +179,7 @@ class Report(_t.List[str]):
 
     def _invalid_directive_options(self) -> None:
         for comment in self._func.comments:
-            for rule in comment.rules:
+            for rule in comment:
                 if not rule.isknown:
                     self._add(
                         _E[int(f"20{3 if comment.ismodule else 4}")],
