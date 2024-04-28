@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.51.1...HEAD)
 ------------------------------------------------------------------------
+### Added
+- message types to messages module
 
 [0.51.1](https://github.com/jshwi/docsig/releases/tag/v0.51.1) - 2024-04-27
 ------------------------------------------------------------------------

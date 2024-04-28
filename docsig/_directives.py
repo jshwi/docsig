@@ -9,8 +9,8 @@ import tokenize as _tokenize
 import typing as _t
 from io import StringIO as _StringIO
 
-from ._message import Messages as _Messages
 from .messages import E as _E
+from .messages import Messages as _Messages
 
 
 class Comment(_Messages):

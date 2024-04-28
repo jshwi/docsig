@@ -23,116 +23,182 @@ docsig.messages
 | E204: unknown inline comment option for {directive} '{option}'
 """
 
-from ._message import Message as _Message
-from ._message import MessageMap as _MessageMap
+from __future__ import annotations
 
+import typing as _t
+
+UNKNOWN = "E000"
 TEMPLATE = "{code}: {description} ({symbolic})"
 
 
+class Message(_t.NamedTuple):
+    """Message type for errors."""
+
+    code: str
+    description: str
+    symbolic: str = ""
+    hint: _t.Optional[str] = None
+
+    @property
+    def isknown(self) -> bool:
+        """Whether this is a known error."""
+        return self.code != UNKNOWN
+
+    def fstring(self, template: str) -> str:
+        """Return values as a format string.
+
+        :param template: String to interpolate values.
+        :return: Formatted string.
+        """
+        return template.format(
+            code=self.code,
+            description=self.description,
+            symbolic=self.symbolic,
+        )
+
+
+class Messages(_t.List[Message]):
+    """List of messages."""
+
+
+class MessageMap(_t.Dict[int, Message]):
+    """Messages mapped under an integer version of their codes.."""
+
+    def from_ref(self, ref: str) -> Message:
+        """Get a message by its code or symbolic reference.
+
+        :param ref: Code or symbolic reference.
+        :return: Message if valid ref else an unknown message type.
+        """
+        for value in self.values():
+            if ref in (value.code, value.symbolic):
+                return value
+
+        return Message(UNKNOWN, ref)
+
+    def from_codes(self, refs: list[str]) -> Messages:
+        """Get list of message types from codes or symbolic references.
+
+        :param refs: List of codes or symbolic references.
+        :return: List of message types.
+        """
+        return Messages(self.from_ref(i) for i in refs)
+
+    def all(self, category: int) -> Messages:
+        """Get all messages belonging to a category.
+
+        :param category: Index of message category.
+        :return: List of all message objects belonging to category.
+        """
+        return Messages(
+            v for k, v in self.items() if str(k).startswith(str(category))
+        )
+
+
 # Exxx: Error
-E = _MessageMap(
+E = MessageMap(
     {
         # E1xx: Docstring
-        101: _Message(
+        101: Message(
             "E101",
             "parameters out of order",
             "params-out-of-order",
         ),
-        102: _Message(
+        102: Message(
             "E102",
             "includes parameters that do not exist",
             "params-do-not-exist",
         ),
-        103: _Message(
+        103: Message(
             "E103",
             "parameters missing",
             "params-missing",
         ),
-        104: _Message(
+        104: Message(
             "E104",
             "return statement documented for None",
             "return-documented-for-none",
         ),
-        105: _Message(
+        105: Message(
             "E105",
             "return missing from docstring",
             "return-missing",
             "it is possible a syntax error could be causing this",
         ),
-        106: _Message(
+        106: Message(
             "E106",
             "duplicate parameters found",
             "duplicate-params-found",
         ),
-        107: _Message(
+        107: Message(
             "E107",
             "parameter appears to be incorrectly documented",
             "param-incorrectly-documented",
         ),
-        108: _Message(
+        108: Message(
             "E108",
             "return statement documented for property",
             "return-documented-for-property",
             "documentation is sufficient as a getter is the value returned",
         ),
-        109: _Message(
+        109: Message(
             "E109",
             "cannot determine whether a return statement should exist or not",
             "confirm-return-needed",
         ),
-        110: _Message(
+        110: Message(
             "E110",
             "documented parameter not equal to its respective argument",
             "param-not-equal-to-arg",
         ),
-        111: _Message(
+        111: Message(
             "E111",
             "return statement documented for class",
             "class-return-documented",
             "a class does not return a value during instantiation",
         ),
-        112: _Message(
+        112: Message(
             "E112",
             "spelling error found in documented parameter",
             "spelling-error",
         ),
-        113: _Message(
+        113: Message(
             "E113",
             "function is missing a docstring",
             "function-doc-missing",
         ),
-        114: _Message(
+        114: Message(
             "E114",
             "class is missing a docstring",
             "class-doc-missing",
         ),
-        115: _Message(
+        115: Message(
             "E115",
             "syntax error in description",
             "syntax-error-in-description",
         ),
-        116: _Message(
+        116: Message(
             "E116",
             "param not indented correctly",
             "incorrect-indent",
         ),
         # E2xx: Config
-        201: _Message(
+        201: Message(
             "E201",
             "unknown module comment directive '{directive}'",
             "unknown-module-directive",
         ),
-        202: _Message(
+        202: Message(
             "E202",
             "unknown inline comment directive '{directive}'",
             "unknown-inline-directive",
         ),
-        203: _Message(
+        203: Message(
             "E203",
             "unknown module comment option for {directive} '{option}'",
             "unknown-module-directive-option",
         ),
-        204: _Message(
+        204: Message(
             "E204",
             "unknown inline comment option for {directive} '{option}'",
             "unknown-inline-directive-option",

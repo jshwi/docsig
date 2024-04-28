@@ -7,14 +7,14 @@ from __future__ import annotations as _
 
 import typing as _t
 
-from ._message import Message as _Message
-from ._message import Messages as _Messages
 from ._module import Function as _Function
 from ._stub import RETURN as _RETURN
 from ._stub import Param as _Param
 from ._utils import almost_equal as _almost_equal
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
+from .messages import Message as _Message
+from .messages import Messages as _Messages
 
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0

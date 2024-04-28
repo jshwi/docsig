@@ -12,12 +12,12 @@ from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
 from ._display import FuncStr as _FuncStr
-from ._message import Messages as _Messages
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Report as _Report
 from ._utils import print_checks as _print_checks
+from .messages import Messages as _Messages
 
 _DEFAULT_EXCLUDES = """\
 (?x)^(
