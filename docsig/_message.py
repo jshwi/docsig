@@ -39,7 +39,7 @@ class Message(_t.NamedTuple):
 class Messages(_t.Dict[int, Message]):
     """Object for storing and retrieving message objects."""
 
-    def fromref(self, ref: str) -> Message:
+    def from_ref(self, ref: str) -> Message:
         """Get a message by its code or symbolic reference.
 
         :param ref: Code or symbolic reference.
@@ -51,13 +51,13 @@ class Messages(_t.Dict[int, Message]):
 
         return Message(UNKNOWN, ref)
 
-    def fromcodes(self, refs: list[str]) -> tuple[Message, ...]:
+    def from_codes(self, refs: list[str]) -> tuple[Message, ...]:
         """Get tuple of message types from codes or symbolic references.
 
         :param refs: Tuple of codes or symbolic references.
         :return: Tuple of message types.
         """
-        return tuple(self.fromref(i) for i in refs)
+        return tuple(self.from_ref(i) for i in refs)
 
     def all(self, category: int) -> tuple[Message, ...]:
         """Get all messages belonging to a category.

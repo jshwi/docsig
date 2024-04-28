@@ -25,8 +25,8 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
 
     @_functools.wraps(func)
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> str | int:
-        disable = list(_E.fromcodes(kwargs.get("disable", []))) or None
-        targets = list(_E.fromcodes(kwargs.get("targets", []))) or None
+        disable = list(_E.from_codes(kwargs.get("disable", []))) or None
+        targets = list(_E.from_codes(kwargs.get("targets", []))) or None
         kwargs["disable"] = disable
         kwargs["targets"] = targets
         return func(*args, **kwargs)
