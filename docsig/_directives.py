@@ -121,37 +121,28 @@ class Directives(_t.Dict[int, _t.Tuple[_t.List[Comment], _t.List[_Message]]]):
     def __init__(self, text: str, messages: list[_Message]) -> None:
         super().__init__()
         fin = _StringIO(text)
-        module_messages = list(messages)
-        module_comments: list[Comment] = []
-        comment = None
+        comments: list[Comment] = []
         for line in _tokenize.generate_tokens(fin.readline):
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
+            scoped_comments = list(comments)
+            scoped_messages = list(messages)
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
-                # ensure previous directive as backup assignment because
-                # if this is just a regular comment it will override a
-                # valid module directive, making it None
-                comment = Comment.parse(line.string, col) or comment
+                comment = Comment.parse(line.string, col)
                 if comment is not None:
-                    update_comments = [comment] + module_comments
-                    update_messages = module_messages
-                    if comment.isvalid:
-                        if comment.disable:
-                            update_messages = comment.rules + module_messages
-                        elif comment.enable:
-                            update_messages = [
-                                i
-                                for i in module_messages
-                                if i not in comment.rules
-                            ]
+                    scoped_comments.append(comment)
+                    if comment.disable:
+                        scoped_messages.extend(comment.rules)
+                    elif comment.enable:
+                        scoped_messages = list(
+                            i for i in messages if i not in comment.rules
+                        )
 
                     if comment.ismodule:
-                        module_messages = update_messages
-                        module_comments = update_comments
-                    else:
-                        self[lineno] = update_comments, update_messages
+                        messages = scoped_messages
+                        comments = scoped_comments
 
             if lineno not in self:
-                self[lineno] = list(module_comments), list(module_messages)
+                self[lineno] = scoped_comments, scoped_messages
