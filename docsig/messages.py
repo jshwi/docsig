@@ -27,25 +27,39 @@ from __future__ import annotations
 
 import typing as _t
 
+#: Error code for unknown errors.
 UNKNOWN = "E000"
+
+#: Default template to format message strings.
 TEMPLATE = "{code}: {description} ({symbolic})"
 
 
 class Message(_t.NamedTuple):
-    """Message type for errors."""
+    """Represents an error message."""
 
+    #: An error code the message can be referenced by.
     code: str
+
+    #: A description of the error.
     description: str
+
+    #: A shortened description the message can be referenced by.
     symbolic: str = ""
+
+    #: A hint, if any, suggesting why the error may have occurred.
     hint: _t.Optional[str] = None
 
     @property
     def isknown(self) -> bool:
-        """Whether this is a known error."""
+        """Whether this is a known error.
+
+        This might exist due to a typo or an attempt to retrieve an
+        error that does not exist.
+        """
         return self.code != UNKNOWN
 
     def fstring(self, template: str) -> str:
-        """Return values as a format string.
+        """Return message values as a string.
 
         :param template: String to interpolate values.
         :return: Formatted string.
