@@ -1,0 +1,21 @@
+# List of revisions that can be ignored with git-blame(1).
+#
+# See `blame.ignoreRevsFile` in git-config(1) to enable it by default,
+# or use it with `--ignore-revs-file` manually with git-blame.
+#
+# To "install" it:
+#
+#   git config --local blame.ignoreRevsFile .git-blame-ignore-revs
+
+4216b83f5d5ec1d432a14bfc9d20469765f1c2dd
+7f5cf34200623f5eba65a8791c2be4aca245b86e
+c3b80b3a3c02ffe07360fc7d6ef96817e04ceff3
+fde6322bb0780b3feafed2c2be96948bbb37f6cc
+a99d3fb94f37f5836a39bbf3f33cdd3363cb7951
+246b725f7ab0626b8db68a75058906512453297e
+349280ca16f35d4d432d52ab0695d2ac52324505
+c3217114433fbebf9c578b1cd99381fde847d4d6
+faf714952b3cbc838e19a69bf5db7072c48d487f
+e668c6b733e52f52ed3770ec7e8989d3825a9772
+7fbe37bbefcb37ca90434c6721a5c0aedd6969fb
+438d5133a943e13581fa7bc81727b13d8da8a554

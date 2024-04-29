@@ -1,8 +1,9 @@
 .PHONY: all install remove install-poetry install-deps install-pre-commit
 .PHONY: install-hooks remove-hooks remove-deps remove-poetry docs
+.PHONY: install-ignore-blame-revs
 
 all: install
-install: install-poetry install-deps install-hooks
+install: install-poetry install-deps install-hooks install-ignore-blame-revs
 remove: remove-poetry remove-hooks remove-deps
 
 docs:
@@ -31,6 +32,10 @@ install-hooks: install-pre-commit
 		--hook-type post-merge \
 		--hook-type post-rewrite
 
+install-ignore-blame-revs:
+	@git config --local blame.ignoreRevsFile .git-blame-ignore-revs
+	@echo "installed .git-blame-ignore-revs"
+
 remove-hooks: install-pre-commit
 	@poetry run pre-commit uninstall \
 		--hook-type pre-commit \
@@ -49,3 +54,8 @@ remove-deps:
 remove-poetry:
 	@command -v poetry >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 - --uninstall
+
+remove-ignore-blame-revs:
+	@git config --local --unset blame.ignoreRevsFile \
+		&& echo "removed .git-blame-ignore-revs" \
+		|| exit 0
