@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.52.0...HEAD)
 ------------------------------------------------------------------------
+### Changed
+- remove color from help
 
 [0.52.0](https://github.com/jshwi/docsig/releases/tag/v0.52.0) - 2024-04-29
 ------------------------------------------------------------------------
