@@ -16,6 +16,9 @@ exclude = '''
 '''
 line-length = 79
 
+[tool.codespell]
+ignore-words-list = "astroid"
+
 [tool.coverage.report]
 exclude_lines = [
   "@_t.overload"
