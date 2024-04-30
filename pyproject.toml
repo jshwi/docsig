@@ -112,6 +112,7 @@ exclude = '''
 (?x)^(
   | docs\/conf\.py
   | whitelist\.py
+  | scripts\/update_readme\.py
 )$
 '''
 

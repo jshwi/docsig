@@ -1,6 +1,6 @@
 .PHONY: all install remove install-poetry install-deps install-pre-commit
 .PHONY: install-hooks remove-hooks remove-deps remove-poetry docs
-.PHONY: install-ignore-blame-revs
+.PHONY: install-ignore-blame-revs update-readme
 
 all: install
 install: install-poetry install-deps install-hooks install-ignore-blame-revs
@@ -59,3 +59,6 @@ remove-ignore-blame-revs:
 	@git config --local --unset blame.ignoreRevsFile \
 		&& echo "removed .git-blame-ignore-revs" \
 		|| exit 0
+
+update-readme:
+	@poetry run python3 scripts/update_readme.py
