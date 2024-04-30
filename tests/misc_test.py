@@ -406,3 +406,80 @@ def test_deprecated(main: MockMainType) -> None:
     """
     with pytest.deprecated_call():
         main(".", long.summary)
+
+
+@pytest.mark.parametrize(
+    "template,expected",
+    [
+        (
+            '''
+def function(*_, **__) -> None:
+    """Proper docstring.
+
+    :return: Returncode.
+    """
+    return 0
+''',
+            E[104].fstring(T),
+        ),
+        (
+            '''
+def function(*_, **__) -> int:
+    """Proper docstring."""
+    return 0
+''',
+            E[105].fstring(T),
+        ),
+        (
+            '''
+def function(*_, **__):
+    """Proper docstring.
+
+
+    Returns
+    -------
+        int
+            Returncode.
+    """
+    return 0
+''',
+            E[109].fstring(T),
+        ),
+        (
+            '''
+class Klass:
+    @property
+    def function() -> int:
+        """Proper docstring.
+
+
+    Returns
+    -------
+    int
+    Returncode.
+"""
+return 0
+''',
+            E[108].fstring(T),
+        ),
+    ],
+)
+def test_ignore_typechecker_and_no_prop_returns(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    template: str,
+    expected: str,
+) -> None:
+    """Test ignore typechecker.
+
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    :param template: Template to test.
+    :param expected: Expected message.
+    """
+    assert main(long.string, template) == 1
+    std = capsys.readouterr()
+    assert expected in std.out
+    assert main(long.string, template, long.ignore_typechecker) == 0
+    std = capsys.readouterr()
+    assert expected not in std.out

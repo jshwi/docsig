@@ -109,6 +109,12 @@ class Parser(_ArgumentParser):
             help="ignore kwargs prefixed with two asterisks",
         )
         self.add_argument(
+            "-T",
+            "--ignore-typechecker",
+            action="store_true",
+            help="ignore checking return values",
+        )
+        self.add_argument(
             "-I",
             "--include-ignored",
             action="store_true",

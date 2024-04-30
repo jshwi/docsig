@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.52.0...HEAD)
 ------------------------------------------------------------------------
+### Added
+- arg for ignoring return type checker
+
 ### Changed
 - output to summarised version
 - remove color from help

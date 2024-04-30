@@ -37,7 +37,7 @@ _DEFAULT_EXCLUDES = """\
 """
 
 
-def _run_check(  # pylint: disable=too-many-arguments
+def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
     child: _Parent,
     parent: _Parent,
     check_class: bool,
@@ -48,6 +48,7 @@ def _run_check(  # pylint: disable=too-many-arguments
     check_protected: bool,
     check_property_returns: bool,
     ignore_no_params: bool,
+    ignore_typechecker: bool,
     no_ansi: bool,
     targets: _Messages,
     failures: _Failures,
@@ -66,7 +67,11 @@ def _run_check(  # pylint: disable=too-many-arguments
             and not (child.docstring.bare and ignore_no_params)
         ):
             failure = _Failure(
-                child, targets, child.messages, check_property_returns
+                child,
+                targets,
+                child.messages,
+                check_property_returns,
+                ignore_typechecker,
             )
             if failure:
                 failures.append(failure)
@@ -84,6 +89,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                     check_protected,
                     check_property_returns,
                     ignore_no_params,
+                    ignore_typechecker,
                     no_ansi,
                     targets,
                     failures,
@@ -102,6 +108,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                 check_protected,
                 check_property_returns,
                 ignore_no_params,
+                ignore_typechecker,
                 no_ansi,
                 targets,
                 failures,
@@ -127,6 +134,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_no_params: bool = False,
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
+    ignore_typechecker: bool = False,
     no_ansi: bool = False,
     verbose: bool = False,
     targets: _Messages | None = None,
@@ -161,6 +169,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         documented
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param ignore_typechecker: Ignore checking return values.
     :param no_ansi: Disable ANSI output.
     :param verbose: increase output verbosity.
     :param targets: List of errors to target.
@@ -208,6 +217,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     check_protected,
                     check_property_returns,
                     ignore_no_params,
+                    ignore_typechecker,
                     no_ansi,
                     targets or _Messages(),
                     failures,

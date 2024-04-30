@@ -30,14 +30,16 @@ class Failure(_t.List[str]):
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
     :param check_property_returns: Run return checks on properties.
+    :param ignore_typechecker: Ignore checking return values.
     """
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
         self,
         func: _Function,
         targets: _Messages,
         disable: _Messages,
         check_property_returns: bool,
+        ignore_typechecker: bool,
     ) -> None:
         super().__init__()
         self._disable = list(disable)
@@ -50,8 +52,14 @@ class Failure(_t.List[str]):
 
         self._errors = _Messages()
         self._func = func
-        self._no_prop_return = func.isproperty and not check_property_returns
-        self._no_returns = func.isinit or self._no_prop_return
+        self._no_prop_return = (
+            func.isproperty
+            and not check_property_returns
+            and not ignore_typechecker
+        )
+        self._no_returns = (
+            func.isinit or self._no_prop_return or ignore_typechecker
+        )
         self._invalid_directive()
         self._invalid_directive_options()
         self._missing_class_docstring()

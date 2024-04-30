@@ -37,6 +37,7 @@ def main() -> str | int:
         ignore_no_params=p.args.ignore_no_params,
         ignore_args=p.args.ignore_args,
         ignore_kwargs=p.args.ignore_kwargs,
+        ignore_typechecker=p.args.ignore_typechecker,
         no_ansi=p.args.no_ansi,
         summary=p.args.summary,  # deprecated
         verbose=p.args.verbose,
