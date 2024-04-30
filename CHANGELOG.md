@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.52.0...HEAD)
 ------------------------------------------------------------------------
 ### Added
+- hint for E109
 - arg for ignoring return type checker
 
 ### Changed

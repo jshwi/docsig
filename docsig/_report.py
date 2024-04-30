@@ -141,7 +141,7 @@ class Failure(_t.List[str]):
             self._func.signature.rettype == _RetType.UNTYPED
             and not self._no_returns
         ):
-            self._add(_E[109])
+            self._add(_E[109], hint=True)
 
     def _missing_return(self) -> None:
         hint = False
