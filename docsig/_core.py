@@ -20,20 +20,20 @@ from .messages import Messages as _Messages
 
 _DEFAULT_EXCLUDES = """\
 (?x)^(
-  |\\.?venv
-  |\\.git
-  |\\.hg
-  |\\.idea
-  |\\.mypy_cache
-  |\\.nox
-  |\\.pytest_cache
-  |\\.svn
-  |\\.tox
-  |\\.vscode
-  |_?build
-  |__pycache__
-  |dist
-  |node_modules
+    |\\.?venv
+    |\\.git
+    |\\.hg
+    |\\.idea
+    |\\.mypy_cache
+    |\\.nox
+    |\\.pytest_cache
+    |\\.svn
+    |\\.tox
+    |\\.vscode
+    |_?build
+    |__pycache__
+    |dist
+    |node_modules
 )$
 """
 
