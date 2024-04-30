@@ -159,6 +159,7 @@ E = MessageMap(
             "E109",
             "cannot determine whether a return statement should exist or not",
             "confirm-return-needed",
+            "annotate type to indicate whether return documentation needed",
         ),
         110: Message(
             "E110",
