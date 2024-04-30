@@ -34,9 +34,6 @@ long = _VarPrefix("--", "-")
 passed = _VarPrefix("p-", "-")
 fail = _VarPrefix("f-", "-")
 
-CHECK = "\u2713"
-CROSS = "\u2716"
-
 MULTI = "m"
 NAME = "name"
 TEMPLATE = "template"
@@ -580,41 +577,14 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:11
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-{PATH}:19
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:11 in function_2
+    {E[102].fstring(T)}
+{PATH}:19 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -2065,41 +2035,14 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:16
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-{PATH}:29
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:16 in function_2
+    {E[102].fstring(T)}
+{PATH}:29 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -3763,41 +3706,14 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:16
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-{PATH}:29
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:16 in function_2
+    {E[102].fstring(T)}
+{PATH}:29 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -5307,41 +5223,14 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:12
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-{PATH}:21
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:12 in function_2
+    {E[102].fstring(T)}
+{PATH}:21 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6325,18 +6214,10 @@ def process(response):
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:20
------------------
-def process({CHECK}response) -> {CROSS}str:
-    """
-    :param response: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:20 in process
+    {E[105].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6371,18 +6252,10 @@ def process(response):
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:20
------------------
-def process({CROSS}response) -> {CHECK}str:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:20 in process
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6511,18 +6384,10 @@ def process(response):
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:20
------------------
-def process({CHECK}response) -> {CROSS}None:
-    """
-    :param response: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[104].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:20 in process
+    {E[104].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6587,18 +6452,10 @@ class SomeClass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:17 in SomeClass
-------------------------------
-def process({CHECK}response) -> {CROSS}str:
-    """
-    :param response: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:17 in SomeClass.process
+    {E[105].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6630,18 +6487,10 @@ class SomeClass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:17 in SomeClass
-------------------------------
-def process({CROSS}response) -> {CHECK}str:
-    """
-    :param None: {CROSS}
-    :return: {CHECK}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:17 in SomeClass.process
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6758,18 +6607,10 @@ class SomeClass:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:17 in SomeClass
-------------------------------
-def process({CHECK}response) -> {CROSS}None:
-    """
-    :param response: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[104].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:17 in SomeClass.process
+    {E[104].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6843,30 +6684,12 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:11
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-{PATH}:19
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:11 in function_2
+    {E[102].fstring(T)}
+{PATH}:19 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6938,19 +6761,10 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6986,30 +6800,12 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:11
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:11 in function_2
+    {E[102].fstring(T)}
+"""
 
 
 @_templates.register
@@ -7046,30 +6842,12 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:21
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:21 in function_3
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -7132,41 +6910,14 @@ def function_6(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-
-{PATH}:21
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-{PATH}:47
------------------
-def function_6({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:2 in function_1
+    {E[101].fstring(T)}
+{PATH}:21 in function_3
+    {E[103].fstring(T)}
+{PATH}:47 in function_6
+    {E[103].fstring(T)}
+"""
 
 
 @_templates.register
@@ -7240,19 +6991,10 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:12
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:12 in function_2
+    {E[102].fstring(T)}
+"""
 
 
 @_templates.register
@@ -7280,30 +7022,12 @@ def function_2(param1, param2) -> None:  # docsig: ena
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[202].fstring(T).format(directive="ena")}
-
-{PATH}:11
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[202].fstring(T).format(directive="ena")}
-
-'''
+        return f"""\
+{PATH}:3 in function_1
+    {E[202].fstring(T).format(directive="ena")}
+{PATH}:11 in function_2
+    {E[202].fstring(T).format(directive="ena")}
+"""
 
 
 @_templates.register
@@ -7331,32 +7055,14 @@ def function_2(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3
-----------------
-def function_1({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-{E[201].fstring(T).format(directive="disa")}
-
-{PATH}:11
------------------
-def function_2({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[201].fstring(T).format(directive="disa")}
-
-'''
+        return f"""\
+{PATH}:3 in function_1
+    {E[102].fstring(T)}
+    {E[201].fstring(T).format(directive="disa")}
+{PATH}:11 in function_2
+    {E[101].fstring(T)}
+    {E[201].fstring(T).format(directive="disa")}
+"""
 
 
 @_templates.register
@@ -7436,103 +7142,36 @@ def f7(param, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:14
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:23
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-{E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
-
-{PATH}:33
------------------
-def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[104].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:43
------------------
-def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:52
------------------
-def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
-    """
-    :param param: {CHECK}
-    :param param: {CROSS}
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[102].fstring(T)}
-{E[106].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:62
------------------
-def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
-    """
-    :param param: {CHECK}
-    :param param: {CROSS}
-    :param param2: {CROSS}
-    :param None: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[102].fstring(T)}
-{E[106].fstring(T)}
-{E[107].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-'''
+        return f"""\
+{PATH}:3 in function_1
+    {E[101].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:14 in function_2
+    {E[102].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:23 in function_3
+    {E[103].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+{PATH}:33 in function_4
+    {E[104].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:43 in function_5
+    {E[105].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:52 in f6
+    {E[101].fstring(T)}
+    {E[102].fstring(T)}
+    {E[106].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:62 in f7
+    {E[101].fstring(T)}
+    {E[102].fstring(T)}
+    {E[106].fstring(T)}
+    {E[107].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+"""
 
 
 @_templates.register
@@ -7612,103 +7251,36 @@ def f7(param, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3
-----------------
-def function_1({CROSS}param1, {CROSS}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    :param param1: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:14
------------------
-def function_2({CHECK}param1, {CHECK}param2, {CROSS}None) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CROSS}
-    """
-
-{E[102].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:23
------------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-{E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
-
-{PATH}:33
------------------
-def function_4({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[104].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:43
------------------
-def function_5({CHECK}param1, {CHECK}param2, {CHECK}param3) -> {CROSS}int:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param param3: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:52
------------------
-def f6({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
-    """
-    :param param: {CHECK}
-    :param param: {CROSS}
-    :param param2: {CROSS}
-    :param param3: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[102].fstring(T)}
-{E[106].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-{PATH}:62
------------------
-def f7({CHECK}param, {CROSS}param2, {CROSS}param3, {CROSS}None) -> {CHECK}None:
-    """
-    :param param: {CHECK}
-    :param param: {CROSS}
-    :param param2: {CROSS}
-    :param None: {CROSS}
-    """
-
-{E[101].fstring(T)}
-{E[102].fstring(T)}
-{E[106].fstring(T)}
-{E[107].fstring(T)}
-{E[201].fstring(T).format(directive=UNKNOWN)}
-
-'''
+        return f"""\
+{PATH}:3 in function_1
+    {E[101].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:14 in function_2
+    {E[102].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:23 in function_3
+    {E[103].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+{PATH}:33 in function_4
+    {E[104].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:43 in function_5
+    {E[105].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:52 in f6
+    {E[101].fstring(T)}
+    {E[102].fstring(T)}
+    {E[106].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+{PATH}:62 in f7
+    {E[101].fstring(T)}
+    {E[102].fstring(T)}
+    {E[106].fstring(T)}
+    {E[107].fstring(T)}
+    {E[201].fstring(T).format(directive=UNKNOWN)}
+"""
 
 
 @_templates.register
@@ -7728,20 +7300,11 @@ def function_3(  # docsig: enable=unknown
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:2
-----------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-{E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-
-'''
+        return f"""\
+{PATH}:2 in function_3
+    {E[103].fstring(T)}
+    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+"""
 
 
 @_templates.register
@@ -7874,20 +7437,11 @@ def function_3(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3
-----------------
-def function_3({CHECK}param1, {CHECK}param2, {CROSS}param3) -> {CHECK}None:
-    """
-    :param param1: {CHECK}
-    :param param2: {CHECK}
-    :param None: {CROSS}
-    """
-
-{E[103].fstring(T)}
-{E[203].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-
-'''
+        return f"""\
+{PATH}:3 in function_3
+    {E[103].fstring(T)}
+    {E[203].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+"""
 
 
 @_templates.register
@@ -7908,27 +7462,12 @@ class _Messages(_t.Dict[int, Message]):
 
     @property
     def expected(self) -> str:
-        return f'''\
-{PATH}:3 in _Messages
------------------------------
-class _Messages:
-    ...
-
-    def __init__() -> {CHECK}None:
-
-{E[114].fstring(T)}
-
-{PATH}:6 in _Messages
------------------------------
-def fromcode({CHECK}ref) -> {CROSS}Message:
-    """
-    :param ref: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-'''
+        return f"""\
+{PATH}:3 in _Messages.__init__
+    {E[114].fstring(T)}
+{PATH}:6 in _Messages.fromcode
+    {E[105].fstring(T)}
+"""
 
 
 @_templates.register
@@ -7964,13 +7503,8 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:20 in Report
----------------------------
-def order({CROSS}sig, {CROSS}doc) -> {CHECK}None:
-    ...
-
-{E[113].fstring(T)}
-
+{PATH}:20 in Report.order
+    {E[113].fstring(T)}
 """
 
 
@@ -8011,13 +7545,8 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:24 in Report
----------------------------
-def order({CROSS}sig, {CROSS}doc) -> {CHECK}None:
-    ...
-
-{E[113].fstring(T)}
-
+{PATH}:24 in Report.order
+    {E[113].fstring(T)}
 """
 
 
@@ -8269,15 +7798,8 @@ def my_function(argument: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:19 in Klass
---------------------------
-class Klass:
-    ...
-
-    def __init__(✖this) -> ✓None:
-
-E114: class is missing a docstring (class-doc-missing)
-
+{PATH}:19 in Klass.__init__
+    {E[114].fstring(T)}
 """
 
 
@@ -8315,22 +7837,10 @@ def my_function(argument: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:19 in Klass
---------------------------
-class Klass:
-    ...
-
-    def __init__(✖this) -> ✓None:
-
-E114: class is missing a docstring (class-doc-missing)
-
-{PATH}:21 in Klass
---------------------------
-def my_external_function(✖argument) -> ✖int:
-    ...
-
-E113: function is missing a docstring (function-doc-missing)
-
+{PATH}:19 in Klass.__init__
+    {E[114].fstring(T)}
+{PATH}:21 in Klass.my_external_function
+    {E[113].fstring(T)}
 """
 
 

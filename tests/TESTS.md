@@ -209,11 +209,3 @@ tests pass and are consistent with the result that the tests for a
 file produce, this test should be enough.
 
 
-### Summary
-
-Test main for passing and failing checks with `--summary`.
-
-Test for the differences and similarities in a standard run where
-the full function diagram is emitted.
-
-

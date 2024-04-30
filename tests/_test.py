@@ -30,9 +30,7 @@ from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
 from . import (
-    CHECK,
     CHECK_ARGS,
-    CROSS,
     E10,
     EXPECTED,
     FAIL,
@@ -232,34 +230,6 @@ def test_disable_rule(
     """
     init_file(template)
     assert main(".", long.disable, name.replace("-", "").upper()[1:5]) == 0
-
-
-@pytest.mark.parametrize(
-    TEMPLATE,
-    templates.registered.getgroup(FAIL),
-    ids=templates.registered.getgroup(FAIL).getids(),
-)
-def test_summary(
-    capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
-    template: Template,
-) -> None:
-    """Test main for passing and failing checks with ``--summary``.
-
-    Test for the differences and similarities in a standard run where
-    the full function diagram is emitted.
-
-    :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param template: Contents to write to file.
-    """
-    init_file(template.template)
-    main(".", *CHECK_ARGS, long.summary)
-    std = capsys.readouterr()
-    assert CHECK not in std.out
-    assert CROSS not in std.out
 
 
 @pytest.mark.parametrize(

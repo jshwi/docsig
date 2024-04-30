@@ -31,7 +31,6 @@ omit = [
 [tool.docsig]
 check-class = true
 check-protected-class-methods = true
-summary = true
 
 [tool.isort]
 ensure_newline_before_comments = true
@@ -66,7 +65,6 @@ repository = "https://github.com/jshwi/docsig"
 version = "0.52.0"
 
 [tool.poetry.dependencies]
-Pygments = "^2.13.0"
 Sphinx = "^7.0.0"
 arcon = ">=0.4.0"
 astroid = "^3.0.1"

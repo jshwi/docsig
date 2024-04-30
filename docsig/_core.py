@@ -11,7 +11,6 @@ from . import _decorators
 from ._display import Display as _Display
 from ._display import Failure as _Failure
 from ._display import Failures as _Failures
-from ._display import FuncStr as _FuncStr
 from ._module import Function as _Function
 from ._module import Modules as _Modules
 from ._module import Parent as _Parent
@@ -71,7 +70,7 @@ def _run_check(  # pylint: disable=too-many-arguments
                 child, targets, child.messages, check_property_returns
             )
             if report:
-                failures.append(_Failure(child, _FuncStr(child), report))
+                failures.append(_Failure(child, report))
 
         if check_nested:
             for func in child:
@@ -191,7 +190,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         no_ansi=no_ansi,
         verbose=verbose,
     )
-    display = _Display(no_ansi)
+    display = _Display()
     for module in modules:
         for top_level in module:
             if (
@@ -219,8 +218,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     display[top_level.path].append(failures)
 
     if summary:
-        display.summarise()
-    else:
-        display.report()
+        pass
 
+    display.report(no_ansi)
     return max(int(bool(display)), modules.retcode)

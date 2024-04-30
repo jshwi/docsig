@@ -15,15 +15,7 @@ import docsig
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import (
-    CHECK,
-    CROSS,
-    PATH,
-    InitFileFixtureType,
-    MockMainType,
-    long,
-    short,
-)
+from . import PATH, InitFileFixtureType, MockMainType, long, short
 
 
 @pytest.mark.parametrize("arg", (short.V, long.version))
@@ -92,7 +84,6 @@ def test_class_and_class_constructor_in_interpreter_with_config(
 check-class = true
 check-class_constructor = true
 check-protected-class-methods = true
-summary = true
 """,
         encoding="utf-8",
     )
@@ -197,53 +188,21 @@ def test_file_not_found_error(main: MockMainType) -> None:
         [(long.check_class_constructor,), ""],
         [
             (long.check_protected_class_methods, long.check_class),
-            f'''\
-{PATH}:6 in _Messages
------------------------------
-def fromcode({CHECK}ref) -> {CROSS}Message:
-    """
-    :param ref: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-{PATH}:12 in _Messages
-------------------------------
-def all({CHECK}category) -> {CROSS}tuple[None]:
-    """
-    :param category: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-''',
+            f"""\
+{PATH}:6 in _Messages.fromcode
+    {E[105].fstring(T)}
+{PATH}:12 in _Messages.all
+    {E[105].fstring(T)}
+""",
         ],
         [
             (long.check_protected_class_methods, long.check_class_constructor),
-            f'''\
-{PATH}:6 in _Messages
------------------------------
-def fromcode({CHECK}ref) -> {CROSS}Message:
-    """
-    :param ref: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-{PATH}:12 in _Messages
-------------------------------
-def all({CHECK}category) -> {CROSS}tuple[None]:
-    """
-    :param category: {CHECK}
-    :return: {CROSS}
-    """
-
-{E[105].fstring(T)}
-
-''',
+            f"""\
+{PATH}:6 in _Messages.fromcode
+    {E[105].fstring(T)}
+{PATH}:12 in _Messages.all
+    {E[105].fstring(T)}
+""",
         ],
     ],
     ids=[
