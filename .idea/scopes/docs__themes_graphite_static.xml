@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="docs._themes.graphite.static" pattern="file[constcheck]:docs/_themes/graphite/static/*" />
-</component>
