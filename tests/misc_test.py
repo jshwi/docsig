@@ -463,6 +463,12 @@ return 0
             E[108].fstring(T),
         ),
     ],
+    ids=[
+        "none-type-documented",
+        "type-not-documented",
+        "no-type-with-document",
+        "property-type-documented",
+    ],
 )
 def test_ignore_typechecker_and_no_prop_returns(
     main: MockMainType,
