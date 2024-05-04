@@ -101,7 +101,8 @@ Commandline
       -o, --check-overridden               check overridden methods
       -p, --check-protected                check protected functions and classes
       -P, --check-property-returns         check property return values
-      -i, --ignore-no-params               ignore docstrings where parameters are not documented
+      -i, --ignore-no-params               ignore docstrings where parameters are not
+                                           documented
       -a, --ignore-args                    ignore args prefixed with an asterisk
       -k, --ignore-kwargs                  ignore kwargs prefixed with two asterisks
       -T, --ignore-typechecker             ignore checking return values

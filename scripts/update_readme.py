@@ -15,7 +15,7 @@ from pathlib import Path
 
 from docsig import main
 
-shutil.get_terminal_size = lambda: os.terminal_size((94, 24))
+shutil.get_terminal_size = lambda: os.terminal_size((93, 24))
 helpio = io.StringIO()
 with contextlib.redirect_stdout(helpio), contextlib.suppress(SystemExit):
     sys.argv = ["docsig", "--help"]
