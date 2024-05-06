@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.53.0...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- no longer raise E104 with optional overload (#318)
 
 [0.53.0](https://github.com/jshwi/docsig/releases/tag/v0.53.0) - 2024-05-01
 ------------------------------------------------------------------------

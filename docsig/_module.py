@@ -152,7 +152,12 @@ class Parent(_t.List["Parent"]):
                         self._imports,
                     )
                     if func.isoverloaded:
-                        self._overloads[func.name] = func
+                        if (
+                            func.name not in self._overloads
+                            or self._overloads[func.name].signature.rettype
+                            == _RetType.NONE
+                        ):
+                            self._overloads[func.name] = func
                     else:
                         if func.name in self._overloads:
                             func.overload(

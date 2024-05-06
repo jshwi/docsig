@@ -6494,7 +6494,7 @@ class SomeClass:
 
 
 @_templates.register
-class _MPassOverloadMethodNoReturnS(_BaseTemplate):
+class _MFailOverloadMethodNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6522,7 +6522,10 @@ class SomeClass:
 
     @property
     def expected(self) -> str:
-        return ""
+        return f"""\
+{PATH}:17 in SomeClass.process
+    {E[105].fstring(T)}
+"""
 
 
 @_templates.register
@@ -6578,7 +6581,7 @@ class SomeClass:
 
 
 @_templates.register
-class _MFailOverloadMethodNoReturnDocumentedS(_BaseTemplate):
+class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6601,16 +6604,13 @@ class SomeClass:
         """process a response.
 
         :param response: the response to process
-        :return: NoneType
+        :return: Optional
         """
 '''
 
     @property
     def expected(self) -> str:
-        return f"""\
-{PATH}:17 in SomeClass.process
-    {E[104].fstring(T)}
-"""
+        return ""
 
 
 @_templates.register
