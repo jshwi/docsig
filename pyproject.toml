@@ -65,7 +65,7 @@ maintainers = [
 name = "docsig"
 readme = "README.rst"
 repository = "https://github.com/jshwi/docsig"
-version = "0.53.0"
+version = "0.53.1"
 
 [tool.poetry.dependencies]
 Sphinx = "^7.0.0"

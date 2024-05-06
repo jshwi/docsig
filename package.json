@@ -28,5 +28,5 @@
     "bump:minor": "poetry run bump2version minor",
     "bump:patch": "poetry run bump2version patch"
   },
-  "version": "0.53.0"
+  "version": "0.53.1"
 }
