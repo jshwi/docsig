@@ -9,7 +9,6 @@ Duplicate parameters found
 
 .. todo::
 
-    | E101 occurs, wrongly, when there are parameters that do not exist
     | E102 is occurring because of the duplicate parameter
     | Should see:
     | 2 in function
@@ -31,7 +30,6 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1
@@ -58,7 +56,6 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1
@@ -85,7 +82,6 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1

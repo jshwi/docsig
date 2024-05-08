@@ -122,7 +122,14 @@ class Failure(_t.List[str]):
             self._add(_E[103])
 
     def _duplicates(self) -> None:
+        # pop the duplicates so that they are considered a single
+        # parameter, that way there are no assumptions that the
+        # parameters must be out of order
         if self._func.docstring.args.duplicated:
+            for count, arg in enumerate(self._func.docstring.args):
+                if arg in self._func.docstring.args.duplicates:
+                    self._func.docstring.args.pop(count)
+
             self._add(_E[106])
 
     def _extra_return(self) -> None:

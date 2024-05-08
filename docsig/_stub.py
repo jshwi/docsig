@@ -171,6 +171,7 @@ class _Params(_t.List[Param]):
         super().__init__()
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
+        self._duplicates: list[Param] = []
 
     # pylint: disable=too-many-boolean-expressions
     def append(self, value: Param) -> None:
@@ -211,9 +212,16 @@ class _Params(_t.List[Param]):
             if v > 1:
                 for i in self:
                     if i.name == k:
+                        # record the duplicates for later analysis
+                        self._duplicates.append(i)
                         return True
 
         return False
+
+    @property
+    def duplicates(self) -> list[Param]:
+        """Duplicated parameters."""
+        return self._duplicates
 
 
 class _Stub:

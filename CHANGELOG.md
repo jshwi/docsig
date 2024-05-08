@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.53.1...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- no longer rely on raising E101 errors to raise E106
 - raise E107 without relying on other errors
 - issue where E106 needed parameter name and description to match
 
