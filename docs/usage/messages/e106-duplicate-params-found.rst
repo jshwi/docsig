@@ -60,6 +60,7 @@ Duplicate parameters found
     2 in function
         E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
+        E106: duplicate parameters found (duplicate-params-found)
     1
 
 .. todo::
@@ -86,4 +87,5 @@ Duplicate parameters found
     2 in function
         E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
+        E106: duplicate parameters found (duplicate-params-found)
     1

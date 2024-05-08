@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.53.1...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- issue where E106 needed parameter name and description to match
 
 [0.53.1](https://github.com/jshwi/docsig/releases/tag/v0.53.1) - 2024-05-06
 ------------------------------------------------------------------------

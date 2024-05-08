@@ -195,8 +195,19 @@ class _Params(_t.List[Param]):
 
     @property
     def duplicated(self) -> bool:
-        """Boolean value for whether there are duplicate parameters."""
-        return any(k for k, v in _Counter(self).items() if v > 1)
+        """Boolean value for whether there are duplicate parameters.
+
+        Ensure only the names of the parameters are needed to be
+        considered duplicates. It is not relevant whether the
+        descriptions match.
+        """
+        for k, v in _Counter(i.name for i in self).items():
+            if v > 1:
+                for i in self:
+                    if i.name == k:
+                        return True
+
+        return False
 
 
 class _Stub:
