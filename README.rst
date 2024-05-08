@@ -62,7 +62,7 @@ Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 
 Contributing
 ------------
-If you are interested in contributing to ``docsig`` please read about contributing `here <https://github.com/jshwi/docsig/blob/master/CONTRIBUTING.md>`__
+If you are interested in contributing to ``docsig`` please read about contributing `here <https://docsig.readthedocs.io/en/latest/development/contributing.html>`__
 
 Installation
 ------------
@@ -171,17 +171,17 @@ API
         E102: includes parameters that do not exist (params-do-not-exist)
     1
 
-A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/docsig.html#docsig-messages>`__
+A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/usage/messages.html>`__
 
 Message Control
 ***************
 
-`Documentation on message control <https://github.com/jshwi/docsig/blob/master/docs/examples/message-control.rst>`_
+`Documentation on message control <https://docsig.readthedocs.io/en/latest/usage/message-control.html>`_
 
 Classes
 *******
 
-`Documenting classes <https://github.com/jshwi/docsig/blob/master/docs/examples/classes.rst>`_
+`Documenting classes <https://docsig.readthedocs.io/en/latest/usage/configuration.html#classes>`_
 
 pre-commit
 **********

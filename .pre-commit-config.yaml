@@ -8,13 +8,12 @@ ci:
     - docsig
     - vulture
     - tests
-    - toc
-    - about-tests
     - commit-policy
     - copyright-year
     - doctest-examples
     - make-docs
     - update-readme
+    - update-docs
 default_language_version:
   python: "3.9"
 default_stages:
@@ -77,12 +76,6 @@ repos:
         language: system
         entry: poetry run pyaud test
         pass_filenames: false
-      # script written for specific format
-      - id: toc
-        name: update docs toctree
-        language: system
-        entry: poetry run pyaud toc --fix
-        pass_filenames: false
       # check imports against dependencies
       - id: deptry
         name: deptry
@@ -92,12 +85,6 @@ repos:
         entry: poetry run deptry .
         language: system
         always_run: true
-        pass_filenames: false
-      # check tests/TESTS.md is up-to-date
-      - id: about-tests
-        name: about tests
-        language: system
-        entry: poetry run pyaud about-tests
         pass_filenames: false
       # check .github/COMMIT_POLICY.md is up-to-date
       - id: commit-policy
@@ -114,7 +101,7 @@ repos:
       - id: doctest-examples
         name: doctest examples
         language: system
-        entry: poetry run pytest docs/examples --doctest-glob='*.rst'
+        entry: poetry run pytest docs --doctest-glob='*.rst'
         pass_filenames: false
       - id: make-docs
         name: make docs
@@ -125,6 +112,11 @@ repos:
         name: update readme
         language: system
         entry: poetry run make update-readme
+        pass_filenames: false
+      - id: update-docs
+        name: update docs
+        language: system
+        entry: poetry run make update-docs
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"

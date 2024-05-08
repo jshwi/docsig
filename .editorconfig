@@ -20,5 +20,9 @@ indent_style = tab
 max_line_length = unset
 indent_size = unset
 
+[{scripts,docs/extensions}/*.py]
+max_line_length = unset
+indent_size = unset
+
 [{.pylintrc,*.rst}]
 indent_size = unset

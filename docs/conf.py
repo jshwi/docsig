@@ -10,9 +10,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+
+sys.path.append(os.path.abspath("./extensions"))
 
 
 # -- Project information -----------------------------------------------------
@@ -37,10 +38,11 @@ extensions = [
     "sphinx.ext.imgmath",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
-    "sphinxcontrib.fulltoc",
     "sphinxcontrib.programoutput",
     "sphinx_toolbox.more_autodoc.autonamedtuple",
-    "sphinx_immaterial",
+    "myst_parser",
+    "sphinx_copybutton",
+    "generate",
 ]
 
 
@@ -53,60 +55,23 @@ extensions = [
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = "monokai"
+pygments_dark_style = "monokai"
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages. See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_immaterial"
+html_theme = "furo"
 html_domain_indices = True
 html_use_index = True
 html_show_sourcelink = True
 html_show_sphinx = False
-html_sidebars = {"**": ["globaltoc.html", "searchbox.html"]}
+myst_heading_anchors = 3
+todo_include_todos = True
+html_logo = "static/docsig.svg"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 # html_static_path = ["_static"]
-
-# material theme options
-html_theme_options = {
-    "icon": {
-        "repo": "fontawesome/brands/github",
-        "edit": "material/file-edit-outline",
-    },
-    "site_url": "https://docsig.readthedocs.io/",
-    "repo_url": "https://github.com/jshwi/docsig/",
-    "repo_name": "docsig",
-    "edit_uri": "blob/master/docs",
-    "globaltoc_collapse": True,
-    "features": [
-        "navigation.expand",
-        "navigation.sections",
-        "navigation.top",
-        "search.share",
-        "toc.follow",
-        "toc.sticky",
-        "content.tabs.link",
-        "announce.dismiss",
-    ],
-    "palette": [
-        {"scheme": "slate", "primary": "deep-orange", "accent": "lime"}
-    ],
-    "version_dropdown": True,
-    "toc_title_is_page_title": True,
-    "social": [
-        {
-            "icon": "fontawesome/brands/github",
-            "link": "https://github.com/jshwi/docsig/",
-            "name": "Source on github.com",
-        },
-        {
-            "icon": "fontawesome/brands/python",
-            "link": "https://pypi.org/project/docsig/",
-        },
-    ],
-}

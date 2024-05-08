@@ -53,7 +53,7 @@ jobs:
         run: poetry run make docs
       - name: doctest examples
         id: doctest-examples
-        run: poetry run pytest docs/examples --doctest-glob='*.rst'
+        run: poetry run pytest docs --doctest-glob='*.rst'
       - name: Upload coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4

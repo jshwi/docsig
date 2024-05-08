@@ -27,6 +27,7 @@ fail_under = 100
 
 [tool.coverage.run]
 omit = [
+  "docs/conf.py",
   "docsig/__main__.py",
   "whitelist.py"
 ]
@@ -78,14 +79,16 @@ python = "^3.8"
 [tool.poetry.dev-dependencies]
 bump2version = "^1.0.1"
 deptry = "^0.16.1"
+furo = "^2024.4.27"
 ipython = "^8.12.0"
+myst-parser = "^3.0.1"
 pre-commit = "^3.3.3"
 pyaud = "^7.5.0"
 pytest-randomly = "^3.13.0"
 pytest-sugar = "^1.0.0"
 pytest-xdist = "^3.6.1"
 restview = "^3.0.0"
-sphinx-immaterial = "^0.11.9"
+sphinx-copybutton = "^0.5.2"
 sphinx-toolbox = "^3.5.0"
 templatest = "^0.10.1"
 tox = "^4.15.0"
@@ -95,10 +98,8 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud]
 audit = [
-  "about-tests",
   "commit-policy",
   "copyright-year",
-  "files",
   "format",
   "format-docs",
   "format-str",
@@ -106,13 +107,14 @@ audit = [
   "lint",
   "test",
   "typecheck",
-  "unused"
+  "unused",
+  "whitelist"
 ]
 exclude = '''
 (?x)^(
   | docs\/conf\.py
   | whitelist\.py
-  | scripts\/update_readme\.py
+  | scripts\/.*
 )$
 '''
 

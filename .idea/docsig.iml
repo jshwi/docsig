@@ -17,6 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea/sonarlint" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/.pyaud_cache" />
+      <excludeFolder url="file://$MODULE_DIR$/docs/_generated" />
     </content>
     <orderEntry type="jdk" jdkName="Poetry (docsig)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

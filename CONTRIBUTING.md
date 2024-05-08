@@ -167,7 +167,7 @@ String output includes expected error output (a passing test expects no output)
 Changes to tests should not need to be made in `tests._tests` but instead `tests.__init__`
 
 Tests are organised into the following
-[categories](https://github.com/jshwi/docsig/blob/master/tests/TESTS.md)
+[categories](https://docsig.readthedocs.io/en/latest/development/tests.html)
 
 ## Styleguides
 

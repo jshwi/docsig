@@ -1,5 +1,5 @@
 Message Control
-***************
+===============
 
 To control checks ``docsig`` accepts disable and enable directives
 

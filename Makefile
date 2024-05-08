@@ -9,6 +9,9 @@ remove: remove-poetry remove-hooks remove-deps
 docs:
 	@cd docs && make html
 
+clean:
+	@git clean docs -fdx
+
 install-poetry:
 	@command -v poetry >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 -
@@ -62,3 +65,6 @@ remove-ignore-blame-revs:
 
 update-readme:
 	@poetry run python3 scripts/update_readme.py
+
+update-docs:
+	@poetry run python3 scripts/update_docs.py
