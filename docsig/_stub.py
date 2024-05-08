@@ -134,7 +134,7 @@ class Param(_t.NamedTuple):
 class _Matches(_t.List[Param]):
     _pattern = _re.compile(":(.*?):")
 
-    def __init__(self, string: str) -> None:
+    def __init__(self, string: str, indent_anomaly: bool) -> None:
         super().__init__()
         for line in string.splitlines():
             strip_line = line.lstrip()
@@ -159,7 +159,7 @@ class _Matches(_t.List[Param]):
                             kind,
                             name,
                             description,
-                            len(line) - len(strip_line),
+                            int(indent_anomaly),
                         )
                     )
 
@@ -313,6 +313,19 @@ class Docstring(_Stub):
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
+    @staticmethod
+    def _indent_anomaly(string: str) -> bool:
+        leading_spaces = []
+        for line in string.splitlines():
+            match = _re.match(r"^\s*", line)
+            if match is not None:
+                spaces = len(match.group())
+                if spaces > 0:
+                    leading_spaces.append(spaces)
+
+        # look for spaces in odd intervals
+        return bool(any(i % 2 != 0 for i in leading_spaces))
+
     def __init__(
         self,
         node: _ast.Const | None = None,
@@ -323,7 +336,7 @@ class Docstring(_Stub):
         self._string = None
         if node is not None:
             self._string = _RawDocstring(node.value)
-            for i in _Matches(self._string):
+            for i in _Matches(self._string, self._indent_anomaly(node.value)):
                 self._args.append(i)
 
         self._returns = self._string is not None and bool(

@@ -7,11 +7,6 @@ Param not indented correctly
 
     >>> from docsig import docsig
 
-.. todo::
-
-    | This is buggy as it only works when a description line is correct
-    | If description is also incorrect then this doesn't work, so it's measured against the description and probably shouldn't be
-
 .. code-block:: python
 
     >>> string = '''
@@ -31,12 +26,6 @@ Param not indented correctly
         E116: param not indented correctly (incorrect-indent)
     1
 
-.. todo::
-    | Should see:
-    | 2 in function
-    |     E116: param not indented correctly (incorrect-indent)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -50,13 +39,9 @@ Param not indented correctly
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    0
-
-.. todo::
-    | Should see:
-    | 2 in function
-    |     E116: param not indented correctly (incorrect-indent)
-    | 1
+    2 in function
+        E116: param not indented correctly (incorrect-indent)
+    1
 
 .. code-block:: python
 
@@ -73,4 +58,6 @@ Param not indented correctly
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    0
+    2 in function
+        E116: param not indented correctly (incorrect-indent)
+    1
