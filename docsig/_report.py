@@ -66,10 +66,14 @@ class Failure(_t.List[str]):
         self._missing_class_docstring()
         self._missing_func_docstring()
         if func.docstring.string is not None:
-            self._return_not_typed()
-            self._exists()
-            self._missing()
+            # make sure these come first as they alter the function
+            # docstring object before it is analysed further
             self._duplicates()
+            self._exists()
+
+            # all further analysis below
+            self._return_not_typed()
+            self._missing()
             self._extra_return()
             self._missing_return()
             self._property_return()

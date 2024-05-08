@@ -7161,11 +7161,9 @@ def f7(param, param2, param3) -> None:
     {E[105].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}
 {PATH}:52 in f6
-    {E[102].fstring(T)}
     {E[106].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}
 {PATH}:62 in f7
-    {E[102].fstring(T)}
     {E[106].fstring(T)}
     {E[107].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}
@@ -7268,11 +7266,9 @@ def f7(param, param2, param3) -> None:
     {E[105].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}
 {PATH}:52 in f6
-    {E[102].fstring(T)}
     {E[106].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}
 {PATH}:62 in f7
-    {E[102].fstring(T)}
     {E[106].fstring(T)}
     {E[107].fstring(T)}
     {E[201].fstring(T).format(directive=UNKNOWN)}

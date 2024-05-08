@@ -145,7 +145,6 @@ The same can be done for disabling individual rules
     3 in function_1
         E105: return missing from docstring (return-missing)
     20 in function_3
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
         E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
@@ -186,6 +185,5 @@ Module level directives will be evaluated separately to inline directives and pr
     ... """
     >>> docsig(string=string, no_ansi=True)
     11 in function_2
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1

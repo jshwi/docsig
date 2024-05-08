@@ -95,7 +95,7 @@ check-protected-class-methods = true
     )
 
 
-@pytest.mark.parametrize("error", ["E102", "E106", "E107"])
+@pytest.mark.parametrize("error", ["E106", "E107"])
 def test_target_report(
     main: MockMainType,
     capsys: pytest.CaptureFixture,

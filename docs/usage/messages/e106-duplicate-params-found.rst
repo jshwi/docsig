@@ -7,14 +7,6 @@ Duplicate parameters found
 
     >>> from docsig import docsig
 
-.. todo::
-
-    | E102 is occurring because of the duplicate parameter
-    | Should see:
-    | 2 in function
-    |     E106: duplicate parameters found (duplicate-params-found)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -30,16 +22,8 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1
-
-.. todo::
-
-    | Should see:
-    | 2 in function
-    |     E106: duplicate parameters found (duplicate-params-found)
-    | 1
 
 .. code-block:: python
 
@@ -56,16 +40,8 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1
-
-.. todo::
-
-    | Should see:
-    | 2 in function
-    |     E106: duplicate parameters found (duplicate-params-found)
-    | 1
 
 .. code-block:: python
 
@@ -82,6 +58,5 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
     1

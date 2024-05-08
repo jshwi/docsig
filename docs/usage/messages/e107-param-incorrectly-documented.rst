@@ -27,14 +27,6 @@ This will be raised if it looks as though an existing parameter documentation wa
         E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
 
-.. todo::
-
-    | Should be:
-    | 2 in function
-    |     E106: duplicate parameters found (duplicate-params-found)
-    |     E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -52,7 +44,6 @@ This will be raised if it looks as though an existing parameter documentation wa
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
         E106: duplicate parameters found (duplicate-params-found)
         E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
