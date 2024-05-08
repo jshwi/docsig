@@ -1,0 +1,25 @@
+E104: return-documented-for-none
+================================
+
+Return statement documented for none
+
+.. code-block:: python
+
+    >>> from docsig import docsig
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function() -> None:
+    ...     """Function summary.
+    ...
+    ...     :return: Where there is none.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    2 in function
+        E104: return statement documented for None (return-documented-for-none)
+    1

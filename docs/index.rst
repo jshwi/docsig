@@ -1,10 +1,20 @@
-docsig docs
-===========
+.. include:: docsig.rst
 
 .. toctree::
-   :maxdepth: 2
-   :name: mastertoc
+   :caption: Usage
+   :titlesonly:
+   :hidden:
 
-   docsig
+   api
+   configuration
+   messages
+   message-control
 
-This documentation was last updated on |today|
+.. toctree::
+   :caption: Development
+   :titlesonly:
+   :hidden:
+
+   generated/contributing
+   generated/tests
+   generated/changelog

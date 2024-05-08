@@ -1,5 +1,3 @@
-Classes
-*******
 Checking a class docstring is not enabled by default, as there are two mutually exclusive choices to choose from.
 
 This check will either check the documentation of ``__init__``, or check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
