@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.53.1...HEAD)
 ------------------------------------------------------------------------
 ### Fixed
+- raise E102 before E107 considered
 - false positives in E105 hints
 - method for detecting incorrectly indented parameter
 - no longer rely on raising E102 errors to raise E106

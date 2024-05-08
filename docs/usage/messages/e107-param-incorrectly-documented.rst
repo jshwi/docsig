@@ -70,13 +70,6 @@ This will be raised if it looks as though an existing parameter documentation wa
 
 But not if it is for a parameter that does not exist
 
-.. todo::
-
-    | Should be:
-    | 2 in function
-    |     E102: includes parameters that do not exist (params-do-not-exist)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -93,15 +86,7 @@ But not if it is for a parameter that does not exist
     >>> docsig(string=string, no_ansi=True)
     2 in function
         E102: includes parameters that do not exist (params-do-not-exist)
-        E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
-
-.. todo::
-
-    | Should be:
-    |     E101: parameters out of order (params-out-of-order)
-    |     E102: includes parameters that do not exist (params-do-not-exist)
-    | 1
 
 .. code-block:: python
 
@@ -121,5 +106,4 @@ But not if it is for a parameter that does not exist
     2 in function
         E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
-        E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1

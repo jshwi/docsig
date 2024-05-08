@@ -110,7 +110,16 @@ class Failure(_t.List[str]):
             self._add(_E[101])
 
     def _exists(self) -> None:
+        # pop the parameters that do not exist so that they are excluded
+        # from further analysis, that way there are no additional, and
+        # redundant, errors
+        # this will ensure that both signature and docstring are equal
+        # in length, with all parameters that do not exist accounted for
         if len(self._func.docstring.args) > len(self._func.signature.args):
+            for count, __ in enumerate(self._func.docstring.args, 1):
+                if count > len(self._func.signature.args):
+                    self._func.docstring.args.pop(count - 1)
+
             self._add(_E[102])
 
     def _missing_func_docstring(self) -> None:
