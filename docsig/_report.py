@@ -11,6 +11,7 @@ import typing as _t
 import click as _click
 
 from ._module import Function as _Function
+from ._stub import UNNAMED as _UNNAMED
 from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
@@ -78,9 +79,9 @@ class Failure(_t.List[str]):
                 doc = func.docstring.args.get(index)
                 self._description_syntax(doc)
                 self._indent_syntax(doc)
+                self._incorrect(doc)
                 if arg != doc:
                     self._order(arg, doc)
-                    self._incorrect(arg, doc)
                     self._misspelled(arg, doc)
                     self._not_equal(arg, doc)
 
@@ -156,8 +157,12 @@ class Failure(_t.List[str]):
 
             self._add(_E[105], hint=hint)
 
-    def _incorrect(self, sig: _Param, doc: _Param) -> None:
-        if sig.name is None and doc.name is None:
+    def _incorrect(self, doc: _Param) -> None:
+        # if the parameter does not have a name, but exists, then it
+        # must be incorrectly documented
+        # prior implementation relied on the docstring parameter
+        # equalling the signature parameter
+        if doc.name == _UNNAMED:
             self._add(_E[107])
 
     # final catch-all

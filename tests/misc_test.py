@@ -95,7 +95,7 @@ check-protected-class-methods = true
     )
 
 
-@pytest.mark.parametrize("error", ["E101", "E102", "E106", "E107"])
+@pytest.mark.parametrize("error", ["E102", "E106", "E107"])
 def test_target_report(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
@@ -124,7 +124,7 @@ def function_3(param1, param2, param3) -> None:
     :param: Fails.
     """
 '''
-    _errors = "E101", "E102", "E106", "E107"
+    _errors = "E102", "E106", "E107"
     init_file(template)
     main(".", "--target", error)
     std = capsys.readouterr()

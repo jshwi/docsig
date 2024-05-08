@@ -9,13 +9,6 @@ Parameter appears to be incorrectly documented
 
 This will be raised if it looks as though an existing parameter documentation was attempted
 
-.. todo::
-
-    | Should be:
-    | 2 in function
-    |     E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -30,7 +23,9 @@ This will be raised if it looks as though an existing parameter documentation wa
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    0
+    2 in function
+        E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
+    1
 
 .. todo::
 
@@ -63,14 +58,6 @@ This will be raised if it looks as though an existing parameter documentation wa
         E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
 
-.. todo::
-
-    | Should be:
-    | 2 in function
-    |     E101: parameters out of order (params-out-of-order)
-    |     E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
-    | 1
-
 .. code-block:: python
 
     >>> string = '''
@@ -88,6 +75,7 @@ This will be raised if it looks as though an existing parameter documentation wa
     >>> docsig(string=string, no_ansi=True)
     2 in function
         E101: parameters out of order (params-out-of-order)
+        E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1
 
 But not if it is for a parameter that does not exist
@@ -114,7 +102,6 @@ But not if it is for a parameter that does not exist
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E101: parameters out of order (params-out-of-order)
         E102: includes parameters that do not exist (params-do-not-exist)
         E107: parameter appears to be incorrectly documented (param-incorrectly-documented)
     1

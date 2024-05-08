@@ -14,6 +14,9 @@ from enum import Enum as _Enum
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
+# no function will accidentally have this name
+UNNAMED = -1000
+
 
 # noinspection PyTypeChecker
 class _GoogleDocstring(str):
@@ -137,13 +140,16 @@ class _Matches(_t.List[Param]):
             strip_line = line.lstrip()
             match = self._pattern.split(strip_line)[1:]
             if match:
-                name = description = None
+                description = None
                 kinds = match[0].split()
                 if kinds:
                     kind = DocType.from_str(kinds[0])
 
                     if len(kinds) > 1:
                         name = kinds[1]
+                    else:
+                        # name could not be parsed
+                        name = UNNAMED
 
                     if len(match) > 1:
                         description = match[1]
