@@ -163,8 +163,16 @@ class Failure(_t.List[str]):
             and not self._no_returns
         ):
             docstring = self._func.docstring.string
-            if docstring is not None and "return" in docstring:
-                hint = True
+            # do more than just search the docstring for the word return
+            # as return statements come last, so only search the last
+            # line
+            # params can also come last, so make sure it is not a param
+            # declaration
+            if docstring is not None:
+                lines = docstring.splitlines()
+                if len(lines) > 1:
+                    if "return" in lines[-1] and ":param" not in lines[-1]:
+                        hint = True
 
             self._add(_E[105], hint=hint)
 

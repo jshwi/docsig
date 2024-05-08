@@ -28,10 +28,6 @@ Return missing from docstring
 
     A return won't be recognised with the below syntax
 
-.. todo::
-
-    There should not be a hint in the following
-
 .. code-block:: python
 
     >>> string = '''
@@ -49,16 +45,11 @@ Return missing from docstring
     2 in function
         E102: includes parameters that do not exist (params-do-not-exist)
         E105: return missing from docstring (return-missing)
-        hint: it is possible a syntax error could be causing this
     1
 
 .. note::
 
     Return mentioned in function or parameter description won't result in a hint
-
-.. todo::
-
-    There should not be a hint in the following
 
 .. code-block:: python
 
@@ -75,12 +66,7 @@ Return missing from docstring
     >>> docsig(string=string, no_ansi=True)
     2 in function
         E105: return missing from docstring (return-missing)
-        hint: it is possible a syntax error could be causing this
     1
-
-.. todo::
-
-    There should not be a hint in the following
 
 .. code-block:: python
 
@@ -99,7 +85,6 @@ Return missing from docstring
     >>> docsig(string=string, no_ansi=True)
     2 in function
         E105: return missing from docstring (return-missing)
-        hint: it is possible a syntax error could be causing this
     1
 
 .. note::
