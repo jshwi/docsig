@@ -1,28 +1,35 @@
-.PHONY: all install remove install-poetry install-deps install-pre-commit
-.PHONY: install-hooks remove-hooks remove-deps remove-poetry docs
-.PHONY: install-ignore-blame-revs update-readme
-
+.PHONY: all
 all: install
+
+.PHONY: install
 install: install-poetry install-deps install-hooks install-ignore-blame-revs
+
+.PHONY: remove
 remove: remove-poetry remove-hooks remove-deps
 
+.PHONY: docs
 docs:
 	@cd docs && make html
 
+.PHONY: clean
 clean:
 	@git clean docs -fdx
 
+.PHONY: install-poetry
 install-poetry:
 	@command -v poetry >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 -
 
+.PHONY: install-deps
 install-deps:
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 poetry install
 
+.PHONY: install-pre-commit
 install-pre-commit:
 	@poetry run command -v pre-commit > /dev/null 2>&1 \
 		|| poetry run pip --quiet install pre-commit
 
+.PHONY: install-hooks
 install-hooks: install-pre-commit
 	@poetry run pre-commit install \
 		--hook-type pre-commit \
@@ -35,10 +42,12 @@ install-hooks: install-pre-commit
 		--hook-type post-merge \
 		--hook-type post-rewrite
 
+.PHONY: install-ignore-blame-revs
 install-ignore-blame-revs:
 	@git config --local blame.ignoreRevsFile .git-blame-ignore-revs
 	@echo "installed .git-blame-ignore-revs"
 
+.PHONY: remove-hooks
 remove-hooks: install-pre-commit
 	@poetry run pre-commit uninstall \
 		--hook-type pre-commit \
@@ -51,20 +60,25 @@ remove-hooks: install-pre-commit
 		--hook-type post-merge \
 		--hook-type post-rewrite
 
+.PHONY: remove-deps
 remove-deps:
 	rm -rf $(shell dirname $(shell dirname $(shell poetry run which python)))
 
+.PHONY: remove-poetry
 remove-poetry:
 	@command -v poetry >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 - --uninstall
 
+.PHONY: remove-ignore-blame-revs
 remove-ignore-blame-revs:
 	@git config --local --unset blame.ignoreRevsFile \
 		&& echo "removed .git-blame-ignore-revs" \
 		|| exit 0
 
+.PHONY: update-readme
 update-readme:
 	@poetry run python3 scripts/update_readme.py
 
+.PHONY: update-docs
 update-docs:
 	@poetry run python3 scripts/update_docs.py
