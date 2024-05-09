@@ -125,7 +125,7 @@ imports:
 
 .PHONY: lint
 lint:
-	@pyaud lint -n
+	@pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
 typecheck:
