@@ -32,15 +32,4 @@ pre-commit
 
 It can be added to your .pre-commit-config.yaml as follows:
 
-.. code-block:: yaml
-
-    repos:
-      - repo: https://github.com/jshwi/docsig
-        rev: v0.53.0
-        hooks:
-          - id: docsig
-            args:
-              - "--check-class"
-              - "--check-dunders"
-              - "--check-overridden"
-              - "--check-protected"
+.. include:: _generated/pre-commit-example.rst

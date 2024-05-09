@@ -170,6 +170,15 @@ def generate_tests() -> None:
     )
 
 
+@extension
+def generate_pre_commit_example() -> None:
+    """Generate pre-commit example."""
+    content = README.read_text(encoding="utf-8")
+    (GENERATED / "pre-commit-example.rst").write_text(
+        code_block("yaml").findall(content)[0], encoding="utf-8"
+    )
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -181,3 +190,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_docsig_help)
     app.connect("builder-inited", generate_pyproject_toml_example)
     app.connect("builder-inited", generate_tests)
+    app.connect("builder-inited", generate_pre_commit_example)
