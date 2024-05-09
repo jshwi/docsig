@@ -4,7 +4,6 @@ ci:
     - deptry
     - doctest-package
     - doctest-readme
-    - mypy
     - docsig
     - vulture
     - tests
@@ -49,12 +48,6 @@ repos:
         name: doctest readme
         language: system
         entry: poetry run make doctest-readme
-        pass_filenames: false
-      # script installs stubs if necessary
-      - id: mypy
-        name: check types
-        language: system
-        entry: poetry run make typecheck
         pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
@@ -243,3 +236,8 @@ repos:
     rev: "2.7.3"
     hooks:
       - id: editorconfig-checker
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.10.0"
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-pyyaml==6.0.12]

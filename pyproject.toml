@@ -39,6 +39,14 @@ multi_line_output = 3
 profile = "black"
 use_parentheses = true
 
+[tool.mypy]
+exclude = [
+  "whitelist\\.py"
+]
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+
 [tool.poetry]
 authors = [
   "jshwi <stephen@jshwisolutions.com>"

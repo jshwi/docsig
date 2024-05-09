@@ -129,7 +129,7 @@ lint:
 
 .PHONY: typecheck
 typecheck:
-	@pyaud typecheck -n
+	@mypy .
 
 .PHONY: unused
 unused:
