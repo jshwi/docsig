@@ -31,7 +31,7 @@ install-pre-commit:
 
 .PHONY: install-hooks
 install-hooks: install-pre-commit
-	@poetry run pre-commit install \
+	@pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -49,7 +49,7 @@ install-ignore-blame-revs:
 
 .PHONY: remove-hooks
 remove-hooks: install-pre-commit
-	@poetry run pre-commit uninstall \
+	@pre-commit uninstall \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -77,8 +77,8 @@ remove-ignore-blame-revs:
 
 .PHONY: update-readme
 update-readme:
-	@poetry run python3 scripts/update_readme.py
+	@python3 scripts/update_readme.py
 
 .PHONY: update-docs
 update-docs:
-	@poetry run python3 scripts/update_docs.py
+	@python3 scripts/update_docs.py
