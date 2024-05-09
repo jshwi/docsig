@@ -8,7 +8,6 @@ ci:
     - docsig
     - vulture
     - tests
-    - commit-policy
     - copyright-year
     - doctest-examples
     - make-docs
@@ -26,7 +25,6 @@ exclude: |
     | whitelist\.py
     | \.idea\/.*
     | tests\/TESTS\.md
-    | \.github\/COMMIT_POLICY\.md
     | docs\/conf\.py
   )$
 repos:
@@ -85,12 +83,6 @@ repos:
         entry: poetry run deptry .
         language: system
         always_run: true
-        pass_filenames: false
-      # check .github/COMMIT_POLICY.md is up-to-date
-      - id: commit-policy
-        name: commit policy
-        language: system
-        entry: poetry run pyaud commit-policy
         pass_filenames: false
       # check copyright year in license
       - id: copyright-year

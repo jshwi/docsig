@@ -182,7 +182,7 @@ Autoformatting will run on commit
 ## Commit Messages
 
 Commits follow the conventional commit format and the policy can be found
-[here](https://github.com/jshwi/docsig/blob/master/.github/COMMIT_POLICY.md).
+[here](https://docsig.readthedocs.io/en/latest/development/commit-policy.html).
 
 ## Attribution
 

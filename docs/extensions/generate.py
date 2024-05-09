@@ -8,6 +8,7 @@ import subprocess
 import typing as t
 from pathlib import Path
 
+import yaml
 from sphinx.application import Sphinx
 
 DOCS_DIR = Path(__file__).parent.parent.absolute()
@@ -179,6 +180,36 @@ def generate_pre_commit_example() -> None:
     )
 
 
+@extension
+def generate_commit_policy() -> None:
+    """Generate commit-policy page."""
+    file = REPO / ".conform.yaml"
+    build = GENERATED / "commit-policy.md"
+    content = ["# Commit Policy\n"]
+    policy = yaml.safe_load(file.read_text(encoding="utf-8"))["policies"][0]
+    for header, obj in policy["spec"].items():
+        content.append(f"## {header.capitalize()}\n")
+        if not isinstance(obj, dict):
+            content.append(f"{obj}\n")
+        else:
+            for key, value in obj.items():
+                if isinstance(value, list):
+                    value = "### {}\n\n- {}".format(
+                        key.capitalize(), "\n- ".join(value)
+                    )
+                else:
+                    pattern = re.compile(r"([A-Z][^A-Z]*)")
+                    match = [i for i in pattern.split(key) if i]
+                    if match:
+                        key = " ".join(match).capitalize()
+
+                    value = f"{key}: {value}"
+
+                content.append(f"{value}\n")
+
+    build.write_text("\n".join(content), encoding="utf-8")
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -191,3 +222,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_pyproject_toml_example)
     app.connect("builder-inited", generate_tests)
     app.connect("builder-inited", generate_pre_commit_example)
+    app.connect("builder-inited", generate_commit_policy)

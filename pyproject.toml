@@ -32,6 +32,9 @@ omit = [
   "whitelist.py"
 ]
 
+[tool.deptry.per_rule_ignores]
+DEP001 = ["yaml"]
+
 [tool.docsig]
 check-class = true
 check-protected-class-methods = true
@@ -97,7 +100,6 @@ docsig = "docsig.__main__:main"
 
 [tool.pyaud]
 audit = [
-  "commit-policy",
   "copyright-year",
   "format",
   "format-docs",
