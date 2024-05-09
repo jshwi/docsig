@@ -89,7 +89,6 @@ pytest-sugar = "^1.0.0"
 pytest-xdist = "^3.6.1"
 restview = "^3.0.0"
 sphinx-copybutton = "^0.5.2"
-sphinx-toolbox = "^3.5.0"
 templatest = "^0.10.1"
 tox = "^4.15.0"
 

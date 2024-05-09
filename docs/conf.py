@@ -38,8 +38,6 @@ extensions = [
     "sphinx.ext.imgmath",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
-    "sphinxcontrib.programoutput",
-    "sphinx_toolbox.more_autodoc.autonamedtuple",
     "myst_parser",
     "sphinx_copybutton",
     "generate",
