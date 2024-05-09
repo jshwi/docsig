@@ -158,3 +158,10 @@ params:
 .PHONY: doctest-docs
 doctest-docs:
 	@pytest docs --doctest-glob='*.rst'
+
+.PHONY: benchmark
+benchmark:
+	@RUN_BENCHMARK=true \
+		pytest \
+		-m="benchmark" \
+		--benchmark-save=benchmark

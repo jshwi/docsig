@@ -5,6 +5,7 @@ tests.conftest
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import pytest
@@ -80,3 +81,19 @@ def fixture_make_tree() -> FixtureMakeTree:
                 fullpath.write_text("\n".join(value), encoding="utf-8")
 
     return _make_tree
+
+
+@pytest.fixture(name="bench")
+def bench(request: pytest.FixtureRequest) -> MockMainType:
+    """A fixture that returns a benchmark function or a no-op function.
+
+    Depends on whether benchmarking is enabled.
+
+    :param request: Fixture request.
+    :return: Function for using this fixture.
+    """
+    return (
+        request.getfixturevalue("benchmark")
+        if os.getenv("RUN_BENCHMARK", "false").lower() == "true"
+        else lambda func, *args, **kwargs: func(*args, **kwargs)
+    )

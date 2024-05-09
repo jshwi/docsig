@@ -110,6 +110,7 @@ templatest = "^0.10.1"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^8.2.0"
+pytest-benchmark = "^4.0.0"
 pytest-cov = "^5.0.0"
 pytest-randomly = "^3.15.0"
 pytest-sugar = "^1.0.0"
@@ -124,10 +125,12 @@ addopts = [
   "--color=yes",
   "--cov-report=term-missing",
   "--durations=5",
-  "-n=auto",
   "-vv"
 ]
 filterwarnings = "ignore::DeprecationWarning"
+markers = [
+  "benchmark: Marks tests as benchmarks"
+]
 norecursedirs = [
   ".git",
   ".idea",
