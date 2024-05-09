@@ -79,7 +79,7 @@ click = "^8.1.7"
 pathspec = "^0.12.1"
 python = "^3.8"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
 deptry = "^0.16.1"
 pre-commit = "^3.3.3"
