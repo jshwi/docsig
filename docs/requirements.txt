@@ -7,7 +7,7 @@ requests>=2.31.0 # not directly required, pinned by Snyk to avoid a vulnerabilit
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 sphinx>=3.3.0 # not directly required, pinned by Snyk to avoid a vulnerability
 sphinx-copybutton==0.5.2
-sphinx-markdown-builder==0.5.5
+sphinx-markdown-builder==0.6.6
 sphinx-toolbox==3.5.0
 sphinxcontrib-programoutput==0.17
 templatest==0.10.1
