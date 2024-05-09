@@ -9,7 +9,7 @@ remove: remove-poetry remove-hooks remove-deps
 
 .PHONY: docs
 docs:
-	@cd docs && make html
+	@$(MAKE) -C docs html
 
 .PHONY: clean
 clean:
