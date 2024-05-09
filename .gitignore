@@ -2,6 +2,7 @@
 *coverage*
 *venv
 .DS_Store
+.benchmarks/
 .env
 __pycache__/
 dist/
