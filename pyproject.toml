@@ -5,15 +5,6 @@ requires = [
 ]
 
 [tool.black]
-exclude = '''
-/(
-  | \.git
-  | \.mypy_cache
-  | _build
-  | build
-  | dist
-)/
-'''
 line-length = 79
 
 [tool.codespell]
