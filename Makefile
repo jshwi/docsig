@@ -141,7 +141,7 @@ whitelist:
 
 .PHONY: coverage
 coverage:
-	@pyaud coverage -n
+	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
 
 .PHONY: doctest-package
 doctest-package:
