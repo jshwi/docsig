@@ -60,7 +60,7 @@ repos:
       - id: docsig
         name: check signature documentation
         language: system
-        entry: poetry run pyaud params
+        entry: poetry run make params
         pass_filenames: false
       # analyze all files for reliable result
       - id: vulture

@@ -1,3 +1,5 @@
+PYTHON_FILES := $(shell git ls-files "*.py")
+
 .PHONY: all
 all: install
 
@@ -148,3 +150,7 @@ doctest-package:
 .PHONY: doctest-package
 doctest-readme:
 	@pyaud doctest-readme
+
+.PHONY: params
+params:
+	@docsig $(PYTHON_FILES)
