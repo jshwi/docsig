@@ -44,7 +44,7 @@ jobs:
         run: poetry install
       - name: Audit
         id: audit
-        run: poetry run pyaud audit
+        run: poetry run make audit
       - name: check signature documentation
         id: check-signature-documentation
         run: poetry run docsig docsig tests

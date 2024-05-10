@@ -94,18 +94,6 @@ templatest = "^0.10.1"
 docsig = "docsig.__main__:main"
 
 [tool.pyaud]
-audit = [
-  "copyright-year",
-  "format",
-  "format-docs",
-  "format-str",
-  "imports",
-  "lint",
-  "test",
-  "typecheck",
-  "unused",
-  "whitelist"
-]
 exclude = '''
 (?x)^(
   | docs\/conf\.py

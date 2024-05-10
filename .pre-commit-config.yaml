@@ -54,7 +54,7 @@ repos:
       - id: mypy
         name: check types
         language: system
-        entry: poetry run pyaud typecheck
+        entry: poetry run make typecheck
         pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
@@ -66,13 +66,13 @@ repos:
       - id: vulture
         name: check for unused code
         language: system
-        entry: poetry run pyaud unused
+        entry: poetry run make unused
         pass_filenames: false
       # script also handles coverage
       - id: tests
         name: test source code
         language: system
-        entry: poetry run pyaud test
+        entry: poetry run make tests
         pass_filenames: false
       # check imports against dependencies
       - id: deptry
@@ -88,7 +88,7 @@ repos:
       - id: copyright-year
         name: copyright year
         language: system
-        entry: poetry run pyaud copyright-year
+        entry: poetry run make update-copyright
         pass_filenames: false
       - id: doctest-examples
         name: doctest examples

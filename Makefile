@@ -7,6 +7,22 @@ install: install-poetry install-deps install-hooks install-ignore-blame-revs
 .PHONY: remove
 remove: remove-poetry remove-hooks remove-deps
 
+.PHONY: audit
+audit: update-copyright \
+	format \
+	format-docs \
+	format-str \
+	imports \
+	lint \
+	test \
+	typecheck \
+	unused \
+	whitelist
+
+.PHONY: test
+test:
+	@pyaud test -n
+
 .PHONY: docs
 docs:
 	@$(MAKE) -C docs html
@@ -82,3 +98,39 @@ update-readme:
 .PHONY: update-docs
 update-docs:
 	@python3 scripts/update_docs.py
+
+.PHONY: update-copyright
+update-copyright:
+	@python3 scripts/update_copyright.py
+
+.PHONY: format
+format:
+	@pyaud format -fn
+
+.PHONY: format-docs
+format-docs:
+	@pyaud format-docs -fn
+
+.PHONY: format-str
+format-str:
+	@pyaud format-str -fn
+
+.PHONY: imports
+imports:
+	@pyaud imports -fn
+
+.PHONY: lint
+lint:
+	@pyaud lint -n
+
+.PHONY: typecheck
+typecheck:
+	@pyaud typecheck -n
+
+.PHONY: unused
+unused:
+	@pyaud unused -n
+
+.PHONY: whitelist
+whitelist:
+	@pyaud whitelist -fn
