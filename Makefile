@@ -20,8 +20,11 @@ audit: update-copyright \
 	whitelist
 
 .PHONY: test
-test:
-	@pyaud test -n
+test: doctest coverage
+
+.PHONY: doctest
+doctest:
+	@pyaud doctest -n
 
 .PHONY: docs
 docs:
@@ -134,3 +137,7 @@ unused:
 .PHONY: whitelist
 whitelist:
 	@pyaud whitelist -fn
+
+.PHONY: coverage
+coverage:
+	@pyaud coverage -n
