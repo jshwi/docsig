@@ -109,7 +109,7 @@ update-copyright:
 
 .PHONY: format
 format:
-	@pyaud format -fn
+	@black $(PYTHON_FILES)
 
 .PHONY: format-docs
 format-docs:
