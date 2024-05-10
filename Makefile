@@ -121,7 +121,7 @@ format-str:
 
 .PHONY: imports
 imports:
-	@pyaud imports -fn
+	@isort $(PYTHON_FILES)
 
 .PHONY: lint
 lint:
