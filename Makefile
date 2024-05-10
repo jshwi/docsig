@@ -137,7 +137,7 @@ unused:
 
 .PHONY: whitelist
 whitelist:
-	@pyaud whitelist -fn
+	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
 
 .PHONY: coverage
 coverage:
