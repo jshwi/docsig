@@ -145,7 +145,7 @@ coverage:
 
 .PHONY: doctest-package
 doctest-package:
-	@pyaud doctest-package
+	@$(MAKE) -C docs doctest
 
 .PHONY: doctest-package
 doctest-readme:
