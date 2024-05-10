@@ -117,7 +117,7 @@ format-docs:
 
 .PHONY: format-str
 format-str:
-	@pyaud format-str -fn
+	@flynt $(PYTHON_FILES)
 
 .PHONY: imports
 imports:

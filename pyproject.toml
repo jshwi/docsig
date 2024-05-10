@@ -34,6 +34,10 @@ wrap-summaries = 72
 check-class = true
 check-protected-class-methods = true
 
+[tool.flynt]
+line-length = 79
+transform-concats = true
+
 [tool.isort]
 ensure_newline_before_comments = true
 force_grid_wrap = 0
