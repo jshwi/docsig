@@ -149,7 +149,7 @@ doctest-package:
 
 .PHONY: doctest-package
 doctest-readme:
-	@pyaud doctest-readme
+	@python -m doctest README.rst
 
 .PHONY: params
 params:
