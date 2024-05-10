@@ -113,7 +113,7 @@ format:
 
 .PHONY: format-docs
 format-docs:
-	@pyaud format-docs -fn
+	@docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
 format-str:

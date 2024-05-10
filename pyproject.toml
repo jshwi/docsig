@@ -26,6 +26,10 @@ omit = [
 [tool.deptry.per_rule_ignores]
 DEP004 = ["yaml"]
 
+[tool.docformatter]
+in-place = true
+wrap-summaries = 72
+
 [tool.docsig]
 check-class = true
 check-protected-class-methods = true
