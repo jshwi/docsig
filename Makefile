@@ -154,3 +154,7 @@ doctest-readme:
 .PHONY: params
 params:
 	@docsig $(PYTHON_FILES)
+
+.PHONY: doctest-docs
+doctest-docs:
+	@pytest docs --doctest-glob='*.rst'

@@ -93,7 +93,7 @@ repos:
       - id: doctest-examples
         name: doctest examples
         language: system
-        entry: poetry run pytest docs --doctest-glob='*.rst'
+        entry: poetry run make doctest-docs
         pass_filenames: false
       - id: make-docs
         name: make docs
