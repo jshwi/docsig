@@ -23,8 +23,7 @@ audit: update-copyright \
 test: doctest coverage
 
 .PHONY: doctest
-doctest:
-	@pyaud doctest -n
+doctest: doctest-package doctest-readme
 
 .PHONY: docs
 docs:
@@ -141,3 +140,11 @@ whitelist:
 .PHONY: coverage
 coverage:
 	@pyaud coverage -n
+
+.PHONY: doctest-package
+doctest-package:
+	@pyaud doctest-package
+
+.PHONY: doctest-package
+doctest-readme:
+	@pyaud doctest-readme

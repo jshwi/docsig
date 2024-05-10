@@ -42,13 +42,13 @@ repos:
       - id: doctest-package
         name: doctest docstrings
         language: system
-        entry: poetry run pyaud doctest-package
+        entry: poetry run make doctest-package
         pass_filenames: false
       # no hooks found for `doctest`
       - id: doctest-readme
         name: doctest readme
         language: system
-        entry: poetry run pyaud doctest-readme
+        entry: poetry run make doctest-readme
         pass_filenames: false
       # script installs stubs if necessary
       - id: mypy
