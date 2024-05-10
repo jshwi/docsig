@@ -133,7 +133,7 @@ typecheck:
 
 .PHONY: unused
 unused:
-	@pyaud unused -n
+	@vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
 whitelist:
