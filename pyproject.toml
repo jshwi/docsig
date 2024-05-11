@@ -120,6 +120,17 @@ templatest = "^0.10.1"
 [tool.poetry.scripts]
 docsig = "docsig.__main__:main"
 
+[tool.pylint.options]
+disable = [
+  "consider-using-f-string",
+  "fixme"
+]
+ignore-patterns = [
+  'conf\.py',
+  'whitelist\.py'
+]
+min-similarity-lines = 9
+
 [tool.pytest.ini_options]
 addopts = [
   "--color=yes",
