@@ -83,11 +83,38 @@ class Failure(_t.List[str]):
                 doc = func.docstring.args.get(index)
                 self._description_syntax(doc)
                 self._indent_syntax(doc)
-                self._incorrect(doc)
-                if arg != doc:
-                    self._order(arg, doc)
-                    self._misspelled(arg, doc)
-                    self._not_equal(arg, doc)
+
+                if doc.name == _UNNAMED:
+                    # if the parameter does not have a name, but exists,
+                    # then it must be incorrectly documented
+                    # prior implementation relied on the docstring
+                    # parameter equalling the signature parameter
+                    self._add(_E[107])
+
+                elif arg != doc:
+                    if any(
+                        arg.name == i.name for i in self._func.docstring.args
+                    ) or any(
+                        doc.name == i.name for i in self._func.signature.args
+                    ):
+                        # parameters out of order
+                        self._add(_E[101])
+
+                    elif (
+                        arg.name is not None
+                        and doc.name is not None
+                        and not self._errors
+                        and _almost_equal(
+                            arg.name, doc.name, _MIN_MATCH, _MAX_MATCH
+                        )
+                    ):
+                        # spelling error found in documented parameter
+                        self._add(_E[112])
+
+                    elif arg.name is not None and doc.name is not None:
+                        # documented parameter not equal to its
+                        # respective argument
+                        self._add(_E[110])
 
         self.sort()
 
@@ -102,12 +129,6 @@ class Failure(_t.List[str]):
 
         if value not in self._disable and message not in self:
             super().append(message)
-
-    def _order(self, sig: _Param, doc: _Param) -> None:
-        if any(sig.name == i.name for i in self._func.docstring.args) or any(
-            doc.name == i.name for i in self._func.signature.args
-        ):
-            self._add(_E[101])
 
     def _exists(self) -> None:
         # pop the parameters that do not exist so that they are excluded
@@ -185,31 +206,9 @@ class Failure(_t.List[str]):
 
             self._add(_E[105], hint=hint)
 
-    def _incorrect(self, doc: _Param) -> None:
-        # if the parameter does not have a name, but exists, then it
-        # must be incorrectly documented
-        # prior implementation relied on the docstring parameter
-        # equalling the signature parameter
-        if doc.name == _UNNAMED:
-            self._add(_E[107])
-
-    # final catch-all
-    def _not_equal(self, sig: _Param, doc: _Param) -> None:
-        if sig.name is not None and doc.name is not None and not self._errors:
-            self._add(_E[110])
-
     def _class_return(self) -> None:
         if self._func.docstring.returns and self._func.isinit:
             self._add(_E[111], hint=True)
-
-    def _misspelled(self, sig: _Param, doc: _Param) -> None:
-        if (
-            sig.name is not None
-            and doc.name is not None
-            and not self._errors
-            and _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH)
-        ):
-            self._add(_E[112])
 
     def _description_syntax(self, doc: _Param) -> None:
         if doc.description is not None and not doc.description.startswith(" "):
