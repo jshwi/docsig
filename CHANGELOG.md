@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - error codes
 
+### Deprecate
+- old style messages
+
 [0.55.0](https://github.com/jshwi/docsig/releases/tag/v0.55.0) - 2024-06-12
 ------------------------------------------------------------------------
 ### Changed
