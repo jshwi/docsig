@@ -6,6 +6,7 @@ docsig.messages
 from __future__ import annotations
 
 import typing as _t
+from warnings import warn as _warn
 
 #: Error code for unknown errors.
 UNKNOWN = "SIG000"
@@ -68,7 +69,16 @@ class MessageMap(_t.Dict[int, Message]):
         :return: Message if valid ref else an unknown message type.
         """
         for value in self.values():
-            if ref in (value.ref, value.code, value.symbolic):
+            if ref == value.code:
+                _warn(
+                    "Exxx errors are deprecated and might not be supported in "
+                    "a future version",
+                    category=DeprecationWarning,
+                    stacklevel=6,
+                )
+                return value
+
+            if ref in (value.ref, value.symbolic):
                 return value
 
         return Message(UNKNOWN, UNKNOWN, ref)
