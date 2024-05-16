@@ -65,56 +65,56 @@ class Failure(_t.List[str]):
         self._invalid_directive_options()
         self._missing_class_docstring()
         self._missing_func_docstring()
-        if func.docstring.string is not None:
-            # make sure these come first as they alter the function
-            # docstring object before it is analysed further
-            self._duplicates()
-            self._exists()
 
-            # all further analysis below
-            self._return_not_typed()
-            self._missing()
-            self._extra_return()
-            self._missing_return()
-            self._property_return()
-            self._class_return()
-            for index in range(len(func)):
-                arg = func.signature.args.get(index)
-                doc = func.docstring.args.get(index)
-                self._no_description(doc)
-                self._description_syntax(doc)
-                self._indent_syntax(doc)
+        # make sure these come first as they alter the function
+        # docstring object before it is analysed further
+        self._duplicates()
+        self._exists()
 
-                if doc.name == _UNNAMED:
-                    # if the parameter does not have a name, but exists,
-                    # then it must be incorrectly documented
-                    # prior implementation relied on the docstring
-                    # parameter equalling the signature parameter
-                    self._add(_E[107])
+        # all further analysis below
+        self._return_not_typed()
+        self._missing()
+        self._extra_return()
+        self._missing_return()
+        self._property_return()
+        self._class_return()
+        for index in range(len(func)):
+            arg = func.signature.args.get(index)
+            doc = func.docstring.args.get(index)
+            self._no_description(doc)
+            self._description_syntax(doc)
+            self._indent_syntax(doc)
 
-                elif arg != doc:
-                    if any(
-                        arg.name == i.name for i in self._func.docstring.args
-                    ) or any(
-                        doc.name == i.name for i in self._func.signature.args
-                    ):
-                        # parameters out of order
-                        self._add(_E[101])
+            if doc.name == _UNNAMED:
+                # if the parameter does not have a name, but exists,
+                # then it must be incorrectly documented
+                # prior implementation relied on the docstring
+                # parameter equalling the signature parameter
+                self._add(_E[107])
 
-                    elif (
-                        arg.name is not None
-                        and doc.name is not None
-                        and _almost_equal(
-                            arg.name, doc.name, _MIN_MATCH, _MAX_MATCH
-                        )
-                    ):
-                        # spelling error found in documented parameter
-                        self._add(_E[112])
+            elif arg != doc:
+                if any(
+                    arg.name == i.name for i in self._func.docstring.args
+                ) or any(
+                    doc.name == i.name for i in self._func.signature.args
+                ):
+                    # parameters out of order
+                    self._add(_E[101])
 
-                    elif arg.name is not None and doc.name is not None:
-                        # documented parameter not equal to its
-                        # respective argument
-                        self._add(_E[110])
+                elif (
+                    arg.name is not None
+                    and doc.name is not None
+                    and _almost_equal(
+                        arg.name, doc.name, _MIN_MATCH, _MAX_MATCH
+                    )
+                ):
+                    # spelling error found in documented parameter
+                    self._add(_E[112])
+
+                elif arg.name is not None and doc.name is not None:
+                    # documented parameter not equal to its
+                    # respective argument
+                    self._add(_E[110])
 
         self.sort()
 
@@ -151,7 +151,9 @@ class Failure(_t.List[str]):
             self._add(_E[114])
 
     def _missing(self) -> None:
-        if len(self._func.signature.args) > len(self._func.docstring.args):
+        if self._func.docstring.string is not None and len(
+            self._func.signature.args
+        ) > len(self._func.docstring.args):
             # append the parameters that are missing so that they are
             # included in further analysis, that way there are no
             # additional, and redundant, errors
@@ -199,7 +201,8 @@ class Failure(_t.List[str]):
     def _missing_return(self) -> None:
         hint = False
         if (
-            self._func.signature.returns
+            self._func.docstring.string is not None
+            and self._func.signature.returns
             and not self._func.docstring.returns
             and not self._no_returns
         ):
@@ -230,7 +233,7 @@ class Failure(_t.List[str]):
             self._add(_E[116])
 
     def _no_description(self, doc: _Param) -> None:
-        if doc.description is None:
+        if self._func.docstring.string is not None and doc.description is None:
             self._add(_E[117])
 
     def _invalid_directive(self) -> None:
