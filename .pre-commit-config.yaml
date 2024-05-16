@@ -12,6 +12,7 @@ ci:
     - make-docs
     - update-readme
     - update-docs
+    - update-whitelist
 default_language_version:
   python: "3.9"
 default_stages:
@@ -103,6 +104,10 @@ repos:
         language: system
         entry: poetry run make update-docs
         pass_filenames: false
+      - id: update-whitelist
+        name: update whitelist
+        language: system
+        entry: poetry run make whitelist
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
     hooks:
