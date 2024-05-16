@@ -65,7 +65,7 @@ ignore checking return values
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E109: cannot determine whether a return statement should exist or not (confirm-return-needed)
+        E109: cannot determine whether a return statement should exist (confirm-return-needed)
         hint: annotate type to indicate whether return documentation needed
     1
 
