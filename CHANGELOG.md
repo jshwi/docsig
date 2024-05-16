@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - error codes
 - reword description for confirm-return-needed
 
+### Deprecate
+- old style messages
+
 ### Fixed
 - adjust docstring to match signature once params-missing evaluated
 
