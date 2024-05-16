@@ -1,26 +1,6 @@
 """
 docsig.messages
 ===============
-| E101: parameters out of order
-| E102: includes parameters that do not exist
-| E103: parameters missing
-| E104: return statement documented for None
-| E105: return missing from docstring
-| E106: duplicate parameters found
-| E107: parameter appears to be incorrectly documented
-| E108: return statement documented for property
-| E109: cannot determine whether a return statement should exist or not
-| E110: documented parameter not equal to its respective argument
-| E111: return statement documented for class
-| E112: spelling error found in documented parameter
-| E113: function is missing a docstring
-| E114: class is missing a docstring
-| E115: syntax error in description
-| E116: param not indented correctly
-| E201: unknown module comment directive '{directive}'
-| E202: unknown inline comment directive '{directive}'
-| E203: unknown module comment option for {directive} '{option}'
-| E204: unknown inline comment option for {directive} '{option}'
 """
 
 from __future__ import annotations
