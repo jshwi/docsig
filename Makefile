@@ -25,7 +25,7 @@ audit: update-copyright \
 test: doctest coverage
 
 .PHONY: doctest
-doctest: doctest-package doctest-readme
+doctest: doctest-package doctest-readme doctest-docs
 
 .PHONY: docs
 docs:
