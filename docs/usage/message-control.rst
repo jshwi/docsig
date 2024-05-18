@@ -54,7 +54,6 @@ Commandline
     2 in func
         E103: parameters missing (params-missing)
         E105: return missing from docstring (return-missing)
-        E112: spelling error found in documented parameter (spelling-error)
         E115: syntax error in description (syntax-error-in-description)
         E116: param not indented correctly (incorrect-indent)
         E117: description missing from parameter (description-missing)
@@ -65,7 +64,6 @@ Commandline
     >>> docsig(string=string, disable=["E103"], no_ansi=True)
     2 in func
         E105: return missing from docstring (return-missing)
-        E112: spelling error found in documented parameter (spelling-error)
         E115: syntax error in description (syntax-error-in-description)
         E116: param not indented correctly (incorrect-indent)
         E117: description missing from parameter (description-missing)
@@ -113,7 +111,6 @@ Directives
     >>> docsig(string=string, disable=["E103"], no_ansi=True)
     2 in func
         E105: return missing from docstring (return-missing)
-        E112: spelling error found in documented parameter (spelling-error)
         E115: syntax error in description (syntax-error-in-description)
         E116: param not indented correctly (incorrect-indent)
     1
