@@ -208,6 +208,11 @@ class _Params(_t.List[Param]):
             return Param()
 
     @property
+    def names(self) -> list[str | None]:
+        """Get names of params."""
+        return [i.name for i in self]
+
+    @property
     def duplicated(self) -> bool:
         """Boolean value for whether there are duplicate parameters.
 

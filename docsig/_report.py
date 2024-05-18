@@ -94,10 +94,9 @@ class Failure(_t.List[str]):
                 self._add(_E[107])
 
             elif arg != doc:
-                if any(
-                    arg.name == i.name for i in self._func.docstring.args
-                ) or any(
-                    doc.name == i.name for i in self._func.signature.args
+                if (
+                    arg.name in self.func.docstring.args.names
+                    or doc.name in self._func.signature.args.names
                 ):
                     # parameters out of order
                     self._add(_E[101])
