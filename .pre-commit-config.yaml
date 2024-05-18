@@ -6,13 +6,13 @@ ci:
     - doctest-readme
     - docsig
     - vulture
-    - tests
     - copyright-year
     - doctest-examples
     - make-docs
     - update-readme
     - update-docs
     - update-whitelist
+    - coverage
 default_language_version:
   python: "3.9"
 default_stages:
@@ -63,10 +63,10 @@ repos:
         entry: poetry run make unused
         pass_filenames: false
       # script also handles coverage
-      - id: tests
-        name: test source code
+      - id: coverage
+        name: test source code coverage
         language: system
-        entry: poetry run make tests
+        entry: poetry run make coverage
         pass_filenames: false
       # check imports against dependencies
       - id: deptry
