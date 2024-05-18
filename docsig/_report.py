@@ -45,74 +45,22 @@ class Failure(_t.List[str]):
         super().__init__()
         self._func = func
         if targets:
-            errors = list(_E.all)
-            for target in targets:
-                errors.remove(target)
-
-            self._func.messages.extend(errors)
+            self._func.messages.extend(i for i in _E.all if i not in targets)
 
         self._func = func
-        self._no_prop_return = (
-            func.isproperty
-            and not check_property_returns
-            and not ignore_typechecker
-        )
-        self._no_returns = (
-            func.isinit or self._no_prop_return or ignore_typechecker
-        )
-        self._invalid_directive()
-        self._invalid_directive_options()
-        self._missing_class_docstring()
-        self._missing_func_docstring()
-
-        # make sure these come first as they alter the function
-        # docstring object before it is analysed further
-        self._duplicates()
-        self._exists()
-
-        # all further analysis below
-        self._return_not_typed()
-        self._missing()
-        self._extra_return()
-        self._missing_return()
-        self._property_return()
-        self._class_return()
-        for index in range(len(func)):
-            arg = func.signature.args.get(index)
-            doc = func.docstring.args.get(index)
-            self._no_description(doc)
-            self._description_syntax(doc)
-            self._indent_syntax(doc)
-
-            if doc.name == _UNNAMED:
-                # if the parameter does not have a name, but exists,
-                # then it must be incorrectly documented
-                # prior implementation relied on the docstring
-                # parameter equalling the signature parameter
-                self._add(_E[107])
-
-            elif arg != doc:
-                if (
-                    arg.name in self.func.docstring.args.names
-                    or doc.name in self._func.signature.args.names
-                ):
-                    # parameters out of order
-                    self._add(_E[101])
-
-                elif (
-                    arg.name is not None
-                    and doc.name is not None
-                    and _almost_equal(
-                        arg.name, doc.name, _MIN_MATCH, _MAX_MATCH
-                    )
-                ):
-                    # spelling error found in documented parameter
-                    self._add(_E[112])
-
-                elif arg.name is not None and doc.name is not None:
-                    # documented parameter not equal to its
-                    # respective argument
-                    self._add(_E[110])
+        self._check_property_returns = check_property_returns
+        self._sig0xx_config()
+        if self._func.docstring.string is None:
+            self._sig1xx_missing()
+        else:
+            self._sig2xx_signature()
+            for index in range(len(self._func)):
+                doc = self._func.docstring.args.get(index)
+                self._sig3xx_description(doc)
+                sig = self._func.signature.args.get(index)
+                self._sig4xx_parameters(doc, sig)
+            if not ignore_typechecker:
+                self._sig5xx_returns()
 
         self.sort()
 
@@ -127,31 +75,67 @@ class Failure(_t.List[str]):
         if value not in self._func.messages and message not in self:
             super().append(message)
 
-    def _exists(self) -> None:
-        # pop the parameters that do not exist so that they are excluded
-        # from further analysis, that way there are no additional, and
-        # redundant, errors
-        # this will ensure that both signature and docstring are equal
-        # in length, with all parameters that do not exist accounted for
-        if len(self._func.docstring.args) > len(self._func.signature.args):
+    def _sig0xx_config(self) -> None:
+        for comment in self._func.comments:
+            if not comment.isvalid:
+                if comment.ismodule:
+                    # unknown-module-directive
+                    self._add(_E[201], directive=comment.kind)
+                else:
+                    # unknown-inline-directive
+                    self._add(_E[202], directive=comment.kind)
+            else:
+                for rule in comment:
+                    if not rule.isknown:
+                        if comment.ismodule:
+                            # unknown-module-directive-option
+                            self._add(
+                                _E[203],
+                                directive=comment.kind,
+                                option=rule.description,
+                            )
+                        else:
+                            # unknown-inline-directive-option
+                            self._add(
+                                _E[204],
+                                directive=comment.kind,
+                                option=rule.description,
+                            )
+
+    def _sig1xx_missing(self) -> None:
+        if not self._func.isinit:
+            # function-doc-missing
+            self._add(_E[113])
+        else:
+            # class-doc-missing
+            self._add(_E[114])
+
+    def _sig2xx_signature(self) -> None:
+        if self._func.docstring.args.duplicated:
+            # pop the duplicates so that they are considered a single
+            # parameter, that way there are no assumptions that the
+            # parameters must be out of order
+            for count, arg in enumerate(self._func.docstring.args):
+                if arg in self._func.docstring.args.duplicates:
+                    self._func.docstring.args.pop(count)
+
+            # duplicate-params-found
+            self._add(_E[106])
+        # there are non-existing params in the docstring
+        elif len(self._func.docstring.args) > len(self._func.signature.args):
+            # pop the parameters that do not exist so that they are
+            # excluded from further analysis, that way there are no
+            # additional, and redundant, errors
+            # this will ensure that both signature and docstring are
+            # equal in length, with all parameters that do not exist
+            # accounted for
             for count, __ in enumerate(self._func.docstring.args, 1):
                 if count > len(self._func.signature.args):
                     self._func.docstring.args.pop(count - 1)
-
+            # params-do-not-exist
             self._add(_E[102])
-
-    def _missing_func_docstring(self) -> None:
-        if not self._func.isinit and self._func.docstring.string is None:
-            self._add(_E[113])
-
-    def _missing_class_docstring(self) -> None:
-        if self._func.isinit and self._func.docstring.string is None:
-            self._add(_E[114])
-
-    def _missing(self) -> None:
-        if self._func.docstring.string is not None and len(
-            self._func.signature.args
-        ) > len(self._func.docstring.args):
+        # there are more args in sig than doc, so doc params missing
+        elif len(self._func.signature.args) > len(self._func.docstring.args):
             # append the parameters that are missing so that they are
             # included in further analysis, that way there are no
             # additional, and redundant, errors
@@ -166,79 +150,72 @@ class Failure(_t.List[str]):
             # params-missing
             self._add(_E[103])
 
-    def _duplicates(self) -> None:
-        # pop the duplicates so that they are considered a single
-        # parameter, that way there are no assumptions that the
-        # parameters must be out of order
-        if self._func.docstring.args.duplicated:
-            for count, arg in enumerate(self._func.docstring.args):
-                if arg in self._func.docstring.args.duplicates:
-                    self._func.docstring.args.pop(count)
-
-            self._add(_E[106])
-
-    def _extra_return(self) -> None:
-        if (
-            self._func.docstring.returns
-            and self._func.signature.rettype == _RetType.NONE
-            and not self._no_returns
-        ):
-            self._add(_E[104])
-
-    def _property_return(self) -> None:
-        if self._func.docstring.returns and self._no_prop_return:
-            self._add(_E[108], hint=True)
-
-    def _return_not_typed(self) -> None:
-        if (
-            self._func.signature.rettype == _RetType.UNTYPED
-            and not self._no_returns
-        ):
-            self._add(_E[109], hint=True)
-
-    def _missing_return(self) -> None:
-        if (
-            self._func.docstring.string is not None
-            and self._func.signature.returns
-            and not self._func.docstring.returns
-            and not self._no_returns
-        ):
-            self._add(
-                _E[105],
-                hint=_has_bad_return(str(self._func.docstring.string)),
-            )
-
-    def _class_return(self) -> None:
-        if self._func.docstring.returns and self._func.isinit:
-            self._add(_E[111], hint=True)
-
-    def _description_syntax(self, doc: _Param) -> None:
-        if doc.description is not None and not doc.description.startswith(" "):
-            self._add(_E[115])
-
-    def _indent_syntax(self, doc: _Param) -> None:
-        if doc.indent > 0:
-            self._add(_E[116])
-
-    def _no_description(self, doc: _Param) -> None:
-        if self._func.docstring.string is not None and doc.description is None:
+    def _sig3xx_description(self, doc: _Param) -> None:
+        if doc.description is None:
             self._add(_E[117])
+        elif doc.description is not None and not doc.description.startswith(
+            " "
+        ):
+            # syntax-error-in-description
+            self._add(_E[115])
+        # if the parameter does not have a name, but exists, then it
+        # must be incorrectly documented
+        elif doc.name == _UNNAMED:
+            # param-incorrectly-documented
+            self._add(_E[107])
 
-    def _invalid_directive(self) -> None:
-        for comment in self._func.comments:
-            if not comment.isvalid:
-                err = _E[int(f"20{1 if comment.ismodule else 2}")]
-                self._add(err, directive=comment.kind)
+    def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
+        if doc.indent > 0:
+            # incorrect-indent
+            self._add(_E[116])
+        elif doc != sig:
+            if (
+                sig.name in self._func.docstring.args.names
+                or doc.name in self.func.signature.args.names
+            ):
+                # params-out-of-order
+                self._add(_E[101])
+            elif (
+                doc.name != _UNNAMED
+                and sig.name is not None
+                and doc.name is not None
+            ):
+                if _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH):
+                    # spelling-error
+                    self._add(_E[112])
+                else:
+                    # param-not-equal-to-arg
+                    self._add(_E[110])
 
-    def _invalid_directive_options(self) -> None:
-        for comment in self._func.comments:
-            for rule in comment:
-                if not rule.isknown:
-                    self._add(
-                        _E[int(f"20{3 if comment.ismodule else 4}")],
-                        directive=comment.kind,
-                        option=rule.description,
-                    )
+    def _sig5xx_returns(self) -> None:
+        if not self._func.isinit and not (
+            self._func.isproperty and not self._check_property_returns
+        ):
+            # no types, cannot know either way
+            if self._func.signature.rettype == _RetType.UNTYPED:
+                # confirm-return-needed
+                self._add(_E[109], hint=True)
+            # return type is none, so no return should be documented
+            elif self._func.docstring.returns:
+                if self._func.signature.rettype == _RetType.NONE:
+                    # return-documented-for-none
+                    self._add(_E[104])
+            # return type is some, so return should be documented
+            elif self._func.signature.returns:
+                # return-missing
+                self._add(
+                    _E[105],
+                    hint=_has_bad_return(str(self._func.docstring.string)),
+                )
+        elif self._func.docstring.returns:
+            # method is init, so no return should be documented
+            if self._func.isinit:
+                # class-return-documented
+                self._add(_E[111], hint=True)
+            # method is property and not set to document property
+            elif self._func.isproperty and not self._check_property_returns:
+                # return-documented-for-property
+                self._add(_E[108], hint=True)
 
     @property
     def func(self) -> _Function:
