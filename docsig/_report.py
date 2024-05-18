@@ -16,6 +16,7 @@ from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
+from ._utils import has_bad_return as _has_bad_return
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 from .messages import Message as _Message
@@ -199,26 +200,16 @@ class Failure(_t.List[str]):
             self._add(_E[109], hint=True)
 
     def _missing_return(self) -> None:
-        hint = False
         if (
             self._func.docstring.string is not None
             and self._func.signature.returns
             and not self._func.docstring.returns
             and not self._no_returns
         ):
-            docstring = self._func.docstring.string
-            # do more than just search the docstring for the word return
-            # as return statements come last, so only search the last
-            # line
-            # params can also come last, so make sure it is not a param
-            # declaration
-            if docstring is not None:
-                lines = docstring.splitlines()
-                if len(lines) > 1:
-                    if "return" in lines[-1] and ":param" not in lines[-1]:
-                        hint = True
-
-            self._add(_E[105], hint=hint)
+            self._add(
+                _E[105],
+                hint=_has_bad_return(str(self._func.docstring.string)),
+            )
 
     def _class_return(self) -> None:
         if self._func.docstring.returns and self._func.isinit:
