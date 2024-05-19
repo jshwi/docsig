@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - reword description for confirm-return-needed
 
+### Fixed
+- adjust docstring to match signature once params-missing evaluated
+
 [0.53.3](https://github.com/jshwi/docsig/releases/tag/v0.53.3) - 2024-05-13
 ------------------------------------------------------------------------
 ### Fixed

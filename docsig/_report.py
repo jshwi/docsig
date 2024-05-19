@@ -12,6 +12,7 @@ import click as _click
 
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
+from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
@@ -153,6 +154,18 @@ class Failure(_t.List[str]):
 
     def _missing(self) -> None:
         if len(self._func.signature.args) > len(self._func.docstring.args):
+            # append the parameters that are missing so that they are
+            # included in further analysis, that way there are no
+            # additional, and redundant, errors
+            # this will ensure that both signature and docstring are
+            # equal in length, with all parameters that are not
+            # documented accounted for
+            for count, arg in enumerate(self._func.signature.args, 1):
+                if count > len(self._func.docstring.args):
+                    self._func.docstring.args.append(
+                        _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0)
+                    )
+            # params-missing
             self._add(_E[103])
 
     def _duplicates(self) -> None:

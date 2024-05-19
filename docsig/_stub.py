@@ -17,6 +17,9 @@ import sphinx.ext.napoleon as _s
 # no function will accidentally have this name
 UNNAMED = -1000
 
+# an example of valid parameter description
+VALID_DESCRIPTION = " A valid description."
+
 
 # noinspection PyTypeChecker
 class _GoogleDocstring(str):
