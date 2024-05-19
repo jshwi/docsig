@@ -77,3 +77,8 @@
    :titlesonly:
 
    messages/e116-incorrect-indent
+
+.. toctree::
+   :titlesonly:
+
+   messages/e117-description-missing

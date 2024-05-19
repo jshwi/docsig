@@ -177,6 +177,11 @@ E = MessageMap(
             "param not indented correctly",
             "incorrect-indent",
         ),
+        117: Message(
+            "E117",
+            "description missing from parameter",
+            "description-missing",
+        ),
         # E2xx: Config
         201: Message(
             "E201",

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/v0.53.3...HEAD)
 ------------------------------------------------------------------------
+### Added
+- description-missing check
+
 ### Changed
 - reword description for confirm-return-needed
 

@@ -137,7 +137,9 @@ class Param(_t.NamedTuple):
 class _Matches(_t.List[Param]):
     _pattern = _re.compile(":(.*?):")
 
-    def __init__(self, string: str, indent_anomaly: bool) -> None:
+    def __init__(
+        self, string: str, indent_anomaly: bool, missing_descriptions: bool
+    ) -> None:
         super().__init__()
         for line in string.splitlines():
             strip_line = line.lstrip()
@@ -155,7 +157,9 @@ class _Matches(_t.List[Param]):
                         name = UNNAMED
 
                     if len(match) > 1:
-                        description = match[1]
+                        second = match[1]
+                        if second != "" or not missing_descriptions:
+                            description = second
 
                     super().append(
                         Param(
@@ -329,6 +333,24 @@ class Docstring(_Stub):
         # look for spaces in odd intervals
         return bool(any(i % 2 != 0 for i in leading_spaces))
 
+    @staticmethod
+    def _missing_descriptions(string: str) -> bool:
+        # find out if parameter is missing a description
+        new = ""
+        for line in string.strip().splitlines()[2:]:
+            line = line.lstrip()
+            if not line.startswith(":"):
+                # it is not a parameter, it is a next line description
+                # append the next entry to the same line
+                new = f"{new[:-1]} "
+            new += f"{line}\n"
+        if not new:
+            return True
+
+        # if it ends with a colon, it's a parameter without a
+        # description
+        return any(i.endswith(":") for i in new.splitlines())
+
     def __init__(
         self,
         node: _ast.Const | None = None,
@@ -339,7 +361,11 @@ class Docstring(_Stub):
         self._string = None
         if node is not None:
             self._string = _RawDocstring(node.value)
-            for i in _Matches(self._string, self._indent_anomaly(node.value)):
+            for i in _Matches(
+                self._string,
+                self._indent_anomaly(node.value),
+                self._missing_descriptions(node.value),
+            ):
                 self._args.append(i)
 
         self._returns = self._string is not None and bool(

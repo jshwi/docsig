@@ -82,6 +82,7 @@ class Failure(_t.List[str]):
             for index in range(len(func)):
                 arg = func.signature.args.get(index)
                 doc = func.docstring.args.get(index)
+                self._no_description(doc)
                 self._description_syntax(doc)
                 self._indent_syntax(doc)
 
@@ -230,6 +231,10 @@ class Failure(_t.List[str]):
     def _indent_syntax(self, doc: _Param) -> None:
         if doc.indent > 0:
             self._add(_E[116])
+
+    def _no_description(self, doc: _Param) -> None:
+        if doc.description is None:
+            self._add(_E[117])
 
     def _invalid_directive(self) -> None:
         for comment in self._func.comments:
