@@ -13,6 +13,7 @@ ci:
     - update-docs
     - update-whitelist
     - coverage
+    - check-links
 default_language_version:
   python: "3.9"
 default_stages:
@@ -108,6 +109,10 @@ repos:
         name: update whitelist
         language: system
         entry: poetry run make whitelist
+      - id: check-links
+        name: check links
+        language: system
+        entry: poetry run make check-links
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
     hooks:
