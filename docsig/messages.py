@@ -78,14 +78,11 @@ class MessageMap(_t.Dict[int, Message]):
         """
         return Messages(self.from_ref(i) for i in refs)
 
-    def all(self, category: int) -> Messages:
-        """Get all messages belonging to a category.
-
-        :param category: Index of message category.
-        :return: List of all message objects belonging to category.
-        """
+    @property
+    def all(self) -> Messages:
+        """Get all messages that aren't a config error."""
         return Messages(
-            v for k, v in self.items() if str(k).startswith(str(category))
+            v for k, v in self.items() if str(k).startswith(str(1))
         )
 
 

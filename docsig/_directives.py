@@ -28,7 +28,7 @@ class Comment(_Messages):
         parts = string.split("=")
         self._kind = parts[0]
         if len(parts) == 1:
-            self.extend(_E.all(1))
+            self.extend(_E.all)
         else:
             self.extend(_E.from_ref(i) for i in parts[1].split(","))
 
