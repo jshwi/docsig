@@ -47,7 +47,7 @@ class Failure(_t.List[str]):
         super().__init__()
         self._disable = list(disable)
         if targets:
-            errors = list(_E.all(1))
+            errors = list(_E.all)
             for target in targets:
                 errors.remove(target)
 
