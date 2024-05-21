@@ -31,27 +31,25 @@ class Failure(_t.List[str]):
 
     :param func: Function object.
     :param targets: List of errors to target.
-    :param disable: List of errors to disable.
     :param check_property_returns: Run return checks on properties.
     :param ignore_typechecker: Ignore checking return values.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(
         self,
         func: _Function,
         targets: _Messages,
-        disable: _Messages,
         check_property_returns: bool,
         ignore_typechecker: bool,
     ) -> None:
         super().__init__()
-        self._disable = list(disable)
+        self._func = func
         if targets:
             errors = list(_E.all)
             for target in targets:
                 errors.remove(target)
 
-            self._disable.extend(errors)
+            self._func.messages.extend(errors)
 
         self._func = func
         self._no_prop_return = (
@@ -126,7 +124,7 @@ class Failure(_t.List[str]):
         if hint:
             message += f"\n    hint: {value.hint}"
 
-        if value not in self._disable and message not in self:
+        if value not in self._func.messages and message not in self:
             super().append(message)
 
     def _exists(self) -> None:
