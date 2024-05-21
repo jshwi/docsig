@@ -30,6 +30,20 @@ tests
 """
 
 
+def _normalize_strange_characters(s: str) -> str:
+    mapping = {
+        "‘": "'",
+        "’": "'",
+        "–": "-",
+        "“": '"',
+        "”": '"',
+    }
+    for k, v in mapping.items():
+        s = s.replace(k, v)
+
+    return s
+
+
 def code_block(lang: str) -> re.Pattern:
     """Extract content from a code block.
 
@@ -162,11 +176,13 @@ def generate_tests() -> None:
             content.append(line)
 
     (GENERATED / "tests.md").write_text(
-        "{}\n".format(
-            "\n".join(content)
-            .strip()
-            .replace("\n###", "##")
-            .replace("# tests", "# Tests")
+        _normalize_strange_characters(
+            "{}\n".format(
+                "\n".join(content)
+                .strip()
+                .replace("\n###", "##")
+                .replace("# tests", "# Tests")
+            )
         )
     )
 
