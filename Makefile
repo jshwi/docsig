@@ -165,3 +165,9 @@ benchmark:
 		pytest \
 		-m="benchmark" \
 		--benchmark-save=benchmark
+
+.PHONY: check-links
+check-links:
+	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
+		&& $(MAKE) -C docs linkcheck \
+		|| echo "could not establish connection, skipping"

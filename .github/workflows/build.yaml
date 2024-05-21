@@ -51,6 +51,9 @@ jobs:
       - name: build documentation
         id: build-documentation
         run: poetry run make docs
+      - name: check links
+        id: check-links
+        run: poetry run make check-links
       - name: doctest examples
         id: doctest-examples
         run: poetry run make doctest-docs
