@@ -67,11 +67,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             and not (child.docstring.bare and ignore_no_params)
         ):
             failure = _Failure(
-                child,
-                targets,
-                child.messages,
-                check_property_returns,
-                ignore_typechecker,
+                child, targets, check_property_returns, ignore_typechecker
             )
             if failure:
                 failures.append(failure)
