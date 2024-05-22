@@ -52,7 +52,6 @@ class Failure(_t.List[str]):
 
             self._disable.extend(errors)
 
-        self._errors = _Messages()
         self._func = func
         self._no_prop_return = (
             func.isproperty
@@ -105,7 +104,6 @@ class Failure(_t.List[str]):
                     elif (
                         arg.name is not None
                         and doc.name is not None
-                        and not self._errors
                         and _almost_equal(
                             arg.name, doc.name, _MIN_MATCH, _MAX_MATCH
                         )
@@ -121,7 +119,6 @@ class Failure(_t.List[str]):
         self.sort()
 
     def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        self._errors.append(value)
         message = value.fstring(_TEMPLATE)
         if kwargs:
             message = message.format(**kwargs)
