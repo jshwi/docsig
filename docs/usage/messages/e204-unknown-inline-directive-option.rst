@@ -21,6 +21,6 @@ Unknown inline comment option for {directive} '{option}'
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E110: documented parameter not equal to its respective argument (param-not-equal-to-arg)
+        E112: spelling error found in documented parameter (spelling-error)
         E204: unknown inline comment option for enable 'EIEIO' (unknown-inline-directive-option)
     1
