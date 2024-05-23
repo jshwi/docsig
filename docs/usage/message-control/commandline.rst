@@ -40,14 +40,14 @@ More on commandline
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E107"], no_ansi=True)
+    >>> docsig(string=string, target=["E107"], no_ansi=True)
     0
 
 This has the same effect, but is quicker to write
@@ -68,7 +68,7 @@ than
 
     >>> docsig(
     ...    string=string,
-    ...    targets=["E105", "E112", "E115", "E116", "E117"],
+    ...    target=["E105", "E112", "E115", "E116", "E117"],
     ...    no_ansi=True,
     ... )
     2 in func
@@ -95,7 +95,7 @@ than
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
@@ -107,7 +107,7 @@ There isn't any use in using these together, however
     >>> docsig(
     ...     string=string,
     ...     disable=["E105", "E112", "E115", "E116", "E117"],
-    ...     targets=["E103"],
+    ...     target=["E103"],
     ...     no_ansi=True,
     ... )
     2 in func
@@ -116,7 +116,7 @@ There isn't any use in using these together, however
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
@@ -126,7 +126,7 @@ disable everything else
 
 .. code-block:: python
 
-    >>> docsig(string=string, disable=["E103"], targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, disable=["E103"], target=["E103"], no_ansi=True)
     0
 
 .. code-block:: python
@@ -154,7 +154,7 @@ disable everything else
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
@@ -184,5 +184,5 @@ disable everything else
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E117"], no_ansi=True)
+    >>> docsig(string=string, target=["E117"], no_ansi=True)
     0

@@ -30,7 +30,7 @@ class Failure(_t.List[str]):
     """Compile and produce report.
 
     :param func: Function object.
-    :param targets: List of errors to target.
+    :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
     :param ignore_typechecker: Ignore checking return values.
     """
@@ -38,14 +38,14 @@ class Failure(_t.List[str]):
     def __init__(
         self,
         func: _Function,
-        targets: _Messages,
+        target: _Messages,
         check_property_returns: bool,
         ignore_typechecker: bool,
     ) -> None:
         super().__init__()
         self._func = func
-        if targets:
-            self._func.messages.extend(i for i in _E.all if i not in targets)
+        if target:
+            self._func.messages.extend(i for i in _E.all if i not in target)
 
         self._func = func
         self._check_property_returns = check_property_returns

@@ -71,7 +71,7 @@ Commandline
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
@@ -81,7 +81,7 @@ disable everything else
 
 .. code-block:: python
 
-    >>> docsig(string=string, disable=["E103"], targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, disable=["E103"], target=["E103"], no_ansi=True)
     0
 
 Directives
@@ -117,7 +117,7 @@ Directives
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["E103"], no_ansi=True)
     2 in func
         E103: parameters missing (params-missing)
     1
@@ -147,5 +147,5 @@ Directives
 
 .. code-block:: python
 
-    >>> docsig(string=string, targets=["E117"], no_ansi=True)
+    >>> docsig(string=string, target=["E117"], no_ansi=True)
     0
