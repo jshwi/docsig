@@ -50,7 +50,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
     ignore_no_params: bool,
     ignore_typechecker: bool,
     no_ansi: bool,
-    targets: _Messages,
+    target: _Messages,
     failures: _Failures,
 ) -> None:
     if isinstance(child, _Function):
@@ -67,7 +67,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             and not (child.docstring.bare and ignore_no_params)
         ):
             failure = _Failure(
-                child, targets, check_property_returns, ignore_typechecker
+                child, target, check_property_returns, ignore_typechecker
             )
             if failure:
                 failures.append(failure)
@@ -87,7 +87,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                     ignore_no_params,
                     ignore_typechecker,
                     no_ansi,
-                    targets,
+                    target,
                     failures,
                 )
     else:
@@ -106,7 +106,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 ignore_no_params,
                 ignore_typechecker,
                 no_ansi,
-                targets,
+                target,
                 failures,
             )
 
@@ -133,7 +133,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_typechecker: bool = False,
     no_ansi: bool = False,
     verbose: bool = False,
-    targets: _Messages | None = None,
+    target: _Messages | None = None,
     disable: _Messages | None = None,
     exclude: str | None = None,
 ) -> int:
@@ -168,7 +168,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_typechecker: Ignore checking return values.
     :param no_ansi: Disable ANSI output.
     :param verbose: increase output verbosity.
-    :param targets: List of errors to target.
+    :param target: List of errors to target.
     :param disable: List of errors to disable.
     :param exclude: Regular expression of files and dirs to exclude from
         checks.
@@ -215,7 +215,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     ignore_no_params,
                     ignore_typechecker,
                     no_ansi,
-                    targets or _Messages(),
+                    target or _Messages(),
                     failures,
                 )
                 if failures:

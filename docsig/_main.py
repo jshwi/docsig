@@ -41,7 +41,7 @@ def main() -> str | int:
         no_ansi=p.args.no_ansi,
         summary=p.args.summary,  # deprecated
         verbose=p.args.verbose,
-        targets=p.args.target,
+        target=p.args.target,
         disable=p.args.disable,
         exclude=p.args.exclude,
     )
