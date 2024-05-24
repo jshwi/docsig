@@ -9,10 +9,10 @@ Function is missing a docstring
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... def function() -> None:
     ...     pass
-    ... """
+    ... '''
 
 .. code-block:: python
 
