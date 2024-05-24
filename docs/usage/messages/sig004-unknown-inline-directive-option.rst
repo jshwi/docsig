@@ -1,5 +1,5 @@
-E204: unknown-inline-directive-option
-=====================================
+SIG004: unknown-inline-directive-option
+=======================================
 
 Unknown inline comment option for {directive} '{option}'
 
@@ -21,6 +21,6 @@ Unknown inline comment option for {directive} '{option}'
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E112: spelling error found in documented parameter (spelling-error)
-        E204: unknown inline comment option for enable 'EIEIO' (unknown-inline-directive-option)
+        SIG004: unknown inline comment option for enable 'EIEIO' (unknown-inline-directive-option)
+        SIG403: spelling error found in documented parameter (spelling-error)
     1

@@ -1,5 +1,5 @@
-E104: return-documented-for-none
-================================
+SIG502: return-documented-for-none
+==================================
 
 Return statement documented for none
 
@@ -21,5 +21,5 @@ Return statement documented for none
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E104: return statement documented for None (return-documented-for-none)
+        SIG502: return statement documented for None (return-documented-for-none)
     1

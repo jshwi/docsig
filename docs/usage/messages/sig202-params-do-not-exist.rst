@@ -1,5 +1,5 @@
-E102: params-do-not-exist
-=========================
+SIG202: params-do-not-exist
+===========================
 
 Includes parameters that do not exist
 
@@ -22,5 +22,5 @@ Includes parameters that do not exist
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - description-missing check
 
 ### Changed
+- error codes
 - reword description for confirm-return-needed
 
 ### Fixed

@@ -28,6 +28,14 @@ TEMPLATE = """\
 
     >>> from docsig import docsig
 """
+CATEGORIES = {
+    0: "config",
+    1: "missing",
+    2: "signature",
+    3: "description",
+    4: "parameters",
+    5: "returns",
+}
 
 
 def generate_configurations() -> None:
@@ -75,7 +83,6 @@ def generate_configurations() -> None:
 
 def generate_messages() -> None:  # pylint: disable=too-many-locals
     """Generate documentation for messages."""
-    categories = {1: "docstring", 2: "config"}
     messages_dir = USAGE / "messages"
     messages_dir.mkdir(exist_ok=True, parents=True)
     pattern = re.compile(r"([^:]+): ([^(]+) \(([^)]+)\)")
@@ -84,7 +91,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
         sys.argv = ["docsig", "--list"]
         main()
 
-    for index, category in categories.items():
+    for index, category in CATEGORIES.items():
         toc_file = USAGE / f"{category}-messages.rst"
         cur_content = toc_file.read_text(encoding="utf-8")
         tocs = []
@@ -93,15 +100,15 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
             if match is not None:
                 code = match.group(1)
                 symbolic = match.group(3)
-                if code.startswith(f"E{index}"):
-                    title = f"{code}: {symbolic}"
+                if code.startswith(f"SIG{index}"):
+                    title = f"{code.upper()}: {symbolic}"
                     option = f"{code.lower()}-{symbolic}"
                     tocs.append(TOC.format(option=f"messages/{option}"))
                     path = messages_dir / f"{option}.rst"
                     if not path.is_file():
                         path.write_text(
                             TEMPLATE.format(
-                                title=title.capitalize(),
+                                title=title,
                                 underline=len(title) * "=",
                                 description=match.group(2).capitalize(),
                             ),
@@ -114,6 +121,14 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
             toc_file.write_text(content)
 
 
+def remove_outdated_messages() -> None:
+    """Remove outdated messages file."""
+    for path in USAGE.glob("*-messages.rst"):
+        if not any(path.name.startswith(v) for v in CATEGORIES.values()):
+            path.unlink()
+
+
 if __name__ == "__main__":
     generate_configurations()
     generate_messages()
+    remove_outdated_messages()

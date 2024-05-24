@@ -30,5 +30,5 @@ check class docstrings
 
     >>> docsig(string=string, check_class=True, no_ansi=True)
     9 in Klass.__init__
-        E101: parameters out of order (params-out-of-order)
+        SIG402: parameters out of order (params-out-of-order)
     1

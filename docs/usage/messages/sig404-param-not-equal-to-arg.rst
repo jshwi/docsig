@@ -1,5 +1,5 @@
-E110: param-not-equal-to-arg
-============================
+SIG404: param-not-equal-to-arg
+==============================
 
 Documented parameter not equal to its respective argument
 
@@ -21,7 +21,7 @@ Documented parameter not equal to its respective argument
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E110: documented parameter not equal to its respective argument (param-not-equal-to-arg)
+        SIG404: documented parameter not equal to its respective argument (param-not-equal-to-arg)
     1
 
 .. code-block:: python
@@ -39,8 +39,8 @@ Documented parameter not equal to its respective argument
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E104: return statement documented for None (return-documented-for-none)
-        E110: documented parameter not equal to its respective argument (param-not-equal-to-arg)
+        SIG404: documented parameter not equal to its respective argument (param-not-equal-to-arg)
+        SIG502: return statement documented for None (return-documented-for-none)
     1
 
 .. code-block:: python
@@ -59,6 +59,6 @@ Documented parameter not equal to its respective argument
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E106: duplicate parameters found (duplicate-params-found)
-        E110: documented parameter not equal to its respective argument (param-not-equal-to-arg)
+        SIG201: duplicate parameters found (duplicate-params-found)
+        SIG404: documented parameter not equal to its respective argument (param-not-equal-to-arg)
     1

@@ -1,5 +1,5 @@
-E108: return-documented-for-property
-====================================
+SIG505: return-documented-for-property
+======================================
 
 Return statement documented for property
 
@@ -24,7 +24,7 @@ Return statement documented for property
 
     >>> docsig(string=string, no_ansi=True)
     3 in Klass.function
-        E108: return statement documented for property (return-documented-for-property)
+        SIG505: return statement documented for property (return-documented-for-property)
         hint: documentation is sufficient as a getter is the value returned
     1
 

@@ -1,5 +1,5 @@
-E105: return-missing
-====================
+SIG503: return-missing
+======================
 
 Return missing from docstring
 
@@ -21,7 +21,7 @@ Return missing from docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. error::
@@ -43,8 +43,8 @@ Return missing from docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
-        E105: return missing from docstring (return-missing)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. note::
@@ -65,7 +65,7 @@ Return missing from docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. code-block:: python
@@ -84,7 +84,7 @@ Return missing from docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. note::
@@ -107,6 +107,6 @@ Return missing from docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
         hint: it is possible a syntax error could be causing this
     1

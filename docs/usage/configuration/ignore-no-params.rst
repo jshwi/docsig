@@ -18,7 +18,7 @@ ignore docstrings where parameters are not documented
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 .. code-block:: python

@@ -28,7 +28,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> docsig(string=string, ignore_kwargs=True, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 .. code-block:: python
@@ -46,7 +46,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 .. code-block:: python
@@ -75,7 +75,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> docsig(string=string, ignore_kwargs=True, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 .. code-block:: python
@@ -104,7 +104,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> docsig(string=string, ignore_kwargs=True, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 .. code-block:: python
@@ -126,7 +126,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 .. code-block:: python

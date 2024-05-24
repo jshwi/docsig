@@ -1,7 +1,7 @@
-E116: incorrect-indent
+SIG403: spelling-error
 ======================
 
-Param not indented correctly
+Spelling error found in documented parameter
 
 .. code-block:: python
 
@@ -13,9 +13,7 @@ Param not indented correctly
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     Function description.
-    ...
-    ...      :param param: This is indented one space too many.
+    ...     :param pram: Misspelled.
     ...     """
     ... '''
 
@@ -23,16 +21,16 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E116: param not indented correctly (incorrect-indent)
+        SIG403: spelling error found in documented parameter (spelling-error)
     1
 
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(param1) -> None:
     ...     """Function summary.
     ...
-    ...      :param param: This is indented one space too many.
+    ...     :param pram1: About param1.
     ...     """
     ... '''
 
@@ -40,18 +38,16 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E116: param not indented correctly (incorrect-indent)
+        SIG403: spelling error found in documented parameter (spelling-error)
     1
 
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...      Function description also indented one space too many.
-    ...
-    ...      :param param: This is indented one space too many.
+    ...     :param pram1: About param1.
     ...     """
     ... '''
 
@@ -59,5 +55,6 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E116: param not indented correctly (incorrect-indent)
+        SIG203: parameters missing (params-missing)
+        SIG403: spelling error found in documented parameter (spelling-error)
     1

@@ -1,5 +1,5 @@
-E111: class-return-documented
-=============================
+SIG504: class-return-documented
+===============================
 
 Return statement documented for class
 
@@ -25,6 +25,6 @@ Return statement documented for class
 
     >>> docsig(string=string, check_class=True, no_ansi=True)
     9 in Klass.__init__
-        E111: return statement documented for class (class-return-documented)
+        SIG504: return statement documented for class (class-return-documented)
         hint: a class does not return a value during instantiation
     1

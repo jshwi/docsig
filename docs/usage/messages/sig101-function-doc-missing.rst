@@ -1,5 +1,5 @@
-E113: function-doc-missing
-==========================
+SIG101: function-doc-missing
+============================
 
 Function is missing a docstring
 
@@ -18,5 +18,5 @@ Function is missing a docstring
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E113: function is missing a docstring (function-doc-missing)
+        SIG101: function is missing a docstring (function-doc-missing)
     1

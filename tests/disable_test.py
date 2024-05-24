@@ -17,12 +17,12 @@ RULES = "rules"
 ARGS = "code,symbolic"
 ES = "E101", "E102", "E103", "E104", "E105", "E106", "E107"
 SYMBOLIC = [
-    (E[101].code, E[101].symbolic),
-    (E[102].code, E[102].symbolic),
-    (E[103].code, E[103].symbolic),
-    (E[104].code, E[104].symbolic),
-    (E[105].code, E[105].symbolic),
-    (E[106].code, E[106].symbolic),
+    (E[402].code, E[402].symbolic),
+    (E[202].code, E[202].symbolic),
+    (E[203].code, E[203].symbolic),
+    (E[502].code, E[502].symbolic),
+    (E[503].code, E[503].symbolic),
+    (E[201].code, E[201].symbolic),
 ]
 DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
@@ -1159,7 +1159,7 @@ def test_no_disables(
     init_file(DISABLE_FILE_1)
     main(".")
     std = capsys.readouterr()
-    assert all(i in std.out for i in ES)
+    assert all(E.from_ref(i).ref in std.out for i in ES)
 
 
 @pytest.mark.parametrize(ARGS, SYMBOLIC)
@@ -1181,8 +1181,10 @@ def test_commandline_disables(
     init_file(DISABLE_FILE_1)
     main(".", "--disable", code)
     std = capsys.readouterr()
-    assert code not in std.out
-    assert all(i[0] in std.out for i in SYMBOLIC if i[0] != code)
+    assert E.from_ref(code).ref not in std.out
+    assert all(
+        E.from_ref(i[0]).ref in std.out for i in SYMBOLIC if i[0] != code
+    )
     init_file(DISABLE_FILE_1)
     main(".", "--disable", symbolic)
     std = capsys.readouterr()
@@ -1250,8 +1252,8 @@ def test_module_single_error_disables(
     init_file(DISABLE_FILE_4)
     main(".")
     std = capsys.readouterr()
-    assert not ES[0] in std.out
-    assert all(i in std.out for i in ES if i != ES[0])
+    assert not E.from_ref(ES[0]).ref in std.out
+    assert all(E.from_ref(i).ref in std.out for i in ES if i != ES[0])
 
 
 def test_module_comma_separated_error_disables(
@@ -1269,8 +1271,8 @@ def test_module_comma_separated_error_disables(
     main(".")
     std = capsys.readouterr()
     excluded = ES[0], ES[1]
-    assert not any(i in std.out for i in excluded)
-    assert all(i in std.out for i in ES if i not in excluded)
+    assert not any(E.from_ref(i).ref in std.out for i in excluded)
+    assert all(E.from_ref(i).ref in std.out for i in ES if i not in excluded)
 
 
 def test_single_function_single_error_disable(
@@ -1323,7 +1325,7 @@ def test_module_enables(
     init_file(ENABLE_FILE_1)
     main(".")
     std = capsys.readouterr()
-    assert all(i in std.out for i in ES)
+    assert all(E.from_ref(i).ref in std.out for i in ES)
 
 
 def test_single_function_enable(
@@ -1362,8 +1364,8 @@ def test_module_single_error_enables(
     init_file(ENABLE_FILE_3)
     main(".")
     std = capsys.readouterr()
-    assert ES[0] in std.out
-    assert not any(i in std.out for i in ES if i != ES[0])
+    assert E.from_ref(ES[0]).ref in std.out
+    assert not any(E.from_ref(i).ref in std.out for i in ES if i != ES[0])
 
 
 def test_module_comma_separated_error_enables(
@@ -1383,8 +1385,10 @@ def test_module_comma_separated_error_enables(
     main(".")
     std = capsys.readouterr()
     included = ES[0], ES[1]
-    assert all(i in std.out for i in included)
-    assert not any(i in std.out for i in ES if i not in included)
+    assert all(E.from_ref(i).ref in std.out for i in included)
+    assert not any(
+        E.from_ref(i).ref in std.out for i in ES if i not in included
+    )
 
 
 def test_single_function_single_error_enable(
@@ -1447,14 +1451,14 @@ def test_individual_inline_disable_checks(
     init_file(INLINE_DISABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert code not in std.out
-    assert all(i in std.out for i in enabled_rules)
+    assert E.from_ref(code).ref not in std.out
+    assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
     enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
     init_file(INLINE_DISABLE_TEMPLATE.format(rules=symbolic))
     main(".")
     std = capsys.readouterr()
     assert symbolic not in std.out
-    assert all(i in std.out for i in enabled_rules)
+    assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
 @pytest.mark.parametrize(
@@ -1491,8 +1495,8 @@ def test_comma_separated_inline_disable_checks(
     init_file(INLINE_DISABLE_TEMPLATE.format(rules=rules))
     main(".")
     std = capsys.readouterr()
-    assert not any(i in std.out for i in comma_separated_rules)
-    assert all(i in std.out for i in enabled_rules)
+    assert not any(E.from_ref(i).ref in std.out for i in comma_separated_rules)
+    assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
 @pytest.mark.parametrize(ARGS, SYMBOLIC)
@@ -1515,8 +1519,8 @@ def test_individual_module_disable_checks(
     init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert code not in std.out
-    assert all(i in std.out for i in enabled_rules)
+    assert E.from_ref(code).ref not in std.out
+    assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
     enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
     init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=symbolic))
     main(".")
@@ -1559,8 +1563,8 @@ def test_comma_separated_module_disable_checks(
     init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=rules))
     main(".")
     std = capsys.readouterr()
-    assert not any(i in std.out for i in comma_separated_rules)
-    assert all(i in std.out for i in enabled_rules)
+    assert not any(E.from_ref(i).ref in std.out for i in comma_separated_rules)
+    assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
 @pytest.mark.parametrize(ARGS, SYMBOLIC)
@@ -1583,14 +1587,14 @@ def test_individual_inline_enable_checks(
     init_file(INLINE_ENABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert code in std.out
-    assert not any(i in std.out for i in disabled_rules)
+    assert E.from_ref(code).ref in std.out
+    assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
     disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
     init_file(INLINE_ENABLE_TEMPLATE.format(rules=symbolic))
     main(".")
     std = capsys.readouterr()
     assert symbolic in std.out
-    assert not any(i in std.out for i in disabled_rules)
+    assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
 @pytest.mark.parametrize(
@@ -1627,8 +1631,8 @@ def test_comma_separated_inline_enable_checks(
     init_file(INLINE_ENABLE_TEMPLATE.format(rules=rules))
     main(".")
     std = capsys.readouterr()
-    assert all(i in std.out for i in comma_separated_rules)
-    assert not any(i in std.out for i in disabled_rules)
+    assert all(E.from_ref(i).ref in std.out for i in comma_separated_rules)
+    assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
 @pytest.mark.parametrize(ARGS, SYMBOLIC)
@@ -1651,14 +1655,14 @@ def test_individual_module_enable_checks(
     init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=code))
     main(".")
     std = capsys.readouterr()
-    assert code in std.out
-    assert not any(i in std.out for i in disabled_rules)
+    assert E.from_ref(code).ref in std.out
+    assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
     disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
     init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=symbolic))
     main(".")
     std = capsys.readouterr()
     assert symbolic in std.out
-    assert not any(i in std.out for i in disabled_rules)
+    assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
 @pytest.mark.parametrize(
@@ -1691,9 +1695,11 @@ def test_comma_separated_module_enable_checks(
     """
     all_rules = list(ES)
     comma_separated_rules = rules.split(",")
-    disabled_rules = [i for i in all_rules if i not in comma_separated_rules]
+    disabled_rules = [
+        E.from_ref(i).ref for i in all_rules if i not in comma_separated_rules
+    ]
     init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=rules))
     main(".")
     std = capsys.readouterr()
-    assert all(i in std.out for i in comma_separated_rules)
+    assert all(E.from_ref(i).ref in std.out for i in comma_separated_rules)
     assert not any(i in std.out for i in disabled_rules)
