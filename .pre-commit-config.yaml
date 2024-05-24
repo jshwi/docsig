@@ -33,11 +33,8 @@ repos:
       # local so package can be imported to lint
       - id: pylint
         name: pylint
-        entry: pylint
+        entry: make lint
         language: system
-        types:
-          - python
-        exclude: ^(docs/conf\.py)$
       # no hooks found for `doctest`
       - id: doctest-package
         name: doctest docstrings
