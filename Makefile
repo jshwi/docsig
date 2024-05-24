@@ -29,7 +29,7 @@ doctest: doctest-package doctest-readme doctest-docs
 
 .PHONY: docs
 docs:
-	@$(MAKE) -C docs html
+	@poetry run $(MAKE) -C docs html
 
 .PHONY: clean
 clean:
@@ -51,7 +51,7 @@ install-pre-commit:
 
 .PHONY: install-hooks
 install-hooks: install-pre-commit
-	@pre-commit install \
+	@poetry run pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -97,77 +97,79 @@ remove-ignore-blame-revs:
 
 .PHONY: update-readme
 update-readme:
-	@python3 scripts/update_readme.py
+	@poetry run python3 scripts/update_readme.py
 
 .PHONY: update-docs
 update-docs:
-	@python3 scripts/update_docs.py
+	@poetry run python3 scripts/update_docs.py
 
 .PHONY: update-copyright
 update-copyright:
-	@python3 scripts/update_copyright.py
+	@poetry run python3 scripts/update_copyright.py
 
 .PHONY: format
 format:
-	@black $(PYTHON_FILES)
+	@poetry run black $(PYTHON_FILES)
 
 .PHONY: format-docs
 format-docs:
-	@docformatter $(PYTHON_FILES)
+	@poetry run docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
 format-str:
-	@flynt $(PYTHON_FILES)
+	@poetry run flynt $(PYTHON_FILES)
 
 .PHONY: imports
 imports:
-	@isort $(PYTHON_FILES)
+	@poetry run isort $(PYTHON_FILES)
 
 .PHONY: lint
 lint:
-	@pylint --output-format=colorized $(PYTHON_FILES)
+	@poetry run pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
 typecheck:
-	@mypy .
+	@poetry run mypy .
 
 .PHONY: unused
 unused:
-	@vulture whitelist.py $(PYTHON_FILES)
+	@poetry run vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
 whitelist:
-	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
+	@poetry run vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py \
+		|| exit 0
 
 .PHONY: coverage
 coverage:
-	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
+	@poetry run pytest -n=auto --cov=docsig --cov=tests \
+		&& poetry run coverage xml
 
 .PHONY: doctest-package
 doctest-package:
-	@$(MAKE) -C docs doctest
+	@poetry run $(MAKE) -C docs doctest
 
 .PHONY: doctest-package
 doctest-readme:
-	@python -m doctest README.rst
+	@poetry run python -m doctest README.rst
 
 .PHONY: params
 params:
-	@docsig $(PYTHON_FILES)
+	@poetry run docsig $(PYTHON_FILES)
 
 .PHONY: doctest-docs
 doctest-docs:
-	@pytest docs --doctest-glob='*.rst'
+	@poetry run pytest docs --doctest-glob='*.rst'
 
 .PHONY: benchmark
 benchmark:
 	@RUN_BENCHMARK=true \
-		pytest \
+		poetry run pytest \
 		-m="benchmark" \
 		--benchmark-save=benchmark
 
 .PHONY: check-links
 check-links:
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
-		&& $(MAKE) -C docs linkcheck \
+		&& poetry run $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"
