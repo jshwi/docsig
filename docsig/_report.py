@@ -80,24 +80,24 @@ class Failure(_t.List[str]):
             if not comment.isvalid:
                 if comment.ismodule:
                     # unknown-module-directive
-                    self._add(_E[201], directive=comment.kind)
+                    self._add(_E[1], directive=comment.kind)
                 else:
                     # unknown-inline-directive
-                    self._add(_E[202], directive=comment.kind)
+                    self._add(_E[2], directive=comment.kind)
             else:
                 for rule in comment:
                     if not rule.isknown:
                         if comment.ismodule:
                             # unknown-module-directive-option
                             self._add(
-                                _E[203],
+                                _E[3],
                                 directive=comment.kind,
                                 option=rule.description,
                             )
                         else:
                             # unknown-inline-directive-option
                             self._add(
-                                _E[204],
+                                _E[4],
                                 directive=comment.kind,
                                 option=rule.description,
                             )
@@ -105,10 +105,10 @@ class Failure(_t.List[str]):
     def _sig1xx_missing(self) -> None:
         if not self._func.isinit:
             # function-doc-missing
-            self._add(_E[113])
+            self._add(_E[101])
         else:
             # class-doc-missing
-            self._add(_E[114])
+            self._add(_E[102])
 
     def _sig2xx_signature(self) -> None:
         if self._func.docstring.args.duplicated:
@@ -120,7 +120,7 @@ class Failure(_t.List[str]):
                     self._func.docstring.args.pop(count)
 
             # duplicate-params-found
-            self._add(_E[106])
+            self._add(_E[201])
         # there are non-existing params in the docstring
         elif len(self._func.docstring.args) > len(self._func.signature.args):
             # pop the parameters that do not exist so that they are
@@ -133,7 +133,7 @@ class Failure(_t.List[str]):
                 if count > len(self._func.signature.args):
                     self._func.docstring.args.pop(count - 1)
             # params-do-not-exist
-            self._add(_E[102])
+            self._add(_E[202])
         # there are more args in sig than doc, so doc params missing
         elif len(self._func.signature.args) > len(self._func.docstring.args):
             # append the parameters that are missing so that they are
@@ -148,33 +148,33 @@ class Failure(_t.List[str]):
                         _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0)
                     )
             # params-missing
-            self._add(_E[103])
+            self._add(_E[203])
 
     def _sig3xx_description(self, doc: _Param) -> None:
         if doc.description is None:
-            self._add(_E[117])
+            self._add(_E[301])
         elif doc.description is not None and not doc.description.startswith(
             " "
         ):
             # syntax-error-in-description
-            self._add(_E[115])
+            self._add(_E[302])
         # if the parameter does not have a name, but exists, then it
         # must be incorrectly documented
         elif doc.name == _UNNAMED:
             # param-incorrectly-documented
-            self._add(_E[107])
+            self._add(_E[303])
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         if doc.indent > 0:
             # incorrect-indent
-            self._add(_E[116])
+            self._add(_E[401])
         elif doc != sig:
             if (
                 sig.name in self._func.docstring.args.names
                 or doc.name in self.func.signature.args.names
             ):
                 # params-out-of-order
-                self._add(_E[101])
+                self._add(_E[402])
             elif (
                 doc.name != _UNNAMED
                 and sig.name is not None
@@ -182,10 +182,10 @@ class Failure(_t.List[str]):
             ):
                 if _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH):
                     # spelling-error
-                    self._add(_E[112])
+                    self._add(_E[403])
                 else:
                     # param-not-equal-to-arg
-                    self._add(_E[110])
+                    self._add(_E[404])
 
     def _sig5xx_returns(self) -> None:
         if not self._func.isinit and not (
@@ -194,28 +194,28 @@ class Failure(_t.List[str]):
             # no types, cannot know either way
             if self._func.signature.rettype == _RetType.UNTYPED:
                 # confirm-return-needed
-                self._add(_E[109], hint=True)
+                self._add(_E[501], hint=True)
             # return type is none, so no return should be documented
             elif self._func.docstring.returns:
                 if self._func.signature.rettype == _RetType.NONE:
                     # return-documented-for-none
-                    self._add(_E[104])
+                    self._add(_E[502])
             # return type is some, so return should be documented
             elif self._func.signature.returns:
                 # return-missing
                 self._add(
-                    _E[105],
+                    _E[503],
                     hint=_has_bad_return(str(self._func.docstring.string)),
                 )
         elif self._func.docstring.returns:
             # method is init, so no return should be documented
             if self._func.isinit:
                 # class-return-documented
-                self._add(_E[111], hint=True)
+                self._add(_E[504], hint=True)
             # method is property and not set to document property
             elif self._func.isproperty and not self._check_property_returns:
                 # return-documented-for-property
-                self._add(_E[108], hint=True)
+                self._add(_E[505], hint=True)
 
     @property
     def func(self) -> _Function:

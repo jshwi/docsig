@@ -128,8 +128,8 @@ def function_3(param1, param2, param3) -> None:
     init_file(template)
     main(".", "--target", error)
     std = capsys.readouterr()
-    assert error in std.out
-    assert not any(e in std.out for e in _errors if e != error)
+    assert E.from_ref(error).ref in std.out
+    assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
 
 
 def test_invalid_target(main: MockMainType) -> None:
@@ -190,18 +190,18 @@ def test_file_not_found_error(main: MockMainType) -> None:
             (long.check_protected_class_methods, long.check_class),
             f"""\
 {PATH}:6 in _Messages.fromcode
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 {PATH}:12 in _Messages.all
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """,
         ],
         [
             (long.check_protected_class_methods, long.check_class_constructor),
             f"""\
 {PATH}:6 in _Messages.fromcode
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 {PATH}:12 in _Messages.all
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """,
         ],
     ],
@@ -296,7 +296,7 @@ def test_list_checks(
     """
     main(long.list_checks)
     std = capsys.readouterr()
-    assert all(i.code in std.out for i in E.values())
+    assert all(i.ref in std.out for i in E.values())
 
 
 def test_bad_py_file(
@@ -420,7 +420,7 @@ def function(*_, **__) -> None:
     """
     return 0
 ''',
-            E[104].fstring(T),
+            E[502].fstring(T),
         ),
         (
             '''
@@ -428,7 +428,7 @@ def function(*_, **__) -> int:
     """Proper docstring."""
     return 0
 ''',
-            E[105].fstring(T),
+            E[503].fstring(T),
         ),
         (
             '''
@@ -443,7 +443,7 @@ def function(*_, **__):
     """
     return 0
 ''',
-            E[109].fstring(T),
+            E[501].fstring(T),
         ),
         (
             '''
@@ -460,7 +460,7 @@ class Klass:
 """
 return 0
 ''',
-            E[108].fstring(T),
+            E[505].fstring(T),
         ),
     ],
     ids=[

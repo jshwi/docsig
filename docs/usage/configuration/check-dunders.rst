@@ -28,5 +28,5 @@ check dunder methods
 
     >>> docsig(string=string, check_dunders=True, no_ansi=True)
     3 in Klass.__get__
-        E101: parameters out of order (params-out-of-order)
+        SIG402: parameters out of order (params-out-of-order)
     1

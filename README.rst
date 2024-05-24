@@ -124,14 +124,14 @@ Options can also be configured with the pyproject.toml file
     check-overridden = false
     check-protected = false
     disable = [
-        "E101",
-        "E102",
-        "E103",
+        "SIG101",
+        "SIG102",
+        "SIG402",
     ]
     target = [
-        "E102",
-        "E103",
-        "E104",
+        "SIG202",
+        "SIG203",
+        "SIG201",
     ]
 
 API
@@ -168,7 +168,7 @@ API
     ... """
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/usage/messages.html>`__

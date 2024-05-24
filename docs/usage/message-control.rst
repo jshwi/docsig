@@ -52,28 +52,28 @@ Commandline
 
     >>> docsig(string=string, no_ansi=True)
     2 in func
-        E103: parameters missing (params-missing)
-        E105: return missing from docstring (return-missing)
-        E115: syntax error in description (syntax-error-in-description)
-        E116: param not indented correctly (incorrect-indent)
-        E117: description missing from parameter (description-missing)
+        SIG203: parameters missing (params-missing)
+        SIG301: description missing from parameter (description-missing)
+        SIG302: syntax error in description (syntax-error-in-description)
+        SIG401: param not indented correctly (incorrect-indent)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. code-block:: python
 
-    >>> docsig(string=string, disable=["E103"], no_ansi=True)
+    >>> docsig(string=string, disable=["SIG203"], no_ansi=True)
     2 in func
-        E105: return missing from docstring (return-missing)
-        E115: syntax error in description (syntax-error-in-description)
-        E116: param not indented correctly (incorrect-indent)
-        E117: description missing from parameter (description-missing)
+        SIG301: description missing from parameter (description-missing)
+        SIG302: syntax error in description (syntax-error-in-description)
+        SIG401: param not indented correctly (incorrect-indent)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. code-block:: python
 
-    >>> docsig(string=string, target=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["SIG203"], no_ansi=True)
     2 in func
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 This will just disable everything, as disable will disable one, and target will
@@ -81,7 +81,7 @@ disable everything else
 
 .. code-block:: python
 
-    >>> docsig(string=string, disable=["E103"], target=["E103"], no_ansi=True)
+    >>> docsig(string=string, disable=["SIG203"], target=["SIG203"], no_ansi=True)
     0
 
 Directives
@@ -95,7 +95,7 @@ Directives
 .. code-block:: python
 
     >>> string = '''
-    ... def func(  # docsig: disable=E117
+    ... def func(  # docsig: disable=SIG301
     ...     param, param2, param3, param4
     ... ) -> int:
     ...     """Desc.
@@ -108,18 +108,18 @@ Directives
 
 .. code-block:: python
 
-    >>> docsig(string=string, disable=["E103"], no_ansi=True)
+    >>> docsig(string=string, disable=["SIG203"], no_ansi=True)
     2 in func
-        E105: return missing from docstring (return-missing)
-        E115: syntax error in description (syntax-error-in-description)
-        E116: param not indented correctly (incorrect-indent)
+        SIG302: syntax error in description (syntax-error-in-description)
+        SIG401: param not indented correctly (incorrect-indent)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. code-block:: python
 
-    >>> docsig(string=string, target=["E103"], no_ansi=True)
+    >>> docsig(string=string, target=["SIG203"], no_ansi=True)
     2 in func
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 .. code-block:: python
@@ -127,7 +127,7 @@ Directives
     >>> string = '''
     ... # docsig: disable
     ...
-    ... def func(  # docsig: enable=E103
+    ... def func(  # docsig: enable=SIG203
     ...     param, param2, param3, param4
     ... ) -> int:
     ...     """Desc.
@@ -142,10 +142,10 @@ Directives
 
     >>> docsig(string=string, no_ansi=True)
     4 in func
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1
 
 .. code-block:: python
 
-    >>> docsig(string=string, target=["E117"], no_ansi=True)
+    >>> docsig(string=string, target=["SIG301"], no_ansi=True)
     0

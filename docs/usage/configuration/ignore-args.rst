@@ -28,5 +28,5 @@ ignore args prefixed with an asterisk
 
     >>> docsig(string=string, ignore_args=True, no_ansi=True)
     2 in function
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1

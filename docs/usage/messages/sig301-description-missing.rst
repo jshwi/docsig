@@ -1,5 +1,5 @@
-E117: description-missing
-=========================
+SIG301: description-missing
+===========================
 
 Description missing from parameter
 
@@ -21,5 +21,5 @@ Description missing from parameter
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E117: description missing from parameter (description-missing)
+        SIG301: description missing from parameter (description-missing)
     1

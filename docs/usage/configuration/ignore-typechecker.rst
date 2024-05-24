@@ -21,7 +21,7 @@ ignore checking return values
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E104: return statement documented for None (return-documented-for-none)
+        SIG502: return statement documented for None (return-documented-for-none)
     1
 
 .. code-block:: python
@@ -40,7 +40,7 @@ ignore checking return values
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
     1
 
 .. code-block:: python
@@ -65,7 +65,7 @@ ignore checking return values
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E109: cannot determine whether a return statement should exist (confirm-return-needed)
+        SIG501: cannot determine whether a return statement should exist (confirm-return-needed)
         hint: annotate type to indicate whether return documentation needed
     1
 
@@ -94,7 +94,7 @@ ignore checking return values
 
     >>> docsig(string=string, no_ansi=True)
     3 in Klass.function
-        E108: return statement documented for property (return-documented-for-property)
+        SIG505: return statement documented for property (return-documented-for-property)
         hint: documentation is sufficient as a getter is the value returned
     1
 

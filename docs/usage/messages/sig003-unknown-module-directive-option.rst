@@ -1,5 +1,5 @@
-E203: unknown-module-directive-option
-=====================================
+SIG003: unknown-module-directive-option
+=======================================
 
 Unknown module comment option for {directive} '{option}'
 
@@ -22,5 +22,5 @@ Unknown module comment option for {directive} '{option}'
 
     >>> docsig(string=string, no_ansi=True)
     3 in function
-        E203: unknown module comment option for enable 'EIEIO' (unknown-module-directive-option)
+        SIG003: unknown module comment option for enable 'EIEIO' (unknown-module-directive-option)
     1
