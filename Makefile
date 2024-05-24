@@ -1,4 +1,5 @@
 PYTHON_FILES := $(shell git ls-files "*.py")
+RUN = poetry run
 
 .PHONY: all
 all: install
@@ -29,7 +30,7 @@ doctest: doctest-package doctest-readme doctest-docs
 
 .PHONY: docs
 docs:
-	@$(MAKE) -C docs html
+	@$(RUN) $(MAKE) -C docs html
 
 .PHONY: clean
 clean:
@@ -46,12 +47,12 @@ install-deps:
 
 .PHONY: install-pre-commit
 install-pre-commit:
-	@poetry run command -v pre-commit > /dev/null 2>&1 \
-		|| poetry run pip --quiet install pre-commit
+	@$(RUN) command -v pre-commit > /dev/null 2>&1 \
+		|| $(RUN) pip --quiet install pre-commit
 
 .PHONY: install-hooks
 install-hooks: install-pre-commit
-	@pre-commit install \
+	@$(RUN) pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -82,7 +83,7 @@ remove-hooks: install-pre-commit
 
 .PHONY: remove-deps
 remove-deps:
-	rm -rf $(shell dirname $(shell dirname $(shell poetry run which python)))
+	rm -rf $(shell dirname $(shell dirname $(shell $(RUN) which python)))
 
 .PHONY: remove-poetry
 remove-poetry:
@@ -97,77 +98,79 @@ remove-ignore-blame-revs:
 
 .PHONY: update-readme
 update-readme:
-	@python3 scripts/update_readme.py
+	@$(RUN) python3 scripts/update_readme.py
 
 .PHONY: update-docs
 update-docs:
-	@python3 scripts/update_docs.py
+	@$(RUN) python3 scripts/update_docs.py
 
 .PHONY: update-copyright
 update-copyright:
-	@python3 scripts/update_copyright.py
+	@$(RUN) python3 scripts/update_copyright.py
 
 .PHONY: format
 format:
-	@black $(PYTHON_FILES)
+	@$(RUN) black $(PYTHON_FILES)
 
 .PHONY: format-docs
 format-docs:
-	@docformatter $(PYTHON_FILES)
+	@$(RUN) docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
 format-str:
-	@flynt $(PYTHON_FILES)
+	@$(RUN) flynt $(PYTHON_FILES)
 
 .PHONY: imports
 imports:
-	@isort $(PYTHON_FILES)
+	@$(RUN) isort $(PYTHON_FILES)
 
 .PHONY: lint
 lint:
-	@pylint --output-format=colorized $(PYTHON_FILES)
+	@$(RUN) pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
 typecheck:
-	@mypy .
+	@$(RUN) mypy .
 
 .PHONY: unused
 unused:
-	@vulture whitelist.py $(PYTHON_FILES)
+	@$(RUN) vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
 whitelist:
-	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
+	@$(RUN) vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py \
+		|| exit 0
 
 .PHONY: coverage
 coverage:
-	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
+	@$(RUN) pytest -n=auto --cov=docsig --cov=tests \
+		&& $(RUN) coverage xml
 
 .PHONY: doctest-package
 doctest-package:
-	@$(MAKE) -C docs doctest
+	@$(RUN) $(MAKE) -C docs doctest
 
 .PHONY: doctest-package
 doctest-readme:
-	@python -m doctest README.rst
+	@$(RUN) python -m doctest README.rst
 
 .PHONY: params
 params:
-	@docsig $(PYTHON_FILES)
+	@$(RUN) docsig $(PYTHON_FILES)
 
 .PHONY: doctest-docs
 doctest-docs:
-	@pytest docs --doctest-glob='*.rst'
+	@$(RUN) pytest docs --doctest-glob='*.rst'
 
 .PHONY: benchmark
 benchmark:
 	@RUN_BENCHMARK=true \
-		pytest \
+		$(RUN) pytest \
 		-m="benchmark" \
 		--benchmark-save=benchmark
 
 .PHONY: check-links
 check-links:
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
-		&& $(MAKE) -C docs linkcheck \
+		&& $(RUN) $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"
