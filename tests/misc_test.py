@@ -399,13 +399,19 @@ def function(param1, param2) -> None:
     assert "\033[35m" not in std.out
 
 
-def test_deprecated(main: MockMainType) -> None:
+@pytest.mark.parametrize(
+    "args",
+    [(long.summary,), (long.disable, "E201")],
+    ids=["summary", "disable"],
+)
+def test_deprecated(main: MockMainType, args: tuple[str, ...]) -> None:
     """Test deprecation.
 
     :param main: Mock ``main`` function.
+    :param args: Arguments to trigger deprecation warning.
     """
     with pytest.deprecated_call():
-        main(".", long.summary)
+        main(".", *args)
 
 
 @pytest.mark.parametrize(

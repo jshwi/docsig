@@ -176,6 +176,9 @@ A full list of checks can be found `here <https://docsig.readthedocs.io/en/lates
 Message Control
 ***************
 
+If you have been using ``docsig`` prior to ``v0.56.0``, please see
+`updated messages <https://docsig.readthedocs.io/en/latest/deprecated/messages.html>`_
+
 `Documentation on message control <https://docsig.readthedocs.io/en/latest/usage/message-control.html>`_
 
 Classes
