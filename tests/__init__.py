@@ -132,7 +132,7 @@ class _PNoParamsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function() -> None:
-    """No params.\"\"\"
+    """No params."""
 '''
 
     @property
@@ -635,7 +635,7 @@ class _FPropertyReturnsClassS(_BaseTemplate):
 class Klass:
     @property
     def method(self) -> int:
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return self._method
 '''
 
@@ -855,7 +855,7 @@ class _PUnderscoreArgsKwargsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(*_, **__) -> None:
-    """Proper docstring.\"\"\"
+    """Proper docstring."""
 '''
 
     @property
@@ -871,7 +871,7 @@ class _FPropertyReturnsS(_BaseTemplate):
 class Klass:
     @property
     def function(*_, **__) -> int:
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return 0
 '''
 
@@ -928,7 +928,7 @@ T = _t.TypeVar("T")
 
 
 class MutableSet(_t.MutableSet[T]):
-    """Set object to inherit from.\"\"\"
+    """Set object to inherit from."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -1011,7 +1011,7 @@ class _FE109WORetQuestionS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function():
-    """Docstring.\"\"\"
+    """Docstring."""
 '''
 
     @property
@@ -1112,7 +1112,7 @@ class _FPropertyReturnsTypeS(_BaseTemplate):
 class Klass:
     @property
     def method(self):
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return self._method
 '''
 
@@ -1328,7 +1328,7 @@ class Klass:
 
     # against convention but not up to this package to decide
     def method(no_self) -> None:
-        """Docstring.\"\"\"
+        """Docstring."""
         return None
 '''
 
@@ -1363,7 +1363,7 @@ class _FDundersS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class MutableSet:
-    """Set object to inherit from.\"\"\"
+    """Set object to inherit from."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -1510,7 +1510,7 @@ class _PNoParamsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function() -> None:
-    """No params.\"\"\"
+    """No params."""
 '''
 
     @property
@@ -2100,7 +2100,7 @@ class _FPropertyReturnsClassN(_BaseTemplate):
 class Klass:
     @property
     def method(self) -> int:
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return self._method
 '''
 
@@ -2340,7 +2340,7 @@ class _PUnderscoreArgsKwargsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(*_, **__) -> None:
-    """Proper docstring.\"\"\"
+    """Proper docstring."""
 '''
 
     @property
@@ -2356,7 +2356,7 @@ class _FPropertyReturnsN(_BaseTemplate):
 class Klass:
     @property
     def function(*_, **__) -> int:
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return 0
 '''
 
@@ -2450,7 +2450,7 @@ T = _t.TypeVar("T")
 
 
 class MutableSet(_t.MutableSet[T]):
-    """Set object to inherit from.\"\"\"
+    """Set object to inherit from."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -2516,7 +2516,7 @@ class _FE109WORetQuestionN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function():
-    """Docstring.\"\"\"
+    """Docstring."""
 '''
 
     @property
@@ -2639,7 +2639,7 @@ class _FPropertyReturnsTypeN(_BaseTemplate):
 class Klass:
     @property
     def method(self):
-        """Proper docstring.\"\"\"
+        """Proper docstring."""
         return self._method
 '''
 
@@ -2897,7 +2897,7 @@ class Klass:
 
     # against convention but not up to this package to decide
     def method(no_self) -> None:
-        """Docstring.\"\"\"
+        """Docstring."""
         return None
 '''
 
@@ -2936,7 +2936,7 @@ class _FDundersN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class MutableSet:
-    """Set object to inherit from.\"\"\"
+    """Set object to inherit from."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -5942,7 +5942,7 @@ VT = _t.TypeVar("VT")
 
 
 class _MutableSequence(_t.MutableSequence[T]):
-    """List-object to inherit from.\"\"\"
+    """List-object to inherit from."""
 
     def __init__(self) -> None:
         self._list: list[T] = []
@@ -5990,7 +5990,7 @@ class _MutableSequence(_t.MutableSequence[T]):
 # without this, the test will fail (not ideal)
 # TODO: remove this to test for why
 class Param(_t.NamedTuple):
-    """A tuple of param types and their names.\"\"\"
+    """A tuple of param types and their names."""
 
     kind: str = "param"
     name: str | None = None
@@ -5999,7 +5999,7 @@ class Param(_t.NamedTuple):
 
 
 class Params(_MutableSequence[Param]):
-    """Represents collection of parameters.\"\"\"
+    """Represents collection of parameters."""
 
     def insert(self, index: int, value: Param) -> None:
         pass
@@ -6039,7 +6039,7 @@ class _FNoParamS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def example(some_input: int) -> int:
-    """Return input.\"\"\"
+    """Return input."""
     return some_input
 '''
 
@@ -7305,7 +7305,7 @@ class _FWClassConstructorFS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    """...\"\"\"
+    """..."""
 
     def __init__(self, param1, param2) -> None:
         """...
@@ -7328,7 +7328,7 @@ class _FWClassConstructorInitNoRetS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    """...\"\"\"
+    """..."""
 
     def __init__(self, param1, param2):
         """...
@@ -7350,7 +7350,7 @@ class _FWClassConstructorInitBadRetS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    """...\"\"\"
+    """..."""
 
     # bad typing, but leave that up to mypy
     def __init__(self, param1, param2) -> int:
@@ -7373,7 +7373,7 @@ class _FWClassConstructorRetNoneFS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    """...\"\"\"
+    """..."""
 
     def __init__(self, param1, param2) -> None:
         """...
@@ -7396,7 +7396,7 @@ class _FWClassConstructorE111FS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    """...\"\"\"
+    """..."""
 
     def __init__(param1, param2) -> None:
         """...
