@@ -8,16 +8,16 @@ This check will either check the documentation of ``__init__``, or check documen
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... class Klass:
     ...     def __init__(self, param1, param2) -> None:
-    ...         '''
+    ...         """
     ...
     ...         :param param1: About param1.
     ...         :param param2: About param2.
     ...         :param param3: About param3.
-    ...         '''
-    ... """
+    ...         """
+    ... '''
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
     3 in Klass.__init__
         E102: includes parameters that do not exist (params-do-not-exist)
@@ -25,17 +25,17 @@ This check will either check the documentation of ``__init__``, or check documen
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... class Klass:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
     ...     :param param3: About param3.
-    ...     '''
+    ...     """
     ...     def __init__(self, param1, param2) -> None:
     ...         pass
-    ... """
+    ... '''
     >>> docsig(string=string, check_class=True, no_ansi=True)
     9 in Klass.__init__
         E102: includes parameters that do not exist (params-do-not-exist)
