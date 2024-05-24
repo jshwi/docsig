@@ -1,36 +1,5 @@
-Message Control
-===============
-
-There are multiple levels that can be configured to achieve the desired results
-
-Persistent
-----------
-
-The base configuration exists in the pyproject.toml file
-
-.. todo::
-
-    Mock the pyproject.toml here if possible
-
-.. include:: ../_generated/pyproject-toml-example.rst
-
-After this, messages available can also be achieved with the commandline and
-with comment directives
-
-Both commandline and comments can be used for finer configuration of signature
-documentation policy
-
-Directives work exactly the same as commandline arguments except they can be
-used to configure lines of code in a module, or functions and classes using
-inline syntax
-
-Commandline
------------
-
-.. toctree::
-   :titlesonly:
-
-   message-control/commandline
+More on commandline
+===================
 
 .. code-block:: python
 
@@ -78,6 +47,84 @@ Commandline
         E103: parameters missing (params-missing)
     1
 
+.. code-block:: python
+
+    >>> docsig(string=string, targets=["E107"], no_ansi=True)
+    0
+
+This has the same effect, but is quicker to write
+
+.. code-block:: python
+
+    >>> docsig(string=string, disable=["E103"], no_ansi=True)
+    2 in func
+        E105: return missing from docstring (return-missing)
+        E112: spelling error found in documented parameter (spelling-error)
+        E115: syntax error in description (syntax-error-in-description)
+        E116: param not indented correctly (incorrect-indent)
+        E117: description missing from parameter (description-missing)
+    1
+
+than
+
+.. code-block:: python
+
+    >>> docsig(
+    ...    string=string,
+    ...    targets=["E105", "E112", "E115", "E116", "E117"],
+    ...    no_ansi=True,
+    ... )
+    2 in func
+        E105: return missing from docstring (return-missing)
+        E112: spelling error found in documented parameter (spelling-error)
+        E115: syntax error in description (syntax-error-in-description)
+        E116: param not indented correctly (incorrect-indent)
+        E117: description missing from parameter (description-missing)
+    1
+
+But this takes longer to write
+
+.. code-block:: python
+
+    >>> docsig(
+    ...     string=string,
+    ...     disable=["E105", "E112", "E115", "E116", "E117"],
+    ...     no_ansi=True
+    ... )
+    2 in func
+        E103: parameters missing (params-missing)
+    1
+
+than
+
+.. code-block:: python
+
+    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    2 in func
+        E103: parameters missing (params-missing)
+    1
+
+There isn't any use in using these together, however
+
+.. code-block:: python
+
+    >>> docsig(
+    ...     string=string,
+    ...     disable=["E105", "E112", "E115", "E116", "E117"],
+    ...     targets=["E103"],
+    ...     no_ansi=True,
+    ... )
+    2 in func
+        E103: parameters missing (params-missing)
+    1
+
+.. code-block:: python
+
+    >>> docsig(string=string, targets=["E103"], no_ansi=True)
+    2 in func
+        E103: parameters missing (params-missing)
+    1
+
 This will just disable everything, as disable will disable one, and target will
 disable everything else
 
@@ -85,14 +132,6 @@ disable everything else
 
     >>> docsig(string=string, disable=["E103"], targets=["E103"], no_ansi=True)
     0
-
-Directives
-----------
-
-.. toctree::
-   :titlesonly:
-
-   message-control/directives
 
 .. code-block:: python
 
