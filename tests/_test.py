@@ -157,7 +157,7 @@ def test_error_codes(
     :param expected: Expected output.
     """
     init_file(template)
-    messages = [v.code for _, v in E.items() if v.code not in expected]
+    messages = [v.ref for _, v in E.items() if v.ref not in expected]
     main(".")
     std = capsys.readouterr()
     assert std.out.count(expected) == 1
@@ -292,10 +292,10 @@ def test_ignore_no_params(  # pylint: disable=too-many-arguments
     # will not trigger when choosing to ignore docstrings that have no
     # parameters documented (only if docstring has no parameter info)
     missing_messages = (
-        E[103].fstring(T),  # parameters missing
-        E[105].fstring(T),  # return missing from docstring
-        E[109].fstring(T),  # cannot determine whether a return ...
-        E[105].hint,  # it is possible a syntax error ...
+        E[203].fstring(T),  # parameters missing
+        E[503].fstring(T),  # return missing from docstring
+        E[501].fstring(T),  # cannot determine whether a return ...
+        E[503].hint,  # it is possible a syntax error ...
     )
     parameter_keys = (
         ":param",
@@ -356,8 +356,8 @@ def test_no_check_property_returns_flag(
     init_file(template.template)
     main(".")
     std = capsys.readouterr()
-    assert E[108].fstring(T) in std.out
-    assert E[108].hint in std.out
+    assert E[505].fstring(T) in std.out
+    assert E[505].hint in std.out
 
 
 @pytest.mark.parametrize(

@@ -1,7 +1,7 @@
-E112: spelling-error
-====================
+SIG401: incorrect-indent
+========================
 
-Spelling error found in documented parameter
+Param not indented correctly
 
 .. code-block:: python
 
@@ -13,7 +13,9 @@ Spelling error found in documented parameter
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram: Misspelled.
+    ...     Function description.
+    ...
+    ...      :param param: This is indented one space too many.
     ...     """
     ... '''
 
@@ -21,16 +23,16 @@ Spelling error found in documented parameter
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E112: spelling error found in documented parameter (spelling-error)
+        SIG401: param not indented correctly (incorrect-indent)
     1
 
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1) -> None:
+    ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram1: About param1.
+    ...      :param param: This is indented one space too many.
     ...     """
     ... '''
 
@@ -38,16 +40,18 @@ Spelling error found in documented parameter
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E112: spelling error found in documented parameter (spelling-error)
+        SIG401: param not indented correctly (incorrect-indent)
     1
 
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram1: About param1.
+    ...      Function description also indented one space too many.
+    ...
+    ...      :param param: This is indented one space too many.
     ...     """
     ... '''
 
@@ -55,6 +59,5 @@ Spelling error found in documented parameter
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E103: parameters missing (params-missing)
-        E112: spelling error found in documented parameter (spelling-error)
+        SIG401: param not indented correctly (incorrect-indent)
     1

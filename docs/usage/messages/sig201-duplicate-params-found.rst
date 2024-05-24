@@ -1,5 +1,5 @@
-E106: duplicate-params-found
-============================
+SIG201: duplicate-params-found
+==============================
 
 Duplicate parameters found
 
@@ -22,7 +22,7 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E106: duplicate parameters found (duplicate-params-found)
+        SIG201: duplicate parameters found (duplicate-params-found)
     1
 
 .. code-block:: python
@@ -40,7 +40,7 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E106: duplicate parameters found (duplicate-params-found)
+        SIG201: duplicate parameters found (duplicate-params-found)
     1
 
 .. code-block:: python
@@ -58,5 +58,5 @@ Duplicate parameters found
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E106: duplicate parameters found (duplicate-params-found)
+        SIG201: duplicate parameters found (duplicate-params-found)
     1

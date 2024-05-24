@@ -20,7 +20,7 @@ This check will either check the documentation of ``__init__``, or check documen
     ... '''
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
     3 in Klass.__init__
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 .. code-block:: python
@@ -38,7 +38,7 @@ This check will either check the documentation of ``__init__``, or check documen
     ... '''
     >>> docsig(string=string, check_class=True, no_ansi=True)
     9 in Klass.__init__
-        E102: includes parameters that do not exist (params-do-not-exist)
+        SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 Checking class docstrings can be permanently enabled in the pyproject.toml file
