@@ -8,10 +8,10 @@ from __future__ import annotations
 import typing as _t
 
 #: Error code for unknown errors.
-UNKNOWN = "E000"
+UNKNOWN = "SIG000"
 
 #: Default template to format message strings.
-TEMPLATE = "{code}: {description} ({symbolic})"
+TEMPLATE = "{ref}: {description} ({symbolic})"
 
 
 class Message(_t.NamedTuple):
@@ -39,7 +39,7 @@ class Message(_t.NamedTuple):
         This might exist due to a typo or an attempt to retrieve an
         error that does not exist.
         """
-        return self.code != UNKNOWN
+        return self.ref != UNKNOWN
 
     def fstring(self, template: str) -> str:
         """Return message values as a string.
@@ -48,7 +48,7 @@ class Message(_t.NamedTuple):
         :return: Formatted string.
         """
         return template.format(
-            code=self.code,
+            ref=self.ref,
             description=self.description,
             symbolic=self.symbolic,
         )
@@ -84,144 +84,142 @@ class MessageMap(_t.Dict[int, Message]):
     @property
     def all(self) -> Messages:
         """Get all messages that aren't a config error."""
-        return Messages(
-            v for k, v in self.items() if str(k).startswith(str(1))
-        )
+        return Messages(v for k, v in self.items() if len(str(k)) > 1)
 
 
 # SIGxxx: Error
 E = MessageMap(
     {
         #: SIG0xx Config
-        201: Message(
+        1: Message(
             "SIG001",
             "E201",
             "unknown module comment directive '{directive}'",
             "unknown-module-directive",
         ),
-        202: Message(
+        2: Message(
             "SIG002",
             "E202",
             "unknown inline comment directive '{directive}'",
             "unknown-inline-directive",
         ),
-        203: Message(
+        3: Message(
             "SIG003",
             "E203",
             "unknown module comment option for {directive} '{option}'",
             "unknown-module-directive-option",
         ),
-        204: Message(
+        4: Message(
             "SIG004",
             "E204",
             "unknown inline comment option for {directive} '{option}'",
             "unknown-inline-directive-option",
         ),
         #: SIG1xx Missing
-        113: Message(
+        101: Message(
             "SIG101",
             "E113",
             "function is missing a docstring",
             "function-doc-missing",
         ),
-        114: Message(
+        102: Message(
             "SIG102",
             "E114",
             "class is missing a docstring",
             "class-doc-missing",
         ),
         #: SIG2xx Signature
-        106: Message(
+        201: Message(
             "SIG201",
             "E106",
             "duplicate parameters found",
             "duplicate-params-found",
         ),
-        102: Message(
+        202: Message(
             "SIG202",
             "E102",
             "includes parameters that do not exist",
             "params-do-not-exist",
         ),
-        103: Message(
+        203: Message(
             "SIG203",
             "E103",
             "parameters missing",
             "params-missing",
         ),
         #: SIG3xx Parameters
-        117: Message(
+        301: Message(
             "SIG301",
             "E117",
             "description missing from parameter",
             "description-missing",
         ),
-        115: Message(
+        302: Message(
             "SIG302",
             "E115",
             "syntax error in description",
             "syntax-error-in-description",
         ),
-        107: Message(
+        303: Message(
             "SIG303",
             "E107",
             "parameter appears to be incorrectly documented",
             "param-incorrectly-documented",
         ),
         #: SIG4xx Description
-        116: Message(
+        401: Message(
             "SIG401",
             "E116",
             "param not indented correctly",
             "incorrect-indent",
         ),
-        101: Message(
+        402: Message(
             "SIG402",
             "E101",
             "parameters out of order",
             "params-out-of-order",
         ),
-        112: Message(
+        403: Message(
             "SIG403",
             "E112",
             "spelling error found in documented parameter",
             "spelling-error",
         ),
-        110: Message(
+        404: Message(
             "SIG404",
             "E110",
             "documented parameter not equal to its respective argument",
             "param-not-equal-to-arg",
         ),
         #: SIG5xx Returns
-        109: Message(
+        501: Message(
             "SIG501",
             "E109",
             "cannot determine whether a return statement should exist",
             "confirm-return-needed",
             "annotate type to indicate whether return documentation needed",
         ),
-        104: Message(
+        502: Message(
             "SIG502",
             "E104",
             "return statement documented for None",
             "return-documented-for-none",
         ),
-        105: Message(
+        503: Message(
             "SIG503",
             "E105",
             "return missing from docstring",
             "return-missing",
             "it is possible a syntax error could be causing this",
         ),
-        111: Message(
+        504: Message(
             "SIG504",
             "E111",
             "return statement documented for class",
             "class-return-documented",
             "a class does not return a value during instantiation",
         ),
-        108: Message(
+        505: Message(
             "SIG505",
             "E108",
             "return statement documented for property",

@@ -25,5 +25,5 @@ check public methods belonging to protected classes
 
     >>> docsig(string=string, check_protected_class_methods=True, no_ansi=True)
     3 in _Klass.prop
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1

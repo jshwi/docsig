@@ -1,7 +1,7 @@
-E101: params-out-of-order
-=========================
+SIG203: params-missing
+======================
 
-Parameters out of order
+Parameters missing
 
 .. code-block:: python
 
@@ -13,8 +13,7 @@ Parameters out of order
     ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: This should be param1.
-    ...     :param param1: This should be param2.
+    ...     :param param1: Missing param2 from docstring.
     ...     """
     ... '''
 
@@ -22,5 +21,5 @@ Parameters out of order
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E101: parameters out of order (params-out-of-order)
+        SIG203: parameters missing (params-missing)
     1

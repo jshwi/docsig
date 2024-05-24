@@ -25,5 +25,5 @@ check property return values
 
     >>> docsig(string=string, check_property_returns=True, no_ansi=True)
     3 in Klass.prop
-        E105: return missing from docstring (return-missing)
+        SIG503: return missing from docstring (return-missing)
     1

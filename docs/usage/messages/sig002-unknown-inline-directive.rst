@@ -1,5 +1,5 @@
-E202: unknown-inline-directive
-==============================
+SIG002: unknown-inline-directive
+================================
 
 Unknown inline comment directive '{directive}'
 
@@ -21,5 +21,5 @@ Unknown inline comment directive '{directive}'
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        E202: unknown inline comment directive 'ena' (unknown-inline-directive)
+        SIG002: unknown inline comment directive 'ena' (unknown-inline-directive)
     1

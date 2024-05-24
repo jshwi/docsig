@@ -25,5 +25,5 @@ check protected functions and classes
 
     >>> docsig(string=string, check_protected=True, no_ansi=True)
     3 in Parent._protected
-        E103: parameters missing (params-missing)
+        SIG203: parameters missing (params-missing)
     1

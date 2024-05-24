@@ -29,5 +29,5 @@ check overridden methods
 
     >>> docsig(string=string, check_overridden=True, no_ansi=True)
     8 in Child.method
-        E113: function is missing a docstring (function-doc-missing)
+        SIG101: function is missing a docstring (function-doc-missing)
     1

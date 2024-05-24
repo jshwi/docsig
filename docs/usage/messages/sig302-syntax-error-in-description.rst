@@ -1,7 +1,7 @@
-E201: unknown-module-directive
-==============================
+SIG302: syntax-error-in-description
+===================================
 
-Unknown module comment directive '{directive}'
+Syntax error in description
 
 .. code-block:: python
 
@@ -10,17 +10,16 @@ Unknown module comment directive '{directive}'
 .. code-block:: python
 
     >>> string = '''
-    ... # docsig: ena
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param1.
+    ...     :param param:There should be a space here.
     ...     """
     ... '''
 
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    3 in function
-        E201: unknown module comment directive 'ena' (unknown-module-directive)
+    2 in function
+        SIG302: syntax error in description (syntax-error-in-description)
     1

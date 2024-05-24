@@ -91,7 +91,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -109,7 +109,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -123,7 +123,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -175,7 +175,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -216,7 +216,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -236,7 +236,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -255,7 +255,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -275,7 +275,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -294,7 +294,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -313,7 +313,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -333,7 +333,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -351,7 +351,7 @@ def function(param1) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -370,7 +370,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -388,7 +388,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -408,7 +408,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -428,7 +428,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -448,7 +448,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[106].fstring(T)
+        return E[201].fstring(T)
 
 
 @_templates.register
@@ -468,7 +468,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[107].fstring(T)
+        return E[303].fstring(T)
 
 
 @_templates.register
@@ -505,7 +505,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -542,7 +542,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -579,11 +579,11 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:11 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 {PATH}:19 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -604,7 +604,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -641,7 +641,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -679,7 +679,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -756,7 +756,7 @@ class _FMsgPoorIndentS(_BaseTemplate):
 def get_post(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
-    """Get post by post's ID or abort with ``404: Not Found.``
+    """Get post by post's ID or abort with ``501: Not Found.``
 
     Standard behaviour would be to return None, so do not bypass
      silently.
@@ -771,7 +771,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return E[116].fstring(T)
+        return E[401].fstring(T)
 
 
 @_templates.register
@@ -788,7 +788,7 @@ def function(param1) -> None:
 
     @property
     def expected(self) -> str:
-        return E[115].fstring(T)
+        return E[302].fstring(T)
 
 
 @_templates.register
@@ -828,7 +828,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -877,7 +877,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -914,7 +914,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return E[105].hint or ""
+        return E[503].hint or ""
 
 
 @_templates.register
@@ -951,7 +951,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -965,7 +965,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -1002,7 +1002,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1016,7 +1016,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1034,7 +1034,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[110].fstring(T)
+        return E[404].fstring(T)
 
 
 @_templates.register
@@ -1100,7 +1100,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -1118,7 +1118,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1183,7 +1183,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -1205,7 +1205,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -1224,7 +1224,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -1243,7 +1243,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -1281,7 +1281,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1295,7 +1295,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -1354,7 +1354,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -1380,7 +1380,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -1400,7 +1400,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -1417,7 +1417,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return E[112].fstring(T)
+        return E[403].fstring(T)
 
 
 @_templates.register
@@ -1465,7 +1465,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -1487,7 +1487,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -1501,7 +1501,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -1562,7 +1562,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -1621,7 +1621,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -1646,7 +1646,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -1670,7 +1670,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1699,7 +1699,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -1721,7 +1721,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -1743,7 +1743,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -1768,7 +1768,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -1792,7 +1792,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -1814,7 +1814,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -1843,7 +1843,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -1868,7 +1868,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -1894,7 +1894,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[106].fstring(T)
+        return E[201].fstring(T)
 
 
 @_templates.register
@@ -1940,7 +1940,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -1986,7 +1986,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -2037,11 +2037,11 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:16 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 {PATH}:29 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -2066,7 +2066,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -2106,7 +2106,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -2150,7 +2150,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -2172,7 +2172,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -2309,7 +2309,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -2362,7 +2362,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -2473,7 +2473,7 @@ class MutableSet(_t.MutableSet[T]):
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -2487,7 +2487,7 @@ def function() -> int:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -2507,7 +2507,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -2521,7 +2521,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -2543,7 +2543,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[110].fstring(T)
+        return E[404].fstring(T)
 
 
 @_templates.register
@@ -2627,7 +2627,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -2645,7 +2645,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -2726,7 +2726,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -2756,7 +2756,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -2780,7 +2780,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -2802,7 +2802,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -2846,7 +2846,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -2860,7 +2860,7 @@ def __init__(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -2927,7 +2927,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -2953,7 +2953,7 @@ class MutableSet:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -2978,7 +2978,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -2998,7 +2998,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return E[112].fstring(T)
+        return E[403].fstring(T)
 
 
 @_templates.register
@@ -3164,7 +3164,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -3186,7 +3186,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3233,7 +3233,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -3292,7 +3292,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -3317,7 +3317,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -3341,7 +3341,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -3370,7 +3370,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -3392,7 +3392,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -3414,7 +3414,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -3439,7 +3439,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -3463,7 +3463,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -3485,7 +3485,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3514,7 +3514,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -3539,7 +3539,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -3565,7 +3565,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[106].fstring(T)
+        return E[201].fstring(T)
 
 
 @_templates.register
@@ -3611,7 +3611,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3657,7 +3657,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3708,11 +3708,11 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:16 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 {PATH}:29 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -3737,7 +3737,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3804,7 +3804,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -3826,7 +3826,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -3963,7 +3963,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -4029,7 +4029,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4051,7 +4051,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[110].fstring(T)
+        return E[404].fstring(T)
 
 
 @_templates.register
@@ -4111,7 +4111,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -4192,7 +4192,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -4222,7 +4222,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -4246,7 +4246,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -4268,7 +4268,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -4312,7 +4312,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4360,7 +4360,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -4385,7 +4385,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -4405,7 +4405,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return E[112].fstring(T)
+        return E[403].fstring(T)
 
 
 @_templates.register
@@ -4446,7 +4446,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -4466,7 +4466,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4486,7 +4486,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -4535,7 +4535,7 @@ class _FMsgPoorIndentSRs(_BaseTemplate):
 def get_post(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
-    """Get post by post's ID or abort with ``404: Not Found.``
+    """Get post by post's ID or abort with ``501: Not Found.``
 
     Standard behaviour would be to return None, so do not bypass
      silently.
@@ -4550,7 +4550,7 @@ def get_post(
 
     @property
     def expected(self) -> str:
-        return E[116].fstring(T)
+        return E[401].fstring(T)
 
 
 @_templates.register
@@ -4590,7 +4590,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -4627,7 +4627,7 @@ def get_post() -> Post:
 
     @property
     def expected(self) -> str:
-        return E[105].hint or ""
+        return E[503].hint or ""
 
 
 @_templates.register
@@ -4664,7 +4664,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4710,7 +4710,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -4732,7 +4732,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -4791,7 +4791,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -4810,7 +4810,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -4831,7 +4831,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -4878,7 +4878,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -4899,7 +4899,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -4919,7 +4919,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4942,7 +4942,7 @@ def function(param1, param2, param3):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -4962,7 +4962,7 @@ def function(param1) -> t.Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -4982,7 +4982,7 @@ def function(param1) -> Optional[str]:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -5003,7 +5003,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -5023,7 +5023,7 @@ def function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -5042,7 +5042,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5065,7 +5065,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[104].fstring(T)
+        return E[502].fstring(T)
 
 
 @_templates.register
@@ -5086,7 +5086,7 @@ def function(param1, param2, param3) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -5107,7 +5107,7 @@ def function(param1, param2, param3) -> None:
 
     @property
     def expected(self) -> str:
-        return E[106].fstring(T)
+        return E[201].fstring(T)
 
 
 @_templates.register
@@ -5146,7 +5146,7 @@ def function(param1, param2, *args) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5185,7 +5185,7 @@ def function(param1, param2, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5225,11 +5225,11 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:12 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 {PATH}:21 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -5251,7 +5251,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5310,7 +5310,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5329,7 +5329,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[101].fstring(T)
+        return E[402].fstring(T)
 
 
 @_templates.register
@@ -5447,7 +5447,7 @@ def get_index(index: int) -> _T | None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5505,7 +5505,7 @@ def function():
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -5524,7 +5524,7 @@ def function(arg, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[110].fstring(T)
+        return E[404].fstring(T)
 
 
 @_templates.register
@@ -5574,7 +5574,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -5644,7 +5644,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -5669,7 +5669,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].fstring(T)
+        return E[504].fstring(T)
 
 
 @_templates.register
@@ -5689,7 +5689,7 @@ def _function(param1, param2) -> None:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -5709,7 +5709,7 @@ def function(self) -> int:
 
     @property
     def expected(self) -> str:
-        return E[105].fstring(T)
+        return E[503].fstring(T)
 
 
 @_templates.register
@@ -5749,7 +5749,7 @@ def method(self):
 
     @property
     def expected(self) -> str:
-        return E[109].fstring(T)
+        return E[501].fstring(T)
 
 
 @_templates.register
@@ -5791,7 +5791,7 @@ class _Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5812,7 +5812,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[102].fstring(T)
+        return E[202].fstring(T)
 
 
 @_templates.register
@@ -5830,7 +5830,7 @@ def function(param) -> None:
 
     @property
     def expected(self) -> str:
-        return E[112].fstring(T)
+        return E[403].fstring(T)
 
 
 @_templates.register
@@ -5875,7 +5875,7 @@ def function(param1, **kwargs) -> None:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -5891,7 +5891,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[114].fstring(T)
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -5924,7 +5924,7 @@ def check_stuff(str_lin: str, a: str) -> bool:
 
     @property
     def expected(self) -> str:
-        return E[115].fstring(T)
+        return E[302].fstring(T)
 
 
 @_templates.register
@@ -6007,7 +6007,7 @@ class Params(_MutableSequence[Param]):
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -6045,7 +6045,7 @@ def example(some_input: int) -> int:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -6067,7 +6067,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[111].hint or ""
+        return E[504].hint or ""
 
 
 @_templates.register
@@ -6216,7 +6216,7 @@ def process(response):
     def expected(self) -> str:
         return f"""\
 {PATH}:20 in process
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """
 
 
@@ -6254,7 +6254,7 @@ def process(response):
     def expected(self) -> str:
         return f"""\
 {PATH}:20 in process
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -6386,7 +6386,7 @@ def process(response):
     def expected(self) -> str:
         return f"""\
 {PATH}:20 in process
-    {E[104].fstring(T)}
+    {E[502].fstring(T)}
 """
 
 
@@ -6454,7 +6454,7 @@ class SomeClass:
     def expected(self) -> str:
         return f"""\
 {PATH}:17 in SomeClass.process
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """
 
 
@@ -6489,7 +6489,7 @@ class SomeClass:
     def expected(self) -> str:
         return f"""\
 {PATH}:17 in SomeClass.process
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -6524,7 +6524,7 @@ class SomeClass:
     def expected(self) -> str:
         return f"""\
 {PATH}:17 in SomeClass.process
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """
 
 
@@ -6686,9 +6686,9 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:11 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 {PATH}:19 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -6763,7 +6763,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 """
 
 
@@ -6802,9 +6802,9 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:11 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 """
 
 
@@ -6844,9 +6844,9 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:21 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -6912,11 +6912,11 @@ def function_6(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_1
-    {E[101].fstring(T)}
+    {E[402].fstring(T)}
 {PATH}:21 in function_3
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 {PATH}:47 in function_6
-    {E[103].fstring(T)}
+    {E[203].fstring(T)}
 """
 
 
@@ -6993,7 +6993,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:12 in function_2
-    {E[102].fstring(T)}
+    {E[202].fstring(T)}
 """
 
 
@@ -7024,9 +7024,9 @@ def function_2(param1, param2) -> None:  # docsig: ena
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_1
-    {E[202].fstring(T).format(directive="ena")}
+    {E[2].fstring(T).format(directive="ena")}
 {PATH}:11 in function_2
-    {E[202].fstring(T).format(directive="ena")}
+    {E[2].fstring(T).format(directive="ena")}
 """
 
 
@@ -7057,11 +7057,11 @@ def function_2(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_1
-    {E[102].fstring(T)}
-    {E[201].fstring(T).format(directive="disa")}
+    {E[1].fstring(T).format(directive="disa")}
+    {E[202].fstring(T)}
 {PATH}:11 in function_2
-    {E[101].fstring(T)}
-    {E[201].fstring(T).format(directive="disa")}
+    {E[1].fstring(T).format(directive="disa")}
+    {E[402].fstring(T)}
 """
 
 
@@ -7144,29 +7144,29 @@ def f7(param, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_1
-    {E[101].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[402].fstring(T)}
 {PATH}:14 in function_2
-    {E[102].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[202].fstring(T)}
 {PATH}:23 in function_3
-    {E[103].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
-    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-    {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[203].fstring(T)}
 {PATH}:33 in function_4
-    {E[104].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[502].fstring(T)}
 {PATH}:43 in function_5
-    {E[105].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[503].fstring(T)}
 {PATH}:52 in f6
-    {E[106].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[201].fstring(T)}
 {PATH}:62 in f7
-    {E[106].fstring(T)}
-    {E[107].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[201].fstring(T)}
+    {E[303].fstring(T)}
 """
 
 
@@ -7249,29 +7249,29 @@ def f7(param, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_1
-    {E[101].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[402].fstring(T)}
 {PATH}:14 in function_2
-    {E[102].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[202].fstring(T)}
 {PATH}:23 in function_3
-    {E[103].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
-    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-    {E[204].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[203].fstring(T)}
 {PATH}:33 in function_4
-    {E[104].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[502].fstring(T)}
 {PATH}:43 in function_5
-    {E[105].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[503].fstring(T)}
 {PATH}:52 in f6
-    {E[106].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[201].fstring(T)}
 {PATH}:62 in f7
-    {E[106].fstring(T)}
-    {E[107].fstring(T)}
-    {E[201].fstring(T).format(directive=UNKNOWN)}
+    {E[1].fstring(T).format(directive=UNKNOWN)}
+    {E[201].fstring(T)}
+    {E[303].fstring(T)}
 """
 
 
@@ -7294,8 +7294,8 @@ def function_3(  # docsig: enable=unknown
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_3
-    {E[103].fstring(T)}
-    {E[204].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[203].fstring(T)}
 """
 
 
@@ -7319,7 +7319,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -7341,7 +7341,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -7364,7 +7364,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -7387,7 +7387,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -7410,7 +7410,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[103].fstring(T)
+        return E[203].fstring(T)
 
 
 @_templates.register
@@ -7431,8 +7431,8 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_3
-    {E[103].fstring(T)}
-    {E[203].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[3].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[203].fstring(T)}
 """
 
 
@@ -7456,9 +7456,9 @@ class _Messages(_t.Dict[int, Message]):
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in _Messages.__init__
-    {E[114].fstring(T)}
+    {E[102].fstring(T)}
 {PATH}:6 in _Messages.fromcode
-    {E[105].fstring(T)}
+    {E[503].fstring(T)}
 """
 
 
@@ -7489,14 +7489,14 @@ class Report(_MessageSequence):
         if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
-            self.add(_E[101])
+            self.add(_E[402])
 '''
 
     @property
     def expected(self) -> str:
         return f"""\
 {PATH}:20 in Report.order
-    {E[113].fstring(T)}
+    {E[101].fstring(T)}
 """
 
 
@@ -7531,14 +7531,14 @@ class Report(_MessageSequence):
         if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
-            self.add(_E[101])
+            self.add(_E[402])
 '''
 
     @property
     def expected(self) -> str:
         return f"""\
 {PATH}:24 in Report.order
-    {E[113].fstring(T)}
+    {E[101].fstring(T)}
 """
 
 
@@ -7570,7 +7570,7 @@ class Report(_MessageSequence):
         if any(sig.name == i.name for i in self._func.docstring.args) or any(
             doc.name == i.name for i in self._func.signature.args
         ):
-            self.add(_E[101])
+            self.add(_E[402])
 '''
 
     @property
@@ -7612,7 +7612,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -7631,7 +7631,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -7649,7 +7649,7 @@ if True:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -7673,7 +7673,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return E[114].fstring(T)
+        return E[102].fstring(T)
 
 
 @_templates.register
@@ -7692,7 +7692,7 @@ for argument in container:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -7712,7 +7712,7 @@ for argument in container:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 @_templates.register
@@ -7745,7 +7745,7 @@ def my_function(argument: int = 42) -> int:
 
     @property
     def expected(self) -> str:
-        return E[113].fstring(T)
+        return E[101].fstring(T)
 
 
 # starts with `M` for multi instead of `F` so we don't run
@@ -7791,7 +7791,7 @@ def my_function(argument: int = 42) -> int:
     def expected(self) -> str:
         return f"""\
 {PATH}:19 in Klass.__init__
-    {E[114].fstring(T)}
+    {E[102].fstring(T)}
 """
 
 
@@ -7830,9 +7830,9 @@ def my_function(argument: int = 42) -> int:
     def expected(self) -> str:
         return f"""\
 {PATH}:19 in Klass.__init__
-    {E[114].fstring(T)}
+    {E[102].fstring(T)}
 {PATH}:21 in Klass.my_external_function
-    {E[113].fstring(T)}
+    {E[101].fstring(T)}
 """
 
 

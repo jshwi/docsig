@@ -44,5 +44,5 @@ check nested functions and classes
 
     >>> docsig(string=string, check_nested=True, no_ansi=True)
     19 in my_function.my_external_function
-        E113: function is missing a docstring (function-doc-missing)
+        SIG101: function is missing a docstring (function-doc-missing)
     1
