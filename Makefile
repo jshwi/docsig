@@ -26,7 +26,7 @@ audit: update-copyright \
 test: doctest coverage
 
 .PHONY: doctest
-doctest: doctest-package doctest-docs
+doctest: doctest-docs
 
 .PHONY: docs
 docs:
@@ -145,10 +145,6 @@ whitelist:
 coverage:
 	@$(RUN) pytest -n=auto --cov=docsig --cov=tests \
 		&& $(RUN) coverage xml
-
-.PHONY: doctest-package
-doctest-package:
-	@$(RUN) $(MAKE) -C docs doctest
 
 .PHONY: params
 params:

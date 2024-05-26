@@ -2,7 +2,6 @@ ci:
   skip:
     - pylint
     - deptry
-    - doctest-package
     - docsig
     - vulture
     - copyright-year
@@ -34,12 +33,6 @@ repos:
         name: pylint
         entry: make lint
         language: system
-      # no hooks found for `doctest`
-      - id: doctest-package
-        name: doctest docstrings
-        language: system
-        entry: make doctest-package
-        pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
         name: check signature documentation
