@@ -3,7 +3,6 @@ ci:
     - pylint
     - deptry
     - doctest-package
-    - doctest-readme
     - docsig
     - vulture
     - copyright-year
@@ -40,12 +39,6 @@ repos:
         name: doctest docstrings
         language: system
         entry: make doctest-package
-        pass_filenames: false
-      # no hooks found for `doctest`
-      - id: doctest-readme
-        name: doctest readme
-        language: system
-        entry: make doctest-readme
         pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
