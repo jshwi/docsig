@@ -10,18 +10,6 @@ install: install-poetry install-deps install-hooks install-ignore-blame-revs
 .PHONY: remove
 remove: remove-poetry remove-deps remove-hooks remove-ignore-blame-revs
 
-.PHONY: audit
-audit: format \
-	format-docs \
-	format-str \
-	imports \
-	lint \
-	doctest \
-	test \
-	typecheck \
-	unused \
-	whitelist
-
 .PHONY: docs
 docs:
 	@$(RUN) $(MAKE) -C docs html
