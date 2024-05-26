@@ -10,7 +10,7 @@ ci:
     - update-readme
     - update-docs
     - update-whitelist
-    - coverage
+    - test
 default_language_version:
   python: "3.9"
 default_stages:
@@ -46,10 +46,10 @@ repos:
         entry: make unused
         pass_filenames: false
       # script also handles coverage
-      - id: coverage
+      - id: test
         name: test source code coverage
         language: system
-        entry: make coverage
+        entry: make test
         pass_filenames: false
       # check imports against dependencies
       - id: deptry

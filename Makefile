@@ -17,7 +17,7 @@ audit: format \
 	imports \
 	lint \
 	doctest \
-	coverage \
+	test \
 	typecheck \
 	unused \
 	whitelist
@@ -144,8 +144,8 @@ whitelist:
 	@$(RUN) vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py \
 		|| exit 0
 
-.PHONY: coverage
-coverage:
+.PHONY: test
+test:
 	@$(RUN) pytest -n=auto --cov=docsig --cov=tests \
 		&& $(RUN) coverage xml
 
