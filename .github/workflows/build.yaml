@@ -42,9 +42,33 @@ jobs:
       - name: Install Python Packages
         id: install-python-packages
         run: poetry install
-      - name: Audit
-        id: audit
-        run: make audit
+      - name: Check Format Style
+        id: check-format-style
+        run: make format
+      - name: Check Docstring Formatting
+        id: check-docstring-formatting
+        run: make format-docs
+      - name: Check Format Strings
+        id: check-format-strings
+        run: make format-str
+      - name: Check Imports Sorted
+        id: check-imports-sorted
+        run: make imports
+      - name: Run Lint
+        id: run-lint
+        run: make lint
+      - name: Run Test Coverage
+        id: run-test-coverage
+        run: make test
+      - name: Check Types
+        id: check-types
+        run: make typecheck
+      - name: Check Whitelist
+        id: check-whitelist
+        run: make whitelist
+      - name: Check Unused Code
+        id: check-unused-code
+        run: make unused
       - name: Check Signature Documentation
         id: check-signature-documentation
         run: make params
