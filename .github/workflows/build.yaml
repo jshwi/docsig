@@ -45,19 +45,19 @@ jobs:
       - name: Audit
         id: audit
         run: make audit
-      - name: check signature documentation
+      - name: Check Signature Documentation
         id: check-signature-documentation
         run: make params
-      - name: build documentation
+      - name: Build Documentation
         id: build-documentation
         run: make docs
-      - name: check links
-        id: check-links
+      - name: Check Links in Documentation
+        id: check-links-in-documentation
         run: make check-links
-      - name: doctest examples
-        id: doctest-examples
+      - name: Test Docs
+        id: test-docs
         run: make doctest-docs
-      - name: Upload coverage
+      - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
         env:
