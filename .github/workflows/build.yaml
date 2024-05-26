@@ -12,8 +12,8 @@ env:
 
 jobs:
   build:
-    name: ${{ matrix.os }}-python${{ matrix.python-version }}
-    runs-on: ${{ matrix.os }}
+    name: "${{ matrix.os }}-python${{ matrix.python-version }}"
+    runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
         python-version:
@@ -37,7 +37,7 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "${{ matrix.python-version }}"
           cache: poetry
       - name: Install Python Packages
         id: install-python-packages
@@ -61,4 +61,4 @@ jobs:
         id: upload-coverage
         uses: codecov/codecov-action@v4
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
