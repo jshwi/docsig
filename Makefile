@@ -8,7 +8,7 @@ all: install
 install: install-poetry install-deps install-hooks install-ignore-blame-revs
 
 .PHONY: remove
-remove: remove-poetry remove-hooks remove-deps
+remove: remove-poetry remove-deps remove-hooks remove-ignore-blame-revs
 
 .PHONY: audit
 audit: update-copyright \
