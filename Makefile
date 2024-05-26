@@ -16,13 +16,11 @@ audit: format \
 	format-str \
 	imports \
 	lint \
-	test \
+	doctest \
+	coverage \
 	typecheck \
 	unused \
 	whitelist
-
-.PHONY: test
-test: doctest coverage
 
 .PHONY: docs
 docs:
