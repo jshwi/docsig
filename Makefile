@@ -25,9 +25,6 @@ audit: update-copyright \
 .PHONY: test
 test: doctest coverage
 
-.PHONY: doctest
-doctest: doctest-docs
-
 .PHONY: docs
 docs:
 	@$(RUN) $(MAKE) -C docs html
@@ -159,8 +156,8 @@ coverage:
 params:
 	@$(RUN) docsig $(PYTHON_FILES)
 
-.PHONY: doctest-docs
-doctest-docs:
+.PHONY: doctest
+doctest:
 	@$(RUN) pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark

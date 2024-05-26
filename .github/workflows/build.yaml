@@ -80,7 +80,7 @@ jobs:
         run: make check-links
       - name: Test Docs
         id: test-docs
-        run: make doctest-docs
+        run: make doctest
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
