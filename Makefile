@@ -11,8 +11,7 @@ install: install-poetry install-deps install-hooks install-ignore-blame-revs
 remove: remove-poetry remove-deps remove-hooks remove-ignore-blame-revs
 
 .PHONY: audit
-audit: update-copyright \
-	format \
+audit: format \
 	format-docs \
 	format-str \
 	imports \
