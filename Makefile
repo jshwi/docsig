@@ -34,7 +34,16 @@ docs:
 
 .PHONY: clean
 clean:
-	@git clean docs -fdx
+	@rm -rf **/*.pyc \
+		**/__pycache__ \
+		.coverage \
+		.mypy_cache \
+		.pytest_cache \
+		coverage.xml \
+		dist \
+		docs/_build \
+		docs/_generated \
+		node_modules
 
 .PHONY: install-poetry
 install-poetry:
