@@ -1,6 +1,6 @@
 POETRY := bin/poetry/bin/poetry
 
-PYTHON_FILES := $(shell git ls-files "*.py")
+PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
