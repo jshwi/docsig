@@ -21,7 +21,7 @@ build: format \
 test: doctest coverage
 
 .PHONY: doctest
-doctest: doctest-package doctest-docs
+doctest: doctest-docs
 
 .PHONY: docs
 docs:
@@ -138,10 +138,6 @@ whitelist:
 .PHONY: coverage
 coverage:
 	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
-
-.PHONY: doctest-package
-doctest-package:
-	@$(MAKE) -C docs doctest
 
 .PHONY: params
 params:
