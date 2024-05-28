@@ -1,4 +1,4 @@
-PYTHON_FILES := $(shell git ls-files "*.py")
+PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 
 .PHONY: all
 all: install-poetry install-deps install-hooks install-ignore-blame-revs
