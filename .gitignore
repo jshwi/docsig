@@ -4,6 +4,7 @@
 .DS_Store
 .benchmarks/
 .env
+.make/
 __pycache__/
 bin
 dist/
