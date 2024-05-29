@@ -1,6 +1,8 @@
 POETRY := bin/poetry/bin/poetry
 
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
+PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
+TEST_FILES := $(shell git ls-files "tests/*.py")
 
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
@@ -105,12 +107,11 @@ typecheck: $(VENV)
 	@$(POETRY) run mypy .
 
 .PHONY: unused
-unused: whitelist
+unused: whitelist.py
 	@$(POETRY) run vulture whitelist.py docsig tests
 
-.PHONY: whitelist
-whitelist: $(VENV)
-	@$(POETRY) run vulture --make-whitelist docsig tests > whitelist.py || exit 0
+whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
+	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
 
 .PHONY: coverage
 coverage: $(VENV)
