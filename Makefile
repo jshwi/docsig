@@ -1,10 +1,7 @@
 PYTHON_FILES := $(shell git ls-files "*.py")
 
 .PHONY: all
-all: install
-
-.PHONY: install
-install: install-poetry install-deps install-hooks install-ignore-blame-revs
+all: install-poetry install-deps install-hooks install-ignore-blame-revs
 
 .PHONY: remove
 remove: remove-poetry remove-hooks remove-deps
