@@ -91,7 +91,7 @@ repos:
       - id: update-whitelist
         name: update whitelist
         language: system
-        entry: make whitelist
+        entry: make whitelist.py
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
