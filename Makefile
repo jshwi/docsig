@@ -9,10 +9,7 @@ else
 endif
 
 .PHONY: all
-all: $(VENV) install-hooks install-ignore-blame-revs
-
-.PHONY: remove
-remove: remove-hooks
+all: .make/pre-commit install-ignore-blame-revs
 
 .PHONY: build
 build: format \
@@ -36,6 +33,8 @@ docs: $(VENV)
 clean:
 	@find . -name '__pycache__' -exec rm -rf {} +
 	@rm -rf .coverage
+	@rm -rf .git/hooks/*
+	@rm -rf .make
 	@rm -rf .mypy_cache
 	@rm -rf .pytest_cache
 	@rm -rf .venv
@@ -51,13 +50,7 @@ $(VENV): $(POETRY) poetry.lock
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 $< install
 	@touch $@
 
-.PHONY: install-pre-commit
-install-pre-commit: $(VENV)
-	@$(POETRY) run command -v pre-commit > /dev/null 2>&1 \
-		|| $(POETRY) run pip --quiet install pre-commit
-
-.PHONY: install-hooks
-install-hooks: install-pre-commit
+.make/pre-commit: $(VENV)
 	@$(POETRY) run pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
@@ -68,24 +61,13 @@ install-hooks: install-pre-commit
 		--hook-type post-checkout \
 		--hook-type post-merge \
 		--hook-type post-rewrite
+	@mkdir -p $(@D)
+	@touch $@
 
 .PHONY: install-ignore-blame-revs
 install-ignore-blame-revs:
 	@git config --local blame.ignoreRevsFile .git-blame-ignore-revs
 	@echo "installed .git-blame-ignore-revs"
-
-.PHONY: remove-hooks
-remove-hooks: install-pre-commit
-	@$(POETRY) run pre-commit uninstall \
-		--hook-type pre-commit \
-		--hook-type pre-merge-commit \
-		--hook-type pre-push \
-		--hook-type prepare-commit-msg \
-		--hook-type commit-msg \
-		--hook-type post-commit \
-		--hook-type post-checkout \
-		--hook-type post-merge \
-		--hook-type post-rewrite
 
 $(POETRY):
 	@curl -sSL https://install.python-poetry.org | \
