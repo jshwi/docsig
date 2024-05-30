@@ -27,7 +27,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
     steps:
-      - name: Checkout build
+      - name: Checkout Build
         id: checkout-build
         uses: actions/checkout@v4
       - name: Install Poetry
@@ -45,19 +45,19 @@ jobs:
       - name: Audit
         id: audit
         run: poetry run make audit
-      - name: check signature documentation
+      - name: Check Signature Documentation
         id: check-signature-documentation
         run: poetry run make params
-      - name: build documentation
+      - name: Build Documentation
         id: build-documentation
         run: poetry run make docs
-      - name: check links
-        id: check-links
+      - name: Check Documentation Links
+        id: check-documentation-links
         run: poetry run make check-links
-      - name: doctest examples
-        id: doctest-examples
+      - name: Test Documentation
+        id: test-documentation
         run: poetry run make doctest-docs
-      - name: Upload coverage
+      - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
         env:
