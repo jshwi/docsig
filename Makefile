@@ -24,7 +24,7 @@ test: doctest coverage
 
 .PHONY: docs
 docs: install-deps
-	@$(MAKE) -C docs html
+	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
 clean:
@@ -46,7 +46,7 @@ install-pre-commit: install-deps
 
 .PHONY: install-hooks
 install-hooks: install-pre-commit
-	@pre-commit install \
+	@$(POETRY) run pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -64,7 +64,7 @@ install-ignore-blame-revs:
 
 .PHONY: remove-hooks
 remove-hooks: install-pre-commit
-	@pre-commit uninstall \
+	@$(POETRY) run pre-commit uninstall \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -93,66 +93,67 @@ remove-ignore-blame-revs:
 
 .PHONY: update-readme
 update-readme: install-deps
-	@python3 scripts/update_readme.py
+	@$(POETRY) run python3 scripts/update_readme.py
 
 .PHONY: update-docs
 update-docs: install-deps
-	@python3 scripts/update_docs.py
+	@$(POETRY) run python3 scripts/update_docs.py
 
 .PHONY: update-copyright
 update-copyright: install-deps
-	@python3 scripts/update_copyright.py
+	@$(POETRY) run python3 scripts/update_copyright.py
 
 .PHONY: format
 format: install-deps
-	@black $(PYTHON_FILES)
+	@$(POETRY) run black $(PYTHON_FILES)
 
 .PHONY: format-docs
 format-docs: install-deps
-	@docformatter $(PYTHON_FILES)
+	@$(POETRY) run docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
 format-str: install-deps
-	@flynt $(PYTHON_FILES)
+	@$(POETRY) run flynt $(PYTHON_FILES)
 
 .PHONY: imports
 imports: install-deps
-	@isort $(PYTHON_FILES)
+	@$(POETRY) run isort $(PYTHON_FILES)
 
 .PHONY: lint
 lint: install-deps
-	@pylint --output-format=colorized $(PYTHON_FILES)
+	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
 typecheck: install-deps
-	@mypy .
+	@$(POETRY) run mypy .
 
 .PHONY: unused
 unused:
-	@vulture whitelist.py $(PYTHON_FILES)
+	@$(POETRY) run vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
 whitelist: install-deps
-	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
+	@$(POETRY) run vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
 
 .PHONY: coverage
 coverage: install-deps
-	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
+	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
+		&& $(POETRY) run coverage xml
 
 .PHONY: params
 params: install-deps
-	@docsig $(PYTHON_FILES)
+	@$(POETRY) run docsig $(PYTHON_FILES)
 
 .PHONY: doctest
 doctest: install-deps
-	@pytest docs README.rst --doctest-glob='*.rst'
+	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark
 benchmark: install-deps
-	@RUN_BENCHMARK=true pytest -m=benchmark --benchmark-save=benchmark
+	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
 
 .PHONY: check-links
 check-links: install-deps
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
-		&& $(MAKE) -C docs linkcheck \
+		&& $(POETRY) run $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"

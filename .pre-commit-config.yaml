@@ -31,26 +31,26 @@ repos:
       # local so package can be imported to lint
       - id: lint
         name: lint
-        entry: poetry run make lint
+        entry: make lint
         language: system
         pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
         name: check signature documentation
         language: system
-        entry: poetry run make params
+        entry: make params
         pass_filenames: false
       # analyze all files for reliable result
       - id: vulture
         name: check for unused code
         language: system
-        entry: poetry run make unused
+        entry: make unused
         pass_filenames: false
       # script also handles coverage
       - id: coverage
         name: test source code coverage
         language: system
-        entry: poetry run make coverage
+        entry: make coverage
         pass_filenames: false
       # check imports against dependencies
       - id: deptry
@@ -66,32 +66,32 @@ repos:
       - id: copyright-year
         name: copyright year
         language: system
-        entry: poetry run make update-copyright
+        entry: make update-copyright
         pass_filenames: false
       - id: doctest
         name: doctest
         language: system
-        entry: poetry run make doctest
+        entry: make doctest
         pass_filenames: false
       - id: make-docs
         name: make docs
         language: system
-        entry: poetry run make docs
+        entry: make docs
         pass_filenames: false
       - id: update-readme
         name: update readme
         language: system
-        entry: poetry run make update-readme
+        entry: make update-readme
         pass_filenames: false
       - id: update-docs
         name: update docs
         language: system
-        entry: poetry run make update-docs
+        entry: make update-docs
         pass_filenames: false
       - id: update-whitelist
         name: update whitelist
         language: system
-        entry: poetry run make whitelist
+        entry: make whitelist
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
