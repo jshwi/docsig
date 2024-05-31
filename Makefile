@@ -18,8 +18,7 @@ audit: update-copyright \
 	lint \
 	test \
 	typecheck \
-	unused \
-	whitelist
+	unused
 
 .PHONY: test
 test: doctest coverage
@@ -132,12 +131,12 @@ typecheck:
 	@mypy .
 
 .PHONY: unused
-unused:
-	@vulture whitelist.py $(PYTHON_FILES)
+unused: whitelist
+	@vulture whitelist.py docsig tests
 
 .PHONY: whitelist
 whitelist:
-	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
+	@vulture --make-whitelist docsig tests > whitelist.py || exit 0
 
 .PHONY: coverage
 coverage:
