@@ -1,3 +1,5 @@
+POETRY := poetry
+
 PYTHON_FILES := $(shell git ls-files "*.py")
 
 .PHONY: all
@@ -37,17 +39,17 @@ clean:
 
 .PHONY: install-poetry
 install-poetry:
-	@command -v poetry >/dev/null 2>&1 \
+	@command -v $(POETRY) >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 -
 
 .PHONY: install-deps
 install-deps:
-	@POETRY_VIRTUALENVS_IN_PROJECT=1 poetry install
+	@POETRY_VIRTUALENVS_IN_PROJECT=1 $(POETRY) install
 
 .PHONY: install-pre-commit
 install-pre-commit: install-deps
-	@poetry run command -v pre-commit > /dev/null 2>&1 \
-		|| poetry run pip --quiet install pre-commit
+	@$(POETRY) run command -v pre-commit > /dev/null 2>&1 \
+		|| $(POETRY) run pip --quiet install pre-commit
 
 .PHONY: install-hooks
 install-hooks: install-pre-commit
@@ -82,11 +84,12 @@ remove-hooks: install-pre-commit
 
 .PHONY: remove-deps
 remove-deps: install-deps
-	rm -rf $(shell dirname $(shell dirname $(shell poetry run which python)))
+	rm -rf \
+		$(shell dirname $(shell dirname $(shell $(POETRY) run which python)))
 
 .PHONY: remove-poetry
 remove-poetry:
-	@command -v poetry >/dev/null 2>&1 \
+	@command -v $(POETRY) >/dev/null 2>&1 \
 		|| curl -sSL https://install.python-poetry.org | python3 - --uninstall
 
 .PHONY: remove-ignore-blame-revs
