@@ -5,7 +5,7 @@ ci:
     - docsig
     - vulture
     - copyright-year
-    - doctest-examples
+    - doctest
     - make-docs
     - update-readme
     - update-docs
@@ -71,10 +71,10 @@ repos:
         language: system
         entry: poetry run make update-copyright
         pass_filenames: false
-      - id: doctest-examples
-        name: doctest examples
+      - id: doctest
+        name: doctest
         language: system
-        entry: poetry run make doctest-docs
+        entry: poetry run make doctest
         pass_filenames: false
       - id: make-docs
         name: make docs
