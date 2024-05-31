@@ -21,7 +21,7 @@ build: format \
 test: doctest coverage
 
 .PHONY: doctest
-doctest: doctest-package doctest-readme doctest-docs
+doctest: doctest-package doctest-docs
 
 .PHONY: docs
 docs:
@@ -143,17 +143,13 @@ coverage:
 doctest-package:
 	@$(MAKE) -C docs doctest
 
-.PHONY: doctest-package
-doctest-readme:
-	@python -m doctest README.rst
-
 .PHONY: params
 params:
 	@docsig $(PYTHON_FILES)
 
 .PHONY: doctest-docs
 doctest-docs:
-	@pytest docs --doctest-glob='*.rst'
+	@pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark
 benchmark:
