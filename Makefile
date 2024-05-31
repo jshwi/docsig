@@ -19,8 +19,7 @@ build: format \
 	lint \
 	test \
 	typecheck \
-	unused \
-	whitelist
+	unused
 
 .PHONY: test
 test: doctest coverage
@@ -106,12 +105,12 @@ typecheck: $(VENV)
 	@$(POETRY) run mypy .
 
 .PHONY: unused
-unused:
-	@$(POETRY) run vulture whitelist.py $(PYTHON_FILES)
+unused: whitelist
+	@$(POETRY) run vulture whitelist.py docsig tests
 
 .PHONY: whitelist
 whitelist: $(VENV)
-	@$(POETRY) run vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
+	@$(POETRY) run vulture --make-whitelist docsig tests > whitelist.py || exit 0
 
 .PHONY: coverage
 coverage: $(VENV)
