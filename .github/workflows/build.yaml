@@ -56,7 +56,7 @@ jobs:
         run: poetry run make check-links
       - name: Test Documentation
         id: test-documentation
-        run: poetry run make doctest-docs
+        run: poetry run make doctest
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4

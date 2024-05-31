@@ -20,9 +20,6 @@ build: format \
 .PHONY: test
 test: doctest coverage
 
-.PHONY: doctest
-doctest: doctest-docs
-
 .PHONY: docs
 docs:
 	@$(MAKE) -C docs html
@@ -150,8 +147,8 @@ coverage:
 params:
 	@docsig $(PYTHON_FILES)
 
-.PHONY: doctest-docs
-doctest-docs:
+.PHONY: doctest
+doctest:
 	@pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark
