@@ -44,19 +44,19 @@ jobs:
         run: poetry install
       - name: Build
         id: build
-        run: poetry run make build
+        run: make build
       - name: Check Signature Documentation
         id: check-signature-documentation
-        run: poetry run make params
+        run: make params
       - name: Build Documentation
         id: build-documentation
-        run: poetry run make docs
+        run: make docs
       - name: Check Documentation Links
         id: check-documentation-links
-        run: poetry run make check-links
+        run: make check-links
       - name: Test Documentation
         id: test-documentation
-        run: poetry run make doctest
+        run: make doctest
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
