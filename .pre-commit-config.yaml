@@ -1,6 +1,6 @@
 ci:
   skip:
-    - pylint
+    - lint
     - deptry
     - docsig
     - vulture
@@ -29,13 +29,10 @@ repos:
   - repo: local
     hooks:
       # local so package can be imported to lint
-      - id: pylint
-        name: pylint
-        entry: poetry run pylint
+      - id: lint
+        name: lint
+        entry: poetry run make lint
         language: system
-        types:
-          - python
-        exclude: ^(docs/conf\.py)$
         pass_filenames: false
       # infer imports for overridden methods
       - id: docsig
