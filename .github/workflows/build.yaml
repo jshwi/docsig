@@ -42,9 +42,9 @@ jobs:
       - name: Install Python Packages
         id: install-python-packages
         run: poetry install
-      - name: Audit
-        id: audit
-        run: poetry run make audit
+      - name: Build
+        id: build
+        run: poetry run make build
       - name: Check Signature Documentation
         id: check-signature-documentation
         run: poetry run make params
