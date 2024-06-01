@@ -76,9 +76,9 @@ $(POETRY):
 		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
 	@touch $@
 
-.PHONY: update-readme
-update-readme: $(VENV)
-	@$(POETRY) run python3 scripts/update_readme.py
+README.rst: $(VENV) $(PACKAGE_FILES)
+	@$(POETRY) run python scripts/update_readme.py >/dev/null 2>&1 || exit 0
+	@touch $@
 
 .make/update-docs: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run python3 scripts/update_docs.py

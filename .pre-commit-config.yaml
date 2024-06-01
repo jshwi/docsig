@@ -81,7 +81,7 @@ repos:
       - id: update-readme
         name: update readme
         language: system
-        entry: make update-readme
+        entry: make README.rst
         pass_filenames: false
       - id: update-docs
         name: update docs
