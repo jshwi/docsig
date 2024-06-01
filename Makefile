@@ -74,9 +74,10 @@ $(POETRY):
 update-readme: $(VENV)
 	@$(POETRY) run python3 scripts/update_readme.py
 
-.PHONY: update-docs
-update-docs: $(VENV)
+.make/update-docs: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run python3 scripts/update_docs.py
+	@mkdir -p $(@D)
+	@touch $@
 
 .PHONY: update-copyright
 update-copyright: $(VENV)
