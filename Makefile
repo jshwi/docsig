@@ -18,9 +18,9 @@ all: .make/pre-commit .git/blame-ignore-revs
 build: .make/doctest \
 	.make/format \
 	.make/lint \
+	.make/unused \
 	.mypy_cache/CACHEDIR.TAG \
-	coverage.xml \
-	unused
+	coverage.xml
 
 .PHONY: test
 test: .make/doctest coverage.xml
@@ -104,9 +104,10 @@ update-copyright: $(VENV)
 	@$(POETRY) run mypy $(PYTHON_FILES)
 	@touch $@
 
-.PHONY: unused
-unused: whitelist.py
+.make/unused: whitelist.py
 	@$(POETRY) run vulture whitelist.py docsig tests
+	@mkdir -p $(@D)
+	@touch $@
 
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
