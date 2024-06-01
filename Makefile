@@ -16,11 +16,8 @@ all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
 build: .make/doctest \
+	.make/format \
 	coverage.xml \
-	format \
-	format-docs \
-	format-str \
-	imports \
 	lint \
 	typecheck \
 	unused
@@ -89,21 +86,13 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 update-copyright: $(VENV)
 	@$(POETRY) run python3 scripts/update_copyright.py
 
-.PHONY: format
-format: $(VENV)
+.make/format: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
-
-.PHONY: format-docs
-format-docs: $(VENV)
 	@$(POETRY) run docformatter $(PYTHON_FILES)
-
-.PHONY: format-str
-format-str: $(VENV)
 	@$(POETRY) run flynt $(PYTHON_FILES)
-
-.PHONY: imports
-imports: $(VENV)
 	@$(POETRY) run isort $(PYTHON_FILES)
+	@mkdir -p $(@D)
+	@touch $@
 
 .PHONY: lint
 lint: $(VENV)
