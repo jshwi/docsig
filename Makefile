@@ -2,11 +2,17 @@ POETRY := bin/poetry/bin/poetry
 
 PYTHON_FILES := $(shell git ls-files "*.py")
 
+ifeq ($(OS),Windows_NT)
+	VENV := .venv/Scripts/activate
+else
+	VENV := .venv/bin/activate
+endif
+
 .PHONY: all
-all: $(POETRY) install-deps install-hooks install-ignore-blame-revs
+all: $(VENV) install-hooks install-ignore-blame-revs
 
 .PHONY: remove
-remove: remove-hooks remove-deps
+remove: remove-hooks
 
 .PHONY: build
 build: format \
@@ -23,7 +29,7 @@ build: format \
 test: doctest coverage
 
 .PHONY: docs
-docs: install-deps
+docs: $(VENV)
 	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
@@ -38,12 +44,15 @@ clean:
 	@rm -rf docs/_build
 	@rm -rf docs/_generated
 
-.PHONY: install-deps
-install-deps: $(POETRY)
+$(VENV): $(POETRY) poetry.lock
+	@[ ! $$(basename "$$($< env info --path)") = ".venv" ] \
+		&& rm -rf "$$($< env info --path)" \
+		|| exit 0
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 $< install
+	@touch $@
 
 .PHONY: install-pre-commit
-install-pre-commit: install-deps
+install-pre-commit: $(VENV)
 	@$(POETRY) run command -v pre-commit > /dev/null 2>&1 \
 		|| $(POETRY) run pip --quiet install pre-commit
 
@@ -78,11 +87,6 @@ remove-hooks: install-pre-commit
 		--hook-type post-merge \
 		--hook-type post-rewrite
 
-.PHONY: remove-deps
-remove-deps: install-deps
-	rm -rf \
-		$(shell dirname $(shell dirname $(shell $(POETRY) run which python)))
-
 $(POETRY):
 	@curl -sSL https://install.python-poetry.org | \
 		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
@@ -95,39 +99,39 @@ remove-ignore-blame-revs:
 		|| exit 0
 
 .PHONY: update-readme
-update-readme: install-deps
+update-readme: $(VENV)
 	@$(POETRY) run python3 scripts/update_readme.py
 
 .PHONY: update-docs
-update-docs: install-deps
+update-docs: $(VENV)
 	@$(POETRY) run python3 scripts/update_docs.py
 
 .PHONY: update-copyright
-update-copyright: install-deps
+update-copyright: $(VENV)
 	@$(POETRY) run python3 scripts/update_copyright.py
 
 .PHONY: format
-format: install-deps
+format: $(VENV)
 	@$(POETRY) run black $(PYTHON_FILES)
 
 .PHONY: format-docs
-format-docs: install-deps
+format-docs: $(VENV)
 	@$(POETRY) run docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
-format-str: install-deps
+format-str: $(VENV)
 	@$(POETRY) run flynt $(PYTHON_FILES)
 
 .PHONY: imports
-imports: install-deps
+imports: $(VENV)
 	@$(POETRY) run isort $(PYTHON_FILES)
 
 .PHONY: lint
-lint: install-deps
+lint: $(VENV)
 	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
-typecheck: install-deps
+typecheck: $(VENV)
 	@$(POETRY) run mypy .
 
 .PHONY: unused
@@ -135,28 +139,28 @@ unused:
 	@$(POETRY) run vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
-whitelist: install-deps
+whitelist: $(VENV)
 	@$(POETRY) run vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
 
 .PHONY: coverage
-coverage: install-deps
+coverage: $(VENV)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
 
 .PHONY: params
-params: install-deps
+params: $(VENV)
 	@$(POETRY) run docsig $(PYTHON_FILES)
 
 .PHONY: doctest
-doctest: install-deps
+doctest: $(VENV)
 	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark
-benchmark: install-deps
+benchmark: $(VENV)
 	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
 
 .PHONY: check-links
-check-links: install-deps
+check-links: $(VENV)
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
 		&& $(POETRY) run $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"
