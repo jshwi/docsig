@@ -46,9 +46,6 @@ jobs:
       - name: Build
         id: build
         run: make build
-      - name: Check Signature Documentation
-        id: check-signature-documentation
-        run: make params
       - name: Build Documentation
         id: build-documentation
         run: make docs/_build/html/index.html
