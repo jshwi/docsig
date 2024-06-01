@@ -17,9 +17,9 @@ all: .make/pre-commit .git/blame-ignore-revs
 .PHONY: build
 build: .make/doctest \
 	.make/format \
+	.make/lint \
 	.mypy_cache/CACHEDIR.TAG \
 	coverage.xml \
-	lint \
 	unused
 
 .PHONY: test
@@ -95,9 +95,11 @@ update-copyright: $(VENV)
 	@mkdir -p $(@D)
 	@touch $@
 
-.PHONY: lint
-lint: $(VENV)
+.make/lint: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
+	@$(POETRY) run docsig $(PYTHON_FILES)
+	@mkdir -p $(@D)
+	@touch $@
 
 .mypy_cache/CACHEDIR.TAG: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run mypy $(PYTHON_FILES)
@@ -113,10 +115,6 @@ whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
-
-.PHONY: params
-params: $(VENV)
-	@$(POETRY) run docsig $(PYTHON_FILES)
 
 .make/doctest: $(VENV) README.rst $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'

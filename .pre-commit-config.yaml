@@ -2,7 +2,6 @@ ci:
   skip:
     - lint
     - deptry
-    - docsig
     - vulture
     - copyright-year
     - doctest
@@ -31,14 +30,8 @@ repos:
       # local so package can be imported to lint
       - id: lint
         name: lint
-        entry: make lint
+        entry: make .make/lint
         language: system
-        pass_filenames: false
-      # infer imports for overridden methods
-      - id: docsig
-        name: check signature documentation
-        language: system
-        entry: make params
         pass_filenames: false
       # analyze all files for reliable result
       - id: vulture
