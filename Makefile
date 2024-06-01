@@ -7,8 +7,7 @@ all: install-poetry install-deps install-hooks install-ignore-blame-revs
 remove: remove-poetry remove-hooks remove-deps
 
 .PHONY: build
-build: update-copyright \
-	format \
+build: format \
 	format-docs \
 	format-str \
 	imports \
