@@ -17,9 +17,9 @@ all: .make/pre-commit .git/blame-ignore-revs
 .PHONY: build
 build: .make/doctest \
 	.make/format \
+	.mypy_cache/CACHEDIR.TAG \
 	coverage.xml \
 	lint \
-	typecheck \
 	unused
 
 .PHONY: test
@@ -35,6 +35,7 @@ clean:
 	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
 	@rm -rf .make
+	@rm -rf .mypy_cache
 	@rm -rf .pytest_cache
 	@rm -rf .venv
 	@rm -rf bin
@@ -98,9 +99,9 @@ update-copyright: $(VENV)
 lint: $(VENV)
 	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
 
-.PHONY: typecheck
-typecheck: $(VENV)
-	@$(POETRY) run mypy .
+.mypy_cache/CACHEDIR.TAG: $(VENV) $(PYTHON_FILES)
+	@$(POETRY) run mypy $(PYTHON_FILES)
+	@touch $@
 
 .PHONY: unused
 unused: whitelist.py
