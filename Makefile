@@ -21,7 +21,7 @@ build: format \
 test: doctest coverage
 
 .PHONY: docs
-docs:
+docs: install-deps
 	@$(MAKE) -C docs html
 
 .PHONY: clean
@@ -45,7 +45,7 @@ install-deps:
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 poetry install
 
 .PHONY: install-pre-commit
-install-pre-commit:
+install-pre-commit: install-deps
 	@poetry run command -v pre-commit > /dev/null 2>&1 \
 		|| poetry run pip --quiet install pre-commit
 
@@ -81,7 +81,7 @@ remove-hooks: install-pre-commit
 		--hook-type post-rewrite
 
 .PHONY: remove-deps
-remove-deps:
+remove-deps: install-deps
 	rm -rf $(shell dirname $(shell dirname $(shell poetry run which python)))
 
 .PHONY: remove-poetry
@@ -96,39 +96,39 @@ remove-ignore-blame-revs:
 		|| exit 0
 
 .PHONY: update-readme
-update-readme:
+update-readme: install-deps
 	@python3 scripts/update_readme.py
 
 .PHONY: update-docs
-update-docs:
+update-docs: install-deps
 	@python3 scripts/update_docs.py
 
 .PHONY: update-copyright
-update-copyright:
+update-copyright: install-deps
 	@python3 scripts/update_copyright.py
 
 .PHONY: format
-format:
+format: install-deps
 	@black $(PYTHON_FILES)
 
 .PHONY: format-docs
-format-docs:
+format-docs: install-deps
 	@docformatter $(PYTHON_FILES)
 
 .PHONY: format-str
-format-str:
+format-str: install-deps
 	@flynt $(PYTHON_FILES)
 
 .PHONY: imports
-imports:
+imports: install-deps
 	@isort $(PYTHON_FILES)
 
 .PHONY: lint
-lint:
+lint: install-deps
 	@pylint --output-format=colorized $(PYTHON_FILES)
 
 .PHONY: typecheck
-typecheck:
+typecheck: install-deps
 	@mypy .
 
 .PHONY: unused
@@ -136,27 +136,27 @@ unused:
 	@vulture whitelist.py $(PYTHON_FILES)
 
 .PHONY: whitelist
-whitelist:
+whitelist: install-deps
 	@vulture --make-whitelist  $(PYTHON_FILES) > whitelist.py || exit 0
 
 .PHONY: coverage
-coverage:
+coverage: install-deps
 	@pytest -n=auto --cov=docsig --cov=tests && coverage xml
 
 .PHONY: params
-params:
+params: install-deps
 	@docsig $(PYTHON_FILES)
 
 .PHONY: doctest
-doctest:
+doctest: install-deps
 	@pytest docs README.rst --doctest-glob='*.rst'
 
 .PHONY: benchmark
-benchmark:
+benchmark: install-deps
 	@RUN_BENCHMARK=true pytest -m=benchmark --benchmark-save=benchmark
 
 .PHONY: check-links
-check-links:
+check-links: install-deps
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
 		&& $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"
