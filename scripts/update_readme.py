@@ -15,6 +15,14 @@ from pathlib import Path
 
 from docsig import main
 
+
+def _normalize_for_alternate_argparse_versions(text: str) -> str:
+    if "[path [path ...]]" not in text:
+        text = text.replace("[path ...]", "[path [path ...]]")
+
+    return text.replace("    options:", "    optional arguments:")
+
+
 shutil.get_terminal_size = lambda: os.terminal_size((93, 24))  # type: ignore
 helpio = io.StringIO()
 with contextlib.redirect_stdout(helpio), contextlib.suppress(SystemExit):
@@ -33,7 +41,9 @@ commandline_pattern = re.compile(
 readme_content = conflict_pattern.sub("", path.read_text())
 match = commandline_pattern.search(readme_content)
 if match is not None:
-    docsig_help = re.sub(r"^", "    ", helpio.getvalue(), flags=re.MULTILINE)
+    docsig_help = _normalize_for_alternate_argparse_versions(
+        re.sub(r"^", "    ", helpio.getvalue(), flags=re.MULTILINE)
+    )
     updated_readme_content = (
         commandline_pattern.sub(rf"\1{docsig_help}", readme_content)
         .replace("    \n", "\n")
