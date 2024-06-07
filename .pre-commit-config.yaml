@@ -108,6 +108,7 @@ repos:
         name: update whitelist
         language: system
         entry: poetry run make whitelist
+        pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
     hooks:
