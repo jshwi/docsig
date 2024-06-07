@@ -168,6 +168,7 @@ repos:
     hooks:
       - id: toml-sort
         args:
+          - "--check"
           - "--in-place"
           - "--all"
   - repo: https://github.com/pre-commit/pygrep-hooks
