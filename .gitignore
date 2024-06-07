@@ -3,8 +3,9 @@
 *venv
 .DS_Store
 .benchmarks/
+.cache/
 .env
 __pycache__/
+bin/
 dist/
 node_modules/
-package-lock.json
