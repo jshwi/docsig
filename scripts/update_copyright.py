@@ -18,7 +18,9 @@ files = {
 }
 
 for file, pattern in files.items():
-    file.write_text(
-        pattern.sub(_replace_year, file.read_text(encoding="utf-8")),
-        encoding="utf-8",
-    )
+    text = file.read_text(encoding="utf-8")
+    if not pattern.search(text):
+        file.write_text(
+            pattern.sub(_replace_year, file.read_text(encoding="utf-8")),
+            encoding="utf-8",
+        )
