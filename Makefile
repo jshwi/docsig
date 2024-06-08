@@ -28,8 +28,12 @@ $(BUILD): .make/doctest \
 	.make/format \
 	.make/lint \
 	.make/unused \
+	.make/update-docs \
 	.mypy_cache/CACHEDIR.TAG \
-	coverage.xml
+	README.rst \
+	coverage.xml \
+	docs/_build/html/index.html \
+	docs/_build/linkcheck/output.json
 	@$(POETRY) build
 	@touch $@
 

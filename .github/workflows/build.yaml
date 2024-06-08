@@ -53,12 +53,6 @@ jobs:
       - name: Build
         id: build
         run: make build
-      - name: Build Documentation
-        id: build-documentation
-        run: make docs/_build/html/index.html
-      - name: Check Documentation Links
-        id: check-documentation-links
-        run: make docs/_build/linkcheck/output.json
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
