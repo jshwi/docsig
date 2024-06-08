@@ -5,6 +5,7 @@
 .benchmarks/
 .env
 __pycache__/
+bin
 dist/
 node_modules/
 package-lock.json
