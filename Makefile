@@ -158,10 +158,7 @@ doctest-docs:
 
 .PHONY: benchmark
 benchmark:
-	@RUN_BENCHMARK=true \
-		pytest \
-		-m="benchmark" \
-		--benchmark-save=benchmark
+	@RUN_BENCHMARK=true pytest -m=benchmark --benchmark-save=benchmark
 
 .PHONY: check-links
 check-links:
