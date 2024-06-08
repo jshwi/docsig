@@ -1,12 +1,12 @@
-POETRY := poetry
+POETRY := bin/poetry/bin/poetry
 
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 
 .PHONY: all
-all: install-poetry install-deps install-hooks install-ignore-blame-revs
+all: $(POETRY) install-deps install-hooks install-ignore-blame-revs
 
 .PHONY: remove
-remove: remove-poetry remove-hooks remove-deps
+remove: remove-hooks remove-deps
 
 .PHONY: build
 build: format \
@@ -29,15 +29,11 @@ docs: install-deps
 .PHONY: clean
 clean:
 	@find . -name '__pycache__' -exec rm -rf {} +
-
-.PHONY: install-poetry
-install-poetry:
-	@command -v $(POETRY) >/dev/null 2>&1 \
-		|| curl -sSL https://install.python-poetry.org | python3 -
+	@rm -rf bin
 
 .PHONY: install-deps
-install-deps:
-	@POETRY_VIRTUALENVS_IN_PROJECT=1 $(POETRY) install
+install-deps: $(POETRY)
+	@POETRY_VIRTUALENVS_IN_PROJECT=1 $< install
 
 .PHONY: install-pre-commit
 install-pre-commit: install-deps
@@ -80,10 +76,10 @@ remove-deps: install-deps
 	rm -rf \
 		$(shell dirname $(shell dirname $(shell $(POETRY) run which python)))
 
-.PHONY: remove-poetry
-remove-poetry:
-	@command -v $(POETRY) >/dev/null 2>&1 \
-		|| curl -sSL https://install.python-poetry.org | python3 - --uninstall
+$(POETRY):
+	@curl -sSL https://install.python-poetry.org | \
+		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
+	@touch $@
 
 .PHONY: remove-ignore-blame-revs
 remove-ignore-blame-revs:
