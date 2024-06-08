@@ -33,6 +33,10 @@ $(BUILD): .make/doctest \
 .PHONY: test
 test: .make/doctest coverage.xml
 
+.PHONY: publish
+publish: $(BUILD)
+	@$(POETRY) publish
+
 docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run $(MAKE) -C docs html
 
