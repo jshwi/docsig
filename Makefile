@@ -30,7 +30,14 @@ docs:
 
 .PHONY: clean
 clean:
-	@git clean docs -fdx
+	@find . -name '__pycache__' -exec rm -rf {} +
+	@rm -rf .coverage
+	@rm -rf .mypy_cache
+	@rm -rf .pytest_cache
+	@rm -rf .venv
+	@rm -rf coverage.xml
+	@rm -rf docs/_build
+	@rm -rf docs/_generated
 
 .PHONY: install-poetry
 install-poetry:
