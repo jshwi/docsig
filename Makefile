@@ -28,8 +28,7 @@ build: .make/doctest \
 .PHONY: test
 test: .make/doctest coverage.xml
 
-.PHONY: docs
-docs: $(VENV)
+docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
