@@ -71,7 +71,7 @@ repos:
       - id: doctest
         name: doctest
         language: system
-        entry: make doctest
+        entry: make .make/doctest
         pass_filenames: false
       - id: make-docs
         name: make docs
