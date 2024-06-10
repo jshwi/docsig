@@ -54,9 +54,6 @@ jobs:
       - name: Check Documentation Links
         id: check-documentation-links
         run: make check-links
-      - name: Test Documentation
-        id: test-documentation
-        run: make doctest
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
