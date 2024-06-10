@@ -105,7 +105,7 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 
 #: update docs according to source
 .make/update-docs: $(VENV) $(PACKAGE_FILES)
-	@$(POETRY) run python3 scripts/update_docs.py
+	@$(POETRY) run python scripts/update_docs.py
 	@mkdir -p $(@D)
 	@touch $@
 
