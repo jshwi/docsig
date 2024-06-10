@@ -76,7 +76,7 @@ repos:
       - id: make-docs
         name: make docs
         language: system
-        entry: make docs
+        entry: make docs/_build/html/index.html
         pass_filenames: false
       - id: update-readme
         name: update readme
