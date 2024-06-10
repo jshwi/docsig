@@ -58,7 +58,7 @@ jobs:
         run: make params
       - name: Build Documentation
         id: build-documentation
-        run: make docs
+        run: make docs/_build/html/index.html
       - name: Check Documentation Links
         id: check-documentation-links
         run: make check-links
