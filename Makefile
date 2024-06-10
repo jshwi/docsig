@@ -15,12 +15,13 @@ endif
 all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
-build: format \
+build: .make/doctest \
+	coverage.xml \
+	format \
 	format-docs \
 	format-str \
 	imports \
 	lint \
-	test \
 	typecheck \
 	unused
 
