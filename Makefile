@@ -3,6 +3,7 @@ POETRY := bin/poetry/bin/poetry
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
+DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
 
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
@@ -24,7 +25,7 @@ build: format \
 	unused
 
 .PHONY: test
-test: doctest coverage.xml
+test: .make/doctest coverage.xml
 
 .PHONY: docs
 docs: $(VENV)
@@ -127,9 +128,10 @@ coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 params: $(VENV)
 	@$(POETRY) run docsig $(PYTHON_FILES)
 
-.PHONY: doctest
-doctest: $(VENV)
+.make/doctest: $(VENV) README.rst $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
+	@mkdir -p $(@D)
+	@touch $@
 
 .PHONY: benchmark
 benchmark: $(VENV)
