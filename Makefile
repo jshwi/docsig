@@ -28,8 +28,7 @@ build: .make/doctest \
 .PHONY: test
 test: .make/doctest coverage.xml
 
-.PHONY: docs
-docs: $(VENV)
+docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
@@ -43,6 +42,8 @@ clean:
 	@rm -rf .venv
 	@rm -rf bin
 	@rm -rf coverage.xml
+	@rm -rf docs/_build
+	@rm -rf docs/_generated
 
 $(VENV): $(POETRY) pyproject.toml poetry.lock
 	@[ ! $$(basename "$$($< env info --path)") = ".venv" ] \
