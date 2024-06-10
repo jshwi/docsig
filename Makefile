@@ -24,7 +24,7 @@ build: format \
 	unused
 
 .PHONY: test
-test: doctest coverage
+test: doctest coverage.xml
 
 .PHONY: docs
 docs: $(VENV)
@@ -119,8 +119,7 @@ unused: whitelist.py
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
 
-.PHONY: coverage
-coverage: $(VENV)
+coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
 
