@@ -24,7 +24,7 @@ build: format \
 	unused
 
 .PHONY: test
-test: doctest coverage
+test: doctest coverage.xml
 
 .PHONY: docs
 docs: $(VENV)
@@ -33,11 +33,14 @@ docs: $(VENV)
 .PHONY: clean
 clean:
 	@find . -name '__pycache__' -exec rm -rf {} +
+	@rm -rf .coverage
 	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
 	@rm -rf .make
+	@rm -rf .pytest_cache
 	@rm -rf .venv
 	@rm -rf bin
+	@rm -rf coverage.xml
 
 $(VENV): $(POETRY) pyproject.toml poetry.lock
 	@[ ! $$(basename "$$($< env info --path)") = ".venv" ] \
@@ -114,8 +117,7 @@ unused: whitelist.py
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
 
-.PHONY: coverage
-coverage: $(VENV)
+coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
 
