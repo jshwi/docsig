@@ -9,7 +9,7 @@ else
 endif
 
 .PHONY: all
-all: .make/pre-commit install-ignore-blame-revs
+all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
 build: format \
@@ -32,6 +32,7 @@ docs: $(VENV)
 .PHONY: clean
 clean:
 	@find . -name '__pycache__' -exec rm -rf {} +
+	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
 	@rm -rf .make
 	@rm -rf .venv
@@ -58,21 +59,15 @@ $(VENV): $(POETRY) pyproject.toml poetry.lock
 	@mkdir -p $(@D)
 	@touch $@
 
-.PHONY: install-ignore-blame-revs
-install-ignore-blame-revs:
-	@git config --local blame.ignoreRevsFile .git-blame-ignore-revs
-	@echo "installed .git-blame-ignore-revs"
+.git/blame-ignore-revs:
+	@git config --local include.path $(@F)
+	@echo '[blame]' > $@
+	@echo 'ignoreRevsFile = .git-blame-ignore-revs' >> $@
 
 $(POETRY):
 	@curl -sSL https://install.python-poetry.org | \
 		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
 	@touch $@
-
-.PHONY: remove-ignore-blame-revs
-remove-ignore-blame-revs:
-	@git config --local --unset blame.ignoreRevsFile \
-		&& echo "removed .git-blame-ignore-revs" \
-		|| exit 0
 
 .PHONY: update-readme
 update-readme: $(VENV)
