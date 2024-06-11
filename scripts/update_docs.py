@@ -41,6 +41,8 @@ def generate_configurations() -> None:
         main()
 
     for category in categories:
+        toc_file = USAGE / f"{category}-configuration.rst"
+        cur_content = toc_file.read_text(encoding="utf-8")
         tocs = []
         for line in helpio.getvalue().splitlines():
             try:
@@ -66,10 +68,12 @@ def generate_configurations() -> None:
                 continue
 
         content = "\n\n".join(sorted(tocs))
-        (USAGE / f"{category}-configuration.rst").write_text(f"{content}\n")
+        content = f"{content}\n"
+        if cur_content != content:
+            toc_file.write_text(content)
 
 
-def generate_messages() -> None:
+def generate_messages() -> None:  # pylint: disable=too-many-locals
     """Generate documentation for messages."""
     categories = {1: "docstring", 2: "config"}
     messages_dir = USAGE / "messages"
@@ -81,6 +85,8 @@ def generate_messages() -> None:
         main()
 
     for index, category in categories.items():
+        toc_file = USAGE / f"{category}-messages.rst"
+        cur_content = toc_file.read_text(encoding="utf-8")
         tocs = []
         for message in msgio.getvalue().splitlines():
             match = pattern.search(message)
@@ -102,8 +108,10 @@ def generate_messages() -> None:
                             encoding="utf-8",
                         )
 
-            content = "\n\n".join(sorted(tocs))
-            (USAGE / f"{category}-messages.rst").write_text(f"{content}\n")
+        content = "\n\n".join(sorted(tocs))
+        content = f"{content}\n"
+        if cur_content != content:
+            toc_file.write_text(content)
 
 
 if __name__ == "__main__":
