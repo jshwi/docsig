@@ -52,9 +52,22 @@ jobs:
             ${{ matrix.os }}-python${{ matrix.python-version }}-${{
               hashFiles('poetry.lock')}}
           restore-keys: "${{ matrix.os }}-python${{ matrix.python-version }}-"
+      - name: Cache Diff
+        uses: actions/cache@v4
+        with:
+          path: .diff_cache
+          key: >
+            ${{ matrix.os }}-python${{ matrix.python-version }}-${{
+              hashFiles('$(git ls-files "*.py")',
+                        'diff/package.ini',
+                        '.bumpversion.cfg') }}
+          restore-keys: "${{ matrix.os }}-python${{ matrix.python-version }}-"
       - name: Build
         id: build
         run: make build
+      - name: Check Diff
+        id: check-diff
+        run: make .diff_cache/CACHEDIR.TAG
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
