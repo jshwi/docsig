@@ -55,6 +55,7 @@ docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
 clean:
 	@find . -name '__pycache__' -exec rm -rf {} +
 	@rm -rf .coverage
+	@rm -rf .diff_cache
 	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
 	@rm -rf .make
@@ -169,3 +170,21 @@ docs/_build/linkcheck/output.json: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
 	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
 		&& $(POETRY) run $(MAKE) -C docs linkcheck \
 		|| echo "could not establish connection, skipping"
+
+.PHONY: gen-top-pypi-list
+#: generate list of top pypi packages
+# make this phony so its updating can be controlled
+gen-top-pypi-list: $(VENV)
+	@$(POETRY) run python diff/gen_top_pypi_list.py \
+		--number=20 \
+		--exclude $(shell cat diff/exclude.ini | grep -v '^#') \
+		> diff/requirements.txt
+
+#: check diff between current commit and latest tag
+.diff_cache/CACHEDIR.TAG: $(PACKAGE_FILES) .bumpversion.cfg
+	@$(POETRY) run python diff/check_diff.py \
+		--verbose \
+		--color \
+		.diff_cache \
+		$(shell cat diff/requirements.txt | grep -v '^#')
+	@touch $@

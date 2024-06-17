@@ -113,6 +113,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
       - id: requirements-txt-fixer
+        exclude: diff/requirements\.txt
       - id: pretty-format-json
         args:
           - "--autofix"

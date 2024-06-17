@@ -53,6 +53,9 @@ jobs:
       - name: Check Documentation Links
         id: check-documentation-links
         run: make docs/_build/linkcheck/output.json
+      - name: Check Diff
+        id: check-diff
+        run: make .diff_cache/CACHEDIR.TAG
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
