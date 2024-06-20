@@ -30,6 +30,8 @@ jobs:
       - name: Checkout Build
         id: checkout-build
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Install Poetry
         id: install-poetry
         run: pipx install poetry
