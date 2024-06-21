@@ -6,7 +6,7 @@ wheel==0.9.7
 certifi==2024.6.2
 idna==3.7
 charset-normalizer==3.3.2
-pip==9.0.3
+pip==23.3
 s3transfer==0.9.0
 packaging==24.1
 aiobotocore==2.9.1
