@@ -30,18 +30,11 @@ jobs:
       - name: Checkout Build
         id: checkout-build
         uses: actions/checkout@v4
-      - name: Install Poetry
-        id: install-poetry
-        run: pipx install poetry
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: "${{ matrix.python-version }}"
-          cache: poetry
-      - name: Install Python Packages
-        id: install-python-packages
-        run: poetry install
       - name: Cache Virtualenv
         uses: actions/cache@v4
         with:
