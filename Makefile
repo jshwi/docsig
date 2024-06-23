@@ -1,3 +1,5 @@
+VERSION := 0.55.0
+
 POETRY := bin/poetry/bin/poetry
 
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
@@ -11,16 +13,22 @@ else
 	VENV := .venv/bin/activate
 endif
 
+BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
+
 .PHONY: all
 all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
-build: .make/doctest \
+build: $(BUILD)
+
+$(BUILD): .make/doctest \
 	.make/format \
 	.make/lint \
 	.make/unused \
 	.mypy_cache/CACHEDIR.TAG \
 	coverage.xml
+	@$(POETRY) build
+	@touch $@
 
 .PHONY: test
 test: .make/doctest coverage.xml
@@ -40,6 +48,7 @@ clean:
 	@rm -rf .venv
 	@rm -rf bin
 	@rm -rf coverage.xml
+	@rm -rf dist
 	@rm -rf docs/_build
 	@rm -rf docs/_generated
 
