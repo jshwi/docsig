@@ -138,6 +138,9 @@ benchmark: $(VENV)
 	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
 
 docs/_build/linkcheck/output.json: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
-	@ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
-		&& $(POETRY) run $(MAKE) -C docs linkcheck \
-		|| echo "could not establish connection, skipping"
+	@trap "rm -f $(@); exit 1" ERR; \
+		{ \
+			ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
+			|| { echo "could not establish connection, skipping"; exit 0; }; \
+			$(POETRY) run $(MAKE) -C docs linkcheck; \
+		}
