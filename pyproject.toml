@@ -149,3 +149,21 @@ norecursedirs = [
   ".pytest_cache",
   "docs"
 ]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+requires =
+    tox>=4.15
+env_list =
+    py{312, 311, 310, 39, 38}
+
+[testenv]
+commands_pre =
+    poetry install --no-root --sync
+commands =
+    poetry run make build
+allowlist_externals =
+    make
+    poetry
+"""
