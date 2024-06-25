@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+This project uses [*towncrier*](https://towncrier.readthedocs.io/)
+and the changes for the upcoming release can be found in
+<https://github.com/jshwi/docsig/tree/main/changelog/>.
+
 <!-- release notes start -->
 
 ## [0.56.0](https://github.com/jshwi/docsig/tree/v0.56.0) - 2024-06-23
