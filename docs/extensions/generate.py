@@ -96,14 +96,12 @@ def make_generated_dir() -> None:
 @extension
 def generate_changelog() -> None:
     """Generate changelog documentation."""
-    content = "# Changelog\n\n[{}".format(
-        "[".join(
-            "\n".join(
-                (REPO / "CHANGELOG.md")
-                .read_text(encoding="utf-8")
-                .splitlines()[9:]
-            ).split("[")[1:]
-        )
+    content = "# Changelog\n\n{}".format(
+        (
+            (REPO / "CHANGELOG.md")
+            .read_text(encoding="utf-8")
+            .split("<!-- release notes start -->")
+        )[1]
     )
     (GENERATED / "changelog.md").write_text(content, encoding="utf-8")
 
