@@ -145,6 +145,7 @@ isort = "^5.13.2"
 mypy = "^1.10.0"
 pre-commit = "^3.3.3"
 pylint = "^3.1.0"
+towncrier = "^23.11.0"
 tox = "^4.15.0"
 vulture = "^2.11"
 
@@ -198,3 +199,38 @@ norecursedirs = [
   ".pytest_cache",
   "docs"
 ]
+
+[tool.towncrier]
+directory = "changelog"
+filename = "CHANGELOG.md"
+issue_format = "[#{issue}](https://github.com/jshwi/docsig/issues/{issue})"
+package = "docsig"
+start_string = "<!-- release notes start -->\n"
+template = "changelog/_template.md"
+title_format = "## [{version}](https://github.com/jshwi/docsig/tree/{version}) - {project_date}"
+underlines = [
+  "",
+  "",
+  ""
+]
+
+[tool.towncrier.fragment.add]
+name = "Added"
+
+[tool.towncrier.fragment.change]
+name = "Changed"
+
+[tool.towncrier.fragment.deprecate]
+name = "Deprecated"
+
+[tool.towncrier.fragment.fix]
+name = "Fixed"
+
+[tool.towncrier.fragment.hack]
+name = "Hacked"
+
+[tool.towncrier.fragment.remove]
+name = "Removed"
+
+[tool.towncrier.fragment.security]
+name = "Security"

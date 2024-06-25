@@ -23,6 +23,7 @@ exclude: |
     | \.idea\/.*
     | tests\/TESTS\.md
     | docs\/conf\.py
+    | changelog\/.*
   )$
 repos:
   - repo: local
