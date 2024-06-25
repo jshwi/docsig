@@ -47,7 +47,12 @@ publish: $(BUILD)
 	@$(POETRY) publish
 
 #: generate documentation
-docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
+docs/_build/html/index.html: $(VENV) \
+	$(PYTHON_FILES) \
+	$(DOCS_FILES) \
+	CHANGELOG.md \
+	.conform.yaml \
+	CONTRIBUTING.md
 	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
@@ -165,7 +170,12 @@ benchmark: $(VENV)
 	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
 
 #: confirm links in documentation are valid
-docs/_build/linkcheck/output.json: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
+docs/_build/linkcheck/output.json: $(VENV) \
+	$(PYTHON_FILES) \
+	$(DOCS_FILES) \
+	CHANGELOG.md \
+	.conform.yaml \
+	CONTRIBUTING.md
 	@trap "rm -f $(@); exit 1" ERR; \
 		{ \
 			ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
