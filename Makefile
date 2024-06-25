@@ -47,7 +47,7 @@ publish: $(BUILD)
 	@$(POETRY) publish
 
 #: generate documentation
-docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES)
+docs/_build/html/index.html: $(VENV) $(PYTHON_FILES) $(DOCS_FILES) CHANGELOG.md
 	@$(POETRY) run $(MAKE) -C docs html
 
 .PHONY: clean
