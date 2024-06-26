@@ -10,6 +10,7 @@ ci:
     - update-docs
     - update-whitelist
     - coverage
+    - check-news
 default_language_version:
   python: "3.9"
 default_stages:
@@ -87,6 +88,12 @@ repos:
         language: system
         entry: make whitelist.py
         pass_filenames: false
+      - id: check-news
+        name: Check News
+        entry: poetry run python scripts/check_news.py
+        language: system
+        stages:
+          - commit-msg
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
     hooks:
