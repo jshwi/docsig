@@ -8,22 +8,13 @@ requires = [
 line-length = 79
 
 [tool.bumpversion]
+allow_dirty = true
 commit = true
 commit_args = "-sS"
 current_version = "0.56.0"
 message = "bump: version {current_version} → {new_version}"
 sign_tags = true
 tag = true
-
-[[tool.bumpversion.files]]
-filename = "CHANGELOG.md"
-replace = """
-[Unreleased](https://github.com/jshwi/docsig/compare/v{new_version}...HEAD)
-------------------------------------------------------------------------
-
-[{new_version}](https://github.com/jshwi/docsig/releases/tag/v{new_version}) - {now:%Y-%m-%d}\
-"""
-search = "[Unreleased](https://github.com/jshwi/docsig/compare/v{current_version}...HEAD)"
 
 [[tool.bumpversion.files]]
 filename = "docs/conf.py"
@@ -71,7 +62,10 @@ omit = [
 ]
 
 [tool.deptry.per_rule_ignores]
-DEP004 = ["yaml"]
+DEP004 = [
+  "git",
+  "yaml"
+]
 
 [tool.docformatter]
 in-place = true
@@ -139,6 +133,7 @@ bump-my-version = "^0.24.1"
 deptry = "^0.16.1"
 docformatter = "^1.7.5"
 flynt = "^1.0.1"
+gitpython = "^3.1.43"
 isort = "^5.13.2"
 mypy = "^1.10.0"
 pre-commit = "^3.3.3"
