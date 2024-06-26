@@ -8,22 +8,13 @@ requires = [
 line-length = 79
 
 [tool.bumpversion]
+allow_dirty = true
 commit = true
 commit_args = "-sS"
 current_version = "0.56.0"
 message = "bump: version {current_version} → {new_version}"
 sign_tags = true
 tag = true
-
-[[tool.bumpversion.files]]
-filename = "CHANGELOG.md"
-replace = """
-[Unreleased](https://github.com/jshwi/docsig/compare/v{new_version}...HEAD)
-------------------------------------------------------------------------
-
-[{new_version}](https://github.com/jshwi/docsig/releases/tag/v{new_version}) - {now:%Y-%m-%d}\
-"""
-search = "[Unreleased](https://github.com/jshwi/docsig/compare/v{current_version}...HEAD)"
 
 [[tool.bumpversion.files]]
 filename = "docs/conf.py"
