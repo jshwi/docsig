@@ -224,6 +224,17 @@ def generate_commit_policy() -> None:
     build.write_text("\n".join(content), encoding="utf-8")
 
 
+@extension
+def generate_flake8_help() -> None:
+    """Generate flake8 documentation."""
+    build = GENERATED / "flake8.rst"
+    readme = README.read_text(encoding="utf-8")
+    pattern = re.compile(r"Flake8\n\*{6}(.*?)end flake8", re.DOTALL)
+    match = pattern.search(readme)
+    if match:
+        build.write_text(match.group(1).strip()[:-2].strip(), encoding="utf-8")
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -237,3 +248,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_tests)
     app.connect("builder-inited", generate_pre_commit_example)
     app.connect("builder-inited", generate_commit_policy)
+    app.connect("builder-inited", generate_flake8_help)
