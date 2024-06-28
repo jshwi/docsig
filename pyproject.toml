@@ -131,7 +131,7 @@ python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
-bump-my-version = "^0.23.0"
+bump-my-version = ">=0.23,<0.25"
 deptry = "^0.16.1"
 docformatter = "^1.7.5"
 flynt = "^1.0.1"
