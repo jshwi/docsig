@@ -134,6 +134,39 @@ Options can also be configured with the pyproject.toml file
         "SIG201",
     ]
 
+Flake8
+******
+
+``docsig`` can also be used as a ``flake8`` plugin. Install ``flake8`` and
+ensure your installation has registered `docsig`
+
+.. code-block:: console
+
+    $ flake8 --version
+    7.1.0 (docsig: 0.56.0, mccabe: 0.7.0, pycodestyle: 2.12.0, pyflakes: 3.2.0) CPython 3.8.13 on Darwin
+
+And now use `flake8` to lint your files
+
+.. code-block:: console
+
+    $ flake8 example.py
+    example.py:1:1: SIG202 includes parameters that do not exist (params-do-not-exist) 'function'
+
+With ``flake8`` the pyproject.toml config will still be the base config, though the
+`ini files <https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations>`_ ``flake8`` gets it config from will override the pyproject.toml config.
+For ``flake8`` all args and config options are prefixed with ``sig`` to
+avoid any potential conflicts with other plugins
+
+.. code-block:: ini
+
+    [flake8]
+    sig-check-dunders = True
+    sig-check-overridden = True
+    sig-check-protected = True
+
+..
+   end flake8
+
 API
 ***
 
