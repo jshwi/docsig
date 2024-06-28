@@ -190,7 +190,7 @@ def test_multiple(
     :param expected: Expected result.
     """
     init_file(template)
-    main(".", *CHECK_ARGS)
+    main(".", *CHECK_ARGS, test_flake8=False)
     std = capsys.readouterr()
     assert std.out == expected
 
@@ -229,7 +229,15 @@ def test_disable_rule(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", long.disable, name.replace("-", "").upper()[1:5]) == 0
+    assert (
+        main(
+            ".",
+            long.disable,
+            name.replace("-", "").upper()[1:5],
+            test_flake8=False,
+        )
+        == 0
+    )
 
 
 @pytest.mark.parametrize(
@@ -564,7 +572,7 @@ def test_string_argument(
     :param template: String data.
     :param expected: Expected output.
     """
-    assert main(*CHECK_ARGS, long.string, template) == int(
+    assert main(*CHECK_ARGS, long.string, template, test_flake8=False) == int(
         name.startswith(FAIL)
     )
     std = capsys.readouterr()

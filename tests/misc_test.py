@@ -6,12 +6,14 @@ tests.misc_test
 # pylint: disable=protected-access
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import pytest
 from templatest import templates
 
 import docsig
+from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
@@ -88,7 +90,7 @@ check-protected-class-methods = true
         encoding="utf-8",
     )
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
-    assert main(".") == (
+    assert main(".", test_flake8=False) == (
         "argument to check class constructor not allowed with argument to"
         " check class\n"
         "please check your pyproject.toml configuration"
@@ -126,7 +128,7 @@ def function_3(param1, param2, param3) -> None:
 '''
     _errors = "E102", "E106", "E107"
     init_file(template)
-    main(".", "--target", error)
+    main(".", "--target", error, test_flake8=False)
     std = capsys.readouterr()
     assert E.from_ref(error).ref in std.out
     assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
@@ -138,7 +140,7 @@ def test_invalid_target(main: MockMainType) -> None:
     :param main: Mock ``main`` function.
     """
     assert (
-        main(".", long.target, "unknown")
+        main(".", long.target, "unknown", test_flake8=False)
         == "unknown option to target 'unknown'"
     )
 
@@ -193,6 +195,8 @@ def test_file_not_found_error(main: MockMainType) -> None:
     {E[503].fstring(T)}
 {PATH}:12 in _Messages.all
     {E[503].fstring(T)}
+.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.fromcode'
+.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.all'
 """,
         ],
         [
@@ -202,6 +206,8 @@ def test_file_not_found_error(main: MockMainType) -> None:
     {E[503].fstring(T)}
 {PATH}:12 in _Messages.all
     {E[503].fstring(T)}
+.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.fromcode'
+.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.all'
 """,
         ],
     ],
@@ -255,7 +261,10 @@ def test_no_path_or_string(main: MockMainType) -> None:
 
     :param main: Mock ``main`` function.
     """
-    assert main() == "the following arguments are required: path(s) or string"
+    assert (
+        main(test_flake8=False)
+        == "the following arguments are required: path(s) or string"
+    )
 
 
 def test_str_path_via_api() -> None:
@@ -294,7 +303,7 @@ def test_list_checks(
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     """
-    main(long.list_checks)
+    main(long.list_checks, test_flake8=False)
     std = capsys.readouterr()
     assert all(i.ref in std.out for i in E.values())
 
@@ -328,7 +337,7 @@ new-ssl() {
 new-ssl "${@}"
 """
     init_file(template)
-    assert main(".") == 1
+    assert main(".", test_flake8=False) == 1
 
 
 def test_bash_script(
@@ -375,7 +384,7 @@ def test_verbose(
 echo "Hello, world"
 """
     init_file(template, Path("module") / "file")
-    main(".", long.verbose)
+    main(".", long.verbose, test_flake8=False)
     std = capsys.readouterr()
     assert "invalid syntax" in std.out
 
@@ -420,7 +429,7 @@ def test_deprecated(main: MockMainType, args: tuple[str, ...]) -> None:
     :param args: Arguments to trigger deprecation warning.
     """
     with pytest.deprecated_call():
-        main(".", *args)
+        main(".", *args, test_flake8=False)
 
 
 @pytest.mark.parametrize(

@@ -1451,7 +1451,7 @@ def test_exclude_defaults(
     :param make_tree: Create directory tree from dict mapping.
     """
     make_tree(Path.cwd(), TREE)
-    main(".", long.verbose, long.include_ignored)
+    main(".", long.verbose, long.include_ignored, test_flake8=False)
     std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: Parsing Python code failed",
@@ -1555,7 +1555,7 @@ new-ssl() {
 new-ssl "${@}"
 """
     init_file(template)
-    assert main(".", long.exclude, "file.py") == 0
+    assert main(".", long.exclude, "file.py", test_flake8=False) == 0
 
 
 def test_gitignore(
@@ -1574,7 +1574,7 @@ def test_gitignore(
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
     monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
-    main(".", long.verbose)
+    main(".", long.verbose, test_flake8=False)
     std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
@@ -1729,7 +1729,7 @@ def test_exclude_defaults_and_gitignore(
     :param make_tree: Create directory tree from dict mapping.
     """
     make_tree(Path.cwd(), TREE)
-    main(".", long.verbose)
+    main(".", long.verbose, test_flake8=False)
     std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
@@ -1819,7 +1819,7 @@ def test_gitignore_patterns(
     # remove default excludes to better test nested gitignore files
     gitignore = docsig._module._Gitignore()  # type: ignore
     monkeypatch.setattr("docsig._module._Gitignore", lambda: gitignore)
-    main(".", long.verbose)
+    main(".", long.verbose, test_flake8=False)
     patterns = [
         "*build/",
         "*coverage*",

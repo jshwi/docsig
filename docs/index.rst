@@ -6,6 +6,7 @@
    :hidden:
 
    usage/api
+   usage/flake8
    usage/configuration
    usage/messages
    usage/message-control

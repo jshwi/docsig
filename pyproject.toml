@@ -38,6 +38,11 @@ replace = "rev: v{new_version}"
 search = "rev: v{current_version}"
 
 [[tool.bumpversion.files]]
+filename = "README.rst"
+replace = "docsig: {new_version}"
+search = "docsig: {current_version}"
+
+[[tool.bumpversion.files]]
 filename = "SECURITY.md"
 
 [[tool.bumpversion.files]]
@@ -64,6 +69,7 @@ omit = [
 
 [tool.deptry.per_rule_ignores]
 DEP004 = [
+  "flake8",
   "git",
   "pytest",
   "tomli",
@@ -129,7 +135,7 @@ arcon = ">=0.4.0"
 astroid = "^3.0.1"
 click = "^8.1.7"
 pathspec = "^0.12.1"
-python = "^3.8"
+python = "^3.8.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
@@ -157,6 +163,9 @@ sphinx-copybutton = "^0.5.2"
 sphinx-markdown-builder = ">=0.5.5,<0.7.0"
 templatest = "^0.10.1"
 
+[tool.poetry.group.flake8.dependencies]
+flake8 = "^7.1.0"
+
 [tool.poetry.group.tests.dependencies]
 pytest = "^8.2.0"
 pytest-benchmark = "^4.0.0"
@@ -165,6 +174,9 @@ pytest-randomly = "^3.15.0"
 pytest-sugar = "^1.0.0"
 pytest-xdist = "^3.6.1"
 templatest = "^0.10.1"
+
+[tool.poetry.plugins."flake8.extension"]
+SIG = "docsig.plugin:Docsig"
 
 [tool.poetry.scripts]
 docsig = "docsig.__main__:main"

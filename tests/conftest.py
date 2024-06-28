@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 
 import pytest
+from flake8.main.application import Application
 
 import docsig
 
@@ -36,13 +37,27 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     :return: Function for using this fixture.
     """
 
-    def _main(*args: str) -> str | int:
+    def _main(*args: str, test_flake8: bool = True) -> str | int:
         """Run main with custom args."""
         monkeypatch.setattr(
             "sys.argv",
             [docsig.__name__, long.no_ansi, *[str(a) for a in args]],
         )
-        return docsig.main()
+        retcode = docsig.main()
+        if test_flake8:
+            app = Application()
+            app.initialize(
+                [
+                    "--select=SIG",
+                    *[str(a).replace("--", "--sig-") for a in args],
+                ]
+            )
+            app.run_checks()
+            app.report()
+            flake8_retcode = app.exit_code()
+            assert flake8_retcode == retcode
+
+        return retcode
 
     return _main
 

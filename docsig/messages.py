@@ -14,6 +14,9 @@ UNKNOWN = "SIG000"
 #: Default template to format message strings.
 TEMPLATE = "{ref}: {description} ({symbolic})"
 
+#: Flake8 template to format message strings.
+FLAKE8 = "{ref} {description} ({symbolic})"
+
 
 class Message(_t.NamedTuple):
     """Represents an error message."""

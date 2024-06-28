@@ -1179,14 +1179,14 @@ def test_commandline_disables(
     :param symbolic: Rule symbolic code to comment.
     """
     init_file(DISABLE_FILE_1)
-    main(".", "--disable", code)
+    main(".", "--disable", code, test_flake8=False)
     std = capsys.readouterr()
     assert E.from_ref(code).ref not in std.out
     assert all(
         E.from_ref(i[0]).ref in std.out for i in SYMBOLIC if i[0] != code
     )
     init_file(DISABLE_FILE_1)
-    main(".", "--disable", symbolic)
+    main(".", "--disable", symbolic, test_flake8=False)
     std = capsys.readouterr()
     assert symbolic not in std.out
     assert all(i[1] in std.out for i in SYMBOLIC if i[1] != symbolic)
@@ -1198,7 +1198,7 @@ def test_unknown_commandline_disables(main: MockMainType) -> None:
     :param main: Mock ``main`` function.
     """
     assert (
-        main(".", long.disable, "unknown")
+        main(".", long.disable, "unknown", test_flake8=False)
         == "unknown option to disable 'unknown'"
     )
 
