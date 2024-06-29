@@ -188,3 +188,9 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@$(POETRY) run deptry .
 	@mkdir -p $(@D)
 	@touch $@
+
+#: test check news script
+.make/test-check-news: $(VENV) scripts/check_news.py
+	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
+	@mkdir -p $(@D)
+	@touch $@

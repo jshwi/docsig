@@ -50,7 +50,8 @@ ignore-words-list = "astroid"
 
 [tool.coverage.report]
 exclude_lines = [
-  "@_t.overload"
+  "@_t.overload",
+  "if __name__ == .__main__.:"
 ]
 fail_under = 100
 
@@ -64,6 +65,9 @@ omit = [
 [tool.deptry.per_rule_ignores]
 DEP004 = [
   "git",
+  "pytest",
+  "tomli",
+  "tomli_w",
   "yaml"
 ]
 
@@ -138,6 +142,8 @@ isort = "^5.13.2"
 mypy = "^1.10.0"
 pre-commit = "^3.3.3"
 pylint = "^3.1.0"
+tomli = "^2.0.1"
+tomli-w = "^1.0.0"
 towncrier = "^23.11.0"
 tox = "^4.15.0"
 vulture = "^2.11"
