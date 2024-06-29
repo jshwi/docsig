@@ -9,6 +9,9 @@ ci:
     - update-docs
     - update-whitelist
     - coverage
+    - check-unstaged-news
+    - check-news
+    - test-check-news
 default_language_version:
   python: "3.9"
 default_stages:
@@ -80,6 +83,25 @@ repos:
         name: update whitelist
         language: system
         entry: make whitelist.py
+        pass_filenames: false
+      - id: check-unstaged-news
+        name: Check Unstaged News
+        entry: |
+          bash -c
+          'git status --porcelain changelog | grep "??" && exit 1 || exit 0'
+        language: system
+        stages:
+          - commit
+      - id: check-news
+        name: Check News
+        entry: poetry run python scripts/check_news.py
+        language: system
+        stages:
+          - commit-msg
+      - id: test-check-news
+        name: Test Check News
+        entry: make .make/test-check-news
+        language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.6.0"
