@@ -182,3 +182,8 @@ docs/_build/linkcheck/output.json: $(VENV) \
 			|| { echo "could not establish connection, skipping"; exit 0; }; \
 			$(POETRY) run $(MAKE) -C docs linkcheck; \
 		}
+
+#: test check news script
+.make/test-check-news: $(VENV) scripts/check_news.py
+	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
+	@touch $(@)
