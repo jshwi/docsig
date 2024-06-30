@@ -14,7 +14,7 @@ def excepthook(no_ansi: bool = False) -> None:
 
     :param no_ansi: Disable ANSI output.
     """
-    if _e.get("DOCSIG_DEBUG", None) != "1":
+    if _e.get("DOCSIG_DEBUG") != "1":
         _sys.excepthook = lambda x, y, _: _pretty_print_error(
             x, str(y), no_ansi
         )
