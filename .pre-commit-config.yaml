@@ -4,7 +4,6 @@ ci:
     - deptry
     - vulture
     - copyright-year
-    - doctest
     - make-docs
     - update-readme
     - update-docs
@@ -64,11 +63,6 @@ repos:
         name: copyright year
         language: system
         entry: make update-copyright
-        pass_filenames: false
-      - id: doctest
-        name: doctest
-        language: system
-        entry: make .make/doctest
         pass_filenames: false
       - id: make-docs
         name: make docs
