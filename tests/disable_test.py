@@ -1252,7 +1252,7 @@ def test_module_single_error_disables(
     init_file(DISABLE_FILE_4)
     main(".")
     std = capsys.readouterr()
-    assert not E.from_ref(ES[0]).ref in std.out
+    assert E.from_ref(ES[0]).ref not in std.out
     assert all(E.from_ref(i).ref in std.out for i in ES if i != ES[0])
 
 
