@@ -333,10 +333,12 @@ new-ssl "${@}"
 
 def test_bash_script(
     main: MockMainType,
+    init_file: InitFileFixtureType,
 ) -> None:
     """Test bash script.
 
     :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
     """
     template = """
 #!/usr/bin/env bash
@@ -353,20 +355,27 @@ pygmentize-cat() {
 
 pygmentize-cat "${@}"
 """
-    assert main(long.string, template) == 0
+    init_file(template, Path("module") / "file")
+    assert main(".") == 0
 
 
-def test_verbose(main: MockMainType, capsys: pytest.CaptureFixture) -> None:
+def test_verbose(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+) -> None:
     """Test verbose.
 
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
     """
     template = """\
 #!/bin/bash
 echo "Hello, world"
 """
-    main(long.string, template, long.verbose)
+    init_file(template, Path("module") / "file")
+    main(".", long.verbose)
     std = capsys.readouterr()
     assert "invalid syntax" in std.out
 
@@ -479,6 +488,7 @@ return 0
 def test_ignore_typechecker_and_no_prop_returns(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
     template: str,
     expected: str,
 ) -> None:
@@ -486,12 +496,14 @@ def test_ignore_typechecker_and_no_prop_returns(
 
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
     :param template: Template to test.
     :param expected: Expected message.
     """
-    assert main(long.string, template) == 1
+    init_file(template)
+    assert main(".") == 1
     std = capsys.readouterr()
     assert expected in std.out
-    assert main(long.string, template, long.ignore_typechecker) == 0
+    assert main(".", long.ignore_typechecker) == 0
     std = capsys.readouterr()
     assert expected not in std.out
