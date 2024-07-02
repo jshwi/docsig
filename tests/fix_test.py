@@ -8,7 +8,7 @@ import pytest
 from . import MockMainType, long
 
 
-def test_fix_optional_return_statements_with_overload_func_e104(
+def test_fix_optional_return_statements_with_overload_func_sig502(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
 ) -> None:
@@ -51,4 +51,4 @@ def get_something(number: Optional[int]) -> Optional[str]:
 '''
     main(long.string, template)
     std = capsys.readouterr()
-    assert "E104" not in std.out
+    assert "SIG502" not in std.out
