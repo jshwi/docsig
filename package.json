@@ -24,9 +24,9 @@
     "url": "git+https://github.com/jshwi/docsig.git"
   },
   "scripts": {
-    "bump:major": "poetry run python scripts/bump_version.py major",
-    "bump:minor": "poetry run python scripts/bump_version.py minor",
-    "bump:patch": "poetry run python scripts/bump_version.py patch"
+    "bump:major": "make bump part=major",
+    "bump:minor": "make bump part=minor",
+    "bump:patch": "make bump part=patch"
   },
   "version": "0.56.0"
 }

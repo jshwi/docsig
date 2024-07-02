@@ -194,3 +194,9 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
 	@touch $@
+
+.PHONY: bump
+bump: part = patch
+#: bump version
+bump: .make/pre-commit
+	@$(POETRY) run python scripts/bump_version.py $(part)
