@@ -52,7 +52,7 @@ repos:
         description: |
           deptry is a command line tool to check for issues with dependencies
           in a Python project, such as obsolete or missing dependencies.
-        entry: poetry run deptry .
+        entry: make .make/check-deps
         language: system
         always_run: true
         pass_filenames: false
