@@ -394,8 +394,8 @@ def test_ignore_args(
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(*CHECK_ARGS, long.ignore_args, file.parent) == int(
+    init_file(template)
+    assert main(".", *CHECK_ARGS, long.ignore_args) == int(
         name.startswith(FAIL)
         and "w-args" not in name
         or name.startswith(PASS)
@@ -437,8 +437,8 @@ def test_ignore_kwargs(
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    file = init_file(template)
-    assert main(*CHECK_ARGS, long.ignore_kwargs, file.parent) == int(
+    init_file(template)
+    assert main(".", *CHECK_ARGS, long.ignore_kwargs) == int(
         name.startswith(FAIL)
         and "w-kwargs" not in name
         or name.startswith(PASS)
