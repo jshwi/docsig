@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.57.0](https://github.com/jshwi/docsig/tree/v0.57.0) - 2024-07-03
+
+### Added
+
+- docsig as a flake8 plugin ([#368](https://github.com/jshwi/docsig/issues/368))
+
 ## [0.56.0](https://github.com/jshwi/docsig/tree/v0.56.0) - 2024-06-23
 
 ### Changed

@@ -143,7 +143,7 @@ ensure your installation has registered `docsig`
 .. code-block:: console
 
     $ flake8 --version
-    7.1.0 (docsig: 0.56.0, mccabe: 0.7.0, pycodestyle: 2.12.0, pyflakes: 3.2.0) CPython 3.8.13 on Darwin
+    7.1.0 (docsig: 0.57.0, mccabe: 0.7.0, pycodestyle: 2.12.0, pyflakes: 3.2.0) CPython 3.8.13 on Darwin
 
 And now use `flake8` to lint your files
 
@@ -230,7 +230,7 @@ It can be added to your .pre-commit-config.yaml as follows:
 
     repos:
       - repo: https://github.com/jshwi/docsig
-        rev: v0.56.0
+        rev: v0.57.0
         hooks:
           - id: docsig
             args:
