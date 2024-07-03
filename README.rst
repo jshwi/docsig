@@ -226,6 +226,8 @@ pre-commit
 
 It can be added to your .pre-commit-config.yaml as follows:
 
+Standalone
+
 .. code-block:: yaml
 
     repos:
@@ -238,3 +240,20 @@ It can be added to your .pre-commit-config.yaml as follows:
               - "--check-dunders"
               - "--check-overridden"
               - "--check-protected"
+
+or integrated with ``flake8``
+
+.. code-block:: yaml
+
+    repos:
+      - repo: https://github.com/PyCQA/flake8
+        rev: "7.1.0"
+        hooks:
+          - id: flake8
+            additional_dependencies:
+              - docsig==0.57.0
+            args:
+              - "--sig-check-class"
+              - "--sig-check-dunders"
+              - "--sig-check-overridden"
+              - "--sig-check-protected"

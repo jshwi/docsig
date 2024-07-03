@@ -43,6 +43,11 @@ replace = "docsig: {new_version}"
 search = "docsig: {current_version}"
 
 [[tool.bumpversion.files]]
+filename = "README.rst"
+replace = "- docsig=={new_version}"
+search = "- docsig=={current_version}"
+
+[[tool.bumpversion.files]]
 filename = "SECURITY.md"
 
 [[tool.bumpversion.files]]

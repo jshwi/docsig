@@ -195,6 +195,15 @@ def generate_pre_commit_example() -> None:
 
 
 @extension
+def generate_pre_commit_flake8_example() -> None:
+    """Generate pre-commit flake8 example."""
+    content = README.read_text(encoding="utf-8")
+    (GENERATED / "pre-commit-flake8-example.rst").write_text(
+        code_block("yaml").findall(content)[1], encoding="utf-8"
+    )
+
+
+@extension
 def generate_commit_policy() -> None:
     """Generate commit-policy page."""
     file = REPO / ".conform.yaml"
@@ -247,5 +256,6 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_pyproject_toml_example)
     app.connect("builder-inited", generate_tests)
     app.connect("builder-inited", generate_pre_commit_example)
+    app.connect("builder-inited", generate_pre_commit_flake8_example)
     app.connect("builder-inited", generate_commit_policy)
     app.connect("builder-inited", generate_flake8_help)
