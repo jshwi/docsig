@@ -76,6 +76,7 @@ omit = [
 DEP004 = [
   "flake8",
   "git",
+  "packaging",
   "pytest",
   "tomli",
   "tomli_w",
@@ -151,6 +152,7 @@ flynt = "^1.0.1"
 gitpython = "^3.1.43"
 isort = "^5.13.2"
 mypy = "^1.10.0"
+packaging = "^24.1"
 pre-commit = "^3.3.3"
 pylint = "^3.1.0"
 tomli = "^2.0.1"
