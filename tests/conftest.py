@@ -37,12 +37,15 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
     :return: Function for using this fixture.
     """
 
-    def _main(*args: str, test_flake8: bool = True) -> str | int:
+    def _main(
+        *args: str, test_flake8: bool = True, no_ansi: bool = True
+    ) -> str | int:
         """Run main with custom args."""
-        monkeypatch.setattr(
-            "sys.argv",
-            [docsig.__name__, long.no_ansi, *[str(a) for a in args]],
-        )
+        argv = [docsig.__name__, *[str(a) for a in args]]
+        if no_ansi:
+            argv.append(long.no_ansi)
+
+        monkeypatch.setattr("sys.argv", argv)
         retcode = docsig.main()
         if test_flake8:
             app = Application()

@@ -309,11 +309,13 @@ def test_list_checks(
 
 
 def test_bad_py_file(
+    monkeypatch: pytest.MonkeyPatch,
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
     """Test invalid syntax on .py file.
 
+    :param monkeypatch: Mock patch environment and attributes.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
@@ -336,8 +338,9 @@ new-ssl() {
 
 new-ssl "${@}"
 """
+    monkeypatch.setattr("sys.stdout.isatty", lambda: True)
     init_file(template)
-    assert main(".", test_flake8=False) == 1
+    assert main(".", test_flake8=False, no_ansi=False) == 1
 
 
 def test_bash_script(
