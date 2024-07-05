@@ -251,9 +251,8 @@ class Report(_t.Dict[str, _t.List[Failures]]):
 
                     header += f" in {function}"
                     _click.echo(
-                        "{}\n    {}".format(
-                            _click.style(header, fg="magenta"),
-                            "\n    ".join(failure),
-                        ),
+                        _click.style(header, fg="magenta"),
                         color=not no_ansi and _sys.stdout.isatty(),
                     )
+                    for item in failure:
+                        _click.echo(f"    {item}")
