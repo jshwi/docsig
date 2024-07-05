@@ -9,8 +9,6 @@ import sys as _sys
 import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
 
-import click as _click
-
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 
@@ -35,7 +33,7 @@ def vprint(msg: str, verbose: bool = False) -> None:
     :param verbose: Whether verbose mode is enabled.
     """
     if verbose:
-        _click.echo(msg)
+        print(msg)
 
 
 def pretty_print_error(
@@ -47,17 +45,17 @@ def pretty_print_error(
     :param msg: The exception message.
     :param no_ansi: Whether to in ANSI escape codes.
     """
-    _click.echo(
-        f"{_click.style(exception_type.__name__, fg='red', bold=True)}: {msg}",
-        file=_sys.stderr,
-        color=not no_ansi and _sys.stderr.isatty(),
-    )
+    exception_type_name = exception_type.__name__
+    if not no_ansi and _sys.stdout.isatty():
+        exception_type_name = f"\033[1;31m{exception_type_name}\033[0m"
+
+    print(f"{exception_type_name}: {msg}", file=_sys.stderr)
 
 
 def print_checks() -> None:
     """Print all available checks."""
     for msg in _E.values():
-        _click.echo(msg.fstring(_TEMPLATE))
+        print(msg.fstring(_TEMPLATE))
 
 
 def has_bad_return(string: str) -> bool:
