@@ -8,8 +8,6 @@ from __future__ import annotations as _
 import sys as _sys
 import typing as _t
 
-import click as _click
-
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
@@ -250,9 +248,9 @@ class Report(_t.Dict[str, _t.List[Failures]]):
                         function = f"{failure.func.parent.name}.{function}"
 
                     header += f" in {function}"
-                    _click.echo(
-                        _click.style(header, fg="magenta"),
-                        color=not no_ansi and _sys.stdout.isatty(),
-                    )
+                    if not no_ansi and _sys.stdout.isatty():
+                        header = f"\033[35m{header}\033[0m"
+
+                    print(header)
                     for item in failure:
-                        _click.echo(f"    {item}")
+                        print(f"    {item}")
