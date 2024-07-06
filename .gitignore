@@ -5,6 +5,7 @@
 .benchmarks/
 .env
 .make/
+.pyenv/
 __pycache__/
 bin
 dist/

@@ -1,5 +1,7 @@
 VERSION := 0.59.1
 
+PYTHON := .pyenv/shims/python
+PYENV := .pyenv/bin/pyenv
 POETRY := bin/poetry/bin/poetry
 
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
@@ -64,6 +66,7 @@ clean:
 	@rm -rf .git/hooks/*
 	@rm -rf .make
 	@rm -rf .mypy_cache
+	@rm -rf .pyenv
 	@rm -rf .pytest_cache
 	@rm -rf .venv
 	@rm -rf bin
@@ -100,10 +103,26 @@ $(VENV): $(POETRY) poetry.lock
 	@git config --local include.path $(@F)
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
 
+#: install pyenv
+$(PYENV):
+	@curl -sSL https://pyenv.run | PYENV_ROOT="$$(pwd)/.pyenv" bash
+	@touch $@
+
+$(PYTHON): version = 3.8.13
+#: install python
+$(PYTHON): $(PYENV)
+	@PYENV_ROOT="$$(pwd)/.pyenv" && \
+		[ -f .pyenv/versions/$(version) ] || \
+		$< install $(version) && \
+		eval "$$($< init --path)" && \
+		eval "$$($< init -)" && \
+		$< global $(version)
+	@touch $@
+
 #: install poetry
-$(POETRY):
+$(POETRY): $(PYTHON)
 	@curl -sSL https://install.python-poetry.org | \
-		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
+		POETRY_HOME="$$(pwd)/bin/poetry" PYENV_ROOT="$$(pwd).pyenv" $< -
 	@touch $@
 
 #: update commandline documentation if needed
