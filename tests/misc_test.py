@@ -607,3 +607,30 @@ def test_multiple_exit_codes(
         )
         == 1
     )
+
+
+def test_merge_of_list(
+    monkeypatch: pytest.MonkeyPatch,
+    main: MockMainType,
+) -> None:
+    """Test merging of toml and commandline lists.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param main: Patch package entry point.
+    """
+    pyproject_toml = Path.cwd() / "pyproject.toml"
+    pyproject_toml.write_text(
+        """
+[tool.docsig]
+disable = ["SIG201"]
+""",
+        encoding="utf-8",
+    )
+    docsig_obj = {}
+    monkeypatch.setattr(
+        "docsig._main._docsig", lambda *x, **y: docsig_obj.update(y)
+    )
+    main(".", long.disable, "SIG202,SIG203", test_flake8=False)
+    assert all(
+        i in docsig_obj["disable"] for i in ("SIG201", "SIG202", "SIG203")
+    )
