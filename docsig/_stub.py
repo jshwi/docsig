@@ -21,37 +21,6 @@ UNNAMED = -1000
 VALID_DESCRIPTION = " A valid description."
 
 
-# noinspection PyTypeChecker
-class _GoogleDocstring(str):
-    def __new__(cls, string: str) -> _GoogleDocstring:
-        return super().__new__(cls, str(_s.GoogleDocstring(string)))
-
-
-# noinspection PyTypeChecker
-class _NumpyDocstring(str):
-    def __new__(cls, string: str) -> _NumpyDocstring:
-        return super().__new__(cls, str(_s.NumpyDocstring(string)))
-
-
-# noinspection PyTypeChecker
-class _DocFmt(str):
-    def __new__(cls, string: str) -> _DocFmt:
-        return super().__new__(
-            cls,
-            _textwrap.dedent("\n".join(string.splitlines()[1:])).replace(
-                "*", ""
-            ),
-        )
-
-
-# noinspection PyTypeChecker
-class _RawDocstring(str):
-    def __new__(cls, string: str) -> _RawDocstring:
-        return super().__new__(
-            cls, _NumpyDocstring(_GoogleDocstring(_DocFmt(string)))
-        )
-
-
 class RetType(_Enum):
     """Defines the possible types of a return annotation."""
 
@@ -356,6 +325,22 @@ class Docstring(_Stub):
         # description
         return any(i.endswith(":") for i in new.splitlines())
 
+    @staticmethod
+    def _normalize_docstring(string: str) -> str:
+        # convert google and numpy style docstrings to parse docstrings
+        # as restructured text
+        return str(
+            _s.NumpyDocstring(
+                str(
+                    _s.GoogleDocstring(
+                        _textwrap.dedent(
+                            "\n".join(string.splitlines()[1:])
+                        ).replace("*", "")
+                    )
+                )
+            )
+        )
+
     def __init__(
         self,
         node: _ast.Const | None = None,
@@ -365,7 +350,7 @@ class Docstring(_Stub):
         super().__init__(ignore_args, ignore_kwargs)
         self._string = None
         if node is not None:
-            self._string = _RawDocstring(node.value)
+            self._string = self._normalize_docstring(node.value)
             for i in _Matches(
                 self._string,
                 self._indent_anomaly(node.value),
@@ -378,7 +363,7 @@ class Docstring(_Stub):
         )
 
     @property
-    def string(self) -> _RawDocstring | None:
+    def string(self) -> str | None:
         """The raw documentation string, if it exists, else None."""
         return self._string
 
