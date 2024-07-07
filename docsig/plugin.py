@@ -1,15 +1,14 @@
 """Flake8 implementation of docsig."""
 
 import ast
-import contextlib
-import io
-import re
 import sys
 import typing as t
 from argparse import Namespace
 
-from ._main import main
+from ._config import Parser
+from ._core import runner
 from ._version import __version__
+from .messages import FLAKE8
 
 Flake8Error = t.Tuple[int, int, str, t.Type]
 
@@ -142,25 +141,42 @@ class Docsig:
 
         :return: Flake8 error, if there is one.
         """
-        buffer = io.StringIO()
-        with contextlib.redirect_stdout(buffer):
-            sys.argv = [
-                __package__,
-                self.filename,
-                *[
-                    f"--{k.replace('_', '-')}"
-                    for k, v in self.options_dict.items()
-                    if v
-                ],
-            ]
-            main()
-
-        results = re.split(r"^(?!\s)", buffer.getvalue(), flags=re.MULTILINE)
+        sys.argv = [
+            __package__,
+            self.filename,
+            *[
+                f"--{k.replace('_', '-')}"
+                for k, v in self.options_dict.items()
+                if v
+            ],
+        ]
+        p = Parser()
+        results = runner(
+            self.filename,
+            check_class=p.args.check_class,
+            check_class_constructor=p.args.check_class_constructor,
+            check_dunders=p.args.check_dunders,
+            check_protected_class_methods=(
+                p.args.check_protected_class_methods
+            ),
+            check_nested=p.args.check_nested,
+            check_overridden=p.args.check_overridden,
+            check_protected=p.args.check_protected,
+            check_property_returns=p.args.check_property_returns,
+            ignore_no_params=p.args.ignore_no_params,
+            ignore_args=p.args.ignore_args,
+            ignore_kwargs=p.args.ignore_kwargs,
+            ignore_typechecker=p.args.ignore_typechecker,
+            no_ansi=p.args.no_ansi,
+        )[0]
         for result in results:
-            if not result:
-                continue
-
-            header, remainder = result.splitlines()[:2]
-            lineno, func_name = header.split(":", 1)[1].split(" in ", 1)
-            line = f"{remainder.lstrip().replace(':', '')} '{func_name}'"
-            yield int(lineno), 0, line, self.__class__
+            for info in result:
+                line = "{msg} '{name}'".format(
+                    msg=FLAKE8.format(
+                        ref=info.ref,
+                        description=info.description,
+                        symbolic=info.symbolic,
+                    ),
+                    name=info.name,
+                )
+                yield info.lineno, 0, line, self.__class__
