@@ -12,10 +12,10 @@ import astroid as _ast
 
 from . import _decorators
 from ._directives import Directives as _Directives
-from ._module import FILE_INFO as _FILE_INFO
+from ._files import FILE_INFO as _FILE_INFO
+from ._files import Paths as _Paths
 from ._module import Function as _Function
 from ._module import Parent as _Parent
-from ._module import Paths as _Paths
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import pretty_print_error as _pretty_print_error

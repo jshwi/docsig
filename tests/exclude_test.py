@@ -1817,8 +1817,8 @@ def test_gitignore_patterns(
     """
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
-    gitignore = docsig._module._Gitignore()  # type: ignore
-    monkeypatch.setattr("docsig._module._Gitignore", lambda: gitignore)
+    gitignore = docsig._files._Gitignore()  # type: ignore
+    monkeypatch.setattr("docsig._files._Gitignore", lambda: gitignore)
     main(".", long.verbose, test_flake8=False)
     patterns = [
         "*build/",
