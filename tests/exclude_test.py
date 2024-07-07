@@ -1573,7 +1573,7 @@ def test_gitignore(
     """
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
-    monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
+    monkeypatch.setattr("docsig._decorators._DEFAULT_EXCLUDES", "^$")
     main(".", long.verbose, test_flake8=False)
     std = capsys.readouterr()
     expected = [

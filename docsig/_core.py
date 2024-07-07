@@ -13,7 +13,6 @@ import astroid as _ast
 from . import _decorators
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
-from ._files import Paths as _Paths
 from ._module import Function as _Function
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
@@ -23,25 +22,6 @@ from ._utils import print_checks as _print_checks
 from ._utils import vprint as _vprint
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
-
-_DEFAULT_EXCLUDES = """\
-(?x)^(
-    |\\.?venv
-    |\\.git
-    |\\.hg
-    |\\.idea
-    |\\.mypy_cache
-    |\\.nox
-    |\\.pytest_cache
-    |\\.svn
-    |\\.tox
-    |\\.vscode
-    |_?build
-    |__pycache__
-    |dist
-    |node_modules
-)$
-"""
 
 
 def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
@@ -309,8 +289,9 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
 @_decorators.parse_msgs
 @_decorators.handle_deprecations
 @_decorators.validate_args
+@_decorators.collect_paths
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
-    *path: str | _Path,
+    *path: _Path,
     string: str | None = None,
     list_checks: bool = False,
     check_class: bool = False,
@@ -321,7 +302,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     check_overridden: bool = False,
     check_protected: bool = False,
     check_property_returns: bool = False,
-    include_ignored: bool = False,
     ignore_no_params: bool = False,
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
@@ -330,7 +310,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     verbose: bool = False,
     target: _Messages | None = None,
     disable: _Messages | None = None,
-    exclude: str | None = None,
 ) -> int:
     """Package's core functionality.
 
@@ -354,8 +333,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param check_overridden: Check overridden methods
     :param check_protected: Check protected functions and classes.
     :param check_property_returns: Run return checks on properties.
-    :param include_ignored: Check files even if they match a gitignore
-        pattern.
     :param ignore_no_params: Ignore docstrings where parameters are not
         documented
     :param ignore_args: Ignore args prefixed with an asterisk.
@@ -365,26 +342,14 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param verbose: increase output verbosity.
     :param target: List of errors to target.
     :param disable: List of errors to disable.
-    :param exclude: Regular expression of files and dirs to exclude from
-        checks.
     :return: Exit status for whether test failed or not.
     """
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    excludes = [_DEFAULT_EXCLUDES]
-    if exclude is not None:
-        excludes.append(exclude)
-
     if string is None:
         retcode = 0
-        paths = _Paths(
-            *tuple(_Path(i) for i in path),
-            excludes=excludes,
-            include_ignored=include_ignored,
-            verbose=verbose,
-        )
-        for file in paths:
+        for file in path:
             failures, retcode = runner(
                 file,
                 disable,
