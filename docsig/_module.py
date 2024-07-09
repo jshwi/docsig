@@ -12,7 +12,6 @@ import typing as _t
 from pathlib import Path as _Path
 
 import astroid as _ast
-from astroid import AstroidSyntaxError as _AstroidSyntaxError
 from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 
@@ -426,7 +425,7 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
                 ),
                 self._verbose,
             )
-        except (_AstroidSyntaxError, UnicodeDecodeError) as err:
+        except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
             msg = str(err).replace("\n", " ")
             if root is not None and root.name.endswith(".py"):
                 # pass by silently for files that do not end with .py,
