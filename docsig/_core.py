@@ -220,7 +220,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 )
 
         if failures:
-            report[module.path].append(failures)
+            report[module.path] = failures
 
     report.print(no_ansi)
     return max(int(bool(report)), modules.retcode)

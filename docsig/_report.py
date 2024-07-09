@@ -224,14 +224,8 @@ class Failures(_t.List[Failure]):
     """Sequence of failed functions."""
 
 
-class Report(_t.Dict[str, _t.List[Failures]]):
+class Report(_t.Dict[str, Failures]):
     """Collect and display report."""
-
-    def __getitem__(self, key: str) -> list[Failures]:
-        if key not in super().__iter__():
-            super().__setitem__(key, [])
-
-        return super().__getitem__(key)
 
     def print(self, no_ansi: bool) -> None:
         """Display report summary if any checks have failed.
@@ -239,17 +233,16 @@ class Report(_t.Dict[str, _t.List[Failures]]):
         :param no_ansi: Disable ANSI output.
         """
         for key, value in self.items():
-            for failures in value:
-                for failure in failures:
-                    header = f"{key}{failure.func.lineno}"
-                    function = failure.func.name
-                    if failure.func.parent.name:
-                        function = f"{failure.func.parent.name}.{function}"
+            for failure in value:
+                header = f"{key}{failure.func.lineno}"
+                function = failure.func.name
+                if failure.func.parent.name:
+                    function = f"{failure.func.parent.name}.{function}"
 
-                    header += f" in {function}"
-                    if not no_ansi and _sys.stdout.isatty():
-                        header = f"\033[35m{header}\033[0m"
+                header += f" in {function}"
+                if not no_ansi and _sys.stdout.isatty():
+                    header = f"\033[35m{header}\033[0m"
 
-                    print(header)
-                    for item in failure:
-                        print(f"    {item}")
+                print(header)
+                for item in failure:
+                    print(f"    {item}")
