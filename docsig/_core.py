@@ -13,6 +13,7 @@ import astroid as _ast
 from . import _decorators
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
+from ._module import Ast as _Ast
 from ._module import Function as _Function
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
@@ -96,56 +97,6 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 target,
                 failures,
             )
-
-
-def _parse_ast(  # pylint: disable=too-many-arguments
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor,
-    verbose: bool,
-    no_ansi: bool,
-    root: _Path | None = None,
-    string: str | None = None,
-) -> tuple[_Parent | None, int]:
-    parent = None
-    retcode = 0
-    try:
-        if root is not None:
-            string = root.read_text(encoding="utf-8")
-
-        # empty string won't happen but keeps the
-        # typechecker happy
-        string = string or ""
-        parent = _Parent(
-            _ast.parse(string),
-            _Directives(string, messages),
-            root,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
-        )
-        _vprint(
-            _FILE_INFO.format(
-                path=root or "stdin", msg="Parsing Python code successful"
-            ),
-            verbose,
-        )
-    except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
-        msg = str(err).replace("\n", " ")
-        if root is not None and root.name.endswith(".py"):
-            # pass by silently for files that do not end with .py, may
-            # result in a 123 syntax error exit status in the future
-            print(root, file=_sys.stderr)
-            _pretty_print_error(type(err), msg, no_ansi=no_ansi)
-            retcode = 1
-
-        _vprint(
-            _FILE_INFO.format(path=root or "stdin", msg=msg),
-            verbose,
-        )
-
-    return parent, retcode
 
 
 def _get_failures(  # pylint: disable=too-many-locals,too-many-arguments
@@ -257,16 +208,22 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :return: Exit status for whether test failed or not.
     """
     failures = _Failures()
-    module, retcode = _parse_ast(
-        disable or _Messages(),
-        ignore_args,
-        ignore_kwargs,
-        check_class_constructor,
-        verbose,
-        no_ansi,
-        root=_Path(file),
-    )
-    if module:
+    path = _Path(file)
+    string = path.read_text(encoding="utf-8")
+    ast = _Ast.parse(string)
+    if ast.success:
+        _vprint(
+            _FILE_INFO.format(path=path, msg="Parsing Python code successful"),
+            verbose,
+        )
+        module = _Parent(
+            ast.module,
+            _Directives(string, disable or _Messages()),
+            path,
+            ignore_args,
+            ignore_kwargs,
+            check_class_constructor,
+        )
         failures = _get_failures(
             module,
             check_class,
@@ -282,8 +239,20 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
             no_ansi,
             target or _Messages(),
         )
+        return failures, 0
 
-    return failures, retcode
+    if path.name.endswith(".py"):
+        # pass by silently for files that do not end with .py,  may
+        # result in a 123 syntax error exit status in the future
+        print(path, file=_sys.stderr)
+        _pretty_print_error(type(ast.err), str(ast.err), no_ansi=no_ansi)
+        return failures, 1
+
+    _vprint(
+        _FILE_INFO.format(path=path, msg=str(ast.err)),
+        verbose,
+    )
+    return failures, 0
 
 
 @_decorators.parse_msgs
@@ -375,16 +344,21 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
         return retcode
 
-    module, retcode = _parse_ast(
-        disable or _Messages(),
-        ignore_args,
-        ignore_kwargs,
-        check_class_constructor,
-        verbose,
-        no_ansi,
-        string=string,
-    )
-    if module is not None:
+    ast = _Ast.parse(string)
+    if ast.success:
+        _vprint(
+            _FILE_INFO.format(
+                path="stdin", msg="Parsing Python code successful"
+            ),
+            verbose,
+        )
+        module = _Parent(
+            _ast.parse(string),
+            _Directives(string, messages=disable or _Messages()),
+            ignore_args=ignore_args,
+            ignore_kwargs=ignore_kwargs,
+            check_class_constructor=check_class_constructor,
+        )
         failures = _get_failures(
             module,
             check_class,
@@ -403,5 +377,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         if failures:
             _report(failures, no_ansi=no_ansi)
             return 1
+
+        _vprint(_FILE_INFO.format(path="stdin", msg=str(ast.err)), verbose)
 
     return 0
