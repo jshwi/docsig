@@ -6,7 +6,6 @@ docsig._core
 from __future__ import annotations as _
 
 import sys as _sys
-import typing as _t
 from pathlib import Path as _Path
 
 from . import _decorators
@@ -113,30 +112,26 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             )
 
 
-class _Report(_t.Dict[str, _Failures]):
-    def print(self, no_ansi: bool) -> None:
-        """Display report summary if any checks have failed.
+def _report(
+    failures: _Failures, path: str | None = None, no_ansi: bool = False
+) -> None:
+    for failure in failures:
+        header = f"{path}{failure.lineno} in {failure.name}"
+        if not no_ansi and _sys.stdout.isatty():
+            header = f"\033[35m{header}\033[0m"
 
-        :param no_ansi: Disable ANSI output.
-        """
-        for key, value in self.items():
-            for failure in value:
-                header = f"{key}{failure.lineno} in {failure.name}"
-                if not no_ansi and _sys.stdout.isatty():
-                    header = f"\033[35m{header}\033[0m"
-
-                print(header)
-                for item in failure:
-                    print(
-                        "    "
-                        + _TEMPLATE.format(
-                            ref=item.ref,
-                            description=item.description,
-                            symbolic=item.symbolic,
-                        )
-                    )
-                    if item.hint:
-                        print(f"    hint: {item.hint}")
+        print(header)
+        for item in failure:
+            print(
+                "    "
+                + _TEMPLATE.format(
+                    ref=item.ref,
+                    description=item.description,
+                    symbolic=item.symbolic,
+                )
+            )
+            if item.hint:
+                print(f"    hint: {item.hint}")
 
 
 @_decorators.parse_msgs
@@ -202,6 +197,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         checks.
     :return: Exit status for whether test failed or not.
     """
+    retcode = 0
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
@@ -221,7 +217,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         no_ansi=no_ansi,
         verbose=verbose,
     )
-    report = _Report()
     for module in modules:
         failures = _Failures()
         for top_level in module:
@@ -248,7 +243,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 )
 
         if failures:
-            report[module.path] = failures
+            _report(failures, module.path, no_ansi=no_ansi)
+            retcode = 1
 
-    report.print(no_ansi)
-    return max(int(bool(report)), modules.retcode)
+    return max(retcode, modules.retcode)
