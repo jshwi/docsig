@@ -45,7 +45,6 @@ class Failure(_t.List[str]):
         if target:
             self._func.messages.extend(i for i in _E.all if i not in target)
 
-        self._func = func
         self._check_property_returns = check_property_returns
         self._sig0xx_config()
         if self._func.docstring.string is None:
