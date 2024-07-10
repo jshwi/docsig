@@ -169,7 +169,7 @@ class Failure(_t.List[str]):
         elif doc != sig:
             if (
                 sig.name in self._func.docstring.args.names
-                or doc.name in self.func.signature.args.names
+                or doc.name in self._func.signature.args.names
             ):
                 # params-out-of-order
                 self._add(_E[402])
