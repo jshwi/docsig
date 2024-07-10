@@ -296,7 +296,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         checks.
     :return: Exit status for whether test failed or not.
     """
-    retcode = 0
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
@@ -305,6 +304,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         excludes.append(exclude)
 
     if string is None:
+        retcode = 0
         paths = _Paths(
             *tuple(_Path(i) for i in path),
             excludes=excludes,
@@ -371,6 +371,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         )
         if failures:
             _report(failures, no_ansi=no_ansi)
-            retcode = 1
+            return 1
 
-    return retcode
+    return 0
