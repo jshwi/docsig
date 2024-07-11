@@ -360,7 +360,7 @@ class Function(Parent):
         self._signature.overload(rettype)
 
 
-class Modules(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
+class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
     """Collect a list of valid paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
