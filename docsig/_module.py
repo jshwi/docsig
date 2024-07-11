@@ -7,7 +7,6 @@ from __future__ import annotations as _
 
 import os as _os
 import re as _re
-import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
@@ -20,11 +19,10 @@ from ._directives import Directives as _Directives
 from ._stub import Docstring as _Docstring
 from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
-from ._utils import pretty_print_error as _pretty_print_error
 from ._utils import vprint as _vprint
 from .messages import Messages as _Messages
 
-_FILE_INFO = "{path}: {msg}"
+FILE_INFO = "{path}: {msg}"
 
 
 class _Gitignore(_PathSpec):
@@ -98,7 +96,6 @@ class Parent(_t.List["Parent"]):
     ) -> None:
         super().__init__()
         self._name = node.name
-        self._path = f"{path}:" if path is not None else ""
         self._overloads: dict[str, Function] = {}
         self._imports = imports or {}
         self._parse_ast(
@@ -184,11 +181,6 @@ class Parent(_t.List["Parent"]):
                         ignore_kwargs,
                         check_class_constructor,
                     )
-
-    @property
-    def path(self) -> str:
-        """Representation of path to parent."""
-        return self._path
 
     @property
     def isprotected(self) -> bool:
@@ -368,119 +360,33 @@ class Function(Parent):
         self._signature.overload(rettype)
 
 
-class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
-    """Sequence of ``Module`` objects parsed from Python modules or str.
-
-    Recursively collect Python files from within all dirs that exist
-    under paths provided.
-
-    If string is provided, ignore paths.
+class Modules(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
+    """Collect a list of valid paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
-    :param messages: List of checks to disable.
     :param excludes: List pf regular expression of files and dirs to
         exclude from checks.
-    :param string: String to parse if provided.
     :param include_ignored: Check files even if they match a gitignore
         pattern.
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param check_class_constructor: Check the class constructor's
-        docstring. Otherwise, expect the constructor's documentation to
-        be on the class level docstring.
-    :param no_ansi: Disable ANSI output.
     :param verbose: increase output verbosity.
     """
-
-    @staticmethod
-    def _sort_key(parent: Parent) -> str:
-        return parent.path
-
-    # handle errors here before appending a module
-    def _add_module(  # pylint: disable=too-many-arguments
-        self,
-        messages: _Messages,
-        string: str | None = None,
-        root: _Path | None = None,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-        check_class_constructor: bool = False,
-    ) -> None:
-        try:
-            if root is not None:
-                string = root.read_text(encoding="utf-8")
-
-            # empty string won't happen but keeps the
-            # typechecker happy
-            string = string or ""
-            self.append(
-                Parent(
-                    _ast.parse(string),
-                    _Directives(string, messages),
-                    root,
-                    ignore_args,
-                    ignore_kwargs,
-                    check_class_constructor,
-                )
-            )
-            _vprint(
-                _FILE_INFO.format(
-                    path=root or "stdin", msg="Parsing Python code successful"
-                ),
-                self._verbose,
-            )
-        except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
-            msg = str(err).replace("\n", " ")
-            if root is not None and root.name.endswith(".py"):
-                # pass by silently for files that do not end with .py,
-                # may result in a 123 syntax error exit status in the
-                # future
-                print(root, file=_sys.stderr)
-                _pretty_print_error(type(err), msg, no_ansi=self._no_ansi)
-                self._retcode = 1
-
-            _vprint(
-                _FILE_INFO.format(path=root or "stdin", msg=msg),
-                self._verbose,
-            )
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
-        messages: _Messages,
         excludes: list[str],
-        string: str | None = None,
         include_ignored: bool = False,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-        check_class_constructor: bool = False,
-        no_ansi: bool = False,
         verbose: bool = False,
     ) -> None:
         super().__init__()
-        self._messages = messages
         self._excludes = excludes
         self._include_ignored = include_ignored
-        self._ignore_args = ignore_args
-        self._ignore_kwargs = ignore_kwargs
-        self._check_class_constructor = check_class_constructor
-        self._no_ansi = no_ansi
         self._verbose = verbose
-        self._retcode = 0
         self._gitignore = _Gitignore()
-        if string is not None:
-            self._add_module(
-                messages,
-                string=string,
-                ignore_args=ignore_args,
-                ignore_kwargs=ignore_kwargs,
-                check_class_constructor=check_class_constructor,
-            )
-        else:
-            for path in paths:
-                self._populate(path)
+        for path in paths:
+            self._populate(path)
 
-        super().sort(key=self._sort_key)
+        self.sort()
 
     def _populate(self, root: _Path) -> None:
         if not root.exists():
@@ -490,32 +396,21 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
             _re.match(i, root.name) for i in self._excludes
         ):
             _vprint(
-                _FILE_INFO.format(path=root, msg="in exclude list, skipping"),
+                FILE_INFO.format(path=root, msg="in exclude list, skipping"),
                 self._verbose,
             )
             return
 
         if not self._include_ignored and self._gitignore.match_file(root):
             _vprint(
-                _FILE_INFO.format(path=root, msg="in gitignore, skipping"),
+                FILE_INFO.format(path=root, msg="in gitignore, skipping"),
                 self._verbose,
             )
             return
 
         if root.is_file():
-            self._add_module(
-                self._messages,
-                root=root,
-                ignore_args=self._ignore_args,
-                ignore_kwargs=self._ignore_kwargs,
-                check_class_constructor=self._check_class_constructor,
-            )
+            self.append(root)
 
         if root.is_dir():
             for path in root.iterdir():
                 self._populate(path)
-
-    @property
-    def retcode(self) -> int:
-        """Return code to propagate to main."""
-        return self._retcode
