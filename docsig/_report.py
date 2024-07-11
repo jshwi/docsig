@@ -5,7 +5,6 @@ docsig._report
 
 from __future__ import annotations as _
 
-import sys as _sys
 import typing as _t
 
 from ._module import Function as _Function
@@ -15,7 +14,6 @@ from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
 from ._utils import has_bad_return as _has_bad_return
-from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 from .messages import Message as _Message
 from .messages import Messages as _Messages
@@ -243,31 +241,3 @@ class Failure(_t.List[Failed]):
 
 class Failures(_t.List[Failure]):
     """Sequence of failed functions."""
-
-
-class Report(_t.Dict[str, Failures]):
-    """Collect and display report."""
-
-    def print(self, no_ansi: bool) -> None:
-        """Display report summary if any checks have failed.
-
-        :param no_ansi: Disable ANSI output.
-        """
-        for key, value in self.items():
-            for failure in value:
-                header = f"{key}{failure.lineno} in {failure.name}"
-                if not no_ansi and _sys.stdout.isatty():
-                    header = f"\033[35m{header}\033[0m"
-
-                print(header)
-                for item in failure:
-                    print(
-                        "    "
-                        + _TEMPLATE.format(
-                            ref=item.ref,
-                            description=item.description,
-                            symbolic=item.symbolic,
-                        )
-                    )
-                    if item.hint:
-                        print(f"    hint: {item.hint}")

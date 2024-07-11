@@ -5,6 +5,8 @@ docsig._core
 
 from __future__ import annotations as _
 
+import sys as _sys
+import typing as _t
 from pathlib import Path as _Path
 
 from . import _decorators
@@ -13,8 +15,8 @@ from ._module import Modules as _Modules
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
-from ._report import Report as _Report
 from ._utils import print_checks as _print_checks
+from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
 _DEFAULT_EXCLUDES = """\
@@ -109,6 +111,32 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 target,
                 failures,
             )
+
+
+class _Report(_t.Dict[str, _Failures]):
+    def print(self, no_ansi: bool) -> None:
+        """Display report summary if any checks have failed.
+
+        :param no_ansi: Disable ANSI output.
+        """
+        for key, value in self.items():
+            for failure in value:
+                header = f"{key}{failure.lineno} in {failure.name}"
+                if not no_ansi and _sys.stdout.isatty():
+                    header = f"\033[35m{header}\033[0m"
+
+                print(header)
+                for item in failure:
+                    print(
+                        "    "
+                        + _TEMPLATE.format(
+                            ref=item.ref,
+                            description=item.description,
+                            symbolic=item.symbolic,
+                        )
+                    )
+                    if item.hint:
+                        print(f"    hint: {item.hint}")
 
 
 @_decorators.parse_msgs
