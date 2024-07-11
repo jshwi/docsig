@@ -8,7 +8,8 @@ import sys
 import typing as t
 from argparse import Namespace
 
-import docsig
+from ._main import main
+from ._version import __version__
 
 Flake8Error = t.Tuple[int, int, str, t.Type]
 
@@ -22,8 +23,8 @@ class Docsig:
     """
 
     off_by_default = False
-    name = docsig.__name__
-    version = docsig.__version__
+    name = __package__
+    version = __version__
     options_dict: t.Dict[str, bool] = {}
 
     def __init__(self, tree: ast.Module, filename: str) -> None:
@@ -152,7 +153,7 @@ class Docsig:
                     if v
                 ],
             ]
-            docsig.main()
+            main()
 
         results = re.split(r"^(?!\s)", buffer.getvalue(), flags=re.MULTILINE)
         for result in results:
