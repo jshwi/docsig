@@ -112,6 +112,48 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             )
 
 
+def _get_failures(  # pylint: disable=too-many-locals,too-many-arguments
+    module: _Parent,
+    check_class: bool,
+    check_class_constructor: bool,
+    check_dunders: bool,
+    check_nested: bool,
+    check_overridden: bool,
+    check_protected: bool,
+    check_property_returns: bool,
+    ignore_no_params: bool,
+    ignore_typechecker: bool,
+    check_protected_class_methods: bool,
+    no_ansi: bool,
+    target: _Messages,
+) -> _Failures:
+    failures = _Failures()
+    for top_level in module:
+        if (
+            not top_level.isprotected
+            or check_protected
+            or check_protected_class_methods
+        ):
+            _run_check(
+                top_level,
+                module,
+                check_class,
+                check_class_constructor,
+                check_dunders,
+                check_nested,
+                check_overridden,
+                check_protected,
+                check_property_returns,
+                ignore_no_params,
+                ignore_typechecker,
+                no_ansi,
+                target or _Messages(),
+                failures,
+            )
+
+    return failures
+
+
 def _report(
     failures: _Failures, path: str | None = None, no_ansi: bool = False
 ) -> None:
@@ -218,30 +260,21 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         verbose=verbose,
     )
     for module in modules:
-        failures = _Failures()
-        for top_level in module:
-            if (
-                not top_level.isprotected
-                or check_protected
-                or check_protected_class_methods
-            ):
-                _run_check(
-                    top_level,
-                    module,
-                    check_class,
-                    check_class_constructor,
-                    check_dunders,
-                    check_nested,
-                    check_overridden,
-                    check_protected,
-                    check_property_returns,
-                    ignore_no_params,
-                    ignore_typechecker,
-                    no_ansi,
-                    target or _Messages(),
-                    failures,
-                )
-
+        failures = _get_failures(
+            module,
+            check_class,
+            check_class_constructor,
+            check_dunders,
+            check_nested,
+            check_overridden,
+            check_protected,
+            check_property_returns,
+            ignore_no_params,
+            ignore_typechecker,
+            check_protected_class_methods,
+            no_ansi,
+            target or _Messages(),
+        )
         if failures:
             _report(failures, module.path, no_ansi=no_ansi)
             retcode = 1
