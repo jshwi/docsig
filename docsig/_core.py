@@ -233,6 +233,79 @@ def _report(
                 print(f"    hint: {item.hint}")
 
 
+def runner(  # pylint: disable=too-many-locals,too-many-arguments
+    file: str | _Path,
+    disable: _Messages | None = None,
+    check_class: bool = False,
+    check_class_constructor: bool = False,
+    check_dunders: bool = False,
+    check_nested: bool = False,
+    check_overridden: bool = False,
+    check_protected: bool = False,
+    check_property_returns: bool = False,
+    ignore_no_params: bool = False,
+    ignore_args: bool = False,
+    ignore_kwargs: bool = False,
+    ignore_typechecker: bool = False,
+    check_protected_class_methods: bool = False,
+    no_ansi: bool = False,
+    verbose: bool = False,
+    target: _Messages | None = None,
+) -> tuple[_Failures, int]:
+    """Per path runner.
+
+    :param file: Path to check.
+    :param disable: Messages to disable.
+    :param check_class: Check class docstrings.
+    :param check_class_constructor: Check ``__init__`` methods. Note that this
+        is mutually incompatible with check_class.
+    :param check_dunders: Check dunder methods
+    :param check_nested: Check nested functions and classes.
+    :param check_overridden: Check overridden methods
+    :param check_protected: Check protected functions and classes.
+    :param check_property_returns: Run return checks on properties.
+    :param ignore_no_params: Ignore docstrings where parameters are not
+        documented
+    :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param ignore_typechecker: Ignore checking return values.
+    :param check_protected_class_methods: Check public methods belonging
+        to protected classes.
+    :param no_ansi: Disable ANSI output.
+    :param verbose: increase output verbosity.
+    :param target: List of errors to target.
+    :return: Exit status for whether test failed or not.
+    """
+    failures = _Failures()
+    module, retcode = _parse_ast(
+        disable or _Messages(),
+        ignore_args,
+        ignore_kwargs,
+        check_class_constructor,
+        verbose,
+        no_ansi,
+        root=_Path(file),
+    )
+    if module:
+        failures = _get_failures(
+            module,
+            check_class,
+            check_class_constructor,
+            check_dunders,
+            check_nested,
+            check_overridden,
+            check_protected,
+            check_property_returns,
+            ignore_no_params,
+            ignore_typechecker,
+            check_protected_class_methods,
+            no_ansi,
+            target or _Messages(),
+        )
+
+    return failures, retcode
+
+
 @_decorators.parse_msgs
 @_decorators.handle_deprecations
 @_decorators.validate_args
@@ -312,35 +385,29 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
             verbose=verbose,
         )
         for file in paths:
-            module, parse_retcode = _parse_ast(
-                disable or _Messages(),
+            failures, parse_retcode = runner(
+                file,
+                disable,
+                check_class,
+                check_class_constructor,
+                check_dunders,
+                check_nested,
+                check_overridden,
+                check_protected,
+                check_property_returns,
+                ignore_no_params,
                 ignore_args,
                 ignore_kwargs,
-                check_class_constructor,
-                verbose,
+                ignore_typechecker,
+                check_protected_class_methods,
                 no_ansi,
-                root=file,
+                verbose,
+                target,
             )
             retcode = retcode or parse_retcode
-            if module:
-                failures = _get_failures(
-                    module,
-                    check_class,
-                    check_class_constructor,
-                    check_dunders,
-                    check_nested,
-                    check_overridden,
-                    check_protected,
-                    check_property_returns,
-                    ignore_no_params,
-                    ignore_typechecker,
-                    check_protected_class_methods,
-                    no_ansi,
-                    target or _Messages(),
-                )
-                if failures:
-                    _report(failures, str(file), no_ansi)
-                    retcode = 1
+            if failures:
+                _report(failures, str(file), no_ansi)
+                retcode = 1
 
         return retcode
 
