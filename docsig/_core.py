@@ -14,8 +14,8 @@ from . import _decorators
 from ._directives import Directives as _Directives
 from ._module import FILE_INFO as _FILE_INFO
 from ._module import Function as _Function
-from ._module import Modules as _Modules
 from ._module import Parent as _Parent
+from ._module import Paths as _Paths
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import pretty_print_error as _pretty_print_error
@@ -305,13 +305,13 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         excludes.append(exclude)
 
     if string is None:
-        modules = _Modules(
+        paths = _Paths(
             *tuple(_Path(i) for i in path),
             excludes=excludes,
             include_ignored=include_ignored,
             verbose=verbose,
         )
-        for file in modules:
+        for file in paths:
             module, retcode = _parse_ast(
                 disable or _Messages(),
                 ignore_args,
