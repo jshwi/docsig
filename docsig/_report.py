@@ -24,7 +24,18 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class Failure(_t.List[str]):
+class Failed(_t.NamedTuple):
+    """Report info object."""
+
+    name: str
+    ref: str
+    description: str
+    symbolic: str
+    lineno: int
+    hint: str | None = None
+
+
+class Failure(_t.List[Failed]):
     """Compile and produce report.
 
     :param func: Function object.
@@ -45,6 +56,10 @@ class Failure(_t.List[str]):
         if target:
             self._func.messages.extend(i for i in _E.all if i not in target)
 
+        self._name = self._func.name
+        if self._func.parent.name:
+            self._name = f"{self._func.parent.name}.{self._func.name}"
+
         self._check_property_returns = check_property_returns
         self._sig0xx_config()
         if self._func.docstring.string is None:
@@ -62,15 +77,16 @@ class Failure(_t.List[str]):
         self.sort()
 
     def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        message = value.fstring(_TEMPLATE)
-        if kwargs:
-            message = message.format(**kwargs)
-
-        if hint:
-            message += f"\n    hint: {value.hint}"
-
-        if value not in self._func.messages and message not in self:
-            super().append(message)
+        failed = Failed(
+            self._name,
+            value.ref,
+            value.description.format(**kwargs),
+            value.symbolic,
+            self._func.lineno,
+            value.hint if hint else None,
+        )
+        if value not in self._func.messages and failed not in self:
+            super().append(failed)
 
     def _sig0xx_config(self) -> None:
         for comment in self._func.comments:
@@ -215,9 +231,14 @@ class Failure(_t.List[str]):
                 self._add(_E[505], hint=True)
 
     @property
-    def func(self) -> _Function:
-        """Function this failure belongs to."""
-        return self._func
+    def name(self) -> str:
+        """Function name."""
+        return self._name
+
+    @property
+    def lineno(self) -> int:
+        """Function line number."""
+        return self._func.lineno
 
 
 class Failures(_t.List[Failure]):
@@ -234,15 +255,19 @@ class Report(_t.Dict[str, Failures]):
         """
         for key, value in self.items():
             for failure in value:
-                header = f"{key}{failure.func.lineno}"
-                function = failure.func.name
-                if failure.func.parent.name:
-                    function = f"{failure.func.parent.name}.{function}"
-
-                header += f" in {function}"
+                header = f"{key}{failure.lineno} in {failure.name}"
                 if not no_ansi and _sys.stdout.isatty():
                     header = f"\033[35m{header}\033[0m"
 
                 print(header)
                 for item in failure:
-                    print(f"    {item}")
+                    print(
+                        "    "
+                        + _TEMPLATE.format(
+                            ref=item.ref,
+                            description=item.description,
+                            symbolic=item.symbolic,
+                        )
+                    )
+                    if item.hint:
+                        print(f"    hint: {item.hint}")
