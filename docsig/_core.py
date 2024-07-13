@@ -195,13 +195,13 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     )
     report = _Report()
     for module in modules:
+        failures = _Failures()
         for top_level in module:
             if (
                 not top_level.isprotected
                 or check_protected
                 or check_protected_class_methods
             ):
-                failures = _Failures()
                 _run_check(
                     top_level,
                     module,
@@ -218,8 +218,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                     target or _Messages(),
                     failures,
                 )
-                if failures:
-                    report[top_level.path].append(failures)
+
+        if failures:
+            report[module.path].append(failures)
 
     report.print(no_ansi)
     return max(int(bool(report)), modules.retcode)
