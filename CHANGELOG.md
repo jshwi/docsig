@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.58.0](https://github.com/jshwi/docsig/tree/v0.58.0) - 2024-07-15
+
+### Changed
+
+- remove click from dependencies ([#376](https://github.com/jshwi/docsig/issues/376))
+
 ## [0.57.0](https://github.com/jshwi/docsig/tree/v0.57.0) - 2024-07-03
 
 ### Added
