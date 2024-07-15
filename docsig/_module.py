@@ -392,6 +392,10 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
     :param verbose: increase output verbosity.
     """
 
+    @staticmethod
+    def _sort_key(parent: Parent) -> str:
+        return parent.path
+
     # handle errors here before appending a module
     def _add_module(  # pylint: disable=too-many-arguments
         self,
@@ -475,6 +479,8 @@ class Modules(_t.List[Parent]):  # pylint: disable=too-many-instance-attributes
         else:
             for path in paths:
                 self._populate(path)
+
+        super().sort(key=self._sort_key)
 
     def _populate(self, root: _Path) -> None:
         if not root.exists():

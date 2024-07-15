@@ -17,7 +17,7 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import PATH, InitFileFixtureType, MockMainType, long, short
+from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType, long, short
 
 
 @pytest.mark.parametrize("arg", (short.V, long.version))
@@ -519,3 +519,47 @@ def test_ignore_typechecker_and_no_prop_returns(
     assert main(".", long.ignore_typechecker) == 0
     std = capsys.readouterr()
     assert expected not in std.out
+
+
+def test_sorted(
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """Test modules evaluated in sorted order.
+
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    :param capsys: Capture sys out.
+    """
+    template = '''
+def function(*_, **__) -> None:
+    """Proper docstring.
+
+    :return: Returncode.
+    """
+    return 0
+'''
+    init_file(template, Path("module") / "file1.py")
+    init_file(template, Path("module") / "file2.py")
+    init_file(template, Path("module") / "file3.py")
+    init_file(template, Path("module") / "file4.py")
+    main(
+        ".",
+        *CHECK_ARGS,
+        test_flake8=False,  # won't need, flake runs one file at a time
+    )
+    std = capsys.readouterr()
+    assert (
+        std.out
+        == f"""\
+{Path('module') / 'file1'}.py:2 in function
+    SIG502: return statement documented for None (return-documented-for-none)
+{Path('module') / 'file2'}.py:2 in function
+    SIG502: return statement documented for None (return-documented-for-none)
+{Path('module') / 'file3'}.py:2 in function
+    SIG502: return statement documented for None (return-documented-for-none)
+{Path('module') / 'file4'}.py:2 in function
+    SIG502: return statement documented for None (return-documented-for-none)
+"""
+    )
