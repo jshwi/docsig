@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.59.0](https://github.com/jshwi/docsig/tree/v0.59.0) - 2024-07-16
+
+### Changed
+
+- sort checked paths ([#381](https://github.com/jshwi/docsig/issues/381))
+
 ## [0.58.0](https://github.com/jshwi/docsig/tree/v0.58.0) - 2024-07-15
 
 ### Changed
