@@ -563,3 +563,47 @@ def function(*_, **__) -> None:
     SIG502: return statement documented for None (return-documented-for-none)
 """
     )
+
+
+def test_multiple_exit_codes(
+    main: MockMainType, init_file: InitFileFixtureType
+) -> None:
+    """Test multiple files, where the last exit code is 0.
+
+    Ensure 0 does not override 1.
+
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    init_file(
+        templates.registered.getbyname(
+            "f-param-docs-s",
+        ).template,  # type: ignore
+        Path("module") / "file1.py",
+    )
+    init_file(
+        templates.registered.getbyname(
+            "f-param-sig-s",
+        ).template,  # type: ignore
+        Path("module") / "file2.py",
+    )
+    init_file(
+        templates.registered.getbyname(
+            "f-no-doc-no-ret-s",
+        ).template,  # type: ignore
+        Path("module") / "file3.py",
+    )
+    init_file(
+        templates.registered.getbyname(
+            "p-param-s",
+        ).template,  # type: ignore
+        Path("module") / "file4.py",
+    )
+    assert (
+        main(
+            ".",
+            *CHECK_ARGS,
+            test_flake8=False,  # won't need, flake runs one file at a time
+        )
+        == 1
+    )
