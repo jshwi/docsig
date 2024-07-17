@@ -308,23 +308,3 @@ class Function(Parent):
         :param rettype: Return type of overloaded signature.
         """
         self._signature.overload(rettype)
-
-
-class Ast(_t.NamedTuple):
-    """Object resulting from parsing an AST."""
-
-    module: _ast.Module = _ast.Module("")
-    err: Exception = Exception()
-    success: bool = False
-
-    @classmethod
-    def parse(cls, string: str) -> Ast:
-        """Parse an AST.
-
-        :param string: String to parse.
-        :return: Constructed AST object, whether successful or not.
-        """
-        try:
-            return cls(module=_ast.parse(string), success=True)
-        except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
-            return cls(err=err)
