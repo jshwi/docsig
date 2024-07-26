@@ -88,20 +88,23 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
         for path in paths:
             self._populate(path)
 
+        for path in list(self):
+            if str(path) != "." and any(
+                _re.match(i, str(path)) for i in self._excludes
+            ):
+                _vprint(
+                    FILE_INFO.format(
+                        path=path, msg="in exclude list, skipping"
+                    ),
+                    self._verbose,
+                )
+                self.remove(path)
+
         self.sort()
 
     def _populate(self, root: _Path) -> None:
         if not root.exists():
             raise FileNotFoundError(root)
-
-        if str(root) != "." and any(
-            _re.match(i, root.name) for i in self._excludes
-        ):
-            _vprint(
-                FILE_INFO.format(path=root, msg="in exclude list, skipping"),
-                self._verbose,
-            )
-            return
 
         if not self._include_ignored and self._gitignore.match_file(root):
             _vprint(

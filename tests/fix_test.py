@@ -3,12 +3,16 @@ tests.exclude_test
 ==================
 """
 
+# pylint: disable=protected-access
+
 import pickle
 from pathlib import Path
 
 import pytest
 
-from . import InitFileFixtureType, MockMainType
+import docsig
+
+from . import FixtureMakeTree, InitFileFixtureType, MockMainType
 
 
 def test_fix_optional_return_statements_with_overload_func_sig502(
@@ -74,3 +78,50 @@ def test_no_fail_on_unicode_decode_error_384(
         pickle.dump(serialize, fout)
 
     assert main(pkl, test_flake8=False) == 0
+
+
+def test_exclude_dirs_392(
+    monkeypatch: pytest.MonkeyPatch,
+    main: MockMainType,
+    make_tree: FixtureMakeTree,
+) -> None:
+    """Test dir regexes are correctly excluded.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param main: Patch package entry point.
+    :param make_tree: Create directory tree from dict mapping.
+    """
+    pyproject_toml = Path.cwd() / "pyproject.toml"
+    pyproject_toml.write_text(
+        r"""
+[tool.docsig]
+exclude = '''.*src[\\/]design[\\/].*'''
+""",
+        encoding="utf-8",
+    )
+    path_obj = docsig._core._Paths  # define to avoid recursion
+    paths_list = []
+
+    def _paths(*args, **kwargs) -> docsig._core._Paths:
+        paths = path_obj(*args, **kwargs)
+        paths_list.append(paths)
+        return paths
+
+    monkeypatch.setattr("docsig._core._Paths", _paths)
+    make_tree(
+        Path.cwd(),
+        {
+            "src": {"design": {"file1.py": []}},
+            "ssrc": {"design": {"file2.py": []}},
+            "parent": {"src": {"design": {"file3.py": []}}},
+        },
+    )
+    main(".", test_flake8=False)
+    assert not any(
+        i in paths_list[0]
+        for i in [
+            Path("src") / "design" / "file1.py",
+            Path("ssrc") / "design" / "file2.py",
+            Path("parent") / "src" / "design" / "file3.py",
+        ]
+    )

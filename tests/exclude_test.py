@@ -1460,9 +1460,7 @@ def test_exclude_defaults(
         f"{Path('CODE_OF_CONDUCT.md')}: Parsing Python code failed",
         f"{Path('.pylintrc')}: Parsing Python code failed",
         f"{Path('LICENSE')}: Parsing Python code failed",
-        f"{Path('.pytest_cache')}: in exclude list, skipping",
         f"{Path('CHANGELOG.md')}: Parsing Python code failed",
-        f"{Path('dist')}: in exclude list, skipping",
         f"{Path('.pre-commit-config.yaml')}: Parsing Python code failed",
         f"{Path('.coverage')}: Parsing Python code failed",
         f"{Path('Makefile')}: Parsing Python code failed",
@@ -1470,12 +1468,10 @@ def test_exclude_defaults(
         f"{Path('.pre-commit-hooks.yaml')}: Parsing Python code failed",
         f"{Path('pyproject.toml')}: Parsing Python code successful",
         f"{Path('.bumpversion.cfg')}: Parsing Python code failed",
-        f"{Path('node_modules')}: in exclude list, skipping",
         f"{Path('tests/misc_test.py')}: Parsing Python code successful",
         f"{Path('tests/conftest.py')}: Parsing Python code successful",
         f"{Path('tests/disable_test.py')}: Parsing Python code successful",
         f"{Path('tests/__init__.py')}: Parsing Python code successful",
-        f"{Path('tests/__pycache__')}: in exclude list, skipping",
         f"{Path('tests/TESTS.md')}: Parsing Python code failed",
         f"{Path('tests/git_test.py')}: Parsing Python code successful",
         f"{Path('tests/_test.py')}: Parsing Python code successful",
@@ -1498,7 +1494,6 @@ def test_exclude_defaults(
         f"{Path('docsig/__init__.py')}: Parsing Python code successful",
         f"{Path('docsig/_display.py')}: Parsing Python code successful",
         f"{Path('docsig/_hooks.py')}: Parsing Python code successful",
-        f"{Path('docsig/__pycache__')}: in exclude list, skipping",
         f"{Path('docsig/_message.py')}: Parsing Python code successful",
         f"{Path('docsig/_core.py')}: Parsing Python code successful",
         f"{Path('docsig/_decorators.py')}: Parsing Python code successful",
@@ -1508,7 +1503,6 @@ def test_exclude_defaults(
         f"{Path('docsig/__main__.py')}: Parsing Python code successful",
         f"{Path('docsig/_utils.py')}: Parsing Python code successful",
         f"{Path('docsig/_directives.py')}: Parsing Python code successful",
-        f"{Path('.mypy_cache')}: in exclude list, skipping",
         f"{Path('.gitignore')}: Parsing Python code failed",
         f"{Path('package-lock.json')}: Parsing Python code failed",
         f"{Path('package.json')}: Parsing Python code failed",
@@ -1520,8 +1514,6 @@ def test_exclude_defaults(
         f"{Path('coverage.xml')}: Parsing Python code failed",
         f"{Path('poetry.lock')}: Parsing Python code failed",
         f"{Path('README.rst')}: Parsing Python code failed",
-        f"{Path('.git')}: in exclude list, skipping",
-        f"{Path('.idea')}: in exclude list, skipping",
     ]
     assert all(i in std.out for i in expected)
 
@@ -1555,7 +1547,9 @@ new-ssl() {
 new-ssl "${@}"
 """
     init_file(template)
-    assert main(".", long.exclude, "file.py", test_flake8=False) == 0
+    assert (
+        main(".", long.exclude, r"module[\\/]file.py", test_flake8=False) == 0
+    )
 
 
 def test_gitignore(
@@ -1738,9 +1732,7 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('CODE_OF_CONDUCT.md')}: Parsing Python code failed",
         f"{Path('.pylintrc')}: Parsing Python code failed",
         f"{Path('LICENSE')}: Parsing Python code failed",
-        f"{Path('.pytest_cache')}: in exclude list, skipping",
         f"{Path('CHANGELOG.md')}: Parsing Python code failed",
-        f"{Path('dist')}: in exclude list, skipping",
         f"{Path('.pre-commit-config.yaml')}: Parsing Python code failed",
         f"{Path('.coverage')}: in gitignore, skipping",
         f"{Path('Makefile')}: Parsing Python code failed",
@@ -1748,12 +1740,10 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('.pre-commit-hooks.yaml')}: Parsing Python code failed",
         f"{Path('pyproject.toml')}: Parsing Python code successful",
         f"{Path('.bumpversion.cfg')}: Parsing Python code failed",
-        f"{Path('node_modules')}: in exclude list, skipping",
         f"{Path('tests/misc_test.py')}: Parsing Python code successful",
         f"{Path('tests/conftest.py')}: Parsing Python code successful",
         f"{Path('tests/disable_test.py')}: Parsing Python code successful",
         f"{Path('tests/__init__.py')}: Parsing Python code successful",
-        f"{Path('tests/__pycache__')}: in exclude list, skipping",
         f"{Path('tests/TESTS.md')}: Parsing Python code failed",
         f"{Path('tests/git_test.py')}: Parsing Python code successful",
         f"{Path('tests/_test.py')}: Parsing Python code successful",
@@ -1776,7 +1766,6 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('docsig/__init__.py')}: Parsing Python code successful",
         f"{Path('docsig/_display.py')}: Parsing Python code successful",
         f"{Path('docsig/_hooks.py')}: Parsing Python code successful",
-        f"{Path('docsig/__pycache__')}: in exclude list, skipping",
         f"{Path('docsig/_message.py')}: Parsing Python code successful",
         f"{Path('docsig/_core.py')}: Parsing Python code successful",
         f"{Path('docsig/_decorators.py')}: Parsing Python code successful",
@@ -1786,7 +1775,6 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('docsig/__main__.py')}: Parsing Python code successful",
         f"{Path('docsig/_utils.py')}: Parsing Python code successful",
         f"{Path('docsig/_directives.py')}: Parsing Python code successful",
-        f"{Path('.mypy_cache')}: in exclude list, skipping",
         f"{Path('.gitignore')}: Parsing Python code failed",
         f"{Path('package-lock.json')}: Parsing Python code failed",
         f"{Path('package.json')}: Parsing Python code failed",
@@ -1798,8 +1786,6 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('coverage.xml')}: in gitignore, skipping",
         f"{Path('poetry.lock')}: Parsing Python code failed",
         f"{Path('README.rst')}: Parsing Python code failed",
-        f"{Path('.git')}: in exclude list, skipping",
-        f"{Path('.idea')}: in exclude list, skipping",
     ]
     assert all(i in std.out for i in expected)
 
