@@ -87,12 +87,30 @@ def create_news_fragment(
     untracked = NEWS.findall("\n".join(repo.untracked_files))
     if untracked:
         latest = Path(untracked[0])
-        if (last.name != latest.name) and (
-            last.read_text(encoding="utf-8")
-            == latest.read_text(encoding="utf-8")
-        ):
-            latest.unlink()
-            return 0
+        if last.name != latest.name:
+            # this is an amendment, but the content is the same, so the
+            # new news fragment will be the same anyway, so remove it
+            if last.read_text(encoding="utf-8") == latest.read_text(
+                encoding="utf-8"
+            ):
+                latest.unlink()
+                return 0
+
+            # this is an amendment, but the prior check means that the
+            # content of the last file and the current file are not the
+            # same, therefore this might just be a commit to update the
+            # commit message
+            # todo: what do we do if we are updating files and we also
+            # todo: want to update the commit message or issue number
+            # todo: might need to run all the same checks run at the
+            # todo: beginning of main
+            try:
+                repo.index.diff("HEAD")
+                os.rename(latest, last)
+                return E.CHANGED_NAME
+            except git.exc.GitCommandError:
+                # TODO: not sure what this means at this moment
+                pass
 
     return output
 
@@ -254,6 +272,8 @@ class Test:
         news = self.fragments / "1.add.1.md"
         expected = CREATED_NEWS.format(path=news)
         self.test_log()
+        self._touch_unique_file()
+        self.repo.git.add(Path.cwd())
         assert self._ci(message="add: to feature (#1)") == expected
         assert news.is_file()
         assert len(list(self.fragments.iterdir())) == 2
@@ -308,6 +328,14 @@ class Test:
         self.repo.git.add(Path.cwd())
         self._ci(message="bump: version 0.56.0 → 0.57.0")
         assert not news.is_file()
+
+    def test_log_commit_amend_new_message(self) -> None:
+        """Test no additional news added for an amended message only."""
+        self.test_log()
+        self._ci(message="add: another feature (#1)", amend=True, no_edit=True)
+        assert len(list(self.fragments.iterdir())) == 1
+        frag = Path.cwd() / "changelog" / "1.add.md"
+        assert frag.read_text(encoding="utf-8").strip() == "another feature"
 
 
 if __name__ == "__main__":
