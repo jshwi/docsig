@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.59.2](https://github.com/jshwi/docsig/tree/v0.59.2) - 2024-07-27
+
+### Fixed
+
+- handle directory exclude patterns ([#392](https://github.com/jshwi/docsig/issues/392))
+
 ## [0.59.1](https://github.com/jshwi/docsig/tree/v0.59.1) - 2024-07-17
 
 ### Fixed
