@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.59.3](https://github.com/jshwi/docsig/tree/v0.59.3) - 2024-07-28
+
+### Fixed
+
+- default exclude pattern for __pycache__ ([#396](https://github.com/jshwi/docsig/issues/396))
+
 ## [0.59.2](https://github.com/jshwi/docsig/tree/v0.59.2) - 2024-07-27
 
 ### Fixed
