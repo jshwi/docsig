@@ -37,7 +37,7 @@ _DEFAULT_EXCLUDES = """\
     |\\.tox[\\\\/].*
     |\\.vscode[\\\\/].*
     |_?build[\\\\/].*
-    |__pycache__[\\\\/].*
+    |.*[\\\\/]__pycache__[\\\\/].*
     |dist[\\\\/].*
     |node_modules[\\\\/].*
 )$
