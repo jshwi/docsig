@@ -177,7 +177,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v3.7.1"
+    rev: "v3.8.0"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -192,7 +192,7 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.16.0"
+    rev: "v3.17.0"
     hooks:
       - id: pyupgrade
         args:
