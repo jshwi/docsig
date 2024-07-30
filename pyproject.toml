@@ -160,7 +160,7 @@ vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
 furo = "^2024.4.27"
-incremental = "22.10.0"
+incremental = "24.7.2"
 myst-parser = "^3.0.1"
 pytest = "^8.2.0"
 pyyaml = "^6.0.1"
