@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.60.0](https://github.com/jshwi/docsig/tree/v0.60.0) - 2024-07-31
+
+### Added
+
+- excludes option for path glob patterns ([#393](https://github.com/jshwi/docsig/issues/393))
+
 ## [0.59.3](https://github.com/jshwi/docsig/tree/v0.59.3) - 2024-07-28
 
 ### Fixed
