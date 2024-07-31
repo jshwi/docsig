@@ -157,6 +157,13 @@ class Parser(_ArgumentParser):
             metavar="PATTERN",
             help="regular expression of files or dirs to exclude from checks",
         )
+        self.add_argument(
+            "-E",
+            "--excludes",
+            nargs="+",
+            metavar="PATH",
+            help="path glob patterns to exclude from checks",
+        )
 
         # deprecated
         self.add_argument(

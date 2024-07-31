@@ -44,4 +44,5 @@ def main() -> str | int:
         target=p.args.target,
         disable=p.args.disable,
         exclude=p.args.exclude,
+        excludes=p.args.excludes,
     )

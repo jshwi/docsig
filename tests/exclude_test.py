@@ -4,6 +4,7 @@ tests.exclude_test
 """
 
 # pylint: disable=too-many-lines,line-too-long,protected-access
+# pylint: disable=too-many-arguments
 
 from __future__ import annotations
 
@@ -408,4 +409,351 @@ def test_gitignore_patterns(
     ]
     assert all(
         i.pattern in patterns for i in gitignore.patterns  # type: ignore
+    )
+
+
+@pytest.mark.parametrize(
+    "args,expected",
+    [
+        (
+            ["docs/*"],
+            [
+                Path("docs/index.rst"),
+                Path("docs/requirements.txt"),
+                Path("docs/docsig.rst"),
+                Path("docs/conf.py"),
+            ],
+        ),
+        (
+            [".pyaud_cache/7.5.1/CACHEDIR.TAG"],
+            [
+                Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+            ],
+        ),
+        (
+            ["docs/examples/*"],
+            [
+                Path("docs/examples/classes.rst"),
+                Path("docs/examples/message-control.rst"),
+            ],
+        ),
+        (
+            [
+                "CODE_OF_CONDUCT.md",
+                ".pylintrc",
+                "LICENSE",
+                "CHANGELOG.md",
+                ".pre-commit-config.yaml",
+                ".coverage",
+                "Makefile",
+                "whitelist.py",
+                ".pre-commit-hooks.yaml",
+                "pyproject.toml",
+                ".bumpversion.cfg",
+                ".conform.yaml",
+                ".readthedocs.yml",
+                ".prettierignore",
+                ".editorconfig",
+                "package-lock.json",
+                "package.json",
+                "CONTRIBUTING.md",
+                "coverage.xml",
+                "poetry.lock",
+                "README.rst",
+            ],
+            [
+                Path("CODE_OF_CONDUCT.md"),
+                Path(".pylintrc"),
+                Path("LICENSE"),
+                Path("CHANGELOG.md"),
+                Path(".pre-commit-config.yaml"),
+                Path(".coverage"),
+                Path("Makefile"),
+                Path("whitelist.py"),
+                Path(".pre-commit-hooks.yaml"),
+                Path("pyproject.toml"),
+                Path(".bumpversion.cfg"),
+                Path(".conform.yaml"),
+                Path(".readthedocs.yml"),
+                Path(".prettierignore"),
+                Path(".editorconfig"),
+                Path("package-lock.json"),
+                Path("package.json"),
+                Path("CONTRIBUTING.md"),
+                Path("coverage.xml"),
+                Path("poetry.lock"),
+                Path("README.rst"),
+            ],
+        ),
+        (
+            ["*.md"],
+            [
+                Path("CODE_OF_CONDUCT.md"),
+                Path("CHANGELOG.md"),
+                Path("CONTRIBUTING.md"),
+            ],
+        ),
+        (
+            ["**/*.md"],
+            [
+                Path("tests/TESTS.md"),
+            ],
+        ),
+        (
+            ["docs/**/*.rst"],
+            [
+                Path("docs/examples/classes.rst"),
+                Path("docs/examples/message-control.rst"),
+            ],
+        ),
+        (
+            ["file?.txt"],
+            [
+                Path("file1.txt"),
+                Path("file2.txt"),
+                Path("file3.txt"),
+                Path("file4.txt"),
+                Path("file5.txt"),
+            ],
+        ),
+        (
+            ["file[1-3].txt"],
+            [
+                Path("file1.txt"),
+                Path("file2.txt"),
+                Path("file3.txt"),
+            ],
+        ),
+        (
+            ["file[!1-3].txt"],
+            [
+                Path("file4.txt"),
+                Path("file5.txt"),
+            ],
+        ),
+        (
+            [".pyaud_cache/7.5.1/*", "tests/*"],
+            [
+                Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+                Path(".pyaud_cache/7.5.1/files.json"),
+                Path("tests/misc_test.py"),
+                Path("tests/conftest.py"),
+                Path("tests/disable_test.py"),
+                Path("tests/__init__.py"),
+                Path("tests/TESTS.md"),
+                Path("tests/git_test.py"),
+                Path("tests/_test.py"),
+            ],
+        ),
+        (
+            [
+                "tests/*",
+                ".pyaud_cache/7.5.1/CACHEDIR.TAG",
+            ],
+            [
+                Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+                Path("tests/misc_test.py"),
+                Path("tests/conftest.py"),
+                Path("tests/disable_test.py"),
+                Path("tests/__init__.py"),
+                Path("tests/TESTS.md"),
+                Path("tests/git_test.py"),
+                Path("tests/_test.py"),
+            ],
+        ),
+        (
+            ["tests/*", ".pyaud_cache/7.5.1/CACHEDIR.TAG", "docs/examples/*"],
+            [
+                Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+                Path("tests/misc_test.py"),
+                Path("tests/conftest.py"),
+                Path("tests/disable_test.py"),
+                Path("tests/__init__.py"),
+                Path("tests/TESTS.md"),
+                Path("tests/git_test.py"),
+                Path("tests/_test.py"),
+                Path("docs/examples/classes.rst"),
+                Path("docs/examples/message-control.rst"),
+            ],
+        ),
+        (
+            [
+                "tests/*",
+                ".pyaud_cache/7.5.1/CACHEDIR.TAG",
+                "docs/examples/*",
+                "CODE_OF_CONDUCT.md",
+                ".pylintrc",
+                "LICENSE",
+                "CHANGELOG.md",
+                ".pre-commit-config.yaml",
+                ".coverage",
+                "Makefile",
+                "whitelist.py",
+                ".pre-commit-hooks.yaml",
+                "pyproject.toml",
+                ".bumpversion.cfg",
+                ".conform.yaml",
+                ".readthedocs.yml",
+                ".prettierignore",
+                ".editorconfig",
+                "package-lock.json",
+                "package.json",
+                "CONTRIBUTING.md",
+                "coverage.xml",
+                "poetry.lock",
+                "README.rst",
+            ],
+            [
+                Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+                Path("tests/misc_test.py"),
+                Path("tests/conftest.py"),
+                Path("tests/disable_test.py"),
+                Path("tests/__init__.py"),
+                Path("tests/TESTS.md"),
+                Path("tests/git_test.py"),
+                Path("tests/_test.py"),
+                Path("docs/examples/classes.rst"),
+                Path("docs/examples/message-control.rst"),
+                Path("CODE_OF_CONDUCT.md"),
+                Path(".pylintrc"),
+                Path("LICENSE"),
+                Path("CHANGELOG.md"),
+                Path(".pre-commit-config.yaml"),
+                Path(".coverage"),
+                Path("Makefile"),
+                Path("whitelist.py"),
+                Path(".pre-commit-hooks.yaml"),
+                Path("pyproject.toml"),
+                Path(".bumpversion.cfg"),
+                Path(".conform.yaml"),
+                Path(".readthedocs.yml"),
+                Path(".prettierignore"),
+                Path(".editorconfig"),
+                Path("package-lock.json"),
+                Path("package.json"),
+                Path("CONTRIBUTING.md"),
+                Path("coverage.xml"),
+                Path("poetry.lock"),
+                Path("README.rst"),
+            ],
+        ),
+    ],
+    ids=[
+        "dir",
+        "path-to-file",
+        "nested-dir",
+        "files",
+        "suffix",
+        "suffix-recurse",
+        "dir-suffix-recurse",
+        "question-mark",
+        "square-brackets",
+        "exclude-square-brackets",
+        "multiple-dirs",
+        "dir-and-path-to-file",
+        "dir-path-to-file-and-nested-dir",
+        "dir-path-to-file-and-nested-dir-and-files",
+    ],
+)
+def test_exclude_glob(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    make_tree: FixtureMakeTree,
+    args: list[str],
+    expected: list[str],
+) -> None:
+    """Test using path glob instead of regex.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param make_tree: Create directory tree from dict mapping.
+    :param args: Args to pass to main.
+    :param expected: List of expected output.
+    """
+    paths = [
+        Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
+        Path(".pyaud_cache/7.5.1/files.json"),
+        Path(".pyaud_cache/7.5.1/.gitignore"),
+        Path("CODE_OF_CONDUCT.md"),
+        Path(".pylintrc"),
+        Path("LICENSE"),
+        Path("CHANGELOG.md"),
+        Path(".pre-commit-config.yaml"),
+        Path(".coverage"),
+        Path("Makefile"),
+        Path("whitelist.py"),
+        Path(".pre-commit-hooks.yaml"),
+        Path("pyproject.toml"),
+        Path(".bumpversion.cfg"),
+        Path("tests/misc_test.py"),
+        Path("tests/conftest.py"),
+        Path("tests/disable_test.py"),
+        Path("tests/__init__.py"),
+        Path("tests/TESTS.md"),
+        Path("tests/git_test.py"),
+        Path("tests/_test.py"),
+        Path(".conform.yaml"),
+        Path("docs/index.rst"),
+        Path("docs/requirements.txt"),
+        Path("docs/docsig.rst"),
+        Path("docs/conf.py"),
+        Path("docs/static/docsig.svg"),
+        Path("docs/examples/classes.rst"),
+        Path("docs/examples/message-control.rst"),
+        Path(".readthedocs.yml"),
+        Path(".prettierignore"),
+        Path(".editorconfig"),
+        Path("docsig/_stub.py"),
+        Path("docsig/_report.py"),
+        Path("docsig/_main.py"),
+        Path("docsig/_version.py"),
+        Path("docsig/_module.py"),
+        Path("docsig/__init__.py"),
+        Path("docsig/_display.py"),
+        Path("docsig/_hooks.py"),
+        Path("docsig/_message.py"),
+        Path("docsig/_core.py"),
+        Path("docsig/_decorators.py"),
+        Path("docsig/messages.py"),
+        Path("docsig/py.typed"),
+        Path("docsig/_config.py"),
+        Path("docsig/__main__.py"),
+        Path("docsig/_utils.py"),
+        Path("docsig/_directives.py"),
+        Path("package-lock.json"),
+        Path("package.json"),
+        Path("CONTRIBUTING.md"),
+        Path(".github/COMMIT_POLICY.md"),
+        Path(".github/workflows/codeql-analysis.yml"),
+        Path(".github/workflows/build.yaml"),
+        Path(".github/dependabot.yml"),
+        Path("coverage.xml"),
+        Path("poetry.lock"),
+        Path("README.rst"),
+        Path("file1.txt"),
+        Path("file2.txt"),
+        Path("file3.txt"),
+        Path("file4.txt"),
+        Path("file5.txt"),
+        Path("file10.txt"),
+        Path("file[1].txt"),
+    ]
+    monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
+    make_tree(Path.cwd(), TREE)
+    main(
+        ".",
+        long.verbose,
+        long.include_ignored,
+        long.excludes,
+        *args,
+        test_flake8=False,
+    )
+    std = capsys.readouterr()
+    assert all(f"{i}: in exclude list, skipping" in std.out for i in expected)
+    assert not any(
+        f"{i}: in exclude list, skipping" in std.out
+        for i in paths
+        if i not in expected
     )

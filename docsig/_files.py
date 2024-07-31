@@ -12,6 +12,7 @@ from pathlib import Path as _Path
 
 from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
+from wcmatch.pathlib import Path as _WcPath
 
 from ._utils import vprint as _vprint
 
@@ -62,12 +63,18 @@ class _Gitignore(_PathSpec):
         super().__init__(map(_GitWildMatchPattern, patterns))
 
 
+def _glob(path: _Path, pattern: str) -> bool:
+    # pylint: disable=no-member
+    return _WcPath(str(path)).globmatch(pattern)  # type: ignore
+
+
 class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
     """Collect a list of valid paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
     :param patterns: List pf regular expression of files and dirs to
         exclude from checks.
+    :param excludes: Files or dirs to exclude from checks.
     :param include_ignored: Check files even if they match a gitignore
         pattern.
     :param verbose: increase output verbosity.
@@ -77,11 +84,13 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
         self,
         *paths: _Path,
         patterns: list[str],
+        excludes: list[str],
         include_ignored: bool = False,
         verbose: bool = False,
     ) -> None:
         super().__init__()
         self._patterns = patterns
+        self._excludes = excludes
         self._include_ignored = include_ignored
         self._verbose = verbose
         self._gitignore = _Gitignore()
@@ -89,8 +98,9 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
             self._populate(path)
 
         for path in list(self):
-            if str(path) != "." and any(
-                _re.match(i, str(path)) for i in self._patterns
+            if str(path) != "." and (
+                any(_re.match(i, str(path)) for i in self._patterns)
+                or any(_glob(path, i) for i in self._excludes)
             ):
                 _vprint(
                     FILE_INFO.format(

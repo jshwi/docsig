@@ -331,6 +331,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     target: _Messages | None = None,
     disable: _Messages | None = None,
     exclude: str | None = None,
+    excludes: list[str] | None = None,
 ) -> int:
     """Package's core functionality.
 
@@ -367,6 +368,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param disable: List of errors to disable.
     :param exclude: Regular expression of files and dirs to exclude from
         checks.
+    :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether test failed or not.
     """
     if list_checks:
@@ -381,6 +383,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         paths = _Paths(
             *tuple(_Path(i) for i in path),
             patterns=patterns,
+            excludes=excludes or [],
             include_ignored=include_ignored,
             verbose=verbose,
         )

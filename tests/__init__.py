@@ -59,6 +59,13 @@ WILL_ERROR = """
 echo "Hello World!"
 """
 TREE = {
+    "file1.txt": [],
+    "file2.txt": [],
+    "file3.txt": [],
+    "file4.txt": [],
+    "file5.txt": [],
+    "file10.txt": [],
+    "file[1].txt": [],
     ".pyaud_cache": {
         "7.5.1": {
             "CACHEDIR.TAG": [WILL_ERROR],
