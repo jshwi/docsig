@@ -66,7 +66,7 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
     """Collect a list of valid paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
-    :param excludes: List pf regular expression of files and dirs to
+    :param patterns: List pf regular expression of files and dirs to
         exclude from checks.
     :param include_ignored: Check files even if they match a gitignore
         pattern.
@@ -76,12 +76,12 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
     def __init__(  # pylint: disable=too-many-arguments
         self,
         *paths: _Path,
-        excludes: list[str],
+        patterns: list[str],
         include_ignored: bool = False,
         verbose: bool = False,
     ) -> None:
         super().__init__()
-        self._excludes = excludes
+        self._patterns = patterns
         self._include_ignored = include_ignored
         self._verbose = verbose
         self._gitignore = _Gitignore()
@@ -90,7 +90,7 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
 
         for path in list(self):
             if str(path) != "." and any(
-                _re.match(i, str(path)) for i in self._excludes
+                _re.match(i, str(path)) for i in self._patterns
             ):
                 _vprint(
                     FILE_INFO.format(

@@ -372,15 +372,15 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    excludes = [_DEFAULT_EXCLUDES]
+    patterns = [_DEFAULT_EXCLUDES]
     if exclude is not None:
-        excludes.append(exclude)
+        patterns.append(exclude)
 
     if string is None:
         retcode = 0
         paths = _Paths(
             *tuple(_Path(i) for i in path),
-            excludes=excludes,
+            patterns=patterns,
             include_ignored=include_ignored,
             verbose=verbose,
         )
