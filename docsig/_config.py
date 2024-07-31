@@ -19,7 +19,7 @@ class Parser(_ArgumentParser):
         super().__init__(
             version=__version__,
             formatter_class=lambda prog: _HelpFormatter(
-                prog, max_help_position=45
+                prog, max_help_position=40
             ),
             description="Check signature params for proper documentation",
             version_short_form="-V",
