@@ -49,6 +49,10 @@ jobs:
       - name: Check Dependencies
         id: check-dependencies
         run: make .make/check-deps
+      - name: Test Scripts
+        id: test-scripts
+        run: |
+          make .make/test-check-news
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v4
