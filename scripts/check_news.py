@@ -177,6 +177,9 @@ class Test:
         cls.fragments.mkdir(exist_ok=True, parents=True)
         cls.pyproject = tmp_path / "pyproject.toml"
         cls.repo = git.Repo.init(tmp_path)
+        config = cls.repo.config_writer(config_level="repository")
+        config.set_value("user", "name", "Test User")
+        config.set_value("user", "email", "test.user@example.com")
         conf["tool"]["towncrier"]["directory"] = str(cls.fragments)
         del conf["tool"]["towncrier"]["template"]
         cls.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
