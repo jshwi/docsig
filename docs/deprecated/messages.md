@@ -19,26 +19,26 @@ If any old disable or target rules are used for your pipeline (as well as any
 old comment directives), please update them with the help of the below table to
 avoid any issues once the old messages are removed
 
-| Old  | New    | Description                                               |
-|------|--------|-----------------------------------------------------------|
-| E101 | SIG402 | parameters out of order                                   |
-| E102 | SIG202 | includes parameters that do not exist                     |
-| E103 | SIG203 | parameters missing                                        |
-| E104 | SIG502 | return statement documented for None                      |
-| E105 | SIG503 | return missing from docstring                             |
-| E106 | SIG201 | duplicate parameters found                                |
-| E107 | SIG303 | parameter appears to be incorrectly documented            |
-| E108 | SIG505 | return statement documented for property                  |
-| E109 | SIG501 | cannot determine whether a return statement should exist  |
-| E110 | SIG404 | documented parameter not equal to its respective argument |
-| E111 | SIG504 | return statement documented for class                     |
-| E112 | SIG403 | spelling error found in documented parameter              |
-| E113 | SIG101 | function is missing a docstring                           |
-| E114 | SIG102 | class is missing a docstring                              |
-| E115 | SIG302 | syntax error in description                               |
-| E116 | SIG401 | param not indented correctly                              |
-| E117 | SIG301 | description missing from parameter                        |
-| E201 | SIG001 | unknown module comment directive '{directive}'            |
-| E202 | SIG002 | unknown inline comment directive '{directive}'            |
-| E203 | SIG003 | unknown module comment option for {directive} '{option}'  |
-| E204 | SIG004 | unknown inline comment option for {directive} '{option}'  |
+| New    | Old  | Description                                               |
+|--------|------|-----------------------------------------------------------|
+| SIG001 | E201 | unknown module comment directive '{directive}'            |
+| SIG002 | E202 | unknown inline comment directive '{directive}'            |
+| SIG003 | E203 | unknown module comment option for {directive} '{option}'  |
+| SIG004 | E204 | unknown inline comment option for {directive} '{option}'  |
+| SIG101 | E113 | function is missing a docstring                           |
+| SIG102 | E114 | class is missing a docstring                              |
+| SIG201 | E106 | duplicate parameters found                                |
+| SIG202 | E102 | includes parameters that do not exist                     |
+| SIG203 | E103 | parameters missing                                        |
+| SIG301 | E117 | description missing from parameter                        |
+| SIG302 | E115 | syntax error in description                               |
+| SIG303 | E107 | parameter appears to be incorrectly documented            |
+| SIG401 | E116 | param not indented correctly                              |
+| SIG402 | E101 | parameters out of order                                   |
+| SIG403 | E112 | spelling error found in documented parameter              |
+| SIG404 | E110 | documented parameter not equal to its respective argument |
+| SIG501 | E109 | cannot determine whether a return statement should exist  |
+| SIG502 | E104 | return statement documented for None                      |
+| SIG503 | E105 | return missing from docstring                             |
+| SIG504 | E111 | return statement documented for class                     |
+| SIG505 | E108 | return statement documented for property                  |
