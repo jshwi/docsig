@@ -126,7 +126,7 @@ def main() -> int | str:
         last = get_last_issue_fragment(Path.cwd() / "changelog" / name)
         if unversioned_news:
             latest = Path(unversioned_news[0])
-            if desc != latest.read_text(encoding="utf-8"):
+            if desc != latest.read_text(encoding="utf-8").strip():
                 # description changed, update file contents
                 latest.write_text(desc, encoding="utf-8")
                 return E.CHANGED_DESC.format(name=latest.name)
