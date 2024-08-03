@@ -86,36 +86,44 @@ Commandline
     Check signature params for proper documentation
 
     positional arguments:
-      path                                  directories or files to check
+      path                  directories or files to check
 
     optional arguments:
-      -h, --help                            show this help message and exit
-      -V, --version                         show program's version number and exit
-      -l, --list-checks                     display a list of all checks and their messages
-      -c, --check-class                     check class docstrings
-      -C, --check-class-constructor         check __init__ methods. Note: mutually incompatible
-                                            with -c
-      -D, --check-dunders                   check dunder methods
-      -m, --check-protected-class-methods   check public methods belonging to protected classes
-      -N, --check-nested                    check nested functions and classes
-      -o, --check-overridden                check overridden methods
-      -p, --check-protected                 check protected functions and classes
-      -P, --check-property-returns          check property return values
-      -i, --ignore-no-params                ignore docstrings where parameters are not
-                                            documented
-      -a, --ignore-args                     ignore args prefixed with an asterisk
-      -k, --ignore-kwargs                   ignore kwargs prefixed with two asterisks
-      -T, --ignore-typechecker              ignore checking return values
-      -I, --include-ignored                 check files even if they match a gitignore pattern
-      -n, --no-ansi                         disable ansi output
-      -v, --verbose                         increase output verbosity
-      -s STR, --string STR                  string to parse instead of files
-      -d LIST, --disable LIST               comma separated list of rules to disable
-      -t LIST, --target LIST                comma separated list of rules to target
-      -e PATTERN, --exclude PATTERN         regular expression of files or dirs to exclude from
-                                            checks
+      -h, --help            show this help message and exit
+      -V, --version         show program's version number and exit
+      -l, --list-checks     display a list of all checks and their messages
+      -c, --check-class     check class docstrings
+      -C, --check-class-constructor
+                            check __init__ methods. Note: mutually incompatible with -c
+      -D, --check-dunders   check dunder methods
+      -m, --check-protected-class-methods
+                            check public methods belonging to protected classes
+      -N, --check-nested    check nested functions and classes
+      -o, --check-overridden
+                            check overridden methods
+      -p, --check-protected
+                            check protected functions and classes
+      -P, --check-property-returns
+                            check property return values
+      -i, --ignore-no-params
+                            ignore docstrings where parameters are not documented
+      -a, --ignore-args     ignore args prefixed with an asterisk
+      -k, --ignore-kwargs   ignore kwargs prefixed with two asterisks
+      -T, --ignore-typechecker
+                            ignore checking return values
+      -I, --include-ignored
+                            check files even if they match a gitignore pattern
+      -n, --no-ansi         disable ansi output
+      -v, --verbose         increase output verbosity
+      -s STR, --string STR  string to parse instead of files
+      -d LIST, --disable LIST
+                            comma separated list of rules to disable
+      -t LIST, --target LIST
+                            comma separated list of rules to target
+      -e PATTERN, --exclude PATTERN
+                            regular expression of files or dirs to exclude from checks
       -E PATH [PATH ...], --excludes PATH [PATH ...]
-                                            path glob patterns to exclude from checks
+                            path glob patterns to exclude from checks
 
 Options can also be configured with the pyproject.toml file
 

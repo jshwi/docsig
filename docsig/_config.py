@@ -4,7 +4,6 @@ docsig._config
 """
 
 from argparse import SUPPRESS as _SUPPRESS
-from argparse import HelpFormatter as _HelpFormatter
 from pathlib import Path as _Path
 
 from arcon import ArgumentParser as _ArgumentParser
@@ -18,9 +17,6 @@ class Parser(_ArgumentParser):
     def __init__(self) -> None:
         super().__init__(
             version=__version__,
-            formatter_class=lambda prog: _HelpFormatter(
-                prog, max_help_position=40
-            ),
             description="Check signature params for proper documentation",
             version_short_form="-V",
         )
