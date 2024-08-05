@@ -515,11 +515,8 @@ name = "docutils"
 version = "0.20.1"
 description = "Docutils -- Python Documentation Utilities"
 optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "docutils-0.20.1-py3-none-any.whl", hash = "sha256:96f387a2c5562db4476f09f13bbab2192e764cac08ebbf3a34a95d9b1e4a59d6"},
-    {file = "docutils-0.20.1.tar.gz", hash = "sha256:f08a4e276c3a1583a86dce3e34aba3fe04d02bba2dd51ed16106244e8a923e3b"},
-]
+python-versions = "*"
+files = []
 
 [[package]]
 name = "exceptiongroup"
@@ -2022,13 +2019,13 @@ tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
 
 [[package]]
 name = "wcmatch"
-version = "8.5.2"
+version = "9.0"
 description = "Wildcard/glob file name matcher."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "wcmatch-8.5.2-py3-none-any.whl", hash = "sha256:17d3ad3758f9d0b5b4dedc770b65420d4dac62e680229c287bf24c9db856a478"},
-    {file = "wcmatch-8.5.2.tar.gz", hash = "sha256:a70222b86dea82fb382dd87b73278c10756c138bd6f8f714e2183128887b9eb2"},
+    {file = "wcmatch-9.0-py3-none-any.whl", hash = "sha256:af25922e2b6dbd1550fa37a4c8de7dd558d6c1bb330c641de9b907b9776cb3c4"},
+    {file = "wcmatch-9.0.tar.gz", hash = "sha256:567d66b11ad74384954c8af86f607857c3bdf93682349ad32066231abd556c92"},
 ]
 
 [package.dependencies]
@@ -2063,4 +2060,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "a04b80dbf99a298179b8723fc75d12a8ba0b6e0cbaac2aa9cf953d0673589116"
+content-hash = "1fb78875a558476a4069d6a447b5fe15c94d78ba8d26079ddfde7270d1f63932"
