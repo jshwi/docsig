@@ -1,6 +1,6 @@
 """
-docsig._disable
-===============
+docsig._directives
+==================
 """
 
 from __future__ import annotations as _
