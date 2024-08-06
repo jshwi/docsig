@@ -1,6 +1,6 @@
 """
-docsig._function
-================
+docsig._stub
+============
 """
 
 from __future__ import annotations as _
