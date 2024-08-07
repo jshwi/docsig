@@ -162,13 +162,13 @@ files = [
 
 [[package]]
 name = "bump-my-version"
-version = "0.24.3"
+version = "0.25.0"
 description = "Version bump your Python project"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "bump_my_version-0.24.3-py3-none-any.whl", hash = "sha256:cdd86e158430dd5e5e25fc61703c140a1107579fdd8d74f8f3a5f991daa07168"},
-    {file = "bump_my_version-0.24.3.tar.gz", hash = "sha256:9b8ac82458a703a968a9a438b460175494cc0e0c6bd5f316019945a6b66eb81f"},
+    {file = "bump_my_version-0.25.0-py3-none-any.whl", hash = "sha256:ee72d2517c64ba716d6b5d6e8024e7efee1bd66166915074a0e4a308f764dd85"},
+    {file = "bump_my_version-0.25.0.tar.gz", hash = "sha256:834b3372165fe6fd884b55b02bc1326ab88fc747127b6e282cd11d505a9f3231"},
 ]
 
 [package.dependencies]
@@ -515,8 +515,11 @@ name = "docutils"
 version = "0.20.1"
 description = "Docutils -- Python Documentation Utilities"
 optional = false
-python-versions = "*"
-files = []
+python-versions = ">=3.7"
+files = [
+    {file = "docutils-0.20.1-py3-none-any.whl", hash = "sha256:96f387a2c5562db4476f09f13bbab2192e764cac08ebbf3a34a95d9b1e4a59d6"},
+    {file = "docutils-0.20.1.tar.gz", hash = "sha256:f08a4e276c3a1583a86dce3e34aba3fe04d02bba2dd51ed16106244e8a923e3b"},
+]
 
 [[package]]
 name = "exceptiongroup"
@@ -2062,4 +2065,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "1fb78875a558476a4069d6a447b5fe15c94d78ba8d26079ddfde7270d1f63932"
+content-hash = "cbdb0f3eb9337de4e3dbe5ba275d8f3623baa5b938b75d4c9d732bcff2fbd6b7"
