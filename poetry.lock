@@ -162,13 +162,13 @@ files = [
 
 [[package]]
 name = "bump-my-version"
-version = "0.25.2"
+version = "0.25.4"
 description = "Version bump your Python project"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "bump_my_version-0.25.2-py3-none-any.whl", hash = "sha256:7dbfd3ef1b139a6c67892621628c33284607d8ea17a984b6d3d9ed84a18840f0"},
-    {file = "bump_my_version-0.25.2.tar.gz", hash = "sha256:19d86623611ad6c9b3e662e1dae27736a43cdc99add0cc00d06f2f37f655c482"},
+    {file = "bump_my_version-0.25.4-py3-none-any.whl", hash = "sha256:cedcb408101cce6413d9b390c7af6c5424dbfde95549d3eef35b19f81940c5bb"},
+    {file = "bump_my_version-0.25.4.tar.gz", hash = "sha256:06a96dd6bb36b39b1f8cf37368c52794f89ba392780ac3c697fcf751a134f9a5"},
 ]
 
 [package.dependencies]
@@ -183,7 +183,7 @@ wcmatch = ">=8.5.1"
 
 [package.extras]
 dev = ["generate-changelog (>=0.7.6)", "git-fame (>=1.12.2)", "pip-tools", "pre-commit"]
-docs = ["black", "markdown-customblocks", "mdx-truly-sane-lists", "mkdocs", "mkdocs-click", "mkdocs-drawio", "mkdocs-gen-files", "mkdocs-git-authors-plugin", "mkdocs-git-committers-plugin", "mkdocs-git-revision-date-localized-plugin", "mkdocs-include-markdown-plugin", "mkdocs-literate-nav", "mkdocs-material", "mkdocstrings[python]", "python-frontmatter"]
+docs = ["black", "markdown-customblocks", "mdx-truly-sane-lists", "mkdocs", "mkdocs-click", "mkdocs-drawio", "mkdocs-gen-files", "mkdocs-git-authors-plugin", "mkdocs-git-committers-plugin", "mkdocs-git-revision-date-localized-plugin (>=1.2.6)", "mkdocs-include-markdown-plugin", "mkdocs-literate-nav", "mkdocs-material", "mkdocstrings[python]", "python-frontmatter"]
 test = ["coverage", "freezegun", "pre-commit", "pytest", "pytest-cov", "pytest-mock", "pytest-sugar"]
 
 [[package]]
