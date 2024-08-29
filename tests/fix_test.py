@@ -280,3 +280,86 @@ def test_exclude_defaults_396(
         f"{Path('whitelist.py')}: Parsing Python code successful",
     ]
     assert all(i in std.out for i in expected)
+
+
+def test_sig401_false_positive_427(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test false positive when using a code-block RST indent.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''\
+def method(*, arg1 = "") -> str:
+    """
+    Description text
+
+    .. code-block:: python
+       print()
+
+    :param arg1: text
+    :return: text
+    :raises TypeError: Incorrect argument(s)
+    """
+    return ""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert "SIG401" not in std.out
+
+
+@pytest.mark.parametrize(
+    "template",
+    [
+        '''\
+def func(param, param2, param3, param4) -> int:
+    """Desc.
+
+     :param param1: About param1.
+    :param param2:A.
+    :param param3:
+    """
+''',
+        '''\
+def func(param, param2, param3, param4) -> int:
+    """Desc.
+
+     :param param1: About param1.
+     :param param2:A.
+    :param param3:
+    """
+''',
+        '''\
+def func(param, param2, param3, param4) -> int:
+    """Desc.
+
+     :param param1: About param1.
+     :param param2:A.
+     :param param3:
+    """
+''',
+    ],
+    ids=["one", "two", "all"],
+)
+def test_indent_427(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+    template: str,
+) -> None:
+    """Test indent properly records, for params only.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    :param template: Python code.
+    """
+    init_file(template)
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert "SIG401" in std.out

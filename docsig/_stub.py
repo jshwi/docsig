@@ -298,11 +298,14 @@ class Docstring(_Stub):
     def _indent_anomaly(string: str) -> bool:
         leading_spaces = []
         for line in string.splitlines():
-            match = _re.match(r"^\s*", line)
-            if match is not None:
-                spaces = len(match.group())
-                if spaces > 0:
-                    leading_spaces.append(spaces)
+            # only check params
+            # description or anything else is out of scope
+            if line.lstrip().startswith(":"):
+                match = _re.match(r"^\s*", line)
+                if match is not None:
+                    spaces = len(match.group())
+                    if spaces > 0:
+                        leading_spaces.append(spaces)
 
         # look for spaces in odd intervals
         return bool(any(i % 2 != 0 for i in leading_spaces))

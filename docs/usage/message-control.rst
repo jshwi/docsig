@@ -42,10 +42,10 @@ Commandline
     ... def func(param, param2, param3, param4) -> int:
     ...     """Desc.
     ...
-    ...     :param param1: About param1.
-    ...     :param param2:A.
-    ...     :param param3:
-    ...      """
+    ...      :param param1: About param1.
+    ...      :param param2:A.
+    ...      :param param3:
+    ...     """
     ... '''
 
 .. code-block:: python
@@ -100,10 +100,10 @@ Directives
     ... ) -> int:
     ...     """Desc.
     ...
-    ...     :param param1: About param1.
-    ...     :param param2:A.
-    ...     :param param3:
-    ...      """
+    ...      :param param1: About param1.
+    ...      :param param2:A.
+    ...      :param param3:
+    ...     """
     ... '''
 
 .. code-block:: python
