@@ -140,7 +140,7 @@ arcon = ">=0.4.0"
 astroid = "^3.0.1"
 pathspec = "^0.12.1"
 python = "^3.8.1"
-wcmatch = "^8.5.2"
+wcmatch = ">=8.5.2,<10.0.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
