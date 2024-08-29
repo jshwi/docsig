@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.60.1](https://github.com/jshwi/docsig/tree/v0.60.1) - 2024-08-29
+
+### Fixed
+
+- only check params for incorrect-indent ([#427](https://github.com/jshwi/docsig/issues/427))
+
 ## [0.60.0](https://github.com/jshwi/docsig/tree/v0.60.0) - 2024-07-31
 
 ### Added
