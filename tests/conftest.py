@@ -27,6 +27,8 @@ def fixture_environment(
     """
     monkeypatch.setenv("DOCSIG_DEBUG", "0")
     monkeypatch.chdir(tmp_path)
+    # make sure no pyproject.toml files past this point get parsed
+    (tmp_path / "pyproject.toml").touch()
 
 
 @pytest.fixture(name="main")
