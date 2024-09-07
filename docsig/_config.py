@@ -56,26 +56,6 @@ def _get_config(prog: str) -> dict[str, _t.Any]:
     )
 
 
-class _DictAction(_a.Action):  # pylint: disable=too-few-public-methods
-    def __call__(
-        self,
-        parser: _a.ArgumentParser,
-        namespace: _a.Namespace,
-        values: str | _t.Sequence[_t.Any] | None = None,
-        _: str | None = None,
-    ) -> None:
-        if values is not None:
-            try:
-                dest = {
-                    k: _split_comma(v)
-                    for i in values
-                    for k, v in [i.split("=")]
-                }
-                setattr(namespace, self.dest, dest)
-            except ValueError:
-                pass
-
-
 class _ArgumentParser(_a.ArgumentParser):
     # noinspection PyDefaultArgument
     # pylint: disable=dangerous-default-value,too-many-arguments
@@ -146,24 +126,6 @@ class _ArgumentParser(_a.ArgumentParser):
                 "action": "store",
                 "type": _split_comma,
                 "default": kwargs.get("default", []),
-            }
-        )
-        self.add_argument(*args, **kwargs)
-
-    def add_dict_argument(
-        self, *args: str, nargs: str = "*", **kwargs: _t.Any
-    ) -> None:
-        """Parse key(s) of comma separated lists of strings into a dict.
-
-        :param args: Long and/or short form argument(s).
-        :param nargs: Nargs to pass to ``add_argument``.
-        :param kwargs: Kwargs to pass to ``add_argument``.
-        """
-        kwargs.update(
-            {
-                "action": _DictAction,
-                "default": kwargs.get("default", {}),
-                "nargs": nargs,
             }
         )
         self.add_argument(*args, **kwargs)

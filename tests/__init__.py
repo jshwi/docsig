@@ -47,7 +47,6 @@ PASS = "p"
 TOML = "pyproject.toml"
 TOOL = "tool"
 LIST = "list"
-DICT = "dict"
 CHECK_ARGS = (
     long.check_class,
     long.check_protected,
