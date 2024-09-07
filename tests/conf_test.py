@@ -13,7 +13,7 @@ import pytest
 import tomli_w
 
 # noinspection PyProtectedMember
-from docsig._arcon import ArgumentParser
+from docsig._config import _ArgumentParser
 
 from . import (
     DICT,
@@ -60,7 +60,7 @@ def test_list_parser(
     """
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(*args)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_list_argument(short.list, long.list)
     namespace = parser.parse_args()
     assert namespace.list.sort() == expected.sort()
@@ -117,7 +117,7 @@ def test_dict_parser(
     """
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(*args)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_dict_argument(short.dict, long.dict)
     namespace = parser.parse_args()
     assert namespace.dict == expected
@@ -129,7 +129,7 @@ def test_dict_value_error(patch_argv: FixturePatchArgv) -> None:
     :param patch_argv: Patch commandline arguments.
     """
     patch_argv(NAME, long.dict, string[0])
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_dict_argument(short.dict, long.dict)
     namespace = parser.parse_args()
     assert namespace.dict == {}
@@ -141,7 +141,7 @@ def test_no_toml(patch_argv: FixturePatchArgv) -> None:
     :param patch_argv: Patch commandline arguments.
     """
     patch_argv(NAME, long.arg)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_argument(short.arg, long.arg, action="store_true")
     namespace = parser.parse_args()
     assert namespace.arg
@@ -155,7 +155,7 @@ def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
     config = {TOOL: {NAME: {"this-flag": True}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(NAME)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_argument(short.this_flag, long.this_flag, action="store_true")
     namespace = parser.parse_args()
     assert namespace.this_flag is True
@@ -170,14 +170,14 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
 
     # no defaults, pyproject.toml, or kwarg, but the type is list, so
     # that is its falsy value
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_list_argument(short.list, long.list)
     namespace = parser.parse_args()
     assert namespace.list == []
 
     # if the default kwarg is provided, it is the default if there is
     # nothing in pyproject.toml
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_list_argument(short.list, long.list, default=[1, 2, 3])
     namespace = parser.parse_args()
     assert namespace.list == [1, 2, 3]
@@ -187,7 +187,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # nothing included in commandline
     config = {TOOL: {NAME: {"list": [100, 200, 300]}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_list_argument(short.list, long.list, default=[1, 2, 3])
     namespace = parser.parse_args()
     assert namespace.list.sort() == [100, 200, 300, 1, 2, 3].sort()
@@ -202,14 +202,14 @@ def test_dict_default(patch_argv: FixturePatchArgv) -> None:
 
     # no defaults, pyproject.toml, or kwarg, but the type is doct, so
     # that is its falsy value
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_dict_argument(short.dict, long.dict)
     namespace = parser.parse_args()
     assert namespace.dict == {}
 
     # if the default kwarg is provided, it is the default if there is
     # nothing in pyproject.toml
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_dict_argument(short.dict, long.dict, default={1: 1, 2: 2, 3: 3})
     namespace = parser.parse_args()
     assert namespace.dict == {1: 1, 2: 2, 3: 3}
@@ -219,7 +219,7 @@ def test_dict_default(patch_argv: FixturePatchArgv) -> None:
     # nothing included in commandline
     config = {TOOL: {NAME: {"dict": {"100": 100, "200": 200, "300": 300}}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_dict_argument(short.dict, long.dict, default={1: 1, 2: 2, 3: 3})
     namespace = parser.parse_args()
     assert namespace.dict == {
@@ -241,7 +241,7 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     config = {TOOL: {NAME: {long.this_flag[2:]: expected}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(NAME)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_argument(short.this_flag, long.this_flag, action="store")
     namespace = parser.parse_args()
     assert namespace.this_flag == expected
@@ -276,7 +276,7 @@ def test_own_config(
     Path(TOML).write_text(
         tomli_w.dumps({TOOL: {NAME: pyproject}}), encoding="utf-8"
     )
-    parser = ArgumentParser(VERSION, config=custom)
+    parser = _ArgumentParser(VERSION, config=custom)
     parser.add_argument(short.a_str, long.a_str, action="store")
     namespace = parser.parse_args()
     assert namespace.a_str == expected
@@ -290,9 +290,9 @@ def test_no_file_to_root(
     :param monkeypatch: Mock patch environment and attributes.
     :param patch_argv: Patch commandline arguments.
     """
-    monkeypatch.setattr("docsig._arcon.PYPROJECT_TOML", str(random()))
+    monkeypatch.setattr("docsig._config.PYPROJECT_TOML", str(random()))
     patch_argv(NAME, long.arg)
-    parser = ArgumentParser(VERSION)
+    parser = _ArgumentParser(VERSION)
     parser.add_argument(short.arg, long.arg, action="store_true")
     namespace = parser.parse_args()
     assert namespace.arg
