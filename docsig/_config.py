@@ -82,7 +82,6 @@ class _ArgumentParser(_a.ArgumentParser):
     # pylint: disable=too-many-locals
     def __init__(
         self,
-        version: str,
         prog: str | None = None,
         usage: str | None = None,
         description: str | None = None,
@@ -96,7 +95,6 @@ class _ArgumentParser(_a.ArgumentParser):
         add_help: bool = True,
         allow_abbrev: bool = True,
         config: dict[str, _t.Any] | None = None,
-        version_short_form: str = "-v",
     ) -> None:
         super().__init__(
             prog,
@@ -111,9 +109,6 @@ class _ArgumentParser(_a.ArgumentParser):
             conflict_handler,
             add_help,
             allow_abbrev,
-        )
-        self.add_argument(
-            version_short_form, "--version", action="version", version=version
         )
         self._config = {
             k.replace("-", "_"): v
@@ -181,9 +176,13 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     :return: Parsed arguments.
     """
     parser = _ArgumentParser(
-        version=__version__,
         description="Check signature params for proper documentation",
-        version_short_form="-V",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=__version__,
     )
     parser.add_argument(
         "path",
