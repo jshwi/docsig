@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
+import argparse as _a
 import os as _os
 import re as _re
 import typing as _t
-from argparse import Action as _Action
-from argparse import ArgumentParser as _ArgumentParser
-from argparse import HelpFormatter as _HelpFormatter
-from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
 import mergedeep as _mergedeep
@@ -19,7 +16,7 @@ ANSI_ESCAPE = _re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
 
 class _FormatterClass(_t.Protocol):  # pylint: disable=too-few-public-methods
-    def __call__(self, prog: str) -> _HelpFormatter:
+    def __call__(self, prog: str) -> _a.HelpFormatter:
         """Callable type for ``ArgumentParser.formatter_class``."""
 
 
@@ -54,11 +51,11 @@ def _get_config(prog: str) -> dict[str, _t.Any]:
     )
 
 
-class _DictAction(_Action):  # pylint: disable=too-few-public-methods
+class _DictAction(_a.Action):  # pylint: disable=too-few-public-methods
     def __call__(
         self,
-        parser: _ArgumentParser,
-        namespace: _Namespace,
+        parser: _a.ArgumentParser,
+        namespace: _a.Namespace,
         values: str | _t.Sequence[_t.Any] | None = None,
         _: str | None = None,
     ) -> None:
@@ -74,7 +71,7 @@ class _DictAction(_Action):  # pylint: disable=too-few-public-methods
                 pass
 
 
-class ArgumentParser(_ArgumentParser):
+class ArgumentParser(_a.ArgumentParser):
     """Parse commandline arguments.
 
     :param version: Version of package, if there is one.
@@ -112,7 +109,7 @@ class ArgumentParser(_ArgumentParser):
         description: str | None = None,
         epilog: str | None = None,
         parents: _t.Sequence[ArgumentParser] = [],  # noqa
-        formatter_class: _FormatterClass = _HelpFormatter,
+        formatter_class: _FormatterClass = _a.HelpFormatter,
         prefix_chars: str = "-",
         fromfile_prefix_chars: str | None = None,
         argument_default: _t.Any = None,
@@ -151,8 +148,8 @@ class ArgumentParser(_ArgumentParser):
     def parse_known_args(  # type: ignore
         self,
         args: _t.Sequence[str] | None = None,
-        namespace: _Namespace | None = None,
-    ) -> tuple[_Namespace | None, list[str]]:
+        namespace: _a.Namespace | None = None,
+    ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
         namedict = namespace.__dict__
         for key, value in self._config.items():

@@ -5,16 +5,15 @@ docsig._config
 
 from __future__ import annotations as _
 
+import argparse as _a
 import typing as _t
-from argparse import SUPPRESS as _SUPPRESS
-from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
 from ._arcon import ArgumentParser as _ArgumentParser
 from ._version import __version__
 
 
-def parse_args(args: _t.Sequence[str] | None = None) -> _Namespace:
+def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     """Parse commandline arguments.
 
     :param args: Args for manual parsing.
@@ -167,7 +166,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _Namespace:
         "-S",
         "--summary",
         action="store_true",
-        help=_SUPPRESS,
+        help=_a.SUPPRESS,
     )
 
     return parser.parse_args(args)
