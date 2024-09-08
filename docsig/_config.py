@@ -17,7 +17,6 @@ import tomli as _tomli
 from ._version import __version__
 
 PYPROJECT_TOML = "pyproject.toml"
-ANSI_ESCAPE = _re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
 
 class _FormatterClass(_t.Protocol):  # pylint: disable=too-few-public-methods
@@ -93,7 +92,7 @@ class _ArgumentParser(_a.ArgumentParser):
         self._config = {
             k.replace("-", "_"): v
             for k, v in _mergedeep.merge(
-                _get_config(ANSI_ESCAPE.sub("", self.prog)),
+                _get_config(self.prog),
                 config or {},
                 strategy=_mergedeep.Strategy.ADDITIVE,
             ).items()
