@@ -61,14 +61,13 @@ class _ArgumentParser(_a.ArgumentParser):
         namespace: _a.Namespace | None = None,
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
-        namedict = namespace.__dict__
         config = _get_config(self.prog)
         for key, value in config.items():
-            if namedict.get(key) in (None, False):
-                namedict[key] = value
+            if namespace.__dict__.get(key) in (None, False):
+                namespace.__dict__[key] = value
 
         namespace.__dict__ = _mergedeep.merge(
-            config, namedict, strategy=_mergedeep.Strategy.ADDITIVE
+            config, namespace.__dict__, strategy=_mergedeep.Strategy.ADDITIVE
         )
         return namespace, args
 
