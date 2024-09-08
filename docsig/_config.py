@@ -64,7 +64,7 @@ class _ArgumentParser(_a.ArgumentParser):
         namedict = namespace.__dict__
         config = _get_config(self.prog)
         for key, value in config.items():
-            if key in namedict and namedict[key] in (None, False):
+            if namedict.get(key) in (None, False):
                 namedict[key] = value
 
         namespace.__dict__ = _mergedeep.merge(
