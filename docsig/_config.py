@@ -73,7 +73,6 @@ class _ArgumentParser(_a.ArgumentParser):
         conflict_handler: str = "error",
         add_help: bool = True,
         allow_abbrev: bool = True,
-        config: dict[str, _t.Any] | None = None,
     ) -> None:
         super().__init__(
             prog,
@@ -90,12 +89,7 @@ class _ArgumentParser(_a.ArgumentParser):
             allow_abbrev,
         )
         self._config = {
-            k.replace("-", "_"): v
-            for k, v in _mergedeep.merge(
-                _get_config(self.prog),
-                config or {},
-                strategy=_mergedeep.Strategy.ADDITIVE,
-            ).items()
+            k.replace("-", "_"): v for k, v in _get_config(self.prog).items()
         }
 
     def parse_known_args(  # type: ignore

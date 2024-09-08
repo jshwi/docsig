@@ -128,41 +128,6 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     assert namespace.this_flag == expected
 
 
-@pytest.mark.parametrize(
-    "pyproject,custom,commandline,expected",
-    [
-        ({}, {}, [], None),
-        ({long.a_str[2:]: "a"}, {}, [], "a"),
-        ({long.a_str[2:]: "a"}, {long.a_str[2:]: "b"}, [], "b"),
-        ({long.a_str[2:]: "a"}, {long.a_str[2:]: "b"}, [long.a_str, "c"], "c"),
-    ],
-    ids=["none", "pyproject", "custom", "commandline"],
-)
-def test_own_config(
-    patch_argv: FixturePatchArgv,
-    pyproject: dict[str, str],
-    custom: dict[str, str],
-    commandline: list[str],
-    expected: str,
-) -> None:
-    """Test ``arcon.ArgumentParser`` using config object.
-
-    :param patch_argv: Patch commandline arguments.
-    :param pyproject: Object to write to pyproject.toml.
-    :param custom: Config to pass to ``ArgumentParser``.
-    :param commandline: Arguments to pass to commandline.
-    :param expected: Expected result.
-    """
-    patch_argv(NAME, *commandline)
-    Path(TOML).write_text(
-        tomli_w.dumps({TOOL: {NAME: pyproject}}), encoding="utf-8"
-    )
-    parser = _ArgumentParser(config=custom)
-    parser.add_argument(short.a_str, long.a_str, action="store")
-    namespace = parser.parse_args()
-    assert namespace.a_str == expected
-
-
 def test_no_file_to_root(
     monkeypatch: pytest.MonkeyPatch, patch_argv: FixturePatchArgv
 ) -> None:
