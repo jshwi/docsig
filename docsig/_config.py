@@ -11,7 +11,6 @@ import re as _re
 import typing as _t
 from pathlib import Path as _Path
 
-import mergedeep as _mergedeep
 import tomli as _tomli
 
 from ._version import __version__
@@ -62,13 +61,13 @@ class _ArgumentParser(_a.ArgumentParser):
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
         config = _get_config(self.prog)
-        for key, value in config.items():
-            if namespace.__dict__.get(key) in (None, False):
-                namespace.__dict__[key] = value
+        for key, n_val in namespace.__dict__.items():
+            c_val = config.get(key)
+            if isinstance(c_val, list) and isinstance(n_val, list):
+                namespace.__dict__[key].extend(c_val)
+            elif c_val:
+                namespace.__dict__[key] = c_val
 
-        namespace.__dict__ = _mergedeep.merge(
-            config, namespace.__dict__, strategy=_mergedeep.Strategy.ADDITIVE
-        )
         return namespace, args
 
     def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
