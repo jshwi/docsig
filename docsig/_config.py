@@ -53,6 +53,19 @@ def _get_config(prog: str) -> dict[str, _t.Any]:
     }
 
 
+def _merge_configs(
+    obj1: dict[str, _t.Any], obj2: dict[str, _t.Any]
+) -> dict[str, _t.Any]:
+    for key, n_val in obj1.items():
+        c_val = obj2.get(key)
+        if isinstance(c_val, list) and isinstance(n_val, list):
+            obj1[key].extend(c_val)
+        elif c_val:
+            obj1[key] = c_val
+
+    return obj1
+
+
 class _ArgumentParser(_a.ArgumentParser):
     def parse_known_args(  # type: ignore
         self,
@@ -61,13 +74,7 @@ class _ArgumentParser(_a.ArgumentParser):
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
         config = _get_config(self.prog)
-        for key, n_val in namespace.__dict__.items():
-            c_val = config.get(key)
-            if isinstance(c_val, list) and isinstance(n_val, list):
-                namespace.__dict__[key].extend(c_val)
-            elif c_val:
-                namespace.__dict__[key] = c_val
-
+        namespace.__dict__ = _merge_configs(namespace.__dict__, config)
         return namespace, args
 
     def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
