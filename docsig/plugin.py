@@ -168,7 +168,6 @@ class Docsig:
             ignore_args=a.ignore_args,
             ignore_kwargs=a.ignore_kwargs,
             ignore_typechecker=a.ignore_typechecker,
-            no_ansi=a.no_ansi,
             verbose=a.verbose,
         )[0]
         for result in results:
