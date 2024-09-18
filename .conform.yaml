@@ -28,6 +28,7 @@ policies:
           - style
           - test
           - remove
+          - wip
         scopes:
           - deps
           - deps-dev
