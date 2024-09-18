@@ -4,7 +4,8 @@ import ast
 import typing as t
 from argparse import Namespace
 
-from ._config import parse_args
+from ._config import get_config as _get_config
+from ._config import merge_configs as _merge_configs
 from ._core import runner
 from ._version import __version__
 from .messages import FLAKE8
@@ -23,7 +24,7 @@ class Docsig:
     off_by_default = False
     name = __package__
     version = __version__
-    options_dict: t.Dict[str, bool] = {}
+    a = Namespace()
 
     def __init__(self, tree: ast.Module, filename: str) -> None:
         _tree = tree  # noqa
@@ -35,7 +36,7 @@ class Docsig:
     # requirement for this package
     @classmethod
     def add_options(cls, parser) -> None:
-        """Add flake8 commandline and config options.sig_
+        """Add flake8 commandline and config options.
 
         :param parser: Flake8 option manager.
         """
@@ -119,56 +120,38 @@ class Docsig:
         )
 
     @classmethod
-    def parse_options(cls, options: Namespace) -> None:
+    def parse_options(cls, a: Namespace) -> None:
         """Parse flake8 options into am instance accessible dict.
 
-        :param options: Argparse namespace.
+        :param a: Argparse namespace.
         """
-        cls.options_dict = {
-            "check_class": options.sig_check_class,
-            "check_class_constructor": options.sig_check_class_constructor,
-            "check_dunders": options.sig_check_dunders,
-            "check_protected_class_methods": (
-                options.sig_check_protected_class_methods
-            ),
-            "check_nested": options.sig_check_nested,
-            "check_overridden": options.sig_check_overridden,
-            "check_protected": options.sig_check_protected,
-            "check_property_returns": options.sig_check_property_returns,
-            "ignore_no_params": options.sig_ignore_no_params,
-            "ignore_args": options.sig_ignore_args,
-            "ignore_kwargs": options.sig_ignore_kwargs,
-            "ignore_typechecker": options.sig_ignore_typechecker,
-            "verbose": options.sig_verbose,
-        }
+        cls.a.__dict__ = _merge_configs(
+            {k.replace("sig_", ""): v for k, v in a.__dict__.items()},
+            _get_config(__package__),
+        )
 
     def run(self) -> t.Generator[Flake8Error, None, None]:
         """Run docsig and possibly yield a flake8 error.
 
         :return: Flake8 error, if there is one.
         """
-        a = parse_args(
-            [
-                f"--{k.replace('_', '-')}"
-                for k, v in self.options_dict.items()
-                if v
-            ],
-        )
         results = runner(
             self.filename,
-            check_class=a.check_class,
-            check_class_constructor=a.check_class_constructor,
-            check_dunders=a.check_dunders,
-            check_protected_class_methods=a.check_protected_class_methods,
-            check_nested=a.check_nested,
-            check_overridden=a.check_overridden,
-            check_protected=a.check_protected,
-            check_property_returns=a.check_property_returns,
-            ignore_no_params=a.ignore_no_params,
-            ignore_args=a.ignore_args,
-            ignore_kwargs=a.ignore_kwargs,
-            ignore_typechecker=a.ignore_typechecker,
-            verbose=a.verbose,
+            check_class=self.a.check_class,
+            check_class_constructor=self.a.check_class_constructor,
+            check_dunders=self.a.check_dunders,
+            check_protected_class_methods=(
+                self.a.check_protected_class_methods
+            ),
+            check_nested=self.a.check_nested,
+            check_overridden=self.a.check_overridden,
+            check_protected=self.a.check_protected,
+            check_property_returns=self.a.check_property_returns,
+            ignore_no_params=self.a.ignore_no_params,
+            ignore_args=self.a.ignore_args,
+            ignore_kwargs=self.a.ignore_kwargs,
+            ignore_typechecker=self.a.ignore_typechecker,
+            verbose=self.a.verbose,
         )[0]
         for result in results:
             for info in result:

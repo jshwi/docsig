@@ -38,8 +38,12 @@ def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
     return _find_pyproject_toml(path.parent)
 
 
-# Get config dict object from package's tool section in toml file.
-def _get_config(prog: str) -> dict[str, _t.Any]:
+def get_config(prog: str) -> dict[str, _t.Any]:
+    """Get config dict object from package's tool section in toml file.
+
+    :param prog: Program name.
+    :return: Config dict.
+    """
     pyproject_file = _find_pyproject_toml()
     if pyproject_file is None:
         return {}
@@ -53,9 +57,15 @@ def _get_config(prog: str) -> dict[str, _t.Any]:
     }
 
 
-def _merge_configs(
+def merge_configs(
     obj1: dict[str, _t.Any], obj2: dict[str, _t.Any]
 ) -> dict[str, _t.Any]:
+    """Merge two config dicts.
+
+    :param obj1: Config dict one.
+    :param obj2: Config dict two.
+    :return: Config dict.
+    """
     for key, n_val in obj1.items():
         c_val = obj2.get(key)
         if isinstance(c_val, list) and isinstance(n_val, list):
@@ -73,8 +83,8 @@ class _ArgumentParser(_a.ArgumentParser):
         namespace: _a.Namespace | None = None,
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
-        config = _get_config(self.prog)
-        namespace.__dict__ = _merge_configs(namespace.__dict__, config)
+        config = get_config(self.prog)
+        namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 
     def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
