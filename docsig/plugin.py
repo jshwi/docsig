@@ -112,6 +112,12 @@ class Docsig:
             parse_from_config=True,
             help="ignore checking return values",
         )
+        parser.add_option(
+            "--sig-verbose",
+            action="store_true",
+            parse_from_config=True,
+            help="increase output verbosity",
+        )
 
     @classmethod
     def parse_options(cls, options: Namespace) -> None:
@@ -134,6 +140,7 @@ class Docsig:
             "ignore_args": options.sig_ignore_args,
             "ignore_kwargs": options.sig_ignore_kwargs,
             "ignore_typechecker": options.sig_ignore_typechecker,
+            "verbose": options.sig_verbose,
         }
 
     def run(self) -> t.Generator[Flake8Error, None, None]:
@@ -168,6 +175,7 @@ class Docsig:
             ignore_kwargs=p.args.ignore_kwargs,
             ignore_typechecker=p.args.ignore_typechecker,
             no_ansi=p.args.no_ansi,
+            verbose=p.args.verbose,
         )[0]
         for result in results:
             for info in result:
