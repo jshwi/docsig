@@ -1,7 +1,6 @@
 """Flake8 implementation of docsig."""
 
 import ast
-import sys
 import typing as t
 from argparse import Namespace
 
@@ -148,16 +147,13 @@ class Docsig:
 
         :return: Flake8 error, if there is one.
         """
-        sys.argv = [
-            __package__,
-            self.filename,
-            *[
+        a = parse_args(
+            [
                 f"--{k.replace('_', '-')}"
                 for k, v in self.options_dict.items()
                 if v
             ],
-        ]
-        a = parse_args()
+        )
         results = runner(
             self.filename,
             check_class=a.check_class,
