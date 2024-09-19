@@ -3,6 +3,9 @@ docsig._config
 ==============
 """
 
+from __future__ import annotations as _
+
+import typing as _t
 from argparse import SUPPRESS as _SUPPRESS
 from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
@@ -11,9 +14,10 @@ from ._arcon import ArgumentParser as _ArgumentParser
 from ._version import __version__
 
 
-def parse_args() -> _Namespace:
+def parse_args(args: _t.Sequence[str] | None = None) -> _Namespace:
     """Parse commandline arguments.
 
+    :param args: Args for manual parsing.
     :return: Parsed arguments.
     """
     parser = _ArgumentParser(
@@ -166,4 +170,4 @@ def parse_args() -> _Namespace:
         help=_SUPPRESS,
     )
 
-    return parser.parse_args()
+    return parser.parse_args(args)
