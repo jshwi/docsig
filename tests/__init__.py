@@ -12,12 +12,14 @@ from pathlib import Path
 from templatest import BaseTemplate as _BaseTemplate
 from templatest import templates as _templates
 from templatest.utils import VarPrefix as _VarPrefix
+from templatest.utils import VarSeq as _VarSeq
 
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
 MockMainType = t.Callable[..., t.Union[str, int]]
 FixtureMakeTree = t.Callable[[Path, t.Dict[t.Any, t.Any]], None]
+FixturePatchArgv = t.Callable[..., None]
 
 
 class InitFileFixtureType(
@@ -33,6 +35,7 @@ short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
 passed = _VarPrefix("p-", "-")
 fail = _VarPrefix("f-", "-")
+string = _VarSeq("string")
 
 MULTI = "m"
 NAME = "name"
@@ -41,6 +44,11 @@ EXPECTED = "expected"
 E10 = "e-1-0"
 FAIL = "f"
 PASS = "p"
+TOML = "pyproject.toml"
+VERSION = "0.1.0"
+TOOL = "tool"
+LIST = "list"
+DICT = "dict"
 CHECK_ARGS = (
     long.check_class,
     long.check_protected,

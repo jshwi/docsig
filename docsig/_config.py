@@ -7,8 +7,7 @@ from argparse import SUPPRESS as _SUPPRESS
 from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
-from arcon import ArgumentParser as _ArgumentParser
-
+from ._arcon import ArgumentParser as _ArgumentParser
 from ._version import __version__
 
 

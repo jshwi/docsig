@@ -13,7 +13,13 @@ from flake8.main.application import Application
 
 import docsig
 
-from . import FixtureMakeTree, InitFileFixtureType, MockMainType, long
+from . import (
+    FixtureMakeTree,
+    FixturePatchArgv,
+    InitFileFixtureType,
+    MockMainType,
+    long,
+)
 
 
 @pytest.fixture(name="environment", autouse=True)
@@ -117,3 +123,17 @@ def bench(request: pytest.FixtureRequest) -> MockMainType:
         if os.getenv("RUN_BENCHMARK", "false").lower() == "true"
         else lambda func, *args, **kwargs: func(*args, **kwargs)
     )
+
+
+@pytest.fixture(name="patch_argv")
+def fixture_patch_argv(monkeypatch: pytest.MonkeyPatch) -> FixturePatchArgv:
+    """Patch commandline arguments.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :return: Function for using this fixture.
+    """
+
+    def _patch_argv(*args: str) -> None:
+        monkeypatch.setattr("sys.argv", [str(a) for a in args])
+
+    return _patch_argv
