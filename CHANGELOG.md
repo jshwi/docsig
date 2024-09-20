@@ -11,6 +11,16 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.61.0](https://github.com/jshwi/docsig/tree/v0.61.0) - 2024-09-20
+
+### Added
+
+- verbose option to flake8 plugin ([#445](https://github.com/jshwi/docsig/issues/445))
+
+### Changed
+
+- vendor arcon ([#447](https://github.com/jshwi/docsig/issues/447))
+
 ## [0.60.1](https://github.com/jshwi/docsig/tree/v0.60.1) - 2024-08-29
 
 ### Fixed
