@@ -19,11 +19,6 @@ from ._version import __version__
 PYPROJECT_TOML = "pyproject.toml"
 
 
-class _FormatterClass(_t.Protocol):  # pylint: disable=too-few-public-methods
-    def __call__(self, prog: str) -> _a.HelpFormatter:
-        """Callable type for ``ArgumentParser.formatter_class``."""
-
-
 # split str by comma, but allow for escaping
 def _split_comma(value: str) -> list[str]:
     return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
@@ -50,48 +45,16 @@ def _get_config(prog: str) -> dict[str, _t.Any]:
     if pyproject_file is None:
         return {}
 
-    return (
-        _tomli.loads(pyproject_file.read_text()).get("tool", {}).get(prog, {})
-    )
+    return {
+        k.replace("-", "_"): v
+        for k, v in _tomli.loads(pyproject_file.read_text())
+        .get("tool", {})
+        .get(prog, {})
+        .items()
+    }
 
 
 class _ArgumentParser(_a.ArgumentParser):
-    # noinspection PyDefaultArgument
-    # pylint: disable=dangerous-default-value,too-many-arguments
-    # pylint: disable=too-many-locals
-    def __init__(
-        self,
-        prog: str | None = None,
-        usage: str | None = None,
-        description: str | None = None,
-        epilog: str | None = None,
-        parents: _t.Sequence[_a.ArgumentParser] = [],  # noqa
-        formatter_class: _FormatterClass = _a.HelpFormatter,
-        prefix_chars: str = "-",
-        fromfile_prefix_chars: str | None = None,
-        argument_default: _t.Any = None,
-        conflict_handler: str = "error",
-        add_help: bool = True,
-        allow_abbrev: bool = True,
-    ) -> None:
-        super().__init__(
-            prog,
-            usage,
-            description,
-            epilog,
-            parents,
-            formatter_class,
-            prefix_chars,
-            fromfile_prefix_chars,
-            argument_default,
-            conflict_handler,
-            add_help,
-            allow_abbrev,
-        )
-        self._config = {
-            k.replace("-", "_"): v for k, v in _get_config(self.prog).items()
-        }
-
     def parse_known_args(  # type: ignore
         self,
         args: _t.Sequence[str] | None = None,
@@ -99,12 +62,13 @@ class _ArgumentParser(_a.ArgumentParser):
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
         namedict = namespace.__dict__
-        for key, value in self._config.items():
+        config = _get_config(self.prog)
+        for key, value in config.items():
             if key in namedict and namedict[key] in (None, False):
                 namedict[key] = value
 
         namespace.__dict__ = _mergedeep.merge(
-            self._config, namedict, strategy=_mergedeep.Strategy.ADDITIVE
+            config, namedict, strategy=_mergedeep.Strategy.ADDITIVE
         )
         return namespace, args
 
