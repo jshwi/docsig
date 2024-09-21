@@ -17,3 +17,8 @@
    :titlesonly:
 
    messages/sig004-unknown-inline-directive-option
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig005-mutually-exclusive-options

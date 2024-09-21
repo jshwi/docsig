@@ -130,6 +130,12 @@ E = MessageMap(
             "unknown inline comment option for {directive} '{option}'",
             "unknown-inline-directive-option",
         ),
+        5: Message(
+            "SIG005",
+            "SIG005",
+            "both mutually exclusive class options configured",
+            "mutually-exclusive-options",
+        ),
         #: SIG1xx Missing
         101: Message(
             "SIG101",
