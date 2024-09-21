@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.61.1](https://github.com/jshwi/docsig/tree/v0.61.1) - 2024-09-22
+
+### Fixed
+
+- disallow both class args with flake8 ([#452](https://github.com/jshwi/docsig/issues/452))
+
 ## [0.61.0](https://github.com/jshwi/docsig/tree/v0.61.0) - 2024-09-20
 
 ### Added
