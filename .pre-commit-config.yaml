@@ -12,6 +12,7 @@ ci:
     - check-unstaged-news
     - check-news
     - test-check-news
+    - commit-fix
 default_language_version:
   python: "3.9"
 default_stages:
@@ -92,6 +93,12 @@ repos:
         language: system
         stages:
           - commit
+      - id: commit-fix
+        name: Test Fix
+        entry: poetry run python scripts/commit_fix.py
+        language: system
+        stages:
+          - commit-msg
       - id: check-news
         name: Check News
         entry: poetry run python scripts/check_news.py
