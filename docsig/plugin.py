@@ -8,7 +8,7 @@ from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
 from ._core import runner
 from ._version import __version__
-from .messages import FLAKE8
+from .messages import FLAKE8, E
 
 Flake8Error = t.Tuple[int, int, str, t.Type]
 
@@ -135,32 +135,42 @@ class Docsig:
 
         :return: Flake8 error, if there is one.
         """
-        results = runner(
-            self.filename,
-            check_class=self.a.check_class,
-            check_class_constructor=self.a.check_class_constructor,
-            check_dunders=self.a.check_dunders,
-            check_protected_class_methods=(
-                self.a.check_protected_class_methods
-            ),
-            check_nested=self.a.check_nested,
-            check_overridden=self.a.check_overridden,
-            check_protected=self.a.check_protected,
-            check_property_returns=self.a.check_property_returns,
-            ignore_no_params=self.a.ignore_no_params,
-            ignore_args=self.a.ignore_args,
-            ignore_kwargs=self.a.ignore_kwargs,
-            ignore_typechecker=self.a.ignore_typechecker,
-            verbose=self.a.verbose,
-        )[0]
-        for result in results:
-            for info in result:
-                line = "{msg} '{name}'".format(
-                    msg=FLAKE8.format(
-                        ref=info.ref,
-                        description=info.description,
-                        symbolic=info.symbolic,
-                    ),
-                    name=info.name,
-                )
-                yield info.lineno, 0, line, self.__class__
+        if self.a.check_class and self.a.check_class_constructor:
+            line = "{msg}".format(
+                msg=FLAKE8.format(
+                    ref=E[5].ref,
+                    description=E[5].description,
+                    symbolic=E[5].symbolic,
+                ),
+            )
+            yield 0, 0, line, self.__class__
+        else:
+            results = runner(
+                self.filename,
+                check_class=self.a.check_class,
+                check_class_constructor=self.a.check_class_constructor,
+                check_dunders=self.a.check_dunders,
+                check_protected_class_methods=(
+                    self.a.check_protected_class_methods
+                ),
+                check_nested=self.a.check_nested,
+                check_overridden=self.a.check_overridden,
+                check_protected=self.a.check_protected,
+                check_property_returns=self.a.check_property_returns,
+                ignore_no_params=self.a.ignore_no_params,
+                ignore_args=self.a.ignore_args,
+                ignore_kwargs=self.a.ignore_kwargs,
+                ignore_typechecker=self.a.ignore_typechecker,
+                verbose=self.a.verbose,
+            )[0]
+            for result in results:
+                for info in result:
+                    line = "{msg} '{name}'".format(
+                        msg=FLAKE8.format(
+                            ref=info.ref,
+                            description=info.description,
+                            symbolic=info.symbolic,
+                        ),
+                        name=info.name,
+                    )
+                    yield info.lineno, 0, line, self.__class__

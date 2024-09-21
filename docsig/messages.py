@@ -130,6 +130,12 @@ E = MessageMap(
             "unknown inline comment option for {directive} '{option}'",
             "unknown-inline-directive-option",
         ),
+        5: Message(
+            "SIG005",
+            "SIG005",
+            "both class args passed to commandline",
+            "mutually-exclusive-class-args",
+        ),
         #: SIG1xx Missing
         101: Message(
             "SIG101",

@@ -11,8 +11,16 @@ from pathlib import Path
 import pytest
 
 import docsig
+import docsig.plugin
 
-from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType, long
+from . import (
+    TREE,
+    FixtureFlake8,
+    FixtureMakeTree,
+    InitFileFixtureType,
+    MockMainType,
+    long,
+)
 
 
 def test_fix_optional_return_statements_with_overload_func_sig502(
@@ -363,3 +371,29 @@ def test_indent_427(
     main(".", test_flake8=False)
     std = capsys.readouterr()
     assert "SIG401" in std.out
+
+
+def test_class_and_class_constructor_452(
+    capsys: pytest.CaptureFixture,
+    flake8: FixtureFlake8,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test command lines errors when passed incompatible options.
+
+    :param capsys: Capture sys out.
+    :param flake8: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(param1, param2, param3) -> None:
+    """Proper docstring.
+
+    :param param1: Passes.
+    :param param2: Passes.
+    :param param3: Passes.
+    """
+'''
+    init_file(template)
+    flake8(".", "--sig-check-class", "--sig-check-class-constructor")
+    std = capsys.readouterr()
+    assert docsig.messages.E[5].description in std.out
