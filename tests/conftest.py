@@ -14,6 +14,7 @@ from flake8.main.application import Application
 import docsig
 
 from . import (
+    FixtureFlake8,
     FixtureMakeTree,
     FixturePatchArgv,
     InitFileFixtureType,
@@ -37,11 +38,32 @@ def fixture_environment(
     (tmp_path / "pyproject.toml").touch()
 
 
+@pytest.fixture(name="flake8")
+def fixture_flake8() -> FixtureFlake8:
+    """Flake8 plugin fixture.
+
+    :return: Function for using this fixture.
+    """
+
+    def _flake8(*args: str) -> int:
+        """Run main with custom args."""
+        app = Application()
+        app.initialize(["--select=SIG", *args])
+        app.run_checks()
+        app.report()
+        return app.exit_code()
+
+    return _flake8
+
+
 @pytest.fixture(name="main")
-def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
+def fixture_main(
+    monkeypatch: pytest.MonkeyPatch, flake8: FixtureFlake8
+) -> MockMainType:
     """Pass patched commandline arguments to package's main function.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param flake8: Flake8 plugin fixture.
     :return: Function for using this fixture.
     """
 
@@ -56,16 +78,9 @@ def fixture_main(monkeypatch: pytest.MonkeyPatch) -> MockMainType:
         monkeypatch.setattr("sys.argv", argv)
         retcode = docsig.main()
         if test_flake8:
-            app = Application()
-            app.initialize(
-                [
-                    "--select=SIG",
-                    *[str(a).replace("--", "--sig-") for a in args],
-                ]
+            flake8_retcode = flake8(
+                *[str(a).replace("--", "--sig-") for a in args]
             )
-            app.run_checks()
-            app.report()
-            flake8_retcode = app.exit_code()
             assert flake8_retcode == retcode
 
         return retcode
