@@ -257,8 +257,8 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :param file: Path to check.
     :param disable: Messages to disable.
     :param check_class: Check class docstrings.
-    :param check_class_constructor: Check ``__init__`` methods. Note that this
-        is mutually incompatible with check_class.
+    :param check_class_constructor: Check ``__init__`` methods. Note
+        that this is mutually incompatible with check_class.
     :param check_dunders: Check dunder methods
     :param check_nested: Check nested functions and classes.
     :param check_overridden: Check overridden methods
@@ -346,8 +346,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param string: String to check.
     :param list_checks: Display a list of all checks and their messages.
     :param check_class: Check class docstrings.
-    :param check_class_constructor: Check ``__init__`` methods. Note that this
-        is mutually incompatible with check_class.
+    :param check_class_constructor: Check ``__init__`` methods. Note
+        that this is mutually incompatible with check_class.
     :param check_dunders: Check dunder methods
     :param check_protected_class_methods: Check public methods belonging
         to protected classes.
