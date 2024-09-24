@@ -12,6 +12,7 @@ from pathlib import Path as _Path
 import astroid as _ast
 
 from ._directives import Comment as _Comment
+from ._directives import Comments as _Comments
 from ._directives import Directives as _Directives
 from ._stub import Docstring as _Docstring
 from ._stub import RetType as _RetType
@@ -64,22 +65,24 @@ class Parent(_t.List["Parent"]):
 
     def _parse_ast(  # pylint: disable=protected-access,too-many-arguments
         self,
-        node,
-        directives,
-        path,
-        ignore_args,
-        ignore_kwargs,
-        check_class_constructor,
+        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
+        directives: _Directives,
+        path: _Path | None = None,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
     ) -> None:
         # need to keep track of `comments` as, even though they are
         # resolved in directives object, they are needed to notify user
         # in the case that they are invalid
         parent_comments, parent_disabled = directives.get(
-            node.lineno, ([], [])
+            node.lineno, (_Comments(), _Messages())
         )
         if hasattr(node, "body"):
             for subnode in node.body:
-                comments, disabled = directives.get(subnode.lineno, ([], []))
+                comments, disabled = directives.get(
+                    subnode.lineno, (_Comments(), _Messages())
+                )
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
                 if isinstance(subnode, (_ast.Import, _ast.ImportFrom)):

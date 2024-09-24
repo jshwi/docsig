@@ -72,11 +72,11 @@ class Comment(_Messages):
         return None
 
 
-class _Comments(_t.List[Comment]):
+class Comments(_t.List[Comment]):
     """List of comments."""
 
 
-class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
+class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
     """Data for directives:
 
     Dict like object with the line number of directive as the key a
@@ -98,7 +98,7 @@ class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
     def __init__(self, text: str, messages: _Messages) -> None:
         super().__init__()
         fin = _StringIO(text)
-        comments = _Comments()
+        comments = Comments()
         for line in _tokenize.generate_tokens(fin.readline):
             # do nothing for these lines types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
@@ -108,7 +108,7 @@ class Directives(_t.Dict[int, _t.Tuple[_Comments, _Messages]]):
             # scope, but do not update the global comments and messages
             # unless it is confirmed that the comment is a module level
             # directive
-            scoped_comments = _Comments(comments)
+            scoped_comments = Comments(comments)
             scoped_messages = _Messages(messages)
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
