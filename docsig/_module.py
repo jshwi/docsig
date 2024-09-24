@@ -6,6 +6,7 @@ docsig._module
 from __future__ import annotations as _
 
 import re as _re
+import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
@@ -14,9 +15,12 @@ import astroid as _ast
 from ._directives import Comment as _Comment
 from ._directives import Comments as _Comments
 from ._directives import Directives as _Directives
+from ._files import FILE_INFO as _FILE_INFO
 from ._stub import Docstring as _Docstring
 from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
+from ._utils import pretty_print_error as _pretty_print_error
+from ._utils import vprint as _vprint
 from .messages import Messages as _Messages
 
 
@@ -134,6 +138,72 @@ class Parent(_t.List["Parent"]):
                         ignore_kwargs,
                         check_class_constructor,
                     )
+
+    @classmethod
+    def from_ast(  # pylint: disable=too-many-arguments
+        cls,
+        messages: _Messages,
+        ignore_args: bool,
+        ignore_kwargs: bool,
+        check_class_constructor,
+        verbose: bool,
+        no_ansi: bool,
+        root: _Path | None = None,
+        string: str | None = None,
+    ) -> tuple[Parent | None, int]:
+        """Represents an object that contains functions or methods.
+
+        :param messages: List of disabled checks specific to this
+            function.
+        :param ignore_args: Ignore args prefixed with an asterisk.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :param check_class_constructor: Check the class constructor's
+            docstring. Otherwise, expect the constructor's documentation
+            to be on the class level docstring.
+        :param verbose: increase output verbosity.
+        :param no_ansi: Disable ANSI output.
+        :param root: Root of the AST.
+        :param string: String to check, if any.
+        :return: Instance of the class.
+        """
+        parent = None
+        retcode = 0
+        try:
+            if root is not None:
+                string = root.read_text(encoding="utf-8")
+
+            # empty string won't happen but keeps the
+            # typechecker happy
+            string = string or ""
+            parent = cls(
+                _ast.parse(string),
+                _Directives(string, messages),
+                root,
+                ignore_args,
+                ignore_kwargs,
+                check_class_constructor,
+            )
+            _vprint(
+                _FILE_INFO.format(
+                    path=root or "stdin", msg="Parsing Python code successful"
+                ),
+                verbose,
+            )
+        except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
+            msg = str(err).replace("\n", " ")
+            if root is not None and root.name.endswith(".py"):
+                # pass by silently for files that do not end with .py, may
+                # result in a 123 syntax error exit status in the future
+                print(root, file=_sys.stderr)
+                _pretty_print_error(type(err), msg, no_ansi=no_ansi)
+                retcode = 1
+
+            _vprint(
+                _FILE_INFO.format(path=root or "stdin", msg=msg),
+                verbose,
+            )
+
+        return parent, retcode
 
     @property
     def isprotected(self) -> bool:

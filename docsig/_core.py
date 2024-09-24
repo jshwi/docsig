@@ -8,19 +8,13 @@ from __future__ import annotations as _
 import sys as _sys
 from pathlib import Path as _Path
 
-import astroid as _ast
-
 from . import _decorators
-from ._directives import Directives as _Directives
-from ._files import FILE_INFO as _FILE_INFO
 from ._files import Paths as _Paths
 from ._module import Function as _Function
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
-from ._utils import pretty_print_error as _pretty_print_error
 from ._utils import print_checks as _print_checks
-from ._utils import vprint as _vprint
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
@@ -116,56 +110,6 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 target,
                 failures,
             )
-
-
-def _parse_ast(  # pylint: disable=too-many-arguments
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor,
-    verbose: bool,
-    no_ansi: bool,
-    root: _Path | None = None,
-    string: str | None = None,
-) -> tuple[_Parent | None, int]:
-    parent = None
-    retcode = 0
-    try:
-        if root is not None:
-            string = root.read_text(encoding="utf-8")
-
-        # empty string won't happen but keeps the
-        # typechecker happy
-        string = string or ""
-        parent = _Parent(
-            _ast.parse(string),
-            _Directives(string, messages),
-            root,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
-        )
-        _vprint(
-            _FILE_INFO.format(
-                path=root or "stdin", msg="Parsing Python code successful"
-            ),
-            verbose,
-        )
-    except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
-        msg = str(err).replace("\n", " ")
-        if root is not None and root.name.endswith(".py"):
-            # pass by silently for files that do not end with .py, may
-            # result in a 123 syntax error exit status in the future
-            print(root, file=_sys.stderr)
-            _pretty_print_error(type(err), msg, no_ansi=no_ansi)
-            retcode = 1
-
-        _vprint(
-            _FILE_INFO.format(path=root or "stdin", msg=msg),
-            verbose,
-        )
-
-    return parent, retcode
 
 
 def _get_failures(  # pylint: disable=too-many-locals,too-many-arguments
@@ -277,7 +221,7 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :return: Exit status for whether test failed or not.
     """
     failures = _Failures()
-    module, retcode = _parse_ast(
+    module, retcode = _Parent.from_ast(
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
@@ -414,7 +358,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
         return retcode
 
-    module, retcode = _parse_ast(
+    module, retcode = _Parent.from_ast(
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
