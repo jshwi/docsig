@@ -11,7 +11,6 @@ from pathlib import Path as _Path
 
 import astroid as _ast
 
-from ._directives import Comment as _Comment
 from ._directives import Comments as _Comments
 from ._directives import Directives as _Directives
 from ._stub import Docstring as _Docstring
@@ -164,7 +163,7 @@ class Function(Parent):
     def __init__(  # pylint: disable=too-many-arguments
         self,
         node: _ast.FunctionDef,
-        comments: list[_Comment],
+        comments: _Comments,
         directives: _Directives,
         messages: _Messages,
         path: _Path | None = None,
@@ -310,7 +309,7 @@ class Function(Parent):
         return self._messages
 
     @property
-    def comments(self) -> list[_Comment]:
+    def comments(self) -> _Comments:
         """Comments, if any, belonging to this function."""
         return self._comments
 
