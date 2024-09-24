@@ -190,12 +190,17 @@ class Function(Parent):
             ignore_args,
             ignore_kwargs,
         )
+        self._docstring = _Docstring()
         if self.isinit and not check_class_constructor:
             # docstring for __init__ is expected on the class docstring
             relevant_doc_node = self._parent.doc_node
         else:
             relevant_doc_node = node.doc_node
-        self._docstring = _Docstring(relevant_doc_node, ignore_kwargs)
+
+        if relevant_doc_node is not None:
+            self._docstring = self._docstring.from_ast(
+                relevant_doc_node, ignore_kwargs
+            )
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""

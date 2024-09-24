@@ -307,6 +307,7 @@ class Docstring(_Stub):
     """Represents a function docstring.
 
     :param node: Docstring ast node.
+    :param string: The raw docstring.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
@@ -364,23 +365,37 @@ class Docstring(_Stub):
     def __init__(
         self,
         node: _ast.Const | None = None,
+        string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__(ignore_args, ignore_kwargs)
-        self._string = None
-        if node is not None:
-            self._string = self._normalize_docstring(node.value)
-            for i in _Matches(
-                self._string,
-                self._indent_anomaly(node.value),
-                self._missing_descriptions(node.value),
-            ):
-                self._args.append(i)
-
+        self._string = string
+        self._node = node
         self._returns = self._string is not None and bool(
             _re.search(":returns?:", self._string)
         )
+
+    @classmethod
+    def from_ast(
+        cls, node: _ast.Const, ignore_kwargs: bool = False
+    ) -> Docstring:
+        """Parse function docstring from ast.
+
+        :param node: Docstring ast node.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :return: Instantiated docstring object.
+        """
+        string = cls._normalize_docstring(node.value)
+        docstring = cls(node, string, ignore_kwargs)
+        for i in _Matches(
+            string,
+            cls._indent_anomaly(node.value),
+            cls._missing_descriptions(node.value),
+        ):
+            docstring.args.append(i)
+
+        return docstring
 
     @property
     def string(self) -> str | None:
