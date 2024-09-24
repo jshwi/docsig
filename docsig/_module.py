@@ -24,6 +24,10 @@ from ._utils import vprint as _vprint
 from .messages import Messages as _Messages
 
 
+class _Imports(_t.Dict[str, str]):
+    """Represents python imports."""
+
+
 class Parent(_t.List["Parent"]):
     """Represents an object that contains functions or methods.
 
@@ -47,12 +51,12 @@ class Parent(_t.List["Parent"]):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
-        imports: dict[str, str] | None = None,
+        imports: _Imports | None = None,
     ) -> None:
         super().__init__()
         self._name = node.name
         self._overloads = _Overloads()
-        self._imports = imports or {}
+        self._imports = imports or _Imports()
         self._parse_ast(
             node,
             directives,
@@ -237,7 +241,7 @@ class Function(Parent):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
-        imports: dict[str, str] | None = None,
+        imports: _Imports | None = None,
     ) -> None:
         super().__init__(
             node,
