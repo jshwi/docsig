@@ -182,7 +182,7 @@ class Function(Parent):
         self._comments = comments
         self._messages = messages
         self._parent = node.parent.frame()
-        self._signature = _Signature(
+        self._signature = _Signature.from_ast(
             node.args,
             node.returns,
             self.ismethod,

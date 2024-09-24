@@ -226,32 +226,50 @@ class _Stub:
 class Signature(_Stub):
     """Represents a function signature.
 
-    :param arguments: Arguments provided to signature.
     :param returns: Returns declared in signature.
-    :param ismethod: Whether this signature belongs to a method.
-    :param isstaticmethod: Whether this signature belongs to a static
-        method.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(
         self,
+        returns: _ast.Module | str | None = None,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
+    ) -> None:
+        super().__init__(ignore_args, ignore_kwargs)
+
+        self._rettype = RetType.from_ast(returns)
+        self._returns = self._rettype == RetType.SOME
+
+    @classmethod
+    def from_ast(  # pylint: disable=too-many-arguments
+        cls,
         arguments: _ast.Arguments,
         returns: _ast.Module | str,
         ismethod: bool = False,
         isstaticmethod: bool = False,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
-    ) -> None:
-        super().__init__(ignore_args, ignore_kwargs)
+    ) -> Signature:
+        """Parse signature from ast.
 
+        :param arguments: Arguments provided to signature.
+        :param returns: Returns declared in signature.
+        :param ismethod: Whether this signature belongs to a method.
+        :param isstaticmethod: Whether this signature belongs to a
+            static method.
+        :param ignore_args: Ignore args prefixed with an asterisk.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :return: Instantiated signature object.
+        """
         if ismethod and not isstaticmethod:
             if arguments.posonlyargs:
                 arguments.posonlyargs.pop(0)
             elif arguments.args:
                 arguments.args.pop(0)
 
+        signature = cls(returns, ignore_args, ignore_kwargs)
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)
             for a in [
@@ -263,10 +281,9 @@ class Signature(_Stub):
             ]
             if a is not None and a.name
         ]:
-            self.args.append(i)
+            signature.args.append(i)
 
-        self._rettype = RetType.from_ast(returns)
-        self._returns = self._rettype == RetType.SOME
+        return signature
 
     @property
     def rettype(self) -> RetType:
