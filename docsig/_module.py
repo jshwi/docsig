@@ -47,7 +47,7 @@ class Parent(_t.List["Parent"]):
     ) -> None:
         super().__init__()
         self._name = node.name
-        self._overloads: dict[str, Function] = {}
+        self._overloads = _Overloads()
         self._imports = imports or {}
         self._parse_ast(
             node,
@@ -316,3 +316,7 @@ class Function(Parent):
         :param rettype: Return type of overloaded signature.
         """
         self._signature.overload(rettype)
+
+
+class _Overloads(_t.Dict[str, Function]):
+    """Represents overloaded methods."""
