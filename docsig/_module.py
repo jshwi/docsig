@@ -230,7 +230,8 @@ class Function(Parent):
     :param imports: Imports within this scope.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-instance-attributes
+    def __init__(
         self,
         node: _ast.FunctionDef,
         comments: _Comments,
@@ -264,6 +265,7 @@ class Function(Parent):
             ignore_kwargs,
         )
         self._docstring = _Docstring()
+        self._lineno = node.lineno or 0
         if self.isinit and not check_class_constructor:
             # docstring for __init__ is expected on the class docstring
             relevant_doc_node = self._parent.doc_node
@@ -361,7 +363,7 @@ class Function(Parent):
     @property
     def lineno(self) -> int:
         """Line number of function declaration."""
-        return self._node.lineno or 0
+        return self._lineno
 
     @property
     def signature(self) -> _Signature:
