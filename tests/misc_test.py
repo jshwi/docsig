@@ -310,12 +310,14 @@ def test_list_checks(
 
 def test_bad_py_file(
     monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
     """Test invalid syntax on .py file.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
@@ -341,6 +343,8 @@ new-ssl "${@}"
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
     init_file(template)
     assert main(".", test_flake8=False, no_ansi=False) == 1
+    std = capsys.readouterr()
+    assert E[901].fstring(T) in std.out
 
 
 def test_bash_script(
@@ -606,4 +610,27 @@ def test_multiple_exit_codes(
             test_flake8=False,  # won't need, flake runs one file at a time
         )
         == 1
+    )
+
+
+def test_sys_excepthook(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+) -> None:
+    """Get coverage on except hook.
+
+    Unsure what errors are relevant after removing syntax error from
+    this hook.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    """
+    monkeypatch.setattr("sys.stdout.isatty", lambda: True)
+
+    # noinspection PyUnresolvedReferences
+    docsig._utils.pretty_print_error(
+        BaseException, "a base exception", no_ansi=False
+    )
+    std = capsys.readouterr()
+    assert (
+        std.err.strip() == "\033[1;31mBaseException\033[0m: a base exception"
     )

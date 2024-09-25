@@ -33,3 +33,8 @@ Returns
 -------
 
 .. include:: returns-messages.rst
+
+Error
+-----
+
+.. include:: error-messages.rst

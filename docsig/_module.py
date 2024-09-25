@@ -7,6 +7,7 @@ from __future__ import annotations as _
 
 import re as _re
 import typing as _t
+from enum import Enum as _Enum
 from pathlib import Path as _Path
 
 import astroid as _ast
@@ -17,6 +18,12 @@ from ._stub import Docstring as _Docstring
 from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
 from .messages import Messages as _Messages
+
+
+class Error(_Enum):
+    """Represents an unrecoverable error."""
+
+    SYNTAX = 1
 
 
 class _Imports(_t.Dict[str, str]):
@@ -36,30 +43,38 @@ class Parent(_t.List["Parent"]):
         docstring. Otherwise, expect the constructor's documentation to
         be on the class level docstring.
     :param imports: Imports within this scope.
+    :param error: Represents an unrecoverable error, if any.
     """
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
-        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
-        directives: _Directives,
+        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | None = None,
+        directives: _Directives | None = None,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
         imports: _Imports | None = None,
+        error: Error | None = None,
     ) -> None:
         super().__init__()
-        self._name = node.name
-        self._overloads = _Overloads()
-        self._imports = imports or _Imports()
-        self._parse_ast(
-            node,
-            directives,
-            path,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
-        )
+        self._name = "module"
+        self._error = error
+        if node is None:
+            if not isinstance(self, Function) and error is not None:
+                self.append(Function(path, error=error))
+        else:
+            self._name = node.name
+            self._overloads = _Overloads()
+            self._imports = imports or _Imports()
+            self._parse_ast(
+                node,
+                directives or _Directives(),
+                path,
+                ignore_args,
+                ignore_kwargs,
+                check_class_constructor,
+            )
 
     def _parse_imports(self, names: list[tuple[str, str | None]]) -> None:
         for name in names:
@@ -143,6 +158,11 @@ class Parent(_t.List["Parent"]):
         """Boolean value for whether class is protected."""
         return self._name.startswith("_")
 
+    @property
+    def error(self) -> Error | None:
+        """Represents an unrecoverable error, if any."""
+        return self._error
+
 
 class Function(Parent):
     """Represents a function with signature and docstring parameters.
@@ -158,54 +178,63 @@ class Function(Parent):
         constructor, use its own docstring. Otherwise, use the class
         level docstring for the constructor function.
     :param imports: Imports within this scope.
+    :param error: Represents an unrecoverable error, if any.
     """
 
     # pylint: disable=too-many-arguments,too-many-instance-attributes
     def __init__(
         self,
-        node: _ast.FunctionDef,
-        comments: _Comments,
-        directives: _Directives,
-        messages: _Messages,
+        node: _ast.FunctionDef | None = None,
+        comments: _Comments | None = None,
+        directives: _Directives | None = None,
+        messages: _Messages | None = None,
         path: _Path | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
         imports: _Imports | None = None,
+        error: Error | None = None,
     ) -> None:
         super().__init__(
             node,
-            directives,
+            directives or _Directives(),
             path,
             ignore_args,
             ignore_kwargs,
             check_class_constructor,
             imports,
         )
-        self._comments = comments
-        self._messages = messages
-        self._parent = node.parent.frame()
-        self._decorators = node.decorators
-        self._signature = _Signature.from_ast(
-            node.args,
-            node.returns,
-            self.ismethod,
-            self.isstaticmethod,
-            ignore_args,
-            ignore_kwargs,
-        )
+        self._comments = comments or _Comments()
+        self._messages = messages or _Messages()
+        self._parent = None
+        self._decorators = None
+        self._signature = _Signature()
         self._docstring = _Docstring()
-        self._lineno = node.lineno or 0
-        if self.isinit and not check_class_constructor:
-            # docstring for __init__ is expected on the class docstring
-            relevant_doc_node = self._parent.doc_node
-        else:
-            relevant_doc_node = node.doc_node
-
-        if relevant_doc_node is not None:
-            self._docstring = self._docstring.from_ast(
-                relevant_doc_node, ignore_kwargs
+        self._lineno = 0
+        self._error = error
+        if node is not None:
+            self._parent = node.parent.frame()
+            self._decorators = node.decorators
+            self._lineno = node.lineno
+            self._signature = self._signature.from_ast(
+                node.args,
+                node.returns,
+                self.ismethod,
+                self.isstaticmethod,
+                ignore_args,
+                ignore_kwargs,
             )
+            if self.isinit and not check_class_constructor:
+                # docstring for __init__ is expected on the class
+                # docstring
+                relevant_doc_node = self._parent.doc_node
+            else:
+                relevant_doc_node = node.doc_node
+
+            if relevant_doc_node is not None:
+                self._docstring = self.docstring.from_ast(
+                    relevant_doc_node, ignore_kwargs
+                )
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""
@@ -250,7 +279,7 @@ class Function(Parent):
     @property
     def isoverridden(self) -> bool:
         """Boolean value for whether function is overridden."""
-        if self.ismethod and not self.isinit:
+        if self.ismethod and not self.isinit and self._parent is not None:
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
                     ancestor[self.name], _ast.FunctionDef

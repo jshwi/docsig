@@ -247,5 +247,12 @@ E = MessageMap(
             "return-documented-for-property",
             "documentation is sufficient as a getter is the value returned",
         ),
+        #: SIG9xx Error
+        901: Message(
+            "SIG901",
+            "SIG901",
+            "parsing python code failed",
+            "invalid-syntax",
+        ),
     }
 )

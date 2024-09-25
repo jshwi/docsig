@@ -7,6 +7,7 @@ from __future__ import annotations as _
 
 import typing as _t
 
+from ._module import Error as _Error
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
@@ -55,22 +56,25 @@ class Failure(_t.List[Failed]):
             self._func.messages.extend(i for i in _E.all if i not in target)
 
         self._name = self._func.name
-        if self._func.parent.name:
+        if self._func.parent is not None and self._func.parent.name:
             self._name = f"{self._func.parent.name}.{self._func.name}"
 
         self._check_property_returns = check_property_returns
-        self._sig0xx_config()
-        if self._func.docstring.string is None:
-            self._sig1xx_missing()
+        if self._func.error is not None:
+            self._sig9xx_error()
         else:
-            self._sig2xx_signature()
-            for index in range(len(self._func)):
-                doc = self._func.docstring.args.get(index)
-                self._sig3xx_description(doc)
-                sig = self._func.signature.args.get(index)
-                self._sig4xx_parameters(doc, sig)
-            if not ignore_typechecker:
-                self._sig5xx_returns()
+            self._sig0xx_config()
+            if self._func.docstring.string is None:
+                self._sig1xx_missing()
+            else:
+                self._sig2xx_signature()
+                for index in range(len(self._func)):
+                    doc = self._func.docstring.args.get(index)
+                    self._sig3xx_description(doc)
+                    sig = self._func.signature.args.get(index)
+                    self._sig4xx_parameters(doc, sig)
+                if not ignore_typechecker:
+                    self._sig5xx_returns()
 
         self.sort()
 
@@ -227,6 +231,11 @@ class Failure(_t.List[Failed]):
             elif self._func.isproperty and not self._check_property_returns:
                 # return-documented-for-property
                 self._add(_E[505], hint=True)
+
+    def _sig9xx_error(self) -> None:
+        # invalid-syntax
+        if self._func.error == _Error.SYNTAX:
+            self._add(_E[901])
 
     @property
     def name(self) -> str:

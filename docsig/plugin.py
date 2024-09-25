@@ -162,7 +162,7 @@ class Docsig:
                 ignore_kwargs=self.a.ignore_kwargs,
                 ignore_typechecker=self.a.ignore_typechecker,
                 verbose=self.a.verbose,
-            )[0]
+            )
             for result in results:
                 for info in result:
                     line = "{msg} '{name}'".format(

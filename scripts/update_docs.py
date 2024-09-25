@@ -35,6 +35,7 @@ CATEGORIES = {
     3: "description",
     4: "parameters",
     5: "returns",
+    9: "error",
 }
 
 
