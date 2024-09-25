@@ -306,7 +306,6 @@ class Signature(_Stub):
 class Docstring(_Stub):
     """Represents a function docstring.
 
-    :param node: Docstring ast node.
     :param string: The raw docstring.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -364,14 +363,12 @@ class Docstring(_Stub):
 
     def __init__(
         self,
-        node: _ast.Const | None = None,
         string: str | None = None,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__(ignore_args, ignore_kwargs)
         self._string = string
-        self._node = node
         self._returns = self._string is not None and bool(
             _re.search(":returns?:", self._string)
         )
@@ -387,7 +384,7 @@ class Docstring(_Stub):
         :return: Instantiated docstring object.
         """
         string = cls._normalize_docstring(node.value)
-        docstring = cls(node, string, ignore_kwargs)
+        docstring = cls(string, ignore_kwargs)
         for i in _Matches(
             string,
             cls._indent_anomaly(node.value),

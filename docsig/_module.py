@@ -182,7 +182,6 @@ class Function(Parent):
             check_class_constructor,
             imports,
         )
-        self._node = node
         self._comments = comments
         self._messages = messages
         self._parent = node.parent.frame()
@@ -282,7 +281,7 @@ class Function(Parent):
     @property
     def name(self) -> str:
         """The name of the function."""
-        return self._node.name
+        return self._name
 
     @property
     def parent(
