@@ -90,13 +90,17 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
     are the final product of messages to disable.
 
     Comments are collected here for later analysis.
-
-    :param text: Python code.
-    :param messages: List of checks to disable.
     """
 
-    def __init__(self, text: str, messages: _Messages) -> None:
-        super().__init__()
+    @classmethod
+    def from_text(cls, text: str, messages: _Messages) -> Directives:
+        """Create directives from text.
+
+        :param text: Python code.
+        :param messages: List of checks to disable.
+        :return: Instantiated directives object.
+        """
+        directives = cls()
         fin = _StringIO(text)
         comments = Comments()
         for line in _tokenize.generate_tokens(fin.readline):
@@ -130,5 +134,7 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
 
             # check that a scoped message has not updated this first, as
             # they take precedence over global messages
-            if lineno not in self:
-                self[lineno] = scoped_comments, scoped_messages
+            if lineno not in directives:
+                directives[lineno] = scoped_comments, scoped_messages
+
+        return directives

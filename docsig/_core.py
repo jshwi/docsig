@@ -139,7 +139,7 @@ def _parse_ast(  # pylint: disable=too-many-arguments
         string = string or ""
         parent = _Parent(
             _ast.parse(string),
-            _Directives(string, messages),
+            _Directives.from_text(string, messages),
             root,
             ignore_args,
             ignore_kwargs,
