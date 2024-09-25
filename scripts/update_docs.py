@@ -122,6 +122,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
         content = f"{content}\n"
         if cur_content != content:
             toc_file.write_text(content)
+            sys.exit("new docs generated that need to be added to commit")
 
 
 def remove_outdated_messages() -> None:
