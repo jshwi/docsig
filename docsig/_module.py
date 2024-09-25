@@ -180,7 +180,7 @@ class Parent(_t.List["Parent"]):
             string = string or ""
             parent = cls(
                 _ast.parse(string),
-                _Directives(string, messages),
+                _Directives.from_text(string, messages),
                 root,
                 ignore_args,
                 ignore_kwargs,
