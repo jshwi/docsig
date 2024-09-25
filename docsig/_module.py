@@ -186,6 +186,7 @@ class Function(Parent):
         self._comments = comments
         self._messages = messages
         self._parent = node.parent.frame()
+        self._decorators = node.decorators
         self._signature = _Signature.from_ast(
             node.args,
             node.returns,
@@ -213,8 +214,8 @@ class Function(Parent):
 
     def _decorated_with(self, name: str) -> bool:
         name = self._imports.get(name, name)
-        if self._node.decorators is not None:
-            for dec in self._node.decorators.nodes:
+        if self._decorators is not None:
+            for dec in self._decorators.nodes:
                 return (isinstance(dec, _ast.Name) and dec.name == name) or (
                     isinstance(dec, _ast.Attribute) and dec.attrname == name
                 )
