@@ -93,7 +93,10 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
 
     for index, category in CATEGORIES.items():
         toc_file = USAGE / f"{category}-messages.rst"
-        cur_content = toc_file.read_text(encoding="utf-8")
+        cur_content = ""
+        if toc_file.is_file():
+            cur_content = toc_file.read_text(encoding="utf-8")
+
         tocs = []
         for message in msgio.getvalue().splitlines():
             match = pattern.search(message)
