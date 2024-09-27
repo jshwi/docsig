@@ -103,43 +103,6 @@ class Param(_t.NamedTuple):
         return str(self.name).startswith("_")
 
 
-class _Matches(_t.List[Param]):
-    _pattern = _re.compile(":(.*?):")
-
-    def __init__(
-        self, string: str, indent_anomaly: bool, missing_descriptions: bool
-    ) -> None:
-        super().__init__()
-        for line in string.splitlines():
-            strip_line = line.lstrip()
-            match = self._pattern.split(strip_line)[1:]
-            if match:
-                description = None
-                kinds = match[0].split()
-                if kinds:
-                    kind = DocType.from_str(kinds[0])
-
-                    if len(kinds) > 1:
-                        name = kinds[1]
-                    else:
-                        # name could not be parsed
-                        name = UNNAMED
-
-                    if len(match) > 1:
-                        second = match[1]
-                        if second != "" or not missing_descriptions:
-                            description = second
-
-                    super().append(
-                        Param(
-                            kind,
-                            name,
-                            description,
-                            int(indent_anomaly),
-                        )
-                    )
-
-
 class _Params(_t.List[Param]):
     def __init__(
         self, ignore_args: bool = False, ignore_kwargs: bool = False
@@ -385,12 +348,36 @@ class Docstring(_Stub):
         """
         string = cls._normalize_docstring(node.value)
         docstring = cls(string, ignore_kwargs)
-        for i in _Matches(
-            string,
-            cls._indent_anomaly(node.value),
-            cls._missing_descriptions(node.value),
-        ):
-            docstring.args.append(i)
+        indent_anomaly = cls._indent_anomaly(node.value)
+        missing_descriptions = cls._missing_descriptions(node.value)
+        for line in string.splitlines():
+            strip_line = line.lstrip()
+            match = _re.split(":(.*?):", strip_line)[1:]
+            if match:
+                description = None
+                kinds = match[0].split()
+                if kinds:
+                    kind = DocType.from_str(kinds[0])
+
+                    if len(kinds) > 1:
+                        name = kinds[1]
+                    else:
+                        # name could not be parsed
+                        name = UNNAMED
+
+                    if len(match) > 1:
+                        second = match[1]
+                        if second != "" or not missing_descriptions:
+                            description = second
+
+                    docstring.args.append(
+                        Param(
+                            kind,
+                            name,
+                            description,
+                            int(indent_anomaly),
+                        )
+                    )
 
         return docstring
 
