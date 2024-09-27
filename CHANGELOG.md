@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.62.0](https://github.com/jshwi/docsig/tree/v0.62.0) - 2024-09-27
+
+### Changed
+
+- handle syntax error as a violation ([#455](https://github.com/jshwi/docsig/issues/455))
+
 ## [0.61.1](https://github.com/jshwi/docsig/tree/v0.61.1) - 2024-09-22
 
 ### Fixed
