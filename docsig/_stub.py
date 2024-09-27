@@ -291,24 +291,6 @@ class Docstring(_Stub):
         return bool(any(i % 2 != 0 for i in leading_spaces))
 
     @staticmethod
-    def _missing_descriptions(string: str) -> bool:
-        # find out if parameter is missing a description
-        new = ""
-        for line in string.strip().splitlines()[2:]:
-            line = line.lstrip()
-            if not line.startswith(":"):
-                # it is not a parameter, it is a next line description
-                # append the next entry to the same line
-                new = f"{new[:-1]} "
-            new += f"{line}\n"
-        if not new:
-            return True
-
-        # if it ends with a colon, it's a parameter without a
-        # description
-        return any(i.endswith(":") for i in new.splitlines())
-
-    @staticmethod
     def _normalize_docstring(string: str) -> str:
         # convert google and numpy style docstrings to parse docstrings
         # as restructured text
@@ -337,7 +319,7 @@ class Docstring(_Stub):
         )
 
     @classmethod
-    def from_ast(
+    def from_ast(  # pylint: disable=too-many-locals
         cls, node: _ast.Const, ignore_kwargs: bool = False
     ) -> Docstring:
         """Parse function docstring from ast.
@@ -349,7 +331,24 @@ class Docstring(_Stub):
         string = cls._normalize_docstring(node.value)
         docstring = cls(string, ignore_kwargs)
         indent_anomaly = cls._indent_anomaly(node.value)
-        missing_descriptions = cls._missing_descriptions(node.value)
+        # find out if parameter is missing a description
+        new = ""
+        for line in node.value.strip().splitlines()[2:]:
+            line = line.lstrip()
+            if not line.startswith(":"):
+                # it is not a parameter, it is a next line description
+                # append the next entry to the same line
+                new = f"{new[:-1]} "
+            new += f"{line}\n"
+        if not new:
+            missing_descriptions = True
+        else:
+            # if it ends with a colon, it's a parameter without a
+            # description
+            missing_descriptions = any(
+                i.endswith(":") for i in new.splitlines()
+            )
+
         for line in string.splitlines():
             strip_line = line.lstrip()
             match = _re.split(":(.*?):", strip_line)[1:]
