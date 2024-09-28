@@ -71,8 +71,7 @@ def test_class_and_class_constructor_in_interpreter() -> None:
 
 
 def test_class_and_class_constructor_in_interpreter_with_config(
-    monkeypatch: pytest.MonkeyPatch,
-    main: MockMainType,
+    monkeypatch: pytest.MonkeyPatch, main: MockMainType
 ) -> None:
     """Test that docsig errors when passed incompatible options.
 
@@ -348,8 +347,7 @@ new-ssl "${@}"
 
 
 def test_bash_script(
-    main: MockMainType,
-    init_file: InitFileFixtureType,
+    main: MockMainType, init_file: InitFileFixtureType
 ) -> None:
     """Test bash script.
 
@@ -397,8 +395,7 @@ echo "Hello, world"
 
 
 def test_no_color_with_pipe(
-    monkeypatch: pytest.MonkeyPatch,
-    capsys: pytest.CaptureFixture,
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
 ) -> None:
     """Ensure colors are removed when piping output to a file.
 

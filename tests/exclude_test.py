@@ -97,8 +97,7 @@ def test_exclude_defaults(
 
 
 def test_exclude_argument(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: InitFileFixtureType, main: MockMainType
 ) -> None:
     """Test bash script is ignored when exclude argument passed.
 
