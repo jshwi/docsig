@@ -317,10 +317,10 @@ class Docstring(_Stub):
         :param node: Docstring ast node.
         :return: Instantiated docstring object.
         """
+        indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
         returns = bool(_re.search(r":returns?:", string))
         docstring = cls(string, returns)
-        indent_anomaly = cls._indent_anomaly(node.value)
         for match in _re.findall(r":(.*?):((?:.|\n)*?)(?=\n:|$)", string):
             if match:
                 kinds = match[0].split()
