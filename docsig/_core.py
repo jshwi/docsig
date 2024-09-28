@@ -165,8 +165,6 @@ def _parse_ast(  # pylint: disable=too-many-arguments
     except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
         msg = str(err).replace("\n", " ")
         if root is not None and root.name.endswith(".py"):
-            # pass by silently for files that do not end with .py, may
-            # result in a 123 syntax error exit status in the future
             parent = _Parent(error=_Error.SYNTAX)
 
         logger.debug(_FILE_INFO, root or "stdin", msg)
@@ -218,8 +216,10 @@ def _get_failures(  # pylint: disable=too-many-arguments
 
 def _report(
     failures: _Failures, path: str | None = None, no_ansi: bool = False
-) -> None:
+) -> int:
+    retcodes = []
     for failure in failures:
+        retcodes.append(failure.retcode)
         module = f"{path}:" if path is not None else ""
         header = f"{module}{failure.lineno} in {failure.name}"
         if not no_ansi and _sys.stdout.isatty():
@@ -237,6 +237,8 @@ def _report(
             )
             if item.hint:
                 print(f"    hint: {item.hint}")
+
+    return max(retcodes)
 
 
 def runner(  # pylint: disable=too-many-locals,too-many-arguments
@@ -382,7 +384,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         patterns.append(exclude)
 
     if string is None:
-        retcode = 0
+        retcodes = [0]
         paths = _Paths(
             *tuple(_Path(i) for i in path),
             patterns=patterns,
@@ -409,10 +411,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 target,
             )
             if failures:
-                _report(failures, str(file), no_ansi)
-                retcode = 1
+                retcodes.append(_report(failures, str(file), no_ansi))
 
-        return retcode
+        return max(retcodes)
 
     module = _parse_ast(
         disable or _Messages(),
@@ -438,7 +439,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
             target or _Messages(),
         )
         if failures:
-            _report(failures, no_ansi=no_ansi)
-            return 1
+            return _report(failures, no_ansi=no_ansi)
 
     return 0

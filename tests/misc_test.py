@@ -309,6 +309,7 @@ def test_list_checks(
 
 
 def test_bad_py_file(
+    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -316,12 +317,13 @@ def test_bad_py_file(
 ) -> None:
     """Test invalid syntax on .py file.
 
+    :param tmp_path: Create and return temporary directory.
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = """
+    template1 = """
 #!/usr/bin/env bash
 new-ssl() {
   domain="${1}"
@@ -340,9 +342,19 @@ new-ssl() {
 
 new-ssl "${@}"
 """
+    template2 = '''
+    def function(param1, param2) -> None:
+        """...
+
+        :param param1: Fails.
+        :param param2: Fails.
+        :param param3: Fails.
+        """
+    '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    init_file(template)
-    assert main(".", test_flake8=False, no_ansi=False) == 1
+    init_file(template1, tmp_path / "module" / "file1.py")
+    init_file(template2, tmp_path / "module" / "file2.py")
+    assert main(".", test_flake8=False, no_ansi=False) == 123
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
 

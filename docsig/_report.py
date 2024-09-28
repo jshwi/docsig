@@ -51,6 +51,7 @@ class Failure(_t.List[Failed]):
         ignore_typechecker: bool,
     ) -> None:
         super().__init__()
+        self._retcode = 0
         self._func = func
         if target:
             self._func.messages.extend(i for i in _E.all if i not in target)
@@ -79,6 +80,7 @@ class Failure(_t.List[Failed]):
         self.sort()
 
     def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+        self._retcode = 1
         failed = Failed(
             self._name,
             value.ref,
@@ -236,6 +238,7 @@ class Failure(_t.List[Failed]):
         # invalid-syntax
         if self._func.error == _Error.SYNTAX:
             self._add(_E[901])
+            self._retcode = 123
 
     @property
     def name(self) -> str:
@@ -246,6 +249,11 @@ class Failure(_t.List[Failed]):
     def lineno(self) -> int:
         """Function line number."""
         return self._func.lineno
+
+    @property
+    def retcode(self) -> int:
+        """How to exit the program."""
+        return self._retcode
 
 
 class Failures(_t.List[Failure]):
