@@ -270,6 +270,7 @@ class Docstring(_Stub):
     """Represents a function docstring.
 
     :param string: The raw docstring.
+    :param returns: Whether this docstring has a return.
     """
 
     @staticmethod
@@ -302,12 +303,12 @@ class Docstring(_Stub):
             )
         )
 
-    def __init__(self, string: str | None = None) -> None:
+    def __init__(
+        self, string: str | None = None, returns: bool = False
+    ) -> None:
         super().__init__()
         self._string = string
-        self._returns = self._string is not None and bool(
-            _re.search(":returns?:", self._string)
-        )
+        self._returns = returns
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
@@ -317,7 +318,8 @@ class Docstring(_Stub):
         :return: Instantiated docstring object.
         """
         string = cls._normalize_docstring(node.value)
-        docstring = cls(string)
+        returns = bool(_re.search(r":returns?:", string))
+        docstring = cls(string, returns)
         indent_anomaly = cls._indent_anomaly(node.value)
         for match in _re.findall(r":(.*?):((?:.|\n)*?)(?=\n:|$)", string):
             if match:
