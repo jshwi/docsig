@@ -112,15 +112,18 @@ class _Params(_t.List[Param]):
         self._ignore_kwargs = ignore_kwargs
         self._duplicates: list[Param] = []
 
-    # pylint: disable=too-many-boolean-expressions
     def append(self, value: Param) -> None:
-        if not value.isprotected and (
-            value.kind == DocType.PARAM
-            or (value.kind == DocType.ARG and not self._ignore_args)
-            or (
-                value.kind == DocType.KWARG
-                and not self._ignore_kwargs
-                and not any(i.kind == DocType.KWARG for i in self)
+        if not value.isprotected and any(
+            (
+                value.kind == DocType.PARAM,
+                (value.kind == DocType.ARG and not self._ignore_args),
+                (
+                    value.kind == DocType.KWARG
+                    and not (
+                        self._ignore_kwargs
+                        or any(i.kind == DocType.KWARG for i in self)
+                    )
+                ),
             )
         ):
             super().append(value)
