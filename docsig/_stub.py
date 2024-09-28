@@ -192,6 +192,7 @@ class _Stub:
 class Signature(_Stub):
     """Represents a function signature.
 
+    :param rettype: The return type.
     :param returns: Returns declared in signature.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -199,13 +200,14 @@ class Signature(_Stub):
 
     def __init__(
         self,
-        returns: _ast.Module | str | None = None,
+        rettype: RetType = RetType.NONE,
+        returns: bool = False,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__(ignore_args, ignore_kwargs)
-        self._rettype = RetType.from_ast(returns)
-        self._returns = self._rettype == RetType.SOME
+        self._rettype = rettype
+        self._returns = returns
 
     @classmethod
     def from_ast(  # pylint: disable=too-many-arguments
@@ -232,7 +234,9 @@ class Signature(_Stub):
             elif node.args.args:
                 node.args.args.pop(0)
 
-        signature = cls(node.returns, ignore_args, ignore_kwargs)
+        rettype = RetType.from_ast(node.returns)
+        returns = rettype == RetType.SOME
+        signature = cls(rettype, returns, ignore_args, ignore_kwargs)
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)
             for a in [
