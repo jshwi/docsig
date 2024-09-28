@@ -60,6 +60,9 @@ class Parent(_t.List["Parent"]):
         super().__init__()
         self._name = "module"
         self._error = error
+        self._ignore_args = ignore_args
+        self._ignore_kwargs = ignore_kwargs
+        self._check_class_constructor = check_class_constructor
         if node is None:
             if not isinstance(self, Function) and error is not None:
                 self.append(Function(path, error=error))
@@ -67,28 +70,18 @@ class Parent(_t.List["Parent"]):
             self._name = node.name
             self._overloads = _Overloads()
             self._imports = imports or _Imports()
-            self._parse_ast(
-                node,
-                directives or _Directives(),
-                path,
-                ignore_args,
-                ignore_kwargs,
-                check_class_constructor,
-            )
+            self._parse_ast(node, directives or _Directives(), path)
 
     def _parse_imports(self, names: list[tuple[str, str | None]]) -> None:
         for name in names:
             original, alias = name
             self._imports[original] = alias or original
 
-    def _parse_ast(  # pylint: disable=too-many-arguments
+    def _parse_ast(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
         directives: _Directives,
         path: _Path | None = None,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-        check_class_constructor: bool = False,
     ) -> None:
         # need to keep track of `comments` as, even though they are
         # resolved in directives object, they are needed to notify user
@@ -112,9 +105,9 @@ class Parent(_t.List["Parent"]):
                         directives,
                         disabled,
                         path,
-                        ignore_args,
-                        ignore_kwargs,
-                        check_class_constructor,
+                        self._ignore_args,
+                        self._ignore_kwargs,
+                        self._check_class_constructor,
                         self._imports,
                     )
                     if func.isoverloaded:
@@ -137,21 +130,14 @@ class Parent(_t.List["Parent"]):
                             subnode,
                             directives,
                             path,
-                            ignore_args,
-                            ignore_kwargs,
-                            check_class_constructor,
+                            self._ignore_args,
+                            self._ignore_kwargs,
+                            self._check_class_constructor,
                             self._imports,
                         )
                     )
                 else:
-                    self._parse_ast(
-                        subnode,
-                        directives,
-                        path,
-                        ignore_args,
-                        ignore_kwargs,
-                        check_class_constructor,
-                    )
+                    self._parse_ast(subnode, directives, path)
 
     @property
     def isprotected(self) -> bool:
