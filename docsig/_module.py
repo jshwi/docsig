@@ -232,9 +232,7 @@ class Function(Parent):
                 relevant_doc_node = node.doc_node
 
             if relevant_doc_node is not None:
-                self._docstring = self.docstring.from_ast(
-                    relevant_doc_node, ignore_kwargs
-                )
+                self._docstring = self.docstring.from_ast(relevant_doc_node)
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""

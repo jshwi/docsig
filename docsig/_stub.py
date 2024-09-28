@@ -269,8 +269,6 @@ class Docstring(_Stub):
     """Represents a function docstring.
 
     :param string: The raw docstring.
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
 
     @staticmethod
@@ -303,30 +301,22 @@ class Docstring(_Stub):
             )
         )
 
-    def __init__(
-        self,
-        string: str | None = None,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-    ) -> None:
-        super().__init__(ignore_args, ignore_kwargs)
+    def __init__(self, string: str | None = None) -> None:
+        super().__init__()
         self._string = string
         self._returns = self._string is not None and bool(
             _re.search(":returns?:", self._string)
         )
 
     @classmethod
-    def from_ast(
-        cls, node: _ast.Const, ignore_kwargs: bool = False
-    ) -> Docstring:
+    def from_ast(cls, node: _ast.Const) -> Docstring:
         """Parse function docstring from ast.
 
         :param node: Docstring ast node.
-        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
         :return: Instantiated docstring object.
         """
         string = cls._normalize_docstring(node.value)
-        docstring = cls(string, ignore_kwargs)
+        docstring = cls(string)
         indent_anomaly = cls._indent_anomaly(node.value)
         for match in _re.findall(r":(.*?):((?:.|\n)*?)(?=\n:|$)", string):
             if match:
