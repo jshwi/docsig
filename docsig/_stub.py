@@ -319,7 +319,7 @@ class Docstring(_Stub):
         )
 
     @classmethod
-    def from_ast(  # pylint: disable=too-many-locals
+    def from_ast(
         cls, node: _ast.Const, ignore_kwargs: bool = False
     ) -> Docstring:
         """Parse function docstring from ast.
@@ -331,49 +331,15 @@ class Docstring(_Stub):
         string = cls._normalize_docstring(node.value)
         docstring = cls(string, ignore_kwargs)
         indent_anomaly = cls._indent_anomaly(node.value)
-        # find out if parameter is missing a description
-        new = ""
-        for line in node.value.strip().splitlines()[2:]:
-            line = line.lstrip()
-            if not line.startswith(":"):
-                # it is not a parameter, it is a next line description
-                # append the next entry to the same line
-                new = f"{new[:-1]} "
-            new += f"{line}\n"
-        if not new:
-            missing_descriptions = True
-        else:
-            # if it ends with a colon, it's a parameter without a
-            # description
-            missing_descriptions = any(
-                i.endswith(":") for i in new.splitlines()
-            )
-
-        for line in string.splitlines():
-            strip_line = line.lstrip()
-            match = _re.split(":(.*?):", strip_line)[1:]
+        for match in _re.findall(r":(.*?):((?:.|\n)*?)(?=\n:|$)", string):
             if match:
-                description = None
                 kinds = match[0].split()
                 if kinds:
-                    kind = DocType.from_str(kinds[0])
-
-                    if len(kinds) > 1:
-                        name = kinds[1]
-                    else:
-                        # name could not be parsed
-                        name = UNNAMED
-
-                    if len(match) > 1:
-                        second = match[1]
-                        if second != "" or not missing_descriptions:
-                            description = second
-
                     docstring.args.append(
                         Param(
-                            kind,
-                            name,
-                            description,
+                            DocType.from_str(kinds[0]),
+                            UNNAMED if len(kinds) == 1 else kinds[1],
+                            match[1] or None,
                             int(indent_anomaly),
                         )
                     )

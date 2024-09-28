@@ -397,3 +397,32 @@ def function(param1, param2, param3) -> None:
     flake8(".", "--sig-check-class", "--sig-check-class-constructor")
     std = capsys.readouterr()
     assert docsig.messages.E[5].description in std.out
+
+
+def test_description_missing_and_description_syntax_error_461(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test description missing raised with other description.
+
+    Other description would cause a syntax in description error if it
+    spanned over multiple lines.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(param1, param2) -> None:
+    """
+
+    :param param1:
+    :param param2: This one does have a description however
+        and continues on the next line.
+    """
+'''
+    init_file(template)
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert docsig.messages.E[301].description in std.out
