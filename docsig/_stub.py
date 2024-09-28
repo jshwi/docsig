@@ -275,7 +275,6 @@ class Docstring(_Stub):
 
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
-        leading_spaces = []
         for line in string.splitlines():
             # only check params
             # description or anything else is out of scope
@@ -284,10 +283,9 @@ class Docstring(_Stub):
                 if match is not None:
                     spaces = len(match.group())
                     if spaces > 0:
-                        leading_spaces.append(spaces)
+                        return spaces % 2 != 0
 
-        # look for spaces in odd intervals
-        return bool(any(i % 2 != 0 for i in leading_spaces))
+        return False
 
     @staticmethod
     def _normalize_docstring(string: str) -> str:
