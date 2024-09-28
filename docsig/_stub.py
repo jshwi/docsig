@@ -201,7 +201,6 @@ class Signature(_Stub):
         ignore_kwargs: bool = False,
     ) -> None:
         super().__init__(ignore_args, ignore_kwargs)
-
         self._rettype = RetType.from_ast(returns)
         self._returns = self._rettype == RetType.SOME
 
