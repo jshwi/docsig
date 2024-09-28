@@ -634,3 +634,37 @@ def test_sys_excepthook(
     assert (
         std.err.strip() == "\033[1;31mBaseException\033[0m: a base exception"
     )
+
+
+def test_ignore_args_ignore_kwargs_index_error(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test necessity of handling index error when getting args.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''\
+class ArgumentParser(_a.ArgumentParser):
+    def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
+        """Parse a comma separated list of strings into a list.
+
+        :param args: Long and/or short form argument(s).
+        :param kwargs: Kwargs to pass to ``add_argument``.
+        """
+        kwargs.update(
+            {
+                "action": "store",
+                "type": _split_comma,
+                "default": kwargs.get("default", []),
+            }
+        )
+        self.add_argument(*args, **kwargs)
+'''
+    init_file(template)
+    main(".", "-ak", test_flake8=False)
+    std = capsys.readouterr()
+    assert docsig.messages.E[202].description in std.out
