@@ -203,8 +203,7 @@ class Function(Parent):
             self._decorators = node.decorators
             self._lineno = node.lineno
             self._signature = self._signature.from_ast(
-                node.args,
-                node.returns,
+                node,
                 self.ismethod,
                 self.isstaticmethod,
                 ignore_args,

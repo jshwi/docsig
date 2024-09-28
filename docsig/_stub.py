@@ -210,8 +210,7 @@ class Signature(_Stub):
     @classmethod
     def from_ast(  # pylint: disable=too-many-arguments
         cls,
-        arguments: _ast.Arguments,
-        returns: _ast.Module | str,
+        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
         ismethod: bool = False,
         isstaticmethod: bool = False,
         ignore_args: bool = False,
@@ -219,8 +218,7 @@ class Signature(_Stub):
     ) -> Signature:
         """Parse signature from ast.
 
-        :param arguments: Arguments provided to signature.
-        :param returns: Returns declared in signature.
+        :param node: Abstract syntax tree.
         :param ismethod: Whether this signature belongs to a method.
         :param isstaticmethod: Whether this signature belongs to a
             static method.
@@ -229,20 +227,20 @@ class Signature(_Stub):
         :return: Instantiated signature object.
         """
         if ismethod and not isstaticmethod:
-            if arguments.posonlyargs:
-                arguments.posonlyargs.pop(0)
-            elif arguments.args:
-                arguments.args.pop(0)
+            if node.args.posonlyargs:
+                node.args.posonlyargs.pop(0)
+            elif node.args.args:
+                node.args.args.pop(0)
 
-        signature = cls(returns, ignore_args, ignore_kwargs)
+        signature = cls(node.returns, ignore_args, ignore_kwargs)
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)
             for a in [
-                *arguments.posonlyargs,
-                *arguments.args,
-                Param(DocType.ARG, name=arguments.vararg),
-                *arguments.kwonlyargs,
-                Param(DocType.KWARG, name=arguments.kwarg),
+                *node.args.posonlyargs,
+                *node.args.args,
+                Param(DocType.ARG, name=node.args.vararg),
+                *node.args.kwonlyargs,
+                Param(DocType.KWARG, name=node.args.kwarg),
             ]
             if a is not None and a.name
         ]:
