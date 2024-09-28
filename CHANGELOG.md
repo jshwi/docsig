@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.62.1](https://github.com/jshwi/docsig/tree/v0.62.1) - 2024-09-28
+
+### Fixed
+
+- fix missing description with multiple args ([#461](https://github.com/jshwi/docsig/issues/461))
+
 ## [0.62.0](https://github.com/jshwi/docsig/tree/v0.62.0) - 2024-09-27
 
 ### Changed
