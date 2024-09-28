@@ -141,7 +141,7 @@ class Docsig:
                     ref=E[5].ref,
                     description=E[5].description,
                     symbolic=E[5].symbolic,
-                ),
+                )
             )
             yield 0, 0, line, self.__class__
         else:

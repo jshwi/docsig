@@ -110,7 +110,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     :return: Parsed arguments.
     """
     parser = _ArgumentParser(
-        description="Check signature params for proper documentation",
+        description="Check signature params for proper documentation"
     )
     parser.add_argument(
         "-V",
