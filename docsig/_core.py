@@ -165,7 +165,7 @@ def _parse_ast(  # pylint: disable=too-many-arguments
     return parent
 
 
-def _get_failures(  # pylint: disable=too-many-locals,too-many-arguments
+def _get_failures(  # pylint: disable=too-many-arguments
     module: _Parent,
     check_class: bool,
     check_class_constructor: bool,

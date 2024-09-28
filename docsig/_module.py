@@ -81,7 +81,7 @@ class Parent(_t.List["Parent"]):
             original, alias = name
             self._imports[original] = alias or original
 
-    def _parse_ast(  # pylint: disable=protected-access,too-many-arguments
+    def _parse_ast(  # pylint: disable=too-many-arguments
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
         directives: _Directives,

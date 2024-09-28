@@ -68,7 +68,7 @@ def _glob(path: _Path, pattern: str) -> bool:
     return _WcPath(str(path)).globmatch(pattern)  # type: ignore
 
 
-class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
+class Paths(_t.List[_Path]):
     """Collect a list of valid paths.
 
     :param paths: Path(s) to parse ``Module``(s) from.
@@ -80,7 +80,7 @@ class Paths(_t.List[_Path]):  # pylint: disable=too-many-instance-attributes
     :param verbose: increase output verbosity.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(
         self,
         *paths: _Path,
         patterns: list[str],
