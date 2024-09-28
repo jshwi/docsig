@@ -210,30 +210,19 @@ class Signature(_Stub):
         self._returns = returns
 
     @classmethod
-    def from_ast(  # pylint: disable=too-many-arguments
+    def from_ast(
         cls,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
-        ismethod: bool = False,
-        isstaticmethod: bool = False,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> Signature:
         """Parse signature from ast.
 
         :param node: Abstract syntax tree.
-        :param ismethod: Whether this signature belongs to a method.
-        :param isstaticmethod: Whether this signature belongs to a
-            static method.
         :param ignore_args: Ignore args prefixed with an asterisk.
         :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
         :return: Instantiated signature object.
         """
-        if ismethod and not isstaticmethod:
-            if node.args.posonlyargs:
-                node.args.posonlyargs.pop(0)
-            elif node.args.args:
-                node.args.args.pop(0)
-
         rettype = RetType.from_ast(node.returns)
         returns = rettype == RetType.SOME
         signature = cls(rettype, returns, ignore_args, ignore_kwargs)

@@ -202,12 +202,14 @@ class Function(Parent):
             self._parent = node.parent.frame()
             self._decorators = node.decorators
             self._lineno = node.lineno
+            if self.ismethod and not self.isstaticmethod:
+                if node.args.posonlyargs:
+                    node.args.posonlyargs.pop(0)
+                elif node.args.args:
+                    node.args.args.pop(0)
+
             self._signature = self._signature.from_ast(
-                node,
-                self.ismethod,
-                self.isstaticmethod,
-                ignore_args,
-                ignore_kwargs,
+                node, ignore_args, ignore_kwargs
             )
             if self.isinit and not check_class_constructor:
                 # docstring for __init__ is expected on the class
