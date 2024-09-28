@@ -5,6 +5,7 @@ docsig._core
 
 from __future__ import annotations as _
 
+import logging as _logging
 import sys as _sys
 from pathlib import Path as _Path
 
@@ -20,7 +21,6 @@ from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import print_checks as _print_checks
-from ._utils import vprint as _vprint
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
@@ -42,6 +42,21 @@ _DEFAULT_EXCLUDES = """\
     |node_modules[\\\\/].*
 )$
 """
+
+
+def setup_logger(verbose: bool) -> None:
+    """Setup docsig logger.
+
+    Only log if verbose mode is enabled.
+
+    :param verbose: Whether to enable verbose mode.
+    """
+    loglevel = _logging.DEBUG if verbose else _logging.INFO
+    logger = _logging.getLogger(__package__)
+    logger.setLevel(loglevel)
+    if not logger.handlers:
+        stream_handler = _logging.StreamHandler(_sys.stdout)
+        logger.addHandler(stream_handler)
 
 
 def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
@@ -123,10 +138,10 @@ def _parse_ast(  # pylint: disable=too-many-arguments
     ignore_args: bool,
     ignore_kwargs: bool,
     check_class_constructor,
-    verbose: bool,
     root: _Path | None = None,
     string: str | None = None,
 ) -> _Parent:
+    logger = _logging.getLogger(__package__)
     parent = _Parent()
     try:
         if root is not None:
@@ -143,11 +158,8 @@ def _parse_ast(  # pylint: disable=too-many-arguments
             ignore_kwargs,
             check_class_constructor,
         )
-        _vprint(
-            _FILE_INFO.format(
-                path=root or "stdin", msg="Parsing Python code successful"
-            ),
-            verbose,
+        logger.debug(
+            _FILE_INFO, root or "stdin", "Parsing Python code successful"
         )
         return parent
     except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
@@ -157,10 +169,7 @@ def _parse_ast(  # pylint: disable=too-many-arguments
             # result in a 123 syntax error exit status in the future
             parent = _Parent(error=_Error.SYNTAX)
 
-        _vprint(
-            _FILE_INFO.format(path=root or "stdin", msg=msg),
-            verbose,
-        )
+        logger.debug(_FILE_INFO, root or "stdin", msg)
 
     return parent
 
@@ -246,7 +255,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_typechecker: bool = False,
     check_protected_class_methods: bool = False,
     no_ansi: bool = False,
-    verbose: bool = False,
     target: _Messages | None = None,
 ) -> _Failures:
     """Per path runner.
@@ -269,7 +277,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :param check_protected_class_methods: Check public methods belonging
         to protected classes.
     :param no_ansi: Disable ANSI output.
-    :param verbose: increase output verbosity.
     :param target: List of errors to target.
     :return: Exit status for whether test failed or not.
     """
@@ -279,7 +286,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        verbose,
         root=_Path(file),
     )
     if module or module.error is not None:
@@ -367,6 +373,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether test failed or not.
     """
+    setup_logger(verbose)
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
@@ -381,7 +388,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
             patterns=patterns,
             excludes=excludes or [],
             include_ignored=include_ignored,
-            verbose=verbose,
         )
         for file in paths:
             failures = runner(
@@ -400,7 +406,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 ignore_typechecker,
                 check_protected_class_methods,
                 no_ansi,
-                verbose,
                 target,
             )
             if failures:
@@ -414,7 +419,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        verbose,
         string=string,
     )
     if module or module.error is not None:

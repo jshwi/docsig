@@ -5,6 +5,7 @@ docsig._files
 
 from __future__ import annotations as _
 
+import logging as _logging
 import os as _os
 import re as _re
 import typing as _t
@@ -14,9 +15,7 @@ from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 from wcmatch.pathlib import Path as _WcPath
 
-from ._utils import vprint as _vprint
-
-FILE_INFO = "{path}: {msg}"
+FILE_INFO = "%s: %s"
 
 
 class _Gitignore(_PathSpec):
@@ -77,7 +76,6 @@ class Paths(_t.List[_Path]):
     :param excludes: Files or dirs to exclude from checks.
     :param include_ignored: Check files even if they match a gitignore
         pattern.
-    :param verbose: increase output verbosity.
     """
 
     def __init__(
@@ -86,14 +84,13 @@ class Paths(_t.List[_Path]):
         patterns: list[str],
         excludes: list[str],
         include_ignored: bool = False,
-        verbose: bool = False,
     ) -> None:
         super().__init__()
         self._patterns = patterns
         self._excludes = excludes
         self._include_ignored = include_ignored
-        self._verbose = verbose
         self._gitignore = _Gitignore()
+        self._logger = _logging.getLogger(__package__)
         for path in paths:
             self._populate(path)
 
@@ -102,11 +99,8 @@ class Paths(_t.List[_Path]):
                 any(_re.match(i, str(path)) for i in self._patterns)
                 or any(_glob(path, i) for i in self._excludes)
             ):
-                _vprint(
-                    FILE_INFO.format(
-                        path=path, msg="in exclude list, skipping"
-                    ),
-                    self._verbose,
+                self._logger.debug(
+                    FILE_INFO, path, "in exclude list, skipping"
                 )
                 self.remove(path)
 
@@ -117,10 +111,7 @@ class Paths(_t.List[_Path]):
             raise FileNotFoundError(root)
 
         if not self._include_ignored and self._gitignore.match_file(root):
-            _vprint(
-                FILE_INFO.format(path=root, msg="in gitignore, skipping"),
-                self._verbose,
-            )
+            self._logger.debug(FILE_INFO, root, "in gitignore, skipping")
             return
 
         if root.is_file():

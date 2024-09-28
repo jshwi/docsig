@@ -26,16 +26,6 @@ def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
     return mini < _SequenceMatcher(a=str1, b=str2).ratio() < maxi
 
 
-def vprint(msg: str, verbose: bool = False) -> None:
-    """Print messages only if verbose is true.
-
-    :param msg: Message to print.
-    :param verbose: Whether verbose mode is enabled.
-    """
-    if verbose:
-        print(msg)
-
-
 def pretty_print_error(
     exception_type: _t.Type[BaseException], msg: str, no_ansi: bool
 ) -> None:

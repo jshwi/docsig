@@ -6,6 +6,7 @@ tests.misc_test
 # pylint: disable=protected-access
 from __future__ import annotations
 
+import io
 import os
 from pathlib import Path
 
@@ -375,14 +376,14 @@ pygmentize-cat "${@}"
 
 def test_verbose(
     main: MockMainType,
-    capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
+    patch_logger: io.StringIO,
 ) -> None:
     """Test verbose.
 
     :param main: Mock ``main`` function.
-    :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
+    :param patch_logger: Logs as an io instance.
     """
     template = """\
 #!/bin/bash
@@ -390,8 +391,7 @@ echo "Hello, world"
 """
     init_file(template, Path("module") / "file")
     main(".", long.verbose, test_flake8=False)
-    std = capsys.readouterr()
-    assert "invalid syntax" in std.out
+    assert "invalid syntax" in patch_logger.getvalue()
 
 
 def test_no_color_with_pipe(

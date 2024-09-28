@@ -8,6 +8,7 @@ tests.exclude_test
 
 from __future__ import annotations
 
+import io
 from pathlib import Path
 
 import pytest
@@ -18,19 +19,18 @@ from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType, long
 
 
 def test_exclude_defaults(
-    capsys: pytest.CaptureFixture,
     main: MockMainType,
     make_tree: FixtureMakeTree,
+    patch_logger: io.StringIO,
 ) -> None:
     """Test bash script is ignored when under __pycache__ directory.
 
-    :param capsys: Capture sys out.
     :param main: Patch package entry point.
     :param make_tree: Create directory tree from dict mapping.
+    :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
     main(".", long.verbose, long.include_ignored, test_flake8=False)
-    std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: Parsing Python code failed",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: Parsing Python code failed",
@@ -93,7 +93,7 @@ def test_exclude_defaults(
         f"{Path('poetry.lock')}: Parsing Python code failed",
         f"{Path('README.rst')}: Parsing Python code failed",
     ]
-    assert all(i in std.out for i in expected)
+    assert all(i in patch_logger.getvalue() for i in expected)
 
 
 def test_exclude_argument(
@@ -131,22 +131,21 @@ new-ssl "${@}"
 
 def test_gitignore(
     monkeypatch: pytest.MonkeyPatch,
-    capsys: pytest.CaptureFixture,
     main: MockMainType,
     make_tree: FixtureMakeTree,
+    patch_logger: io.StringIO,
 ) -> None:
     """Test files properly ignored from reading gitignore files.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param capsys: Capture sys out.
     :param main: Patch package entry point.
     :param make_tree: Create directory tree from dict mapping.
+    :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
     monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
     main(".", long.verbose, test_flake8=False)
-    std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -285,23 +284,22 @@ def test_gitignore(
         f"{Path('.idea/scopes/docs_index.xml')}: Parsing Python code failed",
         f"{Path('.idea/scopes/_pylintrc.xml')}: Parsing Python code failed",
     ]
-    assert all(i in std.out for i in expected)
+    assert all(i in patch_logger.getvalue() for i in expected)
 
 
 def test_exclude_defaults_and_gitignore(
-    capsys: pytest.CaptureFixture,
     main: MockMainType,
     make_tree: FixtureMakeTree,
+    patch_logger: io.StringIO,
 ) -> None:
     """Test files excluded and ignored.
 
-    :param capsys: Capture sys out.
     :param main: Patch package entry point.
     :param make_tree: Create directory tree from dict mapping.
+    :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
     main(".", long.verbose, test_flake8=False)
-    std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -364,7 +362,7 @@ def test_exclude_defaults_and_gitignore(
         f"{Path('poetry.lock')}: Parsing Python code failed",
         f"{Path('README.rst')}: Parsing Python code failed",
     ]
-    assert all(i in std.out for i in expected)
+    assert all(i in patch_logger.getvalue() for i in expected)
 
 
 def test_gitignore_patterns(
@@ -656,18 +654,18 @@ def test_gitignore_patterns(
 )
 def test_exclude_glob(
     monkeypatch: pytest.MonkeyPatch,
-    capsys: pytest.CaptureFixture,
     main: MockMainType,
     make_tree: FixtureMakeTree,
+    patch_logger: io.StringIO,
     args: list[str],
     expected: list[str],
 ) -> None:
     """Test using path glob instead of regex.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param capsys: Capture sys out.
     :param main: Patch package entry point.
     :param make_tree: Create directory tree from dict mapping.
+    :param patch_logger: Logs as an io instance.
     :param args: Args to pass to main.
     :param expected: List of expected output.
     """
@@ -749,10 +747,12 @@ def test_exclude_glob(
         *args,
         test_flake8=False,
     )
-    std = capsys.readouterr()
-    assert all(f"{i}: in exclude list, skipping" in std.out for i in expected)
+    assert all(
+        f"{i}: in exclude list, skipping" in patch_logger.getvalue()
+        for i in expected
+    )
     assert not any(
-        f"{i}: in exclude list, skipping" in std.out
+        f"{i}: in exclude list, skipping" in patch_logger.getvalue()
         for i in paths
         if i not in expected
     )

@@ -5,6 +5,8 @@ tests.conftest
 
 from __future__ import annotations
 
+import io
+import logging
 import os
 from pathlib import Path
 
@@ -152,3 +154,19 @@ def fixture_patch_argv(monkeypatch: pytest.MonkeyPatch) -> FixturePatchArgv:
         monkeypatch.setattr("sys.argv", [str(a) for a in args])
 
     return _patch_argv
+
+
+@pytest.fixture(name="patch_logger")
+def fixture_patch_logger() -> io.StringIO:
+    """Logs as an io instance.
+
+    logging this amount output is ridiculously slow and results in an io
+    bottleneck
+
+    :return: Logging as IO instance.
+    """
+    log_stream = io.StringIO()
+    handler = logging.StreamHandler(log_stream)
+    logger = logging.getLogger(docsig.__name__)
+    logger.addHandler(handler)
+    return log_stream

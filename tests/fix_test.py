@@ -4,7 +4,7 @@ tests.exclude_test
 """
 
 # pylint: disable=protected-access,line-too-long
-
+import io
 import pickle
 from pathlib import Path
 
@@ -136,20 +136,19 @@ exclude = '''.*src[\\/]design[\\/].*'''
 
 
 def test_exclude_defaults_396(
-    capsys: pytest.CaptureFixture,
     main: MockMainType,
     make_tree: FixtureMakeTree,
+    patch_logger: io.StringIO,
 ) -> None:
     """Test bash script is ignored when under __pycache__ directory.
 
-    :param capsys: Capture sys out.
     :param main: Patch package entry point.
     :param make_tree: Create directory tree from dict mapping.
+    :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
     Path(".gitignore").unlink()
     main(".", long.verbose, test_flake8=False)
-    std = capsys.readouterr()
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -287,7 +286,7 @@ def test_exclude_defaults_396(
         f"{Path('tests/misc_test.py')}: Parsing Python code successful",
         f"{Path('whitelist.py')}: Parsing Python code successful",
     ]
-    assert all(i in std.out for i in expected)
+    assert all(i in patch_logger.getvalue() for i in expected)
 
 
 def test_sig401_false_positive_427(

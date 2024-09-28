@@ -6,7 +6,7 @@ from argparse import Namespace
 
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
-from ._core import runner
+from ._core import runner, setup_logger
 from ._version import __version__
 from .messages import FLAKE8, E
 
@@ -145,6 +145,7 @@ class Docsig:
             )
             yield 0, 0, line, self.__class__
         else:
+            setup_logger(self.a.verbose)
             results = runner(
                 self.filename,
                 check_class=self.a.check_class,
@@ -161,7 +162,6 @@ class Docsig:
                 ignore_args=self.a.ignore_args,
                 ignore_kwargs=self.a.ignore_kwargs,
                 ignore_typechecker=self.a.ignore_typechecker,
-                verbose=self.a.verbose,
             )
             for result in results:
                 for info in result:
