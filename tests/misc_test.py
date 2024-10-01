@@ -97,7 +97,7 @@ check-protected-class-methods = true
     )
 
 
-@pytest.mark.parametrize("error", ["E106", "E107"])
+@pytest.mark.parametrize("error", ["SIG201", "SIG303"])
 def test_target_report(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
@@ -118,7 +118,7 @@ def test_target_report(
     """
     template = '''
 def function_3(param1, param2, param3) -> None:
-    """E101,E102,E106,E107.
+    """SIG402,SIG202,SIG201,SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -126,7 +126,7 @@ def function_3(param1, param2, param3) -> None:
     :param: Fails.
     """
 '''
-    _errors = "E102", "E106", "E107"
+    _errors = "SIG202", "SIG201", "SIG303"
     init_file(template)
     main(".", "--target", error, test_flake8=False)
     std = capsys.readouterr()
@@ -279,7 +279,7 @@ def test_str_path_via_api() -> None:
 
 def test_no_duplicate_codes() -> None:
     """Test there are no accidental duplicate codes."""
-    codes = [i.code for i in E.values()]
+    codes = [i.ref for i in E.values()]
     assert not any(codes.count(x) > 1 for x in codes)
 
 
