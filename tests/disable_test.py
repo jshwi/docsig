@@ -15,18 +15,18 @@ function = VarSeq("function", "_")
 
 RULES = "rules"
 ARGS = "code,symbolic"
-ES = "E101", "E102", "E103", "E104", "E105", "E106", "E107"
+ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
 SYMBOLIC = [
-    (E[402].code, E[402].symbolic),
-    (E[202].code, E[202].symbolic),
-    (E[203].code, E[203].symbolic),
-    (E[502].code, E[502].symbolic),
-    (E[503].code, E[503].symbolic),
-    (E[201].code, E[201].symbolic),
+    (E[402].ref, E[402].symbolic),
+    (E[202].ref, E[202].symbolic),
+    (E[203].ref, E[203].symbolic),
+    (E[502].ref, E[502].symbolic),
+    (E[503].ref, E[503].symbolic),
+    (E[201].ref, E[201].symbolic),
 ]
 DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -35,7 +35,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -44,7 +44,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -52,7 +52,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -62,7 +62,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -71,7 +71,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -81,7 +81,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -92,7 +92,7 @@ def function_7(param1, param2, param3) -> None:
 DISABLE_FILE_2 = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -101,7 +101,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -110,7 +110,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -118,7 +118,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -128,7 +128,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -137,7 +137,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -147,7 +147,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -157,7 +157,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 DISABLE_FILE_3 = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -166,7 +166,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -175,7 +175,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -183,7 +183,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -193,7 +193,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -202,7 +202,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -212,7 +212,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -221,9 +221,9 @@ def function_7(param1, param2, param3) -> None:
     """
 '''
 DISABLE_FILE_4 = '''
-# docsig: disable=E101
+# docsig: disable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -232,7 +232,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -241,7 +241,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -249,7 +249,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -259,7 +259,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -268,7 +268,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -278,7 +278,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -288,9 +288,9 @@ def function_7(param1, param2, param3) -> None:
 
 '''
 DISABLE_FILE_5 = '''
-# docsig: disable=E101,E102
+# docsig: disable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -299,7 +299,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -308,7 +308,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -316,7 +316,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -326,7 +326,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -335,7 +335,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -345,7 +345,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -356,8 +356,8 @@ def function_7(param1, param2, param3) -> None:
 '''
 DISABLE_FILE_6 = '''
 
-def function_1(param1, param2, param3) -> None:  # docsig: disable=E101
-    """E101.
+def function_1(param1, param2, param3) -> None:  # docsig: disable=SIG402
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -366,7 +366,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable=E101
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -375,7 +375,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -383,7 +383,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -393,7 +393,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -402,7 +402,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E101,E102,E106,e107.
+    """SIG402,SIG202,SIG201,e107.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -412,7 +412,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -424,7 +424,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 DISABLE_FILE_7 = '''
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -433,7 +433,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -442,7 +442,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -450,7 +450,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -460,7 +460,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -468,10 +468,10 @@ def function_5(param1, param2, param3) -> int:
     """
 
 
-def function_6(  # docsig: disable=E101,E102,E106,E107
+def function_6(  # docsig: disable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """E101,E102,E106,e107.
+    """SIG402,SIG202,SIG201,e107.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -481,7 +481,7 @@ def function_6(  # docsig: disable=E101,E102,E106,E107
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -495,7 +495,7 @@ ENABLE_FILE_1 = '''
 # docsig: disable
 # docsig: enable
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -504,7 +504,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -513,7 +513,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -521,7 +521,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -531,7 +531,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -540,7 +540,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -550,7 +550,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -563,7 +563,7 @@ ENABLE_FILE_2 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -572,7 +572,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -581,7 +581,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -589,7 +589,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -599,7 +599,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -608,7 +608,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -618,7 +618,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -630,9 +630,9 @@ def function_7(param1, param2, param3) -> None:
 '''
 ENABLE_FILE_3 = '''
 # docsig: disable
-# docsig: enable=E101
+# docsig: enable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -641,7 +641,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -650,7 +650,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -658,7 +658,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -668,7 +668,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -677,7 +677,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -687,7 +687,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -699,9 +699,9 @@ def function_7(param1, param2, param3) -> None:
 ENABLE_FILE_4 = '''
 
 # docsig: disable
-# docsig: enable=E101,E102
+# docsig: enable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -710,7 +710,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -719,7 +719,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -727,7 +727,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -737,7 +737,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -746,7 +746,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E106.
+    """SIG201.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -756,7 +756,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -768,8 +768,8 @@ def function_7(param1, param2, param3) -> None:
 ENABLE_FILE_5 = '''
 
 # docsig: disable
-def function_1(param1, param2, param3) -> None:  # docsig: enable=E101
-    """E101.
+def function_1(param1, param2, param3) -> None:  # docsig: enable=SIG402
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -778,7 +778,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable=E101
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -787,7 +787,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -795,7 +795,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -805,7 +805,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -814,7 +814,7 @@ def function_5(param1, param2, param3) -> int:
 
 
 def function_6(param1, param2, param3) -> None:
-    """E101,E102,E106,e107.
+    """SIG402,SIG202,SIG201,e107.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -824,7 +824,7 @@ def function_6(param1, param2, param3) -> None:
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -837,7 +837,7 @@ ENABLE_FILE_6 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """E101.
+    """SIG402.
 
     :param param2: Fails.
     :param param3: Fails.
@@ -846,7 +846,7 @@ def function_1(param1, param2, param3) -> None:
 
 
 def function_2(param1, param2) -> None:
-    """E102.
+    """SIG202.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -855,7 +855,7 @@ def function_2(param1, param2) -> None:
 
 
 def function_3(param1, param2, param3) -> None:
-    """E103.
+    """SIG203.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -863,7 +863,7 @@ def function_3(param1, param2, param3) -> None:
 
 
 def function_4(param1, param2, param3) -> None:
-    """E104.
+    """SIG502.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -873,7 +873,7 @@ def function_4(param1, param2, param3) -> None:
 
 
 def function_5(param1, param2, param3) -> int:
-    """E105.
+    """SIG503.
 
     :param param1: Fails.
     :param param2: Fails.
@@ -881,10 +881,10 @@ def function_5(param1, param2, param3) -> int:
     """
 
 
-def function_6(  # docsig: enable=E101,E102,E106,E107
+def function_6(  # docsig: enable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """E101,E102,E106,e107.
+    """SIG402,SIG202,SIG201,e107.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -894,7 +894,7 @@ def function_6(  # docsig: enable=E101,E102,E106,E107
 
 
 def function_7(param1, param2, param3) -> None:
-    """E107.
+    """SIG303.
 
     :param param1: Fails.
     :param param1: Fails.
@@ -905,7 +905,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 INLINE_DISABLE_TEMPLATE = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """E101
+    """SIG402
 
     :param param2: Fails.
     :param param3: Fails.
@@ -913,7 +913,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_2(param1, param2) -> None:  # docsig: disable={rules}
-    """E102
+    """SIG202
 
     :param param1: Fails.
     :param param2: Fails.
@@ -921,14 +921,14 @@ def function_2(param1, param2) -> None:  # docsig: disable={rules}
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """E103
+    """SIG203
 
     :param param1: Fails.
     :param param2: Fails.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """E104
+    """SIG502
 
     :param param1: Fails.
     :param param2: Fails.
@@ -937,7 +937,7 @@ def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
-    """E105
+    """SIG503
 
     :param param1: Fails.
     :param param2: Fails.
@@ -945,7 +945,7 @@ def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """E106
+    """SIG201
 
     :param param1: Fails.
     :param param1: Fails.
@@ -954,7 +954,7 @@ def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """E107
+    """SIG303
 
     :param param1: Fails.
     :param param1: Fails.
@@ -965,7 +965,7 @@ def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
 MODULE_LEVEL_DISABLE_TEMPLATE = '''
 # docsig: disable={rules}
 def function_1(param1, param2, param3) -> None:
-    """E101
+    """SIG402
 
     :param param2: Fails.
     :param param3: Fails.
@@ -973,7 +973,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """E102
+    """SIG202
 
     :param param1: Fails.
     :param param2: Fails.
@@ -981,14 +981,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """E103
+    """SIG203
 
     :param param1: Fails.
     :param param2: Fails.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """E104
+    """SIG502
 
     :param param1: Fails.
     :param param2: Fails.
@@ -997,7 +997,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """E105
+    """SIG503
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1005,7 +1005,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """E106
+    """SIG201
 
     :param param1: Fails.
     :param param1: Fails.
@@ -1014,7 +1014,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """E107
+    """SIG303
 
     :param param1: Fails.
     :param param1: Fails.
@@ -1025,7 +1025,7 @@ def function_7(param1, param2, param3) -> None:
 INLINE_ENABLE_TEMPLATE = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """E101
+    """SIG402
 
     :param param2: Fails.
     :param param3: Fails.
@@ -1033,7 +1033,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_2(param1, param2) -> None:  # docsig: enable={rules}
-    """E102
+    """SIG202
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1041,14 +1041,14 @@ def function_2(param1, param2) -> None:  # docsig: enable={rules}
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """E103
+    """SIG203
 
     :param param1: Fails.
     :param param2: Fails.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """E104
+    """SIG502
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1057,7 +1057,7 @@ def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
-    """E105
+    """SIG503
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1065,7 +1065,7 @@ def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """E106
+    """SIG201
 
     :param param1: Fails.
     :param param1: Fails.
@@ -1074,7 +1074,7 @@ def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """E107
+    """SIG303
 
     :param param1: Fails.
     :param param1: Fails.
@@ -1086,7 +1086,7 @@ MODULE_LEVEL_ENABLE_TEMPLATE = '''
 # docsig: disable
 # docsig: enable={rules}
 def function_1(param1, param2, param3) -> None:
-    """E101
+    """SIG402
 
     :param param2: Fails.
     :param param3: Fails.
@@ -1094,7 +1094,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """E102
+    """SIG202
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1102,14 +1102,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """E103
+    """SIG203
 
     :param param1: Fails.
     :param param2: Fails.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """E104
+    """SIG502
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1118,7 +1118,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """E105
+    """SIG503
 
     :param param1: Fails.
     :param param2: Fails.
@@ -1126,7 +1126,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """E106
+    """SIG201
 
     :param param1: Fails.
     :param param1: Fails.
@@ -1135,7 +1135,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """E107
+    """SIG303
 
     :param param1: Fails.
     :param param1: Fails.
