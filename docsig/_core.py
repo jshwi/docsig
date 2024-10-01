@@ -133,23 +133,42 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             )
 
 
-def _parse_ast(  # pylint: disable=too-many-arguments
+def _from_file(
+    root: _Path,
+    messages: _Messages,
+    ignore_args: bool,
+    ignore_kwargs: bool,
+    check_class_constructor,
+) -> _Parent:
+    parent = _Parent()
+    try:
+        string = root.read_text(encoding="utf-8")
+        parent = _from_str(
+            messages=messages,
+            string=string,
+            root=root,
+            ignore_args=ignore_args,
+            ignore_kwargs=ignore_kwargs,
+            check_class_constructor=check_class_constructor,
+        )
+    except UnicodeDecodeError as err:
+        logger = _logging.getLogger(__package__)
+        logger.debug(_FILE_INFO, root, str(err).replace("\n", " "))
+
+    return parent
+
+
+def _from_str(  # pylint: disable=too-many-arguments
+    string: str,
     messages: _Messages,
     ignore_args: bool,
     ignore_kwargs: bool,
     check_class_constructor,
     root: _Path | None = None,
-    string: str | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
     parent = _Parent()
     try:
-        if root is not None:
-            string = root.read_text(encoding="utf-8")
-
-        # empty string won't happen but keeps the
-        # typechecker happy
-        string = string or ""
         parent = _Parent(
             _ast.parse(string),
             _Directives.from_text(string, messages),
@@ -161,7 +180,7 @@ def _parse_ast(  # pylint: disable=too-many-arguments
         logger.debug(
             _FILE_INFO, root or "stdin", "Parsing Python code successful"
         )
-    except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
+    except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, root or "stdin", str(err).replace("\n", " "))
         if root is not None and root.name.endswith(".py"):
             parent = _Parent(error=_Error.SYNTAX)
@@ -279,12 +298,12 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :param target: List of errors to target.
     :return: Exit status for whether test failed or not.
     """
-    module = _parse_ast(
+    module = _from_file(
+        _Path(file),
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        root=_Path(file),
     )
     return _get_failures(
         module,
@@ -407,12 +426,12 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
         return max(retcodes)
 
-    module = _parse_ast(
+    module = _from_str(
+        string,
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
         check_class_constructor,
-        string=string,
     )
     failures = _get_failures(
         module,
