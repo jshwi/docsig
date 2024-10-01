@@ -80,19 +80,19 @@ class Paths(_t.List[_Path]):
 
     def __init__(
         self,
-        *paths: _Path,
+        *paths: _Path | str,
         patterns: list[str],
         excludes: list[str],
         include_ignored: bool = False,
     ) -> None:
         super().__init__()
         self._patterns = patterns
-        self._excludes = excludes
+        self._excludes = excludes or []
         self._include_ignored = include_ignored
         self._gitignore = _Gitignore()
         self._logger = _logging.getLogger(__package__)
         for path in paths:
-            self._populate(path)
+            self._populate(_Path(path))
 
         for path in list(self):
             if str(path) != "." and (

@@ -382,7 +382,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if string is None:
         retcodes = [0]
         paths = _Paths(
-            *tuple(_Path(i) for i in path),
+            *path,
             patterns=patterns,
             excludes=excludes or [],
             include_ignored=include_ignored,
