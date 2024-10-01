@@ -161,13 +161,10 @@ def _parse_ast(  # pylint: disable=too-many-arguments
         logger.debug(
             _FILE_INFO, root or "stdin", "Parsing Python code successful"
         )
-        return parent
     except (_ast.AstroidSyntaxError, UnicodeDecodeError) as err:
-        msg = str(err).replace("\n", " ")
+        logger.debug(_FILE_INFO, root or "stdin", str(err).replace("\n", " "))
         if root is not None and root.name.endswith(".py"):
             parent = _Parent(error=_Error.SYNTAX)
-
-        logger.debug(_FILE_INFO, root or "stdin", msg)
 
     return parent
 
