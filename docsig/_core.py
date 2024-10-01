@@ -282,7 +282,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :param target: List of errors to target.
     :return: Exit status for whether test failed or not.
     """
-    failures = _Failures()
     module = _parse_ast(
         disable or _Messages(),
         ignore_args,
@@ -290,24 +289,21 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
         check_class_constructor,
         root=_Path(file),
     )
-    if module or module.error is not None:
-        failures = _get_failures(
-            module,
-            check_class,
-            check_class_constructor,
-            check_dunders,
-            check_nested,
-            check_overridden,
-            check_protected,
-            check_property_returns,
-            ignore_no_params,
-            ignore_typechecker,
-            check_protected_class_methods,
-            no_ansi,
-            target or _Messages(),
-        )
-
-    return failures
+    return _get_failures(
+        module,
+        check_class,
+        check_class_constructor,
+        check_dunders,
+        check_nested,
+        check_overridden,
+        check_protected,
+        check_property_returns,
+        ignore_no_params,
+        ignore_typechecker,
+        check_protected_class_methods,
+        no_ansi,
+        target or _Messages(),
+    )
 
 
 @_decorators.parse_msgs
