@@ -197,10 +197,10 @@ def test_multiple(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.getgroup(fail.e_1_0),
+    templates.registered.getgroup(fail.s_i_g_2_0),
     ids=[
         i.replace("-", "").upper()[4:8]
-        for i in templates.registered.getgroup(fail.e_1_0).getids()
+        for i in templates.registered.getgroup(fail.sig_2_0).getids()
     ],
 )
 def test_disable_rule(
@@ -233,7 +233,7 @@ def test_disable_rule(
         main(
             ".",
             long.disable,
-            name.replace("-", "").upper()[1:5],
+            name.replace("-", "").upper()[1:7],
             test_flake8=False,
         )
         == 0
@@ -282,7 +282,7 @@ def test_ignore_no_params(  # pylint: disable=too-many-arguments
 ) -> None:
     """Test that failing funcs pass with `-i/--ignore-no-params` flag.
 
-    ``E103``, ``E105``, ``E109``, and ``H102`` all indicate parameters
+    ``SIG203``, ``SIG503``, ``SIG501``, and ``H102`` all indicate parameters
     missing from docstring. These should not trigger with this argument.
 
     All templates prefixed with ``M`` will be excluded from this test,
@@ -353,7 +353,7 @@ def test_no_check_property_returns_flag(
     Only test templates prefixed with ``PPropertyReturn`` are collected
     for this test, and all tests should fail.
 
-    All tests will be tested for ``E108`` and ``H101``, which property
+    All tests will be tested for ``SIG505`` and ``H101``, which property
     related errors.
 
     :param capsys: Capture sys out.
