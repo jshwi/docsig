@@ -39,7 +39,6 @@ def main() -> str | int:
         ignore_kwargs=a.ignore_kwargs,
         ignore_typechecker=a.ignore_typechecker,
         no_ansi=a.no_ansi,
-        summary=a.summary,  # deprecated
         verbose=a.verbose,
         target=a.target,
         disable=a.disable,
