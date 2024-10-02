@@ -34,10 +34,7 @@ class _Imports(_t.Dict[str, str]):
 class Parent:  # pylint: disable=too-many-instance-attributes
     """Represents an object that contains functions or methods.
 
-    :param node: Parent's abstract syntax tree.
-    :param directives: Data for directives and, subsequently, total of
-        errors which are excluded from function checks.
-    :param path: Path to base path representation on.
+    :param name: The name of the object.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param check_class_constructor: Check the class constructor's
@@ -49,9 +46,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
-        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | None = None,
-        directives: _Directives | None = None,
-        path: _Path | None = None,
+        name: str = "module",
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
@@ -59,7 +54,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         error: Error | None = None,
     ) -> None:
         super().__init__()
-        self._name = "module"
+        self._name = name
         self._error = error
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
@@ -67,9 +62,6 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._children = _Children()
         self._imports = imports or _Imports()
         self._overloads = _Overloads()
-        if node is not None:
-            self._name = node.name
-            self._parse_ast(node, directives or _Directives(), path)
 
     def _parse_ast(
         self,
@@ -124,7 +116,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         self._children.append(func)
                 elif isinstance(subnode, _ast.ClassDef):
                     self._children.append(
-                        Parent(
+                        Parent.from_ast(
                             subnode,
                             directives,
                             path,
@@ -136,6 +128,42 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     )
                 else:
                     self._parse_ast(subnode, directives, path)
+
+    @classmethod
+    def from_ast(  # pylint: disable=too-many-arguments
+        cls,
+        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
+        directives: _Directives,
+        path: _Path | None = None,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
+        check_class_constructor: bool = False,
+        imports: _Imports | None = None,
+    ) -> Parent:
+        """Parse a new parent from an AST node.
+
+        :param node: Parent's abstract syntax tree.
+        :param directives: Data for directives and, subsequently, total
+            of errors which are excluded from function checks.
+        :param path: Path to base path representation on.
+        :param ignore_args: Ignore args prefixed with an asterisk.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :param check_class_constructor: Check the class constructor's
+            docstring. Otherwise, expect the constructor's documentation
+            to be on the class level docstring.
+        :param imports: Imports within this scope.
+        :return: Instantiated module.
+        """
+        name = node.name
+        parent = cls(
+            name,
+            ignore_args,
+            ignore_kwargs,
+            check_class_constructor,
+            imports,
+        )
+        parent._parse_ast(node, directives or _Directives(), path)
+        return parent
 
     @classmethod
     def as_error(cls, error: Error) -> Parent:
@@ -196,13 +224,10 @@ class Function(Parent):
         error: Error | None = None,
     ) -> None:
         super().__init__(
-            node,
-            directives or _Directives(),
-            path,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
-            imports,
+            ignore_args=ignore_args,
+            ignore_kwargs=ignore_kwargs,
+            check_class_constructor=check_class_constructor,
+            imports=imports,
         )
         self._comments = comments or _Comments()
         self._messages = messages or _Messages()
@@ -213,6 +238,8 @@ class Function(Parent):
         self._lineno = 0
         self._error = error
         if node is not None:
+            self._parse_ast(node, directives or _Directives(), path)
+            self._name = node.name
             self._parent = node.parent.frame()
             self._decorators = node.decorators
             self._lineno = node.lineno
