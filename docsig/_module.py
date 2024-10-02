@@ -67,10 +67,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._children = _Children()
         self._imports = imports or _Imports()
         self._overloads = _Overloads()
-        if node is None:
-            if not isinstance(self, Function) and error is not None:
-                self._children.append(Function(path, error=error))
-        else:
+        if node is not None:
             self._name = node.name
             self._parse_ast(node, directives or _Directives(), path)
 
@@ -137,6 +134,17 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     )
                 else:
                     self._parse_ast(subnode, directives, path)
+
+    @classmethod
+    def as_error(cls, error: Error) -> Parent:
+        """Return a usable error module.
+
+        :param error: Error to instantiate.
+        :return: Instantiated error module.
+        """
+        parent = cls(error=error)
+        parent.children.append(Function(error=error))
+        return parent
 
     @property
     def isprotected(self) -> bool:
