@@ -161,7 +161,7 @@ def _from_file(
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.UNICODE)
+        parent = _Parent.as_error(_Error.UNICODE)
 
     if parent.error is not None and not path.name.endswith(".py"):
         parent = _Parent()
@@ -194,7 +194,7 @@ def _from_str(  # pylint: disable=too-many-arguments
         )
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.SYNTAX)
+        parent = _Parent.as_error(_Error.SYNTAX)
 
     return parent
 
