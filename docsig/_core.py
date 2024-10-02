@@ -179,7 +179,7 @@ def _from_str(  # pylint: disable=too-many-arguments
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
     try:
-        parent = _Parent(
+        parent = _Parent.from_ast(
             _ast.parse(**context),
             _Directives.from_text(context["code"], messages),
             path,
