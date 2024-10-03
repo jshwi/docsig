@@ -72,11 +72,6 @@ class Parent(_t.List["Parent"]):
             self._imports = imports or _Imports()
             self._parse_ast(node, directives or _Directives(), path)
 
-    def _parse_imports(self, names: list[tuple[str, str | None]]) -> None:
-        for name in names:
-            original, alias = name
-            self._imports[original] = alias or original
-
     def _parse_ast(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
@@ -97,7 +92,9 @@ class Parent(_t.List["Parent"]):
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
                 if isinstance(subnode, (_ast.Import, _ast.ImportFrom)):
-                    self._parse_imports(subnode.names)
+                    for name in subnode.names:
+                        original, alias = name
+                        self._imports[original] = alias or original
                 elif isinstance(subnode, _ast.FunctionDef):
                     func = Function(
                         subnode,
