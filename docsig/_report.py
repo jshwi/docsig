@@ -239,6 +239,8 @@ class Failure(_t.List[Failed]):
         if self._func.error == _Error.SYNTAX:
             self._add(_E[901])
             self._retcode = 123
+        if self._func.error == _Error.UNICODE:
+            self._add(_E[902])
 
     @property
     def name(self) -> str:

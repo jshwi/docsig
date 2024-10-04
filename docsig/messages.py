@@ -254,5 +254,11 @@ E = MessageMap(
             "parsing python code failed",
             "invalid-syntax",
         ),
+        902: Message(
+            "SIG902",
+            "SIG902",
+            "failed to read file",
+            "unicode-decode-error",
+        ),
     }
 )

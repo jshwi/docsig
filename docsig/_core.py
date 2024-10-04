@@ -140,7 +140,6 @@ def _from_file(
     ignore_kwargs: bool,
     check_class_constructor,
 ) -> _Parent:
-    parent = _Parent()
     try:
         string = root.read_text(encoding="utf-8")
         parent = _from_str(
@@ -154,6 +153,7 @@ def _from_file(
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, root, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.UNICODE)
 
     if parent.error is not None and not root.name.endswith(".py"):
         parent = _Parent()
@@ -183,8 +183,8 @@ def _from_str(  # pylint: disable=too-many-arguments
             _FILE_INFO, root or "stdin", "Parsing Python code successful"
         )
     except _ast.AstroidSyntaxError as err:
-        parent = _Parent(error=_Error.SYNTAX)
         logger.debug(_FILE_INFO, root or "stdin", str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.SYNTAX)
 
     return parent
 

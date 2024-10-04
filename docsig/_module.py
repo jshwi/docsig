@@ -24,6 +24,7 @@ class Error(_Enum):
     """Represents an unrecoverable error."""
 
     SYNTAX = 1
+    UNICODE = 2
 
 
 class _Imports(_t.Dict[str, str]):

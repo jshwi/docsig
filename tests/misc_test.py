@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import io
 import os
+import pickle
 from pathlib import Path
 
 import pytest
@@ -695,3 +696,22 @@ echo "Hello, world"
     assert main("--string", template, test_flake8=False, no_ansi=False) == 123
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
+
+
+def test_fail_on_unicode_decode_error_if_py_file(
+    capsys: pytest.CaptureFixture, main: MockMainType, tmp_path: Path
+) -> None:
+    """Ensure unicode decode error is handled without error.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param tmp_path: Create and return temporary directory.
+    """
+    pkl = tmp_path / "test.py"
+    serialize = [1, 2, 3]
+    with open(pkl, "wb") as fout:
+        pickle.dump(serialize, fout)
+
+    assert main(pkl, test_flake8=False) == 1
+    std = capsys.readouterr()
+    assert E[902].fstring(T) in std.out
