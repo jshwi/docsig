@@ -677,3 +677,21 @@ class ArgumentParser(_a.ArgumentParser):
     main(".", "-ak", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[202].description in std.out
+
+
+def test_always_fail_on_astroid_syntax_error_with_string(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+) -> None:
+    """Test invalid syntax on .py file.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    """
+    template = """\
+#!/bin/bash
+echo "Hello, world"
+"""
+    assert main("--string", template, test_flake8=False, no_ansi=False) == 123
+    std = capsys.readouterr()
+    assert E[901].fstring(T) in std.out
