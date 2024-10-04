@@ -11,6 +11,16 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.64.0](https://github.com/jshwi/docsig/tree/v0.64.0) - 2024-10-04
+
+### Added
+
+- unicode decode error ([#472](https://github.com/jshwi/docsig/issues/472))
+
+### Changed
+
+- raise invalid-syntax if a string cannot be parsed ([#471](https://github.com/jshwi/docsig/issues/471))
+
 ## [0.63.0](https://github.com/jshwi/docsig/tree/v0.63.0) - 2024-09-29
 
 ### Changed
