@@ -217,7 +217,7 @@ def _get_failures(  # pylint: disable=too-many-arguments
 def _report(
     failures: _Failures, path: str | None = None, no_ansi: bool = False
 ) -> int:
-    retcodes = []
+    retcodes = [0]
     for failure in failures:
         retcodes.append(failure.retcode)
         module = f"{path}:" if path is not None else ""
