@@ -406,8 +406,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 no_ansi,
                 target,
             )
-            if failures:
-                retcodes.append(_report(failures, str(file), no_ansi))
+            retcodes.append(_report(failures, str(file), no_ansi))
 
         return max(retcodes)
 
@@ -418,23 +417,19 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         check_class_constructor,
         string=string,
     )
-    if module or module.error is not None:
-        failures = _get_failures(
-            module,
-            check_class,
-            check_class_constructor,
-            check_dunders,
-            check_nested,
-            check_overridden,
-            check_protected,
-            check_property_returns,
-            ignore_no_params,
-            ignore_typechecker,
-            check_protected_class_methods,
-            no_ansi,
-            target or _Messages(),
-        )
-        if failures:
-            return _report(failures, no_ansi=no_ansi)
-
-    return 0
+    failures = _get_failures(
+        module,
+        check_class,
+        check_class_constructor,
+        check_dunders,
+        check_nested,
+        check_overridden,
+        check_protected,
+        check_property_returns,
+        ignore_no_params,
+        ignore_typechecker,
+        check_protected_class_methods,
+        no_ansi,
+        target or _Messages(),
+    )
+    return _report(failures, no_ansi=no_ansi)
