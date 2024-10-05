@@ -187,6 +187,9 @@ SIG = "docsig.plugin:Docsig"
 docsig = "docsig.__main__:main"
 
 [tool.pylint.options]
+allowed-redefined-builtins = [
+  "help"
+]
 disable = [
   "consider-using-f-string",
   "fixme"
