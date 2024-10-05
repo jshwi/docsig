@@ -304,7 +304,9 @@ def test_list_checks(
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     """
-    main(long.list_checks, test_flake8=False)
+    with pytest.raises(SystemExit):
+        main(long.list_checks, test_flake8=False)
+
     std = capsys.readouterr()
     assert all(i.ref in std.out for i in E.values())
 

@@ -1,3 +1,4 @@
+option_string  # unused variable (docsig/_config.py:104)
 Docsig  # unused class (docsig/plugin.py:17)
 off_by_default  # unused variable (docsig/plugin.py:25)
 _.add_options  # unused method (docsig/plugin.py:38)

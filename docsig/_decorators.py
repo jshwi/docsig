@@ -44,6 +44,7 @@ def handle_deprecations(func: _WrappedFuncType) -> _WrappedFuncType:
     warning = "{} is deprecated and will be removed in a future version"
     deprecated_args = [
         "summary",
+        "list_checks",
     ]
 
     @_functools.wraps(func)
