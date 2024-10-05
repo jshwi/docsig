@@ -20,7 +20,6 @@ from ._module import Function as _Function
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
-from ._utils import print_checks as _print_checks
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
@@ -329,7 +328,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
     string: str | None = None,
-    list_checks: bool = False,
     check_class: bool = False,
     check_class_constructor: bool = False,
     check_dunders: bool = False,
@@ -361,7 +359,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
     :param path: Path(s) to check.
     :param string: String to check.
-    :param list_checks: Display a list of all checks and their messages.
     :param check_class: Check class docstrings.
     :param check_class_constructor: Check ``__init__`` methods. Note
         that this is mutually incompatible with check_class.
@@ -389,9 +386,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :return: Exit status for whether test failed or not.
     """
     setup_logger(verbose)
-    if list_checks:
-        return int(bool(_print_checks()))  # type: ignore
-
     patterns = [_DEFAULT_EXCLUDES]
     if exclude is not None:
         patterns.append(exclude)

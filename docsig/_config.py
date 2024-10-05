@@ -8,12 +8,15 @@ from __future__ import annotations as _
 import argparse as _a
 import os as _os
 import re as _re
+import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
 import tomli as _tomli
 
 from ._version import __version__
+from .messages import TEMPLATE as _TEMPLATE
+from .messages import E as _E
 
 PYPROJECT_TOML = "pyproject.toml"
 
@@ -76,6 +79,36 @@ def merge_configs(
     return obj1
 
 
+class _ListChecks(_a.Action):  # pylint: disable=too-few-public-methods
+    # noinspection PyShadowingBuiltins
+    def __init__(
+        self,
+        option_strings: _t.Sequence[str],
+        dest: str = "list_checks",
+        default: bool = False,
+        help: str | None = None,
+    ):
+        super().__init__(
+            option_strings=option_strings,
+            dest=dest,
+            default=default,
+            nargs=0,
+            help=help,
+        )
+
+    def __call__(
+        self,
+        parser: _a.ArgumentParser,
+        namespace: _a.Namespace,
+        values: str | _t.Sequence | None,
+        option_string: str | None = None,
+    ):
+        for msg in _E.values():
+            print(msg.fstring(_TEMPLATE))
+
+        _sys.exit(0)
+
+
 class _ArgumentParser(_a.ArgumentParser):
     def parse_known_args(  # type: ignore
         self,
@@ -128,7 +161,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-l",
         "--list-checks",
-        action="store_true",
+        action=_ListChecks,
         help="display a list of all checks and their messages",
     )
     group = parser.add_mutually_exclusive_group(required=False)

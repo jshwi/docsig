@@ -9,9 +9,6 @@ import sys as _sys
 import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
 
-from .messages import TEMPLATE as _TEMPLATE
-from .messages import E as _E
-
 
 def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
     """Show result for more than the minimum but less than the maximum.
@@ -40,12 +37,6 @@ def pretty_print_error(
         exception_type_name = f"\033[1;31m{exception_type_name}\033[0m"
 
     print(f"{exception_type_name}: {msg}", file=_sys.stderr)
-
-
-def print_checks() -> None:
-    """Print all available checks."""
-    for msg in _E.values():
-        print(msg.fstring(_TEMPLATE))
 
 
 def has_bad_return(string: str) -> bool:

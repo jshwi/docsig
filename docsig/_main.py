@@ -24,7 +24,7 @@ def main() -> str | int:
     return _docsig(
         *a.path,
         string=a.string,
-        list_checks=a.list_checks,
+        list_checks=a.list_checks,  # deprecated
         check_class=a.check_class,
         check_class_constructor=a.check_class_constructor,
         check_dunders=a.check_dunders,
