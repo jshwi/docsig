@@ -111,7 +111,7 @@ repos:
         language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v4.6.0"
+    rev: "v5.0.0"
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -184,7 +184,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v3.8.0"
+    rev: "v4.0.0"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
