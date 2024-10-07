@@ -180,7 +180,7 @@ def _from_str(  # pylint: disable=too-many-arguments
             check_class_constructor,
         )
         logger.debug(
-            _FILE_INFO, path or "stdin", "Parsing Python code successful"
+            _FILE_INFO, path or "stdin", "parsing python code successful"
         )
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
