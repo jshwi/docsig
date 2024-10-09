@@ -134,28 +134,28 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
 
 
 def _from_file(
-    root: _Path,
+    path: _Path,
     messages: _Messages,
     ignore_args: bool,
     ignore_kwargs: bool,
     check_class_constructor,
 ) -> _Parent:
     try:
-        string = root.read_text(encoding="utf-8")
+        string = path.read_text(encoding="utf-8")
         parent = _from_str(
             messages=messages,
             string=string,
-            root=root,
+            path=path,
             ignore_args=ignore_args,
             ignore_kwargs=ignore_kwargs,
             check_class_constructor=check_class_constructor,
         )
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, root, str(err).replace("\n", " "))
+        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.UNICODE)
 
-    if parent.error is not None and not root.name.endswith(".py"):
+    if parent.error is not None and not path.name.endswith(".py"):
         parent = _Parent()
 
     return parent
@@ -167,23 +167,23 @@ def _from_str(  # pylint: disable=too-many-arguments
     ignore_args: bool,
     ignore_kwargs: bool,
     check_class_constructor,
-    root: _Path | None = None,
+    path: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
     try:
         parent = _Parent(
             _ast.parse(string),
             _Directives.from_text(string, messages),
-            root,
+            path,
             ignore_args,
             ignore_kwargs,
             check_class_constructor,
         )
         logger.debug(
-            _FILE_INFO, root or "stdin", "Parsing Python code successful"
+            _FILE_INFO, path or "stdin", "Parsing Python code successful"
         )
     except _ast.AstroidSyntaxError as err:
-        logger.debug(_FILE_INFO, root or "stdin", str(err).replace("\n", " "))
+        logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
         parent = _Parent(error=_Error.SYNTAX)
 
     return parent
@@ -259,7 +259,7 @@ def _report(
 
 
 def runner(  # pylint: disable=too-many-locals,too-many-arguments
-    file: _Path,
+    path: _Path,
     disable: _Messages | None = None,
     check_class: bool = False,
     check_class_constructor: bool = False,
@@ -278,7 +278,7 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
 ) -> _Failures:
     """Per path runner.
 
-    :param file: Path to check.
+    :param path: Path to check.
     :param disable: Messages to disable.
     :param check_class: Check class docstrings.
     :param check_class_constructor: Check ``__init__`` methods. Note
@@ -300,7 +300,7 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :return: Exit status for whether test failed or not.
     """
     module = _from_file(
-        _Path(file),
+        path,
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
@@ -392,21 +392,21 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    patterns = [_DEFAULT_EXCLUDES]
+    exclude_ = [_DEFAULT_EXCLUDES]
     if exclude is not None:
-        patterns.append(exclude)
+        exclude_.append(exclude)
 
     if string is None:
         retcodes = [0]
         paths = _Paths(
             *path,
-            patterns=patterns,
+            patterns=exclude_,
             excludes=excludes,
             include_ignored=include_ignored,
         )
-        for file in paths:
+        for path_ in paths:
             failures = runner(
-                file,
+                path_,
                 disable,
                 check_class,
                 check_class_constructor,
@@ -423,7 +423,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 no_ansi,
                 target,
             )
-            retcodes.append(_report(failures, str(file), no_ansi))
+            retcodes.append(_report(failures, str(path_), no_ansi))
 
         return max(retcodes)
 
