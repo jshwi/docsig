@@ -82,7 +82,7 @@ class Paths(_t.List[_Path]):
         self,
         *paths: _Path | str,
         patterns: list[str],
-        excludes: list[str],
+        excludes: list[str] | None = None,
         include_ignored: bool = False,
     ) -> None:
         super().__init__()
