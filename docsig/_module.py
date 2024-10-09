@@ -65,13 +65,13 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._ignore_kwargs = ignore_kwargs
         self._check_class_constructor = check_class_constructor
         self._children = _Children()
+        self._imports = imports or _Imports()
+        self._overloads = _Overloads()
         if node is None:
             if not isinstance(self, Function) and error is not None:
                 self._children.append(Function(path, error=error))
         else:
             self._name = node.name
-            self._overloads = _Overloads()
-            self._imports = imports or _Imports()
             self._parse_ast(node, directives or _Directives(), path)
 
     def _parse_ast(
