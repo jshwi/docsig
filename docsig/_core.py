@@ -259,7 +259,7 @@ def _report(
 
 
 def runner(  # pylint: disable=too-many-locals,too-many-arguments
-    file: str | _Path,
+    file: _Path,
     disable: _Messages | None = None,
     check_class: bool = False,
     check_class_constructor: bool = False,
