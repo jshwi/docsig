@@ -6,18 +6,13 @@ docsig._core
 from __future__ import annotations as _
 
 import logging as _logging
-import os as _os
 import sys as _sys
 from pathlib import Path as _Path
 
-import astroid as _ast
-
 from . import _decorators
-from ._directives import Directives as _Directives
-from ._files import FILE_INFO as _FILE_INFO
 from ._files import Paths as _Paths
-from ._module import Error as _Error
 from ._module import Function as _Function
+from ._module import Module as _Module
 from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
@@ -137,68 +132,6 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             )
 
 
-def _from_file(
-    path: _Path,
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor,
-) -> _Parent:
-    try:
-        code = path.read_text(encoding="utf-8")
-        parent = _from_str(
-            context={
-                "code": code,
-                "module_name": derive_module_name(path),
-                "path": path,
-            },
-            messages=messages,
-            path=path,
-            ignore_args=ignore_args,
-            ignore_kwargs=ignore_kwargs,
-            check_class_constructor=check_class_constructor,
-        )
-    except UnicodeDecodeError as err:
-        logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
-        parent = _Parent.as_error(_Error.UNICODE)
-
-    if parent.error is not None and not path.name.endswith(".py"):
-        parent = _Parent()
-
-    return parent
-
-
-def _from_str(  # pylint: disable=too-many-arguments
-    context: dict,
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor,
-    path: _Path | None = None,
-) -> _Parent:
-    logger = _logging.getLogger(__package__)
-    try:
-        parent = _Parent.from_ast(
-            _ast.parse(**context),
-            _Directives.from_text(context["code"], messages),
-            path,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
-        )
-        logger.debug(
-            _FILE_INFO,
-            path or "stdin",
-            "Parsing Python code successful",
-        )
-    except _ast.AstroidSyntaxError as err:
-        logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
-        parent = _Parent.as_error(_Error.SYNTAX)
-
-    return parent
-
-
 def _get_failures(  # pylint: disable=too-many-arguments
     module: _Parent,
     check_class: bool,
@@ -311,7 +244,7 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
     :param target: List of errors to target.
     :return: Exit status for whether test failed or not.
     """
-    module = _from_file(
+    module = _Module.from_file(
         path,
         disable or _Messages(),
         ignore_args,
@@ -438,7 +371,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
         return max(retcodes)
 
-    module = _from_str(
+    module = _Module.from_str(
         {
             "code": string,
         },
@@ -463,20 +396,3 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         target or _Messages(),
     )
     return _report(failures, no_ansi=no_ansi)
-
-
-def derive_module_name(
-    file_path: str | _Path,
-) -> str:
-    """Extract Python module names from paths.
-
-    A dot separated Python module name is generated from the given file
-    path.
-
-    :param file_path: A file system path.
-    :returns: The converted Python module name.
-    """
-    converted = _os.path.splitext(str(file_path))[0]
-    converted = converted.replace(_os.sep, ".")
-    converted = converted.replace("-", "_")
-    return converted
