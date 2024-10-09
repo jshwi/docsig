@@ -5,15 +5,18 @@ docsig._module
 
 from __future__ import annotations as _
 
+import logging as _logging
 import re as _re
 import typing as _t
 from enum import Enum as _Enum
 from pathlib import Path as _Path
 
 import astroid as _ast
+from typing_extensions import Self as _Self
 
 from ._directives import Comments as _Comments
 from ._directives import Directives as _Directives
+from ._files import FILE_INFO as _FILE_INFO
 from ._stub import Docstring as _Docstring
 from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
@@ -137,7 +140,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         ignore_kwargs: bool = False,
         check_class_constructor: bool = False,
         imports: _Imports | None = None,
-    ) -> Parent:
+    ) -> _Self:
         """Parse a new parent from an AST node.
 
         :param node: Parent's abstract syntax tree.
@@ -163,17 +166,6 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         parent._parse_ast(node, directives or _Directives(), path)
         return parent
 
-    @classmethod
-    def as_error(cls, error: Error) -> Parent:
-        """Return a usable error module.
-
-        :param error: Error to instantiate.
-        :return: Instantiated error module.
-        """
-        parent = cls(error=error)
-        parent.children.append(Function(error=error))
-        return parent
-
     @property
     def isprotected(self) -> bool:
         """Boolean value for whether class is protected."""
@@ -188,6 +180,103 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     def children(self) -> _Children:
         """Children of this parent."""
         return self._children
+
+
+class Module(Parent):  # pylint: disable=too-many-instance-attributes
+    """Represents a module that contains functions or methods."""
+
+    @classmethod
+    def as_error(cls, error: Error) -> _Self:
+        """Return a usable error module.
+
+        :param error: Error to instantiate.
+        :return: Instantiated error module.
+        """
+        module = cls(error=error)
+        module.children.append(Function(error=error))
+        return module
+
+    @classmethod
+    def from_file(  # pylint: disable=too-many-arguments
+        cls,
+        path: _Path,
+        messages: _Messages,
+        ignore_args: bool,
+        ignore_kwargs: bool,
+        check_class_constructor,
+    ) -> _Self:
+        """Parse a new parent from a file.
+
+        :param path: Path(s) to check.
+        :param messages: List of errors to disable.
+        :param ignore_args: Ignore args prefixed with an asterisk.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :param check_class_constructor: Check ``__init__`` methods. Note
+            that this is mutually incompatible with check_class.
+        :return: Instantiated parent object.
+        """
+        obj = cls()
+        try:
+            string = path.read_text(encoding="utf-8")
+            obj = obj.from_str(
+                messages=messages,
+                string=string,
+                path=path,
+                ignore_args=ignore_args,
+                ignore_kwargs=ignore_kwargs,
+                check_class_constructor=check_class_constructor,
+            )
+        except UnicodeDecodeError as err:
+            logger = _logging.getLogger(__package__)
+            logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
+            obj = cls.as_error(Error.UNICODE)
+
+        if obj.error is not None and not path.name.endswith(".py"):
+            obj = cls()
+
+        return obj
+
+    @classmethod
+    def from_str(  # pylint: disable=too-many-arguments
+        cls,
+        string: str,
+        messages: _Messages,
+        ignore_args: bool,
+        ignore_kwargs: bool,
+        check_class_constructor,
+        path: _Path | None = None,
+    ) -> _Self:
+        """Parse a new parent from a string.
+
+        :param string: String to check.
+        :param messages: List of errors to disable.
+        :param ignore_args: Ignore args prefixed with an asterisk.
+        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :param check_class_constructor: Check ``__init__`` methods. Note
+            that this is mutually incompatible with check_class.
+        :param path: Path(s) to check.
+        :return: Instantiated parent object.
+        """
+        logger = _logging.getLogger(__package__)
+        try:
+            obj = cls.from_ast(
+                _ast.parse(string),
+                _Directives.from_text(string, messages),
+                path,
+                ignore_args,
+                ignore_kwargs,
+                check_class_constructor,
+            )
+            logger.debug(
+                _FILE_INFO, path or "stdin", "parsing python code successful"
+            )
+        except _ast.AstroidSyntaxError as err:
+            logger.debug(
+                _FILE_INFO, path or "stdin", str(err).replace("\n", " ")
+            )
+            obj = cls.as_error(Error.SYNTAX)
+
+        return obj
 
 
 class Function(Parent):
@@ -380,5 +469,5 @@ class _Overloads(_t.Dict[str, Function]):
     """Represents overloaded methods."""
 
 
-class _Children(_t.List[_t.Union[Parent, Function]]):
+class _Children(_t.List[Parent]):
     """Represents children of object."""
