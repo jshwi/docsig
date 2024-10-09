@@ -31,7 +31,7 @@ class _Imports(_t.Dict[str, str]):
     """Represents python imports."""
 
 
-class Parent(_t.List["Parent"]):
+class Parent:  # pylint: disable=too-many-instance-attributes
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
@@ -64,9 +64,10 @@ class Parent(_t.List["Parent"]):
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self._check_class_constructor = check_class_constructor
+        self._children = _Children()
         if node is None:
             if not isinstance(self, Function) and error is not None:
-                self.append(Function(path, error=error))
+                self._children.append(Function(path, error=error))
         else:
             self._name = node.name
             self._overloads = _Overloads()
@@ -121,9 +122,9 @@ class Parent(_t.List["Parent"]):
                                 self._overloads[func.name].signature.rettype
                             )
 
-                        self.append(func)
+                        self._children.append(func)
                 elif isinstance(subnode, _ast.ClassDef):
-                    self.append(
+                    self._children.append(
                         Parent(
                             subnode,
                             directives,
@@ -146,6 +147,11 @@ class Parent(_t.List["Parent"]):
     def error(self) -> Error | None:
         """Represents an unrecoverable error, if any."""
         return self._error
+
+    @property
+    def children(self) -> _Children:
+        """Children of this parent."""
+        return self._children
 
 
 class Function(Parent):
@@ -337,3 +343,7 @@ class Function(Parent):
 
 class _Overloads(_t.Dict[str, Function]):
     """Represents overloaded methods."""
+
+
+class _Children(_t.List[_t.Union[Parent, Function]]):
+    """Represents children of object."""

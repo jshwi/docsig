@@ -95,7 +95,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 failures.append(failure)
 
         if check_nested:
-            for func in child:
+            for func in child.children:
                 _run_check(
                     func,
                     child,
@@ -114,7 +114,7 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
                 )
     else:
         # this is a class
-        for func in child:
+        for func in child.children:
             _run_check(
                 func,
                 child,
@@ -205,7 +205,7 @@ def _get_failures(  # pylint: disable=too-many-arguments
     target: _Messages,
 ) -> _Failures:
     failures = _Failures()
-    for top_level in module:
+    for top_level in module.children:
         if (
             not top_level.isprotected
             or check_protected
