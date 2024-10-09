@@ -67,12 +67,18 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._imports = imports or _Imports()
         self._overloads = _Overloads()
 
-    def _parse_ast(
+    def parse_ast(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
         directives: _Directives,
         path: _Path | None = None,
     ) -> None:
+        """Parse ast into a usable object.
+
+        :param node: Ast to parse.
+        :param directives: Directives belonging to this object.
+        :param path: Path to this object.
+        """
         # need to keep track of `comments` as, even though they are
         # resolved in directives object, they are needed to notify user
         # in the case that they are invalid
@@ -131,7 +137,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         ),
                     )
                 else:
-                    self._parse_ast(subnode, directives, path)
+                    self.parse_ast(subnode, directives, path)
 
     @classmethod
     def from_ast(  # pylint: disable=too-many-arguments
@@ -166,7 +172,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             check_class_constructor,
             imports,
         )
-        parent._parse_ast(node, directives or _Directives(), path)
+        parent.parse_ast(node, directives or _Directives(), path)
         return parent
 
     @property
@@ -353,7 +359,7 @@ class Function(Parent):
         self._lineno = 0
         self._error = error
         if node is not None:
-            self._parse_ast(node, directives or _Directives(), path)
+            self.parse_ast(node, directives or _Directives(), path)
             self._name = node.name
             self._parent = node.parent.frame()
             self._decorators = node.decorators
