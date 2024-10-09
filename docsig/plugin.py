@@ -3,6 +3,7 @@
 import ast
 import typing as t
 from argparse import Namespace
+from pathlib import Path
 
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
@@ -147,7 +148,7 @@ class Docsig:
         else:
             setup_logger(self.a.verbose)
             results = runner(
-                self.filename,
+                Path(self.filename),
                 check_class=self.a.check_class,
                 check_class_constructor=self.a.check_class_constructor,
                 check_dunders=self.a.check_dunders,
