@@ -401,7 +401,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         paths = _Paths(
             *path,
             patterns=patterns,
-            excludes=excludes or [],
+            excludes=excludes,
             include_ignored=include_ignored,
         )
         for file in paths:
