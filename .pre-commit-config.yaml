@@ -16,7 +16,7 @@ ci:
 default_language_version:
   python: "3.9"
 default_stages:
-  - commit
+  - pre-commit
 exclude: |
   (?x)^(
     | poetry\.lock
@@ -92,7 +92,7 @@ repos:
           'git status --porcelain changelog | grep "??" && exit 1 || exit 0'
         language: system
         stages:
-          - commit
+          - pre-commit
       - id: commit-fix
         name: Test Fix
         entry: poetry run python scripts/commit_fix.py
@@ -184,7 +184,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v4.0.0"
+    rev: "v4.0.1"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -199,7 +199,7 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.17.0"
+    rev: "v3.18.0"
     hooks:
       - id: pyupgrade
         args:
@@ -219,7 +219,7 @@ repos:
         args:
           - "--config-data={rules: {line-length: {max: 79}}}"
   - repo: https://github.com/psf/black
-    rev: "24.8.0"
+    rev: "24.10.0"
     hooks:
       - id: black
         additional_dependencies:
