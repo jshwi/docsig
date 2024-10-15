@@ -163,14 +163,6 @@ repos:
             | SECURITY\.md
             | docs\/deprecated\/messages\.md
           )$
-  - repo: https://github.com/PyCQA/docformatter
-    rev: "v1.7.5"
-    hooks:
-      - id: docformatter
-        args:
-          - "--recursive"
-          - "--wrap-summaries=72"
-          - "--in-place"
   - repo: https://github.com/pappasam/toml-sort
     rev: "v0.23.1"
     hooks:
