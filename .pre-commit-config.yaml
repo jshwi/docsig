@@ -191,7 +191,7 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.18.0"
+    rev: "v3.19.0"
     hooks:
       - id: pyupgrade
         args:
@@ -235,7 +235,7 @@ repos:
     hooks:
       - id: rm-unneeded-f-str
   - repo: https://github.com/rhysd/actionlint
-    rev: "v1.7.3"
+    rev: "v1.7.4"
     hooks:
       - id: actionlint
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
@@ -243,7 +243,7 @@ repos:
     hooks:
       - id: editorconfig-checker
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.12.1"
+    rev: "v1.13.0"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
