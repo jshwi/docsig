@@ -83,7 +83,7 @@ class _ArgumentParser(_a.ArgumentParser):
         namespace: _a.Namespace | None = None,
     ) -> tuple[_a.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
-        config = get_config(self.prog)
+        config = get_config(_Path(self.prog).stem)
         namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 

@@ -13,13 +13,18 @@ import pytest
 import docsig
 import docsig.plugin
 
+# noinspection PyProtectedMember
+from docsig._config import _ArgumentParser
+
 from . import (
     TREE,
     FixtureFlake8,
     FixtureMakeTree,
+    FixturePatchArgv,
     InitFileFixtureType,
     MockMainType,
     long,
+    short,
 )
 
 
@@ -425,3 +430,59 @@ def function(param1, param2) -> None:
     main(".", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[301].description in std.out
+
+
+def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
+    patch_argv: FixturePatchArgv,
+) -> None:
+    """Test config correctly loads on windows.
+
+    Problem: When running the pre-commit hook in Windows PowerShell,
+    get_config returns {} because prog='docsig.EXE' instead of 'docsig'.
+
+    :param patch_argv: Patch commandline arguments.
+    """
+    disable = [
+        "SIG101",
+        "SIG202",
+        "SIG203",
+        "SIG301",
+        "SIG302",
+        "SIG401",
+        "SIG402",
+        "SIG404",
+        "SIG501",
+        "SIG502",
+        "SIG503",
+        "SIG505",
+    ]
+    pyproject_toml = Path.cwd() / "pyproject.toml"
+    pyproject_toml.write_text(
+        """
+[tool.docsig]
+disable = [
+    "SIG101",
+    "SIG202",
+    "SIG203",
+    "SIG301",
+    "SIG302",
+    "SIG401",
+    "SIG402",
+    "SIG404",
+    "SIG501",
+    "SIG502",
+    "SIG503",
+    "SIG505",
+]
+
+[tool.isort]
+py_version = 37
+add_imports = ["from __future__ import annotations"]
+""",
+        encoding="utf-8",
+    )
+    patch_argv("docsig.EXE")
+    parser = _ArgumentParser()
+    parser.add_list_argument(short.disable, long.disable)
+    namespace = parser.parse_args()
+    assert all(i in namespace.disable for i in disable)
