@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.64.1](https://github.com/jshwi/docsig/tree/v0.64.1) - 2024-11-10
+
+### Fixed
+
+- correctly load config for windows ([#488](https://github.com/jshwi/docsig/issues/488))
+
 ## [0.64.0](https://github.com/jshwi/docsig/tree/v0.64.0) - 2024-10-04
 
 ### Added
