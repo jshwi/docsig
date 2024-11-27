@@ -324,7 +324,6 @@ def runner(  # pylint: disable=too-many-locals,too-many-arguments
 
 
 @_decorators.parse_msgs
-@_decorators.handle_deprecations
 @_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,

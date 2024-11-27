@@ -254,13 +254,4 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         metavar="PATH",
         help="path glob patterns to exclude from checks",
     )
-
-    # deprecated
-    parser.add_argument(
-        "-S",
-        "--summary",
-        action="store_true",
-        help=_a.SUPPRESS,
-    )
-
     return parser.parse_args(args)
