@@ -187,6 +187,13 @@ E = MessageMap(
             "parameter appears to be incorrectly documented",
             "param-incorrectly-documented",
         ),
+        304: Message(
+            "SIG304",
+            "SIG304",
+            "bad token used to close parameter declaration '{token}'",
+            "bad-closing-token",
+            "close a parameter declaration with ':'",
+        ),
         #: SIG4xx Description
         401: Message(
             "SIG401",

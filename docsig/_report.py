@@ -180,6 +180,13 @@ class Failure(_t.List[Failed]):
         elif doc.name == _UNNAMED:
             # param-incorrectly-documented
             self._add(_E[303])
+        elif doc.closing_token != ":":
+            # bad-closing-token
+            self._add(
+                _E[304],
+                token=doc.closing_token,
+                hint=True,
+            )
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         if doc.indent > 0:

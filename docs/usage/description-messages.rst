@@ -12,3 +12,8 @@
    :titlesonly:
 
    messages/sig303-param-incorrectly-documented
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig304-bad-closing-token

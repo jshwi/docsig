@@ -9331,3 +9331,34 @@ class Klass:
     @property
     def expected(self) -> str:
         return ""
+
+
+@_templates.register
+class _FIncorrectDocDotS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return r'''
+def display(
+    define: tuple[tuple[str, str], ...],
+    data: list[_t.Any],
+    sort_by_field: int | None = None,
+    summary_line: _t.Iterable[_t.Any] | None = None,
+    print_field_total: int | None = None,
+) -> None:
+    """Display data as a table.
+
+    :param define: Define the headers and the format of the fields
+        belonging to the headers.
+    :param data: Data to display.
+    :param sort_by_field. Sort the table by the index of the field to
+        sort by.
+    :param summary_line: Add a row to the end of the table that will not
+        be sorted if `sort_by_field` is provided.
+    :param print_field_total: Print the total number in the same format
+        of the index of the field provided.
+    """
+'''
+
+    @property
+    def expected(self) -> str:
+        return E[304].fstring(T).format(token=".")

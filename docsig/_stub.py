@@ -84,6 +84,7 @@ class Param(_t.NamedTuple):
     name: str | None = None
     description: str | None = None
     indent: int = 0
+    closing_token: str = ":"
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Param):
@@ -314,7 +315,9 @@ class Docstring(_Stub):
         string = cls._normalize_docstring(node.value)
         returns = bool(_re.search(r":returns?:", string))
         docstring = cls(string, returns)
-        for match in _re.findall(r":(.*?):((?:.|\n)*?)(?=\n:|$)", string):
+        for match in _re.findall(
+            r":(.*?)([^\w\s])((?:.|\n)*?)(?=\n:|$)", string
+        ):
             if match:
                 kinds = match[0].split()
                 if kinds:
@@ -322,8 +325,9 @@ class Docstring(_Stub):
                         Param(
                             DocType.from_str(kinds[0]),
                             UNNAMED if len(kinds) == 1 else kinds[1],
-                            match[1] or None,
+                            match[2] or None,
                             int(indent_anomaly),
+                            match[1],
                         )
                     )
 
