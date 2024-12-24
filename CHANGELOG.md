@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.66.0](https://github.com/jshwi/docsig/tree/v0.66.0) - 2024-12-24
+
+### Added
+
+- bad-closing-token violation ([#507](https://github.com/jshwi/docsig/issues/507))
+
 ## [0.65.0](https://github.com/jshwi/docsig/tree/v0.65.0) - 2024-11-27
 
 ### Removed
