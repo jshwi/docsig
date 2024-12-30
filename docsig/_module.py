@@ -233,9 +233,10 @@ class Function(Parent):
         name = self._imports.get(name, name)
         if self._decorators is not None:
             for dec in self._decorators.nodes:
-                return (isinstance(dec, _ast.Name) and dec.name == name) or (
+                if (isinstance(dec, _ast.Name) and dec.name == name) or (
                     isinstance(dec, _ast.Attribute) and dec.attrname == name
-                )
+                ):
+                    return True
 
         return False
 

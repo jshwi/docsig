@@ -486,3 +486,95 @@ add_imports = ["from __future__ import annotations"]
     parser.add_list_argument(short.disable, long.disable)
     namespace = parser.parse_args()
     assert all(i in namespace.disable for i in disable)
+
+
+def test_properties_not_recognized_when_underneath_other_decorators_509(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Fix properties not recognized when stacked.
+
+    Also check this does fail with --check-property-returns.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+import typing as _t
+from abc import abstractmethod as _abstractmethod
+from functools import cached_property as _cached_property
+
+from ._ticker import Tickers as _Ticker
+from ._transactions import Trades as _Trades
+
+
+class Trades(dict[str, _Trades]):
+    """Represents a collection of trades."""
+
+
+class Account(dict[str, _t.Any]):
+    """Represents an account."""
+
+    @_abstractmethod
+    @_cached_property
+    def trades(self) -> Trades:
+        """Get all trades."""
+
+    @_abstractmethod
+    @_cached_property
+    def portfolio(self) -> _Tickers:
+        """Get portfolio."""
+'''
+    init_file(template)
+    assert not main(".", test_flake8=False)
+    main(".", "-P", test_flake8=False)
+    std = capsys.readouterr()
+    assert docsig.messages.E[503].description in std.out
+
+
+def test_properties_not_recognized_when_on_top_of_other_decorators_509(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Fix properties not recognized when stacked.
+
+    Also check this does fail with --check-property-returns.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+import typing as _t
+from abc import abstractmethod as _abstractmethod
+from functools import cached_property as _cached_property
+
+from ._ticker import Tickers as _Ticker
+from ._transactions import Trades as _Trades
+
+
+class Trades(dict[str, _Trades]):
+    """Represents a collection of trades."""
+
+
+class Account(dict[str, _t.Any]):
+    """Represents an account."""
+
+    @_cached_property
+    @_abstractmethod
+    def trades(self) -> Trades:
+        """Get all trades."""
+
+    @_cached_property
+    @_abstractmethod
+    def portfolio(self) -> _Tickers:
+        """Get portfolio."""
+'''
+    init_file(template)
+    assert not main(".", test_flake8=False)
+    main(".", "-P", test_flake8=False)
+    std = capsys.readouterr()
+    assert docsig.messages.E[503].description in std.out
