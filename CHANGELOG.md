@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.66.1](https://github.com/jshwi/docsig/tree/v0.66.1) - 2024-12-30
+
+### Fixed
+
+- recognize all decorators when stacked ([#509](https://github.com/jshwi/docsig/issues/509))
+
 ## [0.66.0](https://github.com/jshwi/docsig/tree/v0.66.0) - 2024-12-24
 
 ### Added
