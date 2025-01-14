@@ -103,7 +103,7 @@ $(VENV): $(POETRY) poetry.lock
 #: install poetry
 $(POETRY):
 	@curl -sSL https://install.python-poetry.org | \
-		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" -
+		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" - --version 1.8.3
 	@touch $@
 
 #: update commandline documentation if needed
