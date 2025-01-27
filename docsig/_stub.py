@@ -282,6 +282,8 @@ class Docstring(_Stub):
 
     :param string: The raw docstring.
     :param returns: Whether this docstring has a return.
+    :param ret_description_missing: Whether description for return is
+        missing from this docstrings.
     """
 
     @staticmethod
@@ -315,11 +317,15 @@ class Docstring(_Stub):
         )
 
     def __init__(
-        self, string: str | None = None, returns: bool = False
+        self,
+        string: str | None = None,
+        returns: bool = False,
+        ret_description_missing: bool = False,
     ) -> None:
         super().__init__()
         self._string = string
         self._returns = returns
+        self._ret_description_missing = ret_description_missing
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
@@ -330,8 +336,15 @@ class Docstring(_Stub):
         """
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
-        returns = bool(_re.search(r":returns?:", string))
-        docstring = cls(string, returns)
+        # todo: we can start building return objects for more detailed
+        # todo: checks that are in common with the params class
+        match = _re.search(r":returns?:(.*)?", string)
+        returns = bool(match)
+        ret_description_missing = False
+        if match:
+            ret_description_missing = not match.group(1)
+
+        docstring = cls(string, returns, ret_description_missing)
         for match in _re.findall(
             r":(.*?)([^\w\s])((?:.|\n)*?)(?=\n:|$)", string
         ):
@@ -362,3 +375,8 @@ class Docstring(_Stub):
         Docstring has to exist for docstring to be considered bare.
         """
         return self._string is not None and not self._args and not self.returns
+
+    @property
+    def ret_description_missing(self) -> bool:
+        """Is return description missing?"""
+        return self._ret_description_missing

@@ -22,3 +22,8 @@
    :titlesonly:
 
    messages/sig505-return-documented-for-property
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig506-return-description-missing

@@ -254,6 +254,12 @@ E = MessageMap(
             "return-documented-for-property",
             "documentation is sufficient as a getter is the value returned",
         ),
+        506: Message(
+            "SIG506",
+            "SIG506",
+            "description missing from return",
+            "return-description-missing",
+        ),
         #: SIG9xx Error
         901: Message(
             "SIG901",

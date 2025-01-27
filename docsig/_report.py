@@ -227,6 +227,8 @@ class Failure(_t.List[Failed]):
                 if self._func.signature.rettype == _RetType.NONE:
                     # return-documented-for-none
                     self._add(_E[502])
+                if self._func.docstring.ret_description_missing:
+                    self._add(_E[506])
             # return type is some, so return should be documented
             elif self._func.signature.returns:
                 # return-missing

@@ -9362,3 +9362,21 @@ def display(
     @property
     def expected(self) -> str:
         return E[304].fstring(T).format(token=".")
+
+
+@_templates.register
+class _FPropertyReturnMissingDescS(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return r'''
+def normalize(ticker: str) -> str:
+    """Normalize ticket names.
+
+    :param ticker: Ticker to normalize.
+    :return:
+    """
+    '''
+
+    @property
+    def expected(self) -> str:
+        return E[506].fstring(T)
