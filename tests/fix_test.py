@@ -578,3 +578,42 @@ class Account(dict[str, _t.Any]):
     main(".", "-P", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[503].description in std.out
+
+
+def test_no_erroneous_301_in_duplicate(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Make sure 301 does not appear for duplicate parameters.
+
+    :param main: Mock ``main`` function.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    """
+    template = r'''
+# pylint: disable=too-many-locals,too-many-statements
+@_g.cache("arb.json")
+@_g.cache("diff.json")
+def print_target_progress(
+    diff_obj: _g.CacheObj,
+    arb_obj: _g.CacheObj,
+    coins: _Coins,
+    executor: _ThreadPoolExecutor,
+    ignore_actionable_diff_score: bool,
+) -> None:
+    """Print table of target values.
+
+    :param diff_obj: Object containing diff information.
+    :param arb_obj: Object containing arb information.
+    :param coins: Total coins to print.
+    :param executor: Thread-safe Executor object.
+    :param ignore_actionable_diff_score: Ignore actionable difference
+        score.
+    :param executor: ThreadPoolExecutor.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[301].description not in std.out

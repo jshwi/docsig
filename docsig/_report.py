@@ -133,7 +133,10 @@ class Failure(_t.List[Failed]):
             # parameter, that way there are no assumptions that the
             # parameters must be out of order
             for count, arg in enumerate(self._func.docstring.args):
-                if arg in self._func.docstring.args.duplicates:
+                if (
+                    arg in self._func.docstring.args.duplicates
+                    and self._func.docstring.args.count(arg) > 1
+                ):
                     self._func.docstring.args.pop(count)
 
             # duplicate-params-found
