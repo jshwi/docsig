@@ -77,14 +77,31 @@ class DocType(_Enum):
         return cls.UNKNOWN
 
 
-class Param(_t.NamedTuple):
-    """A tuple of param types and their names."""
+#: todo: consider a parent object that can be used for returns that do
+#: todo: not include the name attribute
+class Param:
+    """A tuple of param types and their names.
 
-    kind: DocType = DocType.PARAM
-    name: str | None = None
-    description: str | None = None
-    indent: int = 0
-    closing_token: str = ":"
+    :param kind: The type of the parameter.
+    :param name: The name of the parameter.
+    :param description: The description of the parameter.
+    :param indent: The number that the parameter is indented.
+    :param closing_token: The token used for closing the parameter.
+    """
+
+    def __init__(  # pylint: disable=too-many-arguments
+        self,
+        kind: DocType = DocType.PARAM,
+        name: str | None = None,
+        description: str | None = None,
+        indent: int = 0,
+        closing_token: str = ":",
+    ) -> None:
+        self.kind = kind
+        self.name = name
+        self.description = description
+        self.indent = indent
+        self.closing_token = closing_token
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Param):
