@@ -635,3 +635,49 @@ def test_handle_empty_symlinks(
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[301].description not in std.out
+
+
+def test_no_erroneous_402(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Fix properties not recognized when stacked.
+
+    Also check this does fail with --check-property-returns.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class BinanceTransactions(_Transactions):
+    """Represents a transaction to and from the exchange.
+
+    :param ticker: Crypto ticker symbol.
+    """
+
+    def __init__(self, client: Client, ticker: str, attr: str):
+        super().__init__()
+        data = getattr(client, attr)(coin=ticker)
+        for i in data:
+            try:
+                epoch_seconds = i["insertTime"] / 1000
+            except KeyError:
+                dt_object = _datetime.strptime(
+                    i["applyTime"], "%Y-%m-%d %H:%M:%S"
+                )
+                epoch_seconds = int(dt_object.timestamp())
+            self.append(
+                _Transaction(
+                    _datetime.fromtimestamp(epoch_seconds).replace(
+                        tzinfo=_timezone.utc
+                    ),
+                    float(i["amount"]),
+                )
+            )
+'''
+    init_file(template)
+    main(".", "--check-class")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description not in std.out

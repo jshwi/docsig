@@ -168,9 +168,10 @@ class Failure(_t.List[Failed]):
             # this will ensure that both signature and docstring are
             # equal in length, with all parameters that are not
             # documented accounted for
-            for count, arg in enumerate(self._func.signature.args, 1):
-                if count > len(self._func.docstring.args):
-                    self._func.docstring.args.append(
+            for arg in self._func.signature.args:
+                if arg not in self._func.docstring.args:
+                    self._func.docstring.args.insert(
+                        self._func.signature.args.index(arg),
                         _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
                     )
             # params-missing
