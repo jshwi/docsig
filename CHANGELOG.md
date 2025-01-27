@@ -11,6 +11,17 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.67.0](https://github.com/jshwi/docsig/tree/v0.67.0) - 2025-01-27
+
+### Added
+
+- support for python3.13 ([#511](https://github.com/jshwi/docsig/issues/511))
+- return-description-missing violation ([#525](https://github.com/jshwi/docsig/issues/525))
+
+### Fixed
+
+- description-missing appears in duplicate check ([#523](https://github.com/jshwi/docsig/issues/523))
+
 ## [0.66.1](https://github.com/jshwi/docsig/tree/v0.66.1) - 2024-12-30
 
 ### Fixed
