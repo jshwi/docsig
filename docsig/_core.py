@@ -6,6 +6,7 @@ docsig._core
 from __future__ import annotations as _
 
 import logging as _logging
+import os as _os
 import sys as _sys
 from pathlib import Path as _Path
 
@@ -141,10 +142,14 @@ def _from_file(
     check_class_constructor,
 ) -> _Parent:
     try:
-        string = path.read_text(encoding="utf-8")
+        code = path.read_text(encoding="utf-8")
         parent = _from_str(
+            context={
+                "code": code,
+                "module_name": derive_module_name(path),
+                "path": path,
+            },
             messages=messages,
-            string=string,
             path=path,
             ignore_args=ignore_args,
             ignore_kwargs=ignore_kwargs,
@@ -162,7 +167,7 @@ def _from_file(
 
 
 def _from_str(  # pylint: disable=too-many-arguments
-    string: str,
+    context: dict,
     messages: _Messages,
     ignore_args: bool,
     ignore_kwargs: bool,
@@ -172,8 +177,8 @@ def _from_str(  # pylint: disable=too-many-arguments
     logger = _logging.getLogger(__package__)
     try:
         parent = _Parent(
-            _ast.parse(string),
-            _Directives.from_text(string, messages),
+            _ast.parse(**context),
+            _Directives.from_text(context["code"], messages),
             path,
             ignore_args,
             ignore_kwargs,
@@ -427,7 +432,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return max(retcodes)
 
     module = _from_str(
-        string,
+        {
+            "code": string,
+        },
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
@@ -449,3 +456,20 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         target or _Messages(),
     )
     return _report(failures, no_ansi=no_ansi)
+
+
+def derive_module_name(
+    file_path: str | _Path,
+) -> str:
+    """Extract Python module names from paths.
+
+    A dot separated Python module name is generated from the given file
+    path.
+
+    :param file_path: A file system path.
+    :returns: The converted Python module name.
+    """
+    converted = _os.path.splitext(str(file_path))[0]
+    converted = converted.replace(_os.sep, ".")
+    converted = converted.replace("-", "_")
+    return converted
