@@ -108,6 +108,10 @@ class Paths(_t.List[_Path]):
 
     def _populate(self, root: _Path) -> None:
         if not root.exists():
+            if root.is_symlink():
+                self._logger.debug(FILE_INFO, root, "broken link, skipping")
+                return
+
             raise FileNotFoundError(root)
 
         if not self._include_ignored and self._gitignore.match_file(root):

@@ -617,3 +617,20 @@ def print_target_progress(
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[301].description not in std.out
+
+
+def test_handle_empty_symlinks(
+    main: MockMainType,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """Ensure program doesn't crash when it checks broken symlinks.
+
+    :param main: Mock ``main`` function.
+    :param tmp_path: Create and return temporary directory.
+    :param capsys: Capture sys out.
+    """
+    (tmp_path / "broken_symlink.py").symlink_to("does-not-exist")
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[301].description not in std.out
