@@ -3,6 +3,8 @@ docsig._module
 ==============
 """
 
+# pylint: disable=too-many-positional-arguments
+
 from __future__ import annotations as _
 
 import re as _re
