@@ -700,3 +700,49 @@ def test_fail_on_unicode_decode_error_if_py_file(
     assert main(pkl, test_flake8=False) == 1
     std = capsys.readouterr()
     assert E[902].fstring(T) in std.out
+
+
+def test_pre_commit_compatibility_issue_with_pythonpath_522(
+    main: MockMainType,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """Test compatibility issues with Python path.
+
+    :param main: Patch package entry point.
+    :param tmp_path: Create and return temporary directory.
+    :param capsys: Capture sys out.
+    """
+    t1 = '''\
+class BaseClass:
+    """My base class."""
+
+    def method(self, arg) -> None:
+        """Does something.
+
+        :param arg: some argument
+        """
+        return None
+'''
+    t2 = '''\
+from .bases.base_class import BaseClass
+
+
+class Implementation(BaseClass):
+    """My implementation."""
+
+    def method(self, arg) -> None:
+        """Does something."""
+        return None
+'''
+    root = tmp_path / "folder"
+    bases = root / "bases"
+    bases.mkdir(exist_ok=True, parents=True)
+    (root / "__init__.py").touch()
+    p1 = bases / "base_class.py"
+    p2 = root / "implementation1.py"
+    p1.write_text(t1)
+    p2.write_text(t2)
+    main(".")
+    std = capsys.readouterr()
+    assert not std.out

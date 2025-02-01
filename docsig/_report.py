@@ -7,6 +7,8 @@ from __future__ import annotations as _
 
 import typing as _t
 
+from astroid.nodes.scoped_nodes import scoped_nodes as _scoped_nodes
+
 from ._module import Error as _Error
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
@@ -57,7 +59,11 @@ class Failure(_t.List[Failed]):
             self._func.messages.extend(i for i in _E.all if i not in target)
 
         self._name = self._func.name
-        if self._func.parent is not None and self._func.parent.name:
+        if (
+            self._func.parent is not None
+            and self._func.parent.name
+            and not isinstance(self._func.parent, _scoped_nodes.Module)
+        ):
             self._name = f"{self._func.parent.name}.{self._func.name}"
 
         self._check_property_returns = check_property_returns
