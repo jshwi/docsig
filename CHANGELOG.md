@@ -11,6 +11,16 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.68.0](https://github.com/jshwi/docsig/tree/v0.68.0) - 2025-02-01
+
+### Added
+
+- support relative paths - @niall-byrne ([#522](https://github.com/jshwi/docsig/issues/522))
+
+### Fixed
+
+- fix crash with broken symlinks ([#531](https://github.com/jshwi/docsig/issues/531))
+
 ## [0.67.0](https://github.com/jshwi/docsig/tree/v0.67.0) - 2025-01-27
 
 ### Added
