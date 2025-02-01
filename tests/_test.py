@@ -20,7 +20,7 @@ unusual indent, and all templates ending with ``G`` are ``Google`` style
 docstrings.
 """
 
-# pylint: disable=protected-access
+# pylint: disable=protected-access,too-many-positional-arguments
 
 import pytest
 import templatest

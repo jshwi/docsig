@@ -4,7 +4,7 @@ tests.exclude_test
 """
 
 # pylint: disable=too-many-lines,line-too-long,protected-access
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments,too-many-positional-arguments
 
 from __future__ import annotations
 
