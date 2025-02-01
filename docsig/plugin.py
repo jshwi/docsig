@@ -1,6 +1,8 @@
 """Flake8 implementation of docsig."""
 
 import ast
+import os
+import sys
 import typing as t
 from argparse import Namespace
 from pathlib import Path
@@ -12,6 +14,7 @@ from ._version import __version__
 from .messages import FLAKE8, E
 
 Flake8Error = t.Tuple[int, int, str, t.Type]
+sys.path.append(os.path.abspath(os.getcwd()))
 
 
 class Docsig:
