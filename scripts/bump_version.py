@@ -9,6 +9,9 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 import git
+import pytest
+import tomli
+import tomli_w
 
 
 def _main() -> int | str:
@@ -57,6 +60,35 @@ def _main() -> int | str:
         return "version bump failed"
 
     return 0
+
+
+def test_bump(  # pylint: disable=too-many-locals
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Test bump.
+
+    :param tmp_path: Create and return temporary directory.
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    this = Path(__file__).parent.parent
+    path = tmp_path / this.name
+    repo = git.Repo.clone_from(this, path)
+    config = repo.config_writer(config_level="repository")
+    config.set_value("user", "name", "Test User")
+    config.set_value("user", "email", "test.user@example.com")
+    changelog = path / "changelog"
+    fragment = changelog / "1.add.md"
+    fragment.write_text("add something")
+    pyproject = path / "pyproject.toml"
+    conf = tomli.loads(pyproject.read_text(encoding="utf-8"))
+    del conf["tool"]["bumpversion"]["commit_args"]
+    del conf["tool"]["bumpversion"]["sign_tags"]
+    pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
+    repo.git.add(path)
+    repo.git.commit(message="Initial commit")
+    monkeypatch.chdir(path)
+    monkeypatch.setattr("sys.argv", [__file__, "patch"])
+    assert not _main()
 
 
 if __name__ == "__main__":

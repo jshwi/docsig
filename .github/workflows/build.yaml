@@ -9,6 +9,7 @@ on:
 
 env:
   PYTHONIOENCODING: utf-8
+  POETRY: bin/poetry/bin/poetry
 
 jobs:
   build:
@@ -59,3 +60,7 @@ jobs:
         uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
+      - name: Test Bump
+        id: test-bump
+        run: |
+          make .make/test-bump

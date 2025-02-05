@@ -200,3 +200,9 @@ bump: part = patch
 #: bump version
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
+
+#: test check news script
+.make/test-bump: $(VENV) scripts/bump_version.py
+	@$(POETRY) run pytest scripts/bump_version.py -n=auto
+	@mkdir -p $(@D)
+	@touch $@
