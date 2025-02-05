@@ -33,9 +33,9 @@ def _main() -> int | str:
     # all pre-flight checks passed, start making changes to files
     try:
         new_version = re.search(  # type: ignore
-            rf"\s*{o.part}\s*─\s*(\S+)",
+            rf"{o.part}\s*-\s*(\d+\.\d+\.\d+)",
             subprocess.run(
-                ["bump-my-version", "show-bump"],
+                ["bump-my-version", "show-bump", "--ascii"],
                 stdout=subprocess.PIPE,
                 text=True,
                 check=True,
