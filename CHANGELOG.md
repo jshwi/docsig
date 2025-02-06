@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.69.0](https://github.com/jshwi/docsig/tree/v0.69.0) - 2025-02-06
+
+### Removed
+
+- support for old-style messages ([#536](https://github.com/jshwi/docsig/issues/536))
+
 ## [0.68.0](https://github.com/jshwi/docsig/tree/v0.68.0) - 2025-02-01
 
 ### Added
