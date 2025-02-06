@@ -1,9 +1,6 @@
 Messages
 ========
 
-If you have been using ``docsig`` prior to ``v0.56.0``, please see
-`updated messages <https://docsig.readthedocs.io/en/latest/deprecated/messages.html>`_
-
 Config
 ------
 

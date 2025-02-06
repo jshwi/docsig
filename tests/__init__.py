@@ -1675,7 +1675,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FE109NoRetNoTypeS(_BaseTemplate):
+class _FSIG501NoRetNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -1752,7 +1752,7 @@ def function(param1) -> Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrderSingleErrorS(_BaseTemplate):
+class _FSIG402OutOfOrderSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -1790,7 +1790,7 @@ def function(param1) -> None:
 
 
 @_templates.register
-class _FE102ParamDocsSingleErrorS(_BaseTemplate):
+class _FSIG202ParamDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -1809,7 +1809,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSigSingleErrorS(_BaseTemplate):
+class _FSIG203ParamSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -1827,7 +1827,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocsSingleErrorS(_BaseTemplate):
+class _FSIG502RetTypeDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -1847,7 +1847,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSigSingleErrorS(_BaseTemplate):
+class _FSIG503RetTypeSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2210,7 +2210,7 @@ def get_post(
 
 
 @_templates.register
-class _FE115NoSpaceS(_BaseTemplate):
+class _FSIG302NoSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2424,7 +2424,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
 
 
 @_templates.register
-class _FE109WRetQuestionS(_BaseTemplate):
+class _FSIG501WRetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2441,7 +2441,7 @@ def function():
 
 
 @_templates.register
-class _FE109WORetQuestionS(_BaseTemplate):
+class _FSIG501WORetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2455,7 +2455,7 @@ def function():
 
 
 @_templates.register
-class _FE110NES(_BaseTemplate):
+class _FSIG404NES(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2622,7 +2622,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111S(_BaseTemplate):
+class _FSIG504S(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -2839,7 +2839,7 @@ class Klass:
 
 
 @_templates.register
-class _FE112S(_BaseTemplate):
+class _FSIG403S(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3085,7 +3085,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FE109NoRetNoTypeN(_BaseTemplate):
+class _FSIG501NoRetNoTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3182,7 +3182,7 @@ def function(param1) -> Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrderSingleErrorN(_BaseTemplate):
+class _FSIG402OutOfOrderSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3207,7 +3207,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocsSingleErrorN(_BaseTemplate):
+class _FSIG202ParamDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3231,7 +3231,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSigSingleErrorN(_BaseTemplate):
+class _FSIG203ParamSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3253,7 +3253,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocsSingleErrorN(_BaseTemplate):
+class _FSIG502RetTypeDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3282,7 +3282,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSigSingleErrorN(_BaseTemplate):
+class _FSIG503RetTypeSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3926,7 +3926,7 @@ def function() -> int:
 
 
 @_templates.register
-class _FE109WRetQuestionN(_BaseTemplate):
+class _FSIG501WRetQuestionN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3946,7 +3946,7 @@ def function():
 
 
 @_templates.register
-class _FE109WORetQuestionN(_BaseTemplate):
+class _FSIG501WORetQuestionN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -3960,7 +3960,7 @@ def function():
 
 
 @_templates.register
-class _FE110NEN(_BaseTemplate):
+class _FSIG404NEN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4165,7 +4165,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111N(_BaseTemplate):
+class _FSIG504N(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4417,7 +4417,7 @@ class Klass:
 
 
 @_templates.register
-class _FE112N(_BaseTemplate):
+class _FSIG403N(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4756,7 +4756,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FE109NoRetNoTypeNI(_BaseTemplate):
+class _FSIG501NoRetNoTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4853,7 +4853,7 @@ def function(param1) -> Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrderSingleErrorNI(_BaseTemplate):
+class _FSIG402OutOfOrderSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4878,7 +4878,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocsSingleErrorNI(_BaseTemplate):
+class _FSIG202ParamDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4902,7 +4902,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSigSingleErrorNI(_BaseTemplate):
+class _FSIG203ParamSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4924,7 +4924,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocsSingleErrorNI(_BaseTemplate):
+class _FSIG502RetTypeDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -4953,7 +4953,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSigSingleErrorNI(_BaseTemplate):
+class _FSIG503RetTypeSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -5448,7 +5448,7 @@ class Klass:
 
 
 @_templates.register
-class _FE109WRetQuestionNI(_BaseTemplate):
+class _FSIG501WRetQuestionNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -5468,7 +5468,7 @@ def function():
 
 
 @_templates.register
-class _FE110NENI(_BaseTemplate):
+class _FSIG404NENI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -5631,7 +5631,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111NI(_BaseTemplate):
+class _FSIG504NI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -5824,7 +5824,7 @@ class Klass:
 
 
 @_templates.register
-class _FE112NI(_BaseTemplate):
+class _FSIG403NI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -5905,7 +5905,7 @@ def function(param1, param2, param3):
 
 
 @_templates.register
-class _FE104RetTypeDocsSingleErrorSRs(_BaseTemplate):
+class _FSIG502RetTypeDocsSingleErrorSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6086,7 +6086,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
 
 
 @_templates.register
-class _FE109WRetQuestionSRs(_BaseTemplate):
+class _FSIG501WRetQuestionSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6149,7 +6149,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111SRs(_BaseTemplate):
+class _FSIG504SRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6338,7 +6338,7 @@ def function(param1, param2, param3) -> int:
 
 
 @_templates.register
-class _FE109NoRetNoTypeG(_BaseTemplate):
+class _FSIG501NoRetNoTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6421,7 +6421,7 @@ def function(param1) -> Optional[str]:
 
 
 @_templates.register
-class _FE101OutOfOrderSingleErrorG(_BaseTemplate):
+class _FSIG402OutOfOrderSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6442,7 +6442,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE102ParamDocsSingleErrorG(_BaseTemplate):
+class _FSIG202ParamDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6462,7 +6462,7 @@ def function(param1, param2) -> None:
 
 
 @_templates.register
-class _FE103ParamSigSingleErrorG(_BaseTemplate):
+class _FSIG203ParamSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6481,7 +6481,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE104RetTypeDocsSingleErrorG(_BaseTemplate):
+class _FSIG502RetTypeDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6504,7 +6504,7 @@ def function(param1, param2, param3) -> None:
 
 
 @_templates.register
-class _FE105RetTypeSigSingleErrorG(_BaseTemplate):
+class _FSIG503RetTypeSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6926,7 +6926,7 @@ class Klass:
 
 
 @_templates.register
-class _FE109WRetQuestionG(_BaseTemplate):
+class _FSIG501WRetQuestionG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -6944,7 +6944,7 @@ def function():
 
 
 @_templates.register
-class _FE110NEG(_BaseTemplate):
+class _FSIG404NEG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -7083,7 +7083,7 @@ class Klass:
 
 
 @_templates.register
-class _FE111G(_BaseTemplate):
+class _FSIG504G(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -7251,7 +7251,7 @@ class Klass:
 
 
 @_templates.register
-class _FE112G(_BaseTemplate):
+class _FSIG403G(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -8612,7 +8612,7 @@ class _MInvalidDirectiveOptions(_BaseTemplate):
         return '''
 # docsig: unknown
 def function_1(param1, param2, param3) -> None:  # pylint: disable
-    """E101
+    """SIG402
 
 
     :param param2: Fails.
@@ -8826,7 +8826,7 @@ class Klass:
 
 
 @_templates.register
-class _FWClassConstructorE111FS(_BaseTemplate):
+class _FWClassConstructorSIG504FS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
