@@ -17,7 +17,10 @@ def main() -> int | str:
     if commit_msg.startswith("fix:"):
         repo = git.Repo(Path.cwd())
         diff = repo.git.diff(
-            "HEAD", Path("tests") / "fix_test.py", cached=True, name_only=True
+            "HEAD",
+            Path("tests") / "fix_test.py",
+            cached=True,
+            name_only=True,
         )
         if not diff:
             return """\

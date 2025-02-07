@@ -101,7 +101,7 @@ def generate_changelog() -> None:
             (REPO / "CHANGELOG.md")
             .read_text(encoding="utf-8")
             .split("<!-- release notes start -->")
-        )[1]
+        )[1],
     )
     (GENERATED / "changelog.md").write_text(content, encoding="utf-8")
 
@@ -130,7 +130,8 @@ def generate_pyproject_toml_example() -> None:
     """Generate pyproject.toml example."""
     content = README.read_text(encoding="utf-8")
     (GENERATED / "pyproject-toml-example.rst").write_text(
-        code_block("toml").findall(content)[0], encoding="utf-8"
+        code_block("toml").findall(content)[0],
+        encoding="utf-8",
     )
 
 
@@ -166,7 +167,7 @@ def generate_tests() -> None:
                 "{}{}\n".format(
                     match.group(1),
                     match.group(2).capitalize().replace("_", " "),
-                )
+                ),
             )
         elif line.startswith("* **"):
             skip_lines = True
@@ -179,9 +180,9 @@ def generate_tests() -> None:
                 "\n".join(content)
                 .strip()
                 .replace("\n###", "##")
-                .replace("# tests", "# Tests")
-            )
-        )
+                .replace("# tests", "# Tests"),
+            ),
+        ),
     )
 
 
@@ -190,7 +191,8 @@ def generate_pre_commit_example() -> None:
     """Generate pre-commit example."""
     content = README.read_text(encoding="utf-8")
     (GENERATED / "pre-commit-example.rst").write_text(
-        code_block("yaml").findall(content)[0], encoding="utf-8"
+        code_block("yaml").findall(content)[0],
+        encoding="utf-8",
     )
 
 
@@ -199,7 +201,8 @@ def generate_pre_commit_flake8_example() -> None:
     """Generate pre-commit flake8 example."""
     content = README.read_text(encoding="utf-8")
     (GENERATED / "pre-commit-flake8-example.rst").write_text(
-        code_block("yaml").findall(content)[1], encoding="utf-8"
+        code_block("yaml").findall(content)[1],
+        encoding="utf-8",
     )
 
 
@@ -218,7 +221,8 @@ def generate_commit_policy() -> None:
             for key, value in obj.items():
                 if isinstance(value, list):
                     value = "### {}\n\n- {}".format(
-                        key.capitalize(), "\n- ".join(value)
+                        key.capitalize(),
+                        "\n- ".join(value),
                     )
                 else:
                     pattern = re.compile(r"([A-Z][^A-Z]*)")

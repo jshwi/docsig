@@ -58,7 +58,10 @@ def get_last_issue_fragment(default: Path) -> Path:
 
 
 def create_news_fragment(
-    desc: str, name: Path, repo: git.Repo, last: Path
+    desc: str,
+    name: Path,
+    repo: git.Repo,
+    last: Path,
 ) -> int | str:
     """Create news files and ensure it's not a duplicate.
 
@@ -163,7 +166,9 @@ class Test:
     @classmethod
     @pytest.fixture(autouse=True)
     def setup_class(
-        cls, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+        cls,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
     ) -> None:
         """Set up the test environment.
 

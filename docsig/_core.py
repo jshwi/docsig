@@ -90,7 +90,10 @@ def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
             and not (child.docstring.bare and ignore_no_params)
         ):
             failure = _Failure(
-                child, target, check_property_returns, ignore_typechecker
+                child,
+                target,
+                check_property_returns,
+                ignore_typechecker,
             )
             if failure:
                 failures.append(failure)
@@ -185,7 +188,9 @@ def _from_str(  # pylint: disable=too-many-arguments
             check_class_constructor,
         )
         logger.debug(
-            _FILE_INFO, path or "stdin", "Parsing Python code successful"
+            _FILE_INFO,
+            path or "stdin",
+            "Parsing Python code successful",
         )
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
@@ -237,7 +242,9 @@ def _get_failures(  # pylint: disable=too-many-arguments
 
 
 def _report(
-    failures: _Failures, path: str | None = None, no_ansi: bool = False
+    failures: _Failures,
+    path: str | None = None,
+    no_ansi: bool = False,
 ) -> int:
     retcodes = [0]
     for failure in failures:
@@ -255,7 +262,7 @@ def _report(
                     ref=item.ref,
                     description=item.description,
                     symbolic=item.symbolic,
-                )
+                ),
             )
             if item.hint:
                 print(f"    hint: {item.hint}")

@@ -47,27 +47,27 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string"):
                 stderr.append(
-                    "the following arguments are required: path(s) or string"
+                    "the following arguments are required: path(s) or string",
                 )
 
             for message in kwargs.get("disable") or []:
                 if not message.isknown:
                     stderr.append(
-                        f"unknown option to disable '{message.description}'"
+                        f"unknown option to disable '{message.description}'",
                     )
 
             for message in kwargs.get("target") or []:
                 if not message.isknown:
                     stderr.append(
-                        f"unknown option to target '{message.description}'"
+                        f"unknown option to target '{message.description}'",
                     )
 
             if kwargs.get("check_class") and kwargs.get(
-                "check_class_constructor"
+                "check_class_constructor",
             ):
                 stderr.append(
                     "argument to check class constructor not allowed with"
-                    " argument to check class"
+                    " argument to check class",
                 )
                 # if we don't make it past this condition then we are
                 # running this using the python interpreter
@@ -77,7 +77,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
                     # allow it, therefore, this must be an issue with
                     # the pyproject.toml configuration
                     stderr.append(
-                        "please check your pyproject.toml configuration"
+                        "please check your pyproject.toml configuration",
                     )
 
         return "\n".join(stderr) if stderr else func(*args, **kwargs)

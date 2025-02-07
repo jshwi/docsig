@@ -58,7 +58,8 @@ def get_config(prog: str) -> dict[str, _t.Any]:
 
 
 def merge_configs(
-    obj1: dict[str, _t.Any], obj2: dict[str, _t.Any]
+    obj1: dict[str, _t.Any],
+    obj2: dict[str, _t.Any],
 ) -> dict[str, _t.Any]:
     """Merge two config dicts.
 
@@ -98,7 +99,7 @@ class _ArgumentParser(_a.ArgumentParser):
                 "action": "store",
                 "type": _split_comma,
                 "default": kwargs.get("default", []),
-            }
+            },
         )
         self.add_argument(*args, **kwargs)
 
@@ -110,7 +111,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     :return: Parsed arguments.
     """
     parser = _ArgumentParser(
-        description="Check signature params for proper documentation"
+        description="Check signature params for proper documentation",
     )
     parser.add_argument(
         "-V",

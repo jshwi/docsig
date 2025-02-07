@@ -16,5 +16,7 @@ def excepthook(no_ansi: bool = False) -> None:
     """
     if _e.get("DOCSIG_DEBUG") != "1":
         _sys.excepthook = lambda x, y, _: _pretty_print_error(
-            x, str(y), no_ansi
+            x,
+            str(y),
+            no_ansi,
         )

@@ -84,12 +84,14 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         # resolved in directives object, they are needed to notify user
         # in the case that they are invalid
         parent_comments, parent_disabled = directives.get(
-            node.lineno, (_Comments(), _Messages())
+            node.lineno,
+            (_Comments(), _Messages()),
         )
         if hasattr(node, "body"):
             for subnode in node.body:
                 comments, disabled = directives.get(
-                    subnode.lineno, (_Comments(), _Messages())
+                    subnode.lineno,
+                    (_Comments(), _Messages()),
                 )
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
@@ -119,7 +121,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     else:
                         if func.name in self._overloads:
                             func.overload(
-                                self._overloads[func.name].signature.rettype
+                                self._overloads[func.name].signature.rettype,
                             )
 
                         self._children.append(func)
@@ -133,7 +135,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                             self._ignore_kwargs,
                             self._check_class_constructor,
                             self._imports,
-                        )
+                        ),
                     )
                 else:
                     self._parse_ast(subnode, directives, path)
@@ -213,7 +215,9 @@ class Function(Parent):
                     node.args.args.pop(0)
 
             self._signature = self._signature.from_ast(
-                node, ignore_args, ignore_kwargs
+                node,
+                ignore_args,
+                ignore_kwargs,
             )
             if self.isinit and not check_class_constructor:
                 # docstring for __init__ is expected on the class
@@ -272,7 +276,8 @@ class Function(Parent):
         if self.ismethod and not self.isinit and self._parent is not None:
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
-                    ancestor[self.name], _ast.FunctionDef
+                    ancestor[self.name],
+                    _ast.FunctionDef,
                 ):
                     return True
 
