@@ -45,7 +45,8 @@ def test_print_version(
 
 
 def test_class_and_class_constructor(
-    capsys: pytest.CaptureFixture, main: MockMainType
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
 ) -> None:
     """Test that docsig command lines errors when passed incompatible
     options.
@@ -73,7 +74,8 @@ def test_class_and_class_constructor_in_interpreter() -> None:
 
 
 def test_class_and_class_constructor_in_interpreter_with_config(
-    monkeypatch: pytest.MonkeyPatch, main: MockMainType
+    monkeypatch: pytest.MonkeyPatch,
+    main: MockMainType,
 ) -> None:
     """Test that docsig errors when passed incompatible options.
 
@@ -158,7 +160,7 @@ def test_lineno(
     :param main: Mock ``main`` function.
     """
     init_file(
-        templates.registered.getbyname("m-fail-s").template  # type: ignore
+        templates.registered.getbyname("m-fail-s").template,  # type: ignore
     )
     main(".")
     std = capsys.readouterr()
@@ -297,7 +299,8 @@ def test_no_duplicate_symbolic_messages() -> None:
 
 
 def test_list_checks(
-    main: MockMainType, capsys: pytest.CaptureFixture
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
 ) -> None:
     """Test listing of all available checks.
 
@@ -361,7 +364,8 @@ new-ssl "${@}"
 
 
 def test_bash_script(
-    main: MockMainType, init_file: InitFileFixtureType
+    main: MockMainType,
+    init_file: InitFileFixtureType,
 ) -> None:
     """Test bash script.
 
@@ -408,7 +412,8 @@ echo "Hello, world"
 
 
 def test_no_color_with_pipe(
-    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
 ) -> None:
     """Ensure colors are removed when piping output to a file.
 
@@ -565,7 +570,8 @@ def function(*_, **__) -> None:
 
 
 def test_multiple_exit_codes(
-    main: MockMainType, init_file: InitFileFixtureType
+    main: MockMainType,
+    init_file: InitFileFixtureType,
 ) -> None:
     """Test multiple files, where the last exit code is 0.
 
@@ -609,7 +615,8 @@ def test_multiple_exit_codes(
 
 
 def test_sys_excepthook(
-    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
 ) -> None:
     """Get coverage on except hook.
 
@@ -623,7 +630,9 @@ def test_sys_excepthook(
 
     # noinspection PyUnresolvedReferences
     docsig._utils.pretty_print_error(
-        BaseException, "a base exception", no_ansi=False
+        BaseException,
+        "a base exception",
+        no_ansi=False,
     )
     std = capsys.readouterr()
     assert (
@@ -684,7 +693,9 @@ echo "Hello, world"
 
 
 def test_fail_on_unicode_decode_error_if_py_file(
-    capsys: pytest.CaptureFixture, main: MockMainType, tmp_path: Path
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    tmp_path: Path,
 ) -> None:
     """Ensure unicode decode error is handled without error.
 

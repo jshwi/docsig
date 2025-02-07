@@ -27,7 +27,8 @@ from . import (
 
 @pytest.fixture(name="environment", autouse=True)
 def fixture_environment(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
     """Prepare environment for testing.
 
@@ -60,7 +61,8 @@ def fixture_flake8() -> FixtureFlake8:
 
 @pytest.fixture(name="main")
 def fixture_main(
-    monkeypatch: pytest.MonkeyPatch, flake8: FixtureFlake8
+    monkeypatch: pytest.MonkeyPatch,
+    flake8: FixtureFlake8,
 ) -> MockMainType:
     """Pass patched commandline arguments to package's main function.
 
@@ -70,7 +72,9 @@ def fixture_main(
     """
 
     def _main(
-        *args: str, test_flake8: bool = True, no_ansi: bool = True
+        *args: str,
+        test_flake8: bool = True,
+        no_ansi: bool = True,
     ) -> str | int:
         """Run main with custom args."""
         argv = [docsig.__name__, *[str(a) for a in args]]
@@ -81,7 +85,7 @@ def fixture_main(
         retcode = docsig.main()
         if test_flake8:
             flake8_retcode = flake8(
-                *[str(a).replace("--", "--sig-") for a in args]
+                *[str(a).replace("--", "--sig-") for a in args],
             )
             assert flake8_retcode == retcode
 

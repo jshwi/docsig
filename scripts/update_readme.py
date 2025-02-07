@@ -31,10 +31,11 @@ with contextlib.redirect_stdout(helpio), contextlib.suppress(SystemExit):
 
 path = Path(__file__).parent.parent / "README.rst"
 conflict_pattern = re.compile(
-    r"^(<<<<<<<|=======|>>>>>>>).*\n?", flags=re.MULTILINE
+    r"^(<<<<<<<|=======|>>>>>>>).*\n?",
+    flags=re.MULTILINE,
 )
 commandline_pattern = re.compile(
-    r"(Commandline\s*\*+\s*..\s*code-block::\s*console\s*\n)((?:\s{4}.*\n)+)"
+    r"(Commandline\s*\*+\s*..\s*code-block::\s*console\s*\n)((?:\s{4}.*\n)+)",
 )
 # this won't work if there's a conflict in the file as it analyses
 # indents
@@ -42,7 +43,7 @@ readme_content = conflict_pattern.sub("", path.read_text())
 match = commandline_pattern.search(readme_content)
 if match is not None:
     docsig_help = _normalize_for_alternate_argparse_versions(
-        re.sub(r"^", "    ", helpio.getvalue(), flags=re.MULTILINE)
+        re.sub(r"^", "    ", helpio.getvalue(), flags=re.MULTILINE),
     )
     updated_readme_content = (
         commandline_pattern.sub(rf"\1{docsig_help}", readme_content)

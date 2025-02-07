@@ -232,5 +232,5 @@ E = MessageMap(
             "failed to read file",
             "unicode-decode-error",
         ),
-    }
+    },
 )

@@ -407,7 +407,7 @@ def test_ignore_args(
         name.startswith(FAIL)
         and "w-args" not in name
         or name.startswith(PASS)
-        and "w-args" in name
+        and "w-args" in name,
     )
 
 
@@ -450,7 +450,7 @@ def test_ignore_kwargs(
         name.startswith(FAIL)
         and "w-kwargs" not in name
         or name.startswith(PASS)
-        and "w-kwargs" in name
+        and "w-kwargs" in name,
     )
 
 
@@ -460,7 +460,9 @@ def test_ignore_kwargs(
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
 def test_no_flag(
-    init_file: InitFileFixtureType, main: MockMainType, template: Template
+    init_file: InitFileFixtureType,
+    main: MockMainType,
+    template: Template,
 ) -> None:
     """Test that failing tests pass without their corresponding flag.
 
@@ -536,7 +538,7 @@ def test_check_class_constructor(
     # exclude --check-class from CHECK_ARGS, because this is
     # mutually incompatible with --check-class-constructor
     assert main(".", *CHECK_ARGS[1:], "--check-class-constructor") == int(
-        name[: name.rindex("-")].endswith(FAIL)
+        name[: name.rindex("-")].endswith(FAIL),
     )
 
 

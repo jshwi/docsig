@@ -123,7 +123,9 @@ class Param:
 
 class _Params(_t.List[Param]):
     def __init__(
-        self, ignore_args: bool = False, ignore_kwargs: bool = False
+        self,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         super().__init__()
         self._ignore_args = ignore_args
@@ -142,7 +144,7 @@ class _Params(_t.List[Param]):
                         or any(i.kind == DocType.KWARG for i in self)
                     )
                 ),
-            )
+            ),
         ):
             super().append(value)
 
@@ -191,7 +193,9 @@ class _Params(_t.List[Param]):
 
 class _Stub:
     def __init__(
-        self, ignore_args: bool = False, ignore_kwargs: bool = False
+        self,
+        ignore_args: bool = False,
+        ignore_kwargs: bool = False,
     ) -> None:
         self._args = _Params(ignore_args, ignore_kwargs)
         self._returns = False
@@ -309,11 +313,11 @@ class Docstring(_Stub):
                 str(
                     _s.GoogleDocstring(
                         _textwrap.dedent(
-                            "\n".join(string.splitlines()[1:])
-                        ).replace("*", "")
-                    )
-                )
-            )
+                            "\n".join(string.splitlines()[1:]),
+                        ).replace("*", ""),
+                    ),
+                ),
+            ),
         )
 
     def __init__(
@@ -346,7 +350,8 @@ class Docstring(_Stub):
 
         docstring = cls(string, returns, ret_description_missing)
         for match in _re.findall(
-            r":(.*?)([^\w\s])((?:.|\n)*?)(?=\n:|$)", string
+            r":(.*?)([^\w\s])((?:.|\n)*?)(?=\n:|$)",
+            string,
         ):
             if match:
                 kinds = match[0].split()
@@ -358,7 +363,7 @@ class Docstring(_Stub):
                             match[2] or None,
                             int(indent_anomaly),
                             match[1],
-                        )
+                        ),
                     )
 
         return docstring

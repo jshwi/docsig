@@ -24,7 +24,7 @@ FixturePatchArgv = t.Callable[..., None]
 
 
 class InitFileFixtureType(
-    t.Protocol
+    t.Protocol,
 ):  # pylint: disable=too-few-public-methods
     """Type for ``fixture_init_file``."""
 
@@ -78,7 +78,7 @@ TREE = {
             "CACHEDIR.TAG": [WILL_ERROR],
             "files.json": [WILL_ERROR],
             ".gitignore": ["# Created by pyaud automatically.", "*"],
-        }
+        },
     },
     "CODE_OF_CONDUCT.md": [WILL_ERROR],
     ".pylintrc": [WILL_ERROR],
@@ -117,11 +117,11 @@ TREE = {
             "prettier": {
                 ".prettier-caches": {
                     "7f51ae3462154079bc96a79583b977616b1ad315.json": [
-                        WILL_ERROR
-                    ]
-                }
-            }
-        }
+                        WILL_ERROR,
+                    ],
+                },
+            },
+        },
     },
     "tests": {
         "misc_test.py": [],

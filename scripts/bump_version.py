@@ -63,7 +63,8 @@ def _main() -> int | str:
 
 
 def test_bump(  # pylint: disable=too-many-locals
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Test bump.
 

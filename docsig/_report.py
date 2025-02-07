@@ -171,7 +171,7 @@ class Failure(_t.List[Failed]):
             for count, arg in enumerate(self._func.signature.args, 1):
                 if count > len(self._func.docstring.args):
                     self._func.docstring.args.append(
-                        _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0)
+                        _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
                     )
             # params-missing
             self._add(_E[203])
@@ -180,7 +180,7 @@ class Failure(_t.List[Failed]):
         if doc.description is None:
             self._add(_E[301])
         elif doc.description is not None and not doc.description.startswith(
-            " "
+            " ",
         ):
             # syntax-error-in-description
             self._add(_E[302])

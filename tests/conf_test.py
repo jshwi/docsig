@@ -129,7 +129,8 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
 
 
 def test_no_file_to_root(
-    monkeypatch: pytest.MonkeyPatch, patch_argv: FixturePatchArgv
+    monkeypatch: pytest.MonkeyPatch,
+    patch_argv: FixturePatchArgv,
 ) -> None:
     """Test ``arcon._ArgumentParser`` with no config.
 

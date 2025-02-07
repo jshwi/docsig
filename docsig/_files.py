@@ -56,7 +56,7 @@ class _Gitignore(_PathSpec):
                         _os.path.join(
                             _os.path.dirname(file.relative_to(repo)),
                             pattern.strip(),
-                        ).replace(_os.sep, "/")
+                        ).replace(_os.sep, "/"),
                     )
 
         super().__init__(map(_GitWildMatchPattern, patterns))
@@ -100,7 +100,9 @@ class Paths(_t.List[_Path]):
                 or any(_glob(path, i) for i in self._excludes)
             ):
                 self._logger.debug(
-                    FILE_INFO, path, "in exclude list, skipping"
+                    FILE_INFO,
+                    path,
+                    "in exclude list, skipping",
                 )
                 self.remove(path)
 

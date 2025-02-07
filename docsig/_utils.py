@@ -27,7 +27,9 @@ def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
 
 
 def pretty_print_error(
-    exception_type: _t.Type[BaseException], msg: str, no_ansi: bool
+    exception_type: _t.Type[BaseException],
+    msg: str,
+    no_ansi: bool,
 ) -> None:
     """Print user-friendly exception.
 

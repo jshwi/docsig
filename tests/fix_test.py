@@ -78,7 +78,8 @@ def get_something(number: Optional[int]) -> Optional[str]:
 
 
 def test_no_fail_on_unicode_decode_error_384(
-    main: MockMainType, tmp_path: Path
+    main: MockMainType,
+    tmp_path: Path,
 ) -> None:
     """Ensure unicode decode error is handled without error.
 
