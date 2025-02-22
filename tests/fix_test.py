@@ -635,3 +635,47 @@ def test_handle_empty_symlinks(
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[301].description not in std.out
+
+
+def test_no_erroneous_402_when_order_cannot_be_confirmed(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Fix params out of order popping up with a single document.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class Transactions(_Transactions):
+    """Represents a transaction.
+
+    :param symbol: Symbol.
+    """
+
+    def __init__(self, client: Client, symbol: str, attr: str):
+        super().__init__()
+        data = getattr(client, attr)(symbol=symbol)
+        for i in data:
+            try:
+                epoch_seconds = i["insertTime"] / 1000
+            except KeyError:
+                dt_object = _datetime.strptime(
+                    i["applyTime"], "%Y-%m-%d %H:%M:%S"
+                )
+                epoch_seconds = int(dt_object.timestamp())
+            self.append(
+                _Transaction(
+                    _datetime.fromtimestamp(epoch_seconds).replace(
+                        tzinfo=_timezone.utc
+                    ),
+                    float(i["amount"]),
+                )
+            )
+'''
+    init_file(template)
+    main(".", "--check-class")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description not in std.out

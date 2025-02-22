@@ -55,6 +55,7 @@ class Failure(_t.List[Failed]):
         super().__init__()
         self._retcode = 0
         self._func = func
+        self._docstring_len = len(self._func.docstring.args)
         if target:
             self._func.messages.extend(i for i in _E.all if i not in target)
 
@@ -205,7 +206,7 @@ class Failure(_t.List[Failed]):
             if (
                 sig.name in self._func.docstring.args.names
                 or doc.name in self._func.signature.args.names
-            ):
+            ) and self._docstring_len > 1:
                 # params-out-of-order
                 self._add(_E[402])
             elif (
