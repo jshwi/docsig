@@ -20,7 +20,7 @@ BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
 all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
-#: build distribution
+#: phony target for build
 build: $(BUILD)
 
 #: build and check integrity of distribution
@@ -201,7 +201,7 @@ bump: part = patch
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
 
-#: test check news script
+#: test bumping of version
 .make/test-bump: $(VENV) scripts/bump_version.py
 	@$(POETRY) run pytest scripts/bump_version.py -n=auto
 	@mkdir -p $(@D)
