@@ -679,3 +679,55 @@ class Transactions(_Transactions):
     main(".", "--check-class")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
+
+
+def test_fix_allow_or_operator_in_type_545(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test type declaration in name with pipe is allowed.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def foo(a, **kwargs) -> None:
+    """Test for docsig.
+
+    :param str | None a: Use string or None for this purpose.
+    :keyword str | None bar: Use string or None for this purpose.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[201].description not in std.out
+    assert docsig.messages.E[203].description not in std.out
+    assert docsig.messages.E[301].description not in std.out
+    assert docsig.messages.E[304].description.format(token="|") not in std.out
+
+
+def test_close_with_bitwise_operator_545(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test pipe still treated as a bad closing token.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def foo(**kwargs) -> None:
+    """Test for docsig.
+
+    :keyword bar| Use string or None for this purpose.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[304].description.format(token="|") in std.out

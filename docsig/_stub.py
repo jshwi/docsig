@@ -350,7 +350,7 @@ class Docstring(_Stub):
 
         docstring = cls(string, returns, ret_description_missing)
         for match in _re.findall(
-            r":(.*?)([^\w\s])((?:.|\n)*?)(?=\n:|$)",
+            r":([\w\s]+(?:\s\|\s[\w\s]+|\w+))([^\w\s])((?:.|\n)*?)(?=\n:|$)",
             string,
         ):
             if match:
@@ -359,7 +359,7 @@ class Docstring(_Stub):
                     docstring.args.append(
                         Param(
                             DocType.from_str(kinds[0]),
-                            UNNAMED if len(kinds) == 1 else kinds[1],
+                            UNNAMED if len(kinds) == 1 else kinds[-1],
                             match[2] or None,
                             int(indent_anomaly),
                             match[1],
