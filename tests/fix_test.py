@@ -731,3 +731,34 @@ def foo(**kwargs) -> None:
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[304].description.format(token="|") in std.out
+
+
+def test_recognise_yield_550(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Recognise yield in docstrings.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def count_up_to(n: int) -> _t.Generator[int, None, None]:
+    """
+    Counts from 0 up to n - 1.
+
+    Args:
+        n (int): The upper limit (exclusive).
+
+    Yields:
+        int: The next number in the sequence.
+    """
+    for i in range(n):
+        yield i
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert not std.out

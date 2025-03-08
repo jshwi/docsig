@@ -342,7 +342,11 @@ class Docstring(_Stub):
         string = cls._normalize_docstring(node.value)
         # todo: we can start building return objects for more detailed
         # todo: checks that are in common with the params class
-        match = _re.search(r":returns?:(.*)?", string)
+        match = _re.search(
+            ":(?:returns?|yields?):(.*)?",
+            string,
+            _re.IGNORECASE,
+        )
         returns = bool(match)
         ret_description_missing = False
         if match:
