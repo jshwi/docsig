@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.69.3](https://github.com/jshwi/docsig/tree/v0.69.3) - 2025-03-08
+
+### Fixed
+
+- allow yield as a return doc ([#550](https://github.com/jshwi/docsig/issues/550))
+
 ## [0.69.2](https://github.com/jshwi/docsig/tree/v0.69.2) - 2025-03-08
 
 ### Fixed
