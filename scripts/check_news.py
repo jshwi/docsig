@@ -185,6 +185,7 @@ class Test:
         config = cls.repo.config_writer(config_level="repository")
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test.user@example.com")
+        config.set_value("commit", "gpgsign", False)
         conf["tool"]["towncrier"]["directory"] = str(cls.fragments)
         del conf["tool"]["towncrier"]["template"]
         cls.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
