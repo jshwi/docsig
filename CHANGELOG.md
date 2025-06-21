@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.69.4](https://github.com/jshwi/docsig/tree/v0.69.4) - 2025-06-21
+
+### Fixed
+
+- ignore indents within directives ([#562](https://github.com/jshwi/docsig/issues/562))
+
 ## [0.69.3](https://github.com/jshwi/docsig/tree/v0.69.3) - 2025-03-08
 
 ### Fixed
