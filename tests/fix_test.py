@@ -762,3 +762,39 @@ def count_up_to(n: int) -> _t.Generator[int, None, None]:
     main(".")
     std = capsys.readouterr()
     assert not std.out
+
+
+def test_sig401_false_positives_562(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test indents are ignored within double dot directives.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class Classy:
+    @remove_last_args(['normalize'])  # since 8.2.0
+    def toTimestr(self, force_iso: bool = False) -> str:
+        """Convert the data to a UTC date/time string.
+
+        .. seealso:: :meth:`fromTimestr` for differences between output
+           with and without *force_iso* parameter.
+
+        .. versionchanged:: 8.0
+           *normalize* parameter was added.
+        .. versionchanged:: 8.2
+           *normalize* parameter was removed due to :phab:`T340495` and
+           :phab:`T57755`
+
+        :param force_iso: whether the output should be forced to ISO 8601
+        :return: Timestamp in a format resembling ISO 8601
+        """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert not std.out

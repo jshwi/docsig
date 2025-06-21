@@ -292,6 +292,14 @@ class Docstring(_Stub):
 
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
+        # strip double dot directives from docstring which can be
+        # indented arbitrarily
+        string = _re.sub(
+            r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*",
+            "",
+            string,
+            flags=_re.MULTILINE,
+        )
         for line in string.splitlines():
             # only check params
             # description or anything else is out of scope
