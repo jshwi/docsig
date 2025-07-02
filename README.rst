@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.8| |Black| |isort| |docformatter| |pylint| |Security Status| |Known Vulnerabilities| |docsig|
+|License| |PyPI| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.9| |Black| |isort| |docformatter| |pylint| |Security Status| |Known Vulnerabilities| |docsig|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -30,9 +30,9 @@
 .. |readthedocs.org| image:: https://readthedocs.org/projects/docsig/badge/?version=latest
    :target: https://docsig.readthedocs.io/en/latest/?badge=latest
    :alt: readthedocs.org
-.. |python3.8| image:: https://img.shields.io/badge/python-3.8-blue.svg
-   :target: https://www.python.org/downloads/release/python-380
-   :alt: python3.8
+.. |python3.9| image:: https://img.shields.io/badge/python-3.9-blue.svg
+   :target: https://www.python.org/downloads/release/python-390
+   :alt: python3.9
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
    :alt: Black
@@ -153,7 +153,7 @@ ensure your installation has registered `docsig`
 .. code-block:: console
 
     $ flake8 --version
-    7.1.0 (docsig: 0.69.4, mccabe: 0.7.0, pycodestyle: 2.12.0, pyflakes: 3.2.0) CPython 3.8.13 on Darwin
+    7.1.2 (docsig: 0.69.4, mccabe: 0.7.0, pycodestyle: 2.12.1, pyflakes: 3.2.0) CPython 3.9.6 on Darwin
 
 And now use `flake8` to lint your files
 
