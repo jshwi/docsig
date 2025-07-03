@@ -206,3 +206,13 @@ bump: .make/pre-commit
 	@$(POETRY) run pytest scripts/bump_version.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
+
+#: poetry lock
+poetry.lock: pyproject.toml
+	@$(POETRY) lock
+	@touch $@
+
+.PHONY: deps-update
+#: update dependencies
+deps-update:
+	@$(POETRY) update
