@@ -144,7 +144,7 @@ tomli = "^2.0.1"
 wcmatch = ">=8.5.2,<11.0.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.4.2"
+black = ">=24.4.2,<26.0.0"
 bump-my-version = ">=0.24.1,<0.30.0"
 deptry = ">=0.16.1,<0.24.0"
 docformatter = "^1.7.5"
