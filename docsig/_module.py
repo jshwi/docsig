@@ -47,7 +47,8 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     :param error: Represents an unrecoverable error, if any.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
+    def __init__(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | None = None,
         directives: _Directives | None = None,
@@ -174,6 +175,7 @@ class Function(Parent):
     """
 
     # pylint: disable=too-many-arguments,too-many-instance-attributes
+    # pylint: disable=too-many-positional-arguments
     def __init__(
         self,
         node: _ast.FunctionDef | None = None,

@@ -89,7 +89,8 @@ class Param:
     :param closing_token: The token used for closing the parameter.
     """
 
-    def __init__(  # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
+    def __init__(
         self,
         kind: DocType = DocType.PARAM,
         name: str | None = None,

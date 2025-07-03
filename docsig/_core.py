@@ -60,7 +60,9 @@ def setup_logger(verbose: bool) -> None:
         logger.addHandler(stream_handler)
 
 
-def _run_check(  # pylint: disable=too-many-arguments,too-many-locals
+# pylint: disable=too-many-arguments,too-many-locals
+# pylint: disable=too-many-positional-arguments
+def _run_check(
     child: _Parent,
     parent: _Parent,
     check_class: bool,
@@ -169,7 +171,8 @@ def _from_file(
     return parent
 
 
-def _from_str(  # pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments,too-many-positional-arguments
+def _from_str(
     context: dict,
     messages: _Messages,
     ignore_args: bool,
@@ -199,7 +202,8 @@ def _from_str(  # pylint: disable=too-many-arguments
     return parent
 
 
-def _get_failures(  # pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments,too-many-positional-arguments
+def _get_failures(
     module: _Parent,
     check_class: bool,
     check_class_constructor: bool,
@@ -270,7 +274,9 @@ def _report(
     return max(retcodes)
 
 
-def runner(  # pylint: disable=too-many-locals,too-many-arguments
+# pylint: disable=too-many-locals,too-many-arguments
+# pylint: disable=too-many-positional-arguments
+def runner(
     path: _Path,
     disable: _Messages | None = None,
     check_class: bool = False,

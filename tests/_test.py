@@ -272,7 +272,8 @@ def test_no_stdout(
     templates.registered.filtergroup(MULTI),
     ids=templates.registered.filtergroup(MULTI).getids(),
 )
-def test_ignore_no_params(  # pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments,too-many-positional-arguments
+def test_ignore_no_params(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
     main: MockMainType,

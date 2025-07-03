@@ -653,7 +653,7 @@ def test_gitignore_patterns(
         "dir-path-to-file-and-nested-dir-and-files",
     ],
 )
-def test_exclude_glob(
+def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
     monkeypatch: pytest.MonkeyPatch,
     main: MockMainType,
     make_tree: FixtureMakeTree,
