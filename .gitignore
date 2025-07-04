@@ -5,6 +5,7 @@
 .benchmarks/
 .env
 .make/
+.tox
 __pycache__/
 bin
 dist/
