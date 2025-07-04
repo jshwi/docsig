@@ -1,0 +1,23 @@
+name: Publish vX.Y.0 version doc
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.0"
+
+jobs:
+  enable-rtd-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish version
+        env:
+          API: https://readthedocs.org/api/v3/projects
+          PROJECT: docsig
+          TAG: ${{ github.ref_name }}
+          RTD_TOKEN: ${{ secrets.RTD_TOKEN }}
+        run: |
+          curl -X PATCH \
+            -H "Authorization: Token $RTD_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"active":true}' \
+            "$API/$PROJECT/versions/$TAG/"
