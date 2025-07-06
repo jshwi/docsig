@@ -186,29 +186,29 @@ API
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... def function(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
     ...     :param param3: About param3.
-    ...     '''
     ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     0
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... def function(param1, param2) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: About param1.
     ...     :param param2: About param2.
     ...     :param param3: About param3.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     2 in function
         SIG202: includes parameters that do not exist (params-do-not-exist)
