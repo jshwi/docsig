@@ -706,7 +706,7 @@ def test_fail_on_unicode_decode_error_if_py_file(
     pkl = tmp_path / "test.py"
     serialize = [1, 2, 3]
     with open(pkl, "wb") as fout:
-        pickle.dump(serialize, fout)
+        pickle.dump(serialize, fout)  # type: ignore
 
     assert main(pkl, test_flake8=False) == 1
     std = capsys.readouterr()

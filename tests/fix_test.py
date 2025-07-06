@@ -89,7 +89,7 @@ def test_no_fail_on_unicode_decode_error_384(
     pkl = tmp_path / "test.pkl"
     serialize = [1, 2, 3]
     with open(pkl, "wb") as fout:
-        pickle.dump(serialize, fout)
+        pickle.dump(serialize, fout)  # type: ignore
 
     assert main(pkl, test_flake8=False) == 0
 
