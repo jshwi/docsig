@@ -117,6 +117,12 @@ class Docsig:
             help="ignore checking return values",
         )
         parser.add_option(
+            "--sig-enforce-capitalization",
+            action="store_true",
+            parse_from_config=True,
+            help="ensure param descriptions are capitalized",
+        )
+        parser.add_option(
             "--sig-verbose",
             action="store_true",
             parse_from_config=True,
@@ -166,6 +172,7 @@ class Docsig:
                 ignore_args=self.a.ignore_args,
                 ignore_kwargs=self.a.ignore_kwargs,
                 ignore_typechecker=self.a.ignore_typechecker,
+                enforce_capitalization=self.a.enforce_capitalization,
             )
             for result in results:
                 for info in result:

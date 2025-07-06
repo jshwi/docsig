@@ -80,7 +80,8 @@ Commandline
 .. code-block:: console
 
     usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a] [-k] [-T]
-                  [-I] [-n] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]]
+                  [-I] [-U] [-n] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
+                  [-E PATH [PATH ...]]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -113,6 +114,8 @@ Commandline
                             ignore checking return values
       -I, --include-ignored
                             check files even if they match a gitignore pattern
+      -U, --enforce-capitalization
+                            ensure param descriptions are capitalized
       -n, --no-ansi         disable ansi output
       -v, --verbose         increase output verbosity
       -s STR, --string STR  string to parse instead of files

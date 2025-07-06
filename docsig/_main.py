@@ -38,6 +38,7 @@ def main() -> str | int:
         ignore_args=a.ignore_args,
         ignore_kwargs=a.ignore_kwargs,
         ignore_typechecker=a.ignore_typechecker,
+        enforce_capitalization=a.enforce_capitalization,
         no_ansi=a.no_ansi,
         verbose=a.verbose,
         target=a.target,

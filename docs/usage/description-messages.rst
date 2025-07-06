@@ -17,3 +17,8 @@
    :titlesonly:
 
    messages/sig304-bad-closing-token
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig305-description-not-capitalized

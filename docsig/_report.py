@@ -17,6 +17,7 @@ from ._stub import Param as _Param
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
 from ._utils import has_bad_return as _has_bad_return
+from ._utils import sentence_tokenizer as _sentence_tokenizer
 from .messages import E as _E
 from .messages import Message as _Message
 from .messages import Messages as _Messages
@@ -43,14 +44,18 @@ class Failure(_t.List[Failed]):
     :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
     :param ignore_typechecker: Ignore checking return values.
+    :param enforce_capitalization: Ensure param descriptions are
+        capitalised.
     """
 
+    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
         func: _Function,
         target: _Messages,
         check_property_returns: bool,
         ignore_typechecker: bool,
+        enforce_capitalization: bool,
     ) -> None:
         super().__init__()
         self._retcode = 0
@@ -68,6 +73,7 @@ class Failure(_t.List[Failed]):
             self._name = f"{self._func.parent.name}.{self._func.name}"
 
         self._check_property_returns = check_property_returns
+        self._enforce_capitalization = enforce_capitalization
         if self._func.error is not None:
             self._sig9xx_error()
         else:
@@ -197,6 +203,17 @@ class Failure(_t.List[Failed]):
                 token=doc.closing_token,
                 hint=True,
             )
+        if (
+            self._enforce_capitalization
+            and doc.description is not None
+            and not all(
+                i.strip()[0].isupper()
+                for i in _sentence_tokenizer(doc.description)
+                if i
+            )
+        ):
+            # description is not capitalised
+            self._add(_E[305])
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         if doc.indent > 0:

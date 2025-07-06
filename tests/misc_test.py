@@ -757,3 +757,55 @@ class Implementation(BaseClass):
     main(".")
     std = capsys.readouterr()
     assert not std.out
+
+
+def test_enforce_capitalisation_should_591(
+    main: MockMainType,
+    capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test enforce capitalisation.
+
+    :param main: Patch package entry point.
+    :param capsys: Capture sys out.
+    :param init_file: initialise a test file.
+    """
+    t1 = '''
+def foo(a) -> None:
+    """Test for docsig.
+
+    :param a: this is all lower case.
+    """
+'''
+    t2 = '''
+def foo(a) -> None:
+    """Test for docsig.
+
+    :param a: This is all lower case. but this is not.
+    """
+'''
+    init_file(t1)
+    init_file(t2)
+    assert main(".", "--enforce-capitalization") == 1
+    std = capsys.readouterr()
+    assert docsig.messages.E[305].description in std.out
+
+
+def test_enforce_capitalisation_should_not_591(
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test enforce capitalisation.
+
+    :param main: Patch package entry point.
+    :param init_file: initialise a test file.
+    """
+    template = '''
+def function(a) -> None:
+    """Function summary.
+
+    :param a: Description of param e.g. not a new sentence.
+    """
+'''
+    init_file(template)
+    assert main(".", "--enforce-capitalization") == 0
