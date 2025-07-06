@@ -90,6 +90,7 @@ wrap-summaries = 72
 [tool.docsig]
 check-class = true
 check-protected-class-methods = true
+enforce-capitalization = true
 
 [tool.flynt]
 line-length = 79
