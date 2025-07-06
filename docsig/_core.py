@@ -410,7 +410,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param enforce_capitalization: Ensure param descriptions are
         capitalised.
     :param no_ansi: Disable ANSI output.
-    :param verbose: increase output verbosity.
+    :param verbose: Increase output verbosity.
     :param target: List of errors to target.
     :param disable: List of errors to disable.
     :param exclude: Regular expression of files and dirs to exclude from
