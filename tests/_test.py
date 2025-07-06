@@ -304,7 +304,7 @@ def test_ignore_no_params(
         E[203].fstring(T),  # parameters missing
         E[503].fstring(T),  # return missing from docstring
         E[501].fstring(T),  # cannot determine whether a return ...
-        E[503].hint,  # it is possible a syntax error ...
+        E[503].hint,  # it is possible a syntax error could be ...
     )
     parameter_keys = (
         ":param",
@@ -322,8 +322,7 @@ def test_ignore_no_params(
 
     # expected result one of the messages indicating missing params
     # does not include any strings indicating that params are documented
-    # output should be none and the should result with a zero exit
-    # status
+    # output should be none and should result in a zero exit-status
     no_params = (
         expected in missing_messages
         and (

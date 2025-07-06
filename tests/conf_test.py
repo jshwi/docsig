@@ -102,7 +102,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     namespace = parser.parse_args()
     assert namespace.list == [1, 2, 3]
 
-    # if the default kwarg is provided it is added to by the
+    # if the default kwarg is provided, it is added to by the
     # pyproject.toml, as this is a configured value, and a default if
     # nothing included in commandline
     config = {TOOL: {NAME: {"list": [100, 200, 300]}}}
