@@ -212,6 +212,12 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="check files even if they match a gitignore pattern",
     )
     parser.add_argument(
+        "-U",
+        "--enforce-capitalization",
+        action="store_true",
+        help="ensure param descriptions are capitalized",
+    )
+    parser.add_argument(
         "-n",
         "--no-ansi",
         action="store_true",

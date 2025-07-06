@@ -165,6 +165,11 @@ E = MessageMap(
             "bad-closing-token",
             "close a parameter declaration with ':'",
         ),
+        305: Message(
+            "SIG305",
+            "description does not begin with a capital letter",
+            "description-not-capitalized",
+        ),
         #: SIG4xx Description
         401: Message(
             "SIG401",

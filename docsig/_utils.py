@@ -5,6 +5,7 @@ docsig._utils
 
 from __future__ import annotations as _
 
+import re as _re
 import sys as _sys
 import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
@@ -67,3 +68,29 @@ def has_bad_return(string: str) -> bool:
     return (
         len(lines) > 1 and "return" in lines[-1] and ":param" not in lines[-1]
     )
+
+
+def sentence_tokenizer(text: str) -> list[str]:
+    """Split text into sentences.
+
+    :param text: Text to split.
+    :return: List of sentences.
+    """
+    abbreviations = {"e.g.", "i.e.", "mr.", "dr.", "vs.", "etc.", "u.s."}
+    result = []
+    start = 0
+
+    for match in _re.finditer(r"[.!?]\s+", text):
+        end = match.end()
+        candidate = text[start:end].strip()
+        last_word = candidate.lower().split()[-1]
+        if last_word in abbreviations:
+            continue
+
+        result.append(candidate)
+        start = end
+
+    if start < len(text):
+        result.append(text[start:].strip())
+
+    return result

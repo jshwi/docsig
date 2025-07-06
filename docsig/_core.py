@@ -74,6 +74,7 @@ def _run_check(
     check_property_returns: bool,
     ignore_no_params: bool,
     ignore_typechecker: bool,
+    enforce_capitalization: bool,
     no_ansi: bool,
     target: _Messages,
     failures: _Failures,
@@ -96,6 +97,7 @@ def _run_check(
                 target,
                 check_property_returns,
                 ignore_typechecker,
+                enforce_capitalization,
             )
             if failure:
                 failures.append(failure)
@@ -114,6 +116,7 @@ def _run_check(
                     check_property_returns,
                     ignore_no_params,
                     ignore_typechecker,
+                    enforce_capitalization,
                     no_ansi,
                     target,
                     failures,
@@ -133,6 +136,7 @@ def _run_check(
                 check_property_returns,
                 ignore_no_params,
                 ignore_typechecker,
+                enforce_capitalization,
                 no_ansi,
                 target,
                 failures,
@@ -215,6 +219,7 @@ def _get_failures(
     ignore_no_params: bool,
     ignore_typechecker: bool,
     check_protected_class_methods: bool,
+    enforce_capitalization,
     no_ansi: bool,
     target: _Messages,
 ) -> _Failures:
@@ -237,6 +242,7 @@ def _get_failures(
                 check_property_returns,
                 ignore_no_params,
                 ignore_typechecker,
+                enforce_capitalization,
                 no_ansi,
                 target or _Messages(),
                 failures,
@@ -291,6 +297,7 @@ def runner(
     ignore_kwargs: bool = False,
     ignore_typechecker: bool = False,
     check_protected_class_methods: bool = False,
+    enforce_capitalization: bool = False,
     no_ansi: bool = False,
     target: _Messages | None = None,
 ) -> _Failures:
@@ -313,6 +320,8 @@ def runner(
     :param ignore_typechecker: Ignore checking return values.
     :param check_protected_class_methods: Check public methods belonging
         to protected classes.
+    :param enforce_capitalization: Ensure param descriptions are
+        capitalised.
     :param no_ansi: Disable ANSI output.
     :param target: List of errors to target.
     :return: Exit status for whether test failed or not.
@@ -336,6 +345,7 @@ def runner(
         ignore_no_params,
         ignore_typechecker,
         check_protected_class_methods,
+        enforce_capitalization,
         no_ansi,
         target or _Messages(),
     )
@@ -360,6 +370,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
     ignore_typechecker: bool = False,
+    enforce_capitalization: bool = False,
     no_ansi: bool = False,
     verbose: bool = False,
     target: _Messages | None = None,
@@ -396,6 +407,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param ignore_typechecker: Ignore checking return values.
+    :param enforce_capitalization: Ensure param descriptions are
+        capitalised.
     :param no_ansi: Disable ANSI output.
     :param verbose: increase output verbosity.
     :param target: List of errors to target.
@@ -437,6 +450,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
                 ignore_kwargs,
                 ignore_typechecker,
                 check_protected_class_methods,
+                enforce_capitalization,
                 no_ansi,
                 target,
             )
@@ -465,6 +479,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ignore_no_params,
         ignore_typechecker,
         check_protected_class_methods,
+        enforce_capitalization,
         no_ansi,
         target or _Messages(),
     )
