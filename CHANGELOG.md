@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.71.0](https://github.com/jshwi/docsig/tree/v0.71.0) - 2025-07-08
+
+### Added
+
+- option to enforce description capitalization ([#591](https://github.com/jshwi/docsig/issues/591))
+
 ## [0.70.0](https://github.com/jshwi/docsig/tree/v0.70.0) - 2025-07-03
 
 ### Changed
