@@ -90,21 +90,6 @@ class _ArgumentParser(_a.ArgumentParser):
         namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 
-    def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
-        """Parse a comma separated list of strings into a list.
-
-        :param args: Long and/or short form argument(s).
-        :param kwargs: Kwargs to pass to ``add_argument``.
-        """
-        kwargs.update(
-            {
-                "action": "store",
-                "type": _split_comma,
-                "default": kwargs.get("default", []),
-            },
-        )
-        self.add_argument(*args, **kwargs)
-
 
 # noinspection PyUnresolvedReferences
 def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
@@ -226,16 +211,22 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         action="store_true",
         help="ignore checking return values",
     )
-    parser.add_list_argument(
+    parser.add_argument(
         "-d",
         "--disable",
         metavar="LIST",
+        action="store",
+        type=_split_comma,
+        default=[],
         help="comma-separated list of rule codes to disable",
     )
-    parser.add_list_argument(
+    parser.add_argument(
         "-t",
         "--target",
         metavar="LIST",
+        action="store",
+        type=_split_comma,
+        default=[],
         help="comma-separated list of rule codes to target",
     )
     parser.add_argument(

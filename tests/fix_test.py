@@ -14,7 +14,7 @@ import docsig
 import docsig.plugin
 
 # noinspection PyProtectedMember
-from docsig._config import _ArgumentParser
+from docsig._config import _ArgumentParser, _split_comma
 
 from . import (
     TREE,
@@ -484,7 +484,13 @@ add_imports = ["from __future__ import annotations"]
     )
     patch_argv("docsig.EXE")
     parser = _ArgumentParser()
-    parser.add_list_argument(short.disable, long.disable)
+    parser.add_argument(
+        short.disable,
+        long.disable,
+        action="store",
+        type=_split_comma,
+        default=[],
+    )
     namespace = parser.parse_args()
     assert all(i in namespace.disable for i in disable)
 
