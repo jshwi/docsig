@@ -115,7 +115,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         "-l",
         "--list-checks",
         action="store_true",
-        help="display a list of all checks and their messages",
+        help="list all available checks and exit",
     )
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
@@ -128,7 +128,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         "-C",
         "--check-class-constructor",
         action="store_true",
-        help="check __init__ methods. Note: mutually incompatible with -c",
+        help="check __init__ methods (mutually exclusive with --class-class)",
     )
     parser.add_argument(
         "-D",
@@ -206,7 +206,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         "-n",
         "--no-ansi",
         action="store_true",
-        help="disable ansi output",
+        help="disable ansi color output",
     )
     parser.add_argument(
         "-v",
@@ -228,7 +228,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         action="store",
         type=_split_comma,
         default=[],
-        help="comma separated list of rules to disable",
+        help="comma-separated list of rule codes to disable",
     )
     parser.add_argument(
         "-t",
@@ -237,7 +237,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         action="store",
         type=_split_comma,
         default=[],
-        help="comma separated list of rules to target",
+        help="comma-separated list of rule codes to target",
     )
     parser.add_argument(
         "-e",
