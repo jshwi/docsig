@@ -76,9 +76,9 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-V] [-l] [-c | -C] [-D] [-m] [-N] [-o] [-p] [-P] [-i] [-a] [-k] [-T]
-                  [-I] [-U] [-n] [-v] [-s STR] [-d LIST] [-t LIST] [-e PATTERN]
-                  [-E PATH [PATH ...]]
+    usage: docsig [-h] [-V] [-l] [-n] [-v] [-c | -C] [-D] [-N] [-o] [-P] [-p] [-m] [-U] [-a]
+                  [-k] [-i] [-T] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]] [-I]
+                  [-s STR]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -90,32 +90,29 @@ Commandline
       -h, --help            show this help message and exit
       -V, --version         show program's version number and exit
       -l, --list-checks     list all available checks and exit
+      -n, --no-ansi         disable ansi color output
+      -v, --verbose         increase output verbosity
       -c, --check-class     check class docstrings
       -C, --check-class-constructor
                             check __init__ methods (mutually exclusive with --class-class)
       -D, --check-dunders   check dunder methods
-      -m, --check-protected-class-methods
-                            check public methods belonging to protected classes
       -N, --check-nested    check nested functions and classes
       -o, --check-overridden
                             check overridden methods
-      -p, --check-protected
-                            check protected functions and classes
       -P, --check-property-returns
                             check property return values
-      -i, --ignore-no-params
-                            ignore docstrings where parameters are not documented
-      -a, --ignore-args     ignore args prefixed with an asterisk
-      -k, --ignore-kwargs   ignore kwargs prefixed with two asterisks
-      -T, --ignore-typechecker
-                            ignore checking return values
-      -I, --include-ignored
-                            check files even if they match a gitignore pattern
+      -p, --check-protected
+                            check protected functions and classes
+      -m, --check-protected-class-methods
+                            check public methods belonging to protected classes
       -U, --enforce-capitalization
                             ensure param descriptions are capitalized
-      -n, --no-ansi         disable ansi color output
-      -v, --verbose         increase output verbosity
-      -s STR, --string STR  string to parse instead of files
+      -a, --ignore-args     ignore args prefixed with an asterisk
+      -k, --ignore-kwargs   ignore kwargs prefixed with two asterisks
+      -i, --ignore-no-params
+                            ignore docstrings where parameters are not documented
+      -T, --ignore-typechecker
+                            ignore checking return values
       -d LIST, --disable LIST
                             comma-separated list of rule codes to disable
       -t LIST, --target LIST
@@ -124,6 +121,9 @@ Commandline
                             regular expression of files or dirs to exclude from checks
       -E PATH [PATH ...], --excludes PATH [PATH ...]
                             path glob patterns to exclude from checks
+      -I, --include-ignored
+                            check files even if they match a gitignore pattern
+      -s STR, --string STR  string to parse instead of files
 
 Options can also be configured with the pyproject.toml file
 
