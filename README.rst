@@ -76,9 +76,12 @@ Commandline
 
 .. code-block:: console
 
-    usage: docsig [-h] [-V] [-l] [-n] [-v] [-c | -C] [-D] [-N] [-o] [-P] [-p] [-m] [-U] [-a]
-                  [-k] [-i] [-T] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]] [-I]
-                  [-s STR]
+    usage: docsig [-h] [-V] [-l] [-n] [-v] [--check-class | --check-class-constructor]
+                  [--check-dunders] [--check-nested] [--check-overridden]
+                  [--check-property-returns] [--check-protected]
+                  [--check-protected-class-methods] [--enforce-capitalization] [--ignore-args]
+                  [--ignore-kwargs] [--ignore-no-params] [--ignore-typechecker] [-d LIST]
+                  [-t LIST] [-e PATTERN] [-E PATH [PATH ...]] [-I] [-s STR]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -92,27 +95,23 @@ Commandline
       -l, --list-checks     list all available checks and exit
       -n, --no-ansi         disable ansi color output
       -v, --verbose         increase output verbosity
-      -c, --check-class     check class docstrings
-      -C, --check-class-constructor
-                            check __init__ methods (mutually exclusive with --class-class)
-      -D, --check-dunders   check dunder methods
-      -N, --check-nested    check nested functions and classes
-      -o, --check-overridden
-                            check overridden methods
-      -P, --check-property-returns
+      --check-class         check class docstrings
+      --check-class-constructor
+                            check __init__ methods (mutually exclusive with --check-class)
+      --check-dunders       check dunder methods
+      --check-nested        check nested functions and classes
+      --check-overridden    check overridden methods
+      --check-property-returns
                             check property return values
-      -p, --check-protected
-                            check protected functions and classes
-      -m, --check-protected-class-methods
+      --check-protected     check protected functions and classes
+      --check-protected-class-methods
                             check public methods belonging to protected classes
-      -U, --enforce-capitalization
+      --enforce-capitalization
                             ensure param descriptions are capitalized
-      -a, --ignore-args     ignore args prefixed with an asterisk
-      -k, --ignore-kwargs   ignore kwargs prefixed with two asterisks
-      -i, --ignore-no-params
-                            ignore docstrings where parameters are not documented
-      -T, --ignore-typechecker
-                            ignore checking return values
+      --ignore-args         ignore args prefixed with an asterisk
+      --ignore-kwargs       ignore kwargs prefixed with two asterisks
+      --ignore-no-params    ignore docstrings where parameters are not documented
+      --ignore-typechecker  ignore checking return values
       -d LIST, --disable LIST
                             comma-separated list of rule codes to disable
       -t LIST, --target LIST
