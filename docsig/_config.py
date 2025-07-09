@@ -99,12 +99,6 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         description="Check signature params for proper documentation",
     )
     parser.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version=__version__,
-    )
-    parser.add_argument(
         "path",
         nargs="*",
         action="store",
@@ -112,10 +106,28 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="directories or files to check",
     )
     parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=__version__,
+    )
+    parser.add_argument(
         "-l",
         "--list-checks",
         action="store_true",
         help="display a list of all checks and their messages",
+    )
+    parser.add_argument(
+        "-n",
+        "--no-ansi",
+        action="store_true",
+        help="disable ansi output",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="increase output verbosity",
     )
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
@@ -137,12 +149,6 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="check dunder methods",
     )
     parser.add_argument(
-        "-m",
-        "--check-protected-class-methods",
-        action="store_true",
-        help="check public methods belonging to protected classes",
-    )
-    parser.add_argument(
         "-N",
         "--check-nested",
         action="store_true",
@@ -155,22 +161,28 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="check overridden methods",
     )
     parser.add_argument(
-        "-p",
-        "--check-protected",
-        action="store_true",
-        help="check protected functions and classes",
-    )
-    parser.add_argument(
         "-P",
         "--check-property-returns",
         action="store_true",
         help="check property return values",
     )
     parser.add_argument(
-        "-i",
-        "--ignore-no-params",
+        "-p",
+        "--check-protected",
         action="store_true",
-        help="ignore docstrings where parameters are not documented",
+        help="check protected functions and classes",
+    )
+    parser.add_argument(
+        "-m",
+        "--check-protected-class-methods",
+        action="store_true",
+        help="check public methods belonging to protected classes",
+    )
+    parser.add_argument(  # deprecated
+        "-U",
+        "--enforce-capitalization",
+        action="store_true",
+        help=_a.SUPPRESS,
     )
     parser.add_argument(
         "-a",
@@ -185,41 +197,16 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="ignore kwargs prefixed with two asterisks",
     )
     parser.add_argument(
+        "-i",
+        "--ignore-no-params",
+        action="store_true",
+        help="ignore docstrings where parameters are not documented",
+    )
+    parser.add_argument(
         "-T",
         "--ignore-typechecker",
         action="store_true",
         help="ignore checking return values",
-    )
-    parser.add_argument(
-        "-I",
-        "--include-ignored",
-        action="store_true",
-        help="check files even if they match a gitignore pattern",
-    )
-    parser.add_argument(  # deprecated
-        "-U",
-        "--enforce-capitalization",
-        action="store_true",
-        help=_a.SUPPRESS,
-    )
-    parser.add_argument(
-        "-n",
-        "--no-ansi",
-        action="store_true",
-        help="disable ansi output",
-    )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="increase output verbosity",
-    )
-    parser.add_argument(
-        "-s",
-        "--string",
-        action="store",
-        metavar="STR",
-        help="string to parse instead of files",
     )
     parser.add_argument(
         "-d",
@@ -251,5 +238,18 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         nargs="+",
         metavar="PATH",
         help="path glob patterns to exclude from checks",
+    )
+    parser.add_argument(
+        "-I",
+        "--include-ignored",
+        action="store_true",
+        help="check files even if they match a gitignore pattern",
+    )
+    parser.add_argument(
+        "-s",
+        "--string",
+        action="store",
+        metavar="STR",
+        help="string to parse instead of files",
     )
     return parser.parse_args(args)
