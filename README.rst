@@ -92,10 +92,10 @@ Commandline
     optional arguments:
       -h, --help            show this help message and exit
       -V, --version         show program's version number and exit
-      -l, --list-checks     display a list of all checks and their messages
+      -l, --list-checks     list all available checks and exit
       -c, --check-class     check class docstrings
       -C, --check-class-constructor
-                            check __init__ methods. Note: mutually incompatible with -c
+                            check __init__ methods (mutually exclusive with --class-class)
       -D, --check-dunders   check dunder methods
       -m, --check-protected-class-methods
                             check public methods belonging to protected classes
@@ -116,13 +116,13 @@ Commandline
                             check files even if they match a gitignore pattern
       -U, --enforce-capitalization
                             ensure param descriptions are capitalized
-      -n, --no-ansi         disable ansi output
+      -n, --no-ansi         disable ansi color output
       -v, --verbose         increase output verbosity
       -s STR, --string STR  string to parse instead of files
       -d LIST, --disable LIST
-                            comma separated list of rules to disable
+                            comma-separated list of rule codes to disable
       -t LIST, --target LIST
-                            comma separated list of rules to target
+                            comma-separated list of rule codes to target
       -e PATTERN, --exclude PATTERN
                             regular expression of files or dirs to exclude from checks
       -E PATH [PATH ...], --excludes PATH [PATH ...]
