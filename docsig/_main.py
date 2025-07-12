@@ -12,6 +12,7 @@ from ._core import docsig as _docsig
 from ._hooks import excepthook as _excepthook
 
 
+# noinspection PyUnresolvedReferences
 def main() -> str | int:
     """Main function for package.
 

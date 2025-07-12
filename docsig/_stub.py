@@ -28,6 +28,7 @@ class RetType(_Enum):
     SOME = 2
     UNTYPED = 3
 
+    # noinspection PyUnresolvedReferences
     @classmethod
     def from_ast(cls, returns: _ast.NodeNG | None) -> RetType:
         """Construct a return type object from an AST node.
@@ -90,6 +91,7 @@ class Param:
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
+    # noinspection PyUnresolvedReferences
     def __init__(
         self,
         kind: DocType = DocType.PARAM,
@@ -163,6 +165,7 @@ class _Params(_t.List[Param]):
         except IndexError:
             return Param()
 
+    # noinspection PyUnresolvedReferences
     @property
     def names(self) -> list[str | None]:
         """Get names of params."""
@@ -232,6 +235,7 @@ class Signature(_Stub):
         self._rettype = rettype
         self._returns = returns
 
+    # noinspection PyUnresolvedReferences
     @classmethod
     def from_ast(
         cls,
@@ -329,6 +333,7 @@ class Docstring(_Stub):
             ),
         )
 
+    # noinspection PyUnresolvedReferences
     def __init__(
         self,
         string: str | None = None,
@@ -381,6 +386,7 @@ class Docstring(_Stub):
 
         return docstring
 
+    # noinspection PyUnresolvedReferences
     @property
     def string(self) -> str | None:
         """The raw documentation string, if it exists, else None."""
