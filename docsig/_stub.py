@@ -297,7 +297,7 @@ class Docstring(_Stub):
 
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
-        # strip double dot directives from docstring which can be
+        # strip double dot directives from docstring, which can be
         # indented arbitrarily
         string = _re.sub(
             r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*",
@@ -319,7 +319,7 @@ class Docstring(_Stub):
 
     @staticmethod
     def _normalize_docstring(string: str) -> str:
-        # convert google and numpy style docstrings to parse docstrings
+        # convert Google and numpy style docstrings to parse docstrings
         # as restructured text
         return str(
             _s.NumpyDocstring(
