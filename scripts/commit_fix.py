@@ -8,6 +8,7 @@ from pathlib import Path
 import git
 
 
+# noinspection PyUnresolvedReferences
 def main() -> int | str:
     """Entry point.
 

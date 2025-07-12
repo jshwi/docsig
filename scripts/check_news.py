@@ -57,6 +57,7 @@ def get_last_issue_fragment(default: Path) -> Path:
     return default.parent / max(files, key=lambda x: x[1])[0]
 
 
+# noinspection PyUnresolvedReferences
 def create_news_fragment(
     desc: str,
     name: Path,
@@ -100,6 +101,7 @@ def create_news_fragment(
     return output
 
 
+# noinspection PyUnresolvedReferences
 def main() -> int | str:
     """Entry point.
 
@@ -197,6 +199,7 @@ class Test:
     def _touch_unique_file(self) -> None:
         Path(self.repo.git.rev_parse("HEAD")).touch()
 
+    # noinspection PyUnresolvedReferences
     def _ci(self, **kwargs: t.Any) -> int | str:
         # simulate pre-commit hook which blocks unstaged fragments
         assert "??" not in self.repo.git.status(self.fragments, porcelain=True)

@@ -14,6 +14,7 @@ import tomli
 import tomli_w
 
 
+# noinspection PyUnresolvedReferences
 def _main() -> int | str:
     p = ArgumentParser()
     p.add_argument("part", choices=["patch", "minor", "major"])
