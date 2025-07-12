@@ -180,7 +180,7 @@ def function() -> None:
 def test_bench(bench: MockMainType, template: str, path: str) -> None:
     """A small benchmark test.
 
-    :param bench: Benchmark fixture that is active when environment
+    :param bench: Benchmark fixture that is active when the environment
         allows it to be.
     :param template: String data.
     :param path: An associated mock file path.
