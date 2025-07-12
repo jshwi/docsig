@@ -120,7 +120,7 @@ class Param:
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether parameter is protected."""
+        """Boolean value for whether a parameter is protected."""
         return str(self.name).startswith("_")
 
 
@@ -154,7 +154,7 @@ class _Params(_t.List[Param]):
     def get(self, index: int) -> Param:
         """Get a param.
 
-        If the index does not exist return a `Param` with None as
+        If the index does not exist, return a `Param` with None as
         `Param.name`.
 
         :param index: Index of param to get.
@@ -243,7 +243,7 @@ class Signature(_Stub):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> Signature:
-        """Parse signature from ast.
+        """Parse signature from AST.
 
         :param node: Abstract syntax tree.
         :param ignore_args: Ignore args prefixed with an asterisk.
@@ -272,15 +272,15 @@ class Signature(_Stub):
     def rettype(self) -> RetType:
         """Function's return value.
 
-        If a function is typed to return None, return str(None). If no
-        typehint exists then return None (NoneType).
+        If a function is typed to return None, return "". If no typehint
+        exists, then return None (NoneType).
         """
         return self._rettype
 
     def overload(self, rettype: RetType) -> None:
-        """Overload signature with a ret type.
+        """Overload signature with a return type.
 
-        :param rettype: Return type of overloaded signature.
+        :param rettype: Return-type of overloaded signature.
         """
         self._rettype = rettype
         self._returns = rettype != RetType.NONE
@@ -347,9 +347,9 @@ class Docstring(_Stub):
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
-        """Parse function docstring from ast.
+        """Parse function docstring from AST.
 
-        :param node: Docstring ast node.
+        :param node: Docstring AST node.
         :return: Instantiated docstring object.
         """
         indent_anomaly = cls._indent_anomaly(node.value)
@@ -402,5 +402,5 @@ class Docstring(_Stub):
 
     @property
     def ret_description_missing(self) -> bool:
-        """Is return description missing?"""
+        """Is the return description missing?"""
         return self._ret_description_missing
