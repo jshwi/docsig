@@ -24,12 +24,12 @@ community include:
 
 Examples of unacceptable behaviour include:
 
-- The use of sexualised language or imagery, and sexual attention or advances
-- Trolling, insulting or derogatory comments, and personal or political attacks
+- The use of sexualized language or imagery, and sexual attention or advances
+- Trolling, insulting, or derogatory comments, and personal or political attacks
 - Public or private harassment
 - Publishing others' private information, such as a physical or email
   address, without their explicit permission
-- Other conduct which could reasonably be considered inappropriate in a
+- Other conduct, which could reasonably be considered inappropriate in a
   professional setting
 
 ## Our Responsibilities
@@ -46,7 +46,7 @@ communicate reasons for moderation decisions when appropriate.
 
 ## Scope
 
-This Code of Conduct applies within all community spaces, and also applies when
+This Code of Conduct applies within all community spaces and also applies when
 an individual is officially representing the community in public spaces.
 Examples of representing our community include using an official e-mail address,
 posting via an official social media account, or acting as an appointed
