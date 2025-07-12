@@ -20,7 +20,7 @@ sys.path.append(os.path.abspath(os.getcwd()))
 class Docsig:
     """Flake8 implementation of docsig class.
 
-    :param tree: Ast module, which will not be used by flake8 will
+    :param tree: AST module, which will not be used, but flake8 will
         provide.
     :param filename: Filename to pass to docsig.
     """
@@ -131,7 +131,7 @@ class Docsig:
 
     @classmethod
     def parse_options(cls, a: Namespace) -> None:
-        """Parse flake8 options into am instance accessible dict.
+        """Parse flake8 options into an instance accessible dict.
 
         :param a: Argparse namespace.
         """

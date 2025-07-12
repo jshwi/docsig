@@ -26,7 +26,7 @@ class Message(_t.NamedTuple):
     #: A description of the error.
     description: str
 
-    #: A shortened description the message can be referenced by.
+    #: A shortened description that the message can be referenced by.
     symbolic: str = ""
 
     #: A hint, if any, suggesting why the error may have occurred.
@@ -59,7 +59,7 @@ class Messages(_t.List[Message]):
 
 
 class MessageMap(_t.Dict[int, Message]):
-    """Messages mapped under an integer version of their codes.."""
+    """Messages mapped under an integer version of their codes."""
 
     def from_ref(self, ref: str) -> Message:
         """Get a message by its code or symbolic reference.
@@ -74,7 +74,7 @@ class MessageMap(_t.Dict[int, Message]):
         return Message(UNKNOWN, ref)
 
     def from_codes(self, refs: list[str]) -> Messages:
-        """Get list of message types from codes or symbolic references.
+        """Get a list of message types from codes or symbolic refs.
 
         :param refs: List of codes or symbolic references.
         :return: List of message types.
