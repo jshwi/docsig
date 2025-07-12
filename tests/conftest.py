@@ -71,6 +71,7 @@ def fixture_main(
     :return: Function for using this fixture.
     """
 
+    # noinspection PyUnresolvedReferences
     def _main(
         *args: str,
         test_flake8: bool = True,
@@ -102,6 +103,7 @@ def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
     :return: Function for using this fixture.
     """
 
+    # noinspection PyUnresolvedReferences
     def _init_file(contents: str, path: Path | None = None) -> Path:
         file = tmp_path / (path or Path("module") / "file.py")
         file.parent.mkdir(exist_ok=True)
