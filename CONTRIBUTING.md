@@ -6,7 +6,7 @@ First off, thanks for taking the time to contribute! ❤️
 
 All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
 
-> And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+> And if you like the project but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be thrilled about:
 >
 > - Star the project
 > - Tweet about it
@@ -30,7 +30,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 This project and everyone participating in it is governed by the
 [docsig Code of Conduct](https://github.com/jshwi/docsig/blob/master/CODE_OF_CONDUCT.md).
-By participating, you are expected to uphold this code. Please report unacceptable behaviour
+By participating, you are expected to uphold this code. Please report unacceptable behavior
 to <stephen@jshwisolutions.com>.
 
 ## I Have a Question
@@ -50,7 +50,7 @@ We will then take care of the issue as soon as possible.
 <!--
 You might want to create a separate issue tag for questions and include it in this description. People should then tag their issues accordingly.
 
-Depending on how large the project is, you may want to outsource the questioning, e.g. to Stack Overflow or Gitter. You may add additional contact and information possibilities:
+Depending on how large the project is, you may want to outsource the questioning, e.g., to Stack Overflow or Gitter. You may add additional contact and information possibilities:
 - IRC
 - Slack
 - Gitter
@@ -68,12 +68,12 @@ Depending on how large the project is, you may want to outsource the questioning
 
 ### Before Submitting a Bug Report
 
-A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information, and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
 
 - Make sure that you are using the latest version.
-- Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the [documentation](https://docsig.io/). If you are looking for support, you might want to check [this section](#i-have-a-question)).
+- Determine if your bug is really a bug and not an error on your side e.g., using incompatible environment components/versions (Make sure that you have read the [documentation](https://docsig.io/). If you are looking for support, you might want to check [this section](#i-have-a-question)).
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/jshwi/docsig/issues?q=label%3Abug).
-- Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
+- Also, make sure to search the internet (including Stack Overflow) to see if users outside the GitHub community have discussed the issue.
 - Collect information about the bug:
   - Stack trace (Traceback)
   - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
@@ -85,7 +85,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 
 ### How Do I Submit a Good Bug Report?
 
-> You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <stephen@jshwisolutions.com>.
+> You must never report security-related issues, vulnerabilities, or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead, sensitive bugs must be sent by email to <stephen@jshwisolutions.com>.
 
 <!-- You may add a PGP key to allow the messages to be sent encrypted as well. -->
 
@@ -135,9 +135,9 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/jshwi/
 
 > ### Legal Notice <!-- omit in toc -->
 >
-> When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content and that the content you contribute may be provided under the project license.
+> When contributing to this project, you must agree that you have authored 100% of the content, that you have the necessary rights to the content, and that the content you contribute may be provided under the project license.
 
-First, clone the repo, this can either be a fork or the project itself
+First, clone the repo; this can either be a fork or the project itself
 
 ```shell
     $ git clone https://github.com/jshwi/docsig.git
@@ -166,7 +166,7 @@ String output includes expected error output (a passing test expects no output)
 
 Changes to tests should not need to be made in `tests._tests` but instead `tests.__init__`
 
-Tests are organised into the following
+Tests are organized into the following
 [categories](https://docsig.io/en/latest/development/tests.html)
 
 ## Styleguides
@@ -180,7 +180,7 @@ Autoformatting will run on commit
 
 ## Commit Messages
 
-Commits follow the conventional commit format and the policy can be found
+Commits follow the conventional commit format, and the policy can be found
 [here](https://docsig.io/en/latest/development/commit-policy.html).
 
 ## Attribution
