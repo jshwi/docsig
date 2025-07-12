@@ -192,8 +192,8 @@ class Failure(_t.List[Failed]):
         ):
             # syntax-error-in-description
             self._add(_E[302])
-        # if the parameter does not have a name, but exists, then it
-        # must be incorrectly documented
+        # if the parameter does not have a name but exists, then it must
+        # be incorrectly documented
         elif doc.name == _UNNAMED:
             # param-incorrectly-documented
             self._add(_E[303])
@@ -247,14 +247,15 @@ class Failure(_t.List[Failed]):
             if self._func.signature.rettype == _RetType.UNTYPED:
                 # confirm-return-needed
                 self._add(_E[501], hint=True)
-            # return type is none, so no return should be documented
+            # the return type is none, so no return should be documented
             elif self._func.docstring.returns:
                 if self._func.signature.rettype == _RetType.NONE:
                     # return-documented-for-none
                     self._add(_E[502])
                 if self._func.docstring.ret_description_missing:
                     self._add(_E[506])
-            # return type is some, so return should be documented
+            # the return type is some, so the return should be
+            # documented
             elif self._func.signature.returns:
                 # return-missing
                 self._add(
@@ -262,7 +263,7 @@ class Failure(_t.List[Failed]):
                     hint=_has_bad_return(str(self._func.docstring.string)),
                 )
         elif self._func.docstring.returns:
-            # method is init, so no return should be documented
+            # the method is init, so no return should be documented
             if self._func.isinit:
                 # class-return-documented
                 self._add(_E[504], hint=True)
