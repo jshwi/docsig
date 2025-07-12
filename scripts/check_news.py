@@ -172,7 +172,7 @@ class Test:
     ) -> None:
         """Set up the test environment.
 
-        :param tmp_path: Create and return temporary directory.
+        :param tmp_path: Create and return a temporary directory.
         :param monkeypatch: Mock patch environment and attributes.
         """
         monkeypatch.chdir(tmp_path)
