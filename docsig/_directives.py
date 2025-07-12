@@ -57,6 +57,7 @@ class Comment(_Messages):
         """Whether this is a disable directive or not."""
         return self._kind == self._valid_kinds[1]
 
+    # noinspection PyUnresolvedReferences
     @classmethod
     def parse(cls, comment: str, col: int) -> Comment | None:
         """Parse string into directive object if possible.
