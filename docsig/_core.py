@@ -176,6 +176,7 @@ def _from_file(
 
 
 # pylint: disable=too-many-arguments,too-many-positional-arguments
+# noinspection PyUnresolvedReferences
 def _from_str(
     context: dict,
     messages: _Messages,
@@ -251,6 +252,7 @@ def _get_failures(
     return failures
 
 
+# noinspection PyUnresolvedReferences
 def _report(
     failures: _Failures,
     path: str | None = None,
@@ -282,6 +284,7 @@ def _report(
 
 # pylint: disable=too-many-locals,too-many-arguments
 # pylint: disable=too-many-positional-arguments
+# noinspection PyUnresolvedReferences
 def runner(
     path: _Path,
     disable: _Messages | None = None,
@@ -351,6 +354,7 @@ def runner(
     )
 
 
+# noinspection PyUnresolvedReferences
 @_decorators.parse_msgs
 @_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
@@ -486,6 +490,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     return _report(failures, no_ansi=no_ansi)
 
 
+# noinspection PyUnresolvedReferences
 def derive_module_name(
     file_path: str | _Path,
 ) -> str:

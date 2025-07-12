@@ -19,6 +19,7 @@ FILE_INFO = "%s: %s"
 
 
 class _Gitignore(_PathSpec):
+    # noinspection PyUnresolvedReferences
     def _get_repo_relative_to(self, path: _Path) -> _Path | None:
         if (path / ".git" / "HEAD").is_file():
             return path
@@ -78,6 +79,7 @@ class Paths(_t.List[_Path]):
         pattern.
     """
 
+    # noinspection PyUnresolvedReferences
     def __init__(
         self,
         *paths: _Path | str,

@@ -24,6 +24,7 @@ def _split_comma(value: str) -> list[str]:
 
 
 # attempt to locate a pyproject.toml file if one exists in parents
+# noinspection PyUnresolvedReferences
 def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
     if not path:
         path = _Path.cwd()
@@ -78,6 +79,7 @@ def merge_configs(
 
 
 class _ArgumentParser(_a.ArgumentParser):
+    # noinspection PyUnresolvedReferences
     def parse_known_args(  # type: ignore
         self,
         args: _t.Sequence[str] | None = None,
@@ -104,6 +106,7 @@ class _ArgumentParser(_a.ArgumentParser):
         self.add_argument(*args, **kwargs)
 
 
+# noinspection PyUnresolvedReferences
 def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     """Parse commandline arguments.
 

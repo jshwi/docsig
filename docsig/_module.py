@@ -48,6 +48,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
+    # noinspection PyUnresolvedReferences
     def __init__(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | None = None,
@@ -75,6 +76,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             self._name = node.name
             self._parse_ast(node, directives or _Directives(), path)
 
+    # noinspection PyUnresolvedReferences
     def _parse_ast(
         self,
         node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
@@ -146,6 +148,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         """Boolean value for whether class is protected."""
         return self._name.startswith("_")
 
+    # noinspection PyUnresolvedReferences
     @property
     def error(self) -> Error | None:
         """Represents an unrecoverable error, if any."""
@@ -176,6 +179,7 @@ class Function(Parent):
 
     # pylint: disable=too-many-arguments,too-many-instance-attributes
     # pylint: disable=too-many-positional-arguments
+    # noinspection PyUnresolvedReferences
     def __init__(
         self,
         node: _ast.FunctionDef | None = None,
@@ -309,6 +313,7 @@ class Function(Parent):
         """The name of the function."""
         return self._name
 
+    # noinspection PyUnresolvedReferences
     @property
     def parent(
         self,

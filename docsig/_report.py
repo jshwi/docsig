@@ -26,6 +26,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
+# noinspection PyUnresolvedReferences
 class Failed(_t.NamedTuple):
     """Report info object."""
 
