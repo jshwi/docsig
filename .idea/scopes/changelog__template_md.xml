@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="changelog._template.md" pattern="file:changelog/_template.md" />
+</component>
