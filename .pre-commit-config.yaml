@@ -30,7 +30,7 @@ exclude: |
 repos:
   - repo: local
     hooks:
-      # local so package can be imported to lint
+      # local so the package can be imported to lint
       - id: lint
         name: lint
         entry: make lint
