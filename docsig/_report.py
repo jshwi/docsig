@@ -44,8 +44,6 @@ class Failure(_t.List[Failed]):
     :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
     :param ignore_typechecker: Ignore checking return values.
-    :param enforce_capitalization: Ensure param descriptions are
-        capitalised.
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
@@ -55,7 +53,6 @@ class Failure(_t.List[Failed]):
         target: _Messages,
         check_property_returns: bool,
         ignore_typechecker: bool,
-        enforce_capitalization: bool,
     ) -> None:
         super().__init__()
         self._retcode = 0
@@ -73,7 +70,6 @@ class Failure(_t.List[Failed]):
             self._name = f"{self._func.parent.name}.{self._func.name}"
 
         self._check_property_returns = check_property_returns
-        self._enforce_capitalization = enforce_capitalization
         if self._func.error is not None:
             self._sig9xx_error()
         else:
@@ -203,14 +199,10 @@ class Failure(_t.List[Failed]):
                 token=doc.closing_token,
                 hint=True,
             )
-        if (
-            self._enforce_capitalization
-            and doc.description is not None
-            and not all(
-                i.strip()[0].isupper()
-                for i in _sentence_tokenizer(doc.description)
-                if i
-            )
+        if doc.description is not None and not all(
+            i.strip()[0].isupper()
+            for i in _sentence_tokenizer(doc.description)
+            if i and not any(i.startswith(x) for x in (":", ".", "`"))
         ):
             # description is not capitalised
             self._add(_E[305])
