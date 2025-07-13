@@ -731,7 +731,7 @@ class BaseClass:
     def method(self, arg) -> None:
         """Does something.
 
-        :param arg: some argument
+        :param arg: Some argument
         """
         return None
 '''

@@ -796,7 +796,7 @@ class Classy:
            *normalize* parameter was removed due to :phab:`T340495` and
            :phab:`T57755`
 
-        :param force_iso: whether the output should be forced to ISO 8601
+        :param force_iso: Whether the output should be forced to ISO 8601
         :return: Timestamp in a format resembling ISO 8601
         """
 '''

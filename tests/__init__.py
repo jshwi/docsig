@@ -2462,8 +2462,8 @@ class _FSIG404NES(_BaseTemplate):
 def function(arg, param2) -> None:
     """Docstring.
 
-    :param param1: not equal.
-    :param para2: not equal.
+    :param param1: Not equal.
+    :param para2: Not equal.
     """
 '''
 
@@ -3970,9 +3970,9 @@ def function(arg, param2) -> None:
     Parameters
     ----------
         param1 : int
-            not equal.
+            Not equal.
         para2 : int
-            not equal.
+            Not equal.
     """
 '''
 
@@ -4504,12 +4504,12 @@ def modify(numericString: Union[str, int]) -> str:
     Parameters
     ----------
     numericString: Union[str, int]
-        numeric string that should be converted.
+        Numeric string that should be converted.
 
     Returns
     -------
     str
-        reformatted string
+        Reformatted string
     """
     numericString = str(numericString)
     last = numericString[-1]
@@ -4537,7 +4537,7 @@ def check_stuff(str_lin: str) -> bool:
     Parameters
     ----------
     str_lin: str
-        special string produced by function_of_y
+        Special string produced by function_of_y
 
     Returns
     -------
@@ -5478,9 +5478,9 @@ def function(arg, param2) -> None:
     Parameters
     ----------
     param1: int
-        not equal.
+        Not equal.
     para2: int
-        not equal.
+        Not equal.
     """
 '''
 
@@ -7527,10 +7527,10 @@ def starmap(
     Args:
         fun: ...
         iterable: ...
-        *args: static arguments passed to the function.
+        *args: Static arguments passed to the function.
         timeout: ...
         show_progress: ...
-        **kwargs: static keyword-arguments passed to the function.
+        **kwargs: Static keyword-arguments passed to the function.
 
     Returns:
         ...
@@ -7566,10 +7566,10 @@ class Klass:
         Args:
             fun: ...
             iterable: ...
-            *args: static arguments passed to the function.
+            *args: Static arguments passed to the function.
             timeout: ...
             show_progress: ...
-            **kwargs: static keyword-arguments passed to the function.
+            **kwargs: Static keyword-arguments passed to the function.
 
         Returns:
             ...
@@ -7607,8 +7607,8 @@ def process(response: bytes) -> str:
 def process(response):
     """process a response.
 
-    :param response: the response to process
-    :return: something depending on what the response is
+    :param response: The response to process
+    :return: Something depending on what the response is
     """
 '''
 
@@ -7643,7 +7643,7 @@ def process(response: bytes) -> str:
 def process(response):
     """process a response.
 
-    :param response: the response to process
+    :param response: The response to process
     """
 '''
 
@@ -7719,7 +7719,7 @@ def process(response: bytes) -> None:
 def process(response):
     """process a response.
 
-    :param response: the response to process
+    :param response: The response to process
     """
 '''
 
@@ -7754,7 +7754,7 @@ def process(response: bytes) -> str:
 def process(response):
     """process a response.
 
-    :param response: the response to process
+    :param response: The response to process
     :return: something depending on what the response is
     """
 
@@ -7776,7 +7776,7 @@ def another_process(response: str) -> int:
 def another_process(response):
     """process another response.
 
-    :param response: the response to process
+    :param response: The response to process
     :return: something depending on what the response is
     """
 '''
@@ -7812,7 +7812,7 @@ def process(response: bytes) -> None:
 def process(response):
     """process a response.
 
-    :param response: the response to process
+    :param response: The response to process
     :return: NoneType
     """
 '''
@@ -7848,7 +7848,7 @@ class SomeClass:
     def process(self, response):
         """process a response.
 
-        :param response: the response to process
+        :param response: The response to process
         :return: something depending on what the response is
         """
 '''
@@ -7881,7 +7881,7 @@ class SomeClass:
     def process(self, response):
         """process a response.
 
-        :param response: the response to process
+        :param response: The response to process
         """
 '''
 
@@ -7951,7 +7951,7 @@ class SomeClass:
     def process(self, response):
         """process a response.
 
-        :param response: the response to process
+        :param response: The response to process
         """
 '''
 
@@ -7986,7 +7986,7 @@ class SomeClass:
     def process(self, response):
         """process a response.
 
-        :param response: the response to process
+        :param response: The response to process
         :return: something depending on what the response is
         """
 
@@ -8005,7 +8005,7 @@ class SomeClass:
     def another_process(self, response):
         """process another response.
 
-        :param response: the response to process
+        :param response: The response to process
         :return: something depending on what the response is
         """
 '''
@@ -8038,7 +8038,7 @@ class SomeClass:
     def process(self, response):
         """process a response.
 
-        :param response: the response to process
+        :param response: The response to process
         :return: Optional
         """
 '''
@@ -9298,7 +9298,7 @@ def process(response: bytes) -> None:
 def process(response):
     """process a response.
 
-    :param response: the response to process
+    :param response: The response to process
     """
 '''
 
