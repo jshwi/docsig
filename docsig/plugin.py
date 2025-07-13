@@ -9,7 +9,7 @@ from pathlib import Path
 
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
-from ._core import runner, setup_logger
+from ._core import handle_deprecations, runner, setup_logger
 from ._version import __version__
 from .messages import FLAKE8, E
 
@@ -145,6 +145,7 @@ class Docsig:
 
         :return: Flake8 error, if there is one.
         """
+        handle_deprecations(self.a.enforce_capitalization)
         if self.a.check_class and self.a.check_class_constructor:
             line = "{msg}".format(
                 msg=FLAKE8.format(
@@ -172,7 +173,6 @@ class Docsig:
                 ignore_args=self.a.ignore_args,
                 ignore_kwargs=self.a.ignore_kwargs,
                 ignore_typechecker=self.a.ignore_typechecker,
-                enforce_capitalization=self.a.enforce_capitalization,
             )
             for result in results:
                 for info in result:
