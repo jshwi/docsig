@@ -111,7 +111,7 @@ repos:
         language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v5.0.0"
+    rev: "v6.0.0"
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -144,7 +144,7 @@ repos:
         args:
           - "--remove"
   - repo: https://github.com/ikamensh/flynt
-    rev: "1.0.1"
+    rev: "1.0.6"
     hooks:
       - id: flynt
         args:
@@ -176,7 +176,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v4.2.0"
+    rev: "v4.3.0"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -184,7 +184,7 @@ repos:
     hooks:
       - id: conform
   - repo: https://github.com/PyCQA/bandit
-    rev: "1.8.5"
+    rev: "1.8.6"
     hooks:
       - id: bandit
         args:
@@ -231,7 +231,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.5.0"
+    rev: "1.6.0"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
@@ -243,11 +243,11 @@ repos:
     hooks:
       - id: actionlint
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: "3.2.1"
+    rev: "3.4.0"
     hooks:
       - id: editorconfig-checker
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.16.1"
+    rev: "v1.17.1"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
