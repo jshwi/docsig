@@ -111,7 +111,7 @@ repos:
         language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v5.0.0"
+    rev: "v6.0.0"
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -144,7 +144,7 @@ repos:
         args:
           - "--remove"
   - repo: https://github.com/ikamensh/flynt
-    rev: "1.0.1"
+    rev: "1.0.6"
     hooks:
       - id: flynt
         args:
@@ -164,7 +164,7 @@ repos:
             | docs\/deprecated\/messages\.md
           )$
   - repo: https://github.com/pappasam/toml-sort
-    rev: "v0.24.2"
+    rev: "v0.24.3"
     hooks:
       - id: toml-sort
         args:
@@ -176,7 +176,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v4.2.0"
+    rev: "v4.3.0"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -184,14 +184,14 @@ repos:
     hooks:
       - id: conform
   - repo: https://github.com/PyCQA/bandit
-    rev: "1.8.5"
+    rev: "1.8.6"
     hooks:
       - id: bandit
         args:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.20.0"
+    rev: "v3.21.0"
     hooks:
       - id: pyupgrade
         args:
@@ -211,17 +211,17 @@ repos:
         args:
           - "--config-data={rules: {line-length: {max: 79}}}"
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.2.0
+    rev: v4.0.0
     hooks:
       - id: add-trailing-comma
-  - repo: https://github.com/psf/black
-    rev: "25.1.0"
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: "25.9.0"
     hooks:
       - id: black
         additional_dependencies:
           - tomli==2.0.1
   - repo: https://github.com/pycqa/isort
-    rev: "6.0.1"
+    rev: "7.0.0"
     hooks:
       - id: isort
   - repo: https://github.com/codespell-project/codespell
@@ -231,7 +231,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.5.0"
+    rev: "1.7.0"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
@@ -239,15 +239,15 @@ repos:
     hooks:
       - id: rm-unneeded-f-str
   - repo: https://github.com/rhysd/actionlint
-    rev: "v1.7.7"
+    rev: "v1.7.8"
     hooks:
       - id: actionlint
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: "3.2.1"
+    rev: "3.4.1"
     hooks:
       - id: editorconfig-checker
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.16.1"
+    rev: "v1.18.2"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
