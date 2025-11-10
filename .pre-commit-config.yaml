@@ -14,7 +14,7 @@ ci:
     - test-check-news
     - commit-fix
 default_language_version:
-  python: "3.9"
+  python: "3.10"
 default_stages:
   - pre-commit
 exclude: |
