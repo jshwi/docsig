@@ -140,9 +140,6 @@ repos:
       - id: pretty-format-json
         args:
           - "--autofix"
-      - id: fix-encoding-pragma
-        args:
-          - "--remove"
   - repo: https://github.com/ikamensh/flynt
     rev: "1.0.1"
     hooks:
