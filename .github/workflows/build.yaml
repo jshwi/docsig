@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Python
         id: setup-python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "${{ matrix.python-version }}"
       - name: Cache Virtualenv
