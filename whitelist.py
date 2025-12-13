@@ -1,3 +1,4 @@
+_._sig_len  # unused attribute (docsig/_report.py:64)
 Docsig  # unused class (docsig/plugin.py:20)
 off_by_default  # unused variable (docsig/plugin.py:28)
 _.add_options  # unused method (docsig/plugin.py:41)
