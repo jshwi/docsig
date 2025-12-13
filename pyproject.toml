@@ -158,7 +158,7 @@ vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
 furo = ">=2024.4.27,<2026.0.0"
-myst-parser = "^3.0.1"
+myst-parser = ">=3.0.1,<5.0.0"
 pytest = "8.3.5"
 pyyaml = "^6.0.1"
 sphinx-copybutton = "^0.5.2"
