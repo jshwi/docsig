@@ -159,7 +159,7 @@ vulture = "^2.11"
 [tool.poetry.group.docs.dependencies]
 furo = "^2024.4.27"
 myst-parser = "^3.0.1"
-pytest = "8.3.5"
+pytest = "9.0.2"
 pyyaml = "^6.0.1"
 sphinx-copybutton = "^0.5.2"
 sphinx-markdown-builder = ">=0.5.5,<0.7.0"
@@ -169,7 +169,7 @@ templatest = "^0.10.1"
 flake8 = "^7.1.0"
 
 [tool.poetry.group.tests.dependencies]
-pytest = "^8.2.0"
+pytest = ">=8.2,<10.0"
 pytest-benchmark = ">=4,<6"
 pytest-cov = ">=5,<7"
 pytest-gitignore = "^1.3"
