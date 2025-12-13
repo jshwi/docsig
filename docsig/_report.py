@@ -61,6 +61,7 @@ class Failure(_t.List[Failed]):
         self._retcode = 0
         self._func = func
         self._docstring_len = len(self._func.docstring.args)
+        self._sig_len = len(self._func.signature.args)
         if target:
             self._func.messages.extend(i for i in _E.all if i not in target)
 
