@@ -140,7 +140,7 @@ version = "0.71.0"
 Sphinx = "^7.0.0"
 astroid = "^3.0.1"
 pathspec = "^0.12.1"
-python = "^3.9"
+python = "^3.10"
 tomli = "^2.0.1"
 wcmatch = ">=8.5.2,<11.0.0"
 
