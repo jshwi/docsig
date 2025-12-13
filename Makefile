@@ -125,7 +125,6 @@ update-copyright: $(VENV)
 #: run checks that format code
 .make/format: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
-	@$(POETRY) run docformatter $(PYTHON_FILES)
 	@$(POETRY) run flynt $(PYTHON_FILES)
 	@$(POETRY) run isort $(PYTHON_FILES)
 	@mkdir -p $(@D)
