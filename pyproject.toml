@@ -133,7 +133,7 @@ repository = "https://github.com/jshwi/docsig"
 version = "0.71.0"
 
 [tool.poetry.dependencies]
-Sphinx = "^7.0.0"
+Sphinx = ">=7,<9"
 astroid = "^3.0.1"
 pathspec = "^0.12.1"
 python = "^3.10"
