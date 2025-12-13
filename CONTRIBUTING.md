@@ -175,7 +175,6 @@ docsig uses:
 
 - Black style
 - isort for imports
-- docformatter for docstrings
 
 Autoformatting will run on commit
 
