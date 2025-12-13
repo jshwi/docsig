@@ -153,7 +153,7 @@ ensure your installation has registered `docsig`
 .. code-block:: console
 
     $ flake8 --version
-    7.1.2 (docsig: 0.72.0, mccabe: 0.7.0, pycodestyle: 2.12.1, pyflakes: 3.2.0) CPython 3.9.6 on Darwin
+    7.3.0 (docsig: 0.72.0, mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) CPython 3.10.19 on Darwin
 
 And now use `flake8` to lint your files
 
