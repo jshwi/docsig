@@ -152,7 +152,7 @@ pre-commit = ">=3.3.3,<5.0.0"
 pylint = "^3.3.7"
 tomli = "^2.0.1"
 tomli-w = "^1.0.0"
-towncrier = "^23.11.0"
+towncrier = ">=23.11,<26.0"
 tox = "^4.15.0"
 vulture = "^2.11"
 
