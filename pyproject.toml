@@ -114,7 +114,7 @@ authors = [
   "jshwi <stephen@jshwisolutions.com>"
 ]
 description = "Check signature params for proper documentation"
-documentation = "https://docsig.readthedocs.io/en/latest"
+documentation = "https://docsig.io/en/latest"
 homepage = "https://pypi.org/project/docsig/"
 keywords = [
   "check",
