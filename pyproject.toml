@@ -115,7 +115,7 @@ authors = [
 ]
 description = "Check signature params for proper documentation"
 documentation = "https://docsig.io/en/latest"
-homepage = "https://pypi.org/project/docsig/"
+homepage = "https://docsig.io"
 keywords = [
   "check",
   "docs",
