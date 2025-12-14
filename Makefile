@@ -177,7 +177,7 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	CONTRIBUTING.md
 	@trap "rm -f $(@); exit 1" ERR; \
 		{ \
-			ping -c 1 docsig.readthedocs.io >/dev/null 2>&1 \
+			ping -c 1 docsig.io >/dev/null 2>&1 \
 			|| { echo "could not establish connection, skipping"; exit 0; }; \
 			$(POETRY) run $(MAKE) -C docs linkcheck; \
 		}

@@ -28,7 +28,7 @@
    :target: https://codecov.io/gh/jshwi/docsig
    :alt: codecov.io
 .. |readthedocs.org| image:: https://readthedocs.org/projects/docsig/badge/?version=latest
-   :target: https://docsig.readthedocs.io/en/latest/?badge=latest
+   :target: https://docsig.io/en/latest/?badge=latest
    :alt: readthedocs.org
 .. |python3.10| image:: https://img.shields.io/badge/python-3.10-blue.svg
    :target: https://www.python.org/downloads/release/python-390
@@ -59,7 +59,7 @@ Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 
 Contributing
 ------------
-If you are interested in contributing to ``docsig`` please read about contributing `here <https://docsig.readthedocs.io/en/latest/development/contributing.html>`__
+If you are interested in contributing to ``docsig`` please read about contributing `here <https://docsig.io/en/latest/development/contributing.html>`__
 
 Installation
 ------------
@@ -214,17 +214,17 @@ API
         SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
-A full list of checks can be found `here <https://docsig.readthedocs.io/en/latest/usage/messages.html>`__
+A full list of checks can be found `here <https://docsig.io/en/latest/usage/messages.html>`__
 
 Message Control
 ***************
 
-`Documentation on message control <https://docsig.readthedocs.io/en/latest/usage/message-control.html>`_
+`Documentation on message control <https://docsig.io/en/latest/usage/message-control.html>`_
 
 Classes
 *******
 
-`Documenting classes <https://docsig.readthedocs.io/en/latest/usage/configuration.html#classes>`_
+`Documenting classes <https://docsig.io/en/latest/usage/configuration.html#classes>`_
 
 pre-commit
 **********
