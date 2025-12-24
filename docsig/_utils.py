@@ -24,7 +24,10 @@ def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
         equal.
     :return: Boolean result for whether both strings are almost equal.
     """
-    return mini < _SequenceMatcher(a=str1, b=str2).ratio() < maxi
+    return (str1 == str2) or mini < _SequenceMatcher(
+        a=str1,
+        b=str2,
+    ).ratio() < maxi
 
 
 def pretty_print_error(

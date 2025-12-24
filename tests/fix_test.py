@@ -798,3 +798,74 @@ class Classy:
     main(".")
     std = capsys.readouterr()
     assert not std.out
+
+
+def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test no additional out-of-order or not-equal-to-arg.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class ChildTransactions(Transactions):
+    """Represents a collection of transactions.
+
+    :param symbol: Currency symbol.
+    :param attr: Transaction attribute.
+    :param timestamp: Session timestamp.
+    """
+
+    def __init__(
+        self,
+        transaction_obj,
+        symbol: str,
+        attr: str,
+        timestamp: int,
+    ) -> None:
+        super().__init__()
+'''
+    init_file(template)
+    main(".", "--check-class")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description not in std.out
+    assert docsig.messages.E[404].description not in std.out
+
+
+def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test out-of-order still valid when param missing.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class ChildTransactions(Transactions):
+    """Represents a collection of transactions.
+
+    :param symbol: Currency symbol.
+    :param attr: Transaction attribute.
+    :param timestamp: Session timestamp.
+    """
+
+    def __init__(
+        self,
+        transaction_obj,
+        attr: str,
+        symbol: str,
+        timestamp: int,
+    ) -> None:
+        super().__init__()
+'''
+    init_file(template)
+    main(".", "--check-class")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description in std.out

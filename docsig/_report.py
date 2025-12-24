@@ -169,15 +169,27 @@ class Failure(_t.List[Failed]):
             self._add(_E[202])
         # there are more args in sig than doc, so doc params missing
         elif len(self._func.signature.args) > len(self._func.docstring.args):
-            # append the parameters that are missing so that they are
-            # included in further analysis, that way there are no
-            # additional, and redundant, errors
+            # inset the parameters that are missing in their
+            # corresponding index so that they are included in further
+            # analysis, that way there are no additional, and redundant,
+            # errors
             # this will ensure that both signature and docstring are
-            # equal in length, with all parameters that are not
-            # documented accounted for
-            for count, arg in enumerate(self._func.signature.args, 1):
-                if count > len(self._func.docstring.args):
-                    self._func.docstring.args.append(
+            # equal, with all parameters that are not documented
+            # accounted for
+            for count, arg in enumerate(self._func.signature.args):
+                try:
+                    is_equal = _almost_equal(
+                        str(arg.name),
+                        str(self._func.docstring.args[count].name),
+                        _MIN_MATCH,
+                        _MAX_MATCH,
+                    )
+                except IndexError:
+                    is_equal = False
+
+                if not is_equal:
+                    self._func.docstring.args.insert(
+                        count,
                         _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
                     )
             # params-missing
