@@ -42,3 +42,22 @@ Parameters missing
     2 in function
         SIG203: parameters missing (params-missing)
     1
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(param1, param2, param3, param4) -> None:
+    ...     """Function summary.
+    ...
+    ...     :param param2: second param.
+    ...     :param param3: third param.
+    ...     :param param4: fourth param.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    2 in function
+        SIG203: parameters missing (params-missing)
+    1

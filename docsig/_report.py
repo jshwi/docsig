@@ -5,6 +5,7 @@ docsig._report
 
 from __future__ import annotations as _
 
+import contextlib
 import typing as _t
 
 from astroid.nodes.scoped_nodes import scoped_nodes as _scoped_nodes
@@ -186,6 +187,22 @@ class Failure(_t.List[Failed]):
                     )
                 except IndexError:
                     is_equal = False
+
+                # need to make one more test to determine if equal
+                # in the case of very similar names, such as param1,
+                # param2 and param3 for the signature, and param2,
+                # param3 for the docstring, if we don't do this test,
+                # param1 is almost equal to param2, and so won't be
+                # inserted, but if we can determine param2 is already in
+                # signature's next index, then we know that they aren't
+                # almost equal, param1 is missing and does need to be
+                # inserted in the docstring
+                if is_equal:
+                    with contextlib.suppress(IndexError):
+                        is_equal = (
+                            self._func.docstring.args[count].name
+                            != self._func.signature.args[count + 1].name
+                        )
 
                 if not is_equal:
                     self._func.docstring.args.insert(

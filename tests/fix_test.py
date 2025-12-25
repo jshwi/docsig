@@ -869,3 +869,29 @@ class ChildTransactions(Transactions):
     main(".", "--check-class")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description in std.out
+
+
+def test_fix_no_402_for_very_similar_names_683(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """402 should not be showing for very similar names.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(param1, param2, param3, param4) -> None:
+    """Function summary.
+
+    :param param2: second param.
+    :param param3: third param.
+    :param param4: fourth param.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description not in std.out
