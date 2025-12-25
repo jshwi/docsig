@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.72.2](https://github.com/jshwi/docsig/tree/v0.72.2) - 2025-12-25
+
+### Fixed
+
+- incorrect params-out-of-order for similar names ([#683](https://github.com/jshwi/docsig/issues/683))
+
 ## [0.72.1](https://github.com/jshwi/docsig/tree/v0.72.1) - 2025-12-24
 
 ### Fixed

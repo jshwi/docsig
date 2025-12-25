@@ -1,4 +1,4 @@
-VERSION := 0.72.1
+VERSION := 0.72.2
 
 POETRY := bin/poetry/bin/poetry
 
