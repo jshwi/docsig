@@ -35,17 +35,17 @@ class RetType(_Enum):
         :param returns: Ast node or None.
         :return: Constructed return type.
         """
-        if isinstance(returns, _ast.Const) and returns.value is None:
+        if isinstance(returns, _ast.nodes.Const) and returns.value is None:
             return cls.NONE
 
         if isinstance(
             returns,
             (
-                _ast.Const,
-                _ast.Name,
-                _ast.Attribute,
-                _ast.Subscript,
-                _ast.BinOp,
+                _ast.nodes.Const,
+                _ast.nodes.Name,
+                _ast.nodes.Attribute,
+                _ast.nodes.Subscript,
+                _ast.nodes.BinOp,
             ),
         ):
             return cls.SOME
