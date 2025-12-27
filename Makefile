@@ -72,6 +72,7 @@ clean:
 	@rm -rf dist
 	@rm -rf docs/_build
 	@rm -rf docs/_generated
+	@rm -rf .tox
 
 #: generate virtual environment
 $(VENV): $(POETRY) poetry.lock
@@ -217,3 +218,8 @@ poetry.lock: pyproject.toml
 #: update dependencies
 deps-update:
 	@$(POETRY) update
+
+.PHONY: tox
+#: run tox
+tox: $(VENV)
+	@$(POETRY) run tox
