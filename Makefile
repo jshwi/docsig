@@ -215,3 +215,7 @@ poetry.lock: pyproject.toml
 #: update dependencies
 deps-update:
 	@$(POETRY) update
+
+#: run tox
+tox: $(VENV)
+	@$(POETRY) run tox
