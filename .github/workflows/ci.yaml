@@ -1,29 +1,36 @@
-name: Build
+name: CI
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 env:
   PYTHONIOENCODING: utf-8
   POETRY: bin/poetry/bin/poetry
 
 jobs:
-  build:
+  ci:
     name: "${{ matrix.os }}-python${{ matrix.python-version }}"
     runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
         python-version:
           - "3.10"
+          - "3.11"
+          - "3.12"
+          - "3.13"
+          - "3.14"
         os:
+          - macos-latest
           - ubuntu-latest
+          - windows-latest
     steps:
       - name: Checkout Build
         id: checkout-build
         uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Setup Python
         id: setup-python
         uses: actions/setup-python@v6
@@ -56,22 +63,6 @@ jobs:
           path: .make/ci
           key: >
             {{ runner.os }}-python${{matrix.python-version }}-${{ github.sha }}
-      - name: Build
-        id: build
-        run: make build
-      - name: Check Dependencies
-        id: check-dependencies
-        run: make .make/check-deps
-      - name: Test Scripts
-        id: test-scripts
-        run: |
-          make .make/test-check-news
-      - name: Upload Coverage
-        id: upload-coverage
-        uses: codecov/codecov-action@v5
-        env:
-          CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
-      - name: Test Bump
-        id: test-bump
-        run: |
-          make .make/test-bump
+      - name: CI
+        id: ci
+        run: make .make/ci

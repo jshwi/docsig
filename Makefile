@@ -25,7 +25,7 @@ all: .make/pre-commit .git/blame-ignore-revs
 build: $(BUILD)
 
 #: build and check integrity of distribution
-$(BUILD): .make/doctest \
+.make/ci: .make/doctest \
 	.make/format \
 	.make/lint \
 	.make/unused \
@@ -33,8 +33,10 @@ $(BUILD): .make/doctest \
 	.mypy_cache/CACHEDIR.TAG \
 	README.rst \
 	coverage.xml \
-	docs/_build/html/index.html \
-	docs/_build/linkcheck/output.json
+	docs/_build/html/index.html
+
+#: build and check integrity of distribution
+$(BUILD): .make/ci docs/_build/linkcheck/output.json
 	@$(POETRY) build
 	@touch $@
 
