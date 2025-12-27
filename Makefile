@@ -1,6 +1,7 @@
 VERSION := 0.72.2
 
 POETRY := bin/poetry/bin/poetry
+POETRY_VERSION := $(shell cat .poetry-version)
 
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
@@ -101,9 +102,10 @@ $(VENV): $(POETRY) poetry.lock
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
 
 #: install poetry
-$(POETRY):
+$(POETRY): .poetry-version
 	@curl -sSL https://install.python-poetry.org | \
-		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" - --version 2.2.1
+		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" - \
+		--version $(POETRY_VERSION)
 	@touch $@
 
 #: update commandline documentation if needed
