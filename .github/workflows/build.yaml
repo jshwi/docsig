@@ -36,6 +36,19 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "${{ matrix.python-version }}"
+      - name: Get Poetry Version
+        id: get-poetry-version
+        run: |
+          ver=$(python -c "print(open('.poetry-version').read().strip())")
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Cache Poetry
+        uses: actions/cache@v4
+        with:
+          path: bin/poetry
+          key: >
+            poetry-${{ runner.os }}-${{
+              steps.get-poetry-version.outputs.version}}
       - name: Cache Virtualenv
         uses: actions/cache@v4
         with:
