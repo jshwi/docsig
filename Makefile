@@ -1,33 +1,42 @@
+########################################################################
+# Make Configuration
 SHELL := /bin/bash
 .DELETE_ON_ERROR:
 
+# Extract version from pyproject.toml
 VERSION := $(shell bash scripts/get_docsig_version.sh)
 
+# Poetry configuration
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
+# File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
 
+# Virtual environment path
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
 else
 	VENV := .venv/bin/activate
 endif
 
+# Build artifact
 BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
 
+########################################################################
+# Implicit Phony Targets
 .PHONY: all
-#: install development environment
 all: .make/pre-commit .git/blame-ignore-revs
 
 .PHONY: build
-#: phony target for build
+#: build distribution
 build: $(BUILD)
 
-#: build and check integrity of distribution
+########################################################################
+# Main Targets
 $(BUILD): .make/doctest \
 	.make/format \
 	.make/lint \
@@ -42,7 +51,7 @@ $(BUILD): .make/doctest \
 	@touch $@
 
 .PHONY: test
-#: test source
+#: run tests
 test: .make/doctest coverage.xml
 
 .PHONY: publish
@@ -50,7 +59,7 @@ test: .make/doctest coverage.xml
 publish: $(BUILD)
 	@$(POETRY) publish
 
-#: generate documentation
+#: build documentation
 docs/_build/html/index.html: $(VENV) \
 	$(PYTHON_FILES) \
 	$(DOCS_FILES) \
@@ -128,7 +137,7 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 update-copyright: $(VENV)
 	@$(POETRY) run python3 scripts/update_copyright.py
 
-#: run checks that format code
+#: run formatters
 .make/format: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
 	@$(POETRY) run flynt $(PYTHON_FILES)
@@ -158,12 +167,10 @@ update-copyright: $(VENV)
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
 
-#: generate coverage report
 coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
 
-#: test code examples in documentation
 .make/doctest: $(VENV) README.rst $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
 	@mkdir -p $(@D)
@@ -194,7 +201,6 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
-#: test check news script
 .make/test-check-news: $(VENV) scripts/check_news.py
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
@@ -202,21 +208,22 @@ docs/_build/linkcheck/output.json: $(VENV) \
 
 .PHONY: bump
 bump: part = patch
-#: bump version
+#: bump version (use: make bump part=major|minor|patch)
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
 
-#: test bumping of version
 .make/test-bump: $(VENV) scripts/bump_version.py
 	@$(POETRY) run pytest scripts/bump_version.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
-#: poetry lock
+#: lock poetry dependencies
 poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
 
+########################################################################
+# Phony Targets
 .PHONY: deps-update
 #: update dependencies
 deps-update:
