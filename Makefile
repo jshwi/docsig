@@ -90,7 +90,6 @@ $(POETRY): .poetry-version
 		--version $(POETRY_VERSION)
 	@touch $@
 
-#: update commandline documentation if needed
 README.rst: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run python scripts/update_readme.py >/dev/null 2>&1 || exit 0
 	@touch $@
@@ -287,3 +286,7 @@ update-copyright: $(VENV)
 #: update dependencies
 update-deps: $(VENV)
 	@$(POETRY) update
+
+.PHONY: update-readme
+#: update commandline documentation if needed
+update-readme: README.rst
