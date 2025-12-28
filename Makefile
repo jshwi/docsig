@@ -58,7 +58,6 @@ docs/_build/html/index.html: $(VENV) \
 	CONTRIBUTING.md
 	@$(POETRY) run $(MAKE) -C docs html
 
-#: generate virtual environment
 $(VENV): $(POETRY) poetry.lock
 	@[ ! $$(basename "$$($< env info --path)") = ".venv" ] \
 		&& rm -rf "$$($< env info --path)" \
@@ -247,6 +246,10 @@ install-ignore-revs: .git/blame-ignore-revs
 .PHONY: install-poetry
 #: install poetry
 install-poetry: $(POETRY)
+
+.PHONY: install-venv
+#: install virtualenv
+install-venv: $(VENV)
 
 .PHONY: lint
 #: lint code
