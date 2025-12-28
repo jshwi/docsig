@@ -35,10 +35,6 @@ all: .make/pre-commit .git/blame-ignore-revs help
 help: $(VENV)
 	@$(POETRY) run python scripts/make_help.py
 
-.PHONY: build
-#: build distribution
-build: $(BUILD)
-
 ########################################################################
 # Main Targets
 $(BUILD): .make/doctest \
@@ -54,15 +50,6 @@ $(BUILD): .make/doctest \
 	@$(POETRY) build
 	@touch $@
 
-.PHONY: test
-#: run tests
-test: .make/doctest coverage.xml
-
-.PHONY: publish
-#: publish distribution
-publish: $(BUILD)
-	@$(POETRY) publish
-
 #: build documentation
 docs/_build/html/index.html: $(VENV) \
 	$(PYTHON_FILES) \
@@ -71,24 +58,6 @@ docs/_build/html/index.html: $(VENV) \
 	.conform.yaml \
 	CONTRIBUTING.md
 	@$(POETRY) run $(MAKE) -C docs html
-
-.PHONY: clean
-#: clean compiled files
-clean:
-	@find . -name '__pycache__' -exec rm -rf {} +
-	@rm -rf .coverage
-	@rm -rf .git/blame-ignore-revs
-	@rm -rf .git/hooks/*
-	@rm -rf .make
-	@rm -rf .mypy_cache
-	@rm -rf .pytest_cache
-	@rm -rf .venv
-	@rm -rf bin
-	@rm -rf coverage.xml
-	@rm -rf dist
-	@rm -rf docs/_build
-	@rm -rf docs/_generated
-	@rm -rf .tox
 
 #: generate virtual environment
 $(VENV): $(POETRY) poetry.lock
@@ -136,11 +105,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-.PHONY: update-copyright
-#: update copyright year in files containing it
-update-copyright: $(VENV)
-	@$(POETRY) run python3 scripts/update_copyright.py
-
 #: run formatters
 .make/format: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
@@ -180,11 +144,6 @@ coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-.PHONY: benchmark
-#: run benchmarks
-benchmark: $(VENV)
-	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
-
 #: confirm links in documentation are valid
 docs/_build/linkcheck/output.json: $(VENV) \
 	$(PYTHON_FILES) \
@@ -210,12 +169,6 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
-.PHONY: bump
-bump: part = patch
-#: bump version (use: make bump part=major|minor|patch)
-bump: .make/pre-commit
-	@$(POETRY) run python scripts/bump_version.py $(part)
-
 .make/test-bump: $(VENV) scripts/bump_version.py
 	@$(POETRY) run pytest scripts/bump_version.py -n=auto
 	@mkdir -p $(@D)
@@ -237,3 +190,50 @@ deps-update:
 #: run tox
 tox: $(VENV)
 	@$(POETRY) run tox
+
+.PHONY: build
+#: build distribution
+build: $(BUILD)
+
+.PHONY: test
+#: run tests
+test: .make/doctest coverage.xml
+
+.PHONY: publish
+#: publish distribution
+publish: $(BUILD)
+	@$(POETRY) publish
+
+.PHONY: clean
+#: clean compiled files
+clean:
+	@find . -name '__pycache__' -exec rm -rf {} +
+	@rm -rf .coverage
+	@rm -rf .git/blame-ignore-revs
+	@rm -rf .git/hooks/*
+	@rm -rf .make
+	@rm -rf .mypy_cache
+	@rm -rf .pytest_cache
+	@rm -rf .venv
+	@rm -rf bin
+	@rm -rf coverage.xml
+	@rm -rf dist
+	@rm -rf docs/_build
+	@rm -rf docs/_generated
+	@rm -rf .tox
+
+.PHONY: update-copyright
+#: update copyright year in files containing it
+update-copyright: $(VENV)
+	@$(POETRY) run python3 scripts/update_copyright.py
+
+.PHONY: benchmark
+#: run benchmarks
+benchmark: $(VENV)
+	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
+
+.PHONY: bump
+bump: part = patch
+#: bump version (use: make bump part=major|minor|patch)
+bump: .make/pre-commit
+	@$(POETRY) run python scripts/bump_version.py $(part)
