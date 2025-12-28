@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 .DELETE_ON_ERROR:
 
-VERSION := 0.72.2
+VERSION := $(shell bash scripts/get_docsig_version.sh)
 
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
