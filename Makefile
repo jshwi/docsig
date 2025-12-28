@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.DELETE_ON_ERROR:
 
 VERSION := 0.72.2
 
