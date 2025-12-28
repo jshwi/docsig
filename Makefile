@@ -181,9 +181,9 @@ poetry.lock: pyproject.toml
 
 ########################################################################
 # Phony Targets
-.PHONY: deps-update
+.PHONY: update-deps
 #: update dependencies
-deps-update:
+update-deps:
 	@$(POETRY) update
 
 .PHONY: tox
