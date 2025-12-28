@@ -223,6 +223,7 @@ clean:
 	@rm -rf docs/_build
 	@rm -rf docs/_generated
 	@rm -rf .tox
+	@rm -rf node_modules
 
 .PHONY: format
 #: run formatters
