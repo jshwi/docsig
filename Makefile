@@ -50,7 +50,6 @@ $(BUILD): .make/doctest \
 	@$(POETRY) build
 	@touch $@
 
-#: build documentation
 docs/_build/html/index.html: $(VENV) \
 	$(PYTHON_FILES) \
 	$(DOCS_FILES) \
@@ -231,6 +230,10 @@ clean:
 	@rm -rf docs/_generated
 	@rm -rf .tox
 	@rm -rf node_modules
+
+.PHONY: docs
+#: build documentation
+docs: docs/_build/html/index.html
 
 .PHONY: format
 #: run formatters
