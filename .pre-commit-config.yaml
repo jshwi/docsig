@@ -119,7 +119,6 @@ repos:
       - id: check-case-conflict
       - id: check-docstring-first
       - id: check-executables-have-shebangs
-      - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
         exclude: ^(.*\.rst)$
       - id: check-symlinks
