@@ -50,11 +50,6 @@ search = "- docsig=={current_version}"
 [[tool.bumpversion.files]]
 filename = "SECURITY.md"
 
-[[tool.bumpversion.files]]
-filename = "Makefile"
-replace = "VERSION := {new_version}"
-search = "VERSION := {current_version}"
-
 [tool.codespell]
 ignore-words-list = "astroid"
 
