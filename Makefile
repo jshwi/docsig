@@ -181,18 +181,20 @@ poetry.lock: pyproject.toml
 
 ########################################################################
 # Phony Targets
+.PHONY: benchmark
+#: run benchmarks
+benchmark: $(VENV)
+	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
+
 .PHONY: build
 #: build distribution
 build: $(BUILD)
 
-.PHONY: test
-#: run tests
-test: .make/doctest coverage.xml
-
-.PHONY: publish
-#: publish distribution
-publish: $(BUILD)
-	@$(POETRY) publish
+.PHONY: bump
+bump: part = patch
+#: bump version (use: make bump part=major|minor|patch)
+bump: .make/pre-commit
+	@$(POETRY) run python scripts/bump_version.py $(part)
 
 .PHONY: clean
 #: clean compiled files
@@ -212,28 +214,26 @@ clean:
 	@rm -rf docs/_generated
 	@rm -rf .tox
 
-.PHONY: update-copyright
-#: update copyright year in files containing it
-update-copyright: $(VENV)
-	@$(POETRY) run python3 scripts/update_copyright.py
+.PHONY: publish
+#: publish distribution
+publish: $(BUILD)
+	@$(POETRY) publish
 
-.PHONY: benchmark
-#: run benchmarks
-benchmark: $(VENV)
-	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
-
-.PHONY: bump
-bump: part = patch
-#: bump version (use: make bump part=major|minor|patch)
-bump: .make/pre-commit
-	@$(POETRY) run python scripts/bump_version.py $(part)
-
-.PHONY: update-deps
-#: update dependencies
-update-deps:
-	@$(POETRY) update
+.PHONY: test
+#: run tests
+test: .make/doctest coverage.xml
 
 .PHONY: tox
 #: run tox
 tox: $(VENV)
 	@$(POETRY) run tox
+
+.PHONY: update-copyright
+#: update copyright year in files containing it
+update-copyright: $(VENV)
+	@$(POETRY) run python3 scripts/update_copyright.py
+
+.PHONY: update-deps
+#: update dependencies
+update-deps:
+	@$(POETRY) update
