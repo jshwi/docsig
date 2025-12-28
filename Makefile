@@ -134,7 +134,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-#: generate whitelist of allowed unused code
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
 
@@ -290,3 +289,7 @@ update-deps: $(VENV)
 .PHONY: update=readme
 #: update commandline documentation if needed
 update-readme: README.rst
+
+.PHONY: whitelist
+#: generate whitelist of allowed unused code
+whitelist: whitelist.py
