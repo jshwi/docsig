@@ -39,7 +39,7 @@ help: $(VENV)
 # Main Targets
 $(BUILD): .make/doctest \
 	format \
-	.make/lint \
+	lint \
 	.make/unused \
 	.make/update-docs \
 	.mypy_cache/CACHEDIR.TAG \
@@ -120,7 +120,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-#: lint code
 .make/lint: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
 	@$(POETRY) run docsig $(PYTHON_FILES)
@@ -224,6 +223,10 @@ clean:
 .PHONY: format
 #: run formatters
 format: .make/black .make/flynt .make/isort
+
+.PHONY: lint
+#: lint code
+lint: .make/lint
 
 .PHONY: publish
 #: publish distribution
