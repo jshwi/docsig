@@ -285,5 +285,5 @@ update-copyright: $(VENV)
 
 .PHONY: update-deps
 #: update dependencies
-update-deps:
+update-deps: $(VENV)
 	@$(POETRY) update
