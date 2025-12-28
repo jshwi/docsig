@@ -265,7 +265,7 @@ publish: $(BUILD)
 
 .PHONY: test
 #: run tests
-test: .make/doctest coverage.xml
+test: .make/doctest coverage.xml .make/test-check-news .make/test-bump
 
 .PHONY: tox
 #: run tox
