@@ -30,7 +30,11 @@ BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
 # Implicit Phony Targets
 .PHONY: all
 #: install development environment
-all: .make/pre-commit .git/blame-ignore-revs
+all: .make/pre-commit .git/blame-ignore-revs help
+
+.PHONY: help
+help: $(VENV)
+	@$(POETRY) run python scripts/make_help.py
 
 .PHONY: build
 #: phony target for build
