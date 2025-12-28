@@ -130,7 +130,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run mypy $(PYTHON_FILES)
 	@touch $@
 
-#: check for unused code
 .make/unused: whitelist.py
 	@$(POETRY) run vulture whitelist.py docsig tests
 	@mkdir -p $(@D)
@@ -274,6 +273,10 @@ tox: $(VENV)
 .PHONY: types
 #: check typing
 types: .mypy_cache/CACHEDIR.TAG
+
+.PHONY: unused
+#: check for unused code
+unused: .make/unused
 
 .PHONY: update-copyright
 #: update copyright year in files containing it
