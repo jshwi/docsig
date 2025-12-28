@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 VERSION := 0.72.2
 
 POETRY := bin/poetry/bin/poetry
