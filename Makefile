@@ -178,7 +178,6 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
-#: lock poetry dependencies
 poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
@@ -254,6 +253,10 @@ install-venv: $(VENV)
 .PHONY: lint
 #: lint code
 lint: .make/pylint .make/docsig
+
+.PHONY: lock-deps
+#: lock poetry dependencies
+lock-deps: poetry.lock
 
 .PHONY: publish
 #: publish distribution
