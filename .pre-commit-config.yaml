@@ -41,7 +41,7 @@ repos:
       - id: vulture
         name: check for unused code
         language: system
-        entry: make .make/unused
+        entry: make unused
         pass_filenames: false
       # script also handles coverage
       - id: coverage
