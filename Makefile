@@ -105,9 +105,17 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-.make/format: $(VENV) $(PYTHON_FILES)
+.make/black: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/flynt: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run flynt $(PYTHON_FILES)
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/isort: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run isort $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
@@ -215,7 +223,7 @@ clean:
 
 .PHONY: format
 #: run formatters
-format: .make/format
+format: .make/black .make/flynt .make/isort
 
 .PHONY: publish
 #: publish distribution
