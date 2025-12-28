@@ -120,8 +120,12 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-.make/lint: $(VENV) $(PYTHON_FILES)
+.make/pylint: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/docsig: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run docsig $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
@@ -226,7 +230,7 @@ format: .make/black .make/flynt .make/isort
 
 .PHONY: lint
 #: lint code
-lint: .make/lint
+lint: .make/pylint .make/docsig
 
 .PHONY: publish
 #: publish distribution
