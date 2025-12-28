@@ -85,7 +85,6 @@ $(VENV): $(POETRY) poetry.lock
 	@mkdir -p $(@D)
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
 
-#: install poetry
 $(POETRY): .poetry-version
 	@curl -sSL https://install.python-poetry.org | \
 		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" - \
@@ -244,6 +243,10 @@ install-hooks: .make/pre-commit
 .PHONY: install-ignore-revs
 #: install .git-blame-ignore-revs
 install-ignore-revs: .git/blame-ignore-revs
+
+.PHONY: install-poetry
+#: install poetry
+install-poetry: $(POETRY)
 
 .PHONY: lint
 #: lint code
