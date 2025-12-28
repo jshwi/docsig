@@ -84,7 +84,8 @@ $(VENV): $(POETRY) poetry.lock
 
 #: install .git-blane-ignore-revs
 .git/blame-ignore-revs:
-	@git config --local include.path $(@F)
+	@git config --local include.path $(@F) 2>/dev/null || true
+	@mkdir -p $(@D)
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
 
 #: install poetry
