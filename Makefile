@@ -209,7 +209,7 @@ bump: .make/pre-commit
 .PHONY: clean
 #: clean compiled files
 clean:
-	@find . -name '__pycache__' -exec rm -rf {} +
+	@find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
 	@rm -rf .coverage
 	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
