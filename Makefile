@@ -80,7 +80,6 @@ $(VENV): $(POETRY) poetry.lock
 	@mkdir -p $(@D)
 	@touch $@
 
-#: install .git-blane-ignore-revs
 .git/blame-ignore-revs:
 	@git config --local include.path $(@F) 2>/dev/null || true
 	@mkdir -p $(@D)
@@ -241,6 +240,10 @@ format: .make/black .make/flynt .make/isort
 .PHONY: install-hooks
 #: install pre-commit hooks
 install-hooks: .make/pre-commit
+
+.PHONY: install-ignore-revs
+#: install .git-blame-ignore-revs
+install-ignore-revs: .git/blame-ignore-revs
 
 .PHONY: lint
 #: lint code
