@@ -169,7 +169,6 @@ docs/_build/linkcheck/output.json: $(VENV) \
 			$(POETRY) run $(MAKE) -C docs linkcheck; \
 		}
 
-#: check dependencies are properly managed
 .make/check-deps: $(VENV) $(PYTHON_FILES) pyproject.toml
 	@$(POETRY) run deptry .
 	@mkdir -p $(@D)
@@ -206,6 +205,10 @@ bump: part = patch
 #: bump version (use: make bump part=major|minor|patch)
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
+
+.PHONY: check-deps
+#: check dependencies are properly managed
+check-deps: .make/check-deps
 
 .PHONY: clean
 #: clean compiled files
