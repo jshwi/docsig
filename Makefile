@@ -155,7 +155,6 @@ coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-#: confirm links in documentation are valid
 docs/_build/linkcheck/output.json: $(VENV) \
 	$(PYTHON_FILES) \
 	$(DOCS_FILES) \
@@ -209,6 +208,10 @@ bump: .make/pre-commit
 .PHONY: check-deps
 #: check dependencies are properly managed
 check-deps: .make/check-deps
+
+.PHONY: check-links
+#: confirm links in documentation are valid
+check-links: docs/_build/linkcheck/output.json
 
 .PHONY: clean
 #: clean compiled files
