@@ -38,7 +38,7 @@ help: $(VENV)
 ########################################################################
 # Main Targets
 $(BUILD): .make/doctest \
-	.make/format \
+	format \
 	.make/lint \
 	.make/unused \
 	.make/update-docs \
@@ -105,7 +105,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-#: run formatters
 .make/format: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run black $(PYTHON_FILES)
 	@$(POETRY) run flynt $(PYTHON_FILES)
@@ -213,6 +212,10 @@ clean:
 	@rm -rf docs/_build
 	@rm -rf docs/_generated
 	@rm -rf .tox
+
+.PHONY: format
+#: run formatters
+format: .make/format
 
 .PHONY: publish
 #: publish distribution
