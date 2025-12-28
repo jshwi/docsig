@@ -66,7 +66,6 @@ $(VENV): $(POETRY) poetry.lock
 	@POETRY_VIRTUALENVS_IN_PROJECT=1 $< install
 	@touch $@
 
-#: install pre-commit hooks
 .make/pre-commit: $(VENV)
 	@$(POETRY) run pre-commit install \
 		--hook-type pre-commit \
@@ -238,6 +237,10 @@ docs: docs/_build/html/index.html
 .PHONY: format
 #: run formatters
 format: .make/black .make/flynt .make/isort
+
+.PHONY: install-hooks
+#: install pre-commit hooks
+install-hooks: .make/pre-commit
 
 .PHONY: lint
 #: lint code
