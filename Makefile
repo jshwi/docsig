@@ -126,7 +126,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-#: check typing
 .mypy_cache/CACHEDIR.TAG: $(VENV) $(PYTHON_FILES)
 	@$(POETRY) run mypy $(PYTHON_FILES)
 	@touch $@
@@ -271,6 +270,10 @@ test: .make/doctest coverage.xml .make/test-check-news .make/test-bump
 #: run tox
 tox: $(VENV)
 	@$(POETRY) run tox
+
+.PHONY: types
+#: check typing
+types: .mypy_cache/CACHEDIR.TAG
 
 .PHONY: update-copyright
 #: update copyright year in files containing it
