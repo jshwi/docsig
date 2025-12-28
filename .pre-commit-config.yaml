@@ -34,7 +34,7 @@ repos:
       # local so package can be imported to lint
       - id: lint
         name: lint
-        entry: make .make/lint
+        entry: make lint
         language: system
         pass_filenames: false
       # analyze all files for reliable result
