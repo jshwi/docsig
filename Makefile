@@ -228,9 +228,9 @@ bump: part = patch
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
 
-.PHONY: deps-update
+.PHONY: update-deps
 #: update dependencies
-deps-update:
+update-deps:
 	@$(POETRY) update
 
 .PHONY: tox
