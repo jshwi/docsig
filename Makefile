@@ -1,24 +1,33 @@
+########################################################################
+# Make Configuration
 SHELL := /bin/bash
 .DELETE_ON_ERROR:
 
+# Extract version from pyproject.toml
 VERSION := $(shell bash scripts/get_docsig_version.sh)
 
+# Poetry configuration
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
+# File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
 
+# Virtual environment path
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
 else
 	VENV := .venv/bin/activate
 endif
 
+# Build artifact
 BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
 
+########################################################################
+# Implicit Phony Targets
 .PHONY: all
 #: install development environment
 all: .make/pre-commit .git/blame-ignore-revs
@@ -27,6 +36,8 @@ all: .make/pre-commit .git/blame-ignore-revs
 #: phony target for build
 build: $(BUILD)
 
+########################################################################
+# Main Targets
 #: build and check integrity of distribution
 $(BUILD): .make/doctest \
 	.make/format \
@@ -217,6 +228,8 @@ poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
 
+########################################################################
+# Phony Targets
 .PHONY: deps-update
 #: update dependencies
 deps-update:
