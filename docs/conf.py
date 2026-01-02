@@ -19,7 +19,7 @@ sys.path.append(os.path.abspath("./extensions"))
 # -- Project information -----------------------------------------------------
 
 project = "docsig"
-copyright = "2025, Stephen Whitlock"
+copyright = "2026, Stephen Whitlock"
 author = "Stephen Whitlock"
 
 # The full version, including alpha/beta/rc tags
