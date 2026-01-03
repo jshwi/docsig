@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.73.0](https://github.com/jshwi/docsig/tree/v0.73.0) - 2026-01-03
+
+### Changed
+
+- bump astroid ([#685](https://github.com/jshwi/docsig/issues/685))
+
 ## [0.72.2](https://github.com/jshwi/docsig/tree/v0.72.2) - 2025-12-25
 
 ### Fixed
