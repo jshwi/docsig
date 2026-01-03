@@ -39,14 +39,14 @@ class Failed(_t.NamedTuple):
 
 
 class Failure(_t.List[Failed]):
-    """Compile and produce report.
+    """Compile and produce the report.
 
     :param func: Function object.
     :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
     :param ignore_typechecker: Ignore checking return values.
     :param enforce_capitalization: Ensure param descriptions are
-        capitalised.
+        capitalized.
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments

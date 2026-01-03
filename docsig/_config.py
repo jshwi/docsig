@@ -39,7 +39,7 @@ def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
 
 
 def get_config(prog: str) -> dict[str, _t.Any]:
-    """Get config dict object from package's tool section in toml file.
+    """Get the config object from the package's tool section the config.
 
     :param prog: Program name.
     :return: Config dict.
@@ -89,7 +89,7 @@ class _ArgumentParser(_a.ArgumentParser):
         return namespace, args
 
     def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
-        """Parse a comma separated list of strings into a list.
+        """Parse a comma-separated list of strings into a list.
 
         :param args: Long and/or short form argument(s).
         :param kwargs: Kwargs to pass to ``add_argument``.

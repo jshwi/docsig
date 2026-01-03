@@ -35,7 +35,7 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
 
 
 def validate_args(func: _FuncType) -> _WrappedFuncType:
-    """Confirm args passed to function are valid.
+    """Confirm args passed to the function are valid.
 
     :param func: Function to wrap.
     :return: Wrapped function.

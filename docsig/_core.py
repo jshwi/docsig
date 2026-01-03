@@ -324,7 +324,7 @@ def runner(
         capitalised.
     :param no_ansi: Disable ANSI output.
     :param target: List of errors to target.
-    :return: Exit status for whether test failed or not.
+    :return: Exit status for whether the test failed or not.
     """
     module = _from_file(
         path,

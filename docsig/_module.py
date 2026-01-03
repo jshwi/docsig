@@ -35,8 +35,8 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     """Represents an object that contains functions or methods.
 
     :param node: Parent's abstract syntax tree.
-    :param directives: Data for directives and, subsequently, total of
-        errors which are excluded from function checks.
+    :param directives: Data for directives and, subsequently, the total
+        of errors which are excluded from function checks.
     :param path: Path to base path representation on.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
@@ -143,7 +143,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether class is protected."""
+        """Boolean value for whether this class is protected."""
         return self._name.startswith("_")
 
     @property
@@ -248,12 +248,12 @@ class Function(Parent):
 
     @property
     def ismethod(self) -> bool:
-        """Boolean value for whether function is a method."""
+        """Boolean value for whether this function is a method."""
         return isinstance(self._parent, _ast.ClassDef)
 
     @property
     def isproperty(self) -> bool:
-        """Boolean value for whether function is a property."""
+        """Boolean value for whether this function is a property."""
         valid_properties = [
             "property",
             "cached_property",
@@ -264,17 +264,17 @@ class Function(Parent):
 
     @property
     def isoverloaded(self) -> bool:
-        """Boolean value for whether function is a property."""
+        """Boolean value for whether this function is a property."""
         return self._decorated_with("overload")
 
     @property
     def isinit(self) -> bool:
-        """Boolean value for whether function is a class constructor."""
+        """Bool value for whether this func is a class constructor."""
         return self.ismethod and self.name == "__init__"
 
     @property
     def isoverridden(self) -> bool:
-        """Boolean value for whether function is overridden."""
+        """Boolean value for whether this function is overridden."""
         if self.ismethod and not self.isinit and self._parent is not None:
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
@@ -287,17 +287,17 @@ class Function(Parent):
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether function is protected."""
+        """Boolean value for whether this function is protected."""
         return super().isprotected and not self.isinit and not self.isdunder
 
     @property
     def isstaticmethod(self) -> bool:
-        """Boolean value for whether function is a static method."""
+        """Bool value for whether this function is a static method."""
         return self.ismethod and self._decorated_with("staticmethod")
 
     @property
     def isdunder(self) -> bool:
-        """Boolean value for whether function is a dunder method."""
+        """Boolean value for whether this func is a dunder method."""
         return (
             self.ismethod
             and not self.isinit
@@ -344,7 +344,7 @@ class Function(Parent):
     def overload(self, rettype: _RetType) -> None:
         """Overload function with new signature return type.
 
-        :param rettype: Return type of overloaded signature.
+        :param rettype: The return type of the overloaded signature.
         """
         self._signature.overload(rettype)
 
@@ -354,4 +354,4 @@ class _Overloads(_t.Dict[str, Function]):
 
 
 class _Children(_t.List[_t.Union[Parent, Function]]):
-    """Represents children of object."""
+    """Represents children of an object."""
