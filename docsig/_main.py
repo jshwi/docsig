@@ -17,7 +17,7 @@ def main() -> str | int:
 
     Collect config and arguments for the commandline.
 
-    :return: Exit status for whether test failed or not.
+    :return: Exit status for whether the test failed or not.
     """
     a = _parse_args()
     _excepthook(a.no_ansi)

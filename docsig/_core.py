@@ -321,10 +321,10 @@ def runner(
     :param check_protected_class_methods: Check public methods belonging
         to protected classes.
     :param enforce_capitalization: Ensure param descriptions are
-        capitalised.
+        capitalized.
     :param no_ansi: Disable ANSI output.
     :param target: List of errors to target.
-    :return: Exit status for whether test failed or not.
+    :return: Exit status for whether the test failed or not.
     """
     module = _from_file(
         path,
@@ -408,7 +408,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param ignore_typechecker: Ignore checking return values.
     :param enforce_capitalization: Ensure param descriptions are
-        capitalised.
+        capitalized.
     :param no_ansi: Disable ANSI output.
     :param verbose: Increase output verbosity.
     :param target: List of errors to target.
@@ -416,7 +416,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param exclude: Regular expression of files and dirs to exclude from
         checks.
     :param excludes: Files or dirs to exclude from checks.
-    :return: Exit status for whether test failed or not.
+    :return: Exit status for whether a test failed or not.
     """
     setup_logger(verbose)
     if list_checks:
@@ -491,7 +491,7 @@ def derive_module_name(
 ) -> str:
     """Extract Python module names from paths.
 
-    A dot separated Python module name is generated from the given file
+    A dot-separated Python module name is generated from the given file
     path.
 
     :param file_path: A file system path.

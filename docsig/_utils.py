@@ -15,7 +15,7 @@ from .messages import E as _E
 
 
 def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
-    """Show result for more than the minimum but less than the maximum.
+    """Show the result for more than the min but less than the max.
 
     :param str1: String one to compare with string two.
     :param str2: String two to compare with string one.
@@ -59,7 +59,7 @@ def has_bad_return(string: str) -> bool:
 
     Put this here in case the function increases in complexity.
 
-    Do more than just search the docstring for the word return as return
+    Do more than search the docstring for the word return as return
     statements come last, so only search the last line params can also
     come last, so make sure it is not a param declaration.
 
