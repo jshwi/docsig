@@ -47,7 +47,7 @@ repos:
       - id: coverage
         name: test source code coverage
         language: system
-        entry: make test
+        entry: make test-source
         pass_filenames: false
       # check imports against dependencies
       - id: deptry

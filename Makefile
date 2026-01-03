@@ -44,7 +44,7 @@ $(BUILD): .make/doctest \
 	update-docs \
 	.mypy_cache/CACHEDIR.TAG \
 	README.rst \
-	test \
+	test-source \
 	docs/_build/html/index.html \
 	docs/_build/linkcheck/output.json
 	@$(POETRY) build
@@ -258,9 +258,9 @@ lock-deps: poetry.lock
 publish: $(BUILD)
 	@$(POETRY) publish
 
-.PHONY: test
-#: run tests
-test: .make/doctest coverage.xml
+.PHONY: test-source
+#: run tests on source code
+test-source: .make/doctest coverage.xml
 
 .PHONY: tox
 #: run tox
