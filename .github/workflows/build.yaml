@@ -62,7 +62,7 @@ jobs:
         run: make build
       - name: Check Dependencies
         id: check-dependencies
-        run: make .make/check-deps
+        run: make check-deps
       - name: Test Scripts
         id: test-scripts
         run: |
