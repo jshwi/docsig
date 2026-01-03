@@ -41,9 +41,9 @@ class _Gitignore(_PathSpec):
                     if pattern.startswith("#"):
                         continue
 
-                    # if pattern starts with "/" then os.path.join will
-                    # consider it in the filesystem root, and it will
-                    # only ever return /pattern
+                    # if the pattern starts with "/" then os.path.join
+                    # will consider it in the filesystem root, and it
+                    # will only ever return /pattern
                     if pattern.startswith("/"):
                         pattern = pattern[1:]
 

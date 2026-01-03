@@ -26,7 +26,7 @@ class Message(_t.NamedTuple):
     #: A description of the error.
     description: str
 
-    #: A shortened description the message can be referenced by.
+    #: A shortened description that the message can be referenced by.
     symbolic: str = ""
 
     #: A hint, if any, suggesting why the error may have occurred.

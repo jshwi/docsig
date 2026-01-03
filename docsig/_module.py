@@ -82,8 +82,8 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         path: _Path | None = None,
     ) -> None:
         # need to keep track of `comments` as, even though they are
-        # resolved in directives object, they are needed to notify user
-        # in the case that they are invalid
+        # resolved in the directive object, they are needed to notify
+        # the user in the case that they are invalid
         parent_comments, parent_disabled = directives.get(
             node.lineno,
             (_Comments(), _Messages()),
