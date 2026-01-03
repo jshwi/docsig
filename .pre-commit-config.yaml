@@ -13,6 +13,7 @@ ci:
     - check-news
     - test-check-news
     - commit-fix
+    - test-bump
 default_language_version:
   python: "3.10"
 default_stages:
@@ -108,6 +109,11 @@ repos:
       - id: test-check-news
         name: Test Check News
         entry: make .make/test-check-news
+        language: system
+        pass_filenames: false
+      - id: test-bump
+        name: test bump script
+        entry: make .make/test-bump
         language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
