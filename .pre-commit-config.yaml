@@ -11,9 +11,8 @@ ci:
     - coverage
     - check-unstaged-news
     - check-news
-    - test-check-news
     - commit-fix
-    - test-bump
+    - test-scripts
 default_language_version:
   python: "3.10"
 default_stages:
@@ -106,14 +105,9 @@ repos:
         language: system
         stages:
           - commit-msg
-      - id: test-check-news
-        name: Test Check News
-        entry: make .make/test-check-news
-        language: system
-        pass_filenames: false
-      - id: test-bump
-        name: test bump script
-        entry: make .make/test-bump
+      - id: test-scripts
+        name: test scripts
+        entry: make test-scripts
         language: system
         pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks

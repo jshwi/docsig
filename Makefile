@@ -258,6 +258,10 @@ lock-deps: poetry.lock
 publish: $(BUILD)
 	@$(POETRY) publish
 
+.PHONY: test-scripts
+#: run tests on scripts
+test-scripts: .make/test-check-news .make/test-bump
+
 .PHONY: test-source
 #: run tests on source code
 test-source: .make/doctest coverage.xml
