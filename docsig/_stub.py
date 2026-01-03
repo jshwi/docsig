@@ -249,6 +249,7 @@ class Signature(_Stub):
         rettype = RetType.from_ast(node.returns)
         returns = rettype == RetType.SOME
         signature = cls(rettype, returns, ignore_args, ignore_kwargs)
+        # noinspection PyUnresolvedReferences
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)
             for a in [
