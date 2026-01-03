@@ -179,30 +179,29 @@ poetry.lock: pyproject.toml
 
 ########################################################################
 # Phony Targets
-.PHONY: benchmark
+.PHONY: benchmark build bump check-deps check-links clean docs format \
+	install-hooks install-ignore-revs install-poetry install-venv lint \
+	lock-deps publish test-scripts test-source tests tox types unused \
+	update-copyright update-deps update-docs update-readme whitelist
+
 #: run benchmarks
 benchmark: $(VENV)
 	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
 
-.PHONY: build
 #: build distribution
 build: $(BUILD)
 
-.PHONY: bump
 bump: part = patch
 #: bump version (use: make bump part=major|minor|patch)
 bump: .make/pre-commit
 	@$(POETRY) run python scripts/bump_version.py $(part)
 
-.PHONY: check-deps
 #: check dependencies are properly managed
 check-deps: .make/check-deps
 
-.PHONY: check-links
 #: confirm links in documentation are valid
 check-links: docs/_build/linkcheck/output.json
 
-.PHONY: clean
 #: clean compiled files
 clean:
 	@find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
@@ -221,86 +220,66 @@ clean:
 	@rm -rf .tox
 	@rm -rf node_modules
 
-.PHONY: docs
 #: build documentation
 docs: docs/_build/html/index.html
 
-.PHONY: format
 #: run formatters
 format: .make/black .make/flynt .make/isort
 
-.PHONY: install-hooks
 #: install pre-commit hooks
 install-hooks: .make/pre-commit
 
-.PHONY: install-ignore-revs
 #: install .git-blame-ignore-revs
 install-ignore-revs: .git/blame-ignore-revs
 
-.PHONY: install-poetry
 #: install poetry
 install-poetry: $(POETRY)
 
-.PHONY: install-venv
 #: install virtualenv
 install-venv: $(VENV)
 
-.PHONY: lint
 #: lint code
 lint: .make/pylint .make/docsig
 
-.PHONY: lock-deps
 #: lock poetry dependencies
 lock-deps: poetry.lock
 
-.PHONY: publish
 #: publish distribution
 publish: $(BUILD)
 	@$(POETRY) publish
 
-.PHONY: test-scripts
 #: run tests on scripts
 test-scripts: .make/test-check-news .make/test-bump
 
-.PHONY: test-source
 #: run tests on source code
 test-source: .make/doctest coverage.xml
 
-.PHONY: tests
 #: run all tests
 tests: test-scripts test-source
 
-.PHONY: tox
 #: run tox
 tox: $(VENV)
 	@$(POETRY) run tox
 
-.PHONY: types
 #: check typing
 types: .mypy_cache/CACHEDIR.TAG
 
-.PHONY: unused
 #: check for unused code
 unused: .make/unused
 
-.PHONY: update-copyright
 #: update copyright year in files containing it
 update-copyright: $(VENV)
 	@$(POETRY) run python3 scripts/update_copyright.py
 
-.PHONY: update-deps
 #: update dependencies
 update-deps: $(VENV)
 	@$(POETRY) update
 
-.PHONY: update-docs
 #: update docs according to source
 update-docs: .make/update-docs
 
-.PHONY: update-readme
 #: update commandline documentation if needed
 update-readme: README.rst
 
-.PHONY: whitelist
 #: generate whitelist of allowed unused code
 whitelist: whitelist.py
