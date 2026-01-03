@@ -1150,7 +1150,7 @@ def test_no_disables(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test series of functions with no disable comments.
+    """Test the series of functions with no `disable` comments.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1170,7 +1170,7 @@ def test_commandline_disables(
     code: str,
     symbolic: str,
 ) -> None:
-    """Test series of functions with disable commandline arg.
+    """Test the series of functions with `disable` commandline arg.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1193,7 +1193,7 @@ def test_commandline_disables(
 
 
 def test_unknown_commandline_disables(main: MockMainType) -> None:
-    """Test invalid disable option provided.
+    """Test invalid `disable` option provided.
 
     :param main: Mock ``main`` function.
     """
@@ -1208,7 +1208,7 @@ def test_module_disables(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test disabling entire module with disable comment.
+    """Test disabling entire module with `disable` comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1225,7 +1225,7 @@ def test_single_function_disable(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test disabling single function with disable comment.
+    """Test disabling single function with `disable` comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1243,7 +1243,7 @@ def test_module_single_error_disables(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test disabling entire module with specific disable comment.
+    """Test disabling entire module with specific `disable` comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1280,7 +1280,7 @@ def test_single_function_single_error_disable(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test disabling single function with specific disable comment.
+    """Test disabling single function with specific `disable` comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1335,7 +1335,7 @@ def test_single_function_enable(
 ) -> None:
     """Test enabling entire module with enable comment.
 
-    Prior to enable add disable directive.
+    Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1355,7 +1355,7 @@ def test_module_single_error_enables(
 ) -> None:
     """Test enabling entire module with enable comment.
 
-    Prior to enable add disable directive.
+    Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1375,7 +1375,7 @@ def test_module_comma_separated_error_enables(
 ) -> None:
     """Test enabling entire module with specific enable comment.
 
-    Prior to enable add disable directive.
+    Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1398,7 +1398,7 @@ def test_single_function_single_error_enable(
 ) -> None:
     """Test enabling single function with specific enable comment.
 
-    Prior to enable add disable directive.
+    Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1418,7 +1418,7 @@ def test_single_function_comma_separated_error_enable(
 ) -> None:
     """Test enabling function with comment of several specific errors.
 
-    Prior to enable add disable directive.
+    Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1439,7 +1439,7 @@ def test_individual_inline_disable_checks(
     code: str,
     symbolic: str,
 ) -> None:
-    """Test individual inline disable checks.
+    """Test individual inline `disable` checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1482,7 +1482,7 @@ def test_comma_separated_inline_disable_checks(
     main: MockMainType,
     rules: str,
 ) -> None:
-    """Test multiple inline disable checks.
+    """Test multiple inline `disable` checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1507,7 +1507,7 @@ def test_individual_module_disable_checks(
     code: str,
     symbolic: str,
 ) -> None:
-    """Test individual module disable checks.
+    """Test individual module `disable` checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1550,7 +1550,7 @@ def test_comma_separated_module_disable_checks(
     main: MockMainType,
     rules: str,
 ) -> None:
-    """Test multiple module disable checks.
+    """Test multiple module `disable` checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1643,7 +1643,7 @@ def test_individual_module_enable_checks(
     code: str,
     symbolic: str,
 ) -> None:
-    """Test individual module enable checks.
+    """Test individual module `enable` checks.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.

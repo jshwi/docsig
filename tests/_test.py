@@ -1,8 +1,8 @@
 """Test suite of docsig.
 
 Most tests run with all the args that start with ``check``, so passing
-or failing of most tests depend on these passing. This means, by
-default, that templates including classes, magic methods, overridden
+or failing of most tests depends on these passing. This means that by
+default, templates including classes, magic methods, overridden
 methods, protected methods, and property returns, will be checked, even
 though by default they aren't.
 
@@ -147,7 +147,7 @@ def test_error_codes(
 
     All templates containing ``SingleError`` are tested for error codes.
 
-    Expected result for these tests are derived from
+    Expected results for these tests are derived from
     ``docsig.messages``.
 
     :param capsys: Capture sys out.
@@ -179,8 +179,8 @@ def test_multiple(
 ) -> None:
     """Test for correct output for modules with multiple functions.
 
-    Only test templates prefixed with ``M``, as these are designated
-    templates containing 2 or more functions. There templates are
+    Only test the templates prefixed with ``M``, as these are designated
+    templates containing 2 or more functions. These templates are
     generally excluded from other tests.
 
     :param capsys: Capture sys out.
@@ -213,14 +213,14 @@ def test_disable_rule(
     """Test disabling of errors.
 
     Confirm that templates testing specific error codes, passed as a
-    disable argument, do not result in a failed run.
+    `disable` argument, do not result in a failed run.
 
     Any of the tests that would normally raise the particular error
     should pass with the error disabled.
 
     This test only tests templates prefixed with ``F<ERROR_CODE>``.
 
-    Expected result for these tests are derived from
+    Expected results for these tests are derived from
     ``docsig.messages``.
 
     :param init_file: Initialize a test file.
@@ -283,8 +283,9 @@ def test_ignore_no_params(
 ) -> None:
     """Test that failing funcs pass with `-i/--ignore-no-params` flag.
 
-    ``SIG203``, ``SIG503``, ``SIG501``, and ``H102`` all indicate parameters
-    missing from docstring. These should not trigger with this argument.
+    ``SIG203``, ``SIG503``, ``SIG501``, and ``H102`` all indicate
+    parameters missing from this docstring. These should not trigger
+    with this argument.
 
     All templates prefixed with ``M`` will be excluded from this test,
     as this tests multiple functions in a file, some that may pass and
@@ -348,13 +349,13 @@ def test_no_check_property_returns_flag(
     main: MockMainType,
     template: Template,
 ) -> None:
-    """Test that passing property fails without ``-P`` flag.
+    """Test that passing property fails without a ``-P`` flag.
 
     Only test templates prefixed with ``PPropertyReturn`` are collected
     for this test, and all tests should fail.
 
-    All tests will be tested for ``SIG505`` and ``H101``, which property
-    related errors.
+    All tests will be tested for ``SIG505`` and ``H101``, which are
+    property-related errors.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -388,7 +389,7 @@ def test_ignore_args(
     All templates containing args in their signature must have `WArgs` in
     their name.
 
-    Passing templates with ``WArgs`` will fail and failing tests with
+    Passing templates with ``WArgs`` will fail, and failing tests with
     ``WArgs`` will pass, as tests which pass will have args documented,
     which shouldn’t be to pass with this check. All other tests will
     have the usual result.
@@ -429,9 +430,9 @@ def test_ignore_kwargs(
     don’t fail with ``-k/--ignore-kwargs``.
 
     All templates containing args in their signature must have
-    ``WKwargs`` their name.
+    ``WKwargs`` as their name.
 
-    Passing templates with ``WKwargs`` will fail and failing tests with
+    Passing templates with ``WKwargs`` will fail, and failing tests with
     ``WKwargs`` will pass, as tests which pass will have args documented,
     which shouldn’t be to pass with this check. All other tests will
     have the usual result.
@@ -466,7 +467,7 @@ def test_no_flag(
 ) -> None:
     """Test that failing tests pass without their corresponding flag.
 
-    All tests that fail such as with ``--check-class`` should be
+    All tests that fail, such as with ``--check-class``, should be
     prefixed with ``FClass``, and these particular tests should all
     pass.
 
@@ -490,13 +491,15 @@ def test_single_flag(
     template: str,
     _: str,
 ) -> None:
-    """Test that failing templates pass with only corresponding flag.
+    """Test that failing templates pass.
+
+    Test with only the corresponding flag.
 
     This tests that boolean expressions are all evaluated properly on
     their own.
 
-    All tests that fail such as with `--check-class` should be prefixed
-    with `FClass`, and these particular tests should all fail.
+    All tests that fail, such as with `--check-class`, should be
+    prefixed with `FClass`, and these particular tests should all fail.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -519,7 +522,7 @@ def test_check_class_constructor(
     template: str,
     _: str,
 ) -> None:
-    """Test behaviour of ``--check-class-constructor``.
+    """Test behavior of ``--check-class-constructor``.
 
     These tests all fail under the default setup with ``--check-class``,
     because they are missing parameters from the ``__init__`` under that

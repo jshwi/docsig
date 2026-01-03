@@ -29,7 +29,7 @@ def test_print_version(
     main: MockMainType,
     arg: str,
 ) -> None:
-    """Test printing of version on commandline.
+    """Test printing of the program's version on the commandline.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
@@ -153,7 +153,7 @@ def test_lineno(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test printing of three function errors with line number.
+    """Test printing of three function errors with the line number.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -176,7 +176,7 @@ def test_param_ne() -> None:
 
 
 def test_file_not_found_error(main: MockMainType) -> None:
-    """Test file not found error for incorrect path arg.
+    """Test file-not-found error for incorrect path arg.
 
     :param main: Mock ``main`` function.
     """
@@ -273,7 +273,7 @@ def test_no_path_or_string(main: MockMainType) -> None:
 def test_str_path_via_api() -> None:
     """Test passing a path as a string when using api.
 
-    No need to make any assertions, just need to avoid the following:
+    No need to make any assertions, we only need to avoid the following:
 
         AttributeError: 'str' object has no attribute 'exists'
     """
@@ -319,9 +319,9 @@ def test_bad_py_file(
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
-    """Test invalid syntax on .py file.
+    """Test invalid syntax on a python file.
 
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -513,7 +513,7 @@ def test_ignore_typechecker_and_no_prop_returns(
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
-    :param template: Template to test.
+    :param template: The template to test.
     :param expected: Expected message.
     """
     init_file(template)
@@ -620,7 +620,7 @@ def test_sys_excepthook(
 ) -> None:
     """Get coverage on except hook.
 
-    Unsure what errors are relevant after removing syntax error from
+    Unsure what errors are relevant after removing the syntax error from
     this hook.
 
     :param monkeypatch: Mock patch environment and attributes.
@@ -645,7 +645,7 @@ def test_ignore_args_ignore_kwargs_index_error(
     main: MockMainType,
     init_file: InitFileFixtureType,
 ) -> None:
-    """Test necessity of handling index error when getting args.
+    """Test the necessity of handling index error when getting args.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
@@ -697,11 +697,11 @@ def test_fail_on_unicode_decode_error_if_py_file(
     main: MockMainType,
     tmp_path: Path,
 ) -> None:
-    """Ensure unicode decode error is handled without error.
+    """Ensure that the unicode-decode error is handled without error.
 
     :param capsys: Capture sys out.
     :param main: Patch package entry point.
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     """
     pkl = tmp_path / "test.py"
     serialize = [1, 2, 3]
@@ -718,10 +718,10 @@ def test_pre_commit_compatibility_issue_with_pythonpath_522(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
 ) -> None:
-    """Test compatibility issues with Python path.
+    """Test compatibility issues with a Python path.
 
     :param main: Patch package entry point.
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     :param capsys: Capture sys out.
     """
     t1 = '''\
@@ -795,10 +795,10 @@ def test_enforce_capitalisation_should_not_591(
     main: MockMainType,
     init_file: InitFileFixtureType,
 ) -> None:
-    """Test enforce capitalisation.
+    """Test enforce capitalization.
 
     :param main: Patch package entry point.
-    :param init_file: Initialise a test file.
+    :param init_file: Initialize a test file.
     """
     template = '''
 def function(a) -> None:

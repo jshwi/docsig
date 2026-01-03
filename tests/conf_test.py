@@ -44,7 +44,7 @@ def test_list_parser(
 
     :param patch_argv: Patch commandline arguments.
     :param config: Object to write to pyproject.toml.
-    :param args: Arguments to pass to commandline.
+    :param args: Arguments to pass to the commandline.
     :param expected: Expected result.
     """
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
