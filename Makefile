@@ -41,7 +41,7 @@ $(BUILD): .make/doctest \
 	format \
 	lint \
 	unused \
-	.make/update-docs \
+	update-docs \
 	.mypy_cache/CACHEDIR.TAG \
 	README.rst \
 	coverage.xml \
@@ -94,7 +94,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run python scripts/update_readme.py >/dev/null 2>&1 || exit 0
 	@touch $@
 
-#: update docs according to source
 .make/update-docs: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run python scripts/update_docs.py
 	@mkdir -p $(@D)
@@ -285,6 +284,10 @@ update-copyright: $(VENV)
 #: update dependencies
 update-deps: $(VENV)
 	@$(POETRY) update
+
+.PHONY: update-docs
+#: update docs according to source
+update-docs: .make/update-docs
 
 .PHONY: update-readme
 #: update commandline documentation if needed

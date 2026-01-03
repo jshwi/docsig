@@ -78,7 +78,7 @@ repos:
       - id: update-docs
         name: update docs
         language: system
-        entry: make .make/update-docs
+        entry: make update-docs
         pass_filenames: false
       - id: update-whitelist
         name: update whitelist
