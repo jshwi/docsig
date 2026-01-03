@@ -26,7 +26,7 @@ def test_exclude_defaults(
     """Test bash script is ignored when under __pycache__ directory.
 
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
@@ -140,7 +140,7 @@ def test_gitignore(
 
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
@@ -296,7 +296,7 @@ def test_exclude_defaults_and_gitignore(
     """Test files excluded and ignored.
 
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
@@ -375,7 +375,7 @@ def test_gitignore_patterns(
 
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
@@ -665,7 +665,7 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
 
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     :param args: Args to pass to main.
     :param expected: List of expected output.

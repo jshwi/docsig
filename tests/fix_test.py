@@ -81,10 +81,10 @@ def test_no_fail_on_unicode_decode_error_384(
     main: MockMainType,
     tmp_path: Path,
 ) -> None:
-    """Ensure unicode decode error is handled without error.
+    """Ensure the unicode-decode error is handled without error.
 
     :param main: Patch package entry point.
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     """
     pkl = tmp_path / "test.pkl"
     serialize = [1, 2, 3]
@@ -103,7 +103,7 @@ def test_exclude_dirs_392(
 
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
@@ -149,7 +149,7 @@ def test_exclude_defaults_396(
     """Test bash script is ignored when under __pycache__ directory.
 
     :param main: Patch package entry point.
-    :param make_tree: Create directory tree from dict mapping.
+    :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
@@ -411,8 +411,8 @@ def test_description_missing_and_description_syntax_error_461(
 ) -> None:
     """Test description missing raised with other description.
 
-    Other description would cause a syntax in description error if it
-    spanned over multiple lines.
+    The other description would cause a syntax in description error if
+    it spanned over multiple lines.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
@@ -436,7 +436,7 @@ def function(param1, param2) -> None:
 def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     patch_argv: FixturePatchArgv,
 ) -> None:
-    """Test config correctly loads on windows.
+    """Test that config correctly loads on windows.
 
     Problem: When running the pre-commit hook in Windows PowerShell,
     get_config returns {} because prog='docsig.EXE' instead of 'docsig'.
@@ -496,7 +496,7 @@ def test_properties_not_recognized_when_underneath_other_decorators_509(
 ) -> None:
     """Fix properties not recognized when stacked.
 
-    Also check this does fail with --check-property-returns.
+    Also, check this does fail with --check-property-returns.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
@@ -542,7 +542,7 @@ def test_properties_not_recognized_when_on_top_of_other_decorators_509(
 ) -> None:
     """Fix properties not recognized when stacked.
 
-    Also check this does fail with --check-property-returns.
+    Also, check this does fail with --check-property-returns.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
@@ -625,10 +625,10 @@ def test_handle_empty_symlinks(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
 ) -> None:
-    """Ensure program doesn't crash when it checks broken symlinks.
+    """Ensure the program doesn't crash when it checks broken symlinks.
 
     :param main: Mock ``main`` function.
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     :param capsys: Capture sys out.
     """
     (tmp_path / "broken_symlink.py").symlink_to("does-not-exist")
@@ -642,7 +642,7 @@ def test_no_erroneous_402_when_order_cannot_be_confirmed(
     main: MockMainType,
     init_file: InitFileFixtureType,
 ) -> None:
-    """Fix params out of order popping up with a single document.
+    """Fix params out-of-order popping up with a single document.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
@@ -738,7 +738,7 @@ def test_recognise_yield_550(
     main: MockMainType,
     init_file: InitFileFixtureType,
 ) -> None:
-    """Recognise yield in docstrings.
+    """Recognize yield in docstrings.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.

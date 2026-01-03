@@ -30,10 +30,10 @@ def fixture_environment(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
-    """Prepare environment for testing.
+    """Prepare the environment for testing.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     """
     monkeypatch.setenv("DOCSIG_DEBUG", "0")
     monkeypatch.chdir(tmp_path)
@@ -64,7 +64,7 @@ def fixture_main(
     monkeypatch: pytest.MonkeyPatch,
     flake8: FixtureFlake8,
 ) -> MockMainType:
-    """Pass patched commandline arguments to package's main function.
+    """Pass patched commandline args to the package's main function.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param flake8: Flake8 plugin fixture.
@@ -98,7 +98,7 @@ def fixture_main(
 def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
     """Initialize a test file.
 
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return the temporary directory.
     :return: Function for using this fixture.
     """
 
@@ -113,7 +113,7 @@ def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
 
 @pytest.fixture(name="make_tree")
 def fixture_make_tree() -> FixtureMakeTree:
-    """Recursively create directory tree from dict mapping.
+    """Recursively create a directory tree from a dict mapping.
 
     :return: Function for using this fixture.
     """
@@ -164,10 +164,10 @@ def fixture_patch_argv(monkeypatch: pytest.MonkeyPatch) -> FixturePatchArgv:
 def fixture_patch_logger() -> io.StringIO:
     """Logs as an io instance.
 
-    logging this amount output is ridiculously slow and results in an io
-    bottleneck
+    Logging this amount of output is ridiculously slow and results in an
+    io bottleneck.
 
-    :return: Logging as IO instance.
+    :return: Logging as an IO instance.
     """
     log_stream = io.StringIO()
     handler = logging.StreamHandler(log_stream)
