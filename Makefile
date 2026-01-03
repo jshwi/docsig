@@ -44,7 +44,7 @@ $(BUILD): .make/doctest \
 	update-docs \
 	.mypy_cache/CACHEDIR.TAG \
 	README.rst \
-	coverage.xml \
+	test \
 	docs/_build/html/index.html \
 	docs/_build/linkcheck/output.json
 	@$(POETRY) build
