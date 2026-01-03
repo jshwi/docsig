@@ -12,7 +12,6 @@ ci:
     - check-unstaged-news
     - check-news
     - commit-fix
-    - test-scripts
 default_language_version:
   python: "3.10"
 default_stages:
@@ -47,7 +46,7 @@ repos:
       - id: coverage
         name: test source code coverage
         language: system
-        entry: make test-source
+        entry: make tests
         pass_filenames: false
       # check imports against dependencies
       - id: deptry
@@ -105,11 +104,6 @@ repos:
         language: system
         stages:
           - commit-msg
-      - id: test-scripts
-        name: test scripts
-        entry: make test-scripts
-        language: system
-        pass_filenames: false
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v6.0.0"
     hooks:

@@ -266,6 +266,10 @@ test-scripts: .make/test-check-news .make/test-bump
 #: run tests on source code
 test-source: .make/doctest coverage.xml
 
+.PHONY: tests
+#: run all tests
+tests: test-scripts test-source
+
 .PHONY: tox
 #: run tox
 tox: $(VENV)
