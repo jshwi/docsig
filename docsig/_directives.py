@@ -104,7 +104,7 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
         fin = _StringIO(text)
         comments = Comments()
         for line in _tokenize.generate_tokens(fin.readline):
-            # do nothing for these lines types
+            # do nothing for these line types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
@@ -126,7 +126,7 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
                             i for i in messages if i not in comment
                         )
 
-                    # if module level directive then make changes
+                    # if module level directive, then make changes
                     # globally
                     if comment.ismodule:
                         messages = scoped_messages

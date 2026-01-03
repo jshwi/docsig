@@ -18,7 +18,7 @@ from ._version import __version__
 PYPROJECT_TOML = "pyproject.toml"
 
 
-# split str by comma, but allow for escaping
+# split str by comma but allow for escaping
 def _split_comma(value: str) -> list[str]:
     return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
 
