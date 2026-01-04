@@ -37,7 +37,7 @@ conflict_pattern = re.compile(
 commandline_pattern = re.compile(
     r"(Commandline\s*\*+\s*..\s*code-block::\s*console\s*\n)((?:\s{4}.*\n)+)",
 )
-# this won't work if there's a conflict in the file as it analyses
+# this won't work if there's a conflict in the file as it analyzes
 # indents
 readme_content = conflict_pattern.sub("", path.read_text())
 match = commandline_pattern.search(readme_content)

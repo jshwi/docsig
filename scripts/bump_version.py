@@ -55,7 +55,7 @@ def _main() -> int | str:
     except (KeyboardInterrupt, subprocess.CalledProcessError):
         # this is ok as the script will not run if the working tree is
         # dirty beforehand
-        # just remove any changes this script has made
+        # only remove any changes this script has made
         repo.git.reset(hard=True)
         return "version bump failed"
 

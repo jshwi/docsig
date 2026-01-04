@@ -120,8 +120,8 @@ def main() -> int | str:
     if any(commit_msg.startswith(i) for i in allowed_kinds):
         match = MSG.match(commit_msg)
         if match is None:
-            # if commit message does not have the correct pattern it
-            # cannot be parsed
+            # if the commit message does not have the correct pattern,
+            # it cannot be parsed
             return E.FORMAT.format(pattern=MSG.pattern)
 
         kind, desc, issue = match.group(1), match.group(2), match.group(3)
@@ -135,7 +135,7 @@ def main() -> int | str:
                 return E.CHANGED_DESC.format(name=latest.name)
 
             if not latest.name.startswith(name.stem):
-                # issue or commit type changed, rename file
+                # issue or commit type changed, rename the file
                 os.rename(latest, last)
                 return E.CHANGED_NAME.format(src=latest.name, dst=last.name)
         else:
@@ -198,7 +198,7 @@ class Test:
         Path(self.repo.git.rev_parse("HEAD")).touch()
 
     def _ci(self, **kwargs: t.Any) -> int | str:
-        # simulate pre-commit hook which blocks unstaged fragments
+        # simulate the pre-commit hook which blocks unstaged fragments
         assert "??" not in self.repo.git.status(self.fragments, porcelain=True)
 
         message = kwargs.get("message")
@@ -207,14 +207,14 @@ class Test:
             # be done before the `commit-msg` hook
             self.commit_file.write_text(message, encoding="utf-8")
 
-        # main in this context is the pre-commit hook
+        # `main` in this context is the pre-commit hook
         returncode = main()
         if not returncode:
             # if main passes, the commit hook is successful, so proceed
-            # to actually making the commit
+            # to actually make the commit
             self.repo.git.commit(**kwargs)
 
-        # return int if int, strip str if str
+        # return int if this is an int, strip str if this is a str
         return (
             returncode
             if isinstance(returncode, int)
