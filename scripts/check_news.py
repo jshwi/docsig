@@ -42,7 +42,7 @@ def get_last_issue_fragment(default: Path) -> Path:
 
     If no other fragments exist apart from the default one, return that.
 
-    :param default: Default name for news fragment e.g. 1.add.md.
+    :param default: Default name for news fragment e.g., 1.add.md.
     :return: Latest news fragment.
     """
     files = [(default.name, 0)]
@@ -66,19 +66,19 @@ def create_news_fragment(
     """Create news files and ensure it's not a duplicate.
 
     A duplicate will occur in situations such as an amendment to the
-    commit. As this script only reads the .git/COMMIT_EDITMSG file it is
-    unable to determine whether the commit is an amendment and will
+    commit. As this script only reads the .git/COMMIT_EDITMSG file, it
+    is unable to determine whether the commit is an amendment and will
     create an unwanted duplicate as if it was a new commit for the same
     issue.
 
-    Check the latest untracked news fragment (the name is not know yet),
-    and confirm its contents aren't identical to the last news fragment
-    before it.
+    Check the latest untracked news fragment (the name is not known
+    yet) and confirm its contents aren't identical to the last news
+    fragment before it.
 
     :param desc: Description to write to file.
-    :param name: Name of new file.
+    :param name: Name of the new file.
     :param repo: Repository to check for diff.
-    :param last: Last new file created, before the current one.
+    :param last: The last new file created, before the current one.
     :return: 0 if successful, error message if unsuccessful.
     """
     output = subprocess.run(
@@ -172,7 +172,7 @@ class Test:
     ) -> None:
         """Set up the test environment.
 
-        :param tmp_path: Create and return temporary directory.
+        :param tmp_path: Create and return a temporary directory.
         :param monkeypatch: Mock patch environment and attributes.
         """
         monkeypatch.chdir(tmp_path)
@@ -256,7 +256,7 @@ class Test:
         assert len(list(self.fragments.iterdir())) == 1
 
     def test_log_commit_same_issue(self) -> None:
-        """Test new fragment allowed if it's a commit for same issue."""
+        """Test fragment allowed if it's a commit for the same issue."""
         news = self.fragments / "1.add.1.md"
         expected = CREATED_NEWS.format(path=news)
         self.test_log()
@@ -267,8 +267,8 @@ class Test:
     def test_log_commit_same_issue_amend(self) -> None:
         """Test git commit amend with already existing news.
 
-        This amend is different because it requires finding the latest
-        file to compare against.
+        This amendment is different because it requires finding the
+        latest file to compare against.
         """
         self.test_log_commit_same_issue()
         self._touch_unique_file()
@@ -305,7 +305,7 @@ class Test:
         assert self._ci(message="ci: feature (#1)") == expected
 
     def test_bump(self) -> None:
-        """Test removal ok when building changelog for bump.."""
+        """Test removal ok when building the changelog for bump."""
         news = self.fragments / "1.add.md"
         self._ci(message="add: commit message (#1)")
         self.repo.git.add(Path.cwd())

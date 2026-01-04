@@ -127,7 +127,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
 
 
 def remove_outdated_messages() -> None:
-    """Remove outdated messages file."""
+    """Remove the outdated messages file."""
     for path in USAGE.glob("*-messages.rst"):
         if not any(path.name.startswith(v) for v in CATEGORIES.values()):
             path.unlink()

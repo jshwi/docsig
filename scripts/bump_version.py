@@ -68,7 +68,7 @@ def test_bump(  # pylint: disable=too-many-locals
 ) -> None:
     """Test bump.
 
-    :param tmp_path: Create and return temporary directory.
+    :param tmp_path: Create and return a temporary directory.
     :param monkeypatch: Mock patch environment and attributes.
     """
     this = Path(__file__).parent.parent
