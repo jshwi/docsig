@@ -13,7 +13,7 @@ import pytest
 import tomli_w
 
 # noinspection PyProtectedMember
-from docsig._config import _ArgumentParser
+from docsig._config import _ArgumentParser, _split_comma
 
 from . import LIST, NAME, TOML, TOOL, FixturePatchArgv, long, short, string
 
@@ -50,7 +50,13 @@ def test_list_parser(
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(*args)
     parser = _ArgumentParser()
-    parser.add_list_argument(short.list, long.list)
+    parser.add_argument(
+        short.list,
+        long.list,
+        action="store",
+        type=_split_comma,
+        default=[],
+    )
     namespace = parser.parse_args()
     assert namespace.list.sort() == expected.sort()
 
@@ -91,14 +97,26 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # no defaults, pyproject.toml, or kwarg, but the type is list, so
     # that is its falsy value
     parser = _ArgumentParser()
-    parser.add_list_argument(short.list, long.list)
+    parser.add_argument(
+        short.list,
+        long.list,
+        action="store",
+        type=_split_comma,
+        default=[],
+    )
     namespace = parser.parse_args()
     assert namespace.list == []
 
     # if the default kwarg is provided, it is the default if there is
     # nothing in pyproject.toml
     parser = _ArgumentParser()
-    parser.add_list_argument(short.list, long.list, default=[1, 2, 3])
+    parser.add_argument(
+        short.list,
+        long.list,
+        action="store",
+        type=_split_comma,
+        default=[1, 2, 3],
+    )
     namespace = parser.parse_args()
     assert namespace.list == [1, 2, 3]
 
@@ -108,7 +126,13 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     config = {TOOL: {NAME: {"list": [100, 200, 300]}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     parser = _ArgumentParser()
-    parser.add_list_argument(short.list, long.list, default=[1, 2, 3])
+    parser.add_argument(
+        short.list,
+        long.list,
+        action="store",
+        type=_split_comma,
+        default=[1, 2, 3],
+    )
     namespace = parser.parse_args()
     assert namespace.list.sort() == [100, 200, 300, 1, 2, 3].sort()
 
