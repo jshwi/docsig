@@ -30,9 +30,9 @@ Parameters missing
     ... def function(first, second, third, fourth) -> None:
     ...     """Function summary.
     ...
-    ...     :param second: second param.
-    ...     :param third: third param.
-    ...     :param fourth: fourth param.
+    ...     :param second: Second param.
+    ...     :param third: Third param.
+    ...     :param fourth: Fourth param.
     ...     """
     ... '''
 
@@ -49,9 +49,9 @@ Parameters missing
     ... def function(param1, param2, param3, param4) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: second param.
-    ...     :param param3: third param.
-    ...     :param param4: fourth param.
+    ...     :param param2: Second param.
+    ...     :param param3: Third param.
+    ...     :param param4: Fourth param.
     ...     """
     ... '''
 
