@@ -11,6 +11,16 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.74.0](https://github.com/jshwi/docsig/tree/v0.74.0) - 2026-01-05
+
+### Changed
+
+- enforce capitalization by default ([#693](https://github.com/jshwi/docsig/issues/693))
+
+### Deprecated
+
+- enforce-capitalization option ([#695](https://github.com/jshwi/docsig/issues/695))
+
 ## [0.73.0](https://github.com/jshwi/docsig/tree/v0.73.0) - 2026-01-03
 
 ### Changed
