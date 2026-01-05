@@ -232,14 +232,10 @@ class Failure(_t.List[Failed]):
                 token=doc.closing_token,
                 hint=True,
             )
-        if (
-            self._enforce_capitalization
-            and doc.description is not None
-            and not all(
-                i.strip()[0].isupper()
-                for i in _sentence_tokenizer(doc.description)
-                if i
-            )
+        if doc.description is not None and not all(
+            i.strip()[0].isupper()
+            for i in _sentence_tokenizer(doc.description)
+            if i and not any(i.startswith(x) for x in (":", ".", "`"))
         ):
             # description is not capitalized
             self._add(_E[305])

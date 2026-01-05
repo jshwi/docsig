@@ -1,3 +1,4 @@
+_._enforce_capitalization  # unused attribute (docsig/_report.py:77)
 Docsig  # unused class (docsig/plugin.py:20)
 off_by_default  # unused variable (docsig/plugin.py:27)
 _.add_options  # unused method (docsig/plugin.py:40)
