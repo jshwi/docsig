@@ -4,12 +4,12 @@ import ast
 import os
 import sys
 import typing as t
-from argparse import SUPPRESS, Namespace
+from argparse import Namespace
 from pathlib import Path
 
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
-from ._core import handle_deprecations, runner, setup_logger
+from ._core import runner, setup_logger
 from ._version import __version__
 from .messages import FLAKE8, E
 
@@ -115,12 +115,6 @@ class Docsig:
             parse_from_config=True,
             help="ignore checking return values",
         )
-        parser.add_option(  # deprecated
-            "--sig-enforce-capitalization",
-            action="store_true",
-            parse_from_config=True,
-            help=SUPPRESS,
-        )
         parser.add_option(
             "--sig-verbose",
             action="store_true",
@@ -138,7 +132,6 @@ class Docsig:
             {k.replace("sig_", ""): v for k, v in a.__dict__.items()},
             _get_config(__package__),
         )
-        handle_deprecations(cls.a.enforce_capitalization, stacklevel=8)
 
     def run(self) -> t.Generator[Flake8Error, None, None]:
         """Run docsig and possibly yield a flake8 error.
