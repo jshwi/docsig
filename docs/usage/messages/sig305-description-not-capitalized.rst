@@ -21,7 +21,7 @@ This needs to be manually enabled
 
 .. code-block:: python
 
-    >>> docsig(string=string, enforce_capitalization=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     2 in function
         SIG305: description does not begin with a capital letter (description-not-capitalized)
     1
@@ -38,7 +38,7 @@ This needs to be manually enabled
 
 .. code-block:: python
 
-    >>> docsig(string=string, enforce_capitalization=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     2 in function
         SIG305: description does not begin with a capital letter (description-not-capitalized)
     1
@@ -55,7 +55,7 @@ This needs to be manually enabled
 
 .. code-block:: python
 
-    >>> docsig(string=string, enforce_capitalization=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     0
 
 .. code-block:: python
@@ -70,5 +70,5 @@ This needs to be manually enabled
 
 .. code-block:: python
 
-    >>> docsig(string=string, enforce_capitalization=True, no_ansi=True)
+    >>> docsig(string=string, no_ansi=True)
     0

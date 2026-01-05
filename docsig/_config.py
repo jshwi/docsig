@@ -196,11 +196,11 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         action="store_true",
         help="check files even if they match a gitignore pattern",
     )
-    parser.add_argument(
+    parser.add_argument(  # deprecated
         "-U",
         "--enforce-capitalization",
         action="store_true",
-        help="ensure param descriptions are capitalized",
+        help=_a.SUPPRESS,
     )
     parser.add_argument(
         "-n",
