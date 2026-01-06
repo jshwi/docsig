@@ -77,7 +77,7 @@ But not if it is for a parameter that does not exist
     ...     """Function summary.
     ...
     ...     :param param1: Description of param1.
-    ...     :param: This is considered param3, but it is not named.
+    ...     :param param2: Description of param2.
     ...     """
     ... '''
 
@@ -96,7 +96,7 @@ But not if it is for a parameter that does not exist
     ...
     ...     :param param2: Description of param2.
     ...     :param param1: Description of param1.
-    ...     :param: This is an additional param and should be SIG202.
+    ...     :param param3: Description of param3.
     ...     """
     ... '''
 
