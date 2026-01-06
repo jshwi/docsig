@@ -901,3 +901,88 @@ def function(param1, param2, param3, param4) -> None:
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
+
+
+def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test no additional out-of-order or not-equal-to-arg.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+@_decorators.parse_msgs
+@_decorators.validate_args
+def docsig(  # pylint: disable=too-many-locals,too-many-arguments
+    *path: str | _Path,
+    string: str | None = None,
+    list_checks: bool = False,
+    check_class: bool = False,
+    check_class_constructor: bool = False,
+    check_dunders: bool = False,
+    check_protected_class_methods: bool = False,
+    check_nested: bool = False,
+    check_overridden: bool = False,
+    check_protected: bool = False,
+    check_property_returns: bool = False,
+    include_ignored: bool = False,
+    ignore_no_params: bool = False,
+    ignore_args: bool = False,
+    ignore_kwargs: bool = False,
+    ignore_typechecker: bool = False,
+    no_ansi: bool = False,
+    verbose: bool = False,
+    target: _Messages | None = None,
+    disable: _Messages | None = None,
+    exclude: str | None = None,
+    excludes: list[str] | None = None,
+) -> int:
+    """Package's core functionality.
+
+    Populate a sequence of module objects before iterating over their
+    top-level functions and classes.
+
+    If any of the functions within the module - and methods within its
+    classes - fail, print the resulting function string representation
+    and report.
+
+    :param path: Path(s) to check.
+    :param string: String to check.
+    :param list_checks: Display a list of all checks and their messages.
+    :param check_class: Check class docstrings.
+    :param check_class_constructor: Check ``__init__`` methods. Note
+        that this is mutually incompatible with check_class.
+    :param check_dunders: Check dunder methods
+    :param check_protected_class_methods: Check public methods belonging
+        to protected classes.
+    :param check_nested: Check nested functions and classes.
+    :param check_overridden: Check overridden methods
+    :param check_protected: Check protected functions and classes.
+    :param check_property_returns: Run return checks on properties.
+    :param include_ignored: Check files even if they match a gitignore
+        pattern.
+    :param ignore_no_params: Ignore docstrings where parameters are not
+        documented
+    :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param ignore_typechecker: Ignore checking return values.
+    :param enforce_capitalization: Ensure param descriptions are
+        capitalized.
+    :param no_ansi: Disable ANSI output.
+    :param verbose: Increase output verbosity.
+    :param target: List of errors to target.
+    :param disable: List of errors to disable.
+    :param exclude: Regular expression of files and dirs to exclude from
+        checks.
+    :param excludes: Files or dirs to exclude from checks.
+    :return: Exit status for whether a test failed or not.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[402].description not in std.out

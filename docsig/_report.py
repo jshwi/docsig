@@ -102,6 +102,42 @@ class Failure(_t.List[Failed]):
         if value not in self._func.messages and failed not in self:
             super().append(failed)
 
+    @staticmethod
+    def _normalize_params(from_, to) -> None:
+        # inset the parameters that are missing in their corresponding
+        # index so that they are included in further analysis, that way
+        # there are no additional, and redundant, errors
+        # this will ensure that both signature and docstring are equal,
+        # with all parameters that are not documented accounted for
+        for count, arg in enumerate(from_):
+            try:
+                is_equal = _almost_equal(
+                    str(arg.name),
+                    str(to[count].name),
+                    _MIN_MATCH,
+                    _MAX_MATCH,
+                )
+            except IndexError:
+                is_equal = False
+
+            # need to make one more test to determine if equal in the
+            # case of very similar names, such as param1, param2 and
+            # param3 for the signature, and param2, param3 for the
+            # docstring, if we don't do this test, param1 is almost
+            # equal to param2, and so won't be inserted, but if we can
+            # determine param2 is already in signature's next index,
+            # then we know that they aren't almost equal, param1 is
+            # missing and does need to be inserted in the docstring
+            if is_equal:
+                with contextlib.suppress(IndexError):
+                    is_equal = to[count].name != from_[count + 1].name
+
+            if not is_equal:
+                to.insert(
+                    count,
+                    _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
+                )
+
     def _sig0xx_config(self) -> None:
         for comment in self._func.comments:
             if not comment.isvalid:
@@ -153,58 +189,18 @@ class Failure(_t.List[Failed]):
             self._add(_E[201])
         # there are non-existing params in the docstring
         elif len(self._func.docstring.args) > len(self._func.signature.args):
-            # pop the parameters that do not exist so that they are
-            # excluded from further analysis, that way there are no
-            # additional, and redundant, errors
-            # this will ensure that both signature and docstring are
-            # equal in length, with all parameters that do not exist
-            # accounted for
-            for count, __ in enumerate(self._func.docstring.args, 1):
-                if count > len(self._func.signature.args):
-                    self._func.docstring.args.pop(count - 1)
+            self._normalize_params(
+                self._func.docstring.args,
+                self._func.signature.args,
+            )
             # params-do-not-exist
             self._add(_E[202])
         # there are more args in sig than doc, so doc params missing
         elif len(self._func.signature.args) > len(self._func.docstring.args):
-            # inset the parameters that are missing in their
-            # corresponding index so that they are included in further
-            # analysis, that way there are no additional, and redundant,
-            # errors
-            # this will ensure that both signature and docstring are
-            # equal, with all parameters that are not documented
-            # accounted for
-            for count, arg in enumerate(self._func.signature.args):
-                try:
-                    is_equal = _almost_equal(
-                        str(arg.name),
-                        str(self._func.docstring.args[count].name),
-                        _MIN_MATCH,
-                        _MAX_MATCH,
-                    )
-                except IndexError:
-                    is_equal = False
-
-                # need to make one more test to determine if equal
-                # in the case of very similar names, such as param1,
-                # param2 and param3 for the signature, and param2,
-                # param3 for the docstring, if we don't do this test,
-                # param1 is almost equal to param2, and so won't be
-                # inserted, but if we can determine param2 is already in
-                # signature's next index, then we know that they aren't
-                # almost equal, param1 is missing and does need to be
-                # inserted in the docstring
-                if is_equal:
-                    with contextlib.suppress(IndexError):
-                        is_equal = (
-                            self._func.docstring.args[count].name
-                            != self._func.signature.args[count + 1].name
-                        )
-
-                if not is_equal:
-                    self._func.docstring.args.insert(
-                        count,
-                        _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
-                    )
+            self._normalize_params(
+                self._func.signature.args,
+                self._func.docstring.args,
+            )
             # params-missing
             self._add(_E[203])
 
