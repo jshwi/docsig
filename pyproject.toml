@@ -129,7 +129,7 @@ version = "0.74.0"
 [tool.poetry.dependencies]
 Sphinx = ">=7,<9"
 astroid = "^4.0.2"
-pathspec = "^0.12.1"
+pathspec = ">=0.12.1,<1.1.0"
 python = "^3.10"
 tomli = "^2.0.1"
 wcmatch = ">=8.5.2,<11.0.0"
