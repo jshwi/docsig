@@ -31,7 +31,6 @@ from docsig.messages import E
 
 from . import (
     CHECK_ARGS,
-    FAIL,
     FAIL_CHECK_ARGS,
     PASS,
     InitFileFixtureType,
@@ -69,7 +68,7 @@ def test_exit_status(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", *CHECK_ARGS) == int(name.startswith(FAIL))
+    assert main(".", *CHECK_ARGS) == int(name.startswith("f"))
 
 
 @pytest.mark.parametrize(
@@ -397,7 +396,7 @@ def test_ignore_args(
     """
     init_file(template)
     assert main(".", *CHECK_ARGS, "--ignore-args") == int(
-        name.startswith(FAIL)
+        name.startswith("f")
         and "w-args" not in name
         or name.startswith(PASS)
         and "w-args" in name,
@@ -440,7 +439,7 @@ def test_ignore_kwargs(
     """
     init_file(template)
     assert main(".", *CHECK_ARGS, "--ignore-kwargs") == int(
-        name.startswith(FAIL)
+        name.startswith("f")
         and "w-kwargs" not in name
         or name.startswith(PASS)
         and "w-kwargs" in name,
@@ -533,7 +532,7 @@ def test_check_class_constructor(
     # exclude --check-class from CHECK_ARGS, because this is
     # mutually incompatible with --check-class-constructor
     assert main(".", *CHECK_ARGS[1:], "--check-class-constructor") == int(
-        name[: name.rindex("-")].endswith(FAIL),
+        name[: name.rindex("-")].endswith("f"),
     )
 
 
@@ -575,6 +574,6 @@ def test_string_argument(
         "--string",
         template,
         test_flake8=False,
-    ) == int(name.startswith(FAIL))
+    ) == int(name.startswith("f"))
     std = capsys.readouterr()
     assert expected in std.out

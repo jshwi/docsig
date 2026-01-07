@@ -30,7 +30,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-FAIL = "f"
 PASS = "p"
 TOML = "pyproject.toml"
 TOOL = "tool"
