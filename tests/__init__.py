@@ -11,7 +11,6 @@ from pathlib import Path
 
 from templatest import BaseTemplate as _BaseTemplate
 from templatest import templates as _templates
-from templatest.utils import VarPrefix as _VarPrefix
 from templatest.utils import VarSeq as _VarSeq
 
 from docsig.messages import TEMPLATE as T
@@ -32,7 +31,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-fail = _VarPrefix("f-", "-")
 string = _VarSeq("string")
 
 MULTI = "m"

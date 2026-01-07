@@ -41,7 +41,6 @@ from . import (
     TEMPLATE,
     InitFileFixtureType,
     MockMainType,
-    fail,
 )
 
 
@@ -195,10 +194,10 @@ def test_multiple(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.getgroup(fail.s_i_g_2_0),
+    templates.registered.getgroup("f-s-i-g-2-0"),
     ids=[
         i.replace("-", "").upper()[4:8]
-        for i in templates.registered.getgroup(fail.sig_2_0).getids()
+        for i in templates.registered.getgroup("f-s-i-g-2-0").getids()
     ],
 )
 def test_disable_rule(
@@ -545,11 +544,11 @@ def test_check_class_constructor(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, EXPECTED],
-    templates.registered.filtergroup(MULTI).filtergroup(fail.method_header),
+    templates.registered.filtergroup(MULTI).filtergroup("f-method-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
         for i in templates.registered.filtergroup(MULTI)
-        .filtergroup(fail.method_header)
+        .filtergroup("f-method-header")
         .getids()
     ],
 )
