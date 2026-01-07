@@ -11,30 +11,30 @@ To disable individual function checks add an inline comment similar to the examp
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... def function_1(param1, param2, param3) -> None:  # docsig: disable
-    ...     '''
+    ...     """
     ...
     ...     :param param2: Fails.
     ...     :param param3: Fails.
     ...     :param param1: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_2(param1, param2) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_3(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     10 in function_2
         SIG202: includes parameters that do not exist (params-do-not-exist)
@@ -46,31 +46,31 @@ To disable all function checks add a module level comment similar to the example
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... # docsig: disable
     ... def function_1(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param2: Fails.
     ...     :param param3: Fails.
     ...     :param param1: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_2(param1, param2) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_3(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     0
 
@@ -78,32 +78,32 @@ To disable multiple function checks add a module level disable and enable commen
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... # docsig: disable
     ... def function_1(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param2: Fails.
     ...     :param param3: Fails.
     ...     :param param1: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_2(param1, param2) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ... # docsig: enable
     ...
     ... def function_3(param1, param2, param3) -> None:
-    ...     '''
+    ...     """
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     20 in function_3
         SIG203: parameters missing (params-missing)
@@ -113,34 +113,34 @@ The same can be done for disabling individual rules
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... # docsig: disable=SIG402
     ... def function_1(param1, param2, param3) -> int:
-    ...     '''SIG503.
+    ...     """SIG503.
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_2(param1, param2, param3) -> None:  # docsig: disable=SIG202,SIG201
-    ...     '''SIG402,SIG202,SIG201.
+    ...     """SIG402,SIG202,SIG201.
     ...
     ...     :param param1: Fails.
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_3(param1, param2, param3) -> None:
-    ...     '''SIG402,SIG202,SIG502,SIG303.
+    ...     """SIG402,SIG202,SIG502,SIG303.
     ...
     ...     :param param1: Fails.
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param: Fails.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     3 in function_1
         SIG503: return missing from docstring (return-missing)
@@ -155,34 +155,34 @@ Module level directives will be evaluated separately to inline directives and pr
 
 .. code-block:: python
 
-    >>> string = """
+    >>> string = '''
     ... # docsig: disable
     ... def function_1(param1, param2, param3) -> int:
-    ...     '''E105.
+    ...     """E105.
     ...
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_2(param1, param2, param3) -> None:  # docsig: enable=SIG202,SIG201
-    ...     '''SIG402,SIG202,SIG201.
+    ...     """SIG402,SIG202,SIG201.
     ...
     ...     :param param1: Fails.
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param param3: Fails.
-    ...     '''
+    ...     """
     ...
     ... def function_3(param1, param2, param3) -> None:
-    ...     '''SIG402,SIG202,SIG201,SIG303.
+    ...     """SIG402,SIG202,SIG201,SIG303.
     ...
     ...     :param param1: Fails.
     ...     :param param1: Fails.
     ...     :param param2: Fails.
     ...     :param: Fails.
-    ...     '''
-    ... """
+    ...     """
+    ... '''
     >>> docsig(string=string, no_ansi=True)
     11 in function_2
         SIG201: duplicate parameters found (duplicate-params-found)
