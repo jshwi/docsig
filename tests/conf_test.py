@@ -15,19 +15,19 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, FixturePatchArgv
+from . import FixturePatchArgv
 
 
 @pytest.mark.parametrize(
     "config,args,expected",
     [
         (
-            {"tool": {"name": {LIST: []}}},
+            {"tool": {"name": {"list": []}}},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_1", "string_2", "string_3"],
         ),
         (
-            {"tool": {"name": {LIST: ["string_4"]}}},
+            {"tool": {"name": {"list": ["string_4"]}}},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_4", "string_1", "string_2", "string_3"],
         ),
