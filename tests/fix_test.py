@@ -42,16 +42,13 @@ def test_fix_optional_return_statements_with_overload_func_sig502(
     template = '''
 from typing import Optional, overload
 
-
 @overload
 def get_something(number: int) -> str:
     """For getting a string from an integer."""
 
-
 @overload
 def get_something(number: None) -> None:
     """For getting a string from an integer."""
-
 
 def get_something(number: Optional[int]) -> Optional[str]:
     """
@@ -516,10 +513,8 @@ from functools import cached_property as _cached_property
 from ._ticker import Tickers as _Ticker
 from ._transactions import Trades as _Trades
 
-
 class Trades(dict[str, _Trades]):
     """Represents a collection of trades."""
-
 
 class Account(dict[str, _t.Any]):
     """Represents an account."""
@@ -562,10 +557,8 @@ from functools import cached_property as _cached_property
 from ._ticker import Tickers as _Ticker
 from ._transactions import Trades as _Trades
 
-
 class Trades(dict[str, _Trades]):
     """Represents a collection of trades."""
-
 
 class Account(dict[str, _t.Any]):
     """Represents an account."""

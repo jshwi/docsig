@@ -464,7 +464,6 @@ def function(*_, **__) -> int:
 def function(*_, **__):
     """Proper docstring.
 
-
     Returns
     -------
         int
@@ -479,7 +478,6 @@ class Klass:
     @property
     def function() -> int:
         """Proper docstring.
-
 
         Returns
         -------
@@ -723,7 +721,6 @@ class BaseClass:
 '''
     t2 = '''\
 from .bases.base_class import BaseClass
-
 
 class Implementation(BaseClass):
     """My implementation."""

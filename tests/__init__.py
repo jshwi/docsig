@@ -2344,7 +2344,6 @@ import typing as _t
 
 T = _t.TypeVar("T")
 
-
 class MutableSet(_t.MutableSet[T]):
     """Set object to inherit from."""
 
@@ -2737,7 +2736,6 @@ class _PClassNoSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
 
     # against convention but not up to this package to decide
@@ -2756,7 +2754,6 @@ class _FProtectClsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class _Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Proper docstring.
@@ -3454,7 +3451,6 @@ class _FMethodWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Proper docstring.
@@ -3478,7 +3474,6 @@ class _PClassSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1) -> None:
         """Proper docstring.
@@ -3500,7 +3495,6 @@ class _FPropertyReturnsClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     @property
     def method(self) -> int:
@@ -3699,7 +3693,6 @@ class _FBinOpReprN(_BaseTemplate):
 def get_index(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
-
     Returns
     -------
         int
@@ -3774,7 +3767,6 @@ class Klass:
     def function(*_, **__) -> int:
         """Proper docstring.
 
-
         Returns
         -------
             int
@@ -3796,7 +3788,6 @@ class Klass:
     @cached_property
     def function(*_, **__) -> int:
         """Proper docstring.
-
 
         Returns
         -------
@@ -3820,7 +3811,6 @@ class Klass:
     def function(*_, **__) -> int:
         """Proper docstring.
 
-
         Returns
         -------
             int
@@ -3841,7 +3831,6 @@ class _FOverriddenN(_BaseTemplate):
 import typing as _t
 
 T = _t.TypeVar("T")
-
 
 class MutableSet(_t.MutableSet[T]):
     """Set object to inherit from."""
@@ -5319,7 +5308,6 @@ class _FBinOpReprNI(_BaseTemplate):
 def get_index(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
-
     Returns
     -------
     int
@@ -5363,7 +5351,6 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         """Proper docstring.
-
 
         Returns
         -------
@@ -6784,7 +6771,6 @@ class _FBinOpReprG(_BaseTemplate):
 def get_index(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
-
     Returns:
         int: Item from index else None.
     """
@@ -7276,7 +7262,6 @@ T = _t.TypeVar("T")
 KT = _t.TypeVar("KT")
 VT = _t.TypeVar("VT")
 
-
 class _MutableSequence(_t.MutableSequence[T]):
     """List-object to inherit from."""
 
@@ -7322,7 +7307,6 @@ class _MutableSequence(_t.MutableSequence[T]):
     def __len__(self):
         return self._list.__len__()
 
-
 # without this, the test will fail (not ideal)
 # TODO: remove this to test for why
 class Param(_t.NamedTuple):
@@ -7332,7 +7316,6 @@ class Param(_t.NamedTuple):
     name: str | None = None
     description: str | None = None
     indent: int = 0
-
 
 class Params(_MutableSequence[Param]):
     """Represents collection of parameters."""
@@ -7489,16 +7472,13 @@ class _MPassOverloadS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> tuple[int, str]:
     ...
 
-
 @overload
 def process(response: bytes) -> str:
     ...
-
 
 def process(response):
     """process a response.
@@ -7522,16 +7502,13 @@ class _MFailOverloadMissingReturnS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> tuple[int, str]:
     ...
 
-
 @overload
 def process(response: bytes) -> str:
     ...
-
 
 def process(response):
     """process a response.
@@ -7543,7 +7520,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in process
+{PATH}:14 in process
     {E[503].fstring(T)}
 """
 
@@ -7557,16 +7534,13 @@ class _MFailOverloadMissingParamS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> tuple[int, str]:
     ...
 
-
 @overload
 def process(response: bytes) -> str:
     ...
-
 
 def process(response):
     """process a response.
@@ -7578,7 +7552,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in process
+{PATH}:14 in process
     {E[203].fstring(T)}
 """
 
@@ -7592,16 +7566,13 @@ class _MPassOverloadNoReturnS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> None:
     ...
 
-
 @overload
 def process(response: bytes) -> None:
     ...
-
 
 def process(response):
     """process a response.
@@ -7624,16 +7595,13 @@ class _MPassMultiOverloadsS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> tuple[int, str]:
     ...
 
-
 @overload
 def process(response: bytes) -> str:
     ...
-
 
 def process(response):
     """process a response.
@@ -7646,16 +7614,13 @@ def process(response):
 def another_process(response: int) -> tuple[int, str]:
     ...
 
-
 @overload
 def another_process(response: bool) -> None:
     ...
 
-
 @overload
 def another_process(response: str) -> int:
     ...
-
 
 def another_process(response):
     """process another response.
@@ -7679,16 +7644,13 @@ class _MFailOverloadNoReturnDocumentedS(_BaseTemplate):
 def process(response: None) -> None:
     ...
 
-
 @overload
 def process(response: int) -> None:
     ...
 
-
 @overload
 def process(response: bytes) -> None:
     ...
-
 
 def process(response):
     """process a response.
@@ -7701,7 +7663,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in process
+{PATH}:14 in process
     {E[502].fstring(T)}
 """
 
@@ -8370,12 +8332,10 @@ class _MPylintDirective(_BaseTemplate):
 def function_1(param1, param2, param3) -> None:  # pylint: disable
     """
 
-
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
     """
-
 
 # pylint: disable=unknown,unknown-the-third
 def function_2(param1, param2) -> None:
@@ -8386,7 +8346,6 @@ def function_2(param1, param2) -> None:
     :param param3: Fails.
     """
 
-
 def function_3(  # docsig: enable=unknown,unknown-the-third
     param1, param2, param3
 ) -> None:
@@ -8395,7 +8354,6 @@ def function_3(  # docsig: enable=unknown,unknown-the-third
     :param param1: Fails.
     :param param2: Fails.
     """
-
 
 def function_4(param1, param2, param3) -> None:
     """
@@ -8406,7 +8364,6 @@ def function_4(param1, param2, param3) -> None:
     :return: Fails.
     """
 
-
 def function_5(param1, param2, param3) -> int:
     """
 
@@ -8414,7 +8371,6 @@ def function_5(param1, param2, param3) -> int:
     :param param2: Fails.
     :param param3: Fails.
     """
-
 
 def f6(param, param2, param3) -> None:
     """
@@ -8424,7 +8380,6 @@ def f6(param, param2, param3) -> None:
     :param param2: Fails.
     :param param3: Fails.
     """
-
 
 def f7(param, param2, param3) -> None:
     """
@@ -8442,24 +8397,24 @@ def f7(param, param2, param3) -> None:
 {PATH}:3 in function_1
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[402].fstring(T)}
-{PATH}:14 in function_2
+{PATH}:12 in function_2
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[202].fstring(T)}
-{PATH}:23 in function_3
+{PATH}:20 in function_3
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
     {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
     {E[203].fstring(T)}
-{PATH}:33 in function_4
+{PATH}:29 in function_4
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[502].fstring(T)}
-{PATH}:43 in function_5
+{PATH}:38 in function_5
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[503].fstring(T)}
-{PATH}:52 in f6
+{PATH}:46 in f6
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[201].fstring(T)}
-{PATH}:62 in f7
+{PATH}:55 in f7
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[201].fstring(T)}
     {E[303].fstring(T)}
@@ -8475,12 +8430,10 @@ class _MInvalidDirectiveOptions(_BaseTemplate):
 def function_1(param1, param2, param3) -> None:  # pylint: disable
     """SIG402
 
-
     :param param2: Fails.
     :param param3: Fails.
     :param param1: Fails.
     """
-
 
 # pylint: disable=unknown,unknown-the-third
 def function_2(param1, param2) -> None:
@@ -8491,7 +8444,6 @@ def function_2(param1, param2) -> None:
     :param param3: Fails.
     """
 
-
 def function_3(  # docsig: enable=unknown,unknown-the-third
     param1, param2, param3
 ) -> None:
@@ -8500,7 +8452,6 @@ def function_3(  # docsig: enable=unknown,unknown-the-third
     :param param1: Fails.
     :param param2: Fails.
     """
-
 
 def function_4(param1, param2, param3) -> None:
     """
@@ -8511,7 +8462,6 @@ def function_4(param1, param2, param3) -> None:
     :return: Fails.
     """
 
-
 def function_5(param1, param2, param3) -> int:
     """
 
@@ -8519,7 +8469,6 @@ def function_5(param1, param2, param3) -> int:
     :param param2: Fails.
     :param param3: Fails.
     """
-
 
 def f6(param, param2, param3) -> None:
     """
@@ -8529,7 +8478,6 @@ def f6(param, param2, param3) -> None:
     :param param2: Fails.
     :param param3: Fails.
     """
-
 
 def f7(param, param2, param3) -> None:
     """
@@ -8547,24 +8495,24 @@ def f7(param, param2, param3) -> None:
 {PATH}:3 in function_1
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[402].fstring(T)}
-{PATH}:14 in function_2
+{PATH}:12 in function_2
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[202].fstring(T)}
-{PATH}:23 in function_3
+{PATH}:20 in function_3
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
     {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
     {E[203].fstring(T)}
-{PATH}:33 in function_4
+{PATH}:29 in function_4
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[502].fstring(T)}
-{PATH}:43 in function_5
+{PATH}:38 in function_5
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[503].fstring(T)}
-{PATH}:52 in f6
+{PATH}:46 in f6
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[201].fstring(T)}
-{PATH}:62 in f7
+{PATH}:55 in f7
     {E[1].fstring(T).format(directive=UNKNOWN)}
     {E[201].fstring(T)}
     {E[303].fstring(T)}
@@ -8774,7 +8722,6 @@ class _MessageSequence(_t.List[str]):  # docsig: disable
         :param kwargs: Variable(s) if format string.
         """
 
-
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
         pass
@@ -8783,7 +8730,7 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:20 in Report.order
+{PATH}:19 in Report.order
     {E[101].fstring(T)}
 """
 
@@ -8810,9 +8757,7 @@ class _MessageSequence(_t.List[str]):
         :param kwargs: Variable(s) if format string.
         """
 
-
 # docsig: enable
-
 
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
@@ -8822,7 +8767,7 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:24 in Report.order
+{PATH}:22 in Report.order
     {E[101].fstring(T)}
 """
 
@@ -8848,7 +8793,6 @@ class _MessageSequence(_t.List[str]):
         :param hint: Whether to print a hint or not.
         :param kwargs: Variable(s) if format string.
         """
-
 
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
@@ -8879,7 +8823,6 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-
 
 if True:
     my_function(42)
@@ -9091,21 +9034,17 @@ class _MPassOverloadNoReturnAliasS(_BaseTemplate):
         return '''
 from typing import overload as _overload
 
-
 @_overload
 def process(response: None) -> None:
     ...
-
 
 @_overload
 def process(response: int) -> None:
     ...
 
-
 @_overload
 def process(response: bytes) -> None:
     ...
-
 
 @_overload
 def process(response):
@@ -9131,7 +9070,6 @@ class Klass:
     @_cached_property
     def function(*_, **__) -> int:
         """Proper docstring.
-
 
         Returns
         -------
