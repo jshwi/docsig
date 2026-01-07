@@ -35,7 +35,6 @@ from . import (
     EXPECTED,
     FAIL,
     FAIL_CHECK_ARGS,
-    MULTI,
     NAME,
     PASS,
     TEMPLATE,
@@ -46,8 +45,8 @@ from . import (
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
+    templates.registered.filtergroup("m"),
+    ids=templates.registered.filtergroup("m").getids(),
 )
 def test_exit_status(
     init_file: InitFileFixtureType,
@@ -79,10 +78,10 @@ def test_exit_status(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, EXPECTED],
-    templates.registered.filtergroup(MULTI).filtergroup(PASS),
+    templates.registered.filtergroup("m").filtergroup(PASS),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
-        for i in templates.registered.filtergroup(MULTI)
+        for i in templates.registered.filtergroup("m")
         .filtergroup(PASS)
         .getids()
     ],
@@ -163,8 +162,8 @@ def test_error_codes(
 
 @pytest.mark.parametrize(
     ["_", TEMPLATE, EXPECTED],
-    templates.registered.getgroup(MULTI),
-    ids=templates.registered.getgroup(MULTI).getids(),
+    templates.registered.getgroup("m"),
+    ids=templates.registered.getgroup("m").getids(),
 )
 def test_multiple(
     capsys: pytest.CaptureFixture,
@@ -266,8 +265,8 @@ def test_no_stdout(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, EXPECTED],
-    templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
+    templates.registered.filtergroup("m"),
+    ids=templates.registered.filtergroup("m").getids(),
 )
 # pylint: disable=too-many-arguments,too-many-positional-arguments
 def test_ignore_no_params(
@@ -368,8 +367,8 @@ def test_no_check_property_returns_flag(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
+    templates.registered.filtergroup("m"),
+    ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_args(
     init_file: InitFileFixtureType,
@@ -411,8 +410,8 @@ def test_ignore_args(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, "_"],
-    templates.registered.filtergroup(MULTI),
-    ids=templates.registered.filtergroup(MULTI).getids(),
+    templates.registered.filtergroup("m"),
+    ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_kwargs(
     init_file: InitFileFixtureType,
@@ -544,10 +543,10 @@ def test_check_class_constructor(
 
 @pytest.mark.parametrize(
     [NAME, TEMPLATE, EXPECTED],
-    templates.registered.filtergroup(MULTI).filtergroup("f-method-header"),
+    templates.registered.filtergroup("m").filtergroup("f-method-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
-        for i in templates.registered.filtergroup(MULTI)
+        for i in templates.registered.filtergroup("m")
         .filtergroup("f-method-header")
         .getids()
     ],
