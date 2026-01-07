@@ -30,7 +30,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-MULTI = "m"
 NAME = "name"
 TEMPLATE = "template"
 EXPECTED = "expected"
