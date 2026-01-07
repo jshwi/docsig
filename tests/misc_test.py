@@ -347,14 +347,14 @@ new-ssl() {
 new-ssl "${@}"
 """
     template2 = '''
-    def function(param1, param2) -> None:
-        """...
+def function(param1, param2) -> None:
+    """...
 
-        :param param1: Fails.
-        :param param2: Fails.
-        :param param3: Fails.
-        """
-    '''
+    :param param1: Fails.
+    :param param2: Fails.
+    :param param3: Fails.
+    """
+'''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
     init_file(template1, tmp_path / "module" / "file1.py")
     init_file(template2, tmp_path / "module" / "file2.py")
@@ -484,12 +484,12 @@ class Klass:
         """Proper docstring.
 
 
-    Returns
-    -------
-    int
-    Returncode.
-"""
-return 0
+        Returns
+        -------
+        int
+        Returncode.
+        """
+        return 0
 ''',
             E[505].fstring(T),
         ),
