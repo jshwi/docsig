@@ -32,7 +32,6 @@ from docsig.messages import E
 from . import (
     CHECK_ARGS,
     E10,
-    EXPECTED,
     FAIL,
     FAIL_CHECK_ARGS,
     PASS,
@@ -75,7 +74,7 @@ def test_exit_status(
 
 
 @pytest.mark.parametrize(
-    ["_", "template", EXPECTED],
+    ["_", "template", "expected"],
     templates.registered.filtergroup("m").filtergroup(PASS),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -121,7 +120,7 @@ def test_stdout(
 
 
 @pytest.mark.parametrize(
-    ["_", "template", EXPECTED],
+    ["_", "template", "expected"],
     [i for i in templatest.templates.registered if "single-error" in i.name],
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -159,7 +158,7 @@ def test_error_codes(
 
 
 @pytest.mark.parametrize(
-    ["_", "template", EXPECTED],
+    ["_", "template", "expected"],
     templates.registered.getgroup("m"),
     ids=templates.registered.getgroup("m").getids(),
 )
@@ -262,7 +261,7 @@ def test_no_stdout(
 
 
 @pytest.mark.parametrize(
-    ["name", "template", EXPECTED],
+    ["name", "template", "expected"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -540,7 +539,7 @@ def test_check_class_constructor(
 
 
 @pytest.mark.parametrize(
-    ["name", "template", EXPECTED],
+    ["name", "template", "expected"],
     templates.registered.filtergroup("m").filtergroup("f-method-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
