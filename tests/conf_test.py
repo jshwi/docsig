@@ -15,7 +15,7 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, NAME, TOML, TOOL, FixturePatchArgv, string
+from . import LIST, NAME, TOML, TOOL, FixturePatchArgv
 
 
 @pytest.mark.parametrize(
@@ -23,13 +23,13 @@ from . import LIST, NAME, TOML, TOOL, FixturePatchArgv, string
     [
         (
             {TOOL: {NAME: {LIST: []}}},
-            [NAME, "--list", f"{string[1]},{string[2]},{string[3]}"],
-            [string[1], string[2], string[3]],
+            [NAME, "--list", "string_1,string_2,string_3"],
+            ["string_1", "string_2", "string_3"],
         ),
         (
-            {TOOL: {NAME: {LIST: [string[4]]}}},
-            [NAME, "--list", f"{string[1]},{string[2]},{string[3]}"],
-            [string[4], string[1], string[2], string[3]],
+            {TOOL: {NAME: {LIST: ["string_4"]}}},
+            [NAME, "--list", "string_1,string_2,string_3"],
+            ["string_4", "string_1", "string_2", "string_3"],
         ),
     ],
     ids=["empty-conf", "with-conf"],
