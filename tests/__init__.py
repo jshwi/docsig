@@ -2738,15 +2738,15 @@ class _PStaticSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-    class Klass:
-        @staticmethod
-        def method(self, param1) -> None:
-            """Proper docstring.
+class Klass:
+    @staticmethod
+    def method(self, param1) -> None:
+        """Proper docstring.
 
-            :param self: Pass.
-            :param param1: Pass.
-            """
-    '''
+        :param self: Pass.
+        :param param1: Pass.
+        """
+'''
 
     @property
     def expected(self) -> str:
@@ -4303,19 +4303,19 @@ class _PStaticSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-    class Klass:
-        @staticmethod
-        def method(self, param1) -> None:
-            """Proper docstring.
+class Klass:
+    @staticmethod
+    def method(self, param1) -> None:
+        """Proper docstring.
 
-            Parameters
-            ----------
-                self : Klass
-                    Pass.
-                param1 : int
-                    Pass.
-            """
-    '''
+        Parameters
+        ----------
+            self : Klass
+                Pass.
+            param1 : int
+                Pass.
+        """
+'''
 
     @property
     def expected(self) -> str:
@@ -5755,19 +5755,19 @@ class _PStaticSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-    class Klass:
-        @staticmethod
-        def method(self, param1) -> None:
-            """Proper docstring.
+class Klass:
+    @staticmethod
+    def method(self, param1) -> None:
+        """Proper docstring.
 
-            Parameters
-            ----------
-            self: Klass
-                Pass.
-            param1: int
-                Pass.
-            """
-    '''
+        Parameters
+        ----------
+        self: Klass
+            Pass.
+        param1: int
+            Pass.
+        """
+'''
 
     @property
     def expected(self) -> str:
@@ -7192,16 +7192,16 @@ class _PStaticSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-    class Klass:
-        @staticmethod
-        def method(self, param1) -> None:
-            """Proper docstring.
+class Klass:
+    @staticmethod
+    def method(self, param1) -> None:
+        """Proper docstring.
 
-            Args:
-                self (Klass): Pass.
-                param1 (int): Pass.
-            """
-    '''
+        Args:
+            self (Klass): Pass.
+            param1 (int): Pass.
+        """
+'''
 
     @property
     def expected(self) -> str:
@@ -9375,7 +9375,7 @@ def normalize(ticker: str) -> str:
     :param ticker: Ticker to normalize.
     :return:
     """
-    '''
+'''
 
     @property
     def expected(self) -> str:
