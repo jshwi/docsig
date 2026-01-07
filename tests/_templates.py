@@ -14,7 +14,6 @@ from templatest import templates as _templates
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-ENABLE = "enable"
 UNKNOWN = "unknown"
 PATH = Path("module") / "file.py"
 
@@ -6930,8 +6929,8 @@ def f7(param, param2, param3) -> None:
     {E[202].fstring(T)}
 {PATH}:20 in function_3
     {E[1].fstring(T).format(directive=UNKNOWN)}
-    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-    {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[4].fstring(T).format(directive="enable", option=UNKNOWN)}
+    {E[4].fstring(T).format(directive="enable", option="unknown-the-third")}
     {E[203].fstring(T)}
 {PATH}:29 in function_4
     {E[1].fstring(T).format(directive=UNKNOWN)}
@@ -7028,8 +7027,8 @@ def f7(param, param2, param3) -> None:
     {E[202].fstring(T)}
 {PATH}:20 in function_3
     {E[1].fstring(T).format(directive=UNKNOWN)}
-    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
-    {E[4].fstring(T).format(directive=ENABLE, option="unknown-the-third")}
+    {E[4].fstring(T).format(directive="enable", option=UNKNOWN)}
+    {E[4].fstring(T).format(directive="enable", option="unknown-the-third")}
     {E[203].fstring(T)}
 {PATH}:29 in function_4
     {E[1].fstring(T).format(directive=UNKNOWN)}
@@ -7066,7 +7065,7 @@ def function_3(  # docsig: enable=unknown
     def expected(self) -> str:
         return f"""\
 {PATH}:2 in function_3
-    {E[4].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[4].fstring(T).format(directive="enable", option=UNKNOWN)}
     {E[203].fstring(T)}
 """
 
@@ -7198,7 +7197,7 @@ def function_3(param1, param2, param3) -> None:
     def expected(self) -> str:
         return f"""\
 {PATH}:3 in function_3
-    {E[3].fstring(T).format(directive=ENABLE, option=UNKNOWN)}
+    {E[3].fstring(T).format(directive="enable", option=UNKNOWN)}
     {E[203].fstring(T)}
 """
 
