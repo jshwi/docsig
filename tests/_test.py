@@ -35,7 +35,6 @@ from . import (
     EXPECTED,
     FAIL,
     FAIL_CHECK_ARGS,
-    NAME,
     PASS,
     TEMPLATE,
     InitFileFixtureType,
@@ -44,7 +43,7 @@ from . import (
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -192,7 +191,7 @@ def test_multiple(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.getgroup("f-s-i-g-2-0"),
     ids=[
         i.replace("-", "").upper()[4:8]
@@ -264,7 +263,7 @@ def test_no_stdout(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, EXPECTED],
+    ["name", TEMPLATE, EXPECTED],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -366,7 +365,7 @@ def test_no_check_property_returns_flag(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -409,7 +408,7 @@ def test_ignore_args(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -476,7 +475,7 @@ def test_no_flag(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.getgroup(*FAIL_CHECK_ARGS),
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
@@ -507,7 +506,7 @@ def test_single_flag(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, "_"],
+    ["name", TEMPLATE, "_"],
     templates.registered.getgroup("f-w-class-constructor"),
     ids=templates.registered.getgroup("f-w-class-constructor").getids(),
 )
@@ -542,7 +541,7 @@ def test_check_class_constructor(
 
 
 @pytest.mark.parametrize(
-    [NAME, TEMPLATE, EXPECTED],
+    ["name", TEMPLATE, EXPECTED],
     templates.registered.filtergroup("m").filtergroup("f-method-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i

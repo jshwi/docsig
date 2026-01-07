@@ -15,20 +15,20 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, NAME, TOML, TOOL, FixturePatchArgv
+from . import LIST, TOML, TOOL, FixturePatchArgv
 
 
 @pytest.mark.parametrize(
     "config,args,expected",
     [
         (
-            {TOOL: {NAME: {LIST: []}}},
-            [NAME, "--list", "string_1,string_2,string_3"],
+            {TOOL: {"name": {LIST: []}}},
+            ["name", "--list", "string_1,string_2,string_3"],
             ["string_1", "string_2", "string_3"],
         ),
         (
-            {TOOL: {NAME: {LIST: ["string_4"]}}},
-            [NAME, "--list", "string_1,string_2,string_3"],
+            {TOOL: {"name": {LIST: ["string_4"]}}},
+            ["name", "--list", "string_1,string_2,string_3"],
             ["string_4", "string_1", "string_2", "string_3"],
         ),
     ],
@@ -66,7 +66,7 @@ def test_no_toml(patch_argv: FixturePatchArgv) -> None:
 
     :param patch_argv: Patch commandline arguments.
     """
-    patch_argv(NAME, "--arg")
+    patch_argv("name", "--arg")
     parser = _ArgumentParser()
     parser.add_argument("-a", "--arg", action="store_true")
     namespace = parser.parse_args()
@@ -78,9 +78,9 @@ def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
 
     :param patch_argv: Patch commandline arguments.
     """
-    config = {TOOL: {NAME: {"this-flag": True}}}
+    config = {TOOL: {"name": {"this-flag": True}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
-    patch_argv(NAME)
+    patch_argv("name")
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store_true")
     namespace = parser.parse_args()
@@ -92,7 +92,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
 
     :param patch_argv: Patch commandline arguments.
     """
-    patch_argv(NAME)
+    patch_argv("name")
 
     # no defaults, pyproject.toml, or kwarg, but the type is list, so
     # that is its falsy value
@@ -123,7 +123,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # if the default kwarg is provided, it is added to by the
     # pyproject.toml, as this is a configured value, and a default if
     # nothing included in commandline
-    config = {TOOL: {NAME: {"list": [100, 200, 300]}}}
+    config = {TOOL: {"name": {"list": [100, 200, 300]}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     parser = _ArgumentParser()
     parser.add_argument(
@@ -143,9 +143,9 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     :param patch_argv: Patch commandline arguments.
     """
     expected = "this-is-a-value"
-    config = {TOOL: {NAME: {"this-flag": expected}}}
+    config = {TOOL: {"name": {"this-flag": expected}}}
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
-    patch_argv(NAME)
+    patch_argv("name")
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store")
     namespace = parser.parse_args()
@@ -162,7 +162,7 @@ def test_no_file_to_root(
     :param patch_argv: Patch commandline arguments.
     """
     monkeypatch.setattr("docsig._config.PYPROJECT_TOML", str(random()))
-    patch_argv(NAME, "--arg")
+    patch_argv("name", "--arg")
     parser = _ArgumentParser()
     parser.add_argument("-a", "--arg", action="store_true")
     namespace = parser.parse_args()
