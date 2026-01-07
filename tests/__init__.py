@@ -30,7 +30,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-TOOL = "tool"
 LIST = "list"
 CHECK_ARGS = (
     "--check-class",

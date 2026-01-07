@@ -15,19 +15,19 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, TOOL, FixturePatchArgv
+from . import LIST, FixturePatchArgv
 
 
 @pytest.mark.parametrize(
     "config,args,expected",
     [
         (
-            {TOOL: {"name": {LIST: []}}},
+            {"tool": {"name": {LIST: []}}},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_1", "string_2", "string_3"],
         ),
         (
-            {TOOL: {"name": {LIST: ["string_4"]}}},
+            {"tool": {"name": {LIST: ["string_4"]}}},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_4", "string_1", "string_2", "string_3"],
         ),
@@ -78,7 +78,7 @@ def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
 
     :param patch_argv: Patch commandline arguments.
     """
-    config = {TOOL: {"name": {"this-flag": True}}}
+    config = {"tool": {"name": {"this-flag": True}}}
     Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv("name")
     parser = _ArgumentParser()
@@ -123,7 +123,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # if the default kwarg is provided, it is added to by the
     # pyproject.toml, as this is a configured value, and a default if
     # nothing included in commandline
-    config = {TOOL: {"name": {"list": [100, 200, 300]}}}
+    config = {"tool": {"name": {"list": [100, 200, 300]}}}
     Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     parser = _ArgumentParser()
     parser.add_argument(
@@ -143,7 +143,7 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     :param patch_argv: Patch commandline arguments.
     """
     expected = "this-is-a-value"
-    config = {TOOL: {"name": {"this-flag": expected}}}
+    config = {"tool": {"name": {"this-flag": expected}}}
     Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv("name")
     parser = _ArgumentParser()
