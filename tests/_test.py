@@ -42,7 +42,6 @@ from . import (
     InitFileFixtureType,
     MockMainType,
     fail,
-    passed,
 )
 
 
@@ -339,8 +338,8 @@ def test_ignore_no_params(
 
 @pytest.mark.parametrize(
     TEMPLATE,
-    templates.registered.getgroup(passed.property_return),
-    ids=templates.registered.getgroup(passed.property_return).getids(),
+    templates.registered.getgroup("p-property-return"),
+    ids=templates.registered.getgroup("p-property-return").getids(),
 )
 def test_no_check_property_returns_flag(
     capsys: pytest.CaptureFixture,
