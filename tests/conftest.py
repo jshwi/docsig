@@ -21,7 +21,6 @@ from . import (
     FixturePatchArgv,
     InitFileFixtureType,
     MockMainType,
-    long,
 )
 
 
@@ -79,7 +78,7 @@ def fixture_main(
         """Run main with custom args."""
         argv = [docsig.__name__, *[str(a) for a in args]]
         if no_ansi:
-            argv.append(long.no_ansi)
+            argv.append("--no-ansi")
 
         monkeypatch.setattr("sys.argv", argv)
         retcode = docsig.main()

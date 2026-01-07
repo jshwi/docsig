@@ -15,7 +15,7 @@ import pytest
 
 import docsig
 
-from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType, long
+from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType
 
 
 def test_exclude_defaults(
@@ -30,7 +30,7 @@ def test_exclude_defaults(
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
-    main(".", long.verbose, long.include_ignored, test_flake8=False)
+    main(".", "--verbose", "--include-ignored", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: Parsing Python code failed",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: Parsing Python code failed",
@@ -126,7 +126,7 @@ new-ssl "${@}"
 """
     init_file(template)
     assert (
-        main(".", long.exclude, r"module[\\/]file.py", test_flake8=False) == 0
+        main(".", "--exclude", r"module[\\/]file.py", test_flake8=False) == 0
     )
 
 
@@ -146,7 +146,7 @@ def test_gitignore(
     make_tree(Path.cwd(), TREE)
     # remove default excludes to better test nested gitignore files
     monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
-    main(".", long.verbose, test_flake8=False)
+    main(".", "--verbose", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -300,7 +300,7 @@ def test_exclude_defaults_and_gitignore(
     :param patch_logger: Logs as an io instance.
     """
     make_tree(Path.cwd(), TREE)
-    main(".", long.verbose, test_flake8=False)
+    main(".", "--verbose", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -381,7 +381,7 @@ def test_gitignore_patterns(
     # remove default excludes to better test nested gitignore files
     gitignore = docsig._files._Gitignore()  # type: ignore
     monkeypatch.setattr("docsig._files._Gitignore", lambda: gitignore)
-    main(".", long.verbose, test_flake8=False)
+    main(".", "--verbose", test_flake8=False)
     patterns = [
         "*build/",
         "*coverage*",
@@ -742,9 +742,9 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
     make_tree(Path.cwd(), TREE)
     main(
         ".",
-        long.verbose,
-        long.include_ignored,
-        long.excludes,
+        "--verbose",
+        "--include-ignored",
+        "--excludes",
         *args,
         test_flake8=False,
     )

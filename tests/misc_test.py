@@ -19,10 +19,10 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType, long
+from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType
 
 
-@pytest.mark.parametrize("arg", ("-V", long.version))
+@pytest.mark.parametrize("arg", ("-V", "--version"))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
@@ -143,7 +143,7 @@ def test_invalid_target(main: MockMainType) -> None:
     :param main: Mock ``main`` function.
     """
     assert (
-        main(".", long.target, "unknown", test_flake8=False)
+        main(".", "--target", "unknown", test_flake8=False)
         == "unknown option to target 'unknown'"
     )
 
@@ -189,10 +189,10 @@ def test_file_not_found_error(main: MockMainType) -> None:
 @pytest.mark.parametrize(
     "args,expected",
     [
-        [(long.check_class,), ""],
-        [(long.check_class_constructor,), ""],
+        [("--check-class",), ""],
+        [("--check-class-constructor",), ""],
         [
-            (long.check_protected_class_methods, long.check_class),
+            ("--check-protected-class-methods", "--check-class"),
             f"""\
 {PATH}:6 in _Messages.fromcode
     {E[503].fstring(T)}
@@ -203,7 +203,7 @@ def test_file_not_found_error(main: MockMainType) -> None:
 """,
         ],
         [
-            (long.check_protected_class_methods, long.check_class_constructor),
+            ("--check-protected-class-methods", "--check-class-constructor"),
             f"""\
 {PATH}:6 in _Messages.fromcode
     {E[503].fstring(T)}
@@ -307,7 +307,7 @@ def test_list_checks(
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     """
-    main(long.list_checks, test_flake8=False)
+    main("--list-checks", test_flake8=False)
     std = capsys.readouterr()
     assert all(i.ref in std.out for i in E.values())
 
@@ -407,7 +407,7 @@ def test_verbose(
 echo "Hello, world"
 """
     init_file(template, Path("module") / "file")
-    main(".", long.verbose, test_flake8=False)
+    main(".", "--verbose", test_flake8=False)
     assert "invalid syntax" in patch_logger.getvalue()
 
 
@@ -514,7 +514,7 @@ def test_ignore_typechecker_and_no_prop_returns(
     assert main(".") == 1
     std = capsys.readouterr()
     assert expected in std.out
-    assert main(".", long.ignore_typechecker) == 0
+    assert main(".", "--ignore-typechecker") == 0
     std = capsys.readouterr()
     assert expected not in std.out
 

@@ -9,7 +9,7 @@ from templatest.utils import VarSeq
 
 from docsig.messages import E
 
-from . import InitFileFixtureType, MockMainType, long
+from . import InitFileFixtureType, MockMainType
 
 function = VarSeq("function", "_")
 
@@ -1117,7 +1117,7 @@ def test_unknown_commandline_disables(main: MockMainType) -> None:
     :param main: Mock ``main`` function.
     """
     assert (
-        main(".", long.disable, "unknown", test_flake8=False)
+        main(".", "--disable", "unknown", test_flake8=False)
         == "unknown option to disable 'unknown'"
     )
 

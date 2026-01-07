@@ -42,7 +42,6 @@ from . import (
     InitFileFixtureType,
     MockMainType,
     fail,
-    long,
     passed,
 )
 
@@ -232,7 +231,7 @@ def test_disable_rule(
     assert (
         main(
             ".",
-            long.disable,
+            "--disable",
             name.replace("-", "").upper()[1:7],
             test_flake8=False,
         )
@@ -318,7 +317,7 @@ def test_ignore_no_params(
         "Returns:",
     )
     init_file(template)
-    returncode = main(".", *CHECK_ARGS, long.ignore_no_params)
+    returncode = main(".", *CHECK_ARGS, "--ignore-no-params")
     std = capsys.readouterr()
 
     # expected result one of the messages indicating missing params
@@ -404,7 +403,7 @@ def test_ignore_args(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", *CHECK_ARGS, long.ignore_args) == int(
+    assert main(".", *CHECK_ARGS, "--ignore-args") == int(
         name.startswith(FAIL)
         and "w-args" not in name
         or name.startswith(PASS)
@@ -447,7 +446,7 @@ def test_ignore_kwargs(
     :param template: Contents to write to file.
     """
     init_file(template)
-    assert main(".", *CHECK_ARGS, long.ignore_kwargs) == int(
+    assert main(".", *CHECK_ARGS, "--ignore-kwargs") == int(
         name.startswith(FAIL)
         and "w-kwargs" not in name
         or name.startswith(PASS)
@@ -580,7 +579,7 @@ def test_string_argument(
     assert main(
         "mocked_path",
         *CHECK_ARGS,
-        long.string,
+        "--string",
         template,
         test_flake8=False,
     ) == int(name.startswith(FAIL))

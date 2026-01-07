@@ -32,7 +32,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-long = _VarPrefix("--", "-")
 passed = _VarPrefix("p-", "-")
 fail = _VarPrefix("f-", "-")
 string = _VarSeq("string")
@@ -48,13 +47,13 @@ TOML = "pyproject.toml"
 TOOL = "tool"
 LIST = "list"
 CHECK_ARGS = (
-    long.check_class,
-    long.check_protected,
-    long.check_overridden,
-    long.check_dunders,
-    long.check_property_returns,
-    long.check_protected_class_methods,
-    long.check_nested,
+    "--check-class",
+    "--check-protected",
+    "--check-overridden",
+    "--check-dunders",
+    "--check-property-returns",
+    "--check-protected-class-methods",
+    "--check-nested",
 )
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 ENABLE = "enable"

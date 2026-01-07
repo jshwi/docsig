@@ -23,7 +23,6 @@ from . import (
     FixturePatchArgv,
     InitFileFixtureType,
     MockMainType,
-    long,
 )
 
 
@@ -150,7 +149,7 @@ def test_exclude_defaults_396(
     """
     make_tree(Path.cwd(), TREE)
     Path(".gitignore").unlink()
-    main(".", long.verbose, test_flake8=False)
+    main(".", "--verbose", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -482,7 +481,7 @@ add_imports = ["from __future__ import annotations"]
     parser = _ArgumentParser()
     parser.add_argument(
         "-d",
-        long.disable,
+        "--disable",
         action="store",
         type=_split_comma,
         default=[],
