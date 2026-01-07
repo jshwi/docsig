@@ -32,7 +32,6 @@ from docsig.messages import E
 from . import (
     CHECK_ARGS,
     FAIL_CHECK_ARGS,
-    PASS,
     InitFileFixtureType,
     MockMainType,
 )
@@ -73,11 +72,11 @@ def test_exit_status(
 
 @pytest.mark.parametrize(
     ["_", "template", "expected"],
-    templates.registered.filtergroup("m").filtergroup(PASS),
+    templates.registered.filtergroup("m").filtergroup("p"),
     ids=[
         i.replace("-", "").upper()[4:8] if "e-1-0" in i else i
         for i in templates.registered.filtergroup("m")
-        .filtergroup(PASS)
+        .filtergroup("p")
         .getids()
     ],
 )
@@ -233,8 +232,8 @@ def test_disable_rule(
 
 @pytest.mark.parametrize(
     "template",
-    templates.registered.getgroup(PASS),
-    ids=templates.registered.getgroup(PASS).getids(),
+    templates.registered.getgroup("p"),
+    ids=templates.registered.getgroup("p").getids(),
 )
 def test_no_stdout(
     capsys: pytest.CaptureFixture,
@@ -398,7 +397,7 @@ def test_ignore_args(
     assert main(".", *CHECK_ARGS, "--ignore-args") == int(
         name.startswith("f")
         and "w-args" not in name
-        or name.startswith(PASS)
+        or name.startswith("p")
         and "w-args" in name,
     )
 
@@ -441,7 +440,7 @@ def test_ignore_kwargs(
     assert main(".", *CHECK_ARGS, "--ignore-kwargs") == int(
         name.startswith("f")
         and "w-kwargs" not in name
-        or name.startswith(PASS)
+        or name.startswith("p")
         and "w-kwargs" in name,
     )
 
