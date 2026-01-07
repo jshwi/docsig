@@ -24,7 +24,6 @@ from . import (
     InitFileFixtureType,
     MockMainType,
     long,
-    short,
 )
 
 
@@ -482,7 +481,7 @@ add_imports = ["from __future__ import annotations"]
     patch_argv("docsig.EXE")
     parser = _ArgumentParser()
     parser.add_argument(
-        short.disable,
+        "-d",
         long.disable,
         action="store",
         type=_split_comma,

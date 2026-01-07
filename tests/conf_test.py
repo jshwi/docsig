@@ -15,7 +15,7 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, NAME, TOML, TOOL, FixturePatchArgv, long, short, string
+from . import LIST, NAME, TOML, TOOL, FixturePatchArgv, long, string
 
 
 @pytest.mark.parametrize(
@@ -51,7 +51,7 @@ def test_list_parser(
     patch_argv(*args)
     parser = _ArgumentParser()
     parser.add_argument(
-        short.list,
+        "-l",
         long.list,
         action="store",
         type=_split_comma,
@@ -68,7 +68,7 @@ def test_no_toml(patch_argv: FixturePatchArgv) -> None:
     """
     patch_argv(NAME, long.arg)
     parser = _ArgumentParser()
-    parser.add_argument(short.arg, long.arg, action="store_true")
+    parser.add_argument("-a", long.arg, action="store_true")
     namespace = parser.parse_args()
     assert namespace.arg
 
@@ -82,7 +82,7 @@ def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(NAME)
     parser = _ArgumentParser()
-    parser.add_argument(short.this_flag, long.this_flag, action="store_true")
+    parser.add_argument("-t", long.this_flag, action="store_true")
     namespace = parser.parse_args()
     assert namespace.this_flag is True
 
@@ -98,7 +98,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # that is its falsy value
     parser = _ArgumentParser()
     parser.add_argument(
-        short.list,
+        "-l",
         long.list,
         action="store",
         type=_split_comma,
@@ -111,7 +111,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # nothing in pyproject.toml
     parser = _ArgumentParser()
     parser.add_argument(
-        short.list,
+        "-l",
         long.list,
         action="store",
         type=_split_comma,
@@ -127,7 +127,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     parser = _ArgumentParser()
     parser.add_argument(
-        short.list,
+        "-l",
         long.list,
         action="store",
         type=_split_comma,
@@ -147,7 +147,7 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(NAME)
     parser = _ArgumentParser()
-    parser.add_argument(short.this_flag, long.this_flag, action="store")
+    parser.add_argument("-t", long.this_flag, action="store")
     namespace = parser.parse_args()
     assert namespace.this_flag == expected
 
@@ -164,6 +164,6 @@ def test_no_file_to_root(
     monkeypatch.setattr("docsig._config.PYPROJECT_TOML", str(random()))
     patch_argv(NAME, long.arg)
     parser = _ArgumentParser()
-    parser.add_argument(short.arg, long.arg, action="store_true")
+    parser.add_argument("-a", long.arg, action="store_true")
     namespace = parser.parse_args()
     assert namespace.arg

@@ -19,10 +19,10 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType, long, short
+from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType, long
 
 
-@pytest.mark.parametrize("arg", (short.V, long.version))
+@pytest.mark.parametrize("arg", ("-V", long.version))
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,

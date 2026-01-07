@@ -32,7 +32,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-short = _VarPrefix("-")
 long = _VarPrefix("--", "-")
 passed = _VarPrefix("p-", "-")
 fail = _VarPrefix("f-", "-")
