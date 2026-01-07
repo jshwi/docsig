@@ -165,8 +165,8 @@ def test_lineno(
     main(".")
     std = capsys.readouterr()
     assert f"{PATH}:2" in std.out
-    assert f"{PATH}:11" in std.out
-    assert f"{PATH}:19" in std.out
+    assert f"{PATH}:10" in std.out
+    assert f"{PATH}:18" in std.out
 
 
 def test_param_ne() -> None:
@@ -449,7 +449,6 @@ def function(*_, **__) -> None:
 
     :return: Returncode.
     """
-    return 0
 ''',
             E[502].fstring(T),
         ),
@@ -457,7 +456,6 @@ def function(*_, **__) -> None:
             '''
 def function(*_, **__) -> int:
     """Proper docstring."""
-    return 0
 ''',
             E[503].fstring(T),
         ),
@@ -472,7 +470,6 @@ def function(*_, **__):
         int
             Returncode.
     """
-    return 0
 ''',
             E[501].fstring(T),
         ),
@@ -489,7 +486,6 @@ class Klass:
         int
         Returncode.
         """
-        return 0
 ''',
             E[505].fstring(T),
         ),
@@ -542,7 +538,6 @@ def function(*_, **__) -> None:
 
     :return: Returncode.
     """
-    return 0
 '''
     init_file(template, Path("module") / "file1.py")
     init_file(template, Path("module") / "file2.py")
@@ -659,14 +654,6 @@ class ArgumentParser(_a.ArgumentParser):
         :param args: Long and/or short form argument(s).
         :param kwargs: Kwargs to pass to ``add_argument``.
         """
-        kwargs.update(
-            {
-                "action": "store",
-                "type": _split_comma,
-                "default": kwargs.get("default", []),
-            }
-        )
-        self.add_argument(*args, **kwargs)
 '''
     init_file(template)
     main(".", "-ak", test_flake8=False)
@@ -733,7 +720,6 @@ class BaseClass:
 
         :param arg: Some argument
         """
-        return None
 '''
     t2 = '''\
 from .bases.base_class import BaseClass
@@ -744,7 +730,6 @@ class Implementation(BaseClass):
 
     def method(self, arg) -> None:
         """Does something."""
-        return None
 '''
     root = tmp_path / "folder"
     bases = root / "bases"

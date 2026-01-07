@@ -67,15 +67,8 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    print("Hello from a function")
-    print(argument)
-
     def my_external_function(argument: int = 42) -> int:
-        print("Hello from an external function")
-        print(argument)
-        return argument + 42
-
-    return argument + 1
+        pass
 ''',
             "my_function.py",
         ),
@@ -84,7 +77,6 @@ def my_function(argument: int = 42) -> int:
 class Parent:
     def method(self) -> None:
         """This is documented."""
-        self._set: _t.Set[T] = set()
 
 class Child(Parent):
     def method(self) -> None:
@@ -115,7 +107,6 @@ class _Klass:
 class Parent:
     def _protected(self, param1) -> None:
         """This is documented."""
-        self._set: _t.Set[T] = set()
 ''',
             "parent_with_protected.py",
         ),

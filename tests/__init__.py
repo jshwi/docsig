@@ -1605,7 +1605,6 @@ def function(param1, param2, param3):
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 '''
 
     @property
@@ -1626,7 +1625,6 @@ def function(param1, param2, param3) -> int:
     :param param3: Passes.
     :return: Passes.
     """
-    return 0
 '''
 
     @property
@@ -1666,7 +1664,6 @@ def function(param1, param2, param3) -> int:
     :param param2: Fails.
     :param param3: Fails.
     """
-    return 0
 '''
 
     @property
@@ -1718,8 +1715,6 @@ class _FRetDocsAttrTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as t
-
 def function(param1) -> t.Optional[str]:
     """Proper docstring.
 
@@ -1737,8 +1732,6 @@ class _FRetDocsNameTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import Optional
-
 def function(param1) -> Optional[str]:
     """Proper docstring.
 
@@ -1763,7 +1756,6 @@ def function(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 '''
 
     @property
@@ -1858,7 +1850,6 @@ def function(param1, param2, param3) -> int:
     :param param2: Fails.
     :param param3: Fails.
     """
-    return 0
 '''
 
     @property
@@ -1992,7 +1983,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -2015,9 +2005,9 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:11 in function_2
+{PATH}:10 in function_2
     {E[202].fstring(T)}
-{PATH}:19 in function_3
+{PATH}:18 in function_3
     {E[203].fstring(T)}
 """
 
@@ -2071,7 +2061,6 @@ class Klass:
     @property
     def method(self) -> int:
         """Proper docstring."""
-        return self._method
 '''
 
     @property
@@ -2238,10 +2227,6 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
     :param seq: Sequence object that can be indexed.
     :return: Item from index else None.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property
@@ -2307,7 +2292,6 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         """Proper docstring."""
-        return 0
 '''
 
     @property
@@ -2327,7 +2311,6 @@ class Klass:
 
         :return: Returncode.
         """
-        return 0
 '''
 
     @property
@@ -2548,7 +2531,6 @@ class Klass:
     @property
     def method(self):
         """Proper docstring."""
-        return self._method
 '''
 
     @property
@@ -2673,7 +2655,6 @@ def function(self) -> int:
 
     :param self: Fails.
     """
-    return self._method
 '''
 
     @property
@@ -2692,7 +2673,6 @@ def function(*_, **__) -> int:
 
     :return: Returncode.
     """
-    return 0
 '''
 
     @property
@@ -2711,7 +2691,6 @@ def method(self):
 
     :param self: Fails.
     """
-    return self._method
 '''
 
     @property
@@ -2992,7 +2971,6 @@ def function(param1, param2, param3):
         param1 : int
             Fails.
     """
-    return 0
 '''
 
     @property
@@ -3022,7 +3000,6 @@ def function(param1, param2, param3) -> int:
         int
             Passes.
     """
-    return 0
 '''
 
     @property
@@ -3076,7 +3053,6 @@ def function(param1, param2, param3) -> int:
         param3 : int
             Fails.
     """
-    return 0
 '''
 
     @property
@@ -3142,8 +3118,6 @@ class _FRetDocsAttrTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as t
-
 def function(param1) -> t.Optional[str]:
     """Proper docstring.
 
@@ -3164,8 +3138,6 @@ class _FRetDocsNameTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import Optional
-
 def function(param1) -> Optional[str]:
     """Proper docstring.
 
@@ -3198,7 +3170,6 @@ def function(param1, param2, param3) -> None:
         param1 : int
             Fails.
     """
-    return 0
 '''
 
     @property
@@ -3298,7 +3269,6 @@ def function(param1, param2, param3) -> int:
         param3 : int
             Fails.
     """
-    return 0
 '''
 
     @property
@@ -3441,7 +3411,6 @@ def function_1(param1, param2, param3) -> None:
         param1 : int
             Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -3473,9 +3442,9 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:16 in function_2
+{PATH}:15 in function_2
     {E[202].fstring(T)}
-{PATH}:29 in function_3
+{PATH}:28 in function_3
     {E[203].fstring(T)}
 """
 
@@ -3715,10 +3684,6 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
         int
             Item from index else None.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property
@@ -3792,7 +3757,6 @@ class Klass:
     @property
     def function(*_, **__) -> int:
         """Proper docstring."""
-        return 0
 '''
 
     @property
@@ -3816,7 +3780,6 @@ class Klass:
             int
                 Returncode.
         """
-        return 0
 '''
 
     @property
@@ -3840,7 +3803,6 @@ class Klass:
             int
                 Returncode.
         """
-        return 0
 '''
 
     @property
@@ -3853,8 +3815,6 @@ class _PPropertyReturnFunctoolsCachedN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import functools
-
 class Klass:
     @functools.cached_property
     def function(*_, **__) -> int:
@@ -3866,7 +3826,6 @@ class Klass:
             int
                 Returncode.
         """
-        return 0
 '''
 
     @property
@@ -4075,7 +4034,6 @@ class Klass:
     @property
     def method(self):
         """Proper docstring."""
-        return self._method
 '''
 
     @property
@@ -4232,7 +4190,6 @@ def function(self) -> int:
         self : Klass
             Fails.
     """
-    return self._method
 '''
 
     @property
@@ -4254,7 +4211,6 @@ def function(*_, **__) -> int:
         int
             Returncode.
     """
-    return 0
 '''
 
     @property
@@ -4276,7 +4232,6 @@ def method(self):
         self : Klass
             Fails.
     """
-    return self._method
 '''
 
     @property
@@ -4333,7 +4288,6 @@ class Klass:
     # against convention but not up to this package to decide
     def method(no_self) -> None:
         """Docstring."""
-        return None
 '''
 
     @property
@@ -4511,12 +4465,6 @@ def modify(numericString: Union[str, int]) -> str:
     str
         Reformatted string
     """
-    numericString = str(numericString)
-    last = numericString[-1]
-    middle = numericString[-3:-1]
-    first = numericString[:-3]
-    finalstring = "-".join([first, middle, last])
-    return finalstring
 '''
 
     @property
@@ -4544,9 +4492,6 @@ def check_stuff(str_lin: str) -> bool:
     bool
         Returns True, else false
     """
-    if any(s in str_lin for s in ["A", "B"]):
-        return True
-    return False
 '''
 
     @property
@@ -4663,7 +4608,6 @@ def function(param1, param2, param3):
     param1: int
         Fails.
     """
-    return 0
 '''
 
     @property
@@ -4693,7 +4637,6 @@ def function(param1, param2, param3) -> int:
     int
         Passes.
     """
-    return 0
 '''
 
     @property
@@ -4747,7 +4690,6 @@ def function(param1, param2, param3) -> int:
     param3: int
         Fails.
     """
-    return 0
 '''
 
     @property
@@ -4813,8 +4755,6 @@ class _FRetDocsAttrTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as t
-
 def function(param1) -> t.Optional[str]:
     """Proper docstring.
 
@@ -4835,8 +4775,6 @@ class _FRetDocsNameTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import Optional
-
 def function(param1) -> Optional[str]:
     """Proper docstring.
 
@@ -4869,7 +4807,6 @@ def function(param1, param2, param3) -> None:
     param1: int
         Fails.
     """
-    return 0
 '''
 
     @property
@@ -4969,7 +4906,6 @@ def function(param1, param2, param3) -> int:
     param3: int
         Fails.
     """
-    return 0
 '''
 
     @property
@@ -5112,7 +5048,6 @@ def function_1(param1, param2, param3) -> None:
     param1: int
         Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -5144,9 +5079,9 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:16 in function_2
+{PATH}:15 in function_2
     {E[202].fstring(T)}
-{PATH}:29 in function_3
+{PATH}:28 in function_3
     {E[203].fstring(T)}
 """
 
@@ -5369,10 +5304,6 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
     int
         Item from index else None.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property
@@ -5439,7 +5370,6 @@ class Klass:
         int
             Returncode.
         """
-        return 0
 '''
 
     @property
@@ -5698,7 +5628,6 @@ def function(self) -> int:
     self: Klass
         Fails.
     """
-    return self._method
 '''
 
     @property
@@ -5720,7 +5649,6 @@ def function(*_, **__) -> int:
     int
         Returncode.
     """
-    return 0
 '''
 
     @property
@@ -5742,7 +5670,6 @@ def method(self):
     self: Klass
         Fails.
     """
-    return self._method
 '''
 
     @property
@@ -5856,7 +5783,6 @@ def function(param1, param2, param3) -> int:
     :param param3: Passes.
     :returns: Passes.
     """
-    return 0
 '''
 
     @property
@@ -6040,7 +5966,6 @@ class Klass:
 
         :returns: Returncode.
         """
-        return 0
 '''
 
     @property
@@ -6181,7 +6106,6 @@ def function(*_, **__) -> int:
 
     :returns: Returncode.
     """
-    return 0
 '''
 
     @property
@@ -6261,7 +6185,6 @@ def function(param1, param2, param3):
         param3 (int): Fails.
         param1 (int): Fails.
     """
-    return 0
 '''
 
     @property
@@ -6285,7 +6208,6 @@ def function(param1, param2, param3) -> int:
     Returns:
         bool: Pass.
     """
-    return 0
 '''
 
     @property
@@ -6329,7 +6251,6 @@ def function(param1, param2, param3) -> int:
         param2 (int): Fails.
         param3 (int): Fails.
     """
-    return 0
 '''
 
     @property
@@ -6385,8 +6306,6 @@ class _FRetDocsAttrTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as t
-
 def function(param1) -> t.Optional[str]:
     """Proper docstring.
 
@@ -6405,8 +6324,6 @@ class _FRetDocsNameTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import Optional
-
 def function(param1) -> Optional[str]:
     """Proper docstring.
 
@@ -6433,7 +6350,6 @@ def function(param1, param2, param3) -> None:
         param3 (int): Fails.
         param1 (int): Fails.
     """
-    return 0
 '''
 
     @property
@@ -6516,7 +6432,6 @@ def function(param1, param2, param3) -> int:
         param2 (int): Fails.
         param3 (int): Fails.
     """
-    return 0
 '''
 
     @property
@@ -6636,7 +6551,6 @@ def function_1(param1, param2, param3) -> None:
         param3 (int): Fails.
         param1 (int): Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -6661,9 +6575,9 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:12 in function_2
+{PATH}:11 in function_2
     {E[202].fstring(T)}
-{PATH}:21 in function_3
+{PATH}:20 in function_3
     {E[203].fstring(T)}
 """
 
@@ -6855,10 +6769,6 @@ def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
     Returns:
         int: Item from index else None.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property
@@ -6917,7 +6827,6 @@ class Klass:
         Returns:
             int: Returncode.
         """
-        return 0
 '''
 
     @property
@@ -7139,7 +7048,6 @@ def function(self) -> int:
     Args:
         self (Klass): Fails.
     """
-    return self._method
 '''
 
     @property
@@ -7159,7 +7067,6 @@ def function(*_, **__) -> int:
     Returns:
         int: Returncode.
     """
-    return 0
 '''
 
     @property
@@ -7179,7 +7086,6 @@ def method(self):
     Returns:
         int: Returncode.
     """
-    return self._method
 '''
 
     @property
@@ -7352,9 +7258,6 @@ def check_stuff(str_lin: str, a: str) -> bool:
     bool
         Returns True, else false
     """
-    if any(s in str_lin for s in ["A", "B"]):
-        return True
-    return False
 '''
 
     @property
@@ -7367,8 +7270,6 @@ class _FOverriddenAncestorsMultipleS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from __future__ import annotations
-
 import typing as _t
 
 T = _t.TypeVar("T")
@@ -7460,7 +7361,6 @@ def example(some_input: int) -> "int":
     Returns:
         Unchanged input
     """
-    return some_input
 '''
 
     @property
@@ -7475,7 +7375,6 @@ class _FNoParamS(_BaseTemplate):
         return '''
 def example(some_input: int) -> int:
     """Return input."""
-    return some_input
 '''
 
     @property
@@ -7586,9 +7485,6 @@ class _MPassOverloadS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7622,9 +7518,6 @@ class _MFailOverloadMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7650,7 +7543,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:20 in process
+{PATH}:17 in process
     {E[503].fstring(T)}
 """
 
@@ -7660,9 +7553,6 @@ class _MFailOverloadMissingParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7688,7 +7578,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:20 in process
+{PATH}:17 in process
     {E[203].fstring(T)}
 """
 
@@ -7698,9 +7588,6 @@ class _MPassOverloadNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7733,9 +7620,6 @@ class _MPassMultiOverloadsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7791,9 +7675,6 @@ class _MFailOverloadNoReturnDocumentedS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
-
 @overload
 def process(response: None) -> None:
     ...
@@ -7820,7 +7701,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:20 in process
+{PATH}:17 in process
     {E[502].fstring(T)}
 """
 
@@ -7830,8 +7711,6 @@ class _MPassOverloadMethodS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -7863,8 +7742,6 @@ class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -7888,7 +7765,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in SomeClass.process
+{PATH}:15 in SomeClass.process
     {E[503].fstring(T)}
 """
 
@@ -7898,8 +7775,6 @@ class _MFailOverloadMethodMissingParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -7923,7 +7798,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in SomeClass.process
+{PATH}:15 in SomeClass.process
     {E[203].fstring(T)}
 """
 
@@ -7933,8 +7808,6 @@ class _MFailOverloadMethodNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -7958,7 +7831,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in SomeClass.process
+{PATH}:15 in SomeClass.process
     {E[503].fstring(T)}
 """
 
@@ -7968,8 +7841,6 @@ class _MPassMultiOverloadMethodsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -8020,8 +7891,6 @@ class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload
-
 class SomeClass:
     @overload
     def process(self, response: None) -> None:
@@ -8099,7 +7968,6 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -8120,9 +7988,9 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:11 in function_2
+{PATH}:10 in function_2
     {E[202].fstring(T)}
-{PATH}:19 in function_3
+{PATH}:18 in function_3
     {E[203].fstring(T)}
 """
 
@@ -8140,7 +8008,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -8175,7 +8042,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 # docsig: disable
 def function_2(param1, param2) -> None:
@@ -8214,7 +8080,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:
     """...
@@ -8238,7 +8103,7 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:11 in function_2
+{PATH}:10 in function_2
     {E[202].fstring(T)}
 """
 
@@ -8255,7 +8120,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 # docsig: disable
 def function_2(param1, param2) -> None:
@@ -8280,7 +8144,7 @@ def function_3(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:21 in function_3
+{PATH}:20 in function_3
     {E[203].fstring(T)}
 """
 
@@ -8297,7 +8161,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 # docsig: disable
 def function_2(param1, param2) -> None:
@@ -8323,7 +8186,6 @@ def function_4(param1, param2, param3) -> None:  # docsig: disable
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 # docsig: disable
 def function_5(param1, param2) -> None:
@@ -8348,9 +8210,9 @@ def function_6(param1, param2, param3) -> None:
         return f"""\
 {PATH}:2 in function_1
     {E[402].fstring(T)}
-{PATH}:21 in function_3
+{PATH}:20 in function_3
     {E[203].fstring(T)}
-{PATH}:47 in function_6
+{PATH}:45 in function_6
     {E[203].fstring(T)}
 """
 
@@ -8406,7 +8268,6 @@ def function_1(param1, param2, param3) -> None:
     :param param3: Fails.
     :param param1: Fails.
     """
-    return 0
 
 def function_2(param1, param2) -> None:  # docsig: enable
     """...
@@ -8427,7 +8288,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:12 in function_2
+{PATH}:11 in function_2
     {E[202].fstring(T)}
 """
 
@@ -8749,7 +8610,6 @@ class Klass:
         :param param2: Fails.
         :param param3: Fails.
         """
-        pass
 '''
 
     @property
@@ -8771,7 +8631,6 @@ class Klass:
         :param param1: Fails.
         :param param2: Fails.
         """
-        pass
 '''
 
     @property
@@ -8794,7 +8653,6 @@ class Klass:
         :param param1: Fails.
         :param param2: Fails.
         """
-        pass
 '''
 
     @property
@@ -8817,7 +8675,6 @@ class Klass:
         :param param2: Fails.
         :return: Fails
         """
-        pass
 '''
 
     @property
@@ -8840,7 +8697,6 @@ class Klass:
         :param param2: Fails.
         :return: Fails
         """
-        pass
 '''
 
     @property
@@ -8921,10 +8777,7 @@ class _MessageSequence(_t.List[str]):  # docsig: disable
 
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
-        if any(sig.name == i.name for i in self._func.docstring.args) or any(
-            doc.name == i.name for i in self._func.signature.args
-        ):
-            self.add(_E[402])
+        pass
 '''
 
     @property
@@ -8963,10 +8816,7 @@ class _MessageSequence(_t.List[str]):
 
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
-        if any(sig.name == i.name for i in self._func.docstring.args) or any(
-            doc.name == i.name for i in self._func.signature.args
-        ):
-            self.add(_E[402])
+        pass
 '''
 
     @property
@@ -9002,10 +8852,7 @@ class _MessageSequence(_t.List[str]):
 
 class Report(_MessageSequence):
     def order(self, sig: _Param, doc: _Param) -> None:
-        if any(sig.name == i.name for i in self._func.docstring.args) or any(
-            doc.name == i.name for i in self._func.signature.args
-        ):
-            self.add(_E[402])
+        pass
 '''
 
     @property
@@ -9032,17 +8879,12 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    print("Hello from a function")
-    print(argument)
-    return argument + 1
 
 
 if True:
     my_function(42)
     def my_external_function(argument: int = 42) -> int:
-        print("Hello from an external function")
-        print(argument)
-        return argument + 42
+        pass
 '''
 
     @property
@@ -9059,9 +8901,7 @@ if True:
     class Klass:
         """Class is OK."""
         def my_external_function(self, argument: int = 42) -> int:
-            print("Hello from an external function")
-            print(argument)
-            return argument + 42
+            pass
 '''
 
     @property
@@ -9077,9 +8917,7 @@ class _FFuncInIfInIfStatementN(_BaseTemplate):
 if True:
     if True:
         def my_external_function(argument: int = 42) -> int:
-            print("Hello from an external function")
-            print(argument)
-            return argument + 42
+            pass
 """
 
     @property
@@ -9101,9 +8939,6 @@ class Klass:
         :param argument: An int.
         :return: An int.
         """
-        print("Hello from an external function")
-        print(argument)
-        return argument + 42
 '''
 
     @property
@@ -9120,9 +8955,7 @@ container = []
 
 for argument in container:
     def my_external_function(argument: int = 42) -> int:
-        print("Hello from an external function")
-        print(argument)
-        return argument + 42
+        pass
 """
 
     @property
@@ -9135,14 +8968,10 @@ class _FFuncInForLoopIfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-container = []
-
 for argument in container:
     if argument > 0:
         def my_external_function(argument: int = 42) -> int:
-            print("Hello from an external function")
-            print(argument)
-            return argument + 42
+            pass
 """
 
     @property
@@ -9169,13 +8998,8 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    print("Hello from a function")
-    print(argument)
     def my_external_function(argument: int = 42) -> int:
-        print("Hello from an external function")
-        print(argument)
-        return argument + 42
-    return argument + 1
+        pass
 '''
 
     @property
@@ -9205,27 +9029,21 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    print("Hello from a function")
-    print(argument)
     class Klass:
         def __init__(self, this) -> None:
-            self.this = this
+            pass
         def my_external_function(self, argument: int = 42) -> int:
             """This is a method.
 
             :param argument: An int.
             :return: An int.
             """
-            print("Hello from an external function")
-            print(argument)
-            return argument + 42
-    return argument + 1
 '''
 
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:19 in Klass.__init__
+{PATH}:17 in Klass.__init__
     {E[102].fstring(T)}
 """
 
@@ -9249,24 +9067,19 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    print("Hello from a function")
-    print(argument)
     class Klass:
         def __init__(self, this) -> None:
-            self.this = this
+            pass
         def my_external_function(self, argument: int = 42) -> int:
-            print("Hello from an external function")
-            print(argument)
-            return argument + 42
-    return argument + 1
+            pass
 '''
 
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:19 in Klass.__init__
+{PATH}:17 in Klass.__init__
     {E[102].fstring(T)}
-{PATH}:21 in Klass.my_external_function
+{PATH}:19 in Klass.my_external_function
     {E[101].fstring(T)}
 """
 
@@ -9325,7 +9138,6 @@ class Klass:
             int
                 Returncode.
         """
-        return 0
 '''
 
     @property
