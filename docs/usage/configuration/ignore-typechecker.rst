@@ -87,7 +87,6 @@ ignore checking return values
     ...         int
     ...         Returncode.
     ...         """
-    ...
     ... '''
 
 .. code-block:: python
