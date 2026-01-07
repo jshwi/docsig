@@ -1247,14 +1247,14 @@ files = [
 
 [[package]]
 name = "pathspec"
-version = "1.0.0"
+version = "1.0.1"
 description = "Utility library for gitignore style pattern matching of file paths."
 optional = false
 python-versions = ">=3.9"
 groups = ["main", "dev"]
 files = [
-    {file = "pathspec-1.0.0-py3-none-any.whl", hash = "sha256:1373719036e64a2b9de3b8ddd9e30afb082a915619f07265ed76d9ae507800ae"},
-    {file = "pathspec-1.0.0.tar.gz", hash = "sha256:9ada63a23541746b0cf7d5672a39ea77eac31dd23a80470be90df83537512131"},
+    {file = "pathspec-1.0.1-py3-none-any.whl", hash = "sha256:8870061f22c58e6d83463cfce9a7dd6eca0512c772c1001fb09ac64091816721"},
+    {file = "pathspec-1.0.1.tar.gz", hash = "sha256:e2769b508d0dd47b09af6ee2c75b2744a2cb1f474ae4b1494fd6a1b7a841613c"},
 ]
 
 [package.extras]
