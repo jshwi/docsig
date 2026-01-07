@@ -31,7 +31,6 @@ from docsig.messages import E
 
 from . import (
     CHECK_ARGS,
-    E10,
     FAIL,
     FAIL_CHECK_ARGS,
     PASS,
@@ -77,7 +76,7 @@ def test_exit_status(
     ["_", "template", "expected"],
     templates.registered.filtergroup("m").filtergroup(PASS),
     ids=[
-        i.replace("-", "").upper()[4:8] if E10 in i else i
+        i.replace("-", "").upper()[4:8] if "e-1-0" in i else i
         for i in templates.registered.filtergroup("m")
         .filtergroup(PASS)
         .getids()
@@ -123,7 +122,7 @@ def test_stdout(
     ["_", "template", "expected"],
     [i for i in templatest.templates.registered if "single-error" in i.name],
     ids=[
-        i.replace("-", "").upper()[4:8] if E10 in i else i
+        i.replace("-", "").upper()[4:8] if "e-1-0" in i else i
         for i in templatest.templates.registered.getids()
         if "single-error" in i
     ],
@@ -542,7 +541,7 @@ def test_check_class_constructor(
     ["name", "template", "expected"],
     templates.registered.filtergroup("m").filtergroup("f-method-header"),
     ids=[
-        i.replace("-", "").upper()[4:8] if E10 in i else i
+        i.replace("-", "").upper()[4:8] if "e-1-0" in i else i
         for i in templates.registered.filtergroup("m")
         .filtergroup("f-method-header")
         .getids()
