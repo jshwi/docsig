@@ -26,7 +26,6 @@ class InitFileFixtureType(
         """Type for ``fixture_init_file``."""
 
 
-TEMPLATE = "template"
 EXPECTED = "expected"
 E10 = "e-1-0"
 FAIL = "f"

@@ -36,14 +36,13 @@ from . import (
     FAIL,
     FAIL_CHECK_ARGS,
     PASS,
-    TEMPLATE,
     InitFileFixtureType,
     MockMainType,
 )
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -76,7 +75,7 @@ def test_exit_status(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, EXPECTED],
+    ["_", "template", EXPECTED],
     templates.registered.filtergroup("m").filtergroup(PASS),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -122,7 +121,7 @@ def test_stdout(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, EXPECTED],
+    ["_", "template", EXPECTED],
     [i for i in templatest.templates.registered if "single-error" in i.name],
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
@@ -160,7 +159,7 @@ def test_error_codes(
 
 
 @pytest.mark.parametrize(
-    ["_", TEMPLATE, EXPECTED],
+    ["_", "template", EXPECTED],
     templates.registered.getgroup("m"),
     ids=templates.registered.getgroup("m").getids(),
 )
@@ -191,7 +190,7 @@ def test_multiple(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.getgroup("f-s-i-g-2-0"),
     ids=[
         i.replace("-", "").upper()[4:8]
@@ -236,7 +235,7 @@ def test_disable_rule(
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    "template",
     templates.registered.getgroup(PASS),
     ids=templates.registered.getgroup(PASS).getids(),
 )
@@ -263,7 +262,7 @@ def test_no_stdout(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, EXPECTED],
+    ["name", "template", EXPECTED],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -334,7 +333,7 @@ def test_ignore_no_params(
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    "template",
     templates.registered.getgroup("p-property-return"),
     ids=templates.registered.getgroup("p-property-return").getids(),
 )
@@ -365,7 +364,7 @@ def test_no_check_property_returns_flag(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -408,7 +407,7 @@ def test_ignore_args(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.filtergroup("m"),
     ids=templates.registered.filtergroup("m").getids(),
 )
@@ -451,7 +450,7 @@ def test_ignore_kwargs(
 
 
 @pytest.mark.parametrize(
-    TEMPLATE,
+    "template",
     templates.registered.getgroup(*FAIL_CHECK_ARGS),
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
@@ -475,7 +474,7 @@ def test_no_flag(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.getgroup(*FAIL_CHECK_ARGS),
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
@@ -506,7 +505,7 @@ def test_single_flag(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, "_"],
+    ["name", "template", "_"],
     templates.registered.getgroup("f-w-class-constructor"),
     ids=templates.registered.getgroup("f-w-class-constructor").getids(),
 )
@@ -541,7 +540,7 @@ def test_check_class_constructor(
 
 
 @pytest.mark.parametrize(
-    ["name", TEMPLATE, EXPECTED],
+    ["name", "template", EXPECTED],
     templates.registered.filtergroup("m").filtergroup("f-method-header"),
     ids=[
         i.replace("-", "").upper()[4:8] if E10 in i else i
