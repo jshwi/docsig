@@ -13,7 +13,6 @@ check protected functions and classes
     ... class Parent:
     ...     def _protected(self, param1) -> None:
     ...         """This is documented."""
-    ...         self._set: _t.Set[T] = set()
     ... '''
 
 .. code-block:: python

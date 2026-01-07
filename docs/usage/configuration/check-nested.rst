@@ -24,15 +24,8 @@ check nested functions and classes
     ...     int
     ...         The input argument + 1
     ...     """
-    ...     print("Hello from a function")
-    ...     print(argument)
-    ...
     ...     def my_external_function(argument: int = 42) -> int:
-    ...         print("Hello from an external function")
-    ...         print(argument)
-    ...         return argument + 42
-    ...
-    ...     return argument + 1
+    ...         pass
     ... '''
 
 .. code-block:: python
@@ -43,6 +36,6 @@ check nested functions and classes
 .. code-block:: python
 
     >>> docsig(string=string, check_nested=True, no_ansi=True)
-    19 in my_function.my_external_function
+    16 in my_function.my_external_function
         SIG101: function is missing a docstring (function-doc-missing)
     1

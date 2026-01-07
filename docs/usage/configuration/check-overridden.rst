@@ -13,11 +13,10 @@ check overridden methods
     ... class Parent:
     ...     def method(self) -> None:
     ...         """This is documented."""
-    ...         self._set: _t.Set[T] = set()
     ...
     ... class Child(Parent):
     ...     def method(self) -> None:
-    ...         self._set: _t.Set[T] = set()
+    ...         pass
     ... '''
 
 .. code-block:: python
@@ -28,6 +27,6 @@ check overridden methods
 .. code-block:: python
 
     >>> docsig(string=string, check_overridden=True, no_ansi=True)
-    8 in Child.method
+    7 in Child.method
         SIG101: function is missing a docstring (function-doc-missing)
     1
