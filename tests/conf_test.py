@@ -15,7 +15,7 @@ import tomli_w
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import LIST, TOML, TOOL, FixturePatchArgv
+from . import LIST, TOOL, FixturePatchArgv
 
 
 @pytest.mark.parametrize(
@@ -47,7 +47,7 @@ def test_list_parser(
     :param args: Arguments to pass to the commandline.
     :param expected: Expected result.
     """
-    Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
+    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv(*args)
     parser = _ArgumentParser()
     parser.add_argument(
@@ -79,7 +79,7 @@ def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
     :param patch_argv: Patch commandline arguments.
     """
     config = {TOOL: {"name": {"this-flag": True}}}
-    Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
+    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv("name")
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store_true")
@@ -124,7 +124,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # pyproject.toml, as this is a configured value, and a default if
     # nothing included in commandline
     config = {TOOL: {"name": {"list": [100, 200, 300]}}}
-    Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
+    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     parser = _ArgumentParser()
     parser.add_argument(
         "-l",
@@ -144,7 +144,7 @@ def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
     """
     expected = "this-is-a-value"
     config = {TOOL: {"name": {"this-flag": expected}}}
-    Path(TOML).write_text(tomli_w.dumps(config), encoding="utf-8")
+    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
     patch_argv("name")
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store")
