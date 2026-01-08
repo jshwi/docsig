@@ -13,7 +13,6 @@ from . import InitFileFixtureType, MockMainType
 
 function = VarSeq("function", "_")
 
-RULES = "rules"
 ARGS = "code,symbolic"
 ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
 SYMBOLIC = [
@@ -1381,7 +1380,7 @@ def test_individual_inline_disable_checks(
 
 
 @pytest.mark.parametrize(
-    RULES,
+    "rules",
     [
         f"{ES[0]},{ES[1]}",
         f"{ES[0]},{ES[1]},{ES[2]}",
@@ -1449,7 +1448,7 @@ def test_individual_module_disable_checks(
 
 
 @pytest.mark.parametrize(
-    RULES,
+    "rules",
     [
         f"{ES[0]},{ES[1]}",
         f"{ES[0]},{ES[1]},{ES[2]}",
@@ -1517,7 +1516,7 @@ def test_individual_inline_enable_checks(
 
 
 @pytest.mark.parametrize(
-    RULES,
+    "rules",
     [
         f"{ES[0]},{ES[1]}",
         f"{ES[0]},{ES[1]},{ES[2]}",
@@ -1585,7 +1584,7 @@ def test_individual_module_enable_checks(
 
 
 @pytest.mark.parametrize(
-    RULES,
+    "rules",
     [
         f"{ES[0]},{ES[1]}",
         f"{ES[0]},{ES[1]},{ES[2]}",
