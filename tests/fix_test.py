@@ -325,29 +325,29 @@ def method(*, arg1 = "") -> str:
     "template",
     [
         '''\
-def func(param, param2, param3, param4) -> int:
+def function(param, param2, param3, param4) -> int:
     """Desc.
 
-     :param param1: About param1.
-    :param param2:A.
+     :param param1: Description of param1.
+    :param param2:Description of param2.
     :param param3:
     """
 ''',
         '''\
-def func(param, param2, param3, param4) -> int:
+def function(param, param2, param3, param4) -> int:
     """Desc.
 
-     :param param1: About param1.
-     :param param2:A.
+     :param param1: Description of param1.
+     :param param2:Description of param2.
     :param param3:
     """
 ''',
         '''\
-def func(param, param2, param3, param4) -> int:
+def function(param, param2, param3, param4) -> int:
     """Desc.
 
-     :param param1: About param1.
-     :param param2:A.
+     :param param1: Description of param1.
+     :param param2:Description of param2.
      :param param3:
     """
 ''',
@@ -386,11 +386,11 @@ def test_class_and_class_constructor_452(
     """
     template = '''
 def function(param1, param2, param3) -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :param param1: Passes.
-    :param param2: Passes.
-    :param param3: Passes.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 '''
     init_file(template)
@@ -883,9 +883,9 @@ def test_fix_no_402_for_very_similar_names_683(
 def function(param1, param2, param3, param4) -> None:
     """Function summary.
 
-    :param param2: second param.
-    :param param3: third param.
-    :param param4: fourth param.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param4: Description of param4.
     """
 '''
     init_file(template)

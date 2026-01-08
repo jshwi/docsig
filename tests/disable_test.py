@@ -26,424 +26,424 @@ SYMBOLIC = [
 ]
 DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 DISABLE_FILE_2 = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 DISABLE_FILE_3 = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 DISABLE_FILE_4 = '''
 # docsig: disable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
 DISABLE_FILE_5 = '''
 # docsig: disable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
 DISABLE_FILE_6 = '''
 
 def function_1(param1, param2, param3) -> None:  # docsig: disable=SIG402
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG402,SIG202,SIG201,e107.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
 DISABLE_FILE_7 = '''
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(  # docsig: disable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """SIG402,SIG202,SIG201,e107.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -451,61 +451,61 @@ ENABLE_FILE_1 = '''
 # docsig: disable
 # docsig: enable
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -513,61 +513,61 @@ ENABLE_FILE_2 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -575,61 +575,61 @@ ENABLE_FILE_3 = '''
 # docsig: disable
 # docsig: enable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -638,61 +638,61 @@ ENABLE_FILE_4 = '''
 # docsig: disable
 # docsig: enable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -700,61 +700,61 @@ ENABLE_FILE_5 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable=SIG402
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG402,SIG202,SIG201,e107.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
@@ -762,304 +762,304 @@ ENABLE_FILE_6 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """SIG402.
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(  # docsig: enable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """SIG402,SIG202,SIG201,e107.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 
 '''
 INLINE_DISABLE_TEMPLATE = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """SIG402
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:  # docsig: disable={rules}
-    """SIG202
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """SIG203
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """SIG502
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
-    """SIG503
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """SIG201
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """SIG303
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 MODULE_LEVEL_DISABLE_TEMPLATE = '''
 # docsig: disable={rules}
 def function_1(param1, param2, param3) -> None:
-    """SIG402
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 INLINE_ENABLE_TEMPLATE = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """SIG402
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:  # docsig: enable={rules}
-    """SIG202
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """SIG203
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """SIG502
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
-    """SIG503
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """SIG201
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """SIG303
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 MODULE_LEVEL_ENABLE_TEMPLATE = '''
 # docsig: disable
 # docsig: enable={rules}
 def function_1(param1, param2, param3) -> None:
-    """SIG402
+    """Description summary.
 
-    :param param2: Fails.
-    :param param3: Fails.
-    :param param1: Fails.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :param param1: Description of param1.
     """
 
 def function_2(param1, param2) -> None:
-    """SIG202
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_3(param1, param2, param3) -> None:
-    """SIG203
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """SIG502
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
-    :return: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
+    :return: Return description.
     """
 
 def function_5(param1, param2, param3) -> int:
-    """SIG503
+    """Description summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_6(param1, param2, param3) -> None:
-    """SIG201
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 
 def function_7(param1, param2, param3) -> None:
-    """SIG303
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
 

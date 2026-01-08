@@ -65,7 +65,7 @@ def test_class_and_class_constructor(
 def test_class_and_class_constructor_in_interpreter() -> None:
     """Test that docsig errors when passed incompatible options."""
     assert docsig.docsig(
-        string="def func(): pass",
+        string="def function(): pass",
         check_class=True,
         check_class_constructor=True,
     ) == (
@@ -122,12 +122,12 @@ def test_target_report(
     """
     template = '''
 def function_3(param1, param2, param3) -> None:
-    """SIG402,SIG202,SIG201,SIG303.
+    """Description summary.
 
-    :param param1: Fails.
-    :param param1: Fails.
-    :param param2: Fails.
-    :param: Fails.
+    :param param1: Description of param1.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param: Description of param.
     """
 '''
     _errors = "SIG202", "SIG201", "SIG303"
@@ -349,11 +349,11 @@ new-ssl "${@}"
 """
     template2 = '''
 def function(param1, param2) -> None:
-    """...
+    """Docstring summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
@@ -423,11 +423,11 @@ def test_no_color_with_pipe(
     """
     template = '''
 def function(param1, param2) -> None:
-    """...
+    """Docstring summary.
 
-    :param param1: Fails.
-    :param param2: Fails.
-    :param param3: Fails.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
+    :param param3: Description of param3.
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
@@ -446,9 +446,9 @@ def function(param1, param2) -> None:
         (
             '''
 def function(*_, **__) -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :return: Returncode.
+    :return: Return description.
     """
 ''',
             E[502].fstring(T),
@@ -456,14 +456,14 @@ def function(*_, **__) -> None:
         (
             '''
 def function(*_, **__) -> int:
-    """Proper docstring."""
+    """Docstring summary."""
 ''',
             E[503].fstring(T),
         ),
         (
             '''
 def function(*_, **__):
-    """Proper docstring.
+    """Docstring summary.
 
     Returns
     -------
@@ -478,7 +478,7 @@ def function(*_, **__):
 class Klass:
     @property
     def function() -> int:
-        """Proper docstring.
+        """Docstring summary.
 
         Returns
         -------
@@ -533,9 +533,9 @@ def test_sorted(
     """
     template = '''
 def function(*_, **__) -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :return: Returncode.
+    :return: Return description.
     """
 '''
     init_file(template, Path("module") / "file1.py")
