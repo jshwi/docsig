@@ -5,13 +5,10 @@ tests.disable_test.py
 
 # pylint: disable=too-many-lines
 import pytest
-from templatest.utils import VarSeq
 
 from docsig.messages import E
 
 from . import InitFileFixtureType, MockMainType
-
-function = VarSeq("function", "_")
 
 ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
 SYMBOLIC = [
@@ -1151,7 +1148,7 @@ def test_single_function_disable(
     init_file(DISABLE_FILE_3)
     main(".")
     std = capsys.readouterr()
-    assert function[1] not in std.out
+    assert "function_1" not in std.out
     assert all(f"function_{i}" in std.out for i in range(2, 8))
 
 
@@ -1206,7 +1203,7 @@ def test_single_function_single_error_disable(
     init_file(DISABLE_FILE_6)
     main(".")
     std = capsys.readouterr()
-    assert function[1] not in std.out
+    assert "function_1" not in std.out
     assert all(f"function_{i}" in std.out for i in range(2, 8))
 
 
@@ -1261,7 +1258,7 @@ def test_single_function_enable(
     init_file(ENABLE_FILE_2)
     main(".")
     std = capsys.readouterr()
-    assert function[1] in std.out
+    assert "function_1" in std.out
     assert not any(f"function_{i}" in std.out for i in range(2, 8))
 
 
@@ -1324,7 +1321,7 @@ def test_single_function_single_error_enable(
     init_file(ENABLE_FILE_5)
     main(".")
     std = capsys.readouterr()
-    assert function[1] in std.out
+    assert "function_1" in std.out
     assert not any(f"function_{i}" in std.out for i in range(2, 8))
 
 
