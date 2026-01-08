@@ -13,7 +13,6 @@ from . import InitFileFixtureType, MockMainType
 
 function = VarSeq("function", "_")
 
-ARGS = "code,symbolic"
 ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
 SYMBOLIC = [
     (E[402].ref, E[402].symbolic),
@@ -1080,7 +1079,7 @@ def test_no_disables(
     assert all(E.from_ref(i).ref in std.out for i in ES)
 
 
-@pytest.mark.parametrize(ARGS, SYMBOLIC)
+@pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_commandline_disables(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -1349,7 +1348,7 @@ def test_single_function_comma_separated_error_enable(
     assert not any(f"function_{i}" in std.out for i in range(1, 8) if i != 6)
 
 
-@pytest.mark.parametrize(ARGS, SYMBOLIC)
+@pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -1417,7 +1416,7 @@ def test_comma_separated_inline_disable_checks(
     assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(ARGS, SYMBOLIC)
+@pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -1485,7 +1484,7 @@ def test_comma_separated_module_disable_checks(
     assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(ARGS, SYMBOLIC)
+@pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
@@ -1553,7 +1552,7 @@ def test_comma_separated_inline_enable_checks(
     assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
-@pytest.mark.parametrize(ARGS, SYMBOLIC)
+@pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
