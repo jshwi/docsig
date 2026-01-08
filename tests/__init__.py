@@ -36,10 +36,7 @@ CHECK_ARGS = (
     "--check-nested",
 )
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
-WILL_ERROR = """
-#!/bin/bash
-echo "Hello World!"
-"""
+WILL_ERROR = 'echo "Hello World!"'
 TREE = {
     "file1.txt": [],
     "file2.txt": [],
