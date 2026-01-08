@@ -1021,7 +1021,7 @@ def docsig(
 
     @property
     def expected(self) -> str:
-        return """"""
+        return ""
 
 
 @_templates.register
@@ -2509,7 +2509,7 @@ def docsig(
 
     @property
     def expected(self) -> str:
-        return """"""
+        return ""
 
 
 @_templates.register
@@ -3962,7 +3962,7 @@ def docsig(
 
     @property
     def expected(self) -> str:
-        return """"""
+        return ""
 
 
 @_templates.register
@@ -4561,7 +4561,7 @@ def docsig(
 
     @property
     def expected(self) -> str:
-        return """"""
+        return ""
 
 
 @_templates.register
@@ -5407,7 +5407,7 @@ def docsig(
 
     @property
     def expected(self) -> str:
-        return """"""
+        return ""
 
 
 @_templates.register
