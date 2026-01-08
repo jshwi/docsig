@@ -15,7 +15,7 @@ import pytest
 
 import docsig
 
-from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType
+from . import TREE, FixtureMakeTree, MockMainType
 
 
 def test_exclude_defaults(
@@ -29,7 +29,7 @@ def test_exclude_defaults(
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     main(".", "--verbose", "--include-ignored", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: Parsing Python code failed",
@@ -97,12 +97,12 @@ def test_exclude_defaults(
 
 
 def test_exclude_argument(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test bash script is ignored when exclude argument passed.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
     template = """
@@ -124,7 +124,7 @@ new-ssl() {
 
 new-ssl "${@}"
 """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert (
         main(".", "--exclude", r"module[\\/]file.py", test_flake8=False) == 0
     )
@@ -143,7 +143,7 @@ def test_gitignore(
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     # remove default excludes to better test nested gitignore files
     monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
     main(".", "--verbose", test_flake8=False)
@@ -299,7 +299,7 @@ def test_exclude_defaults_and_gitignore(
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     main(".", "--verbose", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
@@ -377,7 +377,7 @@ def test_gitignore_patterns(
     :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     # remove default excludes to better test nested gitignore files
     gitignore = docsig._files._Gitignore()  # type: ignore
     monkeypatch.setattr("docsig._files._Gitignore", lambda: gitignore)
@@ -739,7 +739,7 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
         Path("file[1].txt"),
     ]
     monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     main(
         ".",
         "--verbose",
