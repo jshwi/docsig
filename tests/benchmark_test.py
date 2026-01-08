@@ -19,8 +19,8 @@ class Klass:
     def __init__(self, param1, param2) -> None:
         """Info about class.
 
-        :param param2: Info about param2.
-        :param param1: Info about param1.
+        :param param2: Description of param2.
+        :param param1: Description of param1.
         """
 ''',
             "klass.py",
@@ -30,8 +30,8 @@ class Klass:
 class Klass:
     """Info about class.
 
-    :param param2: Info about param2.
-    :param param1: Info about param1.
+    :param param2: Description of param2.
+    :param param1: Description of param1.
     """
 
     def __init__(self, param1, param2) -> None:
@@ -45,15 +45,15 @@ class Klass:
     def __get__(self, param1, param2) -> None:
         """Info about class.
 
-        :param param2: Info about param2.
-        :param param1: Info about param1.
+        :param param2: Description of param2.
+        :param param1: Description of param1.
         """
 ''',
             "klass.py",
         ),
         (
             '''
-def my_function(argument: int = 42) -> int:
+def function(argument: int = 42) -> int:
     """
     Function that prints a message and returns the argument + 1
 
@@ -88,7 +88,7 @@ class Child(Parent):
             '''
 class Klass:
     @property
-    def prop(self) -> str:
+    def method(self) -> str:
         """This is documented."""
 ''',
             "klass_with_property.py",
@@ -97,7 +97,7 @@ class Klass:
             '''
 class _Klass:
     @property
-    def prop(self, param1) -> str:
+    def method(self, param1) -> str:
         """This is documented."""
 ''',
             "klass_with_documented_property.py",
@@ -113,10 +113,10 @@ class Parent:
         (
             '''
 def function(param1, param2, *args) -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :param param1: Pass.
-    :param param2: Pass.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     :param args: Pass
     """
 ''',
@@ -125,10 +125,10 @@ def function(param1, param2, *args) -> None:
         (
             '''
 def function(param1, param2, **kwargs) -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :param param1: Pass.
-    :param param2: Pass.
+    :param param1: Description of param1.
+    :param param2: Description of param2.
     :param kwargs: Pass
     """
 ''',
@@ -137,16 +137,16 @@ def function(param1, param2, **kwargs) -> None:
         (
             '''
 def function(param1, param2, *args) -> None:
-    """Proper docstring."""
+    """Docstring summary."""
 ''',
             "function_with_undocumented_params.py",
         ),
         (
             '''
 def function() -> None:
-    """Proper docstring.
+    """Docstring summary.
 
-    :return: Returncode.
+    :return: Return description.
     """,
 ''',
             "function_with_documented_return.py",
