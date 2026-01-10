@@ -11,7 +11,7 @@ check protected functions and classes
 
     >>> string = '''
     ... class Class:
-    ...     def _protected(self, a) -> None:
+    ...     def _method(self, a) -> None:
     ...         """Docstring summary."""
     ... '''
 
@@ -23,6 +23,6 @@ check protected functions and classes
 .. code-block:: python
 
     >>> docsig(string=string, check_protected=True, no_ansi=True)
-    3 in Class._protected
+    3 in Class._method
         SIG203: parameters missing (params-missing)
     1

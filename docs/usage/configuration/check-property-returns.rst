@@ -12,7 +12,7 @@ check property return values
     >>> string = '''
     ... class Class:
     ...     @property
-    ...     def prop(self) -> str:
+    ...     def method(self) -> str:
     ...         """Docstring summary."""
     ... '''
 
@@ -24,6 +24,6 @@ check property return values
 .. code-block:: python
 
     >>> docsig(string=string, check_property_returns=True, no_ansi=True)
-    3 in Class.prop
+    3 in Class.method
         SIG503: return missing from docstring (return-missing)
     1
