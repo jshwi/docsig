@@ -809,3 +809,159 @@ def function(a) -> None:
 '''
     init_file(template)
     assert main(".", "--enforce-capitalization") == 0
+
+
+def test_check_nested_numpy(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test check-nested in numpy format.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def my_function(argument: int = 42) -> int:
+    """
+    Function that prints a message and returns the argument + 1
+
+    Parameters
+    ----------
+    argument : int, optional
+        The input argument, by default 42
+
+    Returns
+    -------
+    int
+        The input argument + 1
+    """
+    def my_external_function(argument: int = 42) -> int:
+        pass
+'''
+    init_file(template)
+    assert main(".") == 0
+    main(".", "--check-nested")
+    std = capsys.readouterr()
+    assert docsig.messages.E[101].description in std.out
+
+
+def test_ignore_kwargs_doco_numpy(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test ignore-kwarg documented in numpy format.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(param1, param2, **kwargs) -> None:
+    """Proper docstring.
+
+    Parameters
+    ----------
+        param1 : int
+            Pass.
+        param2 : int
+            Pass.
+        **kwargs : int
+            Pass
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    main(".", "--ignore-kwargs")
+    std = capsys.readouterr()
+    assert docsig.messages.E[202].description in std.out
+
+
+def test_ignore_kwargs_no_doco_numpy(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test ignore-kwarg not documented in numpy format.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(param1, param2, **kwargs) -> None:
+    """Proper docstring.
+
+    Parameters
+    ----------
+        param1 : int
+            Pass.
+        param2 : int
+            Pass.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[203].description in std.out
+    assert main(".", "--ignore-kwargs") == 0
+
+
+def test_ignore_typechecker_numpy(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test ignore-typechecker not typed in numpy format.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(*_, **__):
+    """Proper docstring.
+
+    Returns
+    -------
+        int
+            Returncode.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[501].description in std.out
+    assert main(".", "--ignore-typechecker") == 0
+
+
+def test_ignore_typechecker_prop_numpy(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test ignore-typechecker property typed in numpy format.
+
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+class Klass:
+    @property
+    def function() -> int:
+        """Proper docstring.
+
+        Returns
+        -------
+        int
+        Returncode.
+        """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[505].description in std.out
+    assert main(".", "--ignore-typechecker") == 0

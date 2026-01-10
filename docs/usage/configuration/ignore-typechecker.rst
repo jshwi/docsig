@@ -54,10 +54,7 @@ ignore checking return values
     ... def function(*_, **__):
     ...     """Proper docstring.
     ...
-    ...     Returns
-    ...     -------
-    ...         int
-    ...             Returncode.
+    ...     :return: Returncode.
     ...     """
     ... '''
 
@@ -82,10 +79,7 @@ ignore checking return values
     ...     def function() -> int:
     ...         """Proper docstring.
     ...
-    ...         Returns
-    ...         -------
-    ...         int
-    ...         Returncode.
+    ...         :return: Returncode.
     ...         """
     ... '''
 
