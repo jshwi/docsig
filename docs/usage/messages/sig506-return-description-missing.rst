@@ -10,7 +10,7 @@ Description missing from return
 .. code-block:: python
 
     >>> string = '''
-    ... def function(a: str) -> str:
+    ... def function(a) -> str:
     ...     """Docstring summary.
     ...
     ...     :param a: Description of a.

@@ -10,13 +10,13 @@ check nested functions and classes
 .. code-block:: python
 
     >>> string = '''
-    ... def function(a: int = 42) -> int:
+    ... def function(a) -> int:
     ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :return: Return description.
     ...     """
-    ...     def nested_function(a: int = 42) -> int:
+    ...     def nested_function(a) -> int:
     ...         pass
     ... '''
 
