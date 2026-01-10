@@ -15,7 +15,7 @@ This needs to be manually enabled
     ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param a: description of param.
+    ...     :param a: description of a.
     ...     """
     ... '''
 
@@ -32,7 +32,7 @@ This needs to be manually enabled
     ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param a: Description of param. and another sentence.
+    ...     :param a: Description of a. and another sentence.
     ...     """
     ... '''
 

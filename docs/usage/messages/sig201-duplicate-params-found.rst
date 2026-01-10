@@ -14,7 +14,7 @@ Duplicate parameters found
     ...     """Function summary.
     ...
     ...     :param param: Description of param.
-    ...     :param param: Another description of param.
+    ...     :param param: Description of param.
     ...     """
     ... '''
 

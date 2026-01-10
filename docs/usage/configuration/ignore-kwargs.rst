@@ -13,9 +13,9 @@ ignore kwargs prefixed with two asterisks
     ... def function(param1, param2, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Pass.
-    ...     :param param2: Pass.
-    ...     :param kwargs: Pass
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
+    ...     :param kwargs: Description of kwargs.
     ...     """
     ... '''
 
@@ -37,8 +37,8 @@ ignore kwargs prefixed with two asterisks
     ... def function(param1, param2, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Pass.
-    ...     :param param2: Pass.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
     ...     """
     ... '''
 
@@ -60,9 +60,9 @@ ignore kwargs prefixed with two asterisks
     ... def function(param1, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Passes
-    ...     :key kwarg1: Pass
-    ...     :keyword kwarg2: Pass
+    ...     :param param1: Description of param1.
+    ...     :key kwarg1: Description of kwarg1.
+    ...     :keyword kwarg2: Description of kwarg2.
     ...     """
     ... '''
 
@@ -84,8 +84,8 @@ ignore kwargs prefixed with two asterisks
     ... def function(param1, param2, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Pass.
-    ...     :param param2: Pass.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
     ...     :param **kwargs: Description of **kwargs.
     ...     """
     ... '''
@@ -108,8 +108,8 @@ ignore kwargs prefixed with two asterisks
     ... def function(param1, param2, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Pass.
-    ...     :param param2: Pass.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
     ...     """
     ... '''
 

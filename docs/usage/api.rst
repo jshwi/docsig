@@ -18,9 +18,9 @@ outlined in the next page.
     ... def function(param1, param2, param3) -> None:
     ...     """
     ...
-    ...     :param param1: About param1.
-    ...     :param param2: About param2.
-    ...     :param param3: About param3.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
+    ...     :param param3: Description of param3.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)
@@ -32,9 +32,9 @@ outlined in the next page.
     ... def function(param1, param2) -> None:
     ...     """
     ...
-    ...     :param param1: About param1.
-    ...     :param param2: About param2.
-    ...     :param param3: About param3.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
+    ...     :param param3: Description of param3.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)

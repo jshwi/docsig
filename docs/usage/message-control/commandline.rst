@@ -11,8 +11,8 @@ More on commandline
     ... def func(param, param2, param3, param4) -> int:
     ...     """Desc.
     ...
-    ...      :param param1: About param1.
-    ...      :param param2:A.
+    ...      :param param1: Description of param1.
+    ...      :param param2:Description of param2.
     ...      :param param3:
     ...     """
     ... '''
@@ -143,8 +143,8 @@ disable everything else
     ... ) -> int:
     ...     """Desc.
     ...
-    ...      :param param1: About param1.
-    ...      :param param2:A.
+    ...      :param param1: Description of param1.
+    ...      :param param2:Description of param2.
     ...      :param param3:
     ...     """
     ... '''
@@ -175,8 +175,8 @@ disable everything else
     ... ) -> int:
     ...     """Desc.
     ...
-    ...     :param param1: About param1.
-    ...     :param param2:A.
+    ...     :param param1: Description of param1.
+    ...     :param param2:Description of param2.
     ...     :param param3:
     ...      """
     ... '''

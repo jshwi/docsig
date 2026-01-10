@@ -13,7 +13,7 @@ Spelling error found in documented parameter
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram: Misspelled.
+    ...     :param pram: Description of pram.
     ...     """
     ... '''
 
@@ -30,7 +30,7 @@ Spelling error found in documented parameter
     ... def function(param1) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram1: About param1.
+    ...     :param pram1: Description of pram1.
     ...     """
     ... '''
 
@@ -47,7 +47,7 @@ Spelling error found in documented parameter
     ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...     :param pram1: About param1.
+    ...     :param pram1: Description of pram1.
     ...     """
     ... '''
 

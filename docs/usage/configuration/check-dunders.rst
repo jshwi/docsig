@@ -14,8 +14,8 @@ check dunder methods
     ...     def __get__(self, param1, param2) -> None:
     ...         """Info about class.
     ...
-    ...         :param param2: Info about param2.
-    ...         :param param1: Info about param1.
+    ...         :param param2: Description of param2.
+    ...         :param param1: Description of param1.
     ...         """
     ... '''
 

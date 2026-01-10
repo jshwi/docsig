@@ -13,7 +13,7 @@ Parameters missing
     ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Missing param2 from docstring.
+    ...     :param param1: Description of param1.
     ...     """
     ... '''
 
@@ -30,9 +30,9 @@ Parameters missing
     ... def function(first, second, third, fourth) -> None:
     ...     """Function summary.
     ...
-    ...     :param second: Second param.
-    ...     :param third: Third param.
-    ...     :param fourth: Fourth param.
+    ...     :param second: Description of second.
+    ...     :param third: Description of third.
+    ...     :param fourth: Description of fourth.
     ...     """
     ... '''
 
@@ -49,9 +49,9 @@ Parameters missing
     ... def function(param1, param2, param3, param4) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: Second param.
-    ...     :param param3: Third param.
-    ...     :param param4: Fourth param.
+    ...     :param param2: Description of param2.
+    ...     :param param3: Description of param3.
+    ...     :param param4: Description of param4.
     ...     """
     ... '''
 

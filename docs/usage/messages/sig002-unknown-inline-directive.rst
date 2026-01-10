@@ -13,7 +13,7 @@ Unknown inline comment directive '{directive}'
     ... def function(param) -> None:  # docsig: ena
     ...     """Function summary.
     ...
-    ...     :param param: Description of param1.
+    ...     :param param: Description of param.
     ...     """
     ... '''
 

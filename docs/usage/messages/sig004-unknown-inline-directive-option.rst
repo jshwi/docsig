@@ -13,7 +13,7 @@ Unknown inline comment option for {directive} '{option}'
     ... def function(param1) -> None:  # docsig: enable=EIEIO
     ...     """Function summary.
     ...
-    ...     :param param: Description of param1.
+    ...     :param param: Description of param.
     ...     """
     ... '''
 

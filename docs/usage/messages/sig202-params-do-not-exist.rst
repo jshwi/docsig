@@ -14,7 +14,7 @@ Includes parameters that do not exist
     ...     """Function summary.
     ...
     ...     :param param1: Description of param1.
-    ...     :param param2: This does not exist in signature.
+    ...     :param param2: Description of param2.
     ...     """
     ... '''
 

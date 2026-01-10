@@ -16,7 +16,7 @@ This will be raised if it looks as though an existing parameter documentation wa
     ...     """Function summary.
     ...
     ...     :param param1: Description of param1.
-    ...     :param: This is considered param3, but it is not named.
+    ...     :param: Description of unnamed param.
     ...     """
     ... '''
 
@@ -36,7 +36,7 @@ This will be raised if it looks as though an existing parameter documentation wa
     ...     :param param1: Description of param1.
     ...     :param param1: Description of param1.
     ...     :param param2: Description of param2.
-    ...     :param: This is considered param3, but it is not named.
+    ...     :param: Description of unnamed param.
     ...     """
     ... '''
 
@@ -56,7 +56,7 @@ This will be raised if it looks as though an existing parameter documentation wa
     ...
     ...     :param param2: Description of param2.
     ...     :param param1: Description of param1.
-    ...     :param: This is considered param3, but it is not named.
+    ...     :param: Description of unnamed param.
     ...     """
     ... '''
 

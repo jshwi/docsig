@@ -14,8 +14,8 @@ check nested functions and classes
     ...     """
     ...     Function that prints a message and returns the argument + 1
     ...
-    ...     :param argument: The input argument, by default 42
-    ...     :return: The input argument + 1
+    ...     :param argument: Description of argument.
+    ...     :return: Return description.
     ...     """
     ...     def my_external_function(argument: int = 42) -> int:
     ...         pass

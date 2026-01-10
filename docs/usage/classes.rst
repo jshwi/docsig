@@ -13,9 +13,9 @@ This check will either check the documentation of ``__init__``, or check documen
     ...     def __init__(self, param1, param2) -> None:
     ...         """
     ...
-    ...         :param param1: About param1.
-    ...         :param param2: About param2.
-    ...         :param param3: About param3.
+    ...         :param param1: Description of param1.
+    ...         :param param2: Description of param2.
+    ...         :param param3: Description of param3.
     ...         """
     ... '''
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
@@ -29,9 +29,9 @@ This check will either check the documentation of ``__init__``, or check documen
     ... class Klass:
     ...     """
     ...
-    ...     :param param1: About param1.
-    ...     :param param2: About param2.
-    ...     :param param3: About param3.
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
+    ...     :param param3: Description of param3.
     ...     """
     ...     def __init__(self, param1, param2) -> None:
     ...         pass

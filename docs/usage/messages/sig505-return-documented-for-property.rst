@@ -16,7 +16,7 @@ Return statement documented for property
     ...     def function() -> int:
     ...         """Return an integer.
     ...
-    ...         :return: An integer.
+    ...         :return: Return description.
     ...         """
     ... '''
 
@@ -41,7 +41,7 @@ Return statement documented for property
     ...     def function() -> int:
     ...         """Return an integer.
     ...
-    ...         :return: An integer.
+    ...         :return: Return description.
     ...         """
     ... '''
 

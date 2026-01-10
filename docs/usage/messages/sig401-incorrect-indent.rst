@@ -15,7 +15,7 @@ Param not indented correctly
     ...
     ...     Function description.
     ...
-    ...      :param param: This is indented one space too many.
+    ...      :param param: Description of param.
     ...     """
     ... '''
 
@@ -32,7 +32,7 @@ Param not indented correctly
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...      :param param: This is indented one space too many.
+    ...      :param param: Description of param.
     ...     """
     ... '''
 
@@ -51,7 +51,7 @@ Param not indented correctly
     ...
     ...      Function description also indented one space too many.
     ...
-    ...      :param param: This is indented one space too many.
+    ...      :param param: Description of param.
     ...     """
     ... '''
 

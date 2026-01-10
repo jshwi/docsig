@@ -13,7 +13,7 @@ Return statement documented for none
     ... def function() -> None:
     ...     """Function summary.
     ...
-    ...     :return: Where there is none.
+    ...     :return: Return description.
     ...     """
     ... '''
 

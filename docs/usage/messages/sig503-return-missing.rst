@@ -34,7 +34,7 @@ Return missing from docstring
     ... def function(param) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param, but no return.
+    ...     :param param: Description of param.
     ...     :param return: Return value.
     ...     """
     ... '''
@@ -57,7 +57,7 @@ Return missing from docstring
     ... def function(param) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param, but no return.
+    ...     :param param: Description of param.
     ...     """
     ... '''
 
@@ -99,7 +99,7 @@ Return missing from docstring
     ...     """Function summary.
     ...
     ...     :param param: Description of param.
-    ...     :return a value
+    ...     :return Return description.
     ...     """
     ... '''
 

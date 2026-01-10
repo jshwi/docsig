@@ -13,7 +13,7 @@ Documented parameter not equal to its respective argument
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param arg: This should be param.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 
@@ -30,8 +30,8 @@ Documented parameter not equal to its respective argument
     ... def function(param1) -> None:
     ...     """Function summary.
     ...
-    ...     :param arg1: This should be param1.
-    ...     :return: None.
+    ...     :param b: Description of b.
+    ...     :return: Return description.
     ...     """
     ... '''
 
@@ -49,9 +49,9 @@ Documented parameter not equal to its respective argument
     ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...     :param arg1: This should be param1.
-    ...     :param param2: Documentation for param2.
-    ...     :param param2: Documentation for param2.
+    ...     :param c: Description of c.
+    ...     :param param2: Description of param2.
+    ...     :param param2: Description of param2.
     ...     """
     ... '''
 

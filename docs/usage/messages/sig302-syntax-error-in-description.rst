@@ -13,7 +13,7 @@ Syntax error in description
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param param:There should be a space here.
+    ...     :param param:Description of param.
     ...     """
     ... '''
 

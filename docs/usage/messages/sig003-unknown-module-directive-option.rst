@@ -14,7 +14,7 @@ Unknown module comment option for {directive} '{option}'
     ... def function(param) -> None:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param1.
+    ...     :param param: Description of param.
     ...     """
     ... '''
 

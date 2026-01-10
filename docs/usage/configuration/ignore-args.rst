@@ -13,9 +13,9 @@ ignore args prefixed with an asterisk
     ... def function(param1, param2, *args) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Pass.
-    ...     :param param2: Pass.
-    ...     :param args: Pass
+    ...     :param param1: Description of param1.
+    ...     :param param2: Description of param2.
+    ...     :param args: Description of args.
     ...     """
     ... '''
 

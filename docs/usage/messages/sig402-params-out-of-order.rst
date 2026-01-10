@@ -13,8 +13,8 @@ Parameters out of order
     ... def function(param1, param2) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: This should be param1.
-    ...     :param param1: This should be param2.
+    ...     :param param2: Description of param2.
+    ...     :param param1: Description of param1.
     ...     """
     ... '''
 

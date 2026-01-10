@@ -13,7 +13,7 @@ Description missing from return
     ... def normalize(ticker: str) -> str:
     ...     """Normalize ticket names.
     ...
-    ...     :param ticker: Ticker to normalize.
+    ...     :param ticker: Description of ticker.
     ...     :return:
     ...     """
     ... '''

@@ -14,7 +14,7 @@ Return statement documented for class
     ...     """Function summary.
     ...
     ...     :param param: Description of param.
-    ...     :returns: No value, it constructs an instance.
+    ...     :returns: Return description.
     ...     """
     ...
     ...     def __init__(self, param) -> None:
