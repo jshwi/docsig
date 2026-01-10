@@ -3,7 +3,7 @@ tests.exclude_test
 ==================
 """
 
-# pylint: disable=protected-access,line-too-long
+# pylint: disable=protected-access,line-too-long,too-many-lines
 import io
 import pickle
 from pathlib import Path
@@ -986,3 +986,29 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
+
+
+def test_incorrect_sig301_with_both_sig202_and_sig402_707(
+    capsys: pytest.CaptureFixture,
+    main: MockMainType,
+    init_file: InitFileFixtureType,
+) -> None:
+    """Test no incorrect SIG301 with both SIG202 and SIG402.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    :param init_file: Initialize a test file.
+    """
+    template = '''
+def function(a, b) -> None:
+    """Function summary.
+
+    :param b: Description of b.
+    :param a: Description of a.
+    :param c: Description of c.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert docsig.messages.E[301].description not in std.out

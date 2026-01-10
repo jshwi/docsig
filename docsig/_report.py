@@ -205,7 +205,7 @@ class Failure(_t.List[Failed]):
             self._add(_E[203])
 
     def _sig3xx_description(self, doc: _Param) -> None:
-        if doc.description is None:
+        if doc.description is None and doc.name is not None:
             self._add(_E[301])
         elif doc.description is not None and not doc.description.startswith(
             " ",
