@@ -10,7 +10,7 @@ Description missing from return
 .. code-block:: python
 
     >>> string = '''
-    ... def normalize(a: str) -> str:
+    ... def function(a: str) -> str:
     ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
@@ -21,6 +21,6 @@ Description missing from return
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    2 in normalize
+    2 in function
         SIG506: description missing from return (return-description-missing)
     1

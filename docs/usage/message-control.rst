@@ -39,7 +39,7 @@ Commandline
 .. code-block:: python
 
     >>> string = '''
-    ... def func(z, b, c, d) -> int:
+    ... def function(z, b, c, d) -> int:
     ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
@@ -51,7 +51,7 @@ Commandline
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    2 in func
+    2 in function
         SIG203: parameters missing (params-missing)
         SIG301: description missing from parameter (description-missing)
         SIG302: syntax error in description (syntax-error-in-description)
@@ -62,7 +62,7 @@ Commandline
 .. code-block:: python
 
     >>> docsig(string=string, disable=["SIG203"], no_ansi=True)
-    2 in func
+    2 in function
         SIG301: description missing from parameter (description-missing)
         SIG302: syntax error in description (syntax-error-in-description)
         SIG401: param not indented correctly (incorrect-indent)
@@ -72,7 +72,7 @@ Commandline
 .. code-block:: python
 
     >>> docsig(string=string, target=["SIG203"], no_ansi=True)
-    2 in func
+    2 in function
         SIG203: parameters missing (params-missing)
     1
 
@@ -95,7 +95,7 @@ Directives
 .. code-block:: python
 
     >>> string = '''
-    ... def func(z, b, c, d) -> int:  # docsig: disable=SIG301
+    ... def function(z, b, c, d) -> int:  # docsig: disable=SIG301
     ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
@@ -107,7 +107,7 @@ Directives
 .. code-block:: python
 
     >>> docsig(string=string, disable=["SIG203"], no_ansi=True)
-    2 in func
+    2 in function
         SIG302: syntax error in description (syntax-error-in-description)
         SIG401: param not indented correctly (incorrect-indent)
         SIG503: return missing from docstring (return-missing)
@@ -116,7 +116,7 @@ Directives
 .. code-block:: python
 
     >>> docsig(string=string, target=["SIG203"], no_ansi=True)
-    2 in func
+    2 in function
         SIG203: parameters missing (params-missing)
     1
 
@@ -125,7 +125,7 @@ Directives
     >>> string = '''
     ... # docsig: disable
     ...
-    ... def func(z, b, c, d) -> int:  # docsig: enable=SIG203
+    ... def function(z, b, c, d) -> int:  # docsig: enable=SIG203
     ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
@@ -137,7 +137,7 @@ Directives
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    4 in func
+    4 in function
         SIG203: parameters missing (params-missing)
     1
 
