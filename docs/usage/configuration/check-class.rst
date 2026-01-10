@@ -13,11 +13,11 @@ check class docstrings
     ... class Klass:
     ...     """Info about class.
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param a: Description of a.
     ...     """
     ...
-    ...     def __init__(self, param1, param2) -> None:
+    ...     def __init__(self, a, b) -> None:
     ...         pass
     ... '''
 

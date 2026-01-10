@@ -11,11 +11,11 @@ check __init__ methods. Note: mutually incompatible with -c
 
     >>> string = '''
     ... class Klass:
-    ...     def __init__(self, param1, param2) -> None:
+    ...     def __init__(self, a, b) -> None:
     ...         """Info about class.
     ...
-    ...         :param param2: Description of param2.
-    ...         :param param1: Description of param1.
+    ...         :param b: Description of b.
+    ...         :param a: Description of a.
     ...         """
     ... '''
 

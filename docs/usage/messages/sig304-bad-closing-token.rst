@@ -10,12 +10,12 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, param3) -> None:
+    ... def function(a, b, c) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2. Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b. Description of b.
+    ...     :param c: Description of c.
     ...     """
     ... '''
 
@@ -30,10 +30,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param! Description of param.
+    ...     :param a! Description of a.
     ...     """
     ... '''
 
@@ -48,10 +48,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param@ Description of param.
+    ...     :param a@ Description of a.
     ...     """
     ... '''
 
@@ -66,10 +66,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param# Description of param.
+    ...     :param a# Description of a.
     ...     """
     ... '''
 
@@ -84,10 +84,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param$ Description of param.
+    ...     :param a$ Description of a.
     ...     """
     ... '''
 
@@ -102,10 +102,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param% Description of param.
+    ...     :param a% Description of a.
     ...     """
     ... '''
 
@@ -120,10 +120,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param^ Description of param.
+    ...     :param a^ Description of a.
     ...     """
     ... '''
 
@@ -138,10 +138,10 @@ bad token used to close parameter declaration '{token}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param& Description of param.
+    ...     :param a& Description of a.
     ...     """
     ... '''
 

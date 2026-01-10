@@ -11,7 +11,7 @@ check protected functions and classes
 
     >>> string = '''
     ... class Parent:
-    ...     def _protected(self, param1) -> None:
+    ...     def _protected(self, a) -> None:
     ...         """This is documented."""
     ... '''
 

@@ -8,12 +8,12 @@ More on commandline
 .. code-block:: python
 
     >>> string = '''
-    ... def func(param, param2, param3, param4) -> int:
+    ... def func(z, b, c, d) -> int:
     ...     """Desc.
     ...
-    ...      :param param1: Description of param1.
-    ...      :param param2:Description of param2.
-    ...      :param param3:
+    ...      :param a: Description of a.
+    ...      :param b:Description of b.
+    ...      :param c:
     ...     """
     ... '''
 
@@ -138,14 +138,12 @@ disable everything else
 .. code-block:: python
 
     >>> string = '''
-    ... def func(  # docsig: disable=SIG301
-    ...     param, param2, param3, param4
-    ... ) -> int:
+    ... def func(z, b, c, d) -> int:  # docsig: disable=SIG301
     ...     """Desc.
     ...
-    ...      :param param1: Description of param1.
-    ...      :param param2:Description of param2.
-    ...      :param param3:
+    ...      :param a: Description of a.
+    ...      :param b:Description of b.
+    ...      :param c:
     ...     """
     ... '''
 
@@ -170,14 +168,12 @@ disable everything else
     >>> string = '''
     ... # docsig: disable
     ...
-    ... def func(  # docsig: enable=SIG203
-    ...     param, param2, param3, param4
-    ... ) -> int:
+    ... def func(z, b, c, d) -> int:  # docsig: enable=SIG203
     ...     """Desc.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2:Description of param2.
-    ...     :param param3:
+    ...     :param a: Description of a.
+    ...     :param b:Description of b.
+    ...     :param c:
     ...      """
     ... '''
 

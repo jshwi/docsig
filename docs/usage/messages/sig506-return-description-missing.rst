@@ -10,10 +10,10 @@ Description missing from return
 .. code-block:: python
 
     >>> string = '''
-    ... def normalize(ticker: str) -> str:
+    ... def normalize(a: str) -> str:
     ...     """Normalize ticket names.
     ...
-    ...     :param ticker: Description of ticker.
+    ...     :param a: Description of a.
     ...     :return:
     ...     """
     ... '''

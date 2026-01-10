@@ -10,7 +10,7 @@ ignore docstrings where parameters are not documented
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, *args) -> None:
+    ... def function(a, b, *args) -> None:
     ...     """Proper docstring."""
     ... '''
 

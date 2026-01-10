@@ -10,10 +10,10 @@ Description missing from parameter
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1:
+    ...     :param a:
     ...     """
     ... '''
 

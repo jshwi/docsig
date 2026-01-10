@@ -11,10 +11,10 @@ Unknown module comment option for {directive} '{option}'
 
     >>> string = '''
     ... # docsig: enable=EIEIO
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 

@@ -10,11 +10,11 @@ Includes parameters that do not exist
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 

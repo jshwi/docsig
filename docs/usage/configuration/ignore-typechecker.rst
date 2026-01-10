@@ -32,7 +32,7 @@ ignore checking return values
 .. code-block:: python
 
     >>> string = '''
-    ... def function(*_, **__) -> int:
+    ... def function() -> int:
     ...     """Proper docstring."""
     ... '''
 
@@ -51,7 +51,7 @@ ignore checking return values
 .. code-block:: python
 
     >>> string = '''
-    ... def function(*_, **__):
+    ... def function():
     ...     """Proper docstring.
     ...
     ...     :return: Return description.

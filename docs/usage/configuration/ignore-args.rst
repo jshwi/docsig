@@ -10,11 +10,11 @@ ignore args prefixed with an asterisk
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, *args) -> None:
+    ... def function(a, b, *args) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param args: Description of args.
     ...     """
     ... '''

@@ -15,12 +15,12 @@ outlined in the next page.
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, param3) -> None:
+    ... def function(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)
@@ -29,12 +29,12 @@ outlined in the next page.
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)

@@ -10,7 +10,7 @@ Documented parameter not equal to its respective argument
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
     ...     :param b: Description of b.
@@ -27,7 +27,7 @@ Documented parameter not equal to its respective argument
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
     ...     :param b: Description of b.
@@ -46,12 +46,12 @@ Documented parameter not equal to its respective argument
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """Function summary.
     ...
     ...     :param c: Description of c.
-    ...     :param param2: Description of param2.
-    ...     :param param2: Description of param2.
+    ...     :param b: Description of b.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 

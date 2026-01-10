@@ -10,10 +10,10 @@ Unknown inline comment directive '{directive}'
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:  # docsig: ena
+    ... def function(a) -> None:  # docsig: ena
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 

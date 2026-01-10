@@ -12,27 +12,27 @@ To disable individual function checks add an inline comment similar to the examp
 .. code-block:: python
 
     >>> string = '''
-    ... def function_1(param1, param2, param3) -> None:  # docsig: disable
+    ... def function_1(a, b, c) -> None:  # docsig: disable
     ...     """
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
+    ...     :param a: Description of a.
     ...     """
     ...
-    ... def function_2(param1, param2) -> None:
+    ... def function_2(a, b) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_3(param1, param2, param3) -> None:
+    ... def function_3(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)
@@ -48,27 +48,27 @@ To disable all function checks add a module level comment similar to the example
 
     >>> string = '''
     ... # docsig: disable
-    ... def function_1(param1, param2, param3) -> None:
+    ... def function_1(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
+    ...     :param a: Description of a.
     ...     """
     ...
-    ... def function_2(param1, param2) -> None:
+    ... def function_2(a, b) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_3(param1, param2, param3) -> None:
+    ... def function_3(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)
@@ -80,28 +80,28 @@ To disable multiple function checks add a module level disable and enable commen
 
     >>> string = '''
     ... # docsig: disable
-    ... def function_1(param1, param2, param3) -> None:
+    ... def function_1(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
+    ...     :param a: Description of a.
     ...     """
     ...
-    ... def function_2(param1, param2) -> None:
+    ... def function_2(a, b) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ... # docsig: enable
     ...
-    ... def function_3(param1, param2, param3) -> None:
+    ... def function_3(a, b, c) -> None:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
     >>> docsig(string=string, no_ansi=True)
@@ -115,29 +115,29 @@ The same can be done for disabling individual rules
 
     >>> string = '''
     ... # docsig: disable=SIG402
-    ... def function_1(param1, param2, param3) -> int:
+    ... def function_1(a, b, c) -> int:
     ...     """SIG503.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_2(param1, param2, param3) -> None:  # docsig: disable=SIG202,SIG201
+    ... def function_2(a, b, c) -> None:  # docsig: disable=SIG202,SIG201
     ...     """SIG402,SIG202,SIG201.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_3(param1, param2, param3) -> None:
+    ... def function_3(a, b, c) -> None:
     ...     """SIG402,SIG202,SIG502,SIG303.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param: Description of unnamed param.
     ...     """
     ... '''
@@ -157,29 +157,29 @@ Module level directives will be evaluated separately to inline directives and pr
 
     >>> string = '''
     ... # docsig: disable
-    ... def function_1(param1, param2, param3) -> int:
+    ... def function_1(a, b, c) -> int:
     ...     """E105.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_2(param1, param2, param3) -> None:  # docsig: enable=SIG202,SIG201
+    ... def function_2(a, b, c) -> None:  # docsig: enable=SIG202,SIG201
     ...     """SIG402,SIG202,SIG201.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
     ...
-    ... def function_3(param1, param2, param3) -> None:
+    ... def function_3(a, b, c) -> None:
     ...     """SIG402,SIG202,SIG201,SIG303.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param: Description of unnamed param.
     ...     """
     ... '''

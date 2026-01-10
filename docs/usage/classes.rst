@@ -10,12 +10,12 @@ This check will either check the documentation of ``__init__``, or check documen
 
     >>> string = '''
     ... class Klass:
-    ...     def __init__(self, param1, param2) -> None:
+    ...     def __init__(self, a, b) -> None:
     ...         """
     ...
-    ...         :param param1: Description of param1.
-    ...         :param param2: Description of param2.
-    ...         :param param3: Description of param3.
+    ...         :param a: Description of a.
+    ...         :param b: Description of b.
+    ...         :param c: Description of c.
     ...         """
     ... '''
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
@@ -29,11 +29,11 @@ This check will either check the documentation of ``__init__``, or check documen
     ... class Klass:
     ...     """
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
     ...     """
-    ...     def __init__(self, param1, param2) -> None:
+    ...     def __init__(self, a, b) -> None:
     ...         pass
     ... '''
     >>> docsig(string=string, check_class=True, no_ansi=True)

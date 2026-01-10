@@ -13,11 +13,11 @@ Return statement documented for class
     ... class Klass:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     :returns: Return description.
     ...     """
     ...
-    ...     def __init__(self, param) -> None:
+    ...     def __init__(self, a) -> None:
     ...         pass
     ... '''
 

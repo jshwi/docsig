@@ -10,11 +10,11 @@ ignore kwargs prefixed with two asterisks
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, **kwargs) -> None:
+    ... def function(a, b, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param kwargs: Description of kwargs.
     ...     """
     ... '''
@@ -34,11 +34,11 @@ ignore kwargs prefixed with two asterisks
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, **kwargs) -> None:
+    ... def function(a, b, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 
@@ -57,10 +57,10 @@ ignore kwargs prefixed with two asterisks
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, **kwargs) -> None:
+    ... def function(a, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
+    ...     :param a: Description of a.
     ...     :key kwarg1: Description of kwarg1.
     ...     :keyword kwarg2: Description of kwarg2.
     ...     """
@@ -81,11 +81,11 @@ ignore kwargs prefixed with two asterisks
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, **kwargs) -> None:
+    ... def function(a, b, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param **kwargs: Description of **kwargs.
     ...     """
     ... '''
@@ -105,11 +105,11 @@ ignore kwargs prefixed with two asterisks
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, **kwargs) -> None:
+    ... def function(a, b, **kwargs) -> None:
     ...     """Proper docstring.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 

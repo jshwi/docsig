@@ -11,10 +11,10 @@ Unknown module comment directive '{directive}'
 
     >>> string = '''
     ... # docsig: ena
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 

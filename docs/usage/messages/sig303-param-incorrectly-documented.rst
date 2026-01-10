@@ -12,10 +12,10 @@ This will be raised if it looks as though an existing parameter documentation wa
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
+    ...     :param a: Description of a.
     ...     :param: Description of unnamed param.
     ...     """
     ... '''
@@ -30,12 +30,12 @@ This will be raised if it looks as though an existing parameter documentation wa
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, param3) -> None:
+    ... def function(a, b, c) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     :param: Description of unnamed param.
     ...     """
     ... '''
@@ -51,11 +51,11 @@ This will be raised if it looks as though an existing parameter documentation wa
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, param3) -> None:
+    ... def function(a, b, c) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param a: Description of a.
     ...     :param: Description of unnamed param.
     ...     """
     ... '''
@@ -73,11 +73,11 @@ But not if it is for a parameter that does not exist
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
-    ...     :param param2: Description of param2.
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
     ...     """
     ... '''
 
@@ -91,12 +91,12 @@ But not if it is for a parameter that does not exist
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param1: Description of param1.
-    ...     :param param3: Description of param3.
+    ...     :param b: Description of b.
+    ...     :param a: Description of a.
+    ...     :param c: Description of c.
     ...     """
     ... '''
 

@@ -10,11 +10,11 @@ Duplicate parameters found
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 

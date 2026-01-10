@@ -10,11 +10,11 @@ Parameters out of order
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param1: Description of param1.
+    ...     :param b: Description of b.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 

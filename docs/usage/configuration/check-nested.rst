@@ -10,11 +10,11 @@ check nested functions and classes
 .. code-block:: python
 
     >>> string = '''
-    ... def my_function(argument: int = 42) -> int:
+    ... def my_function(a: int = 42) -> int:
     ...     """
     ...     Function that prints a message and returns the argument + 1
     ...
-    ...     :param argument: Description of argument.
+    ...     :param a: Description of a.
     ...     :return: Return description.
     ...     """
     ...     def my_external_function(argument: int = 42) -> int:

@@ -64,7 +64,7 @@ This needs to be manually enabled
     ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...     :param a: Description of param e.g. not a new sentence.
+    ...     :param a: Description of a e.g. not a new sentence.
     ...     """
     ... '''
 

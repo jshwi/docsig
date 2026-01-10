@@ -10,10 +10,10 @@ Return missing from docstring
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> int:
+    ... def function(a) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 
@@ -31,10 +31,10 @@ Return missing from docstring
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> int:
+    ... def function(a) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     :param return: Return value.
     ...     """
     ... '''
@@ -54,10 +54,10 @@ Return missing from docstring
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> int:
+    ... def function(a) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 
@@ -71,12 +71,12 @@ Return missing from docstring
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> int:
+    ... def function(a) -> int:
     ...     """Function summary.
     ...
     ...     This does return something.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 
@@ -95,10 +95,10 @@ Return missing from docstring
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> int:
+    ... def function(a) -> int:
     ...     """Function summary.
     ...
-    ...     :param param: Description of param.
+    ...     :param a: Description of a.
     ...     :return Return description.
     ...     """
     ... '''

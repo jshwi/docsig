@@ -10,12 +10,12 @@ Param not indented correctly
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
     ...     Function description.
     ...
-    ...      :param param: Description of param.
+    ...      :param a: Description of a.
     ...     """
     ... '''
 
@@ -29,10 +29,10 @@ Param not indented correctly
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
-    ...      :param param: Description of param.
+    ...      :param a: Description of a.
     ...     """
     ... '''
 
@@ -46,12 +46,12 @@ Param not indented correctly
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param) -> None:
+    ... def function(a) -> None:
     ...     """Function summary.
     ...
     ...      Function description also indented one space too many.
     ...
-    ...      :param param: Description of param.
+    ...      :param a: Description of a.
     ...     """
     ... '''
 

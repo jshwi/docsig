@@ -10,10 +10,10 @@ Parameters missing
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2) -> None:
+    ... def function(a, b) -> None:
     ...     """Function summary.
     ...
-    ...     :param param1: Description of param1.
+    ...     :param a: Description of a.
     ...     """
     ... '''
 
@@ -27,12 +27,12 @@ Parameters missing
 .. code-block:: python
 
     >>> string = '''
-    ... def function(first, second, third, fourth) -> None:
+    ... def function(a, b, c, d) -> None:
     ...     """Function summary.
     ...
-    ...     :param second: Description of second.
-    ...     :param third: Description of third.
-    ...     :param fourth: Description of fourth.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
+    ...     :param d: Description of d.
     ...     """
     ... '''
 
@@ -46,12 +46,12 @@ Parameters missing
 .. code-block:: python
 
     >>> string = '''
-    ... def function(param1, param2, param3, param4) -> None:
+    ... def function(a, b, c, d) -> None:
     ...     """Function summary.
     ...
-    ...     :param param2: Description of param2.
-    ...     :param param3: Description of param3.
-    ...     :param param4: Description of param4.
+    ...     :param b: Description of b.
+    ...     :param c: Description of c.
+    ...     :param d: Description of d.
     ...     """
     ... '''
 
