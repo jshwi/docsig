@@ -10,7 +10,7 @@ check __init__ methods. Note: mutually incompatible with -c
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     def __init__(self, a, b) -> None:
     ...         """Docstring summary.
     ...
@@ -27,6 +27,6 @@ check __init__ methods. Note: mutually incompatible with -c
 .. code-block:: python
 
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
-    3 in Klass.__init__
+    3 in Class.__init__
         SIG402: parameters out of order (params-out-of-order)
     1

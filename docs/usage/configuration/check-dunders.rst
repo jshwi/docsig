@@ -10,7 +10,7 @@ check dunder methods
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     def __get__(self, a, b) -> None:
     ...         """Docstring summary.
     ...
@@ -27,6 +27,6 @@ check dunder methods
 .. code-block:: python
 
     >>> docsig(string=string, check_dunders=True, no_ansi=True)
-    3 in Klass.__get__
+    3 in Class.__get__
         SIG402: parameters out of order (params-out-of-order)
     1

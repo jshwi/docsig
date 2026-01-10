@@ -74,7 +74,7 @@ ignore checking return values
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     @property
     ...     def function() -> int:
     ...         """Docstring summary.
@@ -86,7 +86,7 @@ ignore checking return values
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    3 in Klass.function
+    3 in Class.function
         SIG505: return statement documented for property (return-documented-for-property)
         hint: documentation is sufficient as a getter is the value returned
     1

@@ -9,7 +9,7 @@ This check will either check the documentation of ``__init__``, or check documen
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     def __init__(self, a, b) -> None:
     ...         """Docstring summary.
     ...
@@ -19,14 +19,14 @@ This check will either check the documentation of ``__init__``, or check documen
     ...         """
     ... '''
     >>> docsig(string=string, check_class_constructor=True, no_ansi=True)
-    3 in Klass.__init__
+    3 in Class.__init__
         SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
@@ -37,7 +37,7 @@ This check will either check the documentation of ``__init__``, or check documen
     ...         pass
     ... '''
     >>> docsig(string=string, check_class=True, no_ansi=True)
-    9 in Klass.__init__
+    9 in Class.__init__
         SIG202: includes parameters that do not exist (params-do-not-exist)
     1
 

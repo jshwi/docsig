@@ -10,7 +10,7 @@ check public methods belonging to protected classes
 .. code-block:: python
 
     >>> string = '''
-    ... class _Klass:
+    ... class _Class:
     ...     @property
     ...     def prop(self, a) -> str:
     ...         """Docstring summary."""
@@ -24,6 +24,6 @@ check public methods belonging to protected classes
 .. code-block:: python
 
     >>> docsig(string=string, check_protected_class_methods=True, no_ansi=True)
-    3 in _Klass.prop
+    3 in _Class.prop
         SIG203: parameters missing (params-missing)
     1

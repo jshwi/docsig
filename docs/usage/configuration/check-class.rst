@@ -10,7 +10,7 @@ check class docstrings
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
@@ -29,6 +29,6 @@ check class docstrings
 .. code-block:: python
 
     >>> docsig(string=string, check_class=True, no_ansi=True)
-    9 in Klass.__init__
+    9 in Class.__init__
         SIG402: parameters out of order (params-out-of-order)
     1

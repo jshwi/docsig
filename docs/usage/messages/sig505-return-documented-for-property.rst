@@ -11,7 +11,7 @@ Return statement documented for property
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     @property
     ...     def function() -> int:
     ...         """Docstring summary.
@@ -23,7 +23,7 @@ Return statement documented for property
 .. code-block:: python
 
     >>> docsig(string=string, no_ansi=True)
-    3 in Klass.function
+    3 in Class.function
         SIG505: return statement documented for property (return-documented-for-property)
         hint: documentation is sufficient as a getter is the value returned
     1
@@ -36,7 +36,7 @@ Return statement documented for property
 .. code-block:: python
 
     >>> string = '''
-    ... class Klass:
+    ... class Class:
     ...     @property
     ...     def function() -> int:
     ...         """Docstring summary.
