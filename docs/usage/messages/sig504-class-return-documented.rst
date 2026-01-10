@@ -11,7 +11,7 @@ Return statement documented for class
 
     >>> string = '''
     ... class Klass:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :returns: Return description.

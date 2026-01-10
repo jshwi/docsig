@@ -12,7 +12,7 @@ check overridden methods
     >>> string = '''
     ... class Parent:
     ...     def method(self) -> None:
-    ...         """This is documented."""
+    ...         """Docstring summary."""
     ...
     ... class Child(Parent):
     ...     def method(self) -> None:

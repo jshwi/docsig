@@ -11,8 +11,7 @@ check nested functions and classes
 
     >>> string = '''
     ... def my_function(a: int = 42) -> int:
-    ...     """
-    ...     Function that prints a message and returns the argument + 1
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :return: Return description.
@@ -29,6 +28,6 @@ check nested functions and classes
 .. code-block:: python
 
     >>> docsig(string=string, check_nested=True, no_ansi=True)
-    9 in my_function.my_external_function
+    8 in my_function.my_external_function
         SIG101: function is missing a docstring (function-doc-missing)
     1

@@ -11,7 +11,7 @@ ignore args prefixed with an asterisk
 
     >>> string = '''
     ... def function(a, b, *args) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.

@@ -185,7 +185,7 @@ API
 
     >>> string = '''
     ... def function(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -199,7 +199,7 @@ API
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.

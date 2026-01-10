@@ -12,7 +12,7 @@ check dunder methods
     >>> string = '''
     ... class Klass:
     ...     def __get__(self, a, b) -> None:
-    ...         """Info about class.
+    ...         """Docstring summary.
     ...
     ...         :param b: Description of b.
     ...         :param a: Description of a.

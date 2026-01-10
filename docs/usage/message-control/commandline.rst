@@ -9,7 +9,7 @@ More on commandline
 
     >>> string = '''
     ... def func(z, b, c, d) -> int:
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
     ...      :param b:Description of b.
@@ -139,7 +139,7 @@ disable everything else
 
     >>> string = '''
     ... def func(z, b, c, d) -> int:  # docsig: disable=SIG301
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
     ...      :param b:Description of b.
@@ -169,7 +169,7 @@ disable everything else
     ... # docsig: disable
     ...
     ... def func(z, b, c, d) -> int:  # docsig: enable=SIG203
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b:Description of b.

@@ -11,7 +11,7 @@ Documented parameter not equal to its respective argument
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     """
@@ -28,7 +28,7 @@ Documented parameter not equal to its respective argument
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :return: Return description.
@@ -47,7 +47,7 @@ Documented parameter not equal to its respective argument
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param c: Description of c.
     ...     :param b: Description of b.

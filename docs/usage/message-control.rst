@@ -40,7 +40,7 @@ Commandline
 
     >>> string = '''
     ... def func(z, b, c, d) -> int:
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
     ...      :param b:Description of b.
@@ -96,7 +96,7 @@ Directives
 
     >>> string = '''
     ... def func(z, b, c, d) -> int:  # docsig: disable=SIG301
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
     ...      :param b:Description of b.
@@ -126,7 +126,7 @@ Directives
     ... # docsig: disable
     ...
     ... def func(z, b, c, d) -> int:  # docsig: enable=SIG203
-    ...     """Desc.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b:Description of b.

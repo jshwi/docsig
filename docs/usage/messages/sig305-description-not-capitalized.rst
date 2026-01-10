@@ -13,7 +13,7 @@ This needs to be manually enabled
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: description of a.
     ...     """
@@ -30,7 +30,7 @@ This needs to be manually enabled
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a. and another sentence.
     ...     """
@@ -47,7 +47,7 @@ This needs to be manually enabled
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Describing a pyproject.toml where toml is the type.
     ...     """
@@ -62,7 +62,7 @@ This needs to be manually enabled
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a e.g. not a new sentence.
     ...     """

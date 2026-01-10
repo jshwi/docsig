@@ -11,7 +11,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> string = '''
     ... def function(a, b, **kwargs) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -35,7 +35,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> string = '''
     ... def function(a, b, **kwargs) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -58,7 +58,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> string = '''
     ... def function(a, **kwargs) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :key kwarg1: Description of kwarg1.
@@ -82,7 +82,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> string = '''
     ... def function(a, b, **kwargs) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -106,7 +106,7 @@ ignore kwargs prefixed with two asterisks
 
     >>> string = '''
     ... def function(a, b, **kwargs) -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.

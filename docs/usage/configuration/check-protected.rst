@@ -12,7 +12,7 @@ check protected functions and classes
     >>> string = '''
     ... class Parent:
     ...     def _protected(self, a) -> None:
-    ...         """This is documented."""
+    ...         """Docstring summary."""
     ... '''
 
 .. code-block:: python

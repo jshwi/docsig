@@ -11,7 +11,7 @@ Parameters missing
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     """
@@ -28,7 +28,7 @@ Parameters missing
 
     >>> string = '''
     ... def function(a, b, c, d) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param c: Description of c.
@@ -47,7 +47,7 @@ Parameters missing
 
     >>> string = '''
     ... def function(a, b, c, d) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param c: Description of c.

@@ -11,7 +11,7 @@ Parameters out of order
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param a: Description of a.

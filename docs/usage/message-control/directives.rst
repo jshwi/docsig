@@ -13,7 +13,7 @@ To disable individual function checks add an inline comment similar to the examp
 
     >>> string = '''
     ... def function_1(a, b, c) -> None:  # docsig: disable
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param c: Description of c.
@@ -21,7 +21,7 @@ To disable individual function checks add an inline comment similar to the examp
     ...     """
     ...
     ... def function_2(a, b) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -29,7 +29,7 @@ To disable individual function checks add an inline comment similar to the examp
     ...     """
     ...
     ... def function_3(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -49,7 +49,7 @@ To disable all function checks add a module level comment similar to the example
     >>> string = '''
     ... # docsig: disable
     ... def function_1(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param c: Description of c.
@@ -57,7 +57,7 @@ To disable all function checks add a module level comment similar to the example
     ...     """
     ...
     ... def function_2(a, b) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -65,7 +65,7 @@ To disable all function checks add a module level comment similar to the example
     ...     """
     ...
     ... def function_3(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -81,7 +81,7 @@ To disable multiple function checks add a module level disable and enable commen
     >>> string = '''
     ... # docsig: disable
     ... def function_1(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param c: Description of c.
@@ -89,7 +89,7 @@ To disable multiple function checks add a module level disable and enable commen
     ...     """
     ...
     ... def function_2(a, b) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -98,7 +98,7 @@ To disable multiple function checks add a module level disable and enable commen
     ... # docsig: enable
     ...
     ... def function_3(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -116,7 +116,7 @@ The same can be done for disabling individual rules
     >>> string = '''
     ... # docsig: disable=SIG402
     ... def function_1(a, b, c) -> int:
-    ...     """SIG503.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -124,7 +124,7 @@ The same can be done for disabling individual rules
     ...     """
     ...
     ... def function_2(a, b, c) -> None:  # docsig: disable=SIG202,SIG201
-    ...     """SIG402,SIG202,SIG201.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param a: Description of a.
@@ -133,7 +133,7 @@ The same can be done for disabling individual rules
     ...     """
     ...
     ... def function_3(a, b, c) -> None:
-    ...     """SIG402,SIG202,SIG502,SIG303.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param a: Description of a.
@@ -158,7 +158,7 @@ Module level directives will be evaluated separately to inline directives and pr
     >>> string = '''
     ... # docsig: disable
     ... def function_1(a, b, c) -> int:
-    ...     """E105.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -166,7 +166,7 @@ Module level directives will be evaluated separately to inline directives and pr
     ...     """
     ...
     ... def function_2(a, b, c) -> None:  # docsig: enable=SIG202,SIG201
-    ...     """SIG402,SIG202,SIG201.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param a: Description of a.
@@ -175,7 +175,7 @@ Module level directives will be evaluated separately to inline directives and pr
     ...     """
     ...
     ... def function_3(a, b, c) -> None:
-    ...     """SIG402,SIG202,SIG201,SIG303.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param a: Description of a.

@@ -11,7 +11,7 @@ Param not indented correctly
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     Function description.
     ...
@@ -30,7 +30,7 @@ Param not indented correctly
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...      :param a: Description of a.
     ...     """
@@ -47,7 +47,7 @@ Param not indented correctly
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...      Function description also indented one space too many.
     ...

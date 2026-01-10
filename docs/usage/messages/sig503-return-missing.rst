@@ -11,7 +11,7 @@ Return missing from docstring
 
     >>> string = '''
     ... def function(a) -> int:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     """
@@ -32,7 +32,7 @@ Return missing from docstring
 
     >>> string = '''
     ... def function(a) -> int:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param return: Return value.
@@ -55,7 +55,7 @@ Return missing from docstring
 
     >>> string = '''
     ... def function(a) -> int:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     """
@@ -72,7 +72,7 @@ Return missing from docstring
 
     >>> string = '''
     ... def function(a) -> int:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     This does return something.
     ...
@@ -96,7 +96,7 @@ Return missing from docstring
 
     >>> string = '''
     ... def function(a) -> int:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :return Return description.

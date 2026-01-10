@@ -13,7 +13,7 @@ check public methods belonging to protected classes
     ... class _Klass:
     ...     @property
     ...     def prop(self, a) -> str:
-    ...         """This is documented."""
+    ...         """Docstring summary."""
     ... '''
 
 .. code-block:: python

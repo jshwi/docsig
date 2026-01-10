@@ -16,7 +16,7 @@ outlined in the next page.
 
     >>> string = '''
     ... def function(a, b, c) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -30,7 +30,7 @@ outlined in the next page.
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.

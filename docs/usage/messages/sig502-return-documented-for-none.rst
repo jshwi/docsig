@@ -11,7 +11,7 @@ Return statement documented for none
 
     >>> string = '''
     ... def function() -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :return: Return description.
     ...     """

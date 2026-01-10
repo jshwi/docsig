@@ -11,7 +11,7 @@ check class docstrings
 
     >>> string = '''
     ... class Klass:
-    ...     """Info about class.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param a: Description of a.

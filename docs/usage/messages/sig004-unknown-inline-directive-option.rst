@@ -11,7 +11,7 @@ Unknown inline comment option for {directive} '{option}'
 
     >>> string = '''
     ... def function(param1) -> None:  # docsig: enable=EIEIO
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param param: Description of param.
     ...     """

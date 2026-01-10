@@ -11,7 +11,7 @@ Cannot determine whether a return statement should exist or not
 
     >>> string = '''
     ... def function():
-    ...     """Function summary."""
+    ...     """Docstring summary."""
     ... '''
 
 .. code-block:: python
@@ -30,7 +30,7 @@ Cannot determine whether a return statement should exist or not
 
     >>> string = '''
     ... def function():
-    ...     """Function summary."""
+    ...     """Docstring summary."""
     ... '''
 
 .. code-block:: python

@@ -14,7 +14,7 @@ Return statement documented for property
     ... class Klass:
     ...     @property
     ...     def function() -> int:
-    ...         """Return an integer.
+    ...         """Docstring summary.
     ...
     ...         :return: Return description.
     ...         """
@@ -39,7 +39,7 @@ Return statement documented for property
     ... class Klass:
     ...     @property
     ...     def function() -> int:
-    ...         """Return an integer.
+    ...         """Docstring summary.
     ...
     ...         :return: Return description.
     ...         """

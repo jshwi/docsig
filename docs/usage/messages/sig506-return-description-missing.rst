@@ -11,7 +11,7 @@ Description missing from return
 
     >>> string = '''
     ... def normalize(a: str) -> str:
-    ...     """Normalize ticket names.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :return:

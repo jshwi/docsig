@@ -11,7 +11,7 @@ Includes parameters that do not exist
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.

@@ -11,7 +11,7 @@ ignore checking return values
 
     >>> string = '''
     ... def function() -> None:
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :return: Return description.
     ...     """
@@ -33,7 +33,7 @@ ignore checking return values
 
     >>> string = '''
     ... def function() -> int:
-    ...     """Proper docstring."""
+    ...     """Docstring summary."""
     ... '''
 
 .. code-block:: python
@@ -52,7 +52,7 @@ ignore checking return values
 
     >>> string = '''
     ... def function():
-    ...     """Proper docstring.
+    ...     """Docstring summary.
     ...
     ...     :return: Return description.
     ...     """
@@ -77,7 +77,7 @@ ignore checking return values
     ... class Klass:
     ...     @property
     ...     def function() -> int:
-    ...         """Proper docstring.
+    ...         """Docstring summary.
     ...
     ...         :return: Return description.
     ...         """

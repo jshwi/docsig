@@ -11,7 +11,7 @@ Unknown inline comment directive '{directive}'
 
     >>> string = '''
     ... def function(a) -> None:  # docsig: ena
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     """

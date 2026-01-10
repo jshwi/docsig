@@ -11,7 +11,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a, b, c) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b. Description of b.
@@ -31,7 +31,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a! Description of a.
     ...     """
@@ -49,7 +49,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a@ Description of a.
     ...     """
@@ -67,7 +67,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a# Description of a.
     ...     """
@@ -85,7 +85,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a$ Description of a.
     ...     """
@@ -103,7 +103,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a% Description of a.
     ...     """
@@ -121,7 +121,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a^ Description of a.
     ...     """
@@ -139,7 +139,7 @@ bad token used to close parameter declaration '{token}'
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a& Description of a.
     ...     """

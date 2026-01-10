@@ -12,7 +12,7 @@ check __init__ methods. Note: mutually incompatible with -c
     >>> string = '''
     ... class Klass:
     ...     def __init__(self, a, b) -> None:
-    ...         """Info about class.
+    ...         """Docstring summary.
     ...
     ...         :param b: Description of b.
     ...         :param a: Description of a.

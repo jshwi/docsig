@@ -11,7 +11,7 @@ Spelling error found in documented parameter
 
     >>> string = '''
     ... def function(param) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param pram: Description of pram.
     ...     """
@@ -28,7 +28,7 @@ Spelling error found in documented parameter
 
     >>> string = '''
     ... def function(param1) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param pram1: Description of pram1.
     ...     """
@@ -45,7 +45,7 @@ Spelling error found in documented parameter
 
     >>> string = '''
     ... def function(param1, param2) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param pram1: Description of pram1.
     ...     """

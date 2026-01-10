@@ -13,7 +13,7 @@ check property return values
     ... class Klass:
     ...     @property
     ...     def prop(self) -> str:
-    ...         """This is documented."""
+    ...         """Docstring summary."""
     ... '''
 
 .. code-block:: python

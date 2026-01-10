@@ -13,7 +13,7 @@ This will be raised if it looks as though an existing parameter documentation wa
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param: Description of unnamed param.
@@ -31,7 +31,7 @@ This will be raised if it looks as though an existing parameter documentation wa
 
     >>> string = '''
     ... def function(a, b, c) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param a: Description of a.
@@ -52,7 +52,7 @@ This will be raised if it looks as though an existing parameter documentation wa
 
     >>> string = '''
     ... def function(a, b, c) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param a: Description of a.
@@ -74,7 +74,7 @@ But not if it is for a parameter that does not exist
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
@@ -92,7 +92,7 @@ But not if it is for a parameter that does not exist
 
     >>> string = '''
     ... def function(a, b) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param b: Description of b.
     ...     :param a: Description of a.

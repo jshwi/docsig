@@ -11,7 +11,7 @@ Description missing from parameter
 
     >>> string = '''
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a:
     ...     """

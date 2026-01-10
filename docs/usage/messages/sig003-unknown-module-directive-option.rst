@@ -12,7 +12,7 @@ Unknown module comment option for {directive} '{option}'
     >>> string = '''
     ... # docsig: enable=EIEIO
     ... def function(a) -> None:
-    ...     """Function summary.
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     """

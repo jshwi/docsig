@@ -11,7 +11,7 @@ This check will either check the documentation of ``__init__``, or check documen
     >>> string = '''
     ... class Klass:
     ...     def __init__(self, a, b) -> None:
-    ...         """
+    ...         """Docstring summary.
     ...
     ...         :param a: Description of a.
     ...         :param b: Description of b.
@@ -27,7 +27,7 @@ This check will either check the documentation of ``__init__``, or check documen
 
     >>> string = '''
     ... class Klass:
-    ...     """
+    ...     """Docstring summary.
     ...
     ...     :param a: Description of a.
     ...     :param b: Description of b.
