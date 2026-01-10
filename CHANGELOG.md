@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.74.2](https://github.com/jshwi/docsig/tree/v0.74.2) - 2026-01-10
+
+### Fixed
+
+- incorrect SIG301 with both SIG202 and SIG402 ([#707](https://github.com/jshwi/docsig/issues/707))
+
 ## [0.74.1](https://github.com/jshwi/docsig/tree/v0.74.1) - 2026-01-06
 
 ### Fixed
