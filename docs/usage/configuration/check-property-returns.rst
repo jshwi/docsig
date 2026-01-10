@@ -12,7 +12,7 @@ check property return values
     >>> string = '''
     ... class Class:
     ...     @property
-    ...     def method(self) -> str:
+    ...     def method(self) -> int:
     ...         """Docstring summary."""
     ... '''
 

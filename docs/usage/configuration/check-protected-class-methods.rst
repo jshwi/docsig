@@ -12,7 +12,7 @@ check public methods belonging to protected classes
     >>> string = '''
     ... class _Class:
     ...     @property
-    ...     def method(self, a) -> str:
+    ...     def method(self, a) -> int:
     ...         """Docstring summary."""
     ... '''
 
