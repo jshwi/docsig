@@ -170,7 +170,7 @@ repos:
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
-    rev: "v0.1.0-alpha.30"
+    rev: "v0.1.0-alpha.31"
     hooks:
       - id: conform
         name: conform
