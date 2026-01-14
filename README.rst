@@ -93,7 +93,7 @@ Commandline
       -v, --verbose         increase output verbosity
       -c, --check-class     check class docstrings
       -C, --check-class-constructor
-                            check __init__ methods. Note: mutually incompatible with -c
+                            check __init__ methods
       -D, --check-dunders   check dunder methods
       -N, --check-nested    check nested functions and classes
       -o, --check-overridden

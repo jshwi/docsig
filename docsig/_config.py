@@ -140,7 +140,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         "-C",
         "--check-class-constructor",
         action="store_true",
-        help="check __init__ methods. Note: mutually incompatible with -c",
+        help="check __init__ methods",
     )
     parser.add_argument(
         "-D",
