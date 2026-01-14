@@ -654,7 +654,7 @@ class ArgumentParser(_a.ArgumentParser):
         """
 '''
     init_file(template)
-    main(".", "-ak", test_flake8=False)
+    main(".", "--ignore-args", "--ignore-kwargs", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[202].description in std.out
 
