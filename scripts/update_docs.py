@@ -56,11 +56,11 @@ def generate_configurations() -> None:
         for line in helpio.getvalue().splitlines():
             try:
                 parts = line.split()
-                option = parts[1]
+                option = parts[0]
                 if not option.startswith(f"--{category}"):
                     continue
 
-                option = parts[1][2:]
+                option = parts[0][2:]
                 tocs.append(TOC.format(option=f"configuration/{option}"))
                 doc_path = configuration_dir / f"{option}.rst"
                 if not doc_path.is_file():

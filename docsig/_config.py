@@ -132,51 +132,99 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
         "-c",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_class",
+    )
+    group.add_argument(
         "--check-class",
         action="store_true",
         help="check class docstrings",
+        dest="check_class",
     )
     group.add_argument(
         "-C",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_class_constructor",
+    )
+    group.add_argument(
         "--check-class-constructor",
         action="store_true",
         help="check __init__ methods",
+        dest="check_class_constructor",
     )
     parser.add_argument(
         "-D",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_dunders",
+    )
+    parser.add_argument(
         "--check-dunders",
         action="store_true",
         help="check dunder methods",
+        dest="check_dunders",
     )
     parser.add_argument(
         "-N",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_nested",
+    )
+    parser.add_argument(
         "--check-nested",
         action="store_true",
         help="check nested functions and classes",
+        dest="check_nested",
     )
     parser.add_argument(
         "-o",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_overridden",
+    )
+    parser.add_argument(
         "--check-overridden",
         action="store_true",
         help="check overridden methods",
+        dest="check_overridden",
     )
     parser.add_argument(
         "-P",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_property_returns",
+    )
+    parser.add_argument(
         "--check-property-returns",
         action="store_true",
         help="check property return values",
+        dest="check_property_returns",
     )
     parser.add_argument(
         "-p",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_protected",
+    )
+    parser.add_argument(
         "--check-protected",
         action="store_true",
         help="check protected functions and classes",
+        dest="check_protected",
     )
     parser.add_argument(
         "-m",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="check_protected_class_methods",
+    )
+    parser.add_argument(
         "--check-protected-class-methods",
         action="store_true",
         help="check public methods belonging to protected classes",
+        dest="check_protected_class_methods",
     )
     parser.add_argument(  # deprecated
         "-U",
@@ -186,27 +234,51 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     )
     parser.add_argument(
         "-a",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="ignore_args",
+    )
+    parser.add_argument(
         "--ignore-args",
         action="store_true",
         help="ignore args prefixed with an asterisk",
+        dest="ignore_args",
     )
     parser.add_argument(
         "-k",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="ignore_kwargs",
+    )
+    parser.add_argument(
         "--ignore-kwargs",
         action="store_true",
         help="ignore kwargs prefixed with two asterisks",
+        dest="ignore_kwargs",
     )
     parser.add_argument(
         "-i",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="ignore_no_params",
+    )
+    parser.add_argument(
         "--ignore-no-params",
         action="store_true",
         help="ignore docstrings where parameters are not documented",
+        dest="ignore_no_params",
     )
     parser.add_argument(
         "-T",
+        action="store_true",
+        help=_a.SUPPRESS,
+        dest="ignore_typechecker",
+    )
+    parser.add_argument(
         "--ignore-typechecker",
         action="store_true",
         help="ignore checking return values",
+        dest="ignore_typechecker",
     )
     parser.add_argument(
         "-d",
