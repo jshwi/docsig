@@ -38,7 +38,7 @@ class Docsig:
     # might require that flake8 actually be installed, which is not a
     # requirement for this package
     @classmethod
-    def add_options(cls, parser) -> None:
+    def add_options(cls, parser: t.Any) -> None:
         """Add flake8 commandline and config options.
 
         :param parser: Flake8 option manager.

@@ -15,6 +15,7 @@ from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param
+from ._stub import Params as _Params
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
 from ._utils import has_bad_return as _has_bad_return
@@ -103,7 +104,7 @@ class Failure(_t.List[Failed]):
             super().append(failed)
 
     @staticmethod
-    def _normalize_params(from_, to) -> None:
+    def _normalize_params(from_: _Params, to: _Params) -> None:
         # inset the parameters that are missing in their corresponding
         # index so that they are included in further analysis, that way
         # there are no additional, and redundant, errors
