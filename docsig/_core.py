@@ -451,9 +451,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return max(retcodes)
 
     module = _from_str(
-        {
-            "code": string,
-        },
+        {"code": string},
         disable or _Messages(),
         ignore_args,
         ignore_kwargs,
