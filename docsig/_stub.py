@@ -122,7 +122,13 @@ class Param:
         return str(self.name).startswith("_")
 
 
-class _Params(_t.List[Param]):
+class Params(_t.List[Param]):
+    """A list-like collection of params.
+
+    :param ignore_args: Ignore args prefixed with an asterisk.
+    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    """
+
     def __init__(
         self,
         ignore_args: bool = False,
@@ -198,11 +204,11 @@ class _Stub:
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> None:
-        self._args = _Params(ignore_args, ignore_kwargs)
+        self._args = Params(ignore_args, ignore_kwargs)
         self._returns = False
 
     @property
-    def args(self) -> _Params:
+    def args(self) -> Params:
         """Collection of `Param` types."""
         return self._args
 

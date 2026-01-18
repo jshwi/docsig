@@ -8,6 +8,7 @@ from __future__ import annotations as _
 import logging as _logging
 import os as _os
 import sys as _sys
+import typing as _t
 import warnings as _warnings
 from pathlib import Path as _Path
 
@@ -131,7 +132,7 @@ def _from_file(
     messages: _Messages,
     ignore_args: bool,
     ignore_kwargs: bool,
-    check_class_constructor,
+    check_class_constructor: bool,
 ) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
@@ -160,11 +161,11 @@ def _from_file(
 
 # pylint: disable=too-many-arguments,too-many-positional-arguments
 def _from_str(
-    context: dict,
+    context: dict[str, _t.Any],
     messages: _Messages,
     ignore_args: bool,
     ignore_kwargs: bool,
-    check_class_constructor,
+    check_class_constructor: bool,
     path: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)

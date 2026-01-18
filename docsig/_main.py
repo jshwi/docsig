@@ -15,7 +15,7 @@ from ._core import docsig as _docsig
 from ._hooks import excepthook as _excepthook
 
 
-def _warn_on_deprecated_short_flags():
+def _warn_on_deprecated_short_flags() -> None:
     deprecated_short_flags = {
         "-c": "--check-class",
         "-C": "--check-class-constructor",
