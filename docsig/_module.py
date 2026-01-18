@@ -233,7 +233,7 @@ class Function(Parent):
 
     def __len__(self) -> int:
         """Length of the longest sequence of args."""
-        return max([len(self.signature.args), len(self.docstring.args)])
+        return max(len(self.signature.args), len(self.docstring.args))
 
     def _decorated_with(self, name: str) -> bool:
         name = self._imports.get(name, name)
