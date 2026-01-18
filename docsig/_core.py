@@ -62,7 +62,7 @@ def setup_logger(verbose: bool) -> None:
 
 
 # pylint: disable=too-many-arguments,too-many-locals
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments,too-many-boolean-expressions
 def _run_check(
     child: _Parent,
     parent: _Parent,
@@ -79,8 +79,10 @@ def _run_check(
     target: _Messages,
     failures: _Failures,
 ) -> None:
-    if isinstance(child, _Function):
-        if not (child.isoverridden and not check_overridden) and (
+    if (
+        isinstance(child, _Function)
+        and not (child.isoverridden and not check_overridden)
+        and (
             not (child.isprotected and not check_protected)
             and not (
                 child.isinit
@@ -91,36 +93,19 @@ def _run_check(
             )
             and not (child.isdunder and not check_dunders)
             and not (child.docstring.bare and ignore_no_params)
-        ):
-            failure = _Failure(
-                child,
-                target,
-                check_property_returns,
-                ignore_typechecker,
-            )
-            if failure:
-                failures.append(failure)
+        )
+    ):
+        failure = _Failure(
+            child,
+            target,
+            check_property_returns,
+            ignore_typechecker,
+        )
+        if failure:
+            failures.append(failure)
 
-        if check_nested:
-            for func in child.children:
-                _run_check(
-                    func,
-                    child,
-                    check_class,
-                    check_class_constructor,
-                    check_dunders,
-                    check_nested,
-                    check_overridden,
-                    check_protected,
-                    check_property_returns,
-                    ignore_no_params,
-                    ignore_typechecker,
-                    no_ansi,
-                    target,
-                    failures,
-                )
-    else:
-        # this is a class
+    # recurse for either class methods or, if enabled, nested functions
+    if not isinstance(child, _Function) or check_nested:
         for func in child.children:
             _run_check(
                 func,
