@@ -28,5 +28,5 @@
     "bump:minor": "make bump part=minor",
     "bump:patch": "make bump part=patch"
   },
-  "version": "0.74.2"
+  "version": "0.75.0"
 }

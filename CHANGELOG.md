@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.75.0](https://github.com/jshwi/docsig/tree/v0.75.0) - 2026-01-18
+
+### Deprecated
+
+- some short form options ([#713](https://github.com/jshwi/docsig/issues/713))
+
 ## [0.74.2](https://github.com/jshwi/docsig/tree/v0.74.2) - 2026-01-10
 
 ### Fixed
