@@ -168,6 +168,7 @@ def _from_str(
     path: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
+    source_name = path or "stdin"
     try:
         parent = _Parent(
             _ast.parse(**context),
@@ -177,13 +178,9 @@ def _from_str(
             ignore_kwargs,
             check_class_constructor,
         )
-        logger.debug(
-            _FILE_INFO,
-            path or "stdin",
-            "Parsing Python code successful",
-        )
+        logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
     except _ast.AstroidSyntaxError as err:
-        logger.debug(_FILE_INFO, path or "stdin", str(err).replace("\n", " "))
+        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.SYNTAX)
 
     return parent
