@@ -547,9 +547,7 @@ def function(*_, **__) -> None:
         test_flake8=False,  # won't need, flake runs one file at a time
     )
     std = capsys.readouterr()
-    assert (
-        std.out
-        == f"""\
+    assert std.out == f"""\
 {Path('module') / 'file1'}.py:2 in function
     SIG502: return statement documented for None (return-documented-for-none)
 {Path('module') / 'file2'}.py:2 in function
@@ -559,7 +557,6 @@ def function(*_, **__) -> None:
 {Path('module') / 'file4'}.py:2 in function
     SIG502: return statement documented for None (return-documented-for-none)
 """
-    )
 
 
 def test_multiple_exit_codes(
