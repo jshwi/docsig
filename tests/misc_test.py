@@ -766,7 +766,7 @@ def foo(a) -> None:
 '''
     init_file(t1)
     init_file(t2)
-    assert main(".", "--enforce-capitalization") == 1
+    assert main(".") == 1
     std = capsys.readouterr()
     assert docsig.messages.E[305].description in std.out
 
@@ -788,7 +788,7 @@ def function(a) -> None:
     """
 '''
     init_file(template)
-    assert main(".", "--enforce-capitalization") == 0
+    assert main(".") == 0
 
 
 def test_check_nested_numpy(

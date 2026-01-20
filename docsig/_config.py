@@ -226,12 +226,6 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="check public methods belonging to protected classes",
         dest="check_protected_class_methods",
     )
-    parser.add_argument(  # deprecated
-        "-U",
-        "--enforce-capitalization",
-        action="store_true",
-        help=_a.SUPPRESS,
-    )
     parser.add_argument(
         "-a",
         action="store_true",

@@ -9,7 +9,6 @@ import logging as _logging
 import os as _os
 import sys as _sys
 import typing as _t
-import warnings as _warnings
 from pathlib import Path as _Path
 
 import astroid as _ast
@@ -325,21 +324,6 @@ def runner(
     )
 
 
-def handle_deprecations(enforce_capitalization: bool, stacklevel: int) -> None:
-    """Warn for deprecated arguments.
-
-    :param enforce_capitalization: Whether using or not.
-    :param stacklevel: Warning stacklevel.
-    """
-    if enforce_capitalization:
-        _warnings.warn(
-            "enforce-capitalization is deprecated and will be removed in a"
-            " future version",
-            category=FutureWarning,
-            stacklevel=stacklevel,
-        )
-
-
 @_decorators.parse_msgs
 @_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
@@ -359,7 +343,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
     ignore_typechecker: bool = False,
-    enforce_capitalization: bool = False,  # deprecated
     no_ansi: bool = False,
     verbose: bool = False,
     target: _Messages | None = None,
@@ -396,8 +379,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param ignore_typechecker: Ignore checking return values.
-    :param enforce_capitalization: Ensure param descriptions are
-        capitalized.
     :param no_ansi: Disable ANSI output.
     :param verbose: Increase output verbosity.
     :param target: List of errors to target.
@@ -407,7 +388,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether a test failed or not.
     """
-    handle_deprecations(enforce_capitalization, stacklevel=5)
     setup_logger(verbose)
     if list_checks:
         return int(bool(_print_checks()))  # type: ignore
