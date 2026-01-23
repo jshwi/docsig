@@ -52,8 +52,8 @@
    :target: https://snyk.io/advisor/python/docsig
    :alt: docsig
 
-Check signature params for proper documentation
------------------------------------------------
+Check Python signature params for proper documentation
+-------------------------------------------------------
 
 Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 

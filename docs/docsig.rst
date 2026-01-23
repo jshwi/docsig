@@ -1,10 +1,11 @@
-Check signature params for proper documentation
-===============================================
+Check Python signature params for proper documentation
+=======================================================
 
 Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 -----------------------------------------------------------------
 
-``docsig`` a tool for ensuring signature parameters are correctly documented.
+``docsig`` is a Python tool for ensuring signature parameters are correctly
+documented.
 
 There is no one standard for how docstring parameters should be documented, and
 so with ``docsig``, you can lay down a policy and stick to it, resulting in
