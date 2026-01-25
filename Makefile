@@ -133,7 +133,7 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 		whitelist.py \
 		docsig \
 		tests \
-		--exclude 'tests/_templates.py'
+		--exclude 'tests/_templates.py,tests/conftest.py'
 	@mkdir -p $(@D)
 	@touch $@
 
@@ -142,7 +142,7 @@ whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 		--make-whitelist \
 		docsig \
 		tests \
-		--exclude 'tests/_templates.py' \
+		--exclude 'tests/_templates.py,tests/conftest.py' \
 		> $@ || exit 0
 
 coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
