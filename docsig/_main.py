@@ -28,7 +28,6 @@ def _warn_on_deprecated_short_flags() -> None:
         "-i": "--ignore-no-params",
         "-a": "--ignore-args",
         "-k": "--ignore-kwargs",
-        "-T": "--ignore-typechecker",
     }
     raw_args = _sys.argv[1:]
     expanded_flags = []
