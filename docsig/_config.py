@@ -263,16 +263,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         dest="ignore_no_params",
     )
     parser.add_argument(
-        "-T",
-        action="store_true",
-        help=_a.SUPPRESS,
-        dest="ignore_typechecker",
-    )
-    parser.add_argument(
         "--ignore-typechecker",
         action="store_true",
         help="ignore checking return values",
-        dest="ignore_typechecker",
     )
     parser.add_argument(
         "-d",
