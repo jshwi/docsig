@@ -19,7 +19,8 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, PATH, InitFileFixtureType, MockMainType
+from . import CHECK_ARGS, InitFileFixtureType, MockMainType
+from ._templates import PATH
 
 
 @pytest.mark.parametrize("arg", ("-V", "--version"))

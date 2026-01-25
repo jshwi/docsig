@@ -129,12 +129,21 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@touch $@
 
 .make/unused: whitelist.py
-	@$(POETRY) run vulture whitelist.py docsig tests
+	@$(POETRY) run vulture \
+		whitelist.py \
+		docsig \
+		tests \
+		--exclude 'tests/_templates.py'
 	@mkdir -p $(@D)
 	@touch $@
 
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
-	@$(POETRY) run vulture --make-whitelist docsig tests > $@ || exit 0
+	@$(POETRY) run vulture \
+		--make-whitelist \
+		docsig \
+		tests \
+		--exclude 'tests/_templates.py' \
+		> $@ || exit 0
 
 coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
