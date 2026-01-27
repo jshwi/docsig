@@ -168,16 +168,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         dest="check_dunders",
     )
     parser.add_argument(
-        "-N",
-        action="store_true",
-        help=_a.SUPPRESS,
-        dest="check_nested",
-    )
-    parser.add_argument(
         "--check-nested",
         action="store_true",
         help="check nested functions and classes",
-        dest="check_nested",
     )
     parser.add_argument(
         "-o",
