@@ -68,7 +68,7 @@ repository.
 
 Contributing
 ------------
-If you are interested in contributing to ``docsig`` please read about contributing `here <https://docsig.io/en/latest/development/contributing.html>`__
+If you are interested in contributing to ``docsig``, please read about contributing `here <https://docsig.io/en/latest/development/contributing.html>`__
 
 Installation
 ------------
