@@ -151,16 +151,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         help="check __init__ methods",
     )
     parser.add_argument(
-        "-D",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_dunders",
-    )
-    parser.add_argument(
         "--check-dunders",
         action="store_true",
         help="check dunder methods",
-        dest="check_dunders",
     )
     parser.add_argument(
         "--check-nested",
