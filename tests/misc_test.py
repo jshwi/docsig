@@ -662,7 +662,7 @@ class ArgumentParser(_a.ArgumentParser):
         """
 '''
     make_tree({"module": {"file.py": [template]}})
-    main(".", "-a", "--ignore-kwargs", test_flake8=False)
+    main(".", "--ignore-args", "--ignore-kwargs", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[202].description in std.out
 
@@ -972,4 +972,4 @@ def function(a, b) -> None:
 """
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
-        main(".", "-cDmNopPiaI", test_flake8=False)
+        main(".", "-cDmNopPiI", test_flake8=False)
