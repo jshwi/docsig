@@ -184,16 +184,9 @@ def build_parser() -> _ArgumentParser:
         dest="check_overridden",
     )
     parser.add_argument(
-        "-P",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_property_returns",
-    )
-    parser.add_argument(
         "--check-property-returns",
         action="store_true",
         help="check property return values",
-        dest="check_property_returns",
     )
     parser.add_argument(
         "-p",
