@@ -219,16 +219,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         help="ignore kwargs prefixed with two asterisks",
     )
     parser.add_argument(
-        "-i",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="ignore_no_params",
-    )
-    parser.add_argument(
         "--ignore-no-params",
         action="store_true",
         help="ignore docstrings where parameters are not documented",
-        dest="ignore_no_params",
     )
     parser.add_argument(
         "--ignore-typechecker",
