@@ -946,7 +946,7 @@ def function(a, b) -> None:
 """
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
-        main(".", "-cDIv", test_flake8=False)
+        main(".", "-cIv", test_flake8=False)
 
 
 def test_ignore_no_params(
