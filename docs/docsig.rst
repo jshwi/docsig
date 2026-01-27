@@ -4,17 +4,16 @@ Check Python signature params for proper documentation
 Supports reStructuredText (``Sphinx``), ``NumPy``, and ``Google``
 -----------------------------------------------------------------
 
-``docsig`` is a Python tool for ensuring signature parameters are correctly
-documented.
+**docsig** is a Python documentation linter that ensures function and method
+signature parameters are properly documented in docstrings. It supports multiple
+docstring formats including reStructuredText (``Sphinx``), ``NumPy``, and
+``Google`` styles.
 
-There is no one standard for how docstring parameters should be documented, and
-so with ``docsig``, you can lay down a policy and stick to it, resulting in
-more accurate documentation.
-
-Documenting your parameters is important, but very easy to neglect, especially
-when parameters belonging to a function or method change frequently.
-
-``docsig`` will help you keep your docstrings up-to-date and informative
+Maintain accurate and up-to-date Python documentation by automatically checking
+that all parameters in function signatures match their docstring documentation.
+Use docsig as a standalone tool, integrate it with ``flake8``, or add it as a
+``pre-commit`` hook to catch documentation issues before they reach your
+repository.
 
 Installation
 ------------

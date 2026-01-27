@@ -1,0 +1,85 @@
+{% extends "!layout.html" %} {% block extrahead %} {{ super() }} {# Add meta
+tags for SEO #}
+<meta
+  name="description"
+  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats. Use as a standalone tool, flake8 plugin, or pre-commit hook to maintain accurate Python documentation."
+/>
+<meta
+  name="keywords"
+  content="python, docstring, documentation, linting, sphinx, numpy, google, parameters, signature, type checking, code quality, pre-commit, flake8"
+/>
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="docsig" />
+<meta
+  property="og:title"
+  content="{{ project }} - Check Python signature params for proper documentation"
+/>
+<meta
+  property="og:description"
+  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats."
+/>
+<meta property="og:url" content="https://docsig.io/" />
+<meta property="og:image" content="https://docsig.io/_static/docsig.svg" />
+<meta name="twitter:card" content="summary" />
+<meta
+  name="twitter:title"
+  content="{{ project }} - Check Python signature params for proper documentation"
+/>
+<meta
+  name="twitter:description"
+  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats."
+/>
+<meta name="twitter:image" content="https://docsig.io/_static/docsig.svg" />
+{# Add JSON-LD structured data for better SEO #}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "{{ project }}",
+    "description": "docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats. Use as a standalone tool, flake8 plugin, or pre-commit hook to maintain accurate Python documentation.",
+    "url": "https://docsig.io/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "programmingLanguage": "Python",
+    "author": {
+      "@type": "Person",
+      "name": "{{ author }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ project }}"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "softwareVersion": "{{ release }}",
+    "license": "https://opensource.org/licenses/MIT",
+    "codeRepository": "https://github.com/jshwi/docsig",
+    "downloadUrl": "https://pypi.org/project/docsig/",
+    "keywords": [
+      "python",
+      "docstring",
+      "documentation",
+      "linting",
+      "sphinx",
+      "numpy",
+      "google",
+      "parameters",
+      "signature",
+      "type checking",
+      "code quality",
+      "pre-commit",
+      "flake8"
+    ],
+    "featureList": [
+      "Check Python function and method signature parameters",
+      "Support for Sphinx, NumPy, and Google docstring formats",
+      "Integration with flake8",
+      "pre-commit hook support",
+      "Configurable checking rules"
+    ]
+  }
+</script>
+{% endblock %}
