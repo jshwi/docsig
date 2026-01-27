@@ -211,16 +211,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         dest="check_protected",
     )
     parser.add_argument(
-        "-m",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_protected_class_methods",
-    )
-    parser.add_argument(
         "--check-protected-class-methods",
         action="store_true",
         help="check public methods belonging to protected classes",
-        dest="check_protected_class_methods",
     )
     parser.add_argument(
         "--ignore-args",
