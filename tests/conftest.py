@@ -15,13 +15,7 @@ from flake8.main.application import Application
 
 import docsig
 
-from . import (
-    FixtureFlake8,
-    FixtureMakeTree,
-    FixturePatchArgv,
-    InitFileFixtureType,
-    MockMainType,
-)
+from . import FixtureFlake8, FixtureMakeTree, FixturePatchArgv, MockMainType
 
 
 @pytest.fixture(name="environment", autouse=True)
@@ -91,23 +85,6 @@ def fixture_main(
         return retcode
 
     return _main
-
-
-@pytest.fixture(name="init_file")
-def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
-    """Initialize a test file.
-
-    :param tmp_path: Create and return the temporary directory.
-    :return: Function for using this fixture.
-    """
-
-    def _init_file(contents: str, path: Path | None = None) -> Path:
-        file = tmp_path / (path or Path("module") / "file.py")
-        file.parent.mkdir(exist_ok=True)
-        file.write_text(contents)
-        return file
-
-    return _init_file
 
 
 @pytest.fixture(name="make_tree")

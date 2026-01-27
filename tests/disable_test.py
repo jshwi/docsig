@@ -8,7 +8,7 @@ import pytest
 
 from docsig.messages import E
 
-from . import InitFileFixtureType, MockMainType
+from . import FixtureMakeTree, MockMainType
 
 ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
 SYMBOLIC = [
@@ -1061,16 +1061,16 @@ def function_7(param1, param2, param3) -> None:
 
 def test_no_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test the series of functions with no `disable` comments.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_1)
+    make_tree({"module": {"file.py": [DISABLE_FILE_1]}})
     main(".")
     std = capsys.readouterr()
     assert all(E.from_ref(i).ref in std.out for i in ES)
@@ -1079,7 +1079,7 @@ def test_no_disables(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_commandline_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     code: str,
     symbolic: str,
@@ -1087,19 +1087,19 @@ def test_commandline_disables(
     """Test the series of functions with `disable` commandline arg.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param code: Rule to disable.
     :param symbolic: Rule symbolic code to comment.
     """
-    init_file(DISABLE_FILE_1)
+    make_tree({"module": {"file.py": [DISABLE_FILE_1]}})
     main(".", "--disable", code, test_flake8=False)
     std = capsys.readouterr()
     assert E.from_ref(code).ref not in std.out
     assert all(
         E.from_ref(i[0]).ref in std.out for i in SYMBOLIC if i[0] != code
     )
-    init_file(DISABLE_FILE_1)
+    make_tree({"module": {"file.py": [DISABLE_FILE_1]}})
     main(".", "--disable", symbolic, test_flake8=False)
     std = capsys.readouterr()
     assert symbolic not in std.out
@@ -1119,16 +1119,16 @@ def test_unknown_commandline_disables(main: MockMainType) -> None:
 
 def test_module_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling entire module with `disable` comment.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_2)
+    make_tree({"module": {"file.py": [DISABLE_FILE_2]}})
     main(".")
     std = capsys.readouterr()
     assert not any(i in std.out for i in ES)
@@ -1136,16 +1136,16 @@ def test_module_disables(
 
 def test_single_function_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling single function with `disable` comment.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_3)
+    make_tree({"module": {"file.py": [DISABLE_FILE_3]}})
     main(".")
     std = capsys.readouterr()
     assert "function_1" not in std.out
@@ -1154,16 +1154,16 @@ def test_single_function_disable(
 
 def test_module_single_error_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling entire module with specific `disable` comment.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_4)
+    make_tree({"module": {"file.py": [DISABLE_FILE_4]}})
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(ES[0]).ref not in std.out
@@ -1172,16 +1172,16 @@ def test_module_single_error_disables(
 
 def test_module_comma_separated_error_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling module with comment of several specific errors.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_5)
+    make_tree({"module": {"file.py": [DISABLE_FILE_5]}})
     main(".")
     std = capsys.readouterr()
     excluded = ES[0], ES[1]
@@ -1191,16 +1191,16 @@ def test_module_comma_separated_error_disables(
 
 def test_single_function_single_error_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling single function with specific `disable` comment.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_6)
+    make_tree({"module": {"file.py": [DISABLE_FILE_6]}})
     main(".")
     std = capsys.readouterr()
     assert "function_1" not in std.out
@@ -1209,16 +1209,16 @@ def test_single_function_single_error_disable(
 
 def test_single_function_comma_separated_error_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test disabling function with comment of several specific errors.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(DISABLE_FILE_7)
+    make_tree({"module": {"file.py": [DISABLE_FILE_7]}})
     main(".")
     std = capsys.readouterr()
     assert "function_6" not in std.out
@@ -1227,16 +1227,16 @@ def test_single_function_comma_separated_error_disable(
 
 def test_module_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test individual checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_1)
+    make_tree({"module": {"file.py": [ENABLE_FILE_1]}})
     main(".")
     std = capsys.readouterr()
     assert all(E.from_ref(i).ref in std.out for i in ES)
@@ -1244,7 +1244,7 @@ def test_module_enables(
 
 def test_single_function_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test enabling entire module with enable comment.
@@ -1252,10 +1252,10 @@ def test_single_function_enable(
     Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_2)
+    make_tree({"module": {"file.py": [ENABLE_FILE_2]}})
     main(".")
     std = capsys.readouterr()
     assert "function_1" in std.out
@@ -1264,7 +1264,7 @@ def test_single_function_enable(
 
 def test_module_single_error_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test enabling entire module with enable comment.
@@ -1272,10 +1272,10 @@ def test_module_single_error_enables(
     Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_3)
+    make_tree({"module": {"file.py": [ENABLE_FILE_3]}})
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(ES[0]).ref in std.out
@@ -1284,7 +1284,7 @@ def test_module_single_error_enables(
 
 def test_module_comma_separated_error_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test enabling entire module with specific enable comment.
@@ -1292,10 +1292,10 @@ def test_module_comma_separated_error_enables(
     Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_4)
+    make_tree({"module": {"file.py": [ENABLE_FILE_4]}})
     main(".")
     std = capsys.readouterr()
     included = ES[0], ES[1]
@@ -1307,7 +1307,7 @@ def test_module_comma_separated_error_enables(
 
 def test_single_function_single_error_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test enabling single function with specific enable comment.
@@ -1315,10 +1315,10 @@ def test_single_function_single_error_enable(
     Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_5)
+    make_tree({"module": {"file.py": [ENABLE_FILE_5]}})
     main(".")
     std = capsys.readouterr()
     assert "function_1" in std.out
@@ -1327,7 +1327,7 @@ def test_single_function_single_error_enable(
 
 def test_single_function_comma_separated_error_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test enabling function with comment of several specific errors.
@@ -1335,10 +1335,10 @@ def test_single_function_comma_separated_error_enable(
     Prior to `enable` add the `disable` directive.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
-    init_file(ENABLE_FILE_6)
+    make_tree({"module": {"file.py": [ENABLE_FILE_6]}})
     main(".")
     std = capsys.readouterr()
     assert "function_6" in std.out
@@ -1348,7 +1348,7 @@ def test_single_function_comma_separated_error_enable(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     code: str,
     symbolic: str,
@@ -1356,19 +1356,27 @@ def test_individual_inline_disable_checks(
     """Test individual inline `disable` checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param code: Rule code to comment.
     :param symbolic: Rule symbolic code to comment.
     """
     enabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
-    init_file(INLINE_DISABLE_TEMPLATE.format(rules=code))
+    make_tree(
+        {"module": {"file.py": [INLINE_DISABLE_TEMPLATE.format(rules=code)]}},
+    )
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(code).ref not in std.out
     assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
     enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
-    init_file(INLINE_DISABLE_TEMPLATE.format(rules=symbolic))
+    make_tree(
+        {
+            "module": {
+                "file.py": [INLINE_DISABLE_TEMPLATE.format(rules=symbolic)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert symbolic not in std.out
@@ -1392,21 +1400,23 @@ def test_individual_inline_disable_checks(
 )
 def test_comma_separated_inline_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     rules: str,
 ) -> None:
     """Test multiple inline `disable` checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param rules: Rules to comment.
     """
     all_rules = list(ES)
     comma_separated_rules = rules.split(",")
     enabled_rules = [i for i in all_rules if i not in comma_separated_rules]
-    init_file(INLINE_DISABLE_TEMPLATE.format(rules=rules))
+    make_tree(
+        {"module": {"file.py": [INLINE_DISABLE_TEMPLATE.format(rules=rules)]}},
+    )
     main(".")
     std = capsys.readouterr()
     assert not any(E.from_ref(i).ref in std.out for i in comma_separated_rules)
@@ -1416,7 +1426,7 @@ def test_comma_separated_inline_disable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     code: str,
     symbolic: str,
@@ -1424,19 +1434,33 @@ def test_individual_module_disable_checks(
     """Test individual module `disable` checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param code: Rule code to comment.
     :param symbolic: Rule symbolic code to comment.
     """
     enabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
-    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=code))
+    make_tree(
+        {
+            "module": {
+                "file.py": [MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=code)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(code).ref not in std.out
     assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
     enabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
-    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=symbolic))
+    make_tree(
+        {
+            "module": {
+                "file.py": [
+                    MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=symbolic),
+                ],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert code not in std.out
@@ -1460,21 +1484,27 @@ def test_individual_module_disable_checks(
 )
 def test_comma_separated_module_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     rules: str,
 ) -> None:
     """Test multiple module `disable` checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param rules: Rules to comment.
     """
     all_rules = list(ES)
     comma_separated_rules = rules.split(",")
     enabled_rules = [i for i in all_rules if i not in comma_separated_rules]
-    init_file(MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=rules))
+    make_tree(
+        {
+            "module": {
+                "file.py": [MODULE_LEVEL_DISABLE_TEMPLATE.format(rules=rules)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert not any(E.from_ref(i).ref in std.out for i in comma_separated_rules)
@@ -1484,7 +1514,7 @@ def test_comma_separated_module_disable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     code: str,
     symbolic: str,
@@ -1492,19 +1522,27 @@ def test_individual_inline_enable_checks(
     """Test individual inline enable checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param code: Rule code to comment.
     :param symbolic: Rule symbolic code to comment.
     """
     disabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
-    init_file(INLINE_ENABLE_TEMPLATE.format(rules=code))
+    make_tree(
+        {"module": {"file.py": [INLINE_ENABLE_TEMPLATE.format(rules=code)]}},
+    )
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(code).ref in std.out
     assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
     disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
-    init_file(INLINE_ENABLE_TEMPLATE.format(rules=symbolic))
+    make_tree(
+        {
+            "module": {
+                "file.py": [INLINE_ENABLE_TEMPLATE.format(rules=symbolic)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert symbolic in std.out
@@ -1528,21 +1566,23 @@ def test_individual_inline_enable_checks(
 )
 def test_comma_separated_inline_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     rules: str,
 ) -> None:
     """Test multiple inline enable checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param rules: Rules to comment.
     """
     all_rules = list(ES)
     comma_separated_rules = rules.split(",")
     disabled_rules = [i for i in all_rules if i not in comma_separated_rules]
-    init_file(INLINE_ENABLE_TEMPLATE.format(rules=rules))
+    make_tree(
+        {"module": {"file.py": [INLINE_ENABLE_TEMPLATE.format(rules=rules)]}},
+    )
     main(".")
     std = capsys.readouterr()
     assert all(E.from_ref(i).ref in std.out for i in comma_separated_rules)
@@ -1552,7 +1592,7 @@ def test_comma_separated_inline_enable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     code: str,
     symbolic: str,
@@ -1560,19 +1600,33 @@ def test_individual_module_enable_checks(
     """Test individual module `enable` checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param code: Rule code to comment.
     :param symbolic: Rule symbolic code to comment.
     """
     disabled_rules = [i[0] for i in SYMBOLIC if i[0] != code]
-    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=code))
+    make_tree(
+        {
+            "module": {
+                "file.py": [MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=code)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert E.from_ref(code).ref in std.out
     assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
     disabled_rules = [i[1] for i in SYMBOLIC if i[1] != symbolic]
-    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=symbolic))
+    make_tree(
+        {
+            "module": {
+                "file.py": [
+                    MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=symbolic),
+                ],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert symbolic in std.out
@@ -1596,14 +1650,14 @@ def test_individual_module_enable_checks(
 )
 def test_comma_separated_module_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     rules: str,
 ) -> None:
     """Test multiple module enable checks.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param rules: Rules to comment.
     """
@@ -1612,7 +1666,13 @@ def test_comma_separated_module_enable_checks(
     disabled_rules = [
         E.from_ref(i).ref for i in all_rules if i not in comma_separated_rules
     ]
-    init_file(MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=rules))
+    make_tree(
+        {
+            "module": {
+                "file.py": [MODULE_LEVEL_ENABLE_TEMPLATE.format(rules=rules)],
+            },
+        },
+    )
     main(".")
     std = capsys.readouterr()
     assert all(E.from_ref(i).ref in std.out for i in comma_separated_rules)
