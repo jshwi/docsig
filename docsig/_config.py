@@ -143,16 +143,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         dest="check_class",
     )
     group.add_argument(
-        "-C",
-        action="store_true",
-        help=_a.SUPPRESS,
-        dest="check_class_constructor",
-    )
-    group.add_argument(
         "--check-class-constructor",
         action="store_true",
         help="check __init__ methods",
-        dest="check_class_constructor",
     )
     parser.add_argument(
         "-D",
