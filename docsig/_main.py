@@ -21,7 +21,6 @@ def _warn_on_deprecated_short_flags() -> None:
         "-C": "--check-class-constructor",
         "-D": "--check-dunders",
         "-m": "--check-protected-class-methods",
-        "-N": "--check-nested",
         "-o": "--check-overridden",
         "-p": "--check-protected",
         "-P": "--check-property-returns",
