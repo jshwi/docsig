@@ -39,7 +39,7 @@ def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
 
 
 def get_config(prog: str) -> dict[str, _t.Any]:
-    """Get the config object from the package's tool section the config.
+    """Get the config object from docsig's tool section in the config.
 
     :param prog: Program name.
     :return: Config dict.
