@@ -502,7 +502,7 @@ class Account(dict[str, _t.Any]):
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
-    main(".", "-P", test_flake8=False)
+    main(".", "--check-property-returns", test_flake8=False)
     std = capsys.readouterr()
     assert E[503].ref in std.out
 
@@ -546,7 +546,7 @@ class Account(dict[str, _t.Any]):
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
-    main(".", "-P", test_flake8=False)
+    main(".", "--check-property-returns", test_flake8=False)
     std = capsys.readouterr()
     assert E[503].ref in std.out
 
