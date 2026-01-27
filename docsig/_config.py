@@ -172,16 +172,9 @@ def build_parser() -> _ArgumentParser:
         help="check nested functions and classes",
     )
     parser.add_argument(
-        "-o",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_overridden",
-    )
-    parser.add_argument(
         "--check-overridden",
         action="store_true",
         help="check overridden methods",
-        dest="check_overridden",
     )
     parser.add_argument(
         "--check-property-returns",
