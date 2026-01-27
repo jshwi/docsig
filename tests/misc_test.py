@@ -19,7 +19,7 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, InitFileFixtureType, MockMainType
+from . import CHECK_ARGS, FixtureMakeTree, InitFileFixtureType, MockMainType
 from ._templates import PATH
 
 
@@ -945,3 +945,21 @@ class Klass:
     std = capsys.readouterr()
     assert docsig.messages.E[505].description in std.out
     assert main(".", "--ignore-typechecker") == 0
+
+
+def test_compressed_short_form_warning(
+    main: MockMainType,
+    make_tree: FixtureMakeTree,
+) -> None:
+    """Test warnings for short form options.
+
+    :param main: Mock ``main`` function.
+    :param make_tree: Create the directory tree from dict mapping.
+    """
+    template = """\
+def function(a, b) -> None:
+    pass
+"""
+    make_tree({"module": {"file.py": [template]}})
+    with pytest.warns(FutureWarning):
+        main(".", "-cDmNopPiakI", test_flake8=False)
