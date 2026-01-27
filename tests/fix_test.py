@@ -528,7 +528,7 @@ class Account(dict[str, _t.Any]):
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
-    main(".", "-P", test_flake8=False)
+    main(".", "--check-property-returns", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[503].description in std.out
 
@@ -572,7 +572,7 @@ class Account(dict[str, _t.Any]):
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
-    main(".", "-P", test_flake8=False)
+    main(".", "--check-property-returns", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[503].description in std.out
 
