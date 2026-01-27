@@ -32,7 +32,6 @@ def _excepthook(no_ansi: bool = False) -> None:
 def _warn_on_deprecated_short_flags() -> None:
     deprecated_short_flags = {
         "-I": "--include-ignored",
-        "-c": "--check-class",
     }
     raw_args = _sys.argv[1:]
     expanded_flags = []
