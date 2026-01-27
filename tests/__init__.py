@@ -12,17 +12,16 @@ from . import _templates  # noqa
 
 MockMainType = t.Callable[..., t.Union[str, int]]
 FixtureFlake8 = t.Callable[..., int]
-FixtureMakeTree = t.Callable[[Path, t.Dict[t.Any, t.Any]], None]
 FixturePatchArgv = t.Callable[..., None]
 
 
-class InitFileFixtureType(
+class FixtureMakeTree(
     t.Protocol,
 ):  # pylint: disable=too-few-public-methods
-    """Type for ``fixture_init_file``."""
+    """Type for ``fixture_mock_tree``."""
 
-    def __call__(self, content: str, path: Path = ..., /) -> Path:
-        """Type for ``fixture_init_file``."""
+    def __call__(self, obj: t.Dict[t.Any, t.Any], root: Path = ..., /) -> None:
+        """Type for ``fixture_make_tree``."""
 
 
 CHECK_ARGS = (

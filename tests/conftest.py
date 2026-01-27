@@ -19,7 +19,6 @@ from . import (
     FixtureFlake8,
     FixtureMakeTree,
     FixturePatchArgv,
-    InitFileFixtureType,
     MockMainType,
 )
 
@@ -93,23 +92,6 @@ def fixture_main(
     return _main
 
 
-@pytest.fixture(name="init_file")
-def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
-    """Initialize a test file.
-
-    :param tmp_path: Create and return the temporary directory.
-    :return: Function for using this fixture.
-    """
-
-    def _init_file(contents: str, path: Path | None = None) -> Path:
-        file = tmp_path / (path or Path("module") / "file.py")
-        file.parent.mkdir(exist_ok=True)
-        file.write_text(contents)
-        return file
-
-    return _init_file
-
-
 @pytest.fixture(name="make_tree")
 def fixture_make_tree() -> FixtureMakeTree:
     """Recursively create a directory tree from a dict mapping.
@@ -117,12 +99,12 @@ def fixture_make_tree() -> FixtureMakeTree:
     :return: Function for using this fixture.
     """
 
-    def _make_tree(root: Path, obj: dict[str, object]) -> None:
+    def _make_tree(obj: dict[str, object], root: Path | None = None) -> None:
         for key, value in obj.items():
-            fullpath = root / key
+            fullpath = (root or Path.cwd()) / key
             if isinstance(value, dict):
                 fullpath.mkdir(exist_ok=True)
-                _make_tree(fullpath, value)
+                _make_tree(value, fullpath)
             elif isinstance(value, list):
                 fullpath.write_text("\n".join(value), encoding="utf-8")
 

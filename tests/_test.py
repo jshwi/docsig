@@ -20,8 +20,6 @@ unusual indent, and all templates ending with ``G`` are ``Google`` style
 docstrings.
 """
 
-# pylint: disable=protected-access
-
 import pytest
 import templatest
 from templatest import Template, templates
@@ -32,9 +30,11 @@ from docsig.messages import E
 from . import (
     CHECK_ARGS,
     FAIL_CHECK_ARGS,
-    InitFileFixtureType,
+    FixtureMakeTree,
     MockMainType,
 )
+
+# pylint: disable=protected-access
 
 
 @pytest.mark.parametrize(
@@ -43,7 +43,7 @@ from . import (
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_exit_status(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -61,12 +61,12 @@ def test_exit_status(
     as this tests multiple functions in a file, some that may pass and
     some that may fail.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert main(".", *CHECK_ARGS) == int(name.startswith("f"))
 
 
@@ -82,7 +82,7 @@ def test_exit_status(
 )
 def test_stdout(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     _: str,
     template: str,
@@ -104,12 +104,12 @@ def test_stdout(
     output and some that may not.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: String data.
     :param expected: Expected output.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", *CHECK_ARGS)
     std = capsys.readouterr()
     assert expected
@@ -127,7 +127,7 @@ def test_stdout(
 )
 def test_error_codes(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     _: str,
     template: str,
@@ -141,12 +141,12 @@ def test_error_codes(
     ``docsig.messages``.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: String data.
     :param expected: Expected output.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     messages = [v.ref for _, v in E.items() if v.ref not in expected]
     main(".")
     std = capsys.readouterr()
@@ -161,7 +161,7 @@ def test_error_codes(
 )
 def test_multiple(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     _: str,
     template: str,
@@ -174,12 +174,12 @@ def test_multiple(
     generally excluded from other tests.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     :param expected: Expected result.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", *CHECK_ARGS, test_flake8=False)
     std = capsys.readouterr()
     assert std.out == expected
@@ -194,7 +194,7 @@ def test_multiple(
     ],
 )
 def test_disable_rule(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -213,12 +213,12 @@ def test_disable_rule(
     Expected results for these tests are derived from
     ``docsig.messages``.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert (
         main(
             ".",
@@ -237,7 +237,7 @@ def test_disable_rule(
 )
 def test_no_stdout(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     template: Template,
 ) -> None:
@@ -247,11 +247,11 @@ def test_no_stdout(
     and all tests should pass.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: String data.
     """
-    init_file(template.template)
+    make_tree({"module": {"file.py": [template.template]}})
     main(".", *CHECK_ARGS)
     std = capsys.readouterr()
     assert not std.out
@@ -265,7 +265,7 @@ def test_no_stdout(
 # pylint: disable=too-many-arguments,too-many-positional-arguments
 def test_ignore_no_params(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -282,7 +282,7 @@ def test_ignore_no_params(
     some that may fail.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: String data.
@@ -307,7 +307,7 @@ def test_ignore_no_params(
         "Args:",
         "Returns:",
     )
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     returncode = main(".", *CHECK_ARGS, "--ignore-no-params")
     std = capsys.readouterr()
 
@@ -335,7 +335,7 @@ def test_ignore_no_params(
 )
 def test_no_check_property_returns_flag(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     template: Template,
 ) -> None:
@@ -348,11 +348,11 @@ def test_no_check_property_returns_flag(
     property-related errors.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template.template)
+    make_tree({"module": {"file.py": [template.template]}})
     main(".")
     std = capsys.readouterr()
     assert E[505].fstring(T) in std.out
@@ -365,7 +365,7 @@ def test_no_check_property_returns_flag(
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_args(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -388,12 +388,12 @@ def test_ignore_args(
     as this tests multiple functions in a file, some that may pass and
     some that may fail.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert main(".", *CHECK_ARGS, "--ignore-args") == int(
         name.startswith("f")
         and "w-args" not in name
@@ -408,7 +408,7 @@ def test_ignore_args(
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_kwargs(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -431,12 +431,12 @@ def test_ignore_kwargs(
     as this tests multiple functions in a file, some that may pass and
     some that may fail.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert main(".", *CHECK_ARGS, "--ignore-kwargs") == int(
         name.startswith("f")
         and "w-kwargs" not in name
@@ -451,7 +451,7 @@ def test_ignore_kwargs(
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
 def test_no_flag(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     template: Template,
 ) -> None:
@@ -461,11 +461,11 @@ def test_no_flag(
     prefixed with ``FClass``, and these particular tests should all
     pass.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param template: Contents to write to file.
     """
-    init_file(template.template)
+    make_tree({"module": {"file.py": [template.template]}})
     assert main(".") == 0
 
 
@@ -475,7 +475,7 @@ def test_no_flag(
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
 def test_single_flag(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -491,12 +491,12 @@ def test_single_flag(
     All tests that fail, such as with `--check-class`, should be
     prefixed with `FClass`, and these particular tests should all fail.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert main(".", f"--check-{name.split('-')[1]}") == 1
 
 
@@ -506,7 +506,7 @@ def test_single_flag(
     ids=templates.registered.getgroup("f-w-class-constructor").getids(),
 )
 def test_check_class_constructor(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
     name: str,
     template: str,
@@ -522,12 +522,12 @@ def test_check_class_constructor(
     an 'F' just before the final part of the name relating to the docstring
     style. Otherwise, the test should pass.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     :param name: Name of test.
     :param template: Contents to write to file.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     # exclude --check-class from CHECK_ARGS, because this is
     # mutually incompatible with --check-class-constructor
     assert main(".", *CHECK_ARGS[1:], "--check-class-constructor") == int(

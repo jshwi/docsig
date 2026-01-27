@@ -21,7 +21,6 @@ from . import (
     FixtureFlake8,
     FixtureMakeTree,
     FixturePatchArgv,
-    InitFileFixtureType,
     MockMainType,
 )
 
@@ -29,13 +28,13 @@ from . import (
 def test_fix_optional_return_statements_with_overload_func_sig502(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test ignore typechecker.
 
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 from typing import Optional, overload
@@ -66,7 +65,7 @@ def get_something(number: Optional[int]) -> Optional[str]:
         return None
     return str(number)
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert "SIG502" not in std.out
@@ -118,7 +117,6 @@ exclude = '''.*src[\\/]design[\\/].*'''
 
     monkeypatch.setattr("docsig._core._Paths", _paths)
     make_tree(
-        Path.cwd(),
         {
             "src": {"design": {"file1.py": []}},
             "ssrc": {"design": {"file2.py": []}},
@@ -147,7 +145,7 @@ def test_exclude_defaults_396(
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     Path(".gitignore").unlink()
     main(".", "--verbose", test_flake8=False)
     expected = [
@@ -293,13 +291,13 @@ def test_exclude_defaults_396(
 def test_sig401_false_positive_427(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test false positive when using a code-block RST indent.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''\
 def method(*, arg1 = "") -> str:
@@ -315,7 +313,7 @@ def method(*, arg1 = "") -> str:
     """
     return ""
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert "SIG401" not in std.out
@@ -357,17 +355,17 @@ def function(param, param2, param3, param4) -> int:
 def test_indent_427(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     template: str,
 ) -> None:
     """Test indent properly records, for params only.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param template: Python code.
     """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", test_flake8=False)
     std = capsys.readouterr()
     assert "SIG401" in std.out
@@ -376,13 +374,13 @@ def test_indent_427(
 def test_class_and_class_constructor_452(
     capsys: pytest.CaptureFixture,
     flake8: FixtureFlake8,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test command lines errors when passed incompatible options.
 
     :param capsys: Capture sys out.
     :param flake8: Patch package entry point.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def function(param1, param2, param3) -> None:
@@ -393,7 +391,7 @@ def function(param1, param2, param3) -> None:
     :param param3: Description of param3.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     flake8(".", "--sig-check-class", "--sig-check-class-constructor")
     std = capsys.readouterr()
     assert docsig.messages.E[5].description in std.out
@@ -402,7 +400,7 @@ def function(param1, param2, param3) -> None:
 def test_description_missing_and_description_syntax_error_461(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test description missing raised with other description.
 
@@ -411,7 +409,7 @@ def test_description_missing_and_description_syntax_error_461(
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def function(param1, param2) -> None:
@@ -422,7 +420,7 @@ def function(param1, param2) -> None:
         and continues on the next line.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", test_flake8=False)
     std = capsys.readouterr()
     assert docsig.messages.E[301].description in std.out
@@ -493,7 +491,7 @@ add_imports = ["from __future__ import annotations"]
 def test_properties_not_recognized_when_underneath_other_decorators_509(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Fix properties not recognized when stacked.
 
@@ -501,7 +499,7 @@ def test_properties_not_recognized_when_underneath_other_decorators_509(
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 import typing as _t
@@ -527,7 +525,7 @@ class Account(dict[str, _t.Any]):
     def portfolio(self) -> _Tickers:
         """Get portfolio."""
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert not main(".", test_flake8=False)
     main(".", "-P", test_flake8=False)
     std = capsys.readouterr()
@@ -537,7 +535,7 @@ class Account(dict[str, _t.Any]):
 def test_properties_not_recognized_when_on_top_of_other_decorators_509(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Fix properties not recognized when stacked.
 
@@ -545,7 +543,7 @@ def test_properties_not_recognized_when_on_top_of_other_decorators_509(
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 import typing as _t
@@ -571,7 +569,7 @@ class Account(dict[str, _t.Any]):
     def portfolio(self) -> _Tickers:
         """Get portfolio."""
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert not main(".", test_flake8=False)
     main(".", "-P", test_flake8=False)
     std = capsys.readouterr()
@@ -581,13 +579,13 @@ class Account(dict[str, _t.Any]):
 def test_no_erroneous_301_in_duplicate(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Make sure 301 does not appear for duplicate parameters.
 
     :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = r'''
 # pylint: disable=too-many-locals,too-many-statements
@@ -611,7 +609,7 @@ def print_target_progress(
     :param executor: ThreadPoolExecutor.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[301].description not in std.out
@@ -637,13 +635,13 @@ def test_handle_empty_symlinks(
 def test_no_erroneous_402_when_order_cannot_be_confirmed(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Fix params out-of-order popping up with a single document.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 class Transactions(_Transactions):
@@ -672,7 +670,7 @@ class Transactions(_Transactions):
                 )
             )
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", "--check-class")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
@@ -681,13 +679,13 @@ class Transactions(_Transactions):
 def test_fix_allow_or_operator_in_type_545(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test type declaration in name with pipe is allowed.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def foo(a, **kwargs) -> None:
@@ -697,7 +695,7 @@ def foo(a, **kwargs) -> None:
     :keyword str | None bar: Use string or None for this purpose.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[201].description not in std.out
@@ -709,13 +707,13 @@ def foo(a, **kwargs) -> None:
 def test_close_with_bitwise_operator_545(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test pipe still treated as a bad closing token.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def foo(**kwargs) -> None:
@@ -724,7 +722,7 @@ def foo(**kwargs) -> None:
     :keyword bar| Use string or None for this purpose.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[304].description.format(token="|") in std.out
@@ -733,13 +731,13 @@ def foo(**kwargs) -> None:
 def test_recognise_yield_550(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Recognize yield in docstrings.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def count_up_to(n: int) -> _t.Generator[int, None, None]:
@@ -755,7 +753,7 @@ def count_up_to(n: int) -> _t.Generator[int, None, None]:
     for i in range(n):
         yield i
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert not std.out
@@ -764,13 +762,13 @@ def count_up_to(n: int) -> _t.Generator[int, None, None]:
 def test_sig401_false_positives_562(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test indents are ignored within double dot directives.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 class Classy:
@@ -791,7 +789,7 @@ class Classy:
         :return: Timestamp in a format resembling ISO 8601
         """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert not std.out
@@ -800,13 +798,13 @@ class Classy:
 def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test no additional out-of-order or not-equal-to-arg.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 class ChildTransactions(Transactions):
@@ -826,7 +824,7 @@ class ChildTransactions(Transactions):
     ) -> None:
         super().__init__()
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", "--check-class")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
@@ -836,13 +834,13 @@ class ChildTransactions(Transactions):
 def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test out-of-order still valid when param missing.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 class ChildTransactions(Transactions):
@@ -862,7 +860,7 @@ class ChildTransactions(Transactions):
     ) -> None:
         super().__init__()
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".", "--check-class")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description in std.out
@@ -871,13 +869,13 @@ class ChildTransactions(Transactions):
 def test_fix_no_402_for_very_similar_names_683(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """402 should not be showing for very similar names.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def function(param1, param2, param3, param4) -> None:
@@ -888,7 +886,7 @@ def function(param1, param2, param3, param4) -> None:
     :param param4: Description of param4.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
@@ -897,13 +895,13 @@ def function(param1, param2, param3, param4) -> None:
 def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test no additional out-of-order or not-equal-to-arg.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 @_decorators.parse_msgs
@@ -973,7 +971,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :return: Exit status for whether a test failed or not.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[402].description not in std.out
@@ -982,13 +980,13 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 def test_incorrect_sig301_with_both_sig202_and_sig402_707(
     capsys: pytest.CaptureFixture,
     main: MockMainType,
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
 ) -> None:
     """Test no incorrect SIG301 with both SIG202 and SIG402.
 
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     """
     template = '''
 def function(a, b) -> None:
@@ -999,7 +997,7 @@ def function(a, b) -> None:
     :param c: Description of c.
     """
 '''
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     main(".")
     std = capsys.readouterr()
     assert docsig.messages.E[301].description not in std.out
