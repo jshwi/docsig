@@ -24,7 +24,7 @@ Cannot determine whether a return statement should exist or not
 
 .. hint::
 
-    This check requires that you annotate your function. If you don't type your code this check can be disabled.
+    This check requires that you annotate your function. If you don't type your code, this check can be disabled.
 
 .. code-block:: python
 

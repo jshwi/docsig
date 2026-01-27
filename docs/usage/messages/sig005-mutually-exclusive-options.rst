@@ -6,7 +6,7 @@ Both mutually exclusive class options configured
 This is only raised as a ``flake8`` violation so that it won't cause ``flake8`` to
 totally crash and other plugins can continue to run
 
-When running ``docsig`` on it's own an exception will be raised instead
+When running ``docsig`` on its own an exception will be raised instead
 
 .. code-block:: console
 

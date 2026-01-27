@@ -1,6 +1,6 @@
-Checking a class docstring is not enabled by default, as there are two mutually exclusive choices to choose from.
+Checking a class docstring is not enabled by default, as there are two mutually exclusive options.
 
-This check will either check the documentation of ``__init__``, or check documentation of ``__init__`` under the class docstring, and not under ``__init__`` itself
+This check will either check the documentation of ``__init__`` itself, or check the documentation of ``__init__`` under the class docstring, but not both
 
 .. code-block:: python
 

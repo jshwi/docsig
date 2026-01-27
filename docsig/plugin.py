@@ -124,7 +124,7 @@ class Docsig:
 
     @classmethod
     def parse_options(cls, a: Namespace) -> None:
-        """Parse flake8 options into an instance accessible dict.
+        """Parse flake8 options into an instance-accessible dict.
 
         :param a: Argparse namespace.
         """

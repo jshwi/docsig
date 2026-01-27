@@ -39,7 +39,7 @@ def pretty_print_error(
 
     :param exception_type: Type of the exception.
     :param msg: The exception message.
-    :param no_ansi: Whether to in ANSI escape codes.
+    :param no_ansi: Whether to disable ANSI escape codes.
     """
     exception_type_name = exception_type.__name__
     if not no_ansi and _sys.stdout.isatty():

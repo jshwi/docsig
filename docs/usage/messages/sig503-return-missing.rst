@@ -26,7 +26,7 @@ Return missing from docstring
 
 .. error::
 
-    A return won't be recognised with the below syntax
+    A return won't be recognised with the following syntax
 
 .. code-block:: python
 

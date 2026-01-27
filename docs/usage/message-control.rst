@@ -14,8 +14,8 @@ The base configuration exists in the pyproject.toml file
 
 .. include:: ../_generated/pyproject-toml-example.rst
 
-After this, messages available can also be achieved with the commandline and
-with comment directives
+After this, available messages can also be configured with the commandline and
+comment directives
 
 Both commandline and comments can be used for finer configuration of signature
 documentation policy
