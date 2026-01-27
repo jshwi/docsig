@@ -7,6 +7,7 @@ Contains package entry point.
 
 from __future__ import annotations as _
 
+<<<<<<< HEAD
 import sys as _sys
 import warnings as _warnings
 
@@ -37,6 +38,11 @@ def _warn_on_deprecated_short_flags() -> None:
                 category=FutureWarning,
                 stacklevel=2,
             )
+=======
+from ._config import parse_args
+from ._core import docsig
+from ._hooks import excepthook as _excepthook
+>>>>>>> 1a57d9b4 (wip: remove short form for check-class)
 
 
 def main() -> str | int:
@@ -46,6 +52,7 @@ def main() -> str | int:
 
     :return: Exit status for whether the test failed or not.
     """
+<<<<<<< HEAD
     _warn_on_deprecated_short_flags()
     a = _parse_args()
     _excepthook(a.no_ansi)
@@ -73,3 +80,10 @@ def main() -> str | int:
         exclude=a.exclude,
         excludes=a.excludes,
     )
+=======
+    args = parse_args()
+    excepthook(args.no_ansi)
+    kwargs = vars(args)
+    path = kwargs.pop("path")
+    return docsig(*path, **kwargs)
+>>>>>>> 1a57d9b4 (wip: remove short form for check-class)
