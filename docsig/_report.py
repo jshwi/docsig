@@ -105,7 +105,7 @@ class Failure(_t.List[Failed]):
 
     @staticmethod
     def _normalize_params(from_: _Params, to: _Params) -> None:
-        # inset the parameters that are missing in their corresponding
+        # insert the parameters that are missing in their corresponding
         # index so that they are included in further analysis, that way
         # there are no additional, and redundant, errors
         # this will ensure that both signature and docstring are equal,
