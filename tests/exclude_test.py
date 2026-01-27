@@ -15,7 +15,7 @@ import pytest
 
 import docsig
 
-from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType
+from . import TREE, FixtureMakeTree, MockMainType
 
 
 def test_exclude_defaults(
@@ -97,12 +97,12 @@ def test_exclude_defaults(
 
 
 def test_exclude_argument(
-    init_file: InitFileFixtureType,
+    make_tree: FixtureMakeTree,
     main: MockMainType,
 ) -> None:
     """Test bash script is ignored when exclude argument passed.
 
-    :param init_file: Initialize a test file.
+    :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
     """
     template = """
@@ -124,7 +124,7 @@ new-ssl() {
 
 new-ssl "${@}"
 """
-    init_file(template)
+    make_tree({"module": {"file.py": [template]}})
     assert (
         main(".", "--exclude", r"module[\\/]file.py", test_flake8=False) == 0
     )

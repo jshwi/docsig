@@ -15,15 +15,6 @@ FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
 
 
-class InitFileFixtureType(
-    t.Protocol,
-):  # pylint: disable=too-few-public-methods
-    """Type for ``fixture_init_file``."""
-
-    def __call__(self, content: str, path: Path = ..., /) -> Path:
-        """Type for ``fixture_init_file``."""
-
-
 class FixtureMakeTree(t.Protocol):  # pylint: disable=too-few-public-methods
     """Type for ``fixture_mock_tree``."""
 
