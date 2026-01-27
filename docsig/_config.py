@@ -189,16 +189,9 @@ def build_parser() -> _ArgumentParser:
         help="check property return values",
     )
     parser.add_argument(
-        "-p",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_protected",
-    )
-    parser.add_argument(
         "--check-protected",
         action="store_true",
         help="check protected functions and classes",
-        dest="check_protected",
     )
     parser.add_argument(
         "--check-protected-class-methods",
