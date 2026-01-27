@@ -20,7 +20,6 @@ def _warn_on_deprecated_short_flags() -> None:
         "-c": "--check-class",
         "-D": "--check-dunders",
         "-o": "--check-overridden",
-        "-p": "--check-protected",
     }
     raw_args = _sys.argv[1:]
     expanded_flags = []
