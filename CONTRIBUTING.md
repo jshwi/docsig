@@ -164,7 +164,7 @@ String input involves a function, its signature, and its docstring
 
 String output includes expected error output (a passing test expects no output)
 
-Changes to tests should not need to be made in `tests._tests` but instead `tests.__init__`
+Changes to tests should not need to be made in `tests._tests` but instead `tests.__init__`.
 
 Tests are organized into the following
 [categories](https://docsig.io/en/latest/development/tests.html)
