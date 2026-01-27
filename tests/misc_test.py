@@ -923,4 +923,4 @@ def function(a, b) -> None:
 """
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
-        main(".", "-cDoI", test_flake8=False)
+        main(".", "-cDI", test_flake8=False)
