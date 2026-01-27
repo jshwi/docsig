@@ -134,16 +134,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
     )
     group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument(
-        "-c",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="check_class",
-    )
-    group.add_argument(
         "--check-class",
         action="store_true",
         help="check class docstrings",
-        dest="check_class",
     )
     group.add_argument(
         "--check-class-constructor",
