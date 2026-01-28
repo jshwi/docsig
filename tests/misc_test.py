@@ -590,9 +590,7 @@ def test_multiple_exit_codes(
         Path("module") / "file3.py",
     )
     init_file(
-        templates.registered.getbyname(
-            "p-param-s",
-        ).template,  # type: ignore
+        templates.registered.getbyname("p-param-s").template,  # type: ignore
         Path("module") / "file4.py",
     )
     assert (

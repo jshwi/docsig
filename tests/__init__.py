@@ -216,9 +216,7 @@ TREE = {
     "coverage.xml": [WILL_ERROR],
     "poetry.lock": [WILL_ERROR],
     "README.rst": [WILL_ERROR],
-    ".git": {
-        "HEAD": [WILL_ERROR],
-    },
+    ".git": {"HEAD": [WILL_ERROR]},
     ".idea": {
         "docsig.iml": [WILL_ERROR],
         "jsonSchemas.xml": [WILL_ERROR],
