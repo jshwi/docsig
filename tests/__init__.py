@@ -15,9 +15,7 @@ FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
 
 
-class FixtureMakeTree(
-    t.Protocol,
-):  # pylint: disable=too-few-public-methods
+class FixtureMakeTree(t.Protocol):  # pylint: disable=too-few-public-methods
     """Type for ``fixture_mock_tree``."""
 
     def __call__(self, obj: t.Dict[t.Any, t.Any], root: Path = ..., /) -> None:
@@ -209,9 +207,7 @@ TREE = {
     "coverage.xml": [WILL_ERROR],
     "poetry.lock": [WILL_ERROR],
     "README.rst": [WILL_ERROR],
-    ".git": {
-        "HEAD": [WILL_ERROR],
-    },
+    ".git": {"HEAD": [WILL_ERROR]},
     ".idea": {
         "docsig.iml": [WILL_ERROR],
         "jsonSchemas.xml": [WILL_ERROR],

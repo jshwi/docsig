@@ -27,12 +27,7 @@ from templatest import Template, templates
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import (
-    CHECK_ARGS,
-    FAIL_CHECK_ARGS,
-    FixtureMakeTree,
-    MockMainType,
-)
+from . import CHECK_ARGS, FAIL_CHECK_ARGS, FixtureMakeTree, MockMainType
 
 # pylint: disable=protected-access
 

@@ -363,18 +363,13 @@ def function(param1, param2) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    make_tree(
-        {"module": {"file1.py": [template1], "file2.py": [template2]}},
-    )
+    make_tree({"module": {"file1.py": [template1], "file2.py": [template2]}})
     assert main(".", test_flake8=False, no_ansi=False) == 123
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
 
 
-def test_bash_script(
-    main: MockMainType,
-    make_tree: FixtureMakeTree,
-) -> None:
+def test_bash_script(main: MockMainType, make_tree: FixtureMakeTree) -> None:
     """Test bash script.
 
     :param main: Mock ``main`` function.

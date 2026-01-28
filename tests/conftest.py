@@ -15,12 +15,7 @@ from flake8.main.application import Application
 
 import docsig
 
-from . import (
-    FixtureFlake8,
-    FixtureMakeTree,
-    FixturePatchArgv,
-    MockMainType,
-)
+from . import FixtureFlake8, FixtureMakeTree, FixturePatchArgv, MockMainType
 
 
 @pytest.fixture(name="environment", autouse=True)
