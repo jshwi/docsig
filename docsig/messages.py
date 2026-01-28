@@ -138,11 +138,7 @@ E = MessageMap(
             "includes parameters that do not exist",
             "params-do-not-exist",
         ),
-        203: Message(
-            "SIG203",
-            "parameters missing",
-            "params-missing",
-        ),
+        203: Message("SIG203", "parameters missing", "params-missing"),
         #: SIG3xx Parameters
         301: Message(
             "SIG301",
@@ -227,15 +223,7 @@ E = MessageMap(
             "return-description-missing",
         ),
         #: SIG9xx Error
-        901: Message(
-            "SIG901",
-            "parsing python code failed",
-            "invalid-syntax",
-        ),
-        902: Message(
-            "SIG902",
-            "failed to read file",
-            "unicode-decode-error",
-        ),
+        901: Message("SIG901", "parsing python code failed", "invalid-syntax"),
+        902: Message("SIG902", "failed to read file", "unicode-decode-error"),
     },
 )

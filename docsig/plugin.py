@@ -7,6 +7,8 @@ import typing as t
 from argparse import Namespace
 from pathlib import Path
 
+from ._config import Check as _CheckConfig
+from ._config import Ignore as _IgnoreConfig
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
 from ._core import runner, setup_logger
@@ -149,23 +151,23 @@ class Docsig:
             yield 0, 0, line, self.__class__
         else:
             setup_logger(self.a.verbose)
-            results = runner(
-                Path(self.filename),
-                check_class=self.a.check_class,
-                check_class_constructor=self.a.check_class_constructor,
-                check_dunders=self.a.check_dunders,
-                check_protected_class_methods=(
-                    self.a.check_protected_class_methods
-                ),
-                check_nested=self.a.check_nested,
-                check_overridden=self.a.check_overridden,
-                check_protected=self.a.check_protected,
-                check_property_returns=self.a.check_property_returns,
-                ignore_no_params=self.a.ignore_no_params,
-                ignore_args=self.a.ignore_args,
-                ignore_kwargs=self.a.ignore_kwargs,
-                ignore_typechecker=self.a.ignore_typechecker,
+            check = _CheckConfig(
+                class_=self.a.check_class,
+                class_constructor=self.a.check_class_constructor,
+                dunders=self.a.check_dunders,
+                protected_class_methods=self.a.check_protected_class_methods,
+                nested=self.a.check_nested,
+                overridden=self.a.check_overridden,
+                protected=self.a.check_protected,
+                property_returns=self.a.check_property_returns,
             )
+            ignore = _IgnoreConfig(
+                no_params=self.a.ignore_no_params,
+                args=self.a.ignore_args,
+                kwargs=self.a.ignore_kwargs,
+                typechecker=self.a.ignore_typechecker,
+            )
+            results = runner(Path(self.filename), check=check, ignore=ignore)
             for result in results:
                 for info in result:
                     line = "{msg} '{name}'".format(

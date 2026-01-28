@@ -9,6 +9,7 @@ import argparse as _a
 import os as _os
 import re as _re
 import typing as _t
+from dataclasses import dataclass as _dataclass
 from pathlib import Path as _Path
 
 import tomli as _tomli
@@ -312,3 +313,47 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="string to parse instead of files",
     )
     return parser.parse_args(args)
+
+
+# pylint: disable=too-many-instance-attributes,too-few-public-methods
+@_dataclass
+class Check:
+    """Configuration for what to check.
+
+    :param class: Check class docstrings.
+    :param class_constructor: Check ``__init__`` methods. Note
+        that this is mutually incompatible with check_class.
+    :param dunders: Check dunder methods.
+    :param nested: Check nested functions and classes.
+    :param overridden: Check overridden methods.
+    :param protected: Check protected functions and classes.
+    :param property_returns: Run return checks on properties.
+    :param protected_class_methods: Check public methods belonging
+        to protected classes.
+    """
+
+    class_: bool = False
+    class_constructor: bool = False
+    dunders: bool = False
+    nested: bool = False
+    overridden: bool = False
+    protected: bool = False
+    property_returns: bool = False
+    protected_class_methods: bool = False
+
+
+@_dataclass
+class Ignore:
+    """Configuration for what to ignore.
+
+    :param no_params: Ignore docstrings where parameters are not
+        documented.
+    :param args: Ignore args prefixed with an asterisk.
+    :param kwargs: Ignore kwargs prefixed with two asterisks.
+    :param typechecker: Ignore checking return values.
+    """
+
+    no_params: bool = False
+    args: bool = False
+    kwargs: bool = False
+    typechecker: bool = False
