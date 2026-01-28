@@ -77,17 +77,15 @@ def _run_check(
     if (
         isinstance(child, _Function)
         and not (child.isoverridden and not check.overridden)
-        and (
-            not (child.isprotected and not check.protected)
+        and not (child.isprotected and not check.protected)
+        and not (child.isdunder and not check.dunders)
+        and not (child.docstring.bare and ignore.no_params)
+        and not (
+            child.isinit
             and not (
-                child.isinit
-                and not (
-                    (check.class_ or check.class_constructor)
-                    and not (parent.isprotected and not check.protected)
-                )
+                (check.class_ or check.class_constructor)
+                and not (parent.isprotected and not check.protected)
             )
-            and not (child.isdunder and not check.dunders)
-            and not (child.docstring.bare and ignore.no_params)
         )
     ):
         failure = _Failure(
