@@ -220,11 +220,7 @@ class Failure(_t.List[Failed]):
             self._add(_E[303])
         elif doc.closing_token != ":":
             # bad-closing-token
-            self._add(
-                _E[304],
-                token=doc.closing_token,
-                hint=True,
-            )
+            self._add(_E[304], token=doc.closing_token, hint=True)
         if doc.description is not None and not all(
             i.strip()[0].isupper()
             for i in _sentence_tokenizer(doc.description)
