@@ -452,9 +452,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     return _report(failures, no_ansi=no_ansi)
 
 
-def derive_module_name(
-    file_path: str | _Path,
-) -> str:
+def derive_module_name(file_path: str | _Path) -> str:
     """Extract Python module names from paths.
 
     A dot-separated Python module name is generated from the given file
