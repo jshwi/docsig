@@ -64,28 +64,42 @@ def setup_logger(verbose: bool) -> None:
         logger.addHandler(stream_handler)
 
 
-# pylint: disable=too-many-boolean-expressions
+def _should_check_function(
+    child: _Function,
+    parent: _Parent,
+    config: _Config,
+) -> bool:
+    if child.isoverridden and not config.check.overridden:
+        return False
+
+    if child.isprotected and not config.check.protected:
+        return False
+
+    if child.isdunder and not config.check.dunders:
+        return False
+
+    if child.docstring.bare and config.ignore.no_params:
+        return False
+
+    if child.isinit and (
+        not (config.check.class_ or config.check.class_constructor)
+        or (parent.isprotected and not config.check.protected)
+    ):
+        return False
+
+    return True
+
+
 def _run_check(
     child: _Parent,
     parent: _Parent,
     config: _Config,
     failures: _Failures,
 ) -> None:
-    if (
-        isinstance(child, _Function)
-        and not (child.isoverridden and not config.check.overridden)
-        and (
-            not (child.isprotected and not config.check.protected)
-            and not (
-                child.isinit
-                and not (
-                    (config.check.class_ or config.check.class_constructor)
-                    and not (parent.isprotected and not config.check.protected)
-                )
-            )
-            and not (child.isdunder and not config.check.dunders)
-            and not (child.docstring.bare and config.ignore.no_params)
-        )
+    if isinstance(child, _Function) and _should_check_function(
+        child,
+        parent,
+        config,
     ):
         failure = _Failure(
             child,
