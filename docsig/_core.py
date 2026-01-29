@@ -122,7 +122,7 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
         parent = _from_str(
             context={
                 "code": code,
-                "module_name": derive_module_name(path),
+                "module_name": _derive_module_name(path),
                 "path": path,
             },
             config=config,
@@ -343,15 +343,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     return _run_docsig(*path, string=string, config=config)
 
 
-def derive_module_name(file_path: str | _Path) -> str:
-    """Extract Python module names from paths.
-
-    A dot-separated Python module name is generated from the given file
-    path.
-
-    :param file_path: A file system path.
-    :returns: The converted Python module name.
-    """
+def _derive_module_name(file_path: str | _Path) -> str:
     converted = _os.path.splitext(str(file_path))[0]
     converted = converted.replace(_os.sep, ".")
     converted = converted.replace("-", "_")
