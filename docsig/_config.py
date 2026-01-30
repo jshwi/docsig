@@ -5,7 +5,7 @@ docsig._config
 
 from __future__ import annotations as _
 
-import argparse as _a
+import argparse as _argparse
 import os as _os
 import re as _re
 import typing as _t
@@ -80,19 +80,19 @@ def merge_configs(
     return obj1
 
 
-class _ArgumentParser(_a.ArgumentParser):
+class _ArgumentParser(_argparse.ArgumentParser):
     def parse_known_args(  # type: ignore
         self,
         args: _t.Sequence[str] | None = None,
-        namespace: _a.Namespace | None = None,
-    ) -> tuple[_a.Namespace | None, list[str]]:
+        namespace: _argparse.Namespace | None = None,
+    ) -> tuple[_argparse.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
         config = get_config(_Path(self.prog).stem)
         namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 
 
-def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
+def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
     """Parse commandline arguments.
 
     :param args: Args for manual parsing.
@@ -136,7 +136,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     group.add_argument(
         "-c",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_class",
     )
     group.add_argument(
@@ -148,7 +148,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     group.add_argument(
         "-C",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_class_constructor",
     )
     group.add_argument(
@@ -160,7 +160,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-D",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_dunders",
     )
     parser.add_argument(
@@ -172,7 +172,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-N",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_nested",
     )
     parser.add_argument(
@@ -184,7 +184,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-o",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_overridden",
     )
     parser.add_argument(
@@ -196,7 +196,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-P",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_property_returns",
     )
     parser.add_argument(
@@ -208,7 +208,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-p",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_protected",
     )
     parser.add_argument(
@@ -220,7 +220,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-m",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="check_protected_class_methods",
     )
     parser.add_argument(
@@ -232,7 +232,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-a",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="ignore_args",
     )
     parser.add_argument(
@@ -244,7 +244,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-k",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="ignore_kwargs",
     )
     parser.add_argument(
@@ -256,7 +256,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
     parser.add_argument(
         "-i",
         action="store_true",
-        help=_a.SUPPRESS,
+        help=_argparse.SUPPRESS,
         dest="ignore_no_params",
     )
     parser.add_argument(
