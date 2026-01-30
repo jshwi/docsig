@@ -55,10 +55,7 @@ ignore-words-list = "astroid"
 
 [tool.coverage.report]
 exclude_lines = [
-  "@_t.overload",
-  "from docsig import main",
-  "if __name__ == .__main__.:",
-  "import sys as _sys"
+  "pragma: no cover"
 ]
 fail_under = 100
 
