@@ -184,8 +184,8 @@ def _report(
     retcodes = [0]
     for failure in failures:
         retcodes.append(failure.retcode)
-        module = f"{path}:" if path is not None else ""
-        header = f"{module}{failure.lineno} in {failure.name}"
+        path_prefix = f"{path}:" if path is not None else ""
+        header = f"{path_prefix}{failure.lineno} in {failure.name}"
         if not config.no_ansi and _sys.stdout.isatty():
             header = f"\033[35m{header}\033[0m"
 
