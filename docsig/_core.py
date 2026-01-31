@@ -14,6 +14,9 @@ from pathlib import Path as _Path
 import astroid as _ast
 
 from . import _decorators
+from ._config import Check as _Check
+from ._config import Config as _Config
+from ._config import Ignore as _Ignore
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
 from ._files import Paths as _Paths
@@ -61,77 +64,45 @@ def setup_logger(verbose: bool) -> None:
         logger.addHandler(stream_handler)
 
 
-# pylint: disable=too-many-arguments,too-many-locals
-# pylint: disable=too-many-positional-arguments,too-many-boolean-expressions
+# pylint: disable=too-many-boolean-expressions
 def _run_check(
     child: _Parent,
     parent: _Parent,
-    check_class: bool,
-    check_class_constructor: bool,
-    check_dunders: bool,
-    check_nested: bool,
-    check_overridden: bool,
-    check_protected: bool,
-    check_property_returns: bool,
-    ignore_no_params: bool,
-    ignore_typechecker: bool,
-    no_ansi: bool,
-    target: _Messages,
+    config: _Config,
     failures: _Failures,
 ) -> None:
     if (
         isinstance(child, _Function)
-        and not (child.isoverridden and not check_overridden)
+        and not (child.isoverridden and not config.check.overridden)
         and (
-            not (child.isprotected and not check_protected)
+            not (child.isprotected and not config.check.protected)
             and not (
                 child.isinit
                 and not (
-                    (check_class or check_class_constructor)
-                    and not (parent.isprotected and not check_protected)
+                    (config.check.class_ or config.check.class_constructor)
+                    and not (parent.isprotected and not config.check.protected)
                 )
             )
-            and not (child.isdunder and not check_dunders)
-            and not (child.docstring.bare and ignore_no_params)
+            and not (child.isdunder and not config.check.dunders)
+            and not (child.docstring.bare and config.ignore.no_params)
         )
     ):
         failure = _Failure(
             child,
-            target,
-            check_property_returns,
-            ignore_typechecker,
+            config.target,
+            config.check.property_returns,
+            config.ignore.typechecker,
         )
         if failure:
             failures.append(failure)
 
     # recurse for either class methods or, if enabled, nested functions
-    if not isinstance(child, _Function) or check_nested:
+    if not isinstance(child, _Function) or config.check.nested:
         for func in child.children:
-            _run_check(
-                func,
-                child,
-                check_class,
-                check_class_constructor,
-                check_dunders,
-                check_nested,
-                check_overridden,
-                check_protected,
-                check_property_returns,
-                ignore_no_params,
-                ignore_typechecker,
-                no_ansi,
-                target,
-                failures,
-            )
+            _run_check(func, child, config, failures)
 
 
-def _from_file(
-    path: _Path,
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor: bool,
-) -> _Parent:
+def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
         parent = _from_str(
@@ -140,11 +111,8 @@ def _from_file(
                 "module_name": derive_module_name(path),
                 "path": path,
             },
-            messages=messages,
+            config=config,
             path=path,
-            ignore_args=ignore_args,
-            ignore_kwargs=ignore_kwargs,
-            check_class_constructor=check_class_constructor,
         )
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
@@ -157,13 +125,9 @@ def _from_file(
     return parent
 
 
-# pylint: disable=too-many-arguments,too-many-positional-arguments
 def _from_str(
     context: dict[str, _t.Any],
-    messages: _Messages,
-    ignore_args: bool,
-    ignore_kwargs: bool,
-    check_class_constructor: bool,
+    config: _Config,
     path: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
@@ -171,11 +135,11 @@ def _from_str(
     try:
         parent = _Parent(
             _ast.parse(**context),
-            _Directives.from_text(context["code"], messages),
+            _Directives.from_text(context["code"], config.disable),
             path,
-            ignore_args,
-            ignore_kwargs,
-            check_class_constructor,
+            config.ignore.args,
+            config.ignore.kwargs,
+            config.check.class_constructor,
         )
         logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
     except _ast.AstroidSyntaxError as err:
@@ -185,60 +149,30 @@ def _from_str(
     return parent
 
 
-# pylint: disable=too-many-arguments,too-many-positional-arguments
-def _get_failures(
-    module: _Parent,
-    check_class: bool,
-    check_class_constructor: bool,
-    check_dunders: bool,
-    check_nested: bool,
-    check_overridden: bool,
-    check_protected: bool,
-    check_property_returns: bool,
-    ignore_no_params: bool,
-    ignore_typechecker: bool,
-    check_protected_class_methods: bool,
-    no_ansi: bool,
-    target: _Messages,
-) -> _Failures:
+def _get_failures(module: _Parent, config: _Config) -> _Failures:
     failures = _Failures()
     for top_level in module.children:
         if (
             not top_level.isprotected
-            or check_protected
-            or check_protected_class_methods
+            or config.check.protected
+            or config.check.protected_class_methods
         ):
-            _run_check(
-                top_level,
-                module,
-                check_class,
-                check_class_constructor,
-                check_dunders,
-                check_nested,
-                check_overridden,
-                check_protected,
-                check_property_returns,
-                ignore_no_params,
-                ignore_typechecker,
-                no_ansi,
-                target or _Messages(),
-                failures,
-            )
+            _run_check(top_level, module, config, failures)
 
     return failures
 
 
 def _report(
     failures: _Failures,
+    config: _Config,
     path: str | None = None,
-    no_ansi: bool = False,
 ) -> int:
     retcodes = [0]
     for failure in failures:
         retcodes.append(failure.retcode)
         module = f"{path}:" if path is not None else ""
         header = f"{module}{failure.lineno} in {failure.name}"
-        if not no_ansi and _sys.stdout.isatty():
+        if not config.no_ansi and _sys.stdout.isatty():
             header = f"\033[35m{header}\033[0m"
 
         print(header)
@@ -257,71 +191,15 @@ def _report(
     return max(retcodes)
 
 
-# pylint: disable=too-many-locals,too-many-arguments
-# pylint: disable=too-many-positional-arguments
-def runner(
-    path: _Path,
-    disable: _Messages | None = None,
-    check_class: bool = False,
-    check_class_constructor: bool = False,
-    check_dunders: bool = False,
-    check_nested: bool = False,
-    check_overridden: bool = False,
-    check_protected: bool = False,
-    check_property_returns: bool = False,
-    ignore_no_params: bool = False,
-    ignore_args: bool = False,
-    ignore_kwargs: bool = False,
-    ignore_typechecker: bool = False,
-    check_protected_class_methods: bool = False,
-    no_ansi: bool = False,
-    target: _Messages | None = None,
-) -> _Failures:
+def runner(path: _Path, config: _Config) -> _Failures:
     """Per path runner.
 
     :param path: Path to check.
-    :param disable: Messages to disable.
-    :param check_class: Check class docstrings.
-    :param check_class_constructor: Check ``__init__`` methods. Note
-        that this is mutually incompatible with check_class.
-    :param check_dunders: Check dunder methods
-    :param check_nested: Check nested functions and classes.
-    :param check_overridden: Check overridden methods
-    :param check_protected: Check protected functions and classes.
-    :param check_property_returns: Run return checks on properties.
-    :param ignore_no_params: Ignore docstrings where parameters are not
-        documented
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param ignore_typechecker: Ignore checking return values.
-    :param check_protected_class_methods: Check public methods belonging
-        to protected classes.
-    :param no_ansi: Disable ANSI output.
-    :param target: List of errors to target.
+    :param config: Configuration object.
     :return: Exit status for whether the test failed or not.
     """
-    module = _from_file(
-        path,
-        disable or _Messages(),
-        ignore_args,
-        ignore_kwargs,
-        check_class_constructor,
-    )
-    return _get_failures(
-        module,
-        check_class,
-        check_class_constructor,
-        check_dunders,
-        check_nested,
-        check_overridden,
-        check_protected,
-        check_property_returns,
-        ignore_no_params,
-        ignore_typechecker,
-        check_protected_class_methods,
-        no_ansi,
-        target or _Messages(),
-    )
+    module = _from_file(path, config)
+    return _get_failures(module, config)
 
 
 @_decorators.parse_msgs
@@ -396,60 +274,52 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if exclude is not None:
         exclude_.append(exclude)
 
+    check = _Check(
+        class_=check_class,
+        class_constructor=check_class_constructor,
+        dunders=check_dunders,
+        protected_class_methods=check_protected_class_methods,
+        nested=check_nested,
+        overridden=check_overridden,
+        protected=check_protected,
+        property_returns=check_property_returns,
+    )
+    ignore = _Ignore(
+        no_params=ignore_no_params,
+        args=ignore_args,
+        kwargs=ignore_kwargs,
+        typechecker=ignore_typechecker,
+    )
+    config = _Config(
+        list_checks=list_checks,
+        include_ignored=include_ignored,
+        check=check,
+        ignore=ignore,
+        no_ansi=no_ansi,
+        verbose=verbose,
+        target=target or _Messages(),
+        disable=disable or _Messages(),
+        exclude=exclude_,
+        excludes=excludes,
+    )
+
     if string is None:
         retcodes = [0]
         paths = _Paths(
             *path,
-            patterns=exclude_,
-            excludes=excludes,
-            include_ignored=include_ignored,
+            patterns=config.exclude,
+            excludes=config.excludes,
+            include_ignored=config.include_ignored,
         )
         for path_ in paths:
-            failures = runner(
-                path_,
-                disable,
-                check_class,
-                check_class_constructor,
-                check_dunders,
-                check_nested,
-                check_overridden,
-                check_protected,
-                check_property_returns,
-                ignore_no_params,
-                ignore_args,
-                ignore_kwargs,
-                ignore_typechecker,
-                check_protected_class_methods,
-                no_ansi,
-                target,
-            )
-            retcodes.append(_report(failures, str(path_), no_ansi))
+            failures = runner(path_, config)
+            retcodes.append(_report(failures, config, str(path_)))
 
         return max(retcodes)
 
-    module = _from_str(
-        {"code": string},
-        disable or _Messages(),
-        ignore_args,
-        ignore_kwargs,
-        check_class_constructor,
-    )
-    failures = _get_failures(
-        module,
-        check_class,
-        check_class_constructor,
-        check_dunders,
-        check_nested,
-        check_overridden,
-        check_protected,
-        check_property_returns,
-        ignore_no_params,
-        ignore_typechecker,
-        check_protected_class_methods,
-        no_ansi,
-        target or _Messages(),
-    )
-    return _report(failures, no_ansi=no_ansi)
+    module = _from_str({"code": string}, config)
+    failures = _get_failures(module, config)
+    return _report(failures, config)
 
 
 def derive_module_name(file_path: str | _Path) -> str:
