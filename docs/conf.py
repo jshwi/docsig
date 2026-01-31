@@ -11,6 +11,8 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
+import subprocess
 import sys
 
 sys.path.append(os.path.abspath("./extensions"))
@@ -25,6 +27,13 @@ author = "Stephen Whitlock"
 # The full version, including alpha/beta/rc tags
 release = "0.77.0"
 
+# SEO-friendly project description
+description = """\
+docsig is a Python tool for checking signature parameters in docstrings.
+ Ensures proper documentation of function and method parameters for Sphinx,
+ NumPy, and Google docstring formats. Use as a standalone tool, flake8 plugin,
+ or pre-commit hook to maintain accurate Python documentation.
+"""
 
 # -- General configuration ---------------------------------------------------
 
@@ -41,11 +50,14 @@ extensions = [
     "myst_parser",
     "sphinx_copybutton",
     "generate",
+    "sphinx_sitemap",
 ]
 
+sitemap_url_scheme = "{lang}latest/{link}"
+sitemap_excludes = ["_generated/*"]
 
 # Add any paths that contain templates here, relative to this directory.
-# templates_path = ["_templates"]
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -68,6 +80,34 @@ html_show_sphinx = False
 myst_heading_anchors = 3
 todo_include_todos = True
 html_logo = "static/docsig.svg"
+
+# SEO Configuration
+html_baseurl = "https://docsig.io/"
+
+# Meta tags for SEO
+html_meta = {
+    "description": description,
+    "keywords": """\
+python, docstring, documentation, linting, sphinx, numpy, google,
+ parameters, signature, type checking, code quality, pre-commit, flake8"
+""",
+    "author": author,
+    "viewport": "width=device-width, initial-scale=1.0",
+    "og:type": "website",
+    "og:site_name": "docsig",
+    "og:title": f"""\
+{project} - Check Python signature params for proper documentation"
+""",
+    "og:description": description,
+    "og:url": "https://docsig.io/",
+    "og:image": "https://docsig.io/_static/docsig.svg",
+    "twitter:card": "summary",
+    "twitter:title": f"""\
+{project} - Check Python signature params for proper documentation
+""",
+    "twitter:description": description,
+    "twitter:image": "https://docsig.io/_static/docsig.svg",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
