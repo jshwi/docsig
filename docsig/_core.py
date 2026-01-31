@@ -191,6 +191,34 @@ def _report(
     return max(retcodes)
 
 
+def _run_docsig(
+    *path: str | _Path,
+    string: str | None = None,
+    config: _Config,
+) -> int:
+    setup_logger(config.verbose)
+    if config.list_checks:
+        return int(bool(_print_checks()))  # type: ignore
+
+    if string is None:
+        retcodes = [0]
+        paths = _Paths(
+            *path,
+            patterns=config.exclude,
+            excludes=config.excludes,
+            include_ignored=config.include_ignored,
+        )
+        for path_ in paths:
+            failures = runner(path_, config)
+            retcodes.append(_report(failures, config, str(path_)))
+
+        return max(retcodes)
+
+    module = _from_str({"code": string}, config)
+    failures = _get_failures(module, config)
+    return _report(failures, config)
+
+
 def runner(path: _Path, config: _Config) -> _Failures:
     """Per path runner.
 
@@ -266,10 +294,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether a test failed or not.
     """
-    setup_logger(verbose)
-    if list_checks:
-        return int(bool(_print_checks()))  # type: ignore
-
     exclude_ = [_DEFAULT_EXCLUDES]
     if exclude is not None:
         exclude_.append(exclude)
@@ -302,24 +326,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         exclude=exclude_,
         excludes=excludes,
     )
-
-    if string is None:
-        retcodes = [0]
-        paths = _Paths(
-            *path,
-            patterns=config.exclude,
-            excludes=config.excludes,
-            include_ignored=config.include_ignored,
-        )
-        for path_ in paths:
-            failures = runner(path_, config)
-            retcodes.append(_report(failures, config, str(path_)))
-
-        return max(retcodes)
-
-    module = _from_str({"code": string}, config)
-    failures = _get_failures(module, config)
-    return _report(failures, config)
+    return _run_docsig(*path, string=string, config=config)
 
 
 def derive_module_name(file_path: str | _Path) -> str:
