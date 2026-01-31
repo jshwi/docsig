@@ -150,7 +150,7 @@ ensure your installation has registered `docsig`
 .. code-block:: console
 
     $ flake8 --version
-    7.3.0 (docsig: 0.76.0, mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) CPython 3.10.19 on Darwin
+    7.3.0 (docsig: 0.77.0, mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) CPython 3.10.19 on Darwin
 
 And now use `flake8` to lint your files
 
@@ -236,7 +236,7 @@ Standalone
 
     repos:
       - repo: https://github.com/jshwi/docsig
-        rev: v0.76.0
+        rev: v0.77.0
         hooks:
           - id: docsig
             args:
@@ -255,7 +255,7 @@ or integrated with ``flake8``
         hooks:
           - id: flake8
             additional_dependencies:
-              - docsig==0.76.0
+              - docsig==0.77.0
             args:
               - "--sig-check-class"
               - "--sig-check-dunders"
