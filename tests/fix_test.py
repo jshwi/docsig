@@ -118,7 +118,6 @@ exclude = '''.*src[\\/]design[\\/].*'''
 
     monkeypatch.setattr("docsig._core._Paths", _paths)
     make_tree(
-        Path.cwd(),
         {
             "src": {"design": {"file1.py": []}},
             "ssrc": {"design": {"file2.py": []}},
@@ -147,7 +146,7 @@ def test_exclude_defaults_396(
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
     """
-    make_tree(Path.cwd(), TREE)
+    make_tree(TREE)
     Path(".gitignore").unlink()
     main(".", "--verbose", test_flake8=False)
     expected = [

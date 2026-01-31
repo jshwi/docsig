@@ -117,12 +117,12 @@ def fixture_make_tree() -> FixtureMakeTree:
     :return: Function for using this fixture.
     """
 
-    def _make_tree(root: Path, obj: dict[str, object]) -> None:
+    def _make_tree(obj: dict[str, object], path: Path | None = None) -> None:
         for key, value in obj.items():
-            fullpath = root / key
+            fullpath = (path or Path.cwd()) / key
             if isinstance(value, dict):
                 fullpath.mkdir(exist_ok=True)
-                _make_tree(fullpath, value)
+                _make_tree(value, fullpath)
             elif isinstance(value, list):
                 fullpath.write_text("\n".join(value), encoding="utf-8")
 
