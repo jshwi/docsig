@@ -50,7 +50,13 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
-        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | None = None,
+        node: (
+            _ast.nodes.Module
+            | _ast.nodes.ClassDef
+            | _ast.nodes.FunctionDef
+            | _ast.nodes.NodeNG
+            | None
+        ) = None,
         directives: _Directives | None = None,
         path: _Path | None = None,
         ignore_args: bool = False,
@@ -77,7 +83,12 @@ class Parent:  # pylint: disable=too-many-instance-attributes
 
     def _parse_ast(
         self,
-        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef | _ast.NodeNG,
+        node: (
+            _ast.nodes.Module
+            | _ast.nodes.ClassDef
+            | _ast.nodes.FunctionDef
+            | _ast.nodes.NodeNG
+        ),
         directives: _Directives,
         path: _Path | None = None,
     ) -> None:
@@ -96,7 +107,10 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                 )
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
-                if isinstance(subnode, (_ast.Import, _ast.ImportFrom)):
+                if isinstance(
+                    subnode,
+                    (_ast.nodes.Import, _ast.nodes.ImportFrom),
+                ):
                     for name in subnode.names:
                         original, alias = name
                         self._imports[original] = alias or original
@@ -178,7 +192,7 @@ class Function(Parent):
     # pylint: disable=too-many-positional-arguments
     def __init__(
         self,
-        node: _ast.FunctionDef | None = None,
+        node: _ast.nodes.FunctionDef | _ast.nodes.NodeNG | None = None,
         comments: _Comments | None = None,
         directives: _Directives | None = None,
         messages: _Messages | None = None,
@@ -239,8 +253,9 @@ class Function(Parent):
         name = self._imports.get(name, name)
         if self._decorators is not None:
             for dec in self._decorators.nodes:
-                if (isinstance(dec, _ast.Name) and dec.name == name) or (
-                    isinstance(dec, _ast.Attribute) and dec.attrname == name
+                if (isinstance(dec, _ast.nodes.Name) and dec.name == name) or (
+                    isinstance(dec, _ast.nodes.Attribute)
+                    and dec.attrname == name
                 ):
                     return True
 
@@ -312,7 +327,12 @@ class Function(Parent):
     @property
     def parent(
         self,
-    ) -> _ast.FunctionDef | _ast.Module | _ast.ClassDef | _ast.Lambda:
+    ) -> (
+        _ast.nodes.FunctionDef
+        | _ast.nodes.Module
+        | _ast.nodes.ClassDef
+        | _ast.nodes.Lambda
+    ):
         """Function's parent node."""
         return self._parent
 

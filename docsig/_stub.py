@@ -29,7 +29,7 @@ class RetType(_Enum):
     UNTYPED = 3
 
     @classmethod
-    def from_ast(cls, returns: _ast.NodeNG | None) -> RetType:
+    def from_ast(cls, returns: _ast.nodes.NodeNG | None) -> RetType:
         """Construct a return type object from an AST node.
 
         :param returns: Ast node or None.
@@ -241,7 +241,7 @@ class Signature(_Stub):
     @classmethod
     def from_ast(
         cls,
-        node: _ast.Module | _ast.ClassDef | _ast.FunctionDef,
+        node: _ast.nodes.Module | _ast.nodes.ClassDef | _ast.nodes.FunctionDef,
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> Signature:
