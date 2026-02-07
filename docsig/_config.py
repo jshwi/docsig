@@ -242,16 +242,9 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         dest="ignore_args",
     )
     parser.add_argument(
-        "-k",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="ignore_kwargs",
-    )
-    parser.add_argument(
         "--ignore-kwargs",
         action="store_true",
         help="ignore kwargs prefixed with two asterisks",
-        dest="ignore_kwargs",
     )
     parser.add_argument(
         "-i",
