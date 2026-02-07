@@ -9,11 +9,14 @@ import argparse as _a
 import os as _os
 import re as _re
 import typing as _t
+from dataclasses import dataclass as _dataclass
+from dataclasses import field as _field
 from pathlib import Path as _Path
 
 import tomli as _tomli
 
 from ._version import __version__
+from .messages import Messages
 
 PYPROJECT_TOML = "pyproject.toml"
 
@@ -312,3 +315,67 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _a.Namespace:
         help="string to parse instead of files",
     )
     return parser.parse_args(args)
+
+
+# pylint: disable=too-many-instance-attributes,too-few-public-methods
+@_dataclass
+class Check:
+    """Configuration for what to check.
+
+    :param class: Check class docstrings.
+    :param class_constructor: Check ``__init__`` methods. Note
+        that this is mutually incompatible with check_class.
+    :param dunders: Check dunder methods.
+    :param nested: Check nested functions and classes.
+    :param overridden: Check overridden methods.
+    :param protected: Check protected functions and classes.
+    :param property_returns: Run return checks on properties.
+    :param protected_class_methods: Check public methods belonging
+        to protected classes.
+    """
+
+    class_: bool = False
+    class_constructor: bool = False
+    dunders: bool = False
+    nested: bool = False
+    overridden: bool = False
+    protected: bool = False
+    property_returns: bool = False
+    protected_class_methods: bool = False
+
+
+@_dataclass
+class Ignore:
+    """Configuration for what to ignore.
+
+    :param no_params: Ignore docstrings where parameters are not
+        documented.
+    :param args: Ignore args prefixed with an asterisk.
+    :param kwargs: Ignore kwargs prefixed with two asterisks.
+    :param typechecker: Ignore checking return values.
+    """
+
+    no_params: bool = False
+    args: bool = False
+    kwargs: bool = False
+    typechecker: bool = False
+
+
+@_dataclass(frozen=True)
+class Config:
+    """Internal run configuration for docsig.
+
+    Groups check/ignore settings and run options, so the core runner
+    takes a single config object instead of many parameters.
+    """
+
+    check: Check = _field(default_factory=Check)
+    ignore: Ignore = _field(default_factory=Ignore)
+    target: Messages = _field(default_factory=Messages)
+    disable: Messages = _field(default_factory=Messages)
+    exclude: list[str] = _field(default_factory=list)
+    excludes: list[str] | None = None
+    list_checks: bool = False
+    include_ignored: bool = False
+    no_ansi: bool = False
+    verbose: bool = False
