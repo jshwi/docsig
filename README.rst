@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status| |Known Vulnerabilities| |docsig|
+|License| |PyPI| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status| |Known Vulnerabilities|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -48,9 +48,6 @@
 .. |Known Vulnerabilities| image:: https://snyk.io/test/github/jshwi/docsig/badge.svg
    :target: https://snyk.io/test/github/jshwi/docsig/badge.svg
    :alt: Known Vulnerabilities
-.. |docsig| image:: https://snyk.io/advisor/python/docsig/badge.svg
-   :target: https://snyk.io/advisor/python/docsig
-   :alt: docsig
 
 Check Python signature params for proper documentation
 -------------------------------------------------------
