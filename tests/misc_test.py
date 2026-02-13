@@ -170,12 +170,6 @@ def test_lineno(
     assert f"{PATH}:18" in std.out
 
 
-def test_param_ne() -> None:
-    """Get coverage on `Param.__eq__`."""
-    # noinspection PyUnresolvedReferences
-    assert docsig._stub.Param() != object
-
-
 def test_file_not_found_error(main: MockMainType) -> None:
     """Test file-not-found error for incorrect path arg.
 

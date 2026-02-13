@@ -105,13 +105,15 @@ class Param:
         self.closing_token = closing_token
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Param):
-            return False
+        iseq = False
+        if isinstance(other, Param):
+            args = self, other
+            iseq = all(i.kind == DocType.KWARG for i in args) or (
+                self.name == other.name
+                and all(i.name is not None for i in args)
+            )
 
-        args = self, other
-        return all(i.kind == DocType.KWARG for i in args) or (
-            self.name == other.name and all(i.name is not None for i in args)
-        )
+        return iseq
 
     def __ne__(self, other: object) -> bool:
         return not self.__eq__(other)
