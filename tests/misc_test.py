@@ -17,9 +17,6 @@ from templatest import templates
 from docsig import docsig
 
 # noinspection PyProtectedMember
-from docsig._stub import Param
-
-# noinspection PyProtectedMember
 from docsig._utils import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
@@ -178,12 +175,6 @@ def test_lineno(
     assert f"{PATH}:2" in std.out
     assert f"{PATH}:10" in std.out
     assert f"{PATH}:18" in std.out
-
-
-def test_param_ne() -> None:
-    """Get coverage on `Param.__eq__`."""
-    # noinspection PyUnresolvedReferences
-    assert Param() != object
 
 
 def test_file_not_found_error(main: FixtureMain) -> None:
