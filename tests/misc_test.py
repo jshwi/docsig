@@ -14,7 +14,13 @@ from pathlib import Path
 import pytest
 from templatest import templates
 
-import docsig
+from docsig import docsig
+
+# noinspection PyProtectedMember
+from docsig._stub import Param
+
+# noinspection PyProtectedMember
+from docsig._utils import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
@@ -70,7 +76,7 @@ def test_class_and_class_constructor(
 
 def test_class_and_class_constructor_in_interpreter() -> None:
     """Test that docsig errors when passed incompatible options."""
-    assert docsig.docsig(
+    assert docsig(
         string="def function(): pass",
         check_class=True,
         check_class_constructor=True,
@@ -177,7 +183,7 @@ def test_lineno(
 def test_param_ne() -> None:
     """Get coverage on `Param.__eq__`."""
     # noinspection PyUnresolvedReferences
-    assert docsig._stub.Param() != object
+    assert Param() != object
 
 
 def test_file_not_found_error(main: FixtureMain) -> None:
@@ -282,7 +288,7 @@ def test_str_path_via_api() -> None:
 
         AttributeError: 'str' object has no attribute 'exists'
     """
-    docsig.docsig(".")
+    docsig(".")
 
 
 def test_no_duplicate_codes() -> None:
@@ -435,11 +441,11 @@ def function(param1, param2) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    docsig.docsig(string=template)
+    docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" in std.out
     monkeypatch.setattr("sys.stdout.isatty", lambda: False)
-    docsig.docsig(string=template)
+    docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" not in std.out
 
@@ -622,7 +628,7 @@ def test_sys_excepthook(
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
 
     # noinspection PyUnresolvedReferences
-    docsig._utils.pretty_print_error(
+    pretty_print_error(
         BaseException,
         "a base exception",
         no_ansi=False,
@@ -656,7 +662,7 @@ class ArgumentParser(_a.ArgumentParser):
     init_file(template)
     main(".", "-a", "--ignore-kwargs", test_flake8=False)
     std = capsys.readouterr()
-    assert docsig.messages.E[202].ref in std.out
+    assert E[202].ref in std.out
 
 
 def test_always_fail_on_astroid_syntax_error_with_string(
@@ -770,7 +776,7 @@ def foo(a) -> None:
     init_file(t2)
     assert main(".") == 1
     std = capsys.readouterr()
-    assert docsig.messages.E[305].ref in std.out
+    assert E[305].ref in std.out
 
 
 def test_enforce_capitalisation_should_not_591(
@@ -826,7 +832,7 @@ def my_function(argument: int = 42) -> int:
     assert main(".") == 0
     main(".", "--check-nested")
     std = capsys.readouterr()
-    assert docsig.messages.E[101].ref in std.out
+    assert E[101].ref in std.out
 
 
 def test_ignore_kwargs_doco_numpy(
@@ -858,7 +864,7 @@ def function(param1, param2, **kwargs) -> None:
     assert main(".") == 0
     main(".", "--ignore-kwargs")
     std = capsys.readouterr()
-    assert docsig.messages.E[202].ref in std.out
+    assert E[202].ref in std.out
 
 
 def test_ignore_kwargs_no_doco_numpy(
@@ -887,7 +893,7 @@ def function(param1, param2, **kwargs) -> None:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[203].ref in std.out
+    assert E[203].ref in std.out
     assert main(".", "--ignore-kwargs") == 0
 
 
@@ -915,7 +921,7 @@ def function(*_, **__):
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[501].ref in std.out
+    assert E[501].ref in std.out
     assert main(".", "--ignore-typechecker") == 0
 
 
@@ -945,7 +951,7 @@ class Klass:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[505].ref in std.out
+    assert E[505].ref in std.out
     assert main(".", "--ignore-typechecker") == 0
 
 
