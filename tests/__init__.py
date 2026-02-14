@@ -13,6 +13,7 @@ from . import _templates  # noqa
 MockMainType = t.Callable[..., t.Union[str, int]]
 FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
+FixtureInitPyprojectTomlFile = t.Callable[[dict[str, t.Any]], Path]
 
 
 class InitFileFixtureType(

@@ -9,7 +9,6 @@ import pickle
 from pathlib import Path
 
 import pytest
-import tomli_w
 
 import docsig
 import docsig.plugin
@@ -20,6 +19,7 @@ from docsig._config import _ArgumentParser, _split_comma
 from . import (
     TREE,
     FixtureFlake8,
+    FixtureInitPyprojectTomlFile,
     FixtureMakeTree,
     FixturePatchArgv,
     InitFileFixtureType,
@@ -92,26 +92,18 @@ def test_no_fail_on_unicode_decode_error_384(
 
 def test_exclude_dirs_392(
     monkeypatch: pytest.MonkeyPatch,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
     main: MockMainType,
     make_tree: FixtureMakeTree,
 ) -> None:
     """Test dir regexes are correctly excluded.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     """
-    pyproject_toml = Path.cwd() / "pyproject.toml"
-    pyproject_toml.write_text(
-        tomli_w.dumps(
-            {
-                "tool": {
-                    docsig.__name__: {"exclude": r".*src[\\/]design[\\/].*"},
-                },
-            },
-        ),
-        encoding="utf-8",
-    )
+    init_pyproject_toml({"exclude": r".*src[\\/]design[\\/].*"})
     path_obj = docsig._core._Paths  # define to avoid recursion
     paths_list = []
 
@@ -432,6 +424,7 @@ def function(param1, param2) -> None:
 
 
 def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
     patch_argv: FixturePatchArgv,
 ) -> None:
     """Test that config correctly loads on windows.
@@ -439,6 +432,7 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     Problem: When running the pre-commit hook in Windows PowerShell,
     get_config returns {} because prog='docsig.EXE' instead of 'docsig'.
 
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param patch_argv: Patch commandline arguments.
     """
     disable = [
@@ -455,11 +449,7 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
         "SIG503",
         "SIG505",
     ]
-    pyproject_toml = Path.cwd() / "pyproject.toml"
-    pyproject_toml.write_text(
-        tomli_w.dumps({"tool": {docsig.__name__: {"disable": disable}}}),
-        encoding="utf-8",
-    )
+    init_pyproject_toml({"disable": disable})
     patch_argv("docsig.EXE")
     parser = _ArgumentParser()
     parser.add_argument(

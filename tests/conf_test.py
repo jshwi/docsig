@@ -6,28 +6,28 @@ tests._test
 from __future__ import annotations
 
 import typing as t
-from pathlib import Path
 from random import random
 
 import pytest
-import tomli_w
+
+import docsig
 
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
 
-from . import FixturePatchArgv
+from . import FixtureInitPyprojectTomlFile, FixturePatchArgv
 
 
 @pytest.mark.parametrize(
     "config,args,expected",
     [
         (
-            {"tool": {"name": {"list": []}}},
+            {"list": []},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_1", "string_2", "string_3"],
         ),
         (
-            {"tool": {"name": {"list": ["string_4"]}}},
+            {"list": ["string_4"]},
             ["name", "--list", "string_1,string_2,string_3"],
             ["string_4", "string_1", "string_2", "string_3"],
         ),
@@ -35,6 +35,7 @@ from . import FixturePatchArgv
     ids=["empty-conf", "with-conf"],
 )
 def test_list_parser(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
     patch_argv: FixturePatchArgv,
     config: dict[str, t.Any],
     args: tuple[str, ...],
@@ -42,12 +43,13 @@ def test_list_parser(
 ) -> None:
     """Test ``arcon.ArgumentParser.add_list_args``.
 
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param patch_argv: Patch commandline arguments.
     :param config: Object to write to pyproject.toml.
     :param args: Arguments to pass to the commandline.
     :param expected: Expected result.
     """
-    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
+    init_pyproject_toml(config)
     patch_argv(*args)
     parser = _ArgumentParser()
     parser.add_argument(
@@ -73,23 +75,31 @@ def test_no_toml(patch_argv: FixturePatchArgv) -> None:
     assert namespace.arg
 
 
-def test_regular_flags(patch_argv: FixturePatchArgv) -> None:
+def test_regular_flags(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    patch_argv: FixturePatchArgv,
+) -> None:
     """Test ``arcon.ArgumentParser`` uses proper slug.
 
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param patch_argv: Patch commandline arguments.
     """
-    config = {"tool": {"name": {"this-flag": True}}}
-    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
-    patch_argv("name")
+    config = {"this-flag": True}
+    init_pyproject_toml(config)
+    patch_argv(docsig.__name__)
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store_true")
     namespace = parser.parse_args()
     assert namespace.this_flag is True
 
 
-def test_list_default(patch_argv: FixturePatchArgv) -> None:
+def test_list_default(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    patch_argv: FixturePatchArgv,
+) -> None:
     """Test ``arcon.ArgumentParser.add_list_argument`` defaults.
 
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param patch_argv: Patch commandline arguments.
     """
     patch_argv("name")
@@ -124,7 +134,7 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     # pyproject.toml, as this is a configured value, and a default if
     # nothing included in commandline
     config = {"tool": {"name": {"list": [100, 200, 300]}}}
-    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
+    init_pyproject_toml(config)
     parser = _ArgumentParser()
     parser.add_argument(
         "-l",
@@ -137,15 +147,19 @@ def test_list_default(patch_argv: FixturePatchArgv) -> None:
     assert namespace.list.sort() == [100, 200, 300, 1, 2, 3].sort()
 
 
-def test_store_value_is_none(patch_argv: FixturePatchArgv) -> None:
+def test_store_value_is_none(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    patch_argv: FixturePatchArgv,
+) -> None:
     """Test that pyproject config is not overwritten with a None.
 
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param patch_argv: Patch commandline arguments.
     """
     expected = "this-is-a-value"
-    config = {"tool": {"name": {"this-flag": expected}}}
-    Path("pyproject.toml").write_text(tomli_w.dumps(config), encoding="utf-8")
-    patch_argv("name")
+    config = {"this-flag": expected}
+    init_pyproject_toml(config)
+    patch_argv(docsig.__name__)
     parser = _ArgumentParser()
     parser.add_argument("-t", "--this-flag", action="store")
     namespace = parser.parse_args()
