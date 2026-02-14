@@ -22,14 +22,37 @@ from . import FixtureInitPyprojectTomlFile, FixturePatchArgv
     "config,args,expected",
     [
         (
-            {"list": []},
-            ["name", "--list", "string_1,string_2,string_3"],
-            ["string_1", "string_2", "string_3"],
+            {
+                "list": [],
+            },
+            [
+                "name",
+                "--list",
+                "string_1,string_2,string_3",
+            ],
+            [
+                "string_1",
+                "string_2",
+                "string_3",
+            ],
         ),
         (
-            {"list": ["string_4"]},
-            ["name", "--list", "string_1,string_2,string_3"],
-            ["string_4", "string_1", "string_2", "string_3"],
+            {
+                "list": [
+                    "string_4",
+                ],
+            },
+            [
+                "name",
+                "--list",
+                "string_1,string_2,string_3",
+            ],
+            [
+                "string_4",
+                "string_1",
+                "string_2",
+                "string_3",
+            ],
         ),
     ],
     ids=["empty-conf", "with-conf"],

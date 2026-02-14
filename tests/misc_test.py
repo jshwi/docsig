@@ -32,7 +32,13 @@ from . import (
 from ._templates import PATH
 
 
-@pytest.mark.parametrize("arg", ("-V", "--version"))
+@pytest.mark.parametrize(
+    "arg",
+    (
+        "-V",
+        "--version",
+    ),
+)
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
@@ -108,7 +114,13 @@ def test_class_and_class_constructor_in_interpreter_with_config(
     )
 
 
-@pytest.mark.parametrize("error", [E[201].ref, E[303].ref])
+@pytest.mark.parametrize(
+    "error",
+    [
+        E[201].ref,
+        E[303].ref,
+    ],
+)
 def test_target_report(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
