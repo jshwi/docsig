@@ -469,10 +469,6 @@ disable = [
     "SIG503",
     "SIG505",
 ]
-
-[tool.isort]
-py_version = 37
-add_imports = ["from __future__ import annotations"]
 """,
         encoding="utf-8",
     )
