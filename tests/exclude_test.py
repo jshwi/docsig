@@ -15,13 +15,13 @@ import pytest
 
 import docsig
 
-from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType
+from . import TREE, FixtureInitFile, FixtureMain, FixtureMakeTree
 
 
 def test_exclude_defaults(
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test bash script is ignored when under __pycache__ directory.
 
@@ -97,8 +97,8 @@ def test_exclude_defaults(
 
 
 def test_exclude_argument(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test bash script is ignored when exclude argument passed.
 
@@ -134,7 +134,7 @@ def test_gitignore(
     monkeypatch: pytest.MonkeyPatch,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test files properly ignored from reading gitignore files.
 
@@ -291,7 +291,7 @@ def test_gitignore(
 def test_exclude_defaults_and_gitignore(
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test files excluded and ignored.
 
@@ -369,7 +369,7 @@ def test_exclude_defaults_and_gitignore(
 def test_gitignore_patterns(
     monkeypatch: pytest.MonkeyPatch,
     make_tree: FixtureMakeTree,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test patterns rendered correctly.
 
@@ -657,7 +657,7 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
     monkeypatch: pytest.MonkeyPatch,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
     args: list[str],
     expected: list[str],
 ) -> None:
