@@ -10,7 +10,15 @@ from docsig.messages import E
 
 from . import InitFileFixtureType, MockMainType
 
-ES = "SIG402", "SIG202", "SIG203", "SIG502", "SIG503", "SIG201", "SIG303"
+ES = (
+    E[402].ref,
+    E[202].ref,
+    E[203].ref,
+    E[502].ref,
+    E[502].ref,
+    E[201].ref,
+    E[303].ref,
+)
 SYMBOLIC = [
     (E[402].ref, E[402].symbolic),
     (E[202].ref, E[202].symbolic),
