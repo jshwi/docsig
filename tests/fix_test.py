@@ -43,15 +43,15 @@ from typing import Optional, overload
 
 @overload
 def get_something(number: int) -> str:
-    """For getting a string from an integer."""
+    """Function summary."""
 
 @overload
 def get_something(number: None) -> None:
-    """For getting a string from an integer."""
+    """Function summary."""
 
 def get_something(number: Optional[int]) -> Optional[str]:
     """
-    For getting a string from an integer.
+    Function summary.
 
     Parameters
     ----------
@@ -411,7 +411,7 @@ def test_description_missing_and_description_syntax_error_461(
     """
     template = '''
 def function(param1, param2) -> None:
-    """
+    """Docstring summary.
 
     :param param1:
     :param param2: This one does have a description however
@@ -487,20 +487,20 @@ from ._ticker import Tickers as _Ticker
 from ._transactions import Trades as _Trades
 
 class Trades(dict[str, _Trades]):
-    """Represents a collection of trades."""
+    """Docstring summary."""
 
 class Account(dict[str, _t.Any]):
-    """Represents an account."""
+    """Docstring summary."""
 
     @_abstractmethod
     @_cached_property
     def trades(self) -> Trades:
-        """Get all trades."""
+        """Docstring summary."""
 
     @_abstractmethod
     @_cached_property
     def portfolio(self) -> _Tickers:
-        """Get portfolio."""
+        """Docstring summary."""
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
@@ -531,20 +531,20 @@ from ._ticker import Tickers as _Ticker
 from ._transactions import Trades as _Trades
 
 class Trades(dict[str, _Trades]):
-    """Represents a collection of trades."""
+    """Docstring summary."""
 
 class Account(dict[str, _t.Any]):
-    """Represents an account."""
+    """Docstring summary."""
 
     @_cached_property
     @_abstractmethod
     def trades(self) -> Trades:
-        """Get all trades."""
+        """Docstring summary."""
 
     @_cached_property
     @_abstractmethod
     def portfolio(self) -> _Tickers:
-        """Get portfolio."""
+        """Docstring summary."""
 '''
     init_file(template)
     assert not main(".", test_flake8=False)
@@ -575,7 +575,7 @@ def print_target_progress(
     executor: _ThreadPoolExecutor,
     ignore_actionable_diff_score: bool,
 ) -> None:
-    """Print table of target values.
+    """Docstring summary.
 
     :param diff_obj: Object containing diff information.
     :param arb_obj: Object containing arb information.
@@ -622,7 +622,7 @@ def test_no_erroneous_402_when_order_cannot_be_confirmed(
     """
     template = '''
 class Transactions(_Transactions):
-    """Represents a transaction.
+    """Docstring summary.
 
     :param symbol: Symbol.
     """
@@ -666,7 +666,7 @@ def test_fix_allow_or_operator_in_type_545(
     """
     template = '''
 def foo(a, **kwargs) -> None:
-    """Test for docsig.
+    """Docstring summary.
 
     :param str | None a: Use string or None for this purpose.
     :keyword str | None bar: Use string or None for this purpose.
@@ -694,7 +694,7 @@ def test_close_with_bitwise_operator_545(
     """
     template = '''
 def foo(**kwargs) -> None:
-    """Test for docsig.
+    """Docstring summary.
 
     :keyword bar| Use string or None for this purpose.
     """
@@ -718,7 +718,8 @@ def test_recognise_yield_550(
     """
     template = '''
 def count_up_to(n: int) -> _t.Generator[int, None, None]:
-    """
+    """Docstring summary.
+
     Counts from 0 up to n - 1.
 
     Args:
@@ -751,7 +752,7 @@ def test_sig401_false_positives_562(
 class Classy:
     @remove_last_args(['normalize'])  # since 8.2.0
     def toTimestr(self, force_iso: bool = False) -> str:
-        """Convert the data to a UTC date/time string.
+        """Docstring summary.
 
         .. seealso:: :meth:`fromTimestr` for differences between output
            with and without *force_iso* parameter.
@@ -785,7 +786,7 @@ def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
     """
     template = '''
 class ChildTransactions(Transactions):
-    """Represents a collection of transactions.
+    """Docstring summary.
 
     :param symbol: Currency symbol.
     :param attr: Transaction attribute.
@@ -821,7 +822,7 @@ def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
     """
     template = '''
 class ChildTransactions(Transactions):
-    """Represents a collection of transactions.
+    """Docstring summary.
 
     :param symbol: Currency symbol.
     :param attr: Transaction attribute.
@@ -907,7 +908,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     exclude: str | None = None,
     excludes: list[str] | None = None,
 ) -> int:
-    """Package's core functionality.
+    """Docstring summary.
 
     Populate a sequence of module objects before iterating over their
     top-level functions and classes.
@@ -967,7 +968,7 @@ def test_incorrect_sig301_with_both_sig202_and_sig402_707(
     """
     template = '''
 def function(a, b) -> None:
-    """Function summary.
+    """Docstring summary.
 
     :param b: Description of b.
     :param a: Description of a.
