@@ -12,6 +12,7 @@ import pickle
 from pathlib import Path
 
 import pytest
+import tomli_w
 from templatest import templates
 
 import docsig
@@ -83,14 +84,18 @@ def test_class_and_class_constructor_in_interpreter_with_config(
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
     """
+    config = {
+        "tool": {
+            docsig.__name__: {
+                "check-class": True,
+                "check-class_constructor": True,
+                "check-protected-class-methods": True,
+            },
+        },
+    }
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
-        """
-[tool.docsig]
-check-class = true
-check-class_constructor = true
-check-protected-class-methods = true
-""",
+        tomli_w.dumps(config),
         encoding="utf-8",
     )
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)

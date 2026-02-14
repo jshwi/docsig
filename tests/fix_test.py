@@ -9,6 +9,7 @@ import pickle
 from pathlib import Path
 
 import pytest
+import tomli_w
 
 import docsig
 import docsig.plugin
@@ -100,12 +101,14 @@ def test_exclude_dirs_392(
     :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     """
+    config = {
+        "tool": {
+            docsig.__name__: {"exclude": r".*src[\\/]design[\\/].*"},
+        },
+    }
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
-        r"""
-[tool.docsig]
-exclude = '''.*src[\\/]design[\\/].*'''
-""",
+        tomli_w.dumps(config),
         encoding="utf-8",
     )
     path_obj = docsig._core._Paths  # define to avoid recursion
@@ -451,25 +454,10 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
         "SIG503",
         "SIG505",
     ]
+    config = {"tool": {docsig.__name__: {"disable": disable}}}
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
-        """
-[tool.docsig]
-disable = [
-    "SIG101",
-    "SIG202",
-    "SIG203",
-    "SIG301",
-    "SIG302",
-    "SIG401",
-    "SIG402",
-    "SIG404",
-    "SIG501",
-    "SIG502",
-    "SIG503",
-    "SIG505",
-]
-""",
+        tomli_w.dumps(config),
         encoding="utf-8",
     )
     patch_argv("docsig.EXE")
