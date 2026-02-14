@@ -9,7 +9,6 @@ import pickle
 from pathlib import Path
 
 import pytest
-import tomli_w
 
 import docsig
 import docsig.plugin
@@ -22,6 +21,7 @@ from . import (
     TREE,
     FixtureFlake8,
     FixtureInitFile,
+    FixtureInitPyprojectTomlFile,
     FixtureMain,
     FixtureMakeTree,
     FixturePatchArgv,
@@ -93,25 +93,19 @@ def test_no_fail_on_unicode_decode_error_384(
 
 def test_exclude_dirs_392(
     monkeypatch: pytest.MonkeyPatch,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
     make_tree: FixtureMakeTree,
     main: FixtureMain,
 ) -> None:
     """Test dir regexes are correctly excluded.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param make_tree: Create the directory tree from dict mapping.
     :param main: Patch package entry point.
     """
-    config = {
-        "tool": {
-            docsig.__name__: {"exclude": r".*src[\\/]design[\\/].*"},
-        },
-    }
-    pyproject_toml = Path.cwd() / "pyproject.toml"
-    pyproject_toml.write_text(
-        tomli_w.dumps(config),
-        encoding="utf-8",
-    )
+    config = {"exclude": r".*src[\\/]design[\\/].*"}
+    init_pyproject_toml(config)
     path_obj = docsig._core._Paths  # define to avoid recursion
     paths_list = []
 
@@ -433,6 +427,7 @@ def function(param1, param2) -> None:
 
 def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     patch_argv: FixturePatchArgv,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
 ) -> None:
     """Test that config correctly loads on windows.
 
@@ -440,6 +435,7 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     get_config returns {} because prog='docsig.EXE' instead of 'docsig'.
 
     :param patch_argv: Patch commandline arguments.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     """
     disable = [
         E[101].ref,
@@ -455,12 +451,8 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
         E[503].ref,
         E[505].ref,
     ]
-    config = {"tool": {docsig.__name__: {"disable": disable}}}
-    pyproject_toml = Path.cwd() / "pyproject.toml"
-    pyproject_toml.write_text(
-        tomli_w.dumps(config),
-        encoding="utf-8",
-    )
+    config = {"disable": disable}
+    init_pyproject_toml(config)
     patch_argv("docsig.EXE")
     parser = _ArgumentParser()
     parser.add_argument(

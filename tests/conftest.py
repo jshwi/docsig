@@ -8,9 +8,11 @@ from __future__ import annotations
 import io
 import logging
 import os
+import typing as t
 from pathlib import Path
 
 import pytest
+import tomli_w
 from flake8.main.application import Application
 
 import docsig
@@ -18,26 +20,48 @@ import docsig
 from . import (
     FixtureFlake8,
     FixtureInitFile,
+    FixtureInitPyprojectTomlFile,
     FixtureMain,
     FixtureMakeTree,
     FixturePatchArgv,
 )
 
 
+@pytest.fixture(name="init_pyproject_toml")
+def fixture_init_pyproject_toml(
+    init_file: FixtureInitFile,
+) -> FixtureInitPyprojectTomlFile:
+    """Initialize a test pyproject.toml file.
+
+    :param init_file: Initialize a test file.
+    :return: Function for using this fixture.
+    """
+
+    def _init_pyproject_toml(obj: dict[str, t.Any]) -> Path:
+        return init_file(
+            tomli_w.dumps({"tool": {docsig.__name__: obj}}),
+            Path("pyproject.toml"),
+        )
+
+    return _init_pyproject_toml
+
+
 @pytest.fixture(name="environment", autouse=True)
 def fixture_environment(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
 ) -> None:
     """Prepare the environment for testing.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param tmp_path: Create and return the temporary directory.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     """
     monkeypatch.setenv("DOCSIG_DEBUG", "0")
     monkeypatch.chdir(tmp_path)
     # make sure no pyproject.toml files past this point get parsed
-    (tmp_path / "pyproject.toml").touch()
+    init_pyproject_toml({})
 
 
 @pytest.fixture(name="flake8")

@@ -12,7 +12,6 @@ import pickle
 from pathlib import Path
 
 import pytest
-import tomli_w
 from templatest import templates
 
 import docsig
@@ -20,7 +19,13 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, FixtureInitFile, FixtureMain, FixtureMakeTree
+from . import (
+    CHECK_ARGS,
+    FixtureInitFile,
+    FixtureInitPyprojectTomlFile,
+    FixtureMain,
+    FixtureMakeTree,
+)
 from ._templates import PATH
 
 
@@ -78,26 +83,20 @@ def test_class_and_class_constructor_in_interpreter() -> None:
 def test_class_and_class_constructor_in_interpreter_with_config(
     monkeypatch: pytest.MonkeyPatch,
     main: FixtureMain,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
 ) -> None:
     """Test that docsig errors when passed incompatible options.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param main: Patch package entry point.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
     """
     config = {
-        "tool": {
-            docsig.__name__: {
-                "check-class": True,
-                "check-class_constructor": True,
-                "check-protected-class-methods": True,
-            },
-        },
+        "check-class": True,
+        "check-class_constructor": True,
+        "check-protected-class-methods": True,
     }
-    pyproject_toml = Path.cwd() / "pyproject.toml"
-    pyproject_toml.write_text(
-        tomli_w.dumps(config),
-        encoding="utf-8",
-    )
+    init_pyproject_toml(config)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     assert main(".", test_flake8=False) == (
         "argument to check class constructor not allowed with argument to"
