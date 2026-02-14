@@ -392,7 +392,7 @@ def function(param1, param2, param3) -> None:
     init_file(template)
     flake8(".", "--sig-check-class", "--sig-check-class-constructor")
     std = capsys.readouterr()
-    assert docsig.messages.E[5].description in std.out
+    assert docsig.messages.E[5].ref in std.out
 
 
 def test_description_missing_and_description_syntax_error_461(
@@ -421,7 +421,7 @@ def function(param1, param2) -> None:
     init_file(template)
     main(".", test_flake8=False)
     std = capsys.readouterr()
-    assert docsig.messages.E[301].description in std.out
+    assert docsig.messages.E[301].ref in std.out
 
 
 def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
@@ -505,7 +505,7 @@ class Account(dict[str, _t.Any]):
     assert not main(".", test_flake8=False)
     main(".", "-P", test_flake8=False)
     std = capsys.readouterr()
-    assert docsig.messages.E[503].description in std.out
+    assert docsig.messages.E[503].ref in std.out
 
 
 def test_properties_not_recognized_when_on_top_of_other_decorators_509(
@@ -549,7 +549,7 @@ class Account(dict[str, _t.Any]):
     assert not main(".", test_flake8=False)
     main(".", "-P", test_flake8=False)
     std = capsys.readouterr()
-    assert docsig.messages.E[503].description in std.out
+    assert docsig.messages.E[503].ref in std.out
 
 
 def test_no_erroneous_301_in_duplicate(
@@ -588,7 +588,7 @@ def print_target_progress(
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[301].description not in std.out
+    assert docsig.messages.E[301].ref not in std.out
 
 
 def test_handle_empty_symlinks(
@@ -605,7 +605,7 @@ def test_handle_empty_symlinks(
     (tmp_path / "broken_symlink.py").symlink_to("does-not-exist")
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[301].description not in std.out
+    assert docsig.messages.E[301].ref not in std.out
 
 
 def test_no_erroneous_402_when_order_cannot_be_confirmed(
@@ -649,7 +649,7 @@ class Transactions(_Transactions):
     init_file(template)
     main(".", "--check-class")
     std = capsys.readouterr()
-    assert docsig.messages.E[402].description not in std.out
+    assert docsig.messages.E[402].ref not in std.out
 
 
 def test_fix_allow_or_operator_in_type_545(
@@ -674,10 +674,10 @@ def foo(a, **kwargs) -> None:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[201].description not in std.out
-    assert docsig.messages.E[203].description not in std.out
-    assert docsig.messages.E[301].description not in std.out
-    assert docsig.messages.E[304].description.format(token="|") not in std.out
+    assert docsig.messages.E[201].ref not in std.out
+    assert docsig.messages.E[203].ref not in std.out
+    assert docsig.messages.E[301].ref not in std.out
+    assert docsig.messages.E[304].ref.format(token="|") not in std.out
 
 
 def test_close_with_bitwise_operator_545(
@@ -701,7 +701,7 @@ def foo(**kwargs) -> None:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[304].description.format(token="|") in std.out
+    assert docsig.messages.E[304].ref.format(token="|") in std.out
 
 
 def test_recognise_yield_550(
@@ -803,8 +803,8 @@ class ChildTransactions(Transactions):
     init_file(template)
     main(".", "--check-class")
     std = capsys.readouterr()
-    assert docsig.messages.E[402].description not in std.out
-    assert docsig.messages.E[404].description not in std.out
+    assert docsig.messages.E[402].ref not in std.out
+    assert docsig.messages.E[404].ref not in std.out
 
 
 def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
@@ -839,7 +839,7 @@ class ChildTransactions(Transactions):
     init_file(template)
     main(".", "--check-class")
     std = capsys.readouterr()
-    assert docsig.messages.E[402].description in std.out
+    assert docsig.messages.E[402].ref in std.out
 
 
 def test_fix_no_402_for_very_similar_names_683(
@@ -865,7 +865,7 @@ def function(param1, param2, param3, param4) -> None:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[402].description not in std.out
+    assert docsig.messages.E[402].ref not in std.out
 
 
 def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
@@ -950,7 +950,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[402].description not in std.out
+    assert docsig.messages.E[402].ref not in std.out
 
 
 def test_incorrect_sig301_with_both_sig202_and_sig402_707(
@@ -976,4 +976,4 @@ def function(a, b) -> None:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert docsig.messages.E[301].description not in std.out
+    assert docsig.messages.E[301].ref not in std.out
