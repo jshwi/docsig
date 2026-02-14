@@ -19,15 +19,15 @@ from . import TREE, FixtureMakeTree, InitFileFixtureType, MockMainType
 
 
 def test_exclude_defaults(
-    main: MockMainType,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
+    main: MockMainType,
 ) -> None:
     """Test bash script is ignored when under __pycache__ directory.
 
-    :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
+    :param main: Patch package entry point.
     """
     make_tree(TREE)
     main(".", "--verbose", "--include-ignored", test_flake8=False)
@@ -132,16 +132,16 @@ new-ssl "${@}"
 
 def test_gitignore(
     monkeypatch: pytest.MonkeyPatch,
-    main: MockMainType,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
+    main: MockMainType,
 ) -> None:
     """Test files properly ignored from reading gitignore files.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
+    :param main: Patch package entry point.
     """
     make_tree(TREE)
     # remove default excludes to better test nested gitignore files
@@ -289,15 +289,15 @@ def test_gitignore(
 
 
 def test_exclude_defaults_and_gitignore(
-    main: MockMainType,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
+    main: MockMainType,
 ) -> None:
     """Test files excluded and ignored.
 
-    :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
+    :param main: Patch package entry point.
     """
     make_tree(TREE)
     main(".", "--verbose", test_flake8=False)
@@ -368,14 +368,14 @@ def test_exclude_defaults_and_gitignore(
 
 def test_gitignore_patterns(
     monkeypatch: pytest.MonkeyPatch,
-    main: MockMainType,
     make_tree: FixtureMakeTree,
+    main: MockMainType,
 ) -> None:
     """Test patterns rendered correctly.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
+    :param main: Patch package entry point.
     """
     make_tree(TREE)
     # remove default excludes to better test nested gitignore files
@@ -655,18 +655,18 @@ def test_gitignore_patterns(
 )
 def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
     monkeypatch: pytest.MonkeyPatch,
-    main: MockMainType,
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
+    main: MockMainType,
     args: list[str],
     expected: list[str],
 ) -> None:
     """Test using path glob instead of regex.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param main: Patch package entry point.
     :param make_tree: Create the directory tree from dict mapping.
     :param patch_logger: Logs as an io instance.
+    :param main: Patch package entry point.
     :param args: Args to pass to main.
     :param expected: List of expected output.
     """

@@ -108,9 +108,9 @@ def test_class_and_class_constructor_in_interpreter_with_config(
 
 @pytest.mark.parametrize("error", [E[201].ref, E[303].ref])
 def test_target_report(
-    main: MockMainType,
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
+    main: MockMainType,
     error: str,
 ) -> None:
     """Test report only adds the target error provided.
@@ -120,9 +120,9 @@ def test_target_report(
     Assert that the error appears in the report to confirm it has
     triggered.
 
-    :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
     :param error: Error to target.
     """
     template = '''
@@ -228,17 +228,17 @@ def test_file_not_found_error(main: MockMainType) -> None:
     ],
 )
 def test_check_protected_class_methods(
-    main: MockMainType,
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
+    main: MockMainType,
     args: tuple[str],
     expected: str,
 ) -> None:
     """Test methods are flagged for protected class.
 
-    :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
     :param args: Args to pass to main.
     :param expected: Expected stdout.
     """
@@ -305,13 +305,13 @@ def test_no_duplicate_symbolic_messages() -> None:
 
 
 def test_list_checks(
-    main: MockMainType,
     capsys: pytest.CaptureFixture,
+    main: MockMainType,
 ) -> None:
     """Test listing of all available checks.
 
-    :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
     """
     main("--list-checks", test_flake8=False)
     std = capsys.readouterr()
@@ -319,17 +319,17 @@ def test_list_checks(
 
 
 def test_bad_py_file(
-    tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
+    tmp_path: Path,
     init_file: InitFileFixtureType,
     main: MockMainType,
 ) -> None:
     """Test invalid syntax on a python file.
 
-    :param tmp_path: Create and return the temporary directory.
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
+    :param tmp_path: Create and return the temporary directory.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
@@ -370,13 +370,13 @@ def function(param1, param2) -> None:
 
 
 def test_bash_script(
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test bash script.
 
-    :param main: Mock ``main`` function.
     :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
     """
     template = """
 #!/usr/bin/env bash
@@ -398,15 +398,15 @@ pygmentize-cat "${@}"
 
 
 def test_verbose(
-    main: MockMainType,
     init_file: InitFileFixtureType,
     patch_logger: io.StringIO,
+    main: MockMainType,
 ) -> None:
     """Test verbose.
 
-    :param main: Mock ``main`` function.
     :param init_file: Initialize a test file.
     :param patch_logger: Logs as an io instance.
+    :param main: Mock ``main`` function.
     """
     template = """\
 #!/bin/bash
@@ -502,17 +502,17 @@ class Klass:
     ],
 )
 def test_ignore_typechecker_and_no_prop_returns(
-    main: MockMainType,
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
+    main: MockMainType,
     template: str,
     expected: str,
 ) -> None:
     """Test ignore typechecker.
 
-    :param main: Mock ``main`` function.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
     :param template: The template to test.
     :param expected: Expected message.
     """
@@ -526,15 +526,15 @@ def test_ignore_typechecker_and_no_prop_returns(
 
 
 def test_sorted(
-    main: MockMainType,
-    init_file: InitFileFixtureType,
     capsys: pytest.CaptureFixture,
+    init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test modules evaluated in sorted order.
 
-    :param main: Patch package entry point.
-    :param init_file: Initialize a test file.
     :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def function(*_, **__) -> None:
@@ -566,15 +566,15 @@ def function(*_, **__) -> None:
 
 
 def test_multiple_exit_codes(
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test multiple files, where the last exit code is 0.
 
     Ensure 0 does not override 1.
 
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     init_file(
         templates.registered.getbyname(
@@ -636,14 +636,14 @@ def test_sys_excepthook(
 
 def test_ignore_args_ignore_kwargs_index_error(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test the necessity of handling index error when getting args.
 
     :param capsys: Capture sys out.
-    :param main: Mock ``main`` function.
     :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
     """
     template = '''\
 class ArgumentParser(_a.ArgumentParser):
@@ -680,14 +680,14 @@ echo "Hello, world"
 
 def test_fail_on_unicode_decode_error_if_py_file(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     tmp_path: Path,
+    main: MockMainType,
 ) -> None:
     """Ensure that the unicode-decode error is handled without error.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param tmp_path: Create and return the temporary directory.
+    :param main: Patch package entry point.
     """
     pkl = tmp_path / "test.py"
     serialize = [1, 2, 3]
@@ -700,15 +700,15 @@ def test_fail_on_unicode_decode_error_if_py_file(
 
 
 def test_pre_commit_compatibility_issue_with_pythonpath_522(
-    main: MockMainType,
-    tmp_path: Path,
     capsys: pytest.CaptureFixture,
+    tmp_path: Path,
+    main: MockMainType,
 ) -> None:
     """Test compatibility issues with a Python path.
 
-    :param main: Patch package entry point.
-    :param tmp_path: Create and return the temporary directory.
     :param capsys: Capture sys out.
+    :param tmp_path: Create and return the temporary directory.
+    :param main: Patch package entry point.
     """
     t1 = '''\
 class BaseClass:
@@ -743,15 +743,15 @@ class Implementation(BaseClass):
 
 
 def test_enforce_capitalisation_should_591(
-    main: MockMainType,
     capsys: pytest.CaptureFixture,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test enforce capitalisation.
 
-    :param main: Patch package entry point.
     :param capsys: Capture sys out.
     :param init_file: Initialise a test file.
+    :param main: Patch package entry point.
     """
     t1 = '''
 def foo(a) -> None:
@@ -775,13 +775,13 @@ def foo(a) -> None:
 
 
 def test_enforce_capitalisation_should_not_591(
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test enforce capitalization.
 
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def function(a) -> None:
@@ -796,14 +796,14 @@ def function(a) -> None:
 
 def test_check_nested_numpy(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test check-nested in numpy format.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def my_function(argument: int = 42) -> int:
@@ -832,14 +832,14 @@ def my_function(argument: int = 42) -> int:
 
 def test_ignore_kwargs_doco_numpy(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test ignore-kwarg documented in numpy format.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def function(param1, param2, **kwargs) -> None:
@@ -864,14 +864,14 @@ def function(param1, param2, **kwargs) -> None:
 
 def test_ignore_kwargs_no_doco_numpy(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test ignore-kwarg not documented in numpy format.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def function(param1, param2, **kwargs) -> None:
@@ -894,14 +894,14 @@ def function(param1, param2, **kwargs) -> None:
 
 def test_ignore_typechecker_numpy(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test ignore-typechecker not typed in numpy format.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 def function(*_, **__):
@@ -922,14 +922,14 @@ def function(*_, **__):
 
 def test_ignore_typechecker_prop_numpy(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
     init_file: InitFileFixtureType,
+    main: MockMainType,
 ) -> None:
     """Test ignore-typechecker property typed in numpy format.
 
     :param capsys: Capture sys out.
-    :param main: Patch package entry point.
     :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
     """
     template = '''
 class Klass:
@@ -951,13 +951,13 @@ class Klass:
 
 
 def test_compressed_short_form_warning(
-    main: MockMainType,
     make_tree: FixtureMakeTree,
+    main: MockMainType,
 ) -> None:
     """Test warnings for short form options.
 
-    :param main: Mock ``main`` function.
     :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
     """
     template = """\
 def function(a, b) -> None:
