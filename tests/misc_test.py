@@ -33,7 +33,13 @@ from . import (
 from ._templates import PATH
 
 
-@pytest.mark.parametrize("arg", ("-V", "--version"))
+@pytest.mark.parametrize(
+    "arg",
+    (
+        "-V",
+        "--version",
+    ),
+)
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
@@ -110,7 +116,13 @@ def test_class_and_class_constructor_in_interpreter_with_config(
     )
 
 
-@pytest.mark.parametrize("error", [E[201].ref, E[303].ref])
+@pytest.mark.parametrize(
+    "error",
+    [
+        E[201].ref,
+        E[303].ref,
+    ],
+)
 def test_target_report(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
@@ -193,10 +205,19 @@ def test_file_not_found_error(main: FixtureMain) -> None:
 @pytest.mark.parametrize(
     "args,expected",
     [
-        [("--check-class",), ""],
-        [("--check-class-constructor",), ""],
         [
-            ("--check-protected-class-methods", "--check-class"),
+            ("--check-class",),
+            "",
+        ],
+        [
+            ("--check-class-constructor",),
+            "",
+        ],
+        [
+            (
+                "--check-protected-class-methods",
+                "--check-class",
+            ),
             f"""\
 {PATH}:6 in _Messages.method_1
     {E[503].fstring(T)}
@@ -207,7 +228,10 @@ def test_file_not_found_error(main: FixtureMain) -> None:
 """,
         ],
         [
-            ("--check-protected-class-methods", "--check-class-constructor"),
+            (
+                "--check-protected-class-methods",
+                "--check-class-constructor",
+            ),
             f"""\
 {PATH}:6 in _Messages.method_1
     {E[503].fstring(T)}
