@@ -10,13 +10,13 @@ from pathlib import Path
 
 from . import _templates  # noqa
 
-MockMainType = t.Callable[..., t.Union[str, int]]
+FixtureMain = t.Callable[..., t.Union[str, int]]
 FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
 FixtureInitPyprojectTomlFile = t.Callable[[dict[str, t.Any]], Path]
 
 
-class InitFileFixtureType(
+class FixtureInitFile(
     t.Protocol,
 ):  # pylint: disable=too-few-public-methods
     """Type for ``fixture_init_file``."""

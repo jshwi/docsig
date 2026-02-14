@@ -29,7 +29,7 @@ from templatest import Template, templates
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, FAIL_CHECK_ARGS, InitFileFixtureType, MockMainType
+from . import CHECK_ARGS, FAIL_CHECK_ARGS, FixtureInitFile, FixtureMain
 
 
 @pytest.mark.parametrize(
@@ -38,8 +38,8 @@ from . import CHECK_ARGS, FAIL_CHECK_ARGS, InitFileFixtureType, MockMainType
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_exit_status(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -77,8 +77,8 @@ def test_exit_status(
 )
 def test_stdout(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     _: str,
     template: str,
     expected: str,
@@ -122,8 +122,8 @@ def test_stdout(
 )
 def test_error_codes(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     _: str,
     template: str,
     expected: str,
@@ -156,8 +156,8 @@ def test_error_codes(
 )
 def test_multiple(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     _: str,
     template: str,
     expected: str,
@@ -189,8 +189,8 @@ def test_multiple(
     ],
 )
 def test_disable_rule(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -232,8 +232,8 @@ def test_disable_rule(
 )
 def test_no_stdout(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     template: Template,
 ) -> None:
     """Test that all tests emit no output.
@@ -260,8 +260,8 @@ def test_no_stdout(
 # pylint: disable=too-many-arguments,too-many-positional-arguments
 def test_ignore_no_params(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     expected: str,
@@ -330,8 +330,8 @@ def test_ignore_no_params(
 )
 def test_no_check_property_returns_flag(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     template: Template,
 ) -> None:
     """Test that passing property fails without a ``-P`` flag.
@@ -360,8 +360,8 @@ def test_no_check_property_returns_flag(
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_args(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -403,8 +403,8 @@ def test_ignore_args(
     ids=templates.registered.filtergroup("m").getids(),
 )
 def test_ignore_kwargs(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -446,8 +446,8 @@ def test_ignore_kwargs(
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
 def test_no_flag(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     template: Template,
 ) -> None:
     """Test that failing tests pass without their corresponding flag.
@@ -470,8 +470,8 @@ def test_no_flag(
     ids=templates.registered.getgroup(*FAIL_CHECK_ARGS).getids(),
 )
 def test_single_flag(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -501,8 +501,8 @@ def test_single_flag(
     ids=templates.registered.getgroup("f-w-class-constructor").getids(),
 )
 def test_check_class_constructor(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     name: str,
     template: str,
     _: str,
@@ -542,7 +542,7 @@ def test_check_class_constructor(
 )
 def test_string_argument(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
     name: str,
     template: str,
     expected: str,

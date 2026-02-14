@@ -21,10 +21,10 @@ from docsig.messages import E
 
 from . import (
     CHECK_ARGS,
+    FixtureInitFile,
     FixtureInitPyprojectTomlFile,
+    FixtureMain,
     FixtureMakeTree,
-    InitFileFixtureType,
-    MockMainType,
 )
 from ._templates import PATH
 
@@ -33,7 +33,7 @@ from ._templates import PATH
 def test_print_version(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
     arg: str,
 ) -> None:
     """Test printing of the program's version on the commandline.
@@ -53,7 +53,7 @@ def test_print_version(
 
 def test_class_and_class_constructor(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test that docsig command lines errors when passed incompatible
     options.
@@ -83,7 +83,7 @@ def test_class_and_class_constructor_in_interpreter() -> None:
 def test_class_and_class_constructor_in_interpreter_with_config(
     monkeypatch: pytest.MonkeyPatch,
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test that docsig errors when passed incompatible options.
 
@@ -109,8 +109,8 @@ def test_class_and_class_constructor_in_interpreter_with_config(
 @pytest.mark.parametrize("error", [E[201].ref, E[303].ref])
 def test_target_report(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     error: str,
 ) -> None:
     """Test report only adds the target error provided.
@@ -143,7 +143,7 @@ def function_3(param1, param2, param3) -> None:
     assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
 
 
-def test_invalid_target(main: MockMainType) -> None:
+def test_invalid_target(main: FixtureMain) -> None:
     """Test invalid target provided.
 
     :param main: Mock ``main`` function.
@@ -156,8 +156,8 @@ def test_invalid_target(main: MockMainType) -> None:
 
 def test_lineno(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test printing of three function errors with the line number.
 
@@ -175,7 +175,7 @@ def test_lineno(
     assert f"{PATH}:18" in std.out
 
 
-def test_file_not_found_error(main: MockMainType) -> None:
+def test_file_not_found_error(main: FixtureMain) -> None:
     """Test file-not-found error for incorrect path arg.
 
     :param main: Mock ``main`` function.
@@ -223,8 +223,8 @@ def test_file_not_found_error(main: MockMainType) -> None:
 )
 def test_check_protected_class_methods(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     args: tuple[str],
     expected: str,
 ) -> None:
@@ -259,7 +259,7 @@ class _Messages(_t.Dict[int, Message]):
     assert std.out == expected
 
 
-def test_no_path_or_string(main: MockMainType) -> None:
+def test_no_path_or_string(main: FixtureMain) -> None:
     """Test error raised when missing essential arguments.
 
     :param main: Mock ``main`` function.
@@ -300,7 +300,7 @@ def test_no_duplicate_symbolic_messages() -> None:
 
 def test_list_checks(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test listing of all available checks.
 
@@ -316,8 +316,8 @@ def test_bad_py_file(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test invalid syntax on a python file.
 
@@ -364,8 +364,8 @@ def function(param1, param2) -> None:
 
 
 def test_bash_script(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test bash script.
 
@@ -392,9 +392,9 @@ pygmentize-cat "${@}"
 
 
 def test_verbose(
-    init_file: InitFileFixtureType,
+    init_file: FixtureInitFile,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test verbose.
 
@@ -497,8 +497,8 @@ class Klass:
 )
 def test_ignore_typechecker_and_no_prop_returns(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     template: str,
     expected: str,
 ) -> None:
@@ -521,8 +521,8 @@ def test_ignore_typechecker_and_no_prop_returns(
 
 def test_sorted(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test modules evaluated in sorted order.
 
@@ -560,8 +560,8 @@ def function(*_, **__) -> None:
 
 
 def test_multiple_exit_codes(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test multiple files, where the last exit code is 0.
 
@@ -630,8 +630,8 @@ def test_sys_excepthook(
 
 def test_ignore_args_ignore_kwargs_index_error(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test the necessity of handling index error when getting args.
 
@@ -656,7 +656,7 @@ class ArgumentParser(_a.ArgumentParser):
 
 def test_always_fail_on_astroid_syntax_error_with_string(
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test invalid syntax on .py file.
 
@@ -675,7 +675,7 @@ echo "Hello, world"
 def test_fail_on_unicode_decode_error_if_py_file(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Ensure that the unicode-decode error is handled without error.
 
@@ -696,7 +696,7 @@ def test_fail_on_unicode_decode_error_if_py_file(
 def test_pre_commit_compatibility_issue_with_pythonpath_522(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test compatibility issues with a Python path.
 
@@ -738,8 +738,8 @@ class Implementation(BaseClass):
 
 def test_enforce_capitalisation_should_591(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enforce capitalisation.
 
@@ -769,8 +769,8 @@ def foo(a) -> None:
 
 
 def test_enforce_capitalisation_should_not_591(
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enforce capitalization.
 
@@ -790,8 +790,8 @@ def function(a) -> None:
 
 def test_check_nested_numpy(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test check-nested in numpy format.
 
@@ -826,8 +826,8 @@ def my_function(argument: int = 42) -> int:
 
 def test_ignore_kwargs_doco_numpy(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test ignore-kwarg documented in numpy format.
 
@@ -858,8 +858,8 @@ def function(param1, param2, **kwargs) -> None:
 
 def test_ignore_kwargs_no_doco_numpy(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test ignore-kwarg not documented in numpy format.
 
@@ -888,8 +888,8 @@ def function(param1, param2, **kwargs) -> None:
 
 def test_ignore_typechecker_numpy(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test ignore-typechecker not typed in numpy format.
 
@@ -916,8 +916,8 @@ def function(*_, **__):
 
 def test_ignore_typechecker_prop_numpy(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test ignore-typechecker property typed in numpy format.
 
@@ -946,7 +946,7 @@ class Klass:
 
 def test_compressed_short_form_warning(
     make_tree: FixtureMakeTree,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test warnings for short form options.
 

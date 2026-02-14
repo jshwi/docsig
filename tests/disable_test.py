@@ -8,7 +8,7 @@ import pytest
 
 from docsig.messages import E
 
-from . import InitFileFixtureType, MockMainType
+from . import FixtureInitFile, FixtureMain
 
 ES = (
     E[402].ref,
@@ -1069,8 +1069,8 @@ def function_7(param1, param2, param3) -> None:
 
 def test_no_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test the series of functions with no `disable` comments.
 
@@ -1087,8 +1087,8 @@ def test_no_disables(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_commandline_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     code: str,
     symbolic: str,
 ) -> None:
@@ -1114,7 +1114,7 @@ def test_commandline_disables(
     assert all(i[1] in std.out for i in SYMBOLIC if i[1] != symbolic)
 
 
-def test_unknown_commandline_disables(main: MockMainType) -> None:
+def test_unknown_commandline_disables(main: FixtureMain) -> None:
     """Test invalid `disable` option provided.
 
     :param main: Mock ``main`` function.
@@ -1127,8 +1127,8 @@ def test_unknown_commandline_disables(main: MockMainType) -> None:
 
 def test_module_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling entire module with `disable` comment.
 
@@ -1144,8 +1144,8 @@ def test_module_disables(
 
 def test_single_function_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling single function with `disable` comment.
 
@@ -1162,8 +1162,8 @@ def test_single_function_disable(
 
 def test_module_single_error_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling entire module with specific `disable` comment.
 
@@ -1180,8 +1180,8 @@ def test_module_single_error_disables(
 
 def test_module_comma_separated_error_disables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling module with comment of several specific errors.
 
@@ -1199,8 +1199,8 @@ def test_module_comma_separated_error_disables(
 
 def test_single_function_single_error_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling single function with specific `disable` comment.
 
@@ -1217,8 +1217,8 @@ def test_single_function_single_error_disable(
 
 def test_single_function_comma_separated_error_disable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test disabling function with comment of several specific errors.
 
@@ -1235,8 +1235,8 @@ def test_single_function_comma_separated_error_disable(
 
 def test_module_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test individual checks.
 
@@ -1252,8 +1252,8 @@ def test_module_enables(
 
 def test_single_function_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enabling entire module with enable comment.
 
@@ -1272,8 +1272,8 @@ def test_single_function_enable(
 
 def test_module_single_error_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enabling entire module with enable comment.
 
@@ -1292,8 +1292,8 @@ def test_module_single_error_enables(
 
 def test_module_comma_separated_error_enables(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enabling entire module with specific enable comment.
 
@@ -1315,8 +1315,8 @@ def test_module_comma_separated_error_enables(
 
 def test_single_function_single_error_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enabling single function with specific enable comment.
 
@@ -1335,8 +1335,8 @@ def test_single_function_single_error_enable(
 
 def test_single_function_comma_separated_error_enable(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test enabling function with comment of several specific errors.
 
@@ -1356,8 +1356,8 @@ def test_single_function_comma_separated_error_enable(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     code: str,
     symbolic: str,
 ) -> None:
@@ -1400,8 +1400,8 @@ def test_individual_inline_disable_checks(
 )
 def test_comma_separated_inline_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     rules: str,
 ) -> None:
     """Test multiple inline `disable` checks.
@@ -1424,8 +1424,8 @@ def test_comma_separated_inline_disable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     code: str,
     symbolic: str,
 ) -> None:
@@ -1468,8 +1468,8 @@ def test_individual_module_disable_checks(
 )
 def test_comma_separated_module_disable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     rules: str,
 ) -> None:
     """Test multiple module `disable` checks.
@@ -1492,8 +1492,8 @@ def test_comma_separated_module_disable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_inline_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     code: str,
     symbolic: str,
 ) -> None:
@@ -1536,8 +1536,8 @@ def test_individual_inline_enable_checks(
 )
 def test_comma_separated_inline_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     rules: str,
 ) -> None:
     """Test multiple inline enable checks.
@@ -1560,8 +1560,8 @@ def test_comma_separated_inline_enable_checks(
 @pytest.mark.parametrize("code,symbolic", SYMBOLIC)
 def test_individual_module_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     code: str,
     symbolic: str,
 ) -> None:
@@ -1604,8 +1604,8 @@ def test_individual_module_enable_checks(
 )
 def test_comma_separated_module_enable_checks(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     rules: str,
 ) -> None:
     """Test multiple module enable checks.

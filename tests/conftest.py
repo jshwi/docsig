@@ -19,17 +19,17 @@ import docsig
 
 from . import (
     FixtureFlake8,
+    FixtureInitFile,
     FixtureInitPyprojectTomlFile,
+    FixtureMain,
     FixtureMakeTree,
     FixturePatchArgv,
-    InitFileFixtureType,
-    MockMainType,
 )
 
 
 @pytest.fixture(name="init_pyproject_toml")
 def fixture_init_pyproject_toml(
-    init_file: InitFileFixtureType,
+    init_file: FixtureInitFile,
 ) -> FixtureInitPyprojectTomlFile:
     """Initialize a test pyproject.toml file.
 
@@ -86,7 +86,7 @@ def fixture_flake8() -> FixtureFlake8:
 def fixture_main(
     monkeypatch: pytest.MonkeyPatch,
     flake8: FixtureFlake8,
-) -> MockMainType:
+) -> FixtureMain:
     """Pass patched commandline args to the package's main function.
 
     :param monkeypatch: Mock patch environment and attributes.
@@ -118,7 +118,7 @@ def fixture_main(
 
 
 @pytest.fixture(name="init_file")
-def fixture_init_file(tmp_path: Path) -> InitFileFixtureType:
+def fixture_init_file(tmp_path: Path) -> FixtureInitFile:
     """Initialize a test file.
 
     :param tmp_path: Create and return the temporary directory.
@@ -154,7 +154,7 @@ def fixture_make_tree() -> FixtureMakeTree:
 
 
 @pytest.fixture(name="bench")
-def bench(request: pytest.FixtureRequest) -> MockMainType:
+def bench(request: pytest.FixtureRequest) -> FixtureMain:
     """A fixture that returns a benchmark function or a no-op function.
 
     Depends on whether benchmarking is enabled.

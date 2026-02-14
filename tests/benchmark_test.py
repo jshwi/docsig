@@ -7,7 +7,7 @@ import pytest
 
 from docsig import docsig
 
-from . import MockMainType
+from . import FixtureMain
 
 
 @pytest.mark.parametrize(
@@ -168,7 +168,7 @@ def function() -> None:
     ],
 )
 @pytest.mark.benchmark
-def test_bench(bench: MockMainType, template: str, path: str) -> None:
+def test_bench(bench: FixtureMain, template: str, path: str) -> None:
     """A small benchmark test.
 
     :param bench: Benchmark fixture that is active when the environment

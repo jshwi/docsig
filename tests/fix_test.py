@@ -20,18 +20,18 @@ from docsig.messages import E
 from . import (
     TREE,
     FixtureFlake8,
+    FixtureInitFile,
     FixtureInitPyprojectTomlFile,
+    FixtureMain,
     FixtureMakeTree,
     FixturePatchArgv,
-    InitFileFixtureType,
-    MockMainType,
 )
 
 
 def test_fix_optional_return_statements_with_overload_func_sig502(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test ignore typechecker.
 
@@ -76,7 +76,7 @@ def get_something(number: Optional[int]) -> Optional[str]:
 
 def test_no_fail_on_unicode_decode_error_384(
     tmp_path: Path,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Ensure the unicode-decode error is handled without error.
 
@@ -95,7 +95,7 @@ def test_exclude_dirs_392(
     monkeypatch: pytest.MonkeyPatch,
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
     make_tree: FixtureMakeTree,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test dir regexes are correctly excluded.
 
@@ -135,7 +135,7 @@ def test_exclude_dirs_392(
 def test_exclude_defaults_396(
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Test bash script is ignored when under __pycache__ directory.
 
@@ -288,8 +288,8 @@ def test_exclude_defaults_396(
 
 def test_sig401_false_positive_427(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test false positive when using a code-block RST indent.
 
@@ -352,8 +352,8 @@ def function(param, param2, param3, param4) -> int:
 )
 def test_indent_427(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
     template: str,
 ) -> None:
     """Test indent properly records, for params only.
@@ -371,7 +371,7 @@ def test_indent_427(
 
 def test_class_and_class_constructor_452(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
+    init_file: FixtureInitFile,
     flake8: FixtureFlake8,
 ) -> None:
     """Test command lines errors when passed incompatible options.
@@ -397,8 +397,8 @@ def function(param1, param2, param3) -> None:
 
 def test_description_missing_and_description_syntax_error_461(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test description missing raised with other description.
 
@@ -466,8 +466,8 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
 
 def test_properties_not_recognized_when_underneath_other_decorators_509(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Fix properties not recognized when stacked.
 
@@ -510,8 +510,8 @@ class Account(dict[str, _t.Any]):
 
 def test_properties_not_recognized_when_on_top_of_other_decorators_509(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Fix properties not recognized when stacked.
 
@@ -554,8 +554,8 @@ class Account(dict[str, _t.Any]):
 
 def test_no_erroneous_301_in_duplicate(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Make sure 301 does not appear for duplicate parameters.
 
@@ -594,7 +594,7 @@ def print_target_progress(
 def test_handle_empty_symlinks(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
-    main: MockMainType,
+    main: FixtureMain,
 ) -> None:
     """Ensure the program doesn't crash when it checks broken symlinks.
 
@@ -610,8 +610,8 @@ def test_handle_empty_symlinks(
 
 def test_no_erroneous_402_when_order_cannot_be_confirmed(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Fix params out-of-order popping up with a single document.
 
@@ -654,8 +654,8 @@ class Transactions(_Transactions):
 
 def test_fix_allow_or_operator_in_type_545(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test type declaration in name with pipe is allowed.
 
@@ -682,8 +682,8 @@ def foo(a, **kwargs) -> None:
 
 def test_close_with_bitwise_operator_545(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test pipe still treated as a bad closing token.
 
@@ -706,8 +706,8 @@ def foo(**kwargs) -> None:
 
 def test_recognise_yield_550(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Recognize yield in docstrings.
 
@@ -737,8 +737,8 @@ def count_up_to(n: int) -> _t.Generator[int, None, None]:
 
 def test_sig401_false_positives_562(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test indents are ignored within double dot directives.
 
@@ -773,8 +773,8 @@ class Classy:
 
 def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test no additional out-of-order or not-equal-to-arg.
 
@@ -809,8 +809,8 @@ class ChildTransactions(Transactions):
 
 def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test out-of-order still valid when param missing.
 
@@ -844,8 +844,8 @@ class ChildTransactions(Transactions):
 
 def test_fix_no_402_for_very_similar_names_683(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """402 should not be showing for very similar names.
 
@@ -870,8 +870,8 @@ def function(param1, param2, param3, param4) -> None:
 
 def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test no additional out-of-order or not-equal-to-arg.
 
@@ -955,8 +955,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
 
 def test_incorrect_sig301_with_both_sig202_and_sig402_707(
     capsys: pytest.CaptureFixture,
-    init_file: InitFileFixtureType,
-    main: MockMainType,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
 ) -> None:
     """Test no incorrect SIG301 with both SIG202 and SIG402.
 
