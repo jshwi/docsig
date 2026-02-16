@@ -637,13 +637,7 @@ class _PDualColonWKwargsS(_BaseTemplate):
 def function(attachments, sync, **kwargs) -> None:
     """Docstring summary.
 
-    Note: Keyword args (dict) to pass to ``attachments``:
-
-        See ``flask_mail.Message.attach``.
-
-        * filename:     filename of attachment
-        * content_type: file mimetype
-        * data:         the raw file data
+    Docstring description.
 
     :param attachments: Iterable of kwargs to construct attachment.
     :param sync: Don't thread if True: Defaults to False.
@@ -705,8 +699,7 @@ def function(
 ) -> Post:
     """Docstring summary.
 
-    Standard behaviour would be to return None, so do not bypass
-     silently.
+    Docstring description.
 
      :param id: The post's ID.
      :param version: If provided populate session object with
@@ -2100,13 +2093,7 @@ class _PDualColonWKwargsN(_BaseTemplate):
 def function(attachments, sync, **kwargs) -> None:
     """Docstring summary.
 
-    Note: Keyword args (dict) to pass to ``attachments``:
-
-        See ``flask_mail.Message.attach``.
-
-        * filename:     filename of attachment
-        * content_type: file mimetype
-        * data:         the raw file data
+    Docstring description.
 
     Parameters
     ----------
@@ -2983,7 +2970,7 @@ class _PIssue36ReturnN(_BaseTemplate):
 def function(str_lin: str) -> bool:
     """Docstring summary.
 
-    The function checks whether the string is "A" or "B".
+    Docstring description.
 
     Parameters
     ----------
@@ -3708,13 +3695,7 @@ class _PDualColonWKwargsNI(_BaseTemplate):
 def function(attachments, sync, **kwargs) -> None:
     """Docstring summary.
 
-    Note: Keyword args (dict) to pass to ``attachments``:
-
-        See ``flask_mail.Message.attach``.
-
-        * filename:     filename of attachment
-        * content_type: file mimetype
-        * data:         the raw file data
+    Docstring description.
 
     Parameters
     ----------
@@ -5184,13 +5165,7 @@ class _PDualColonWKwargsG(_BaseTemplate):
 def function(attachments, sync, **kwargs) -> None:
     """Docstring summary.
 
-    Note: Keyword args (dict) to pass to ``attachments``:
-
-        See ``flask_mail.Message.attach``.
-
-        * filename:     filename of attachment
-        * content_type: file mimetype
-        * data:         the raw file data
+    Docstring description.
 
     Args:
         attachments (int): Iterable of kwargs to construct attachment.
@@ -5675,13 +5650,7 @@ class _PEscapedKwargWKwargsS(_BaseTemplate):
 def function(attachments, sync, **kwargs) -> None:
     """Docstring summary.
 
-    Note: Keyword args (dict) to pass to ``attachments``:
-
-        See ``flask_mail.Message.attach``.
-
-        * filename:     filename of attachment
-        * content_type: file mimetype
-        * data:         the raw file data
+    Docstring description.
 
     :param attachments: Iterable of kwargs to construct attachment.
     :param sync: Don't thread if True: Defaults to False.
