@@ -543,7 +543,6 @@ class _FMethodWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -563,7 +562,6 @@ class _PClassSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1) -> None:
         """Docstring summary.
@@ -582,7 +580,6 @@ class _FPropertyReturnsClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     @property
     def method(self) -> int:
@@ -984,7 +981,6 @@ class _FMethodHeaderWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -996,7 +992,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f"{PATH}:4 in Klass"
+        return f"{PATH}:3 in Klass"
 
 
 @_templates.register
@@ -1050,7 +1046,6 @@ class _FPropertyReturnsTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     @property
     def method(self):
@@ -1262,7 +1257,6 @@ class _PClassNoSelfS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-
     # against convention but not up to this package to decide
     def method(no_self) -> None:
         """Docstring summary."""
@@ -2459,7 +2453,6 @@ class _FMethodHeaderWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -2475,7 +2468,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f"{PATH}:4 in Klass"
+        return f"{PATH}:3 in Klass"
 
 
 @_templates.register
@@ -2543,7 +2536,6 @@ class _FPropertyReturnsTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     @property
     def method(self):
@@ -2796,9 +2788,7 @@ class _PClassNoSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
-
     # against convention but not up to this package to decide
     def method(no_self) -> None:
         """Docstring summary."""
@@ -2814,7 +2804,6 @@ class _FProtectClsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class _Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -3605,7 +3594,6 @@ class _FMethodWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -3629,7 +3617,6 @@ class _PClassSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1) -> None:
         """Docstring summary.
@@ -4218,7 +4205,6 @@ class _FProtectClsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class _Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -5098,7 +5084,6 @@ class _FMethodWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -5119,7 +5104,6 @@ class _PClassSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class Klass:
     def method(self, param1) -> None:
         """Docstring summary.
@@ -5629,7 +5613,6 @@ class _FProtectClsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-
 class _Klass:
     def method(self, param1, param2, **kwargs) -> None:
         """Docstring summary.
@@ -5735,7 +5718,6 @@ class _FNoDocClassS(_BaseTemplate):
     def template(self) -> str:
         return """
 class Klass:
-
     def __init__(param1, param2, param3) -> None:
         pass
 """
