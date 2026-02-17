@@ -61,7 +61,7 @@ def function(number: Optional[int]) -> Optional[str]:
     Returns
     -------
     str
-        The string representation of the number.
+        Return description.
     """
     if number is None:
         return None
@@ -305,7 +305,7 @@ def function(*, arg1 = "") -> str:
        print()
 
     :param arg1: text
-    :return: text
+    :returns: Return description.
     :raises TypeError: Incorrect argument(s)
     """
     return ""
@@ -762,7 +762,7 @@ class Classy:
            :phab:`T57755`
 
         :param force_iso: Whether the output should be forced to ISO 8601
-        :return: Timestamp in a format resembling ISO 8601
+        :return: Return description.
         """
 '''
     init_file(template)
@@ -944,7 +944,7 @@ def function(  # pylint: disable=too-many-locals,too-many-arguments
     :param exclude: Regular expression of files and dirs to exclude from
         checks.
     :param excludes: Files or dirs to exclude from checks.
-    :return: Exit status for whether a test failed or not.
+    :return: Return description.
     """
 '''
     init_file(template)

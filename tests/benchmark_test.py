@@ -65,7 +65,7 @@ def function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
     def nested_function(argument: int = 42) -> int:
         pass
