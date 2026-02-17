@@ -660,7 +660,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
     :param reduce: :func:`~lsfiles.utils._Tree.reduce`
-    :return: Tuple of `Path` objects or str repr.
+    :return: Return description.
     """
 '''
 
@@ -680,7 +680,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     :param args: Manipulate string(s).
     :key format: Return a string instead of a tuple if strings are
         passed as tuple.
-    :return: Colored string or None.
+    :return: Return description.
     """
 '''
 
@@ -705,7 +705,7 @@ def function(
      :param version: If provided populate session object with
         version.
      :param checkauthor: Rule whether to check for author ID.
-     :return: Post's connection object.
+    :return: Return description.
     """
 '''
 
@@ -741,7 +741,7 @@ def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
 
     :param index: Index to get.
     :param seq: Sequence object that can be indexed.
-    :return: Item from index else None.
+    :return: Return description.
     """
 '''
 
@@ -758,7 +758,7 @@ class _FBinOpReprS(_BaseTemplate):
 def function(index: int) -> _T | None:
     """Docstring summary.
 
-    :return: Item from index else None.
+    :returns: Return description.
     """
 '''
 
@@ -842,7 +842,7 @@ class _FHintMissingReturnS(_BaseTemplate):
 def function() -> Post:
     """Docstring summary.
 
-     return: Post's connection object.
+     return: Return description.
     """
 '''
 
@@ -911,7 +911,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
     """Docstring summary.
 
     :param monkeypatch: ``pytest`` fixture for mocking attributes.
-    :return:            Function for using this fixture.
+    :return: Return description.
     """
 '''
 
@@ -1003,7 +1003,7 @@ def function(
     :param path: Path(s) to check.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
-    :return: Boolean value for whether there were any failures or not.
+    :return: Return description.
     """
 '''
 
@@ -1507,7 +1507,7 @@ def function(param1, param2, param3) -> int:
     Returns
     -------
         int
-            Passes.
+            Return description.
     """
 '''
 
@@ -1536,7 +1536,7 @@ def function(param1, param2, param3) -> None:
     Returns
     -------
         int
-            Fails.
+            Return description.
     """
 '''
 
@@ -2128,7 +2128,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
     Returns
     -------
         int
-            Tuple of `Path` objects or str repr.
+            Return description.
     """
 '''
 
@@ -2155,7 +2155,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     Returns
     -------
         int
-            Colored string or None.
+            Return description.
     """
 '''
 
@@ -2182,7 +2182,7 @@ def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     Returns
     -------
         int
-            Item from index else None.
+            Return description.
     """
 '''
 
@@ -2202,7 +2202,7 @@ def function(index: int) -> _T | None:
     Returns
     -------
         int
-            Item from index else None.
+            Return description.
     """
 '''
 
@@ -2276,7 +2276,7 @@ class Klass:
         Returns
         -------
             int
-                Returncode.
+                Return description.
         """
 '''
 
@@ -2298,7 +2298,7 @@ class Klass:
         Returns
         -------
             int
-                Returncode.
+                Return description.
         """
 '''
 
@@ -2320,7 +2320,7 @@ class Klass:
         Returns
         -------
             int
-                Returncode.
+                Return description.
         """
 '''
 
@@ -2390,7 +2390,7 @@ def function():
     Returns
     -------
         int
-            Does it?
+            Return description.
     """
 '''
 
@@ -2482,7 +2482,7 @@ def function(
     Returns
     -------
         int
-            Boolean value for whether there were any failures or not.
+            Return description.
     """
 '''
 
@@ -2603,7 +2603,7 @@ class Klass:
     Returns
     -------
         int
-            Fails
+            Return description.
     """
 
     def __init__(self, param1, param2) -> None:
@@ -2633,7 +2633,7 @@ class Klass:
     Returns
     -------
         int
-            Fails
+            Return description.
     """
 
     def __init__(param1, param2) -> None:
@@ -2702,7 +2702,7 @@ def function(*_, **__) -> int:
     Returns
     -------
         int
-            Returncode.
+            Return description.
     """
 '''
 
@@ -2888,7 +2888,7 @@ class _PSphinxWNumpy(_BaseTemplate):
 def function() -> str:
     """Docstring summary.
 
-    :return: Returns is an indicator this could be a numpy docstring.
+    :return: Return description.
     """
 '''
 
@@ -2953,7 +2953,7 @@ def function(numericString: Union[str, int]) -> str:
     Returns
     -------
     str
-        Reformatted string
+        Return description.
     """
 '''
 
@@ -2980,7 +2980,7 @@ def function(str_lin: str) -> bool:
     Returns
     -------
     bool
-        Returns True, else false
+        Return description.
     """
 '''
 
@@ -3125,7 +3125,7 @@ def function(param1, param2, param3) -> int:
     Returns
     -------
     int
-        Passes.
+        Return description.
     """
 '''
 
@@ -3154,7 +3154,7 @@ def function(param1, param2, param3) -> None:
     Returns
     -------
         int
-            Fails.
+            Return description.
     """
 '''
 
@@ -3730,7 +3730,7 @@ def function(reduce: bool = False) -> tuple[str, ...]:
     Returns
     -------
     int
-        Tuple of `Path` objects or str repr.
+        Return description.
     """
 '''
 
@@ -3757,7 +3757,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     Returns
     -------
     int
-        Colored string or None.
+        Return description.
     """
 '''
 
@@ -3784,7 +3784,7 @@ def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     Returns
     -------
     int
-        Item from index else None.
+        Return description.
     """
 '''
 
@@ -3804,7 +3804,7 @@ def function(index: int) -> _T | None:
     Returns
     -------
     int
-        Item from index else None.
+        Return description.
     """
 '''
 
@@ -3848,7 +3848,7 @@ class Klass:
         Returns
         -------
         int
-            Returncode.
+            Return description.
         """
 '''
 
@@ -3868,7 +3868,7 @@ def function():
     Returns
     -------
     int
-        Does it?
+        Return description.
     """
 '''
 
@@ -3923,7 +3923,7 @@ def function(
     Returns
     -------
     int
-        Boolean value for whether there were any failures or not.
+        Return description.
     """
 '''
 
@@ -4028,7 +4028,7 @@ class Klass:
     Returns
     -------
     int
-        Fails
+        Return description.
     """
 
     def __init__(self, param1, param2) -> None:
@@ -4058,7 +4058,7 @@ class Klass:
     Returns
     -------
     int
-        Fails
+        Return description.
     """
 
     def __init__(param1, param2) -> None:
@@ -4127,7 +4127,7 @@ def function(*_, **__) -> int:
     Returns
     -------
     int
-        Returncode.
+        Return description.
     """
 '''
 
@@ -4260,7 +4260,7 @@ def function(param1, param2, param3) -> int:
     :param param1: Description of param1.
     :param param2: Description of param2.
     :param param3: Description of param3.
-    :returns: Passes.
+    :returns: Return description.
     """
 '''
 
@@ -4280,7 +4280,7 @@ def function(param1, param2, param3) -> None:
     :param param1: Description of param1.
     :param param2: Description of param2.
     :param param3: Description of param3.
-    :returns: Fails.
+    :returns: Return description.
     """
 '''
 
@@ -4300,7 +4300,7 @@ def function(param1, param2, param3):
     :param param1: Description of param1.
     :param param2: Description of param2.
     :param param3: Description of param3.
-    :returns: Fails.
+    :returns: Return description.
     """
 '''
 
@@ -4320,7 +4320,7 @@ def function(param1, param2, param3) -> None:
     :param param1: Description of param1.
     :param param2: Description of param2.
     :param param3: Description of param3.
-    :returns: Fails.
+    :returns: Return description.
     """
 '''
 
@@ -4338,7 +4338,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
     :param reduce: :func:`~lsfiles.utils._Tree.reduce`
-    :returns: Tuple of `Path` objects or str repr.
+    :returns: Return description.
     """
 '''
 
@@ -4358,7 +4358,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     :param args: Manipulate string(s).
     :key format: Return a string instead of a tuple if strings are
         passed as tuple.
-    :returns: Colored string or None.
+    :returns: Return description.
     """
 '''
 
@@ -4384,7 +4384,7 @@ def function(
      :param version: If provided populate session object with
         version.
      :param checkauthor: Rule whether to check for author ID.
-     :returns: Post's connection object.
+    :returns: Return description.
     """
 '''
 
@@ -4403,7 +4403,7 @@ def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
 
     :param index: Index to get.
     :param seq: Sequence object that can be indexed.
-    :returns: Item from index else None.
+    :returns: Return description.
     """
     try:
         return seq[index]
@@ -4424,7 +4424,7 @@ class _FBinOpReprSRs(_BaseTemplate):
 def function(index: int) -> _T | None:
     """Docstring summary.
 
-    :returns: Item from index else None.
+    :returns: Return description.
     """
 '''
 
@@ -4443,7 +4443,7 @@ class Klass:
     def function(*_, **__) -> int:
         """Docstring summary.
 
-        :returns: Returncode.
+        :returns: Return description.
         """
 '''
 
@@ -4460,7 +4460,7 @@ class _FHintMissingReturnSRs(_BaseTemplate):
 def function() -> Post:
     """Docstring summary.
 
-     return: Post's connection object.
+     return: Return description.
     """
 '''
 
@@ -4479,7 +4479,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
     """Docstring summary.
 
     :param monkeypatch: ``pytest`` fixture for mocking attributes.
-    :returns:            Function for using this fixture.
+    :returns: Return description.
     """
 '''
 
@@ -4496,7 +4496,7 @@ class _FSIG501WRetQuestionSRs(_BaseTemplate):
 def function():
     """Docstring summary.
 
-    :returns: Does it?
+    :returns: Return description.
     """
 '''
 
@@ -4520,7 +4520,7 @@ def function(
     :param path: Path(s) to check.
     :param targets: List of errors to target.
     :param disable: List of errors to disable.
-    :returns: Boolean value for whether there were any failures or not.
+    :returns: Return description.
     """
 '''
 
@@ -4539,7 +4539,7 @@ class Klass:
 
     :param param1: Description of param1.
     :param param2: Description of param2.
-    :returns: Fails
+    :returns: Return description.
     """
 
     def __init__(self, param1, param2) -> None:
@@ -4561,7 +4561,7 @@ class Klass:
 
     :param param1: Description of param1.
     :param param2: Description of param2.
-    :returns: Fails
+    :returns: Return description.
     """
 
     def __init__(param1, param2) -> None:
@@ -4582,7 +4582,7 @@ class _PFuncPropReturnSRs(_BaseTemplate):
 def function(*_, **__) -> int:
     """Docstring summary.
 
-    :returns: Returncode.
+    :returns: Return description.
     """
 '''
 
@@ -4684,7 +4684,7 @@ def function(param1, param2, param3) -> int:
         param3 (int): Pass.
 
     Returns:
-        bool: Pass.
+        bool: Return description.
     """
 '''
 
@@ -4707,7 +4707,7 @@ def function(param1, param2, param3) -> None:
         param3 (int): Fails.
 
     Returns:
-        bool: Fails.
+        bool: Return description.
     """
 '''
 
@@ -4770,7 +4770,7 @@ def function(param1, param2, param3):
         param3 (int): Fails.
 
     Returns:
-        bool: Fails.
+        bool: Return description.
     """
 '''
 
@@ -4888,7 +4888,7 @@ def function(param1, param2, param3) -> None:
         param3 (int): Fails.
 
     Returns:
-        bool: Fails.
+        bool: Return description.
     """
 '''
 
@@ -5192,7 +5192,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
         reduce (int): :func:`~lsfiles.utils._Tree.reduce`
 
     Returns:
-        int: Tuple of `Path` objects or str repr.
+        int: Return description.
     """
 '''
 
@@ -5215,7 +5215,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
             are passed as tuple.
 
     Returns:
-        int: Colored string or None.
+        int: Return description.
     """
 '''
 
@@ -5237,7 +5237,7 @@ def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
         seq (int): Sequence object that can be indexed.
 
     Returns:
-        int: Item from index else None.
+        int: Return description.
     """
 '''
 
@@ -5255,7 +5255,7 @@ def function(index: int) -> _T | None:
     """Docstring summary.
 
     Returns:
-        int: Item from index else None.
+        int: Return description.
     """
 '''
 
@@ -5294,7 +5294,7 @@ class Klass:
         """Docstring summary.
 
         Returns:
-            int: Returncode.
+            int: Return description.
         """
 '''
 
@@ -5312,7 +5312,7 @@ def function():
     """Docstring summary.
 
     Returns:
-        int: Does it?
+        int: Return description.
     """
 '''
 
@@ -5358,7 +5358,7 @@ def function(
         disable (int): List of errors to disable.
 
     Returns:
-        int: Boolean value for whether there were any failures or not.
+        int: Return description.
     """
 '''
 
@@ -5448,7 +5448,7 @@ class Klass:
         param2 (int): Fails.
 
     Returns:
-        int: Fails
+        int: Return description.
     """
 
     def __init__(self, param1, param2) -> None:
@@ -5473,7 +5473,7 @@ class Klass:
         param2 (int): Fails.
 
     Returns:
-        int: Fails
+        int: Return description.
     """
 
     def __init__(param1, param2) -> None:
@@ -5534,7 +5534,7 @@ def function(*_, **__) -> int:
     """Docstring summary.
 
     Returns:
-        int: Returncode.
+        int: Return description.
     """
 '''
 
@@ -5553,7 +5553,7 @@ def function(self):
     """Docstring summary.
 
     Returns:
-        int: Returncode.
+        int: Return description.
     """
 '''
 
@@ -5717,7 +5717,7 @@ def function(str_lin: str, a: str) -> bool:
     Returns
     -------
     bool
-        Returns True, else false
+        Return description.
     """
 '''
 
@@ -5816,7 +5816,7 @@ def function(some_input: int) -> "int":
         some_input: Random integer
 
     Returns:
-        Unchanged input
+        Return description.
     """
 '''
 
@@ -5889,7 +5889,7 @@ def function(
         **kwargs: Static keyword-arguments passed to the function.
 
     Returns:
-        ...
+        Return description.
     """
 '''
 
@@ -5928,7 +5928,7 @@ class Klass:
             **kwargs: Static keyword-arguments passed to the function.
 
         Returns:
-            ...
+            Return description.
         """
 '''
 
@@ -5958,7 +5958,7 @@ def function(response):
     """Docstring summary.
 
     :param response: The response to process
-    :return: Something depending on what the response is
+    :returns: Return description.
     """
 '''
 
@@ -6019,7 +6019,7 @@ def function(response: bytes) -> str:
 def function(response):
     """Docstring summary.
 
-    :return: something depending on what the response is
+    :returns: Return description.
     """
 '''
 
@@ -6081,7 +6081,7 @@ def function_1(response):
     """Docstring summary.
 
     :param response: The response to process
-    :return: something depending on what the response is
+    :returns: Return description.
     """
 
 @overload
@@ -6100,7 +6100,7 @@ def function_2(response):
     """Docstring summary.
 
     :param response: The response to process
-    :return: something depending on what the response is
+    :returns: Return description.
     """
 '''
 
@@ -6130,7 +6130,7 @@ def function(response):
     """Docstring summary.
 
     :param response: The response to process
-    :return: NoneType
+    :return: Return description.
     """
 '''
 
@@ -6164,7 +6164,7 @@ class SomeClass:
         """Docstring summary.
 
         :param response: The response to process
-        :return: something depending on what the response is
+        :returns: Return description.
         """
 '''
 
@@ -6227,7 +6227,7 @@ class SomeClass:
     def process(self, response):
         """Docstring summary.
 
-        :return: something depending on what the response is
+        :returns: Return description.
         """
 '''
 
@@ -6294,7 +6294,7 @@ class SomeClass:
         """Docstring summary.
 
         :param response: The response to process
-        :return: something depending on what the response is
+        :returns: Return description.
         """
 
     @overload
@@ -6313,7 +6313,7 @@ class SomeClass:
         """Docstring summary.
 
         :param response: The response to process
-        :return: something depending on what the response is
+        :returns: Return description.
         """
 '''
 
@@ -6344,7 +6344,7 @@ class SomeClass:
         """Docstring summary.
 
         :param response: The response to process
-        :return: Optional
+        :return: Return description.
         """
 '''
 
@@ -7294,7 +7294,7 @@ def function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
 
 if True:
@@ -7353,7 +7353,7 @@ class Klass:
         """Docstring summary.
 
         :param argument: An int.
-        :return: An int.
+        :returns: Return description.
         """
 '''
 
@@ -7411,7 +7411,7 @@ def function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
     def nested_function(argument: int = 42) -> int:
         pass
@@ -7441,7 +7441,7 @@ def function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
     class Klass:
         def __init__(self, this) -> None:
@@ -7450,7 +7450,7 @@ def function(argument: int = 42) -> int:
             """Docstring summary.
 
             :param argument: An int.
-            :return: An int.
+            :returns: Return description.
             """
 '''
 
@@ -7478,7 +7478,7 @@ def function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
     class Klass:
         def __init__(self, this) -> None:
@@ -7544,7 +7544,7 @@ class Klass:
         Returns
         -------
             int
-                Returncode.
+                Return description.
         """
 '''
 

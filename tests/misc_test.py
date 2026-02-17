@@ -457,7 +457,7 @@ def function(*_, **__):
     Returns
     -------
         int
-            Returncode.
+            Return description.
     """
 ''',
             E[501].fstring(T),
@@ -472,7 +472,7 @@ class Klass:
         Returns
         -------
         int
-        Returncode.
+        Return description.
         """
 ''',
             E[505].fstring(T),
@@ -834,7 +834,7 @@ def my_function(argument: int = 42) -> int:
     Returns
     -------
     int
-        The input argument + 1
+        Return description.
     """
     def nested_function(argument: int = 42) -> int:
         pass
@@ -926,7 +926,7 @@ def function(*_, **__):
     Returns
     -------
         int
-            Returncode.
+            Return description.
     """
 '''
     init_file(template)
@@ -956,7 +956,7 @@ class Klass:
         Returns
         -------
         int
-        Returncode.
+        Return description.
         """
 '''
     init_file(template)
