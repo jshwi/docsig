@@ -41,7 +41,7 @@ MATRIX = [
 ]
 DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -49,7 +49,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -57,14 +57,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -73,7 +73,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -81,7 +81,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -90,7 +90,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -101,7 +101,7 @@ def function_7(param1, param2, param3) -> None:
 DISABLE_FILE_2 = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -109,7 +109,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -117,14 +117,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -133,7 +133,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -141,7 +141,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -150,7 +150,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -160,7 +160,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 DISABLE_FILE_3 = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -168,7 +168,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -176,14 +176,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -192,7 +192,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -200,7 +200,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -209,7 +209,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -220,7 +220,7 @@ def function_7(param1, param2, param3) -> None:
 DISABLE_FILE_4 = '''
 # docsig: disable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -228,7 +228,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -236,14 +236,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -252,7 +252,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -260,7 +260,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -269,7 +269,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -281,7 +281,7 @@ def function_7(param1, param2, param3) -> None:
 DISABLE_FILE_5 = '''
 # docsig: disable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -289,7 +289,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -297,14 +297,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -313,7 +313,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -321,7 +321,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -330,7 +330,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -342,7 +342,7 @@ def function_7(param1, param2, param3) -> None:
 DISABLE_FILE_6 = '''
 
 def function_1(param1, param2, param3) -> None:  # docsig: disable=SIG402
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -350,7 +350,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable=SIG402
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -358,14 +358,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -374,7 +374,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -382,7 +382,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -391,7 +391,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -402,7 +402,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 DISABLE_FILE_7 = '''
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -410,7 +410,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -418,14 +418,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -434,7 +434,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -444,7 +444,7 @@ def function_5(param1, param2, param3) -> int:
 def function_6(  # docsig: disable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -453,7 +453,7 @@ def function_6(  # docsig: disable=SIG402,SIG202,SIG201,SIG303
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -466,7 +466,7 @@ ENABLE_FILE_1 = '''
 # docsig: disable
 # docsig: enable
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -474,7 +474,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -482,14 +482,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -498,7 +498,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -506,7 +506,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -515,7 +515,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -528,7 +528,7 @@ ENABLE_FILE_2 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -536,7 +536,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -544,14 +544,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -560,7 +560,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -568,7 +568,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -577,7 +577,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -590,7 +590,7 @@ ENABLE_FILE_3 = '''
 # docsig: disable
 # docsig: enable=SIG402
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -598,7 +598,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -606,14 +606,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -622,7 +622,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -630,7 +630,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -639,7 +639,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -653,7 +653,7 @@ ENABLE_FILE_4 = '''
 # docsig: disable
 # docsig: enable=SIG402,SIG202
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -661,7 +661,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -669,14 +669,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -685,7 +685,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -693,7 +693,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -702,7 +702,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -715,7 +715,7 @@ ENABLE_FILE_5 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable=SIG402
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -723,7 +723,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable=SIG402
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -731,14 +731,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -747,7 +747,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -755,7 +755,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -764,7 +764,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -777,7 +777,7 @@ ENABLE_FILE_6 = '''
 
 # docsig: disable
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -785,7 +785,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -793,14 +793,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -809,7 +809,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -819,7 +819,7 @@ def function_5(param1, param2, param3) -> int:
 def function_6(  # docsig: enable=SIG402,SIG202,SIG201,SIG303
     param1, param2, param3
 ) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -828,7 +828,7 @@ def function_6(  # docsig: enable=SIG402,SIG202,SIG201,SIG303
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -839,7 +839,7 @@ def function_7(param1, param2, param3) -> None:
 '''
 INLINE_DISABLE_TEMPLATE = '''
 def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -847,7 +847,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_2(param1, param2) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -855,14 +855,14 @@ def function_2(param1, param2) -> None:  # docsig: disable={rules}
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -871,7 +871,7 @@ def function_4(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -879,7 +879,7 @@ def function_5(param1, param2, param3) -> int:  # docsig: disable={rules}
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -888,7 +888,7 @@ def function_6(param1, param2, param3) -> None:  # docsig: disable={rules}
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -899,7 +899,7 @@ def function_7(param1, param2, param3) -> None:  # docsig: disable={rules}
 MODULE_LEVEL_DISABLE_TEMPLATE = '''
 # docsig: disable={rules}
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -907,7 +907,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -915,14 +915,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -931,7 +931,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -939,7 +939,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -948,7 +948,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -959,7 +959,7 @@ def function_7(param1, param2, param3) -> None:
 INLINE_ENABLE_TEMPLATE = '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -967,7 +967,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_2(param1, param2) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -975,14 +975,14 @@ def function_2(param1, param2) -> None:  # docsig: enable={rules}
     """
 
 def function_3(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -991,7 +991,7 @@ def function_4(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -999,7 +999,7 @@ def function_5(param1, param2, param3) -> int:  # docsig: enable={rules}
     """
 
 def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -1008,7 +1008,7 @@ def function_6(param1, param2, param3) -> None:  # docsig: enable={rules}
     """
 
 def function_7(param1, param2, param3) -> None:  # docsig: enable={rules}
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -1020,7 +1020,7 @@ MODULE_LEVEL_ENABLE_TEMPLATE = '''
 # docsig: disable
 # docsig: enable={rules}
 def function_1(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -1028,7 +1028,7 @@ def function_1(param1, param2, param3) -> None:
     """
 
 def function_2(param1, param2) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -1036,14 +1036,14 @@ def function_2(param1, param2) -> None:
     """
 
 def function_3(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -1052,7 +1052,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -1060,7 +1060,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.
@@ -1069,7 +1069,7 @@ def function_6(param1, param2, param3) -> None:
     """
 
 def function_7(param1, param2, param3) -> None:
-    """Description summary.
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param1: Description of param1.

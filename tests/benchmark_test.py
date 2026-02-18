@@ -17,7 +17,7 @@ from . import FixtureMain
             '''
 class Klass:
     def __init__(self, param1, param2) -> None:
-        """Info about class.
+        """Docstring summary.
 
         :param param2: Description of param2.
         :param param1: Description of param1.
@@ -28,7 +28,7 @@ class Klass:
         (
             '''
 class Klass:
-    """Info about class.
+    """Docstring summary.
 
     :param param2: Description of param2.
     :param param1: Description of param1.
@@ -43,7 +43,7 @@ class Klass:
             '''
 class Klass:
     def __get__(self, param1, param2) -> None:
-        """Info about class.
+        """Docstring summary.
 
         :param param2: Description of param2.
         :param param1: Description of param1.
@@ -76,7 +76,7 @@ def function(argument: int = 42) -> int:
             '''
 class Parent:
     def method(self) -> None:
-        """This is documented."""
+        """Docstring summary."""
 
 class Child(Parent):
     def method(self) -> None:
@@ -89,7 +89,7 @@ class Child(Parent):
 class Klass:
     @property
     def method(self) -> str:
-        """This is documented."""
+        """Docstring summary."""
 ''',
             "klass_with_property.py",
         ),
@@ -98,7 +98,7 @@ class Klass:
 class _Klass:
     @property
     def method(self, param1) -> str:
-        """This is documented."""
+        """Docstring summary."""
 ''',
             "klass_with_documented_property.py",
         ),
@@ -106,7 +106,7 @@ class _Klass:
             '''
 class Parent:
     def _method(self, param1) -> None:
-        """This is documented."""
+        """Docstring summary."""
 ''',
             "parent_with_protected.py",
         ),
