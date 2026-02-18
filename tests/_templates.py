@@ -706,7 +706,7 @@ class _FMsgPoorIndentS(_BaseTemplate):
 def function(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
-    """Get post by post's ID or abort with ``404: Not Found.``
+    """Docstring summary.
 
     Standard behaviour would be to return None, so do not bypass
      silently.
@@ -747,7 +747,7 @@ class _PBinOpS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
-    """Fet index without throwing an error if index does not exist.
+    """Docstring summary.
 
     :param index: Index to get.
     :param seq: Sequence object that can be indexed.
@@ -766,7 +766,7 @@ class _FBinOpReprS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int) -> _T | None:
-    """Get index without throwing an error if index does not exist.
+    """Docstring summary.
 
     :return: Item from index else None.
     """
@@ -871,7 +871,7 @@ import typing as _t
 T = _t.TypeVar("T")
 
 class MutableSet(_t.MutableSet[T]):
-    """Set object to inherit from."""
+    """Docstring summary."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -918,8 +918,7 @@ class _PInconsistentSpaceS(_BaseTemplate):
         return '''
 @pytest.fixture(name="main")
 def fixture_main(monkeypatch) -> t.Callable[..., None]:
-    """Function for passing mock ``main`` commandline arguments
-    to package's main function.
+    """Docstring summary.
 
     :param monkeypatch: ``pytest`` fixture for mocking attributes.
     :return:            Function for using this fixture.
@@ -1300,7 +1299,7 @@ class _FDundersS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class MutableSet:
-    """Set object to inherit from."""
+    """Docstring summary."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -2190,7 +2189,7 @@ class _PBinOpN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
-    """Fet index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Parameters
     ----------
@@ -2217,7 +2216,7 @@ class _FBinOpReprN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int) -> _T | None:
-    """Get index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Returns
     -------
@@ -2359,7 +2358,7 @@ import typing as _t
 T = _t.TypeVar("T")
 
 class MutableSet(_t.MutableSet[T]):
-    """Set object to inherit from."""
+    """Docstring summary."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -2840,7 +2839,7 @@ class _FDundersN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class MutableSet:
-    """Set object to inherit from."""
+    """Docstring summary."""
 
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
@@ -2968,7 +2967,7 @@ class _PIssue36ParamN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(numericString: Union[str, int]) -> str:
-    """Do stuff.
+    """Docstring summary.
 
     Parameters
     ----------
@@ -2993,7 +2992,7 @@ class _PIssue36ReturnN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(str_lin: str) -> bool:
-    """Check if "A" or "B".
+    """Docstring summary.
 
     The function checks whether the string is "A" or "B".
 
@@ -3805,7 +3804,7 @@ class _PBinOpNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
-    """Fet index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Parameters
     ----------
@@ -3832,7 +3831,7 @@ class _FBinOpReprNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int) -> _T | None:
-    """Get index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Returns
     -------
@@ -4409,7 +4408,7 @@ class _FMsgPoorIndentSRs(_BaseTemplate):
 def function(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
-    """Get post by post's ID or abort with ``404: Not Found.``
+    """Docstring summary.
 
     Standard behaviour would be to return None, so do not bypass
      silently.
@@ -4433,7 +4432,7 @@ class _PBinOpSRs(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
-    """Fet index without throwing an error if index does not exist.
+    """Docstring summary.
 
     :param index: Index to get.
     :param seq: Sequence object that can be indexed.
@@ -4456,7 +4455,7 @@ class _FBinOpReprSRs(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int) -> _T | None:
-    """Get index without throwing an error if index does not exist.
+    """Docstring summary.
 
     :returns: Item from index else None.
     """
@@ -4510,8 +4509,7 @@ class _PInconsistentSpaceSRs(_BaseTemplate):
         return '''
 @pytest.fixture(name="main")
 def fixture_main(monkeypatch) -> t.Callable[..., None]:
-    """Function for passing mock ``main`` commandline arguments
-    to package's main function.
+    """Docstring summary.
 
     :param monkeypatch: ``pytest`` fixture for mocking attributes.
     :returns:            Function for using this fixture.
@@ -5273,7 +5271,7 @@ class _PBinOpG(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
-    """Fet index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Args:
         index (int): Index to get.
@@ -5295,7 +5293,7 @@ class _FBinOpReprG(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(index: int) -> _T | None:
-    """Get index without throwing an error if index does not exist.
+    """Docstring summary.
 
     Returns:
         int: Item from index else None.
@@ -5753,7 +5751,7 @@ class _FIssue36OffIndentN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(str_lin: str, a: str) -> bool:
-    """Check if "A" or "B".
+    """Docstring summary.
 
     The function checks whether the string is "A" or "B".
 
@@ -5789,7 +5787,7 @@ KT = _t.TypeVar("KT")
 VT = _t.TypeVar("VT")
 
 class _MutableSequence(_t.MutableSequence[T]):
-    """List-object to inherit from."""
+    """Docstring summary."""
 
     def __init__(self) -> None:
         self._list: list[T] = []
@@ -5836,7 +5834,7 @@ class _MutableSequence(_t.MutableSequence[T]):
 # without this, the test will fail (not ideal)
 # TODO: remove this to test for why
 class Param(_t.NamedTuple):
-    """A tuple of param types and their names."""
+    """Docstring summary."""
 
     kind: str = "param"
     name: str | None = None
@@ -5844,7 +5842,7 @@ class Param(_t.NamedTuple):
     indent: int = 0
 
 class Params(_MutableSequence[Param]):
-    """Represents collection of parameters."""
+    """Docstring summary."""
 
     def insert(self, index: int, value: Param) -> None:
         pass
@@ -5861,8 +5859,7 @@ class _PStringAnnotation(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(some_input: int) -> "int":
-    """
-    Do something.
+    """Docstring summary.
 
     Args:
         some_input: Random integer
@@ -5883,7 +5880,7 @@ class _FNoParamS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(some_input: int) -> int:
-    """Return input."""
+    """Docstring summary."""
 '''
 
     @property
@@ -5927,7 +5924,7 @@ def function(
     show_progress: bool | None = None,
     **kwargs: Any,
 ) -> list[Job]:
-    """Submits many jobs to the queue.
+    """Docstring summary.
 
     One for each sequence in the iterable.
     Waits for all to finish, then returns the results.
@@ -5966,7 +5963,7 @@ class Klass:
         show_progress: bool | None = None,
         **kwargs: Any,
     ) -> list[Job]:
-        """Submits many jobs to the queue.
+        """Docstring summary.
 
         One for each sequence in the iterable.
         Waits for all to finish, then returns the results.
@@ -6007,7 +6004,7 @@ def function(response: bytes) -> str:
     ...
 
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     :return: Something depending on what the response is
@@ -6037,7 +6034,7 @@ def function(response: bytes) -> str:
     ...
 
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     """
@@ -6069,7 +6066,7 @@ def function(response: bytes) -> str:
     ...
 
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :return: something depending on what the response is
     """
@@ -6101,7 +6098,7 @@ def function(response: bytes) -> None:
     ...
 
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     """
@@ -6130,7 +6127,7 @@ def function_1(response: bytes) -> str:
     ...
 
 def function_1(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     :return: something depending on what the response is
@@ -6149,7 +6146,7 @@ def function_2(response: str) -> int:
     ...
 
 def function_2(response):
-    """process another response.
+    """Docstring summary.
 
     :param response: The response to process
     :return: something depending on what the response is
@@ -6179,7 +6176,7 @@ def function(response: bytes) -> None:
     ...
 
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     :return: NoneType
@@ -6213,7 +6210,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :param response: The response to process
         :return: something depending on what the response is
@@ -6244,7 +6241,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :param response: The response to process
         """
@@ -6277,7 +6274,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :return: something depending on what the response is
         """
@@ -6310,7 +6307,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :param response: The response to process
         """
@@ -6343,7 +6340,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :param response: The response to process
         :return: something depending on what the response is
@@ -6362,7 +6359,7 @@ class SomeClass:
         ...
 
     def another_process(self, response):
-        """process another response.
+        """Docstring summary.
 
         :param response: The response to process
         :return: something depending on what the response is
@@ -6393,7 +6390,7 @@ class SomeClass:
         ...
 
     def process(self, response):
-        """process a response.
+        """Docstring summary.
 
         :param response: The response to process
         :return: Optional
@@ -6788,7 +6785,7 @@ class _MPassBadInlineDirective(_BaseTemplate):
         return '''
 # docsig: disable
 def function_1(param1, param2, param3) -> None:  # docsig: ena
-    """
+    """Description summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -6796,7 +6793,7 @@ def function_1(param1, param2, param3) -> None:  # docsig: ena
     """
 
 def function_2(param1, param2) -> None:  # docsig: ena
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6821,7 +6818,7 @@ class _MPassBadModuleDirective(_BaseTemplate):
         return '''
 # docsig: disa
 def function_1(param1, param2) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6829,7 +6826,7 @@ def function_1(param1, param2) -> None:
     """
 
 def function_2(param1, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -6856,7 +6853,7 @@ class _MPylintDirective(_BaseTemplate):
         return '''
 # docsig: unknown
 def function_1(param1, param2, param3) -> None:  # pylint: disable
-    """
+    """Description summary.
 
     :param param2: Description of param2.
     :param param3: Description of param3.
@@ -6865,7 +6862,7 @@ def function_1(param1, param2, param3) -> None:  # pylint: disable
 
 # pylint: disable=unknown,unknown-the-third
 def function_2(param1, param2) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6875,14 +6872,14 @@ def function_2(param1, param2) -> None:
 def function_3(  # docsig: enable=unknown,unknown-the-third
     param1, param2, param3
 ) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6891,7 +6888,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6899,7 +6896,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param: Description of params.
     :param param: Description of params.
@@ -6908,7 +6905,7 @@ def function_6(param, param2, param3) -> None:
     """
 
 def function_7(param, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param: Description of params.
     :param param: Description of params.
@@ -6963,7 +6960,7 @@ def function_1(param1, param2, param3) -> None:  # pylint: disable
 
 # pylint: disable=unknown,unknown-the-third
 def function_2(param1, param2) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6973,14 +6970,14 @@ def function_2(param1, param2) -> None:
 def function_3(  # docsig: enable=unknown,unknown-the-third
     param1, param2, param3
 ) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
     """
 
 def function_4(param1, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6989,7 +6986,7 @@ def function_4(param1, param2, param3) -> None:
     """
 
 def function_5(param1, param2, param3) -> int:
-    """
+    """Description summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -6997,7 +6994,7 @@ def function_5(param1, param2, param3) -> int:
     """
 
 def function_6(param, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param: Description of params.
     :param param: Description of params.
@@ -7006,7 +7003,7 @@ def function_6(param, param2, param3) -> None:
     """
 
 def function_7(param, param2, param3) -> None:
-    """
+    """Description summary.
 
     :param param: Description of params.
     :param param: Description of params.
@@ -7185,7 +7182,7 @@ class _MInvalidSingleModuleDirectiveOptions(_BaseTemplate):
         return '''
 # docsig: enable=unknown
 def function(param1, param2, param3) -> None:
-    """
+    """Docstring summary.
 
     :param param1: Description of param1.
     :param param2: Description of param2.
@@ -7211,7 +7208,7 @@ class _Messages(_t.Dict[int, Message]):
         self._this_should_not_need_a_docstring
 
     def fromcode(self, ref: str) -> Message:
-        """
+        """Docstring summary.
 
         :param ref: Codes or symbolic reference.
         """
@@ -7241,7 +7238,7 @@ class _MessageSequence(_t.List[str]):  # docsig: disable
         pass
 
     def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        """Add an error to the container.
+        """Docstring summary.
 
         :param value: Value to add.
         :param hint: Whether to print a hint or not.
@@ -7276,7 +7273,7 @@ class _MessageSequence(_t.List[str]):
         pass
 
     def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        """Add an error to the container.
+        """Docstring summary.
 
         :param value: Value to add.
         :param hint: Whether to print a hint or not.
@@ -7313,7 +7310,7 @@ class _MessageSequence(_t.List[str]):
         pass
 
     def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        """Add an error to the container.
+        """Docstring summary.
 
         :param value: Value to add.
         :param hint: Whether to print a hint or not.
@@ -7336,8 +7333,7 @@ class _FFuncInIfStatementN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(argument: int = 42) -> int:
-    """
-    Function that prints a message and returns the argument + 1
+    """Docstring summary.
 
     Parameters
     ----------
@@ -7368,7 +7364,7 @@ class _FKlassInIfStatementN(_BaseTemplate):
         return '''
 if True:
     class Klass:
-        """Class is OK."""
+        """Docstring summary."""
         def my_external_function(self, argument: int = 42) -> int:
             pass
 '''
@@ -7403,7 +7399,7 @@ class Klass:
     def __init__(self, this) -> None:
         self.this = this
     def my_external_function(self, argument: int = 42) -> int:
-        """This is a method.
+        """Docstring summary.
 
         :param argument: An int.
         :return: An int.
@@ -7454,8 +7450,7 @@ class _FNestedFuncN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(argument: int = 42) -> int:
-    """
-    Function that prints a message and returns the argument + 1
+    """Docstring summary.
 
     Parameters
     ----------
@@ -7485,8 +7480,7 @@ class _MNestedKlassNotMethodOkN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(argument: int = 42) -> int:
-    """
-    Function that prints a message and returns the argument + 1
+    """Docstring summary.
 
     Parameters
     ----------
@@ -7502,7 +7496,7 @@ def function(argument: int = 42) -> int:
         def __init__(self, this) -> None:
             pass
         def my_external_function(self, argument: int = 42) -> int:
-            """This is a method.
+            """Docstring summary.
 
             :param argument: An int.
             :return: An int.
@@ -7512,7 +7506,7 @@ def function(argument: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in Klass.__init__
+{PATH}:16 in Klass.__init__
     {E[102].fstring(T)}
 """
 
@@ -7523,8 +7517,7 @@ class _MNestedKlassNotMethodNotN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(argument: int = 42) -> int:
-    """
-    Function that prints a message and returns the argument + 1
+    """Docstring summary.
 
     Parameters
     ----------
@@ -7546,9 +7539,9 @@ def function(argument: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:17 in Klass.__init__
+{PATH}:16 in Klass.__init__
     {E[102].fstring(T)}
-{PATH}:19 in Klass.my_external_function
+{PATH}:18 in Klass.my_external_function
     {E[101].fstring(T)}
 """
 
@@ -7574,7 +7567,7 @@ def function(response: bytes) -> None:
 
 @_overload
 def function(response):
-    """process a response.
+    """Docstring summary.
 
     :param response: The response to process
     """
@@ -7621,7 +7614,7 @@ def function(
     summary_line: _t.Iterable[_t.Any] | None = None,
     print_field_total: int | None = None,
 ) -> None:
-    """Display data as a table.
+    """Docstring summary.
 
     :param define: Define the headers and the format of the fields
         belonging to the headers.
@@ -7646,7 +7639,7 @@ class _FPropertyReturnMissingDescS(_BaseTemplate):
     def template(self) -> str:
         return r'''
 def function(ticker: str) -> str:
-    """Normalize ticket names.
+    """Docstring summary.
 
     :param ticker: Ticker to normalize.
     :return:
