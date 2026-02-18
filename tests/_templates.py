@@ -655,7 +655,7 @@ class _POnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: bool = False) -> _t.Tuple[str, ...]:
+def function(a=False) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
     :param a: Description of a.
@@ -673,7 +673,7 @@ class _PReturnAnyWArgsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+def function(*args, **kwargs) -> _t.Any:
     """Docstring summary.
 
     :param args: Description of args.
@@ -692,9 +692,7 @@ class _FMsgPoorIndentS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(
-        a: int, b: t.Optional[int] = None, c: bool = True
-) -> Post:
+def function(a, b=None, c=True) -> Post:
     """Docstring summary.
 
     Docstring description.
@@ -733,7 +731,7 @@ class _PBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: int, b: _t.Sequence[_T]) -> _T | None:
+def function(a, b) -> _T | None:
     """Docstring summary.
 
     :param a: Description of a.
@@ -752,7 +750,7 @@ class _FBinOpReprS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: int) -> _T | None:
+def function(a) -> _T | None:
     """Docstring summary.
 
     :returns: Return description.
@@ -990,11 +988,7 @@ class _PKWOnlyArgsWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(
-    *args: _Path,
-    a: _t.List[str] | None = None,
-    b: _t.List[str] | None = None,
-) -> bool:
+def function(*args, a=None, b=None) -> bool:
     """Docstring summary.
 
     :param args: Description of args.
@@ -2136,7 +2130,7 @@ class _PReturnAnyWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+def function(*args, **kwargs) -> _t.Any:
     """Docstring summary.
 
     Parameters
@@ -2163,7 +2157,7 @@ class _PBinOpN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: int, b: _t.Sequence[_T]) -> _T | None:
+def function(a, b) -> _T | None:
     """Docstring summary.
 
     Parameters
@@ -7166,11 +7160,7 @@ class _MFDisableClassInlineCommentS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class _MessageSequence(_t.List[str]):  # docsig: disable
-    def __init__(
-        self,
-        targets: list[_Message],
-        disable: list[_Message],
-    ) -> None:
+    def __init__(self, targets, disable) -> None:
         pass
 
     def add(self, a: _Message, b: bool = False, **kwargs) -> None:
@@ -7189,7 +7179,7 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:19 in Report.order
+{PATH}:15 in Report.order
     {E[101].fstring(T)}
 """
 
@@ -7201,11 +7191,7 @@ class _MFDisableClassModuleCommentDisableEnableS(_BaseTemplate):
         return '''
 # docsig: disable
 class _MessageSequence(_t.List[str]):
-    def __init__(
-        self,
-        targets: list[_Message],
-        disable: list[_Message],
-    ) -> None:
+    def __init__(self, targets, disable) -> None:
         pass
 
     def add(self, a: _Message, b: bool = False, **kwargs) -> None:
@@ -7226,7 +7212,7 @@ class Report(_MessageSequence):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:22 in Report.order
+{PATH}:18 in Report.order
     {E[101].fstring(T)}
 """
 
@@ -7238,11 +7224,7 @@ class _MFDisableClassModuleCommentDisableS(_BaseTemplate):
         return '''
 # docsig: disable
 class _MessageSequence(_t.List[str]):
-    def __init__(
-        self,
-        targets: list[_Message],
-        disable: list[_Message],
-    ) -> None:
+    def __init__(self, targets, disable) -> None:
         pass
 
     def add(self, a: _Message, b: bool = False, **kwargs) -> None:
@@ -7543,13 +7525,7 @@ class _FIncorrectDocDotS(_BaseTemplate):
     @property
     def template(self) -> str:
         return r'''
-def function(
-    a: tuple[tuple[str, str], ...],
-    b: list[_t.Any],
-    c: int | None = None,
-    d: _t.Iterable[_t.Any] | None = None,
-    e: int | None = None,
-) -> None:
+def function(a, b, c, d, e) -> None:
     """Docstring summary.
 
     :param a: Description of a.
