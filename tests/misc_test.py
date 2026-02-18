@@ -270,13 +270,13 @@ class _Messages(_t.Dict[int, Message]):
         self._this_should_not_need_a_docstring
 
     def method_1(self, ref: str) -> Message:
-        """
+        """Docstring summary.
 
         :param ref: Codes or symbolic reference.
         """
 
     def method_2(self, category: int) -> tuple[Message, ...]:
-        """
+        """Docstring summary.
 
         :param category: Category to get.
         """
@@ -632,7 +632,7 @@ def test_ignore_args_ignore_kwargs_index_error(
     template = '''\
 class ArgumentParser(_a.ArgumentParser):
     def method(self, *args: str, **kwargs: _t.Any) -> None:
-        """Parse a comma separated list of strings into a list.
+        """Docstring summary.
 
         :param args: Long and/or short form argument(s).
         :param kwargs: Kwargs to pass to ``add_argument``.
@@ -697,7 +697,7 @@ class BaseClass:
     """My base class."""
 
     def method(self, arg) -> None:
-        """Does something.
+        """Docstring summary.
 
         :param arg: Some argument
         """
@@ -709,7 +709,7 @@ class Implementation(BaseClass):
     """My implementation."""
 
     def method(self, arg) -> None:
-        """Does something."""
+        """Docstring summary."""
 '''
     root = tmp_path / "folder"
     bases = root / "bases"
@@ -917,7 +917,7 @@ def test_ignore_typechecker_prop_numpy(
 class Klass:
     @property
     def method() -> int:
-        """Proper docstring.
+        """Docstring summary.
 
         Returns
         -------
