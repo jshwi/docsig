@@ -80,13 +80,15 @@ def test_class_and_class_constructor(
 
 def test_class_and_class_constructor_in_interpreter() -> None:
     """Test that docsig errors when passed incompatible options."""
-    assert docsig(
-        string="def function(): pass",
-        check_class=True,
-        check_class_constructor=True,
-    ) == (
-        "argument to check class constructor not allowed with argument to"
-        " check class"
+    assert (
+        docsig(
+            string="def function(): pass",
+            check_class=True,
+            check_class_constructor=True,
+        )
+        == """\
+argument to check class constructor not allowed with argument to check class\
+"""
     )
 
 
@@ -109,11 +111,10 @@ def test_class_and_class_constructor_in_interpreter_with_config(
         },
     )
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
-    assert main(".", test_flake8=False) == (
-        "argument to check class constructor not allowed with argument to"
-        " check class\n"
-        "please check your pyproject.toml configuration"
-    )
+    assert main(".", test_flake8=False) == """\
+argument to check class constructor not allowed with argument to check class
+please check your pyproject.toml configuration\
+"""
 
 
 @pytest.mark.parametrize(
