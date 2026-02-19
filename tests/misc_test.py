@@ -724,33 +724,43 @@ class Implementation(BaseClass):
     assert not std.out
 
 
+@pytest.mark.parametrize(
+    "template",
+    [
+        '''
+def function(a) -> None:
+    """Test for docsig.
+
+    :param a: this is all lower case.
+    """
+''',
+        '''
+def function(a) -> None:
+    """Test for docsig.
+
+    :param a: This is all lower case. but this is not.
+    """
+''',
+    ],
+    ids=[
+        "lowercase",
+        "uppercase-sentence-lowercase-sentence",
+    ],
+)
 def test_enforce_capitalisation_should_591(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
+    template: str,
 ) -> None:
     """Test enforce capitalisation.
 
     :param capsys: Capture sys out.
     :param init_file: Initialise a test file.
     :param main: Patch package entry point.
+    :param template: Contents to write to file.
     """
-    t1 = '''
-def function(a) -> None:
-    """Test for docsig.
-
-    :param a: this is all lower case.
-    """
-'''
-    t2 = '''
-def function(a) -> None:
-    """Test for docsig.
-
-    :param a: This is all lower case. but this is not.
-    """
-'''
-    init_file(t1)
-    init_file(t2)
+    init_file(template)
     assert main(".") == 1
     std = capsys.readouterr()
     assert E[305].ref in std.out
