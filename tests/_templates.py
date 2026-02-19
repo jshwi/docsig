@@ -819,7 +819,7 @@ class _PPropertyReturnS(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function() -> int:
+    def method() -> int:
         """Docstring summary.
 
         :return: Return description.
@@ -7143,7 +7143,7 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def fromcode(self, a: str) -> Message:
+    def method(self, a: str) -> Message:
         """Docstring summary.
 
         :param a: Description of a.
@@ -7155,7 +7155,7 @@ class _Messages(_t.Dict[int, Message]):
         return f"""\
 {PATH}:3 in _Messages.__init__
     {E[102].fstring(T)}
-{PATH}:6 in _Messages.fromcode
+{PATH}:6 in _Messages.method
     {E[503].fstring(T)}
 """
 
@@ -7301,7 +7301,7 @@ class _FKlassInIfStatementN(_BaseTemplate):
 if True:
     class Klass:
         """Docstring summary."""
-        def my_external_function(self, a: int = 42) -> int:
+        def method(self, a: int = 42) -> int:
             pass
 '''
 
@@ -7334,7 +7334,7 @@ class _FKlassNotMethodOkN(_BaseTemplate):
 class Klass:
     def __init__(self, a) -> None:
         self.a = a
-    def my_external_function(self, a: int = 42) -> int:
+    def method(self, a: int = 42) -> int:
         """Docstring summary.
 
         :param a: Description of a.
@@ -7431,7 +7431,7 @@ def function(a: int = 42) -> int:
     class Klass:
         def __init__(self, a) -> None:
             pass
-        def my_external_function(self, a: int = 42) -> int:
+        def method(self, a: int = 42) -> int:
             """Docstring summary.
 
             :param a: Description of a.
@@ -7468,7 +7468,7 @@ def function(a: int = 42) -> int:
     class Klass:
         def __init__(self, this) -> None:
             pass
-        def my_external_function(self, a: int = 42) -> int:
+        def method(self, a: int = 42) -> int:
             pass
 '''
 
@@ -7477,7 +7477,7 @@ def function(a: int = 42) -> int:
         return f"""\
 {PATH}:16 in Klass.__init__
     {E[102].fstring(T)}
-{PATH}:18 in Klass.my_external_function
+{PATH}:18 in Klass.method
     {E[101].fstring(T)}
 """
 
@@ -7523,7 +7523,7 @@ from functools import cached_property as _cached_property
 
 class Klass:
     @_cached_property
-    def function() -> int:
+    def method() -> int:
         """Docstring summary.
 
         Returns
