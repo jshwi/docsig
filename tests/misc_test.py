@@ -798,7 +798,7 @@ def test_check_nested_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-def function(a: int = 42) -> int:
+def function(a: int) -> int:
     """
     Function that prints a message and returns the argument + 1
 

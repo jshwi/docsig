@@ -1250,7 +1250,6 @@ class Klass:
     # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
-        return None
 '''
 
     @property
@@ -1286,16 +1285,16 @@ class MutableSet:
     """Docstring summary."""
 
     def __init__(self) -> None:
-        self._set: _t.Set[T] = set()
+        pass
 
     def __contains__(self, x: object) -> bool:
-        return self._set.__contains__(x)
+        pass
 
     def __len__(self) -> int:
-        return self._set.__len__()
+        pass
 
     def __iter__(self) -> _t.Iterator[T]:
-        return self._set.__iter__()
+        pass
 '''
 
     @property
@@ -2008,7 +2007,6 @@ class Klass:
     @property
     def method(self) -> int:
         """Docstring summary."""
-        return self._method
 '''
 
     @property
@@ -2113,7 +2111,7 @@ class _POnlyParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+def function(reduce: bool) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
     Parameters
@@ -4399,10 +4397,6 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     :param b: Description of b.
     :returns: Return description.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property

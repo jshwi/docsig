@@ -80,7 +80,7 @@ class Parent:
 
 class Child(Parent):
     def method(self) -> None:
-        self._set: _t.Set[T] = set()
+        pass
 ''',
             "parent_and_child.py",
         ),
