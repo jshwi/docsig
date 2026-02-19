@@ -63,9 +63,6 @@ def function(a: Optional[int]) -> Optional[str]:
     str
         Return description.
     """
-    if number is None:
-        return None
-    return str(number)
 '''
     init_file(template)
     main(".")
@@ -308,7 +305,6 @@ def function(*, arg1 = "") -> str:
     :returns: Return description.
     :raises TypeError: Incorrect argument(s)
     """
-    return ""
 '''
     init_file(template)
     main(".")
@@ -626,24 +622,7 @@ class Transactions(_Transactions):
     """
 
     def __init__(self, client: Client, symbol: str, attr: str):
-        super().__init__()
-        data = getattr(client, attr)(symbol=symbol)
-        for i in data:
-            try:
-                epoch_seconds = i["insertTime"] / 1000
-            except KeyError:
-                dt_object = _datetime.strptime(
-                    i["applyTime"], "%Y-%m-%d %H:%M:%S"
-                )
-                epoch_seconds = int(dt_object.timestamp())
-            self.append(
-                _Transaction(
-                    _datetime.fromtimestamp(epoch_seconds).replace(
-                        tzinfo=_timezone.utc
-                    ),
-                    float(i["amount"]),
-                )
-            )
+        pass
 '''
     init_file(template)
     main(".", "--check-class")
