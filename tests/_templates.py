@@ -851,15 +851,15 @@ class _FOverriddenS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as _t
+import typing as t
 
-T = _t.TypeVar("T")
+T = t.TypeVar("T")
 
-class MutableSet(_t.MutableSet[T]):
+class MutableSet(t.MutableSet[T]):
     """Docstring summary."""
 
     def __init__(self) -> None:
-        self._set: _t.Set[T] = set()
+        self._set: t.Set[T] = set()
 
     def add(self, a: T) -> None:
         self._set.add(value)
@@ -873,7 +873,7 @@ class MutableSet(_t.MutableSet[T]):
     def __len__(self) -> int:
         return self._set.__len__()
 
-    def __iter__(self) -> _t.Iterator[T]:
+    def __iter__(self) -> t.Iterator[T]:
         return self._set.__iter__()
 '''
 
@@ -2322,15 +2322,15 @@ class _FOverriddenN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as _t
+import typing as t
 
-T = _t.TypeVar("T")
+T = t.TypeVar("T")
 
-class MutableSet(_t.MutableSet[T]):
+class MutableSet(t.MutableSet[T]):
     """Docstring summary."""
 
     def __init__(self) -> None:
-        self._set: _t.Set[T] = set()
+        self._set: t.Set[T] = set()
 
     def add(self, a: T) -> None:
         self._set.add(value)
@@ -2344,7 +2344,7 @@ class MutableSet(_t.MutableSet[T]):
     def __len__(self) -> int:
         return self._set.__len__()
 
-    def __iter__(self) -> _t.Iterator[T]:
+    def __iter__(self) -> t.Iterator[T]:
         return self._set.__iter__()
 '''
 
@@ -5710,13 +5710,13 @@ class _FOverriddenAncestorsMultipleS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-import typing as _t
+import typing as t
 
-T = _t.TypeVar("T")
-KT = _t.TypeVar("KT")
-VT = _t.TypeVar("VT")
+T = t.TypeVar("T")
+KT = t.TypeVar("KT")
+VT = t.TypeVar("VT")
 
-class _MutableSequence(_t.MutableSequence[T]):
+class _MutableSequence(t.MutableSequence[T]):
     """Docstring summary."""
 
     def __init__(self) -> None:
@@ -5725,33 +5725,33 @@ class _MutableSequence(_t.MutableSequence[T]):
     def insert(self, a: int, a: T) -> None:
         self._list.insert(index, value)
 
-    @_t.overload
+    @t.overload
     def __getitem__(self, i: int) -> T:
         ...
 
-    @_t.overload
-    def __getitem__(self, s: slice) -> _t.MutableSequence[T]:
+    @t.overload
+    def __getitem__(self, s: slice) -> t.MutableSequence[T]:
         ...
 
     def __getitem__(self, i):
         return self._list.__getitem__(i)
 
-    @_t.overload
+    @t.overload
     def __setitem__(self, i: int, o: T) -> None:
         ...
 
-    @_t.overload
-    def __setitem__(self, s: slice, o: _t.Iterable[T]) -> None:
+    @t.overload
+    def __setitem__(self, s: slice, o: t.Iterable[T]) -> None:
         ...
 
     def __setitem__(self, i, o):
         return self._list.__setitem__(i, o)
 
-    @_t.overload
+    @t.overload
     def __delitem__(self, i: int) -> None:
         ...
 
-    @_t.overload
+    @t.overload
     def __delitem__(self, i: slice) -> None:
         ...
 
@@ -5763,7 +5763,7 @@ class _MutableSequence(_t.MutableSequence[T]):
 
 # without this, the test will fail (not ideal)
 # TODO: remove this to test for why
-class Param(_t.NamedTuple):
+class Param(t.NamedTuple):
     """Docstring summary."""
 
     kind: str = "param"
@@ -7469,21 +7469,21 @@ class _MPassOverloadNoReturnAliasS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from typing import overload as _overload
+from typing import overload as overload
 
-@_overload
+@overload
 def function(a: None) -> None:
     ...
 
-@_overload
+@overload
 def function(a: int) -> None:
     ...
 
-@_overload
+@overload
 def function(a: bytes) -> None:
     ...
 
-@_overload
+@overload
 def function(response):
     """Docstring summary.
 
@@ -7501,10 +7501,10 @@ class _PPropertyReturnFunctoolsCachedAliasN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-from functools import cached_property as _cached_property
+from functools import cached_property as cached_property
 
 class Class:
-    @_cached_property
+    @cached_property
     def method() -> int:
         """Docstring summary.
 
