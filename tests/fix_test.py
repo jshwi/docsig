@@ -9,6 +9,7 @@ import pickle
 from pathlib import Path
 
 import pytest
+import tomli_w
 
 import docsig
 import docsig.plugin
@@ -102,10 +103,13 @@ def test_exclude_dirs_392(
     """
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
-        r"""
-[tool.docsig]
-exclude = '''.*src[\\/]design[\\/].*'''
-""",
+        tomli_w.dumps(
+            {
+                "tool": {
+                    docsig.__name__: {"exclude": r".*src[\\/]design[\\/].*"},
+                },
+            },
+        ),
         encoding="utf-8",
     )
     path_obj = docsig._core._Paths  # define to avoid recursion
@@ -453,23 +457,7 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     ]
     pyproject_toml = Path.cwd() / "pyproject.toml"
     pyproject_toml.write_text(
-        """
-[tool.docsig]
-disable = [
-    "SIG101",
-    "SIG202",
-    "SIG203",
-    "SIG301",
-    "SIG302",
-    "SIG401",
-    "SIG402",
-    "SIG404",
-    "SIG501",
-    "SIG502",
-    "SIG503",
-    "SIG505",
-]
-""",
+        tomli_w.dumps({"tool": {docsig.__name__: {"disable": disable}}}),
         encoding="utf-8",
     )
     patch_argv("docsig.EXE")
