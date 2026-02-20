@@ -15,6 +15,7 @@ import docsig.plugin
 
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma
+from docsig.messages import E
 
 from . import (
     TREE,
@@ -70,7 +71,7 @@ def get_something(number: Optional[int]) -> Optional[str]:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert "SIG502" not in std.out
+    assert E[502].ref not in std.out
 
 
 def test_no_fail_on_unicode_decode_error_384(
@@ -313,7 +314,7 @@ def method(*, arg1 = "") -> str:
     init_file(template)
     main(".")
     std = capsys.readouterr()
-    assert "SIG401" not in std.out
+    assert E[401].ref not in std.out
 
 
 @pytest.mark.parametrize(
@@ -365,7 +366,7 @@ def test_indent_427(
     init_file(template)
     main(".", test_flake8=False)
     std = capsys.readouterr()
-    assert "SIG401" in std.out
+    assert E[401].ref in std.out
 
 
 def test_class_and_class_constructor_452(
@@ -436,18 +437,18 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     :param patch_argv: Patch commandline arguments.
     """
     disable = [
-        "SIG101",
-        "SIG202",
-        "SIG203",
-        "SIG301",
-        "SIG302",
-        "SIG401",
-        "SIG402",
-        "SIG404",
-        "SIG501",
-        "SIG502",
-        "SIG503",
-        "SIG505",
+        E[101].ref,
+        E[202].ref,
+        E[203].ref,
+        E[301].ref,
+        E[302].ref,
+        E[401].ref,
+        E[402].ref,
+        E[404].ref,
+        E[501].ref,
+        E[502].ref,
+        E[503].ref,
+        E[505].ref,
     ]
     init_pyproject_toml({"disable": disable})
     patch_argv("docsig.EXE")

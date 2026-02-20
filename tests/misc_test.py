@@ -106,7 +106,7 @@ def test_class_and_class_constructor_in_interpreter_with_config(
     )
 
 
-@pytest.mark.parametrize("error", ["SIG201", "SIG303"])
+@pytest.mark.parametrize("error", [E[201].ref, E[303].ref])
 def test_target_report(
     main: MockMainType,
     capsys: pytest.CaptureFixture,
@@ -135,7 +135,7 @@ def function_3(param1, param2, param3) -> None:
     :param: Description of param.
     """
 '''
-    _errors = "SIG202", "SIG201", "SIG303"
+    _errors = E[202].ref, E[201].ref, E[303].ref
     init_file(template)
     main(".", "--target", error, test_flake8=False)
     std = capsys.readouterr()
@@ -549,13 +549,13 @@ def function(*_, **__) -> None:
     std = capsys.readouterr()
     assert std.out == f"""\
 {Path('module') / 'file1'}.py:2 in function
-    SIG502: return statement documented for None (return-documented-for-none)
+    {E[502].fstring(T)}
 {Path('module') / 'file2'}.py:2 in function
-    SIG502: return statement documented for None (return-documented-for-none)
+    {E[502].fstring(T)}
 {Path('module') / 'file3'}.py:2 in function
-    SIG502: return statement documented for None (return-documented-for-none)
+    {E[502].fstring(T)}
 {Path('module') / 'file4'}.py:2 in function
-    SIG502: return statement documented for None (return-documented-for-none)
+    {E[502].fstring(T)}
 """
 
 
