@@ -543,7 +543,7 @@ class _FMethodWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -562,7 +562,7 @@ class _PClassSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a) -> None:
         """Docstring summary.
 
@@ -580,7 +580,7 @@ class _FPropertyReturnsClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def method(self) -> int:
         """Docstring summary."""
@@ -799,7 +799,7 @@ class _FPropertyReturnsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function() -> int:
         """Docstring summary."""
@@ -815,7 +815,7 @@ class _PPropertyReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def method() -> int:
         """Docstring summary.
@@ -969,7 +969,7 @@ class _FMethodHeaderWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -980,7 +980,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f"{PATH}:3 in Klass"
+        return f"{PATH}:3 in Class"
 
 
 @_templates.register
@@ -1008,7 +1008,7 @@ class _FClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -1030,7 +1030,7 @@ class _FPropertyReturnsTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def method(self):
         """Docstring summary."""
@@ -1046,7 +1046,7 @@ class _PInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -1067,7 +1067,7 @@ class _PInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -1089,7 +1089,7 @@ class _FClassRetNoneS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -1111,7 +1111,7 @@ class _FSIG504S(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -1220,7 +1220,7 @@ class _PStaticSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @staticmethod
     def method(self, a) -> None:
         """Docstring summary.
@@ -1240,7 +1240,7 @@ class _PClassNoSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
@@ -1256,7 +1256,7 @@ class _FProtectClsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class _Klass:
+class _Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -1301,7 +1301,7 @@ class _FDundersParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
@@ -1953,7 +1953,7 @@ class _FMethodWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -1976,7 +1976,7 @@ class _PClassSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a) -> None:
         """Docstring summary.
 
@@ -1997,7 +1997,7 @@ class _FPropertyReturnsClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def method(self) -> int:
         """Docstring summary."""
@@ -2240,7 +2240,7 @@ class _FPropertyReturnsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function(*_, **__) -> int:
         """Docstring summary."""
@@ -2256,7 +2256,7 @@ class _PPropertyReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function(*_, **__) -> int:
         """Docstring summary.
@@ -2278,7 +2278,7 @@ class _PPropertyReturnCachedN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @cached_property
     def function(*_, **__) -> int:
         """Docstring summary.
@@ -2300,7 +2300,7 @@ class _PPropertyReturnFunctoolsCachedN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @functools.cached_property
     def function(*_, **__) -> int:
         """Docstring summary.
@@ -2428,7 +2428,7 @@ class _FMethodHeaderWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -2443,7 +2443,7 @@ class Klass:
 
     @property
     def expected(self) -> str:
-        return f"{PATH}:3 in Klass"
+        return f"{PATH}:3 in Class"
 
 
 @_templates.register
@@ -2484,7 +2484,7 @@ class _FClassN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -2511,7 +2511,7 @@ class _FPropertyReturnsTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def method(self):
         """Docstring summary."""
@@ -2527,7 +2527,7 @@ class _PInitNoRetN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -2552,7 +2552,7 @@ class _PInitBadRetN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -2578,7 +2578,7 @@ class _FClassRetNoneN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -2608,7 +2608,7 @@ class _FSIG504N(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -2668,7 +2668,7 @@ def function(a) -> int:
 
     Parameters
     ----------
-        a : Klass
+        a : Class
             Description of a.
     """
 '''
@@ -2710,7 +2710,7 @@ def function(a):
 
     Parameters
     ----------
-        a : Klass
+        a : Class
             Description of a.
     """
 '''
@@ -2739,14 +2739,14 @@ class _PStaticSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @staticmethod
     def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            self : Klass
+            self : Class
                 Description of self.
             a : int
                 Description of a.
@@ -2763,7 +2763,7 @@ class _PClassNoSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
@@ -2779,7 +2779,7 @@ class _FProtectClsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class _Klass:
+class _Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -2828,7 +2828,7 @@ class _FDundersParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
@@ -3569,7 +3569,7 @@ class _FMethodWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -3592,7 +3592,7 @@ class _PClassSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a) -> None:
         """Docstring summary.
 
@@ -3827,7 +3827,7 @@ class _PPropertyReturnNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function() -> int:
         """Docstring summary.
@@ -3924,7 +3924,7 @@ class _FClassNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -3951,7 +3951,7 @@ class _PInitNoRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -3976,7 +3976,7 @@ class _PInitBadRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -4002,7 +4002,7 @@ class _FClassRetNoneNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -4032,7 +4032,7 @@ class _FSIG504NI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Parameters
@@ -4092,7 +4092,7 @@ def function(a) -> int:
 
     Parameters
     ----------
-    a: Klass
+    a: Class
         Description of a.
     """
 '''
@@ -4134,7 +4134,7 @@ def function(a):
 
     Parameters
     ----------
-    a: Klass
+    a: Class
         Description of a.
     """
 '''
@@ -4149,14 +4149,14 @@ class _PStaticSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @staticmethod
     def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-        self: Klass
+        self: Class
             Description of self.
         a: int
             Description of a.
@@ -4173,7 +4173,7 @@ class _FProtectClsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class _Klass:
+class _Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -4196,7 +4196,7 @@ class _FDundersParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
@@ -4420,7 +4420,7 @@ class _PPropertyReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function() -> int:
         """Docstring summary.
@@ -4516,7 +4516,7 @@ class _FClassRetNoneSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -4538,7 +4538,7 @@ class _FSIG504SRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -5047,7 +5047,7 @@ class _FMethodWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -5067,7 +5067,7 @@ class _PClassSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def method(self, a) -> None:
         """Docstring summary.
 
@@ -5268,7 +5268,7 @@ class _PPropertyReturnG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @property
     def function() -> int:
         """Docstring summary.
@@ -5352,7 +5352,7 @@ class _FClassG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Args:
@@ -5375,7 +5375,7 @@ class _PInitNoRetG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Args:
@@ -5397,7 +5397,7 @@ class _PInitBadRetG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Args:
@@ -5420,7 +5420,7 @@ class _FClassRetNoneG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Args:
@@ -5445,7 +5445,7 @@ class _FSIG504G(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     Args:
@@ -5495,7 +5495,7 @@ def function(a) -> int:
     """Docstring summary.
 
     Args:
-        a (Klass): Description of a.
+        a (Class): Description of a.
     """
 '''
 
@@ -5547,13 +5547,13 @@ class _PStaticSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     @staticmethod
     def method(self, a) -> None:
         """Docstring summary.
 
         Args:
-            self (Klass): Description of self.
+            self (Class): Description of self.
             a (int): Description of a.
         """
 '''
@@ -5568,7 +5568,7 @@ class _FProtectClsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class _Klass:
+class _Class:
     def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
@@ -5588,7 +5588,7 @@ class _FDundersParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
@@ -5665,7 +5665,7 @@ class _FNoDocClassS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-class Klass:
+class Class:
     def __init__(a, b, c) -> None:
         pass
 """
@@ -5823,7 +5823,7 @@ class _FMethodReturnHintS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param a: Description of a.
@@ -5882,7 +5882,7 @@ class _PIssue114PosOnlyArgsSelfWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def starmap(
         self,
         fun: Callable[..., Any],
@@ -7001,7 +7001,7 @@ class _FWClassConstructorFS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary."""
 
     def __init__(self, a, b) -> None:
@@ -7023,7 +7023,7 @@ class _FWClassConstructorInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary."""
 
     def __init__(self, a, b):
@@ -7044,7 +7044,7 @@ class _FWClassConstructorInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary."""
 
     # bad typing, but leave that up to mypy
@@ -7066,7 +7066,7 @@ class _FWClassConstructorRetNoneFS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary."""
 
     def __init__(self, a, b) -> None:
@@ -7088,7 +7088,7 @@ class _FWClassConstructorSIG504FS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     """Docstring summary."""
 
     def __init__(a, b) -> None:
@@ -7281,7 +7281,7 @@ class _FKlassInIfStatementN(_BaseTemplate):
     def template(self) -> str:
         return '''
 if True:
-    class Klass:
+    class Class:
         """Docstring summary."""
         def method(self, a: int = 42) -> int:
             pass
@@ -7309,11 +7309,11 @@ if True:
 
 
 @_templates.register
-class _FKlassNotMethodOkN(_BaseTemplate):
+class _FClassNotMethodOkN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-class Klass:
+class Class:
     def __init__(self, a) -> None:
         self.a = a
     def method(self, a: int = 42) -> int:
@@ -7393,7 +7393,7 @@ def function(a: int = 42) -> int:
 # `test_single_flag` with this as it needs `-N/--check-nested` and
 # `-c/--check-class` to fail
 @_templates.register
-class _MNestedKlassNotMethodOkN(_BaseTemplate):
+class _MNestedClassNotMethodOkN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -7410,7 +7410,7 @@ def function(a: int = 42) -> int:
     int
         Return description.
     """
-    class Klass:
+    class Class:
         def __init__(self, a) -> None:
             pass
         def method(self, a: int = 42) -> int:
@@ -7424,13 +7424,13 @@ def function(a: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:16 in Klass.__init__
+{PATH}:16 in Class.__init__
     {E[102].fstring(T)}
 """
 
 
 @_templates.register
-class _MNestedKlassNotMethodNotN(_BaseTemplate):
+class _MNestedClassNotMethodNotN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
@@ -7447,7 +7447,7 @@ def function(a: int = 42) -> int:
     int
         Return description.
     """
-    class Klass:
+    class Class:
         def __init__(self, this) -> None:
             pass
         def method(self, a: int = 42) -> int:
@@ -7457,9 +7457,9 @@ def function(a: int = 42) -> int:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:16 in Klass.__init__
+{PATH}:16 in Class.__init__
     {E[102].fstring(T)}
-{PATH}:18 in Klass.method
+{PATH}:18 in Class.method
     {E[101].fstring(T)}
 """
 
@@ -7503,7 +7503,7 @@ class _PPropertyReturnFunctoolsCachedAliasN(_BaseTemplate):
         return '''
 from functools import cached_property as _cached_property
 
-class Klass:
+class Class:
     @_cached_property
     def method() -> int:
         """Docstring summary.

@@ -15,7 +15,7 @@ from . import FixtureMain
     [
         (
             '''
-class Klass:
+class Class:
     def __init__(self, a, b) -> None:
         """Docstring summary.
 
@@ -27,7 +27,7 @@ class Klass:
         ),
         (
             '''
-class Klass:
+class Class:
     """Docstring summary.
 
     :param b: Description of b.
@@ -41,7 +41,7 @@ class Klass:
         ),
         (
             '''
-class Klass:
+class Class:
     def __get__(self, a, b) -> None:
         """Docstring summary.
 
@@ -86,7 +86,7 @@ class Child(Parent):
         ),
         (
             '''
-class Klass:
+class Class:
     @property
     def method(self) -> str:
         """Docstring summary."""
@@ -95,7 +95,7 @@ class Klass:
         ),
         (
             '''
-class _Klass:
+class _Class:
     @property
     def method(self, a) -> str:
         """Docstring summary."""
