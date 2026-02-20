@@ -24,6 +24,7 @@ from docsig.messages import E
 
 from . import (
     CHECK_ARGS,
+    WILL_ERROR,
     FixtureInitFile,
     FixtureInitPyprojectTomlFile,
     FixtureMain,
@@ -330,25 +331,6 @@ def test_bad_py_file(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template1 = """
-#!/usr/bin/env bash
-new-ssl() {
-  domain="${1}"
-  config="${2:-"${domain}.conf"}"
-  openssl \
-    req \
-    -new \
-    -newkey \
-    rsa:2048 \
-    -nodes \
-    -sha256 \
-    -out "${domain}.csr" \
-    -keyout "${domain}.key" \
-    -config "${config}"
-}
-
-new-ssl "${@}"
-"""
     template2 = '''
 def function(param1, param2) -> None:
     """Docstring summary.
@@ -359,7 +341,7 @@ def function(param1, param2) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    init_file(template1, tmp_path / "module" / "file1.py")
+    init_file(WILL_ERROR, tmp_path / "module" / "file1.py")
     init_file(template2, tmp_path / "module" / "file2.py")
     assert main(".", test_flake8=False, no_ansi=False) == 123
     std = capsys.readouterr()
@@ -375,22 +357,7 @@ def test_bash_script(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = """
-#!/usr/bin/env bash
-pygmentize-cat() {
-  stdin="${1}"
-  if command -v pygmentize >/dev/null 2>&1; then
-    if pygmentize --help >/dev/null 2>&1; then
-      pygmentize -O style=monokai -f console256 -g "${stdin}"
-      return 0
-    fi
-  fi
-  cat "${stdin}"
-}
-
-pygmentize-cat "${@}"
-"""
-    init_file(template, Path("module") / "file")
+    init_file(WILL_ERROR, Path("module") / "file")
     assert main(".") == 0
 
 
@@ -405,11 +372,7 @@ def test_verbose(
     :param patch_logger: Logs as an io instance.
     :param main: Mock ``main`` function.
     """
-    template = """\
-#!/bin/bash
-echo "Hello, world"
-"""
-    init_file(template, Path("module") / "file")
+    init_file(WILL_ERROR, Path("module") / "file")
     main(".", "--verbose", test_flake8=False)
     assert "invalid syntax" in patch_logger.getvalue()
 
@@ -666,11 +629,9 @@ def test_always_fail_on_astroid_syntax_error_with_string(
     :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     """
-    template = """\
-#!/bin/bash
-echo "Hello, world"
-"""
-    assert main("--string", template, test_flake8=False, no_ansi=False) == 123
+    assert (
+        main("--string", WILL_ERROR, test_flake8=False, no_ansi=False) == 123
+    )
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
 

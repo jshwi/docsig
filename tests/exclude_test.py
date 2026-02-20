@@ -15,7 +15,7 @@ import pytest
 
 import docsig
 
-from . import TREE, FixtureInitFile, FixtureMain, FixtureMakeTree
+from . import TREE, WILL_ERROR, FixtureInitFile, FixtureMain, FixtureMakeTree
 
 
 def test_exclude_defaults(
@@ -105,26 +105,7 @@ def test_exclude_argument(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template = """
-#!/usr/bin/env bash
-new-ssl() {
-  domain="${1}"
-  config="${2:-"${domain}.conf"}"
-  openssl \
-    req \
-    -new \
-    -newkey \
-    rsa:2048 \
-    -nodes \
-    -sha256 \
-    -out "${domain}.csr" \
-    -keyout "${domain}.key" \
-    -config "${config}"
-}
-
-new-ssl "${@}"
-"""
-    init_file(template)
+    init_file(WILL_ERROR)
     assert (
         main(".", "--exclude", r"module[\\/]file.py", test_flake8=False) == 0
     )
