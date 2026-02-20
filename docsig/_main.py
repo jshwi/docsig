@@ -26,7 +26,6 @@ def _warn_on_deprecated_short_flags() -> None:
         "-p": "--check-protected",
         "-P": "--check-property-returns",
         "-i": "--ignore-no-params",
-        "-a": "--ignore-args",
     }
     raw_args = _sys.argv[1:]
     expanded_flags = []
