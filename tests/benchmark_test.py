@@ -88,7 +88,7 @@ class Child(Parent):
             '''
 class Class:
     @property
-    def method(self) -> str:
+    def method(self) -> int:
         """Docstring summary."""
 ''',
             "klass_with_property.py",
@@ -97,7 +97,7 @@ class Class:
             '''
 class _Class:
     @property
-    def method(self, a) -> str:
+    def method(self, a) -> int:
         """Docstring summary."""
 ''',
             "klass_with_documented_property.py",

@@ -241,7 +241,7 @@ class _FRetDocsAttrTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> t.Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     :param a: Description of a.
@@ -258,7 +258,7 @@ class _FRetDocsNameTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     :param a: Description of a.
@@ -655,7 +655,7 @@ class _POnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a=False) -> _t.Tuple[str, ...]:
+def function(a=False) -> int:
     """Docstring summary.
 
     :param a: Description of a.
@@ -673,7 +673,7 @@ class _PReturnAnyWArgsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args, **kwargs) -> _t.Any:
+def function(*args, **kwargs) -> int:
     """Docstring summary.
 
     :param args: Description of args.
@@ -692,7 +692,7 @@ class _FMsgPoorIndentS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a, b=None, c=True) -> Post:
+def function(a, b=None, c=True) -> int:
     """Docstring summary.
 
     Docstring description.
@@ -834,7 +834,7 @@ class _FHintMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function() -> Post:
+def function() -> int:
     """Docstring summary.
 
      return: Return description.
@@ -867,7 +867,7 @@ class MutableSet(_t.MutableSet[T]):
     def discard(self, a: T) -> None:
         self._set.discard(value)
 
-    def __contains__(self, x: object) -> bool:
+    def __contains__(self, x) -> int:
         return self._set.__contains__(x)
 
     def __len__(self) -> int:
@@ -988,7 +988,7 @@ class _PKWOnlyArgsWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args, a=None, b=None) -> bool:
+def function(*args, a=None, b=None) -> int:
     """Docstring summary.
 
     :param args: Description of args.
@@ -1281,7 +1281,7 @@ class MutableSet:
     def __init__(self) -> None:
         pass
 
-    def __contains__(self, x: object) -> bool:
+    def __contains__(self, x: object) -> int:
         pass
 
     def __len__(self) -> int:
@@ -1617,7 +1617,7 @@ class _FRetDocsAttrTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> t.Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
@@ -1637,7 +1637,7 @@ class _FRetDocsNameTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
@@ -2105,7 +2105,7 @@ class _POnlyParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool) -> _t.Tuple[str, ...]:
+def function(reduce: bool) -> int:
     """Docstring summary.
 
     Parameters
@@ -2130,7 +2130,7 @@ class _PReturnAnyWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args, **kwargs) -> _t.Any:
+def function(*args, **kwargs) -> int:
     """Docstring summary.
 
     Parameters
@@ -2338,7 +2338,7 @@ class MutableSet(_t.MutableSet[T]):
     def discard(self, a: T) -> None:
         self._set.discard(value)
 
-    def __contains__(self, x: object) -> bool:
+    def __contains__(self, x: object) -> int:
         return self._set.__contains__(x)
 
     def __len__(self) -> int:
@@ -2455,7 +2455,7 @@ def function(
     *args: _Path,
     a: _t.List[str] | None = None,
     b: _t.List[str] | None = None,
-) -> bool:
+) -> int:
     """Docstring summary.
 
     Parameters
@@ -2808,7 +2808,7 @@ class MutableSet:
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
 
-    def __contains__(self, x: object) -> bool:
+    def __contains__(self, x: object) -> int:
         return self._set.__contains__(x)
 
     def __len__(self) -> int:
@@ -2873,7 +2873,7 @@ class _PSphinxWNumpy(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function() -> str:
+def function() -> int:
     """Docstring summary.
 
     :return: Return description.
@@ -2930,7 +2930,7 @@ class _PIssue36ParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: Union[str, int]) -> str:
+def function(a: Union[str, int]) -> int:
     """Docstring summary.
 
     Parameters
@@ -2955,7 +2955,7 @@ class _PIssue36ReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: str) -> bool:
+def function(a: str) -> int:
     """Docstring summary.
 
     Docstring description.
@@ -3233,7 +3233,7 @@ class _FRetDocsAttrTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> t.Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
@@ -3253,7 +3253,7 @@ class _FRetDocsNameTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
@@ -3731,7 +3731,7 @@ class _PReturnAnyWArgsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+def function(*args: _t.Any, **kwargs: bool) -> int:
     """Docstring summary.
 
     Parameters
@@ -3895,7 +3895,7 @@ def function(
     *args: _Path,
     a: _t.List[str] | None = None,
     b: _t.List[str] | None = None,
-) -> bool:
+) -> int:
     """Docstring summary.
 
     Parameters
@@ -4321,7 +4321,7 @@ class _POnlyParamsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a: bool = False) -> _t.Tuple[str, ...]:
+def function(a: bool = False) -> int:
     """Docstring summary.
 
     :param a: Description of a.
@@ -4339,7 +4339,7 @@ class _PReturnAnyWArgsWKwargsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+def function(*args: _t.Any, **kwargs: bool) -> int:
     """Docstring summary.
 
     :param args: Description of args.
@@ -4360,7 +4360,7 @@ class _FMsgPoorIndentSRs(_BaseTemplate):
         return '''
 def function(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
-) -> Post:
+) -> int:
     """Docstring summary.
 
     Standard behaviour would be to return None, so do not bypass
@@ -4439,7 +4439,7 @@ class _FHintMissingReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function() -> Post:
+def function() -> int:
     """Docstring summary.
 
      return: Return description.
@@ -4496,7 +4496,7 @@ def function(
     *args: _Path,
     a: _t.List[str] | None = None,
     b: _t.List[str] | None = None,
-) -> bool:
+) -> int:
     """Docstring summary.
 
     :param args: Description of args.
@@ -4766,7 +4766,7 @@ class _FRetDocsAttrTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> t.Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Args:
@@ -4784,7 +4784,7 @@ class _FRetDocsNameTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(a) -> Optional[str]:
+def function(a) -> int:
     """Docstring summary.
 
     Args:
@@ -5166,7 +5166,7 @@ class _POnlyParamsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+def function(reduce: bool = False) -> int:
     """Docstring summary.
 
     Args:
@@ -5187,7 +5187,7 @@ class _PReturnAnyWArgsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
+def function(*args: _t.Any, **kwargs: bool) -> int:
     """Docstring summary.
 
     Args:
@@ -5329,7 +5329,7 @@ def function(
     *args: _Path,
     a: _t.List[str] | None = None,
     b: _t.List[str] | None = None,
-) -> bool:
+) -> int:
     """Docstring summary.
 
     Args:
@@ -5680,7 +5680,7 @@ class _FIssue36OffIndentN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(str_lin: str, a: str) -> bool:
+def function(str_lin: str, a: str) -> int:
     """Docstring summary.
 
     The function checks whether the string is "A" or "B".
@@ -5930,7 +5930,7 @@ def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(a: bytes) -> str:
+def function(a: bytes) -> int:
     ...
 
 def function(a):
@@ -5960,7 +5960,7 @@ def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(a: bytes) -> str:
+def function(a: bytes) -> int:
     ...
 
 def function(a):
@@ -5992,7 +5992,7 @@ def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(a: bytes) -> str:
+def function(a: bytes) -> int:
     ...
 
 def function(response):
@@ -6053,7 +6053,7 @@ def function_1(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function_1(a: bytes) -> str:
+def function_1(a: bytes) -> int:
     ...
 
 def function_1(a):
@@ -6136,7 +6136,7 @@ class SomeClass:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def process(self, a: bytes) -> int:
         ...
 
     def process(self, a):
@@ -6167,7 +6167,7 @@ class SomeClass:
         ...
 
     @overload
-    def method(self, a: bytes) -> str:
+    def method(self, a: bytes) -> int:
         ...
 
     def method(self, a):
@@ -6200,7 +6200,7 @@ class SomeClass:
         ...
 
     @overload
-    def method(self, a: bytes) -> str:
+    def method(self, a: bytes) -> int:
         ...
 
     def method(self, response):
@@ -6266,7 +6266,7 @@ class SomeClass:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def process(self, a: bytes) -> int:
         ...
 
     def process(self, a):
@@ -7137,7 +7137,7 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def method(self, a: str) -> Message:
+    def method(self, a: str) -> int:
         """Docstring summary.
 
         :param a: Description of a.
@@ -7546,7 +7546,7 @@ class _FPropertyReturnMissingDescS(_BaseTemplate):
     @property
     def template(self) -> str:
         return r'''
-def function(a: str) -> str:
+def function(a: str) -> int:
     """Docstring summary.
 
     :param a: Description of a.

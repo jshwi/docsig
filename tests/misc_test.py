@@ -270,13 +270,13 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def method_1(self, a: str) -> Message:
+    def method_1(self, a: str) -> int:
         """Docstring summary.
 
         :param a: Description of a.
         """
 
-    def method_2(self, a: int) -> tuple[Message, ...]:
+    def method_2(self, a: int) -> int:
         """Docstring summary.
 
         :param a: Description of a.

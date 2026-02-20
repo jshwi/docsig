@@ -43,14 +43,14 @@ def test_fix_optional_return_statements_with_overload_func_sig502(
 from typing import Optional, overload
 
 @overload
-def function(a: int) -> str:
+def function(a: int) -> int:
     """Docstring summary."""
 
 @overload
 def function(a: None) -> None:
     """Docstring summary."""
 
-def function(a: Optional[int]) -> Optional[str]:
+def function(a: Optional[int]) -> int:
     """Docstring summary.
 
     Parameters
@@ -294,7 +294,7 @@ def test_sig401_false_positive_427(
     :param main: Mock ``main`` function.
     """
     template = '''\
-def function(*, arg1 = "") -> str:
+def function(*, arg1 = "") -> int:
     """
     Description text
 
@@ -728,7 +728,7 @@ def test_sig401_false_positives_562(
     template = '''
 class Classy:
     @remove_last_args(['normalize'])  # since 8.2.0
-    def method(self, force_iso: bool = False) -> str:
+    def method(self, force_iso: bool = False) -> int:
         """Docstring summary.
 
         .. seealso:: :meth:`fromTimestr` for differences between output
