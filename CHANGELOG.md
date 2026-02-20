@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.79.0](https://github.com/jshwi/docsig/tree/v0.79.0) - 2026-02-21
+
+### Removed
+
+- short form for ignore-args ([#734](https://github.com/jshwi/docsig/issues/734))
+
 ## [0.78.0](https://github.com/jshwi/docsig/tree/v0.78.0) - 2026-02-07
 
 ### Removed
