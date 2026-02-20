@@ -1074,7 +1074,6 @@ class Class:
     :param b: Description of b.
     """
 
-    # bad typing, but leave that up to mypy
     def __init__(self, a, b) -> int:
         pass
 '''
@@ -1241,7 +1240,6 @@ class _PClassNoSelfS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Class:
-    # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
 '''
