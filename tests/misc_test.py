@@ -465,7 +465,7 @@ def function():
         ),
         (
             '''
-class Klass:
+class Class:
     @property
     def method() -> int:
         """Docstring summary.
@@ -939,7 +939,7 @@ def test_ignore_typechecker_prop_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-class Klass:
+class Class:
     @property
     def method() -> int:
         """Docstring summary.
