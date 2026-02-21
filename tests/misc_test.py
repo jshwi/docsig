@@ -142,13 +142,13 @@ def test_target_report(
     :param error: Error to target.
     """
     template = '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param: Description of param.
+    :param a: Description of a.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param: Description of d.
     """
 '''
     _errors = E[202].ref, E[201].ref, E[303].ref
@@ -194,7 +194,7 @@ def test_lineno(
 def test_file_not_found_error(main: FixtureMain) -> None:
     """Test file-not-found error for incorrect path arg.
 
-    :param main: Mock ``main`` function.
+    :param main: Description of main.
     """
     with pytest.raises(FileNotFoundError) as err:
         main("does-not-exist")
@@ -269,16 +269,16 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def method_1(self, ref: str) -> Message:
+    def method_1(self, a: str) -> Message:
         """Docstring summary.
 
-        :param ref: Codes or symbolic reference.
+        :param a: Description of a.
         """
 
-    def method_2(self, category: int) -> tuple[Message, ...]:
+    def method_2(self, a: int) -> tuple[Message, ...]:
         """Docstring summary.
 
-        :param category: Category to get.
+        :param a: Description of a.
         """
 '''
     init_file(template)
@@ -356,12 +356,12 @@ def test_bad_py_file(
     :param main: Mock ``main`` function.
     """
     template2 = '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
@@ -411,12 +411,12 @@ def test_no_color_with_pipe(
     :param capsys: Capture sys out.
     """
     template = '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
@@ -434,7 +434,7 @@ def function(param1, param2) -> None:
     [
         (
             '''
-def function(*_, **__) -> None:
+def function() -> None:
     """Docstring summary.
 
     :return: Return description.
@@ -444,14 +444,14 @@ def function(*_, **__) -> None:
         ),
         (
             '''
-def function(*_, **__) -> int:
+def function() -> int:
     """Docstring summary."""
 ''',
             E[503].fstring(T),
         ),
         (
             '''
-def function(*_, **__):
+def function():
     """Docstring summary.
 
     Returns
@@ -521,7 +521,7 @@ def test_sorted(
     :param main: Patch package entry point.
     """
     template = '''
-def function(*_, **__) -> None:
+def function() -> None:
     """Docstring summary.
 
     :return: Return description.
@@ -634,8 +634,8 @@ class ArgumentParser(_a.ArgumentParser):
     def method(self, *args: str, **kwargs: _t.Any) -> None:
         """Docstring summary.
 
-        :param args: Long and/or short form argument(s).
-        :param kwargs: Kwargs to pass to ``add_argument``.
+        :param args: Description of args.
+        :param kwargs: Description of kwargs.
         """
 '''
     init_file(template)
@@ -696,10 +696,10 @@ def test_pre_commit_compatibility_issue_with_pythonpath_522(
 class BaseClass:
     """My base class."""
 
-    def method(self, arg) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
-        :param arg: Some argument
+        :param a: Description of a.
         """
 '''
     t2 = '''\
@@ -708,7 +708,7 @@ from .bases.base_class import BaseClass
 class Implementation(BaseClass):
     """My implementation."""
 
-    def method(self, arg) -> None:
+    def method(self, a) -> None:
         """Docstring summary."""
 '''
     root = tmp_path / "folder"
@@ -798,21 +798,21 @@ def test_check_nested_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-def my_function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """
     Function that prints a message and returns the argument + 1
 
     Parameters
     ----------
-    argument : int, optional
-        The input argument, by default 42
+    a : int, optional
+        Description of a.
 
     Returns
     -------
     int
         Return description.
     """
-    def nested_function(argument: int = 42) -> int:
+    def nested_function(a: int = 42) -> int:
         pass
 '''
     init_file(template)
@@ -834,17 +834,17 @@ def test_ignore_kwargs_doco_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Proper docstring.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
         **kwargs : int
-            Pass
+            Description of kwargs.
     """
 '''
     init_file(template)
@@ -866,15 +866,15 @@ def test_ignore_kwargs_no_doco_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Proper docstring.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
     init_file(template)
@@ -896,7 +896,7 @@ def test_ignore_typechecker_numpy(
     :param main: Patch package entry point.
     """
     template = '''
-def function(*_, **__):
+def function():
     """Proper docstring.
 
     Returns
