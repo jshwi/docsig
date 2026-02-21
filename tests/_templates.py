@@ -1159,10 +1159,10 @@ class _FFuncPropS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
-    :param self: Description of self.
+    :param a: Description of a.
     """
 '''
 
@@ -1195,7 +1195,7 @@ class _FFuncPropNoRetTypeS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     :param a: Description of a.
@@ -2669,13 +2669,13 @@ class _FFuncPropN(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-        self : Klass
-            Description of self.
+        a : Klass
+            Description of a.
     """
 '''
 
@@ -2711,13 +2711,13 @@ class _FFuncPropNoRetTypeN(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Parameters
     ----------
-        self : Klass
-            Description of self.
+        a : Klass
+            Description of a.
     """
 '''
 
@@ -4093,13 +4093,13 @@ class _FFuncPropNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    self: Klass
-        Description of self.
+    a: Klass
+        Description of a.
     """
 '''
 
@@ -4135,13 +4135,13 @@ class _FFuncPropNoRetTypeNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Parameters
     ----------
-    self: Klass
-        Description of self.
+    a: Klass
+        Description of a.
     """
 '''
 
@@ -5497,11 +5497,11 @@ class _FFuncPropG(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Args:
-        self (Klass): Description of self.
+        a (Klass): Description of a.
     """
 '''
 
@@ -5535,7 +5535,7 @@ class _FFuncPropNoRetTypeG(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Returns:
@@ -6134,18 +6134,18 @@ class _MPassOverloadMethodS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def function(self, a: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def function(self, a: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def function(self, a: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
-    def function(self, a):
+    def process(self, a):
         """Docstring summary.
 
         :param a: Description of response.
@@ -6264,18 +6264,18 @@ class _MPassMultiOverloadMethodsS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def function(self, a: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def function(self, a: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def function(self, a: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
-    def function(self, a):
+    def process(self, a):
         """Docstring summary.
 
         :param a: Description of a.
@@ -6314,18 +6314,18 @@ class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def function(self, a: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def function(self, a: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def function(self, a: bytes) -> None:
+    def process(self, a: bytes) -> None:
         ...
 
-    def function(self, a):
+    def process(self, a):
         """Docstring summary.
 
         :param a: Description of a.
