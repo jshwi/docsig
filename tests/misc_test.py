@@ -198,23 +198,23 @@ def test_file_not_found_error(main: FixtureMain) -> None:
         [
             ("--check-protected-class-methods", "--check-class"),
             f"""\
-{PATH}:6 in _Messages.fromcode
+{PATH}:6 in _Messages.method_1
     {E[503].fstring(T)}
-{PATH}:12 in _Messages.all
+{PATH}:12 in _Messages.method_2
     {E[503].fstring(T)}
-.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.fromcode'
-.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.all'
+.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.method_1'
+.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.method_2'
 """,
         ],
         [
             ("--check-protected-class-methods", "--check-class-constructor"),
             f"""\
-{PATH}:6 in _Messages.fromcode
+{PATH}:6 in _Messages.method_1
     {E[503].fstring(T)}
-{PATH}:12 in _Messages.all
+{PATH}:12 in _Messages.method_2
     {E[503].fstring(T)}
-.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.fromcode'
-.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.all'
+.{os.sep}{PATH}:6:1: {E[503].fstring(F)} '_Messages.method_1'
+.{os.sep}{PATH}:12:1: {E[503].fstring(F)} '_Messages.method_2'
 """,
         ],
     ],
@@ -245,13 +245,13 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def fromcode(self, ref: str) -> Message:
+    def method_1(self, ref: str) -> Message:
         """
 
         :param ref: Codes or symbolic reference.
         """
 
-    def all(self, category: int) -> tuple[Message, ...]:
+    def method_2(self, category: int) -> tuple[Message, ...]:
         """
 
         :param category: Category to get.
@@ -442,7 +442,7 @@ def function(*_, **__):
             '''
 class Klass:
     @property
-    def function() -> int:
+    def method() -> int:
         """Docstring summary.
 
         Returns
@@ -607,7 +607,7 @@ def test_ignore_args_ignore_kwargs_index_error(
     """
     template = '''\
 class ArgumentParser(_a.ArgumentParser):
-    def add_list_argument(self, *args: str, **kwargs: _t.Any) -> None:
+    def method(self, *args: str, **kwargs: _t.Any) -> None:
         """Parse a comma separated list of strings into a list.
 
         :param args: Long and/or short form argument(s).
@@ -892,7 +892,7 @@ def test_ignore_typechecker_prop_numpy(
     template = '''
 class Klass:
     @property
-    def function() -> int:
+    def method() -> int:
         """Proper docstring.
 
         Returns
