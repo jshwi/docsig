@@ -130,7 +130,7 @@ def test_target_report(
     :param error: Error to target.
     """
     template = '''
-def function_3(param1, param2, param3) -> None:
+def function(param1, param2, param3) -> None:
     """Description summary.
 
     :param param1: Description of param1.
@@ -712,14 +712,14 @@ def test_enforce_capitalisation_should_591(
     :param main: Patch package entry point.
     """
     t1 = '''
-def foo(a) -> None:
+def function(a) -> None:
     """Test for docsig.
 
     :param a: this is all lower case.
     """
 '''
     t2 = '''
-def foo(a) -> None:
+def function(a) -> None:
     """Test for docsig.
 
     :param a: This is all lower case. but this is not.
@@ -778,7 +778,7 @@ def my_function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    def my_external_function(argument: int = 42) -> int:
+    def nested_function(argument: int = 42) -> int:
         pass
 '''
     init_file(template)
