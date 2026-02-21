@@ -16,11 +16,11 @@ from . import FixtureMain
         (
             '''
 class Klass:
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         """Docstring summary.
 
-        :param param2: Description of param2.
-        :param param1: Description of param1.
+        :param b: Description of b.
+        :param a: Description of a.
         """
 ''',
             "klass.py",
@@ -30,11 +30,11 @@ class Klass:
 class Klass:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param a: Description of a.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 ''',
             "klass.py",
@@ -42,32 +42,32 @@ class Klass:
         (
             '''
 class Klass:
-    def __get__(self, param1, param2) -> None:
+    def __get__(self, a, b) -> None:
         """Docstring summary.
 
-        :param param2: Description of param2.
-        :param param1: Description of param1.
+        :param b: Description of b.
+        :param a: Description of a.
         """
 ''',
             "klass.py",
         ),
         (
             '''
-def function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """
     Function that prints a message and returns the argument + 1
 
     Parameters
     ----------
     argument : int, optional
-        The input argument, by default 42
+        Description of argument.
 
     Returns
     -------
     int
         Return description.
     """
-    def nested_function(argument: int = 42) -> int:
+    def nested_function(a: int = 42) -> int:
         pass
 ''',
             "my_function.py",
@@ -97,7 +97,7 @@ class Klass:
             '''
 class _Klass:
     @property
-    def method(self, param1) -> str:
+    def method(self, a) -> str:
         """Docstring summary."""
 ''',
             "klass_with_documented_property.py",
@@ -105,38 +105,38 @@ class _Klass:
         (
             '''
 class Parent:
-    def _method(self, param1) -> None:
+    def _method(self, a) -> None:
         """Docstring summary."""
 ''',
             "parent_with_protected.py",
         ),
         (
             '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param args: Pass
+    :param a: Description of a.
+    :param b: Description of b.
+    :param args: Description of args.
     """
 ''',
             "function_with_args.py",
         ),
         (
             '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param kwargs: Pass
+    :param a: Description of a.
+    :param b: Description of b.
+    :param kwargs: Description of kwargs.
     """
 ''',
             "function_with_kwargs.py",
         ),
         (
             '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary."""
 ''',
             "function_with_undocumented_params.py",

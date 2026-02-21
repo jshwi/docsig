@@ -43,20 +43,20 @@ def test_fix_optional_return_statements_with_overload_func_sig502(
 from typing import Optional, overload
 
 @overload
-def function(number: int) -> str:
+def function(a: int) -> str:
     """Docstring summary."""
 
 @overload
-def function(number: None) -> None:
+def function(a: None) -> None:
     """Docstring summary."""
 
-def function(number: Optional[int]) -> Optional[str]:
+def function(a: Optional[int]) -> Optional[str]:
     """Docstring summary.
 
     Parameters
     ----------
-    number : int
-        The number to convert to a string.
+    a : int
+        Description of a.
 
     Returns
     -------
@@ -304,7 +304,7 @@ def function(*, arg1 = "") -> str:
     .. code-block:: python
        print()
 
-    :param arg1: text
+    :param arg1: Description of arg1.
     :returns: Return description.
     :raises TypeError: Incorrect argument(s)
     """
@@ -320,30 +320,30 @@ def function(*, arg1 = "") -> str:
     "template",
     [
         '''\
-def function(param, param2, param3, param4) -> int:
+def function(d, b, c, d) -> int:
     """Docstring summary.
 
-     :param param1: Description of param1.
-    :param param2:Description of param2.
-    :param param3:
+     :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 ''',
         '''\
-def function(param, param2, param3, param4) -> int:
+def function(d, b, c, d) -> int:
     """Docstring summary.
 
-     :param param1: Description of param1.
-     :param param2:Description of param2.
-    :param param3:
+     :param a: Description of a.
+     :param b: Description of b.
+    :param c: Description of c.
     """
 ''',
         '''\
-def function(param, param2, param3, param4) -> int:
+def function(d, b, c, d) -> int:
     """Docstring summary.
 
-     :param param1: Description of param1.
-     :param param2:Description of param2.
-     :param param3:
+     :param a: Description of a.
+     :param b: Description of b.
+     :param c: Description of c.
     """
 ''',
     ],
@@ -380,12 +380,12 @@ def test_class_and_class_constructor_452(
     :param flake8: Patch package entry point.
     """
     template = '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
     init_file(template)
@@ -409,11 +409,11 @@ def test_description_missing_and_description_syntax_error_461(
     :param main: Mock ``main`` function.
     """
     template = '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1:
-    :param param2: This one does have a description however
+    :param a:
+    :param b: Description of b.
         and continues on the next line.
     """
 '''
@@ -575,13 +575,13 @@ def function(
 ) -> None:
     """Docstring summary.
 
-    :param diff_obj: Object containing diff information.
-    :param arb_obj: Object containing arb information.
-    :param coins: Total coins to print.
-    :param executor: Thread-safe Executor object.
-    :param ignore_actionable_diff_score: Ignore actionable difference
+    :param diff_obj: Description of diff_obj.
+    :param arb_obj: Description of arb_obj.
+    :param coins: Description of coins.
+    :param executor: Description of executor.
+    :param ignore_actionable_diff_score: Description of ignore_actionable_diff_score.
         score.
-    :param executor: ThreadPoolExecutor.
+    :param executor: Description of executor.
     """
 '''
     init_file(template)
@@ -622,7 +622,7 @@ def test_no_erroneous_402_when_order_cannot_be_confirmed(
 class Transactions(_Transactions):
     """Docstring summary.
 
-    :param symbol: Symbol.
+    :param symbol: Description of symbol.
     """
 
     def __init__(self, client: Client, symbol: str, attr: str):
@@ -761,7 +761,7 @@ class Classy:
            *normalize* parameter was removed due to :phab:`T340495` and
            :phab:`T57755`
 
-        :param force_iso: Whether the output should be forced to ISO 8601
+        :param force_iso: Description of force_iso.
         :return: Return description.
         """
 '''
@@ -786,9 +786,9 @@ def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
 class ChildTransactions(Transactions):
     """Docstring summary.
 
-    :param symbol: Currency symbol.
-    :param attr: Transaction attribute.
-    :param timestamp: Session timestamp.
+    :param symbol: Description of symbol.
+    :param attr: Description of attr.
+    :param timestamp: Description of timestamp.
     """
 
     def __init__(
@@ -822,9 +822,9 @@ def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
 class ChildTransactions(Transactions):
     """Docstring summary.
 
-    :param symbol: Currency symbol.
-    :param attr: Transaction attribute.
-    :param timestamp: Session timestamp.
+    :param symbol: Description of symbol.
+    :param attr: Description of attr.
+    :param timestamp: Description of timestamp.
     """
 
     def __init__(
@@ -854,12 +854,12 @@ def test_fix_no_402_for_very_similar_names_683(
     :param main: Mock ``main`` function.
     """
     template = '''
-def function(param1, param2, param3, param4) -> None:
+def function(a, b, c, d) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param4: Description of param4.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param d: Description of d.
     """
 '''
     init_file(template)
@@ -915,35 +915,35 @@ def function(  # pylint: disable=too-many-locals,too-many-arguments
     classes - fail, print the resulting function string representation
     and report.
 
-    :param path: Path(s) to check.
-    :param string: String to check.
-    :param list_checks: Display a list of all checks and their messages.
-    :param check_class: Check class docstrings.
-    :param check_class_constructor: Check ``__init__`` methods. Note
+    :param path: Description of path.
+    :param string: Description of string.
+    :param list_checks: Description of list_checks.
+    :param check_class: Description of check_class.
+    :param check_class_constructor: Description of check_class_constructor.
         that this is mutually incompatible with check_class.
-    :param check_dunders: Check dunder methods
-    :param check_protected_class_methods: Check public methods belonging
+    :param check_dunders: Description of check_dunders.
+    :param check_protected_class_methods: Description of check_protected_class_methods.
         to protected classes.
-    :param check_nested: Check nested functions and classes.
-    :param check_overridden: Check overridden methods
-    :param check_protected: Check protected functions and classes.
-    :param check_property_returns: Run return checks on properties.
-    :param include_ignored: Check files even if they match a gitignore
+    :param check_nested: Description of check_nested.
+    :param check_overridden: Description of check_overridden.
+    :param check_protected: Description of check_protected.
+    :param check_property_returns: Description of check_property_returns.
+    :param include_ignored: Description of include_ignored.
         pattern.
-    :param ignore_no_params: Ignore docstrings where parameters are not
+    :param ignore_no_params: Description of ignore_no_params.
         documented
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param ignore_typechecker: Ignore checking return values.
-    :param enforce_capitalization: Ensure param descriptions are
+    :param ignore_args: Description of ignore_args.
+    :param ignore_kwargs: Description of ignore_kwargs.
+    :param ignore_typechecker: Description of ignore_typechecker.
+    :param enforce_capitalization: Description of enforce_capitalization.
         capitalized.
-    :param no_ansi: Disable ANSI output.
-    :param verbose: Increase output verbosity.
-    :param target: List of errors to target.
-    :param disable: List of errors to disable.
-    :param exclude: Regular expression of files and dirs to exclude from
+    :param no_ansi: Description of no_ansi.
+    :param verbose: Description of verbose.
+    :param target: Description of target.
+    :param disable: Description of disable.
+    :param exclude: Description of exclude.
         checks.
-    :param excludes: Files or dirs to exclude from checks.
+    :param excludes: Description of excludes.
     :return: Return description.
     """
 '''
