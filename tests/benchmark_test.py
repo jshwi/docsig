@@ -105,7 +105,7 @@ class _Klass:
         (
             '''
 class Parent:
-    def _protected(self, param1) -> None:
+    def _method(self, param1) -> None:
         """This is documented."""
 ''',
             "parent_with_protected.py",

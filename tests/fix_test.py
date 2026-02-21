@@ -493,12 +493,12 @@ class Account(dict[str, _t.Any]):
 
     @_abstractmethod
     @_cached_property
-    def trades(self) -> Trades:
+    def method_1(self) -> Trades:
         """Get all trades."""
 
     @_abstractmethod
     @_cached_property
-    def portfolio(self) -> _Tickers:
+    def method_2(self) -> _Tickers:
         """Get portfolio."""
 '''
     init_file(template)
@@ -537,12 +537,12 @@ class Account(dict[str, _t.Any]):
 
     @_cached_property
     @_abstractmethod
-    def trades(self) -> Trades:
+    def method_1(self) -> Trades:
         """Get all trades."""
 
     @_cached_property
     @_abstractmethod
-    def portfolio(self) -> _Tickers:
+    def method_2(self) -> _Tickers:
         """Get portfolio."""
 '''
     init_file(template)
@@ -749,7 +749,7 @@ def test_sig401_false_positives_562(
     template = '''
 class Classy:
     @remove_last_args(['normalize'])  # since 8.2.0
-    def toTimestr(self, force_iso: bool = False) -> str:
+    def method(self, force_iso: bool = False) -> str:
         """Convert the data to a UTC date/time string.
 
         .. seealso:: :meth:`fromTimestr` for differences between output
