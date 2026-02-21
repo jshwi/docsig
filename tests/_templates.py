@@ -703,7 +703,7 @@ class _FMsgPoorIndentS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_post(
+def function(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
     """Get post by post's ID or abort with ``404: Not Found.``
@@ -746,7 +746,7 @@ class _PBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     """Fet index without throwing an error if index does not exist.
 
     :param index: Index to get.
@@ -765,7 +765,7 @@ class _FBinOpReprS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int) -> _T | None:
+def function(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
     :return: Item from index else None.
@@ -849,7 +849,7 @@ class _FHintMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_post() -> Post:
+def function() -> Post:
     """Docstring summary.
 
      return: Post's connection object.
@@ -1005,7 +1005,7 @@ class _PKWOnlyArgsWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def docsig(
+def function(
     *path: _Path,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -1211,7 +1211,7 @@ class _FFuncPropNoRetTypeS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def method(self):
+def function(self):
     """Docstring summary.
 
     :param self: Fails.
@@ -2189,7 +2189,7 @@ class _PBinOpN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     """Fet index without throwing an error if index does not exist.
 
     Parameters
@@ -2216,7 +2216,7 @@ class _FBinOpReprN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int) -> _T | None:
+def function(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
     Returns
@@ -2484,7 +2484,7 @@ class _PKWOnlyArgsWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def docsig(
+def function(
     *path: _Path,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -2739,7 +2739,7 @@ class _FFuncPropNoRetTypeN(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def method(self):
+def function(self):
     """Docstring summary.
 
     Parameters
@@ -2967,7 +2967,7 @@ class _PIssue36ParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def modify(numericString: Union[str, int]) -> str:
+def function(numericString: Union[str, int]) -> str:
     """Do stuff.
 
     Parameters
@@ -2992,7 +2992,7 @@ class _PIssue36ReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def check_stuff(str_lin: str) -> bool:
+def function(str_lin: str) -> bool:
     """Check if "A" or "B".
 
     The function checks whether the string is "A" or "B".
@@ -3804,7 +3804,7 @@ class _PBinOpNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     """Fet index without throwing an error if index does not exist.
 
     Parameters
@@ -3831,7 +3831,7 @@ class _FBinOpReprNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int) -> _T | None:
+def function(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
     Returns
@@ -3937,7 +3937,7 @@ class _PKWOnlyArgsWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def docsig(
+def function(
     *path: _Path,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -4175,7 +4175,7 @@ class _FFuncPropNoRetTypeNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def method(self):
+def function(self):
     """Docstring summary.
 
     Parameters
@@ -4406,7 +4406,7 @@ class _FMsgPoorIndentSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_post(
+def function(
         id: int, version: t.Optional[int] = None, checkauthor: bool = True
 ) -> Post:
     """Get post by post's ID or abort with ``404: Not Found.``
@@ -4432,7 +4432,7 @@ class _PBinOpSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     """Fet index without throwing an error if index does not exist.
 
     :param index: Index to get.
@@ -4455,7 +4455,7 @@ class _FBinOpReprSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int) -> _T | None:
+def function(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
     :returns: Item from index else None.
@@ -4491,7 +4491,7 @@ class _FHintMissingReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_post() -> Post:
+def function() -> Post:
     """Docstring summary.
 
      return: Post's connection object.
@@ -4545,7 +4545,7 @@ class _PKWOnlyArgsWArgsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def docsig(
+def function(
     *path: _Path,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -5272,7 +5272,7 @@ class _PBinOpG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
     """Fet index without throwing an error if index does not exist.
 
     Args:
@@ -5294,7 +5294,7 @@ class _FBinOpReprG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def get_index(index: int) -> _T | None:
+def function(index: int) -> _T | None:
     """Get index without throwing an error if index does not exist.
 
     Returns:
@@ -5388,7 +5388,7 @@ class _PKWOnlyArgsWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def docsig(
+def function(
     *path: _Path,
     targets: _t.List[str] | None = None,
     disable: _t.List[str] | None = None,
@@ -5592,7 +5592,7 @@ class _FFuncPropNoRetTypeG(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def method(self):
+def function(self):
     """Docstring summary.
 
     Returns:
@@ -5752,7 +5752,7 @@ class _FIssue36OffIndentN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def check_stuff(str_lin: str, a: str) -> bool:
+def function(str_lin: str, a: str) -> bool:
     """Check if "A" or "B".
 
     The function checks whether the string is "A" or "B".
@@ -5860,7 +5860,7 @@ class _PStringAnnotation(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def example(some_input: int) -> "int":
+def function(some_input: int) -> "int":
     """
     Do something.
 
@@ -5882,7 +5882,7 @@ class _FNoParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def example(some_input: int) -> int:
+def function(some_input: int) -> int:
     """Return input."""
 '''
 
@@ -5918,7 +5918,7 @@ class _PIssue114PosOnlyArgsWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def starmap(
+def function(
     fun: Callable[..., Any],
     iterable: Sequence[Sequence[Any]],
     /,
@@ -5995,18 +5995,18 @@ class _MPassOverloadS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> tuple[int, str]:
+def function(response: int) -> tuple[int, str]:
     ...
 
 @overload
-def process(response: bytes) -> str:
+def function(response: bytes) -> str:
     ...
 
-def process(response):
+def function(response):
     """process a response.
 
     :param response: The response to process
@@ -6025,18 +6025,18 @@ class _MFailOverloadMissingReturnS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> tuple[int, str]:
+def function(response: int) -> tuple[int, str]:
     ...
 
 @overload
-def process(response: bytes) -> str:
+def function(response: bytes) -> str:
     ...
 
-def process(response):
+def function(response):
     """process a response.
 
     :param response: The response to process
@@ -6046,7 +6046,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:14 in process
+{PATH}:14 in function
     {E[503].fstring(T)}
 """
 
@@ -6057,18 +6057,18 @@ class _MFailOverloadMissingParamS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> tuple[int, str]:
+def function(response: int) -> tuple[int, str]:
     ...
 
 @overload
-def process(response: bytes) -> str:
+def function(response: bytes) -> str:
     ...
 
-def process(response):
+def function(response):
     """process a response.
 
     :return: something depending on what the response is
@@ -6078,7 +6078,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:14 in process
+{PATH}:14 in function
     {E[203].fstring(T)}
 """
 
@@ -6089,18 +6089,18 @@ class _MPassOverloadNoReturnS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> None:
+def function(response: int) -> None:
     ...
 
 @overload
-def process(response: bytes) -> None:
+def function(response: bytes) -> None:
     ...
 
-def process(response):
+def function(response):
     """process a response.
 
     :param response: The response to process
@@ -6118,18 +6118,18 @@ class _MPassMultiOverloadsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function_1(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> tuple[int, str]:
+def function_1(response: int) -> tuple[int, str]:
     ...
 
 @overload
-def process(response: bytes) -> str:
+def function_1(response: bytes) -> str:
     ...
 
-def process(response):
+def function_1(response):
     """process a response.
 
     :param response: The response to process
@@ -6137,18 +6137,18 @@ def process(response):
     """
 
 @overload
-def another_process(response: int) -> tuple[int, str]:
+def function_2(response: int) -> tuple[int, str]:
     ...
 
 @overload
-def another_process(response: bool) -> None:
+def function_2(response: bool) -> None:
     ...
 
 @overload
-def another_process(response: str) -> int:
+def function_2(response: str) -> int:
     ...
 
-def another_process(response):
+def function_2(response):
     """process another response.
 
     :param response: The response to process
@@ -6167,18 +6167,18 @@ class _MFailOverloadNoReturnDocumentedS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @overload
-def process(response: int) -> None:
+def function(response: int) -> None:
     ...
 
 @overload
-def process(response: bytes) -> None:
+def function(response: bytes) -> None:
     ...
 
-def process(response):
+def function(response):
     """process a response.
 
     :param response: The response to process
@@ -6189,7 +6189,7 @@ def process(response):
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:14 in process
+{PATH}:14 in function
     {E[502].fstring(T)}
 """
 
@@ -6898,7 +6898,7 @@ def function_5(param1, param2, param3) -> int:
     :param param3: Description of param3.
     """
 
-def f6(param, param2, param3) -> None:
+def function_6(param, param2, param3) -> None:
     """
 
     :param param: Description of params.
@@ -6907,7 +6907,7 @@ def f6(param, param2, param3) -> None:
     :param param3: Description of param3.
     """
 
-def f7(param, param2, param3) -> None:
+def function_7(param, param2, param3) -> None:
     """
 
     :param param: Description of params.
@@ -6937,10 +6937,10 @@ def f7(param, param2, param3) -> None:
 {PATH}:38 in function_5
     {E[1].fstring(T).format(directive="unknown")}
     {E[503].fstring(T)}
-{PATH}:46 in f6
+{PATH}:46 in function_6
     {E[1].fstring(T).format(directive="unknown")}
     {E[201].fstring(T)}
-{PATH}:55 in f7
+{PATH}:55 in function_7
     {E[1].fstring(T).format(directive="unknown")}
     {E[201].fstring(T)}
     {E[303].fstring(T)}
@@ -6996,7 +6996,7 @@ def function_5(param1, param2, param3) -> int:
     :param param3: Description of param3.
     """
 
-def f6(param, param2, param3) -> None:
+def function_6(param, param2, param3) -> None:
     """
 
     :param param: Description of params.
@@ -7005,7 +7005,7 @@ def f6(param, param2, param3) -> None:
     :param param3: Description of param3.
     """
 
-def f7(param, param2, param3) -> None:
+def function_7(param, param2, param3) -> None:
     """
 
     :param param: Description of params.
@@ -7035,10 +7035,10 @@ def f7(param, param2, param3) -> None:
 {PATH}:38 in function_5
     {E[1].fstring(T).format(directive="unknown")}
     {E[503].fstring(T)}
-{PATH}:46 in f6
+{PATH}:46 in function_6
     {E[1].fstring(T).format(directive="unknown")}
     {E[201].fstring(T)}
-{PATH}:55 in f7
+{PATH}:55 in function_7
     {E[1].fstring(T).format(directive="unknown")}
     {E[201].fstring(T)}
     {E[303].fstring(T)}
@@ -7050,7 +7050,7 @@ class _MInvalidSingleDirectiveOptions(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_3(  # docsig: enable=unknown
+def function(  # docsig: enable=unknown
     param1, param2, param3
 ) -> None:
     """
@@ -7063,7 +7063,7 @@ def function_3(  # docsig: enable=unknown
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:2 in function_3
+{PATH}:2 in function
     {E[4].fstring(T).format(directive='enable', option="unknown")}
     {E[203].fstring(T)}
 """
@@ -7184,7 +7184,7 @@ class _MInvalidSingleModuleDirectiveOptions(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: enable=unknown
-def function_3(param1, param2, param3) -> None:
+def function(param1, param2, param3) -> None:
     """
 
     :param param1: Description of param1.
@@ -7195,7 +7195,7 @@ def function_3(param1, param2, param3) -> None:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:3 in function_3
+{PATH}:3 in function
     {E[3].fstring(T).format(directive='enable', option="unknown")}
     {E[203].fstring(T)}
 """
@@ -7352,7 +7352,7 @@ def function(argument: int = 42) -> int:
 
 if True:
     my_function(42)
-    def my_external_function(argument: int = 42) -> int:
+    def nested_function(argument: int = 42) -> int:
         pass
 '''
 
@@ -7385,7 +7385,7 @@ class _FFuncInIfInIfStatementN(_BaseTemplate):
         return """
 if True:
     if True:
-        def my_external_function(argument: int = 42) -> int:
+        def function(argument: int = 42) -> int:
             pass
 """
 
@@ -7423,7 +7423,7 @@ class _FFuncInForLoopN(_BaseTemplate):
 container = []
 
 for argument in container:
-    def my_external_function(argument: int = 42) -> int:
+    def function(argument: int = 42) -> int:
         pass
 """
 
@@ -7439,7 +7439,7 @@ class _FFuncInForLoopIfN(_BaseTemplate):
         return """
 for argument in container:
     if argument > 0:
-        def my_external_function(argument: int = 42) -> int:
+        def function(argument: int = 42) -> int:
             pass
 """
 
@@ -7467,7 +7467,7 @@ def function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    def my_external_function(argument: int = 42) -> int:
+    def nested_function(argument: int = 42) -> int:
         pass
 '''
 
@@ -7561,19 +7561,19 @@ class _MPassOverloadNoReturnAliasS(_BaseTemplate):
 from typing import overload as _overload
 
 @_overload
-def process(response: None) -> None:
+def function(response: None) -> None:
     ...
 
 @_overload
-def process(response: int) -> None:
+def function(response: int) -> None:
     ...
 
 @_overload
-def process(response: bytes) -> None:
+def function(response: bytes) -> None:
     ...
 
 @_overload
-def process(response):
+def function(response):
     """process a response.
 
     :param response: The response to process
@@ -7614,7 +7614,7 @@ class _FIncorrectDocDotS(_BaseTemplate):
     @property
     def template(self) -> str:
         return r'''
-def display(
+def function(
     define: tuple[tuple[str, str], ...],
     data: list[_t.Any],
     sort_by_field: int | None = None,
@@ -7645,7 +7645,7 @@ class _FPropertyReturnMissingDescS(_BaseTemplate):
     @property
     def template(self) -> str:
         return r'''
-def normalize(ticker: str) -> str:
+def function(ticker: str) -> str:
     """Normalize ticket names.
 
     :param ticker: Ticker to normalize.

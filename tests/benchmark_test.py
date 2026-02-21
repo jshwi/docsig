@@ -67,7 +67,7 @@ def function(argument: int = 42) -> int:
     int
         The input argument + 1
     """
-    def my_external_function(argument: int = 42) -> int:
+    def nested_function(argument: int = 42) -> int:
         pass
 ''',
             "my_function.py",

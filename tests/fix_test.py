@@ -43,14 +43,14 @@ def test_fix_optional_return_statements_with_overload_func_sig502(
 from typing import Optional, overload
 
 @overload
-def get_something(number: int) -> str:
+def function(number: int) -> str:
     """For getting a string from an integer."""
 
 @overload
-def get_something(number: None) -> None:
+def function(number: None) -> None:
     """For getting a string from an integer."""
 
-def get_something(number: Optional[int]) -> Optional[str]:
+def function(number: Optional[int]) -> Optional[str]:
     """
     For getting a string from an integer.
 
@@ -298,7 +298,7 @@ def test_sig401_false_positive_427(
     :param main: Mock ``main`` function.
     """
     template = '''\
-def method(*, arg1 = "") -> str:
+def function(*, arg1 = "") -> str:
     """
     Description text
 
@@ -567,7 +567,7 @@ def test_no_erroneous_301_in_duplicate(
 # pylint: disable=too-many-locals,too-many-statements
 @_g.cache("arb.json")
 @_g.cache("diff.json")
-def print_target_progress(
+def function(
     diff_obj: _g.CacheObj,
     arb_obj: _g.CacheObj,
     coins: _Coins,
@@ -664,7 +664,7 @@ def test_fix_allow_or_operator_in_type_545(
     :param main: Mock ``main`` function.
     """
     template = '''
-def foo(a, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Test for docsig.
 
     :param str | None a: Use string or None for this purpose.
@@ -692,7 +692,7 @@ def test_close_with_bitwise_operator_545(
     :param main: Mock ``main`` function.
     """
     template = '''
-def foo(**kwargs) -> None:
+def function(**kwargs) -> None:
     """Test for docsig.
 
     :keyword bar| Use string or None for this purpose.
@@ -716,7 +716,7 @@ def test_recognise_yield_550(
     :param main: Mock ``main`` function.
     """
     template = '''
-def count_up_to(n: int) -> _t.Generator[int, None, None]:
+def function(n: int) -> _t.Generator[int, None, None]:
     """
     Counts from 0 up to n - 1.
 
@@ -882,7 +882,7 @@ def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
     template = '''
 @_decorators.parse_msgs
 @_decorators.validate_args
-def docsig(  # pylint: disable=too-many-locals,too-many-arguments
+def function(  # pylint: disable=too-many-locals,too-many-arguments
     *path: str | _Path,
     string: str | None = None,
     list_checks: bool = False,
