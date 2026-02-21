@@ -1212,7 +1212,7 @@ class _FProtectNInitS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def __init__(a, b) -> None:
+def function(a, b) -> None:
     pass
 """
 
@@ -6134,18 +6134,18 @@ class _MPassOverloadMethodS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def function(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def function(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def function(self, a: bytes) -> str:
         ...
 
-    def process(self, a):
+    def function(self, a):
         """Docstring summary.
 
         :param a: Description of response.
@@ -6165,18 +6165,18 @@ class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def method(self, a: bytes) -> str:
         ...
 
-    def process(self, a):
+    def method(self, a):
         """Docstring summary.
 
         :param a: Description of a.
@@ -6186,7 +6186,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[503].fstring(T)}
 """
 
@@ -6198,18 +6198,18 @@ class _MFailOverloadMethodMissingParamS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def method(self, a: bytes) -> str:
         ...
 
-    def process(self, response):
+    def method(self, response):
         """Docstring summary.
 
         :returns: Return description.
@@ -6219,7 +6219,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[203].fstring(T)}
 """
 
@@ -6231,18 +6231,18 @@ class _MFailOverloadMethodNoReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> None:
+    def method(self, a: bytes) -> None:
         ...
 
-    def process(self, a):
+    def method(self, a):
         """Docstring summary.
 
         :param a: Description of response.
@@ -6252,7 +6252,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[503].fstring(T)}
 """
 
@@ -6264,18 +6264,18 @@ class _MPassMultiOverloadMethodsS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def function(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def function(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def function(self, a: bytes) -> str:
         ...
 
-    def process(self, a):
+    def function(self, a):
         """Docstring summary.
 
         :param a: Description of a.
@@ -6314,18 +6314,18 @@ class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def function(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def function(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> None:
+    def function(self, a: bytes) -> None:
         ...
 
-    def process(self, a):
+    def function(self, a):
         """Docstring summary.
 
         :param a: Description of a.
@@ -7284,7 +7284,7 @@ def function(a: int = 42) -> int:
 
 if True:
     my_function(42)
-    def nested_function(a: int = 42) -> int:
+    def function(a: int = 42) -> int:
         pass
 '''
 
