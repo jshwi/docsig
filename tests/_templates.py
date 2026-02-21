@@ -1159,10 +1159,10 @@ class _FFuncPropS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
-    :param self: Description of self.
+    :param a: Description of a.
     """
 '''
 
@@ -1195,7 +1195,7 @@ class _FFuncPropNoRetTypeS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     :param a: Description of a.
@@ -1212,7 +1212,7 @@ class _FProtectNInitS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def __init__(a, b) -> None:
+def function(a, b) -> None:
     pass
 """
 
@@ -2669,13 +2669,13 @@ class _FFuncPropN(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-        self : Klass
-            Description of self.
+        a : Klass
+            Description of a.
     """
 '''
 
@@ -2711,13 +2711,13 @@ class _FFuncPropNoRetTypeN(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Parameters
     ----------
-        self : Klass
-            Description of self.
+        a : Klass
+            Description of a.
     """
 '''
 
@@ -4093,13 +4093,13 @@ class _FFuncPropNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    self: Klass
-        Description of self.
+    a: Klass
+        Description of a.
     """
 '''
 
@@ -4135,13 +4135,13 @@ class _FFuncPropNoRetTypeNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Parameters
     ----------
-    self: Klass
-        Description of self.
+    a: Klass
+        Description of a.
     """
 '''
 
@@ -5497,11 +5497,11 @@ class _FFuncPropG(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self) -> int:
+def function(a) -> int:
     """Docstring summary.
 
     Args:
-        self (Klass): Description of self.
+        a (Klass): Description of a.
     """
 '''
 
@@ -5535,7 +5535,7 @@ class _FFuncPropNoRetTypeG(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(self):
+def function(a):
     """Docstring summary.
 
     Returns:
@@ -6165,18 +6165,18 @@ class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def method(self, a: bytes) -> str:
         ...
 
-    def process(self, a):
+    def method(self, a):
         """Docstring summary.
 
         :param a: Description of a.
@@ -6186,7 +6186,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[503].fstring(T)}
 """
 
@@ -6198,18 +6198,18 @@ class _MFailOverloadMethodMissingParamS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> str:
+    def method(self, a: bytes) -> str:
         ...
 
-    def process(self, response):
+    def method(self, response):
         """Docstring summary.
 
         :returns: Return description.
@@ -6219,7 +6219,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[203].fstring(T)}
 """
 
@@ -6231,18 +6231,18 @@ class _MFailOverloadMethodNoReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, a: None) -> None:
+    def method(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, a: int) -> tuple[int, str]:
+    def method(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, a: bytes) -> None:
+    def method(self, a: bytes) -> None:
         ...
 
-    def process(self, a):
+    def method(self, a):
         """Docstring summary.
 
         :param a: Description of response.
@@ -6252,7 +6252,7 @@ class SomeClass:
     @property
     def expected(self) -> str:
         return f"""\
-{PATH}:15 in SomeClass.process
+{PATH}:15 in SomeClass.method
     {E[503].fstring(T)}
 """
 
@@ -7284,7 +7284,7 @@ def function(a: int = 42) -> int:
 
 if True:
     my_function(42)
-    def nested_function(a: int = 42) -> int:
+    def function(a: int = 42) -> int:
         pass
 '''
 
