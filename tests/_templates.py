@@ -22,12 +22,12 @@ class _PParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -41,12 +41,12 @@ class _FParamDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -60,11 +60,11 @@ class _FParamSigS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -78,7 +78,7 @@ class _FNoDocNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     pass
 """
 
@@ -106,11 +106,11 @@ class _PUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, _) -> None:
+def function(a, b, _) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -124,12 +124,12 @@ class _FOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 '''
 
@@ -143,12 +143,12 @@ class _PRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 '''
@@ -163,12 +163,12 @@ class _FRetTypeDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 '''
@@ -183,12 +183,12 @@ class _FRetTypeSigS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -202,12 +202,12 @@ class _FSIG501NoRetNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -221,12 +221,12 @@ class _FNoRetDocsNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 '''
@@ -241,10 +241,10 @@ class _FRetDocsAttrTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> t.Optional[str]:
+def function(a) -> t.Optional[str]:
     """Docstring summary.
 
-    :param param1: Description of param1.
+    :param a: Description of a.
     """
 '''
 
@@ -258,10 +258,10 @@ class _FRetDocsNameTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> Optional[str]:
+def function(a) -> Optional[str]:
     """Docstring summary.
 
-    :param param1: Description of param1.
+    :param a: Description of a.
     """
 '''
 
@@ -275,12 +275,12 @@ class _FSIG402OutOfOrderSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 '''
 
@@ -294,11 +294,11 @@ class _FIncorrectDocS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> None:
+def function(a) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param: Description of param.
+    :param a: Description of a.
+    :param: Description of d.
     """
 '''
 
@@ -312,12 +312,12 @@ class _FSIG202ParamDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -331,11 +331,11 @@ class _FSIG203ParamSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -349,12 +349,12 @@ class _FSIG502RetTypeDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 '''
@@ -369,12 +369,12 @@ class _FSIG503RetTypeSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -388,13 +388,13 @@ class _FDupesSumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -408,13 +408,13 @@ class _FIncorrectDocSumS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param: Description of param.
+    :param a: Description of a.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param: Description of d.
     """
 '''
 
@@ -428,12 +428,12 @@ class _PWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param args: Pass
+    :param a: Description of a.
+    :param b: Description of b.
+    :param args: Description of args.
     """
 '''
 
@@ -447,11 +447,11 @@ class _FWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -465,12 +465,12 @@ class _PWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param kwargs: Pass
+    :param a: Description of a.
+    :param b: Description of b.
+    :param kwargs: Description of kwargs.
     """
 '''
 
@@ -484,11 +484,11 @@ class _FWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -502,27 +502,27 @@ class _MFailS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -544,11 +544,11 @@ class _FMethodWKwargsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         """
 '''
 
@@ -563,10 +563,10 @@ class _PClassSelfS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
+        :param a: Description of a.
         """
 '''
 
@@ -596,12 +596,12 @@ class _PWKwargsKeyS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
-    :param param1: Passes
-    :key kwarg1: Pass
-    :keyword kwarg2: Pass
+    :param a: Description of a.
+    :key kwarg1: Description of kwarg1.
+    :keyword kwarg2: Description of kwarg2.
     """
 '''
 
@@ -615,12 +615,12 @@ class _FKwargsOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
-    :keyword kwarg1: Fail
-    :keyword kwarg3: Fail
-    :param param1: Description of param1
+    :keyword kwarg1: Description of kwarg1.
+    :keyword kwarg3: Description of kwarg3.
+    :param a: Description of a.
     """
 '''
 
@@ -634,15 +634,14 @@ class _PDualColonWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(attachments, sync, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Docstring description.
 
-    :param attachments: Iterable of kwargs to construct attachment.
-    :param sync: Don't thread if True: Defaults to False.
-    :param kwargs: Keyword args to pass to ``Message``:
-        See ``flask_mail.Message``.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param kwargs: Description of kwargs.
     """
 '''
 
@@ -656,10 +655,10 @@ class _POnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+def function(a: bool = False) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
-    :param reduce: :func:`~lsfiles.utils._Tree.reduce`
+    :param a: Description of a.
     :return: Return description.
     """
 '''
@@ -677,9 +676,8 @@ class _PReturnAnyWArgsWKwargsS(_BaseTemplate):
 def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     """Docstring summary.
 
-    :param args: Manipulate string(s).
-    :key format: Return a string instead of a tuple if strings are
-        passed as tuple.
+    :param args: Description of args.
+    :key format: Description of format.
     :return: Return description.
     """
 '''
@@ -695,16 +693,15 @@ class _FMsgPoorIndentS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-        id: int, version: t.Optional[int] = None, checkauthor: bool = True
+        a: int, b: t.Optional[int] = None, c: bool = True
 ) -> Post:
     """Docstring summary.
 
     Docstring description.
 
-     :param id: The post's ID.
-     :param version: If provided populate session object with
-        version.
-     :param checkauthor: Rule whether to check for author ID.
+     :param a: Description of a.
+     :param b: Description of b.
+     :param c: Description of c.
     :return: Return description.
     """
 '''
@@ -719,10 +716,10 @@ class _FSIG302NoSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> None:
+def function(a) -> None:
     """Docstring summary.
 
-    :param param1:Passes.
+    :param a:Description of a.
     """
 '''
 
@@ -736,11 +733,11 @@ class _PBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     """Docstring summary.
 
-    :param index: Index to get.
-    :param seq: Sequence object that can be indexed.
+    :param a: Description of a.
+    :param b: Description of b.
     :return: Return description.
     """
 '''
@@ -755,7 +752,7 @@ class _FBinOpReprS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int) -> _T | None:
+def function(a: int) -> _T | None:
     """Docstring summary.
 
     :returns: Return description.
@@ -772,11 +769,11 @@ class _PDoubleUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, __) -> None:
+def function(a, b, __) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -806,7 +803,7 @@ class _FPropertyReturnsS(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary."""
 '''
 
@@ -822,7 +819,7 @@ class _PPropertyReturnS(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary.
 
         :return: Return description.
@@ -866,10 +863,10 @@ class MutableSet(_t.MutableSet[T]):
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
 
-    def add(self, value: T) -> None:
+    def add(self, a: T) -> None:
         self._set.add(value)
 
-    def discard(self, value: T) -> None:
+    def discard(self, a: T) -> None:
         self._set.discard(value)
 
     def __contains__(self, x: object) -> bool:
@@ -910,7 +907,7 @@ class _PInconsistentSpaceS(_BaseTemplate):
 def fixture_main(monkeypatch) -> t.Callable[..., None]:
     """Docstring summary.
 
-    :param monkeypatch: ``pytest`` fixture for mocking attributes.
+    :param monkeypatch: Description of monkeypatch.
     :return: Return description.
     """
 '''
@@ -975,11 +972,11 @@ class _FMethodHeaderWKwargsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         """
 '''
 
@@ -994,15 +991,15 @@ class _PKWOnlyArgsWArgsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-    *path: _Path,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    *args: _Path,
+    a: _t.List[str] | None = None,
+    b: _t.List[str] | None = None,
 ) -> bool:
     """Docstring summary.
 
-    :param path: Path(s) to check.
-    :param targets: List of errors to target.
-    :param disable: List of errors to disable.
+    :param args: Description of args.
+    :param a: Description of a.
+    :param b: Description of b.
     :return: Return description.
     """
 '''
@@ -1020,12 +1017,12 @@ class _FClassS(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -1058,11 +1055,11 @@ class _PInitNoRetS(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 
-    def __init__(self, param1, param2):
+    def __init__(self, a, b):
         pass
 '''
 
@@ -1079,12 +1076,12 @@ class _PInitBadRetS(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 
     # bad typing, but leave that up to mypy
-    def __init__(self, param1, param2) -> int:
+    def __init__(self, a, b) -> int:
         pass
 '''
 
@@ -1101,12 +1098,12 @@ class _FClassRetNoneS(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     :return: Return description.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -1123,12 +1120,12 @@ class _FSIG504S(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     :return: Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -1142,12 +1139,12 @@ class _FProtectFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def _function(param1, param2) -> None:
+def _function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -1165,7 +1162,7 @@ class _FFuncPropS(_BaseTemplate):
 def function(self) -> int:
     """Docstring summary.
 
-    :param self: Fails.
+    :param self: Description of self.
     """
 '''
 
@@ -1180,7 +1177,7 @@ class _PFuncPropReturnS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(*_, **__) -> int:
+def function() -> int:
     """Docstring summary.
 
     :return: Return description.
@@ -1201,7 +1198,7 @@ class _FFuncPropNoRetTypeS(_BaseTemplate):
 def function(self):
     """Docstring summary.
 
-    :param self: Fails.
+    :param a: Description of a.
     """
 '''
 
@@ -1215,7 +1212,7 @@ class _FProtectNInitS(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def __init__(param1, param2) -> None:
+def __init__(a, b) -> None:
     pass
 """
 
@@ -1231,11 +1228,11 @@ class _PStaticSelfS(_BaseTemplate):
         return '''
 class Klass:
     @staticmethod
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
-        :param self: Pass.
-        :param param1: Description of param1.
+        :param self: Description of self.
+        :param a: Description of a.
         """
 '''
 
@@ -1251,7 +1248,7 @@ class _PClassNoSelfS(_BaseTemplate):
         return '''
 class Klass:
     # against convention but not up to this package to decide
-    def method(no_self) -> None:
+    def method(self) -> None:
         """Docstring summary."""
         return None
 '''
@@ -1267,11 +1264,11 @@ class _FProtectClsWKwargsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class _Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         """
 '''
 
@@ -1312,12 +1309,12 @@ class _FDundersParamS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def __dunder__(self, param1, param2) -> None:
+    def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
-        :param param3: Description of param3.
+        :param a: Description of a.
+        :param b: Description of b.
+        :param c: Description of c.
         """
 '''
 
@@ -1334,7 +1331,7 @@ class _FSIG403S(_BaseTemplate):
 def function(param) -> None:
     """Docstring summary.
 
-    :param pram: Misspelled.
+    :param pram: Description of pram.
     """
 '''
 
@@ -1348,17 +1345,17 @@ class _PParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes.
-        param2 : int
-            Passes.
-        param3 : int
-            Passes.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1372,17 +1369,17 @@ class _FParamDocsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1396,15 +1393,15 @@ class _FParamSigN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1418,7 +1415,7 @@ class _FNoDocNoRetN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     pass
 """
 
@@ -1446,15 +1443,15 @@ class _PUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, _) -> None:
+def function(a, b, _) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes.
-        param2 : int
-            Passes.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1468,17 +1465,17 @@ class _FOutOfOrderN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
-        param1 : int
-            Fails.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
+        a : int
+            Description of a.
     """
 '''
 
@@ -1492,17 +1489,17 @@ class _PRetTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes.
-        param2 : int
-            Passes.
-        param3 : int
-            Passes.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
 
     Returns
     -------
@@ -1521,17 +1518,17 @@ class _FRetTypeDocsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
 
     Returns
     -------
@@ -1550,17 +1547,17 @@ class _FRetTypeSigN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1574,17 +1571,17 @@ class _FSIG501NoRetNoTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes.
-        param2 : int
-            Passes.
-        param3 : int
-            Passes.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1598,17 +1595,17 @@ class _FNoRetDocsNoTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
 
     Returns
     -------
@@ -1627,13 +1624,13 @@ class _FRetDocsAttrTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> t.Optional[str]:
+def function(a) -> t.Optional[str]:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
+        a : int
+            Description of a.
     """
 '''
 
@@ -1647,13 +1644,13 @@ class _FRetDocsNameTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> Optional[str]:
+def function(a) -> Optional[str]:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
+        a : int
+            Description of a.
     """
 '''
 
@@ -1667,17 +1664,17 @@ class _FSIG402OutOfOrderSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
-        param1 : int
-            Fails.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
+        a : int
+            Description of a.
     """
 '''
 
@@ -1691,17 +1688,17 @@ class _FSIG202ParamDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1715,15 +1712,15 @@ class _FSIG203ParamSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1737,17 +1734,17 @@ class _FSIG502RetTypeDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
 
     Returns
     -------
@@ -1766,17 +1763,17 @@ class _FSIG503RetTypeSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1790,19 +1787,19 @@ class _FDupesSumN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -1816,17 +1813,17 @@ class _PWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
         *args : int
-            Pass
+            Description of args.
     """
 '''
 
@@ -1840,15 +1837,15 @@ class _FWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1862,17 +1859,17 @@ class _PWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
         **kwargs : int
-            Pass
+            Description of kwargs.
     """
 '''
 
@@ -1886,15 +1883,15 @@ class _FWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Pass.
-        param2 : int
-            Pass.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1908,41 +1905,41 @@ class _MFailN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
-        param1 : int
-            Fails.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
+        a : int
+            Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -1964,15 +1961,15 @@ class _FMethodWKwargsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            param1 : int
-                Pass.
-            param2 : int
-                Pass.
+            a : int
+                Description of a.
+            b : int
+                Description of b.
         """
 '''
 
@@ -1987,13 +1984,13 @@ class _PClassSelfN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            param1 : int
-                Pass.
+            a : int
+                Description of a.
         """
 '''
 
@@ -2024,15 +2021,15 @@ class _PWKwargsKeyN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes
+        a : int
+            Description of a.
         **kwargs : int
-            Passes
+            Description of kwargs.
     """
 '''
 
@@ -2046,15 +2043,15 @@ class _FKwargsOutOfSectN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     **kwargs : int
-        Passes
+        Description
 
     Parameters
     ----------
-        param1 : int Fail
+        a : int Description of a.
     """
 '''
 
@@ -2068,15 +2065,15 @@ class _FKwargsOutOfOrderN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
         **kwargs : int
-            Passes
-        param1 : int
-            Fail
+            Description of kwargs.
+        a : int
+            Description of a.
     """
 '''
 
@@ -2090,20 +2087,19 @@ class _PDualColonWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(attachments, sync, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Docstring description.
 
     Parameters
     ----------
-        attachments : int
-            Iterable of kwargs to construct attachment.
-        sync : int
-            Don't thread if True: Defaults to False.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
         **kwargs : int
-            Keyword args to pass to ``Message``:
-            See ``flask_mail.Message``.
+            Description of kwargs.
     """
 '''
 
@@ -2148,9 +2144,9 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     Parameters
     ----------
         *args : int
-            Manipulate string(s).
+            Description of args.
         **kwargs : int
-            Return a string instead of a tuple if strings are passed as tuple.
+            Description of kwargs.
 
     Returns
     -------
@@ -2169,15 +2165,15 @@ class _PBinOpN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     """Docstring summary.
 
     Parameters
     ----------
-        index : int
-            Index to get.
-        seq : int
-            Sequence object that can be indexed.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
 
     Returns
     -------
@@ -2196,7 +2192,7 @@ class _FBinOpReprN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int) -> _T | None:
+def function(a: int) -> _T | None:
     """Docstring summary.
 
     Returns
@@ -2216,15 +2212,15 @@ class _PDoubleUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, __) -> None:
+def function(a, b, __) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Passes.
-        param2 : int
-            Passes.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 '''
 
@@ -2344,10 +2340,10 @@ class MutableSet(_t.MutableSet[T]):
     def __init__(self) -> None:
         self._set: _t.Set[T] = set()
 
-    def add(self, value: T) -> None:
+    def add(self, a: T) -> None:
         self._set.add(value)
 
-    def discard(self, value: T) -> None:
+    def discard(self, a: T) -> None:
         self._set.discard(value)
 
     def __contains__(self, x: object) -> bool:
@@ -2441,15 +2437,15 @@ class _FMethodHeaderWKwargsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            param1 : int
-                Pass.
-            param2 : int
-                Pass.
+            a : int
+                Description of a.
+            b : int
+                Description of b.
         """
 '''
 
@@ -2464,20 +2460,20 @@ class _PKWOnlyArgsWArgsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-    *path: _Path,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    *args: _Path,
+    a: _t.List[str] | None = None,
+    b: _t.List[str] | None = None,
 ) -> bool:
     """Docstring summary.
 
     Parameters
     ----------
-        path : int
-            Path(s) to check.
-        targets : int
-            List of errors to target.
-        disable : int
-            List of errors to disable.
+        args : int
+            Description of args.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
 
     Returns
     -------
@@ -2501,15 +2497,15 @@ class Klass:
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -2544,13 +2540,13 @@ class Klass:
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
     """
 
-    def __init__(self, param1, param2):
+    def __init__(self, a, b):
         pass
 '''
 
@@ -2569,14 +2565,14 @@ class Klass:
 
     Parameters
     ----------
-    param1 : int
-        Fails.
-    param2 : int
-        Fails.
+    a : int
+        Description of a.
+    b : int
+        Description of b.
     """
 
     # bad typing, but leave that up to mypy
-    def __init__(self, param1, param2) -> int:
+    def __init__(self, a, b) -> int:
         pass
 '''
 
@@ -2595,10 +2591,10 @@ class Klass:
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
 
     Returns
     -------
@@ -2606,7 +2602,7 @@ class Klass:
             Return description.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -2625,10 +2621,10 @@ class Klass:
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
 
     Returns
     -------
@@ -2636,7 +2632,7 @@ class Klass:
             Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -2650,17 +2646,17 @@ class _FProtectFuncN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def _function(param1, param2) -> None:
+def _function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-        param1 : int
-            Fails.
-        param2 : int
-            Fails.
-        param3 : int
-            Fails.
+        a : int
+            Description of a.
+        b : int
+            Description of b.
+        c : int
+            Description of c.
     """
 '''
 
@@ -2681,7 +2677,7 @@ def function(self) -> int:
     Parameters
     ----------
         self : Klass
-            Fails.
+            Description of self.
     """
 '''
 
@@ -2723,7 +2719,7 @@ def function(self):
     Parameters
     ----------
         self : Klass
-            Fails.
+            Description of self.
     """
 '''
 
@@ -2737,7 +2733,7 @@ class _FProtectNInitN(_BaseTemplate):
     @property
     def template(self) -> str:
         return """
-def __init__(param1, param2) -> None:
+def __init__(a, b) -> None:
     pass
 """
 
@@ -2753,15 +2749,15 @@ class _PStaticSelfN(_BaseTemplate):
         return '''
 class Klass:
     @staticmethod
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
             self : Klass
-                Pass.
-            param1 : int
-                Pass.
+                Description of self.
+            a : int
+                Description of a.
         """
 '''
 
@@ -2777,7 +2773,7 @@ class _PClassNoSelfN(_BaseTemplate):
         return '''
 class Klass:
     # against convention but not up to this package to decide
-    def method(no_self) -> None:
+    def method(self) -> None:
         """Docstring summary."""
 '''
 
@@ -2792,15 +2788,15 @@ class _FProtectClsWKwargsN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class _Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            param1 : int
-                Pass.
-            param2 : int
-                Pass.
+            a : int
+                Description of a.
+            b : int
+                Description of b.
         """
 '''
 
@@ -2841,17 +2837,17 @@ class _FDundersParamN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def __dunder__(self, param1, param2) -> None:
+    def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-            param1 : int
-                Fails.
-            param2 : int
-                Fails.
-            param3 : int
-                Fails.
+            a : int
+                Description of a.
+            b : int
+                Description of b.
+            c : int
+                Description of c.
         """
 '''
 
@@ -2871,7 +2867,7 @@ def function(param) -> None:
     Parameters
     ----------
         pram : int
-            Misspelled.
+            Description of pram.
     """
 '''
 
@@ -2902,13 +2898,13 @@ class _PNoIdentN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param) -> None:
+def function(a) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param : int
-        Description.
+    a : int
+        Description of a.
     """
 '''
 
@@ -2922,13 +2918,13 @@ class _PColonSpaceN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param) -> None:
+def function(a) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param: int
-        Description.
+    a: int
+        Description of a.
     """
 '''
 
@@ -2942,13 +2938,13 @@ class _PIssue36ParamN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(numericString: Union[str, int]) -> str:
+def function(a: Union[str, int]) -> str:
     """Docstring summary.
 
     Parameters
     ----------
-    numericString: Union[str, int]
-        Numeric string that should be converted.
+    a: Union[str, int]
+        Description of a.
 
     Returns
     -------
@@ -2967,15 +2963,15 @@ class _PIssue36ReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(str_lin: str) -> bool:
+def function(a: str) -> bool:
     """Docstring summary.
 
     Docstring description.
 
     Parameters
     ----------
-    str_lin: str
-        Special string produced by function_of_y
+    a: str
+        Description of str_lin.
 
     Returns
     -------
@@ -2994,17 +2990,17 @@ class _PParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes.
-    param2: int
-        Passes.
-    param3: int
-        Passes.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3018,17 +3014,17 @@ class _FParamDocsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3042,15 +3038,15 @@ class _FParamSigNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3064,15 +3060,15 @@ class _PUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, _) -> None:
+def function(a, b, _) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes.
-    param2: int
-        Passes.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3086,17 +3082,17 @@ class _FOutOfOrderNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-    param2: int
-        Fails.
-    param3: int
-        Fails.
-    param1: int
-        Fails.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
+    a: int
+        Description of a.
     """
 '''
 
@@ -3110,17 +3106,17 @@ class _PRetTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes.
-    param2: int
-        Passes.
-    param3: int
-        Passes.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
 
     Returns
     -------
@@ -3139,17 +3135,17 @@ class _FRetTypeDocsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
 
     Returns
     -------
@@ -3168,17 +3164,17 @@ class _FRetTypeSigNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3192,17 +3188,17 @@ class _FSIG501NoRetNoTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes.
-    param2: int
-        Passes.
-    param3: int
-        Passes.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3216,17 +3212,17 @@ class _FNoRetDocsNoTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of a.
 
     Returns
     -------
@@ -3245,13 +3241,13 @@ class _FRetDocsAttrTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> t.Optional[str]:
+def function(a) -> t.Optional[str]:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
+    a: int
+        Description of a.
     """
 '''
 
@@ -3265,13 +3261,13 @@ class _FRetDocsNameTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> Optional[str]:
+def function(a) -> Optional[str]:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
+    a: int
+        Description of a.
     """
 '''
 
@@ -3285,17 +3281,17 @@ class _FSIG402OutOfOrderSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param2: int
-        Fails.
-    param3: int
-        Fails.
-    param1: int
-        Fails.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
+    a: int
+        Description of a.
     """
 '''
 
@@ -3309,17 +3305,17 @@ class _FSIG202ParamDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3333,15 +3329,15 @@ class _FSIG203ParamSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3355,17 +3351,17 @@ class _FSIG502RetTypeDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
 
     Returns
     -------
@@ -3384,17 +3380,17 @@ class _FSIG503RetTypeSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3408,19 +3404,19 @@ class _FDupesSumNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -3434,17 +3430,17 @@ class _PWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Pass.
-    param2: int
-        Pass.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     *args: int
-        Pass
+        Description of args.
     """
 '''
 
@@ -3458,15 +3454,15 @@ class _FWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Pass.
-    param2: int
-        Pass.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3480,17 +3476,17 @@ class _PWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Pass.
-    param2: int
-        Pass.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     **kwargs: int
-        Pass
+        Description of kwargs.
     """
 '''
 
@@ -3504,15 +3500,15 @@ class _FWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Pass.
-    param2: int
-        Pass.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3526,41 +3522,41 @@ class _MFailNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param2: int
-        Fails.
-    param3: int
-        Fails.
-    param1: int
-        Fails.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
+    a: int
+        Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3582,15 +3578,15 @@ class _FMethodWKwargsNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-        param1: int
-            Pass.
-        param2: int
-            Pass.
+        a: int
+            Description of a.
+        b: int
+            Description of b.
         """
 '''
 
@@ -3605,13 +3601,13 @@ class _PClassSelfNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-        param1: int
-            Pass.
+        a: int
+            Description of a.
         """
 '''
 
@@ -3625,15 +3621,15 @@ class _PWKwargsKeyNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes
+    a: int
+        Description of a.
     **kwargs: int
-        Passes
+        Description of kwargs.
     """
 '''
 
@@ -3647,16 +3643,16 @@ class _FWKwargsOutOfSectNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     **kwargs: int
-        Passes
+        Description of kwargs.
 
     Parameters
     ----------
-    param1: int
-        Fail
+    a: int
+        Description of a.
     """
 '''
 
@@ -3670,15 +3666,15 @@ class _FKwargsOutOfOrderNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Parameters
     ----------
     **kwargs : int
-        Passes
-    param1 : int
-        Fail
+        Description of kwargs.
+    a : int
+        Description of a.
     """
 '''
 
@@ -3692,20 +3688,19 @@ class _PDualColonWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(attachments, sync, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Docstring description.
 
     Parameters
     ----------
-    attachments: int
-        Iterable of kwargs to construct attachment.
-    sync: int
-        Don't thread if True: Defaults to False.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     **kwargs: int
-        Keyword args to pass to ``Message``:
-        See ``flask_mail.Message``.
+        Description of kwargs.
     """
 '''
 
@@ -3719,13 +3714,13 @@ class _POnlyParamsNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool = False) -> tuple[str, ...]:
+def function(a: bool = False) -> tuple[str, ...]:
     """Docstring summary.
 
     Parameters
     ----------
-    reduce: int
-        :func:`~lsfiles.utils._Tree.reduce`
+    a: int
+        Description of a.
 
     Returns
     -------
@@ -3750,9 +3745,9 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     Parameters
     ----------
     *args: int
-        Manipulate string(s).
+        Description of args.
     **kwargs: int
-        Return a string instead of a tuple if strings are passed as tuple.
+        Description of kwargs.
 
     Returns
     -------
@@ -3771,15 +3766,15 @@ class _PBinOpNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     """Docstring summary.
 
     Parameters
     ----------
-    index: int
-        Index to get.
-    seq: int
-        Sequence object that can be indexed.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
 
     Returns
     -------
@@ -3798,7 +3793,7 @@ class _FBinOpReprNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int) -> _T | None:
+def function(a: int) -> _T | None:
     """Docstring summary.
 
     Returns
@@ -3818,15 +3813,15 @@ class _PDoubleUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, __) -> None:
+def function(a, b, __) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Passes.
-    param2: int
-        Passes.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 '''
 
@@ -3842,7 +3837,7 @@ class _PPropertyReturnNI(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary.
 
         Returns
@@ -3905,20 +3900,20 @@ class _PKWOnlyArgsWArgsNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-    *path: _Path,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    *args: _Path,
+    a: _t.List[str] | None = None,
+    b: _t.List[str] | None = None,
 ) -> bool:
     """Docstring summary.
 
     Parameters
     ----------
-    path: int
-        Path(s) to check.
-    targets: int
-        List of errors to target.
-    disable: int
-        List of errors to disable.
+    args: int
+        Description of args.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
 
     Returns
     -------
@@ -3942,15 +3937,15 @@ class Klass:
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -3969,13 +3964,13 @@ class Klass:
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 
-    def __init__(self, param1, param2):
+    def __init__(self, a, b):
         pass
 '''
 
@@ -3994,14 +3989,14 @@ class Klass:
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
     """
 
     # bad typing, but leave that up to mypy
-    def __init__(self, param1, param2) -> int:
+    def __init__(self, a, b) -> int:
         pass
 '''
 
@@ -4020,10 +4015,10 @@ class Klass:
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
 
     Returns
     -------
@@ -4031,7 +4026,7 @@ class Klass:
         Return description.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -4050,10 +4045,10 @@ class Klass:
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
 
     Returns
     -------
@@ -4061,7 +4056,7 @@ class Klass:
         Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -4075,17 +4070,17 @@ class _FProtectFuncNI(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def _function(param1, param2) -> None:
+def _function(a, b) -> None:
     """Docstring summary.
 
     Parameters
     ----------
-    param1: int
-        Fails.
-    param2: int
-        Fails.
-    param3: int
-        Fails.
+    a: int
+        Description of a.
+    b: int
+        Description of b.
+    c: int
+        Description of c.
     """
 '''
 
@@ -4106,7 +4101,7 @@ def function(self) -> int:
     Parameters
     ----------
     self: Klass
-        Fails.
+        Description of self.
     """
 '''
 
@@ -4121,7 +4116,7 @@ class _PFuncPropReturnNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(*_, **__) -> int:
+def function() -> int:
     """Docstring summary.
 
     Returns
@@ -4148,7 +4143,7 @@ def function(self):
     Parameters
     ----------
     self: Klass
-        Fails.
+        Description of self.
     """
 '''
 
@@ -4164,15 +4159,15 @@ class _PStaticSelfNI(_BaseTemplate):
         return '''
 class Klass:
     @staticmethod
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Parameters
         ----------
         self: Klass
-            Pass.
-        param1: int
-            Pass.
+            Description of self.
+        a: int
+            Description of a.
         """
 '''
 
@@ -4187,15 +4182,15 @@ class _FProtectClsWKwargsNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 class _Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-        param1: int
-            Pass.
-        param2: int
-            Pass.
+        a: int
+            Description of a.
+        b: int
+            Description of b.
         """
 '''
 
@@ -4210,17 +4205,17 @@ class _FDundersParamNI(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def __dunder__(self, param1, param2) -> None:
+    def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
         Parameters
         ----------
-        param1: int
-            Fails.
-        param2: int
-            Fails.
-        param3: int
-            Fails.
+        a: int
+            Description of a.
+        b: int
+            Description of b.
+        c: int
+            Description of c.
         """
 '''
 
@@ -4240,7 +4235,7 @@ def function(param) -> None:
     Parameters
     ----------
     pram: int
-        Misspelled.
+        Description of pram.
     """
 '''
 
@@ -4254,12 +4249,12 @@ class _PRetTypeSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :returns: Return description.
     """
 '''
@@ -4274,12 +4269,12 @@ class _FRetTypeDocsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :returns: Return description.
     """
 '''
@@ -4294,12 +4289,12 @@ class _FNoRetDocsNoTypeSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :returns: Return description.
     """
 '''
@@ -4314,12 +4309,12 @@ class _FSIG502RetTypeDocsSingleErrorSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :returns: Return description.
     """
 '''
@@ -4334,10 +4329,10 @@ class _POnlyParamsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(reduce: bool = False) -> _t.Tuple[str, ...]:
+def function(a: bool = False) -> _t.Tuple[str, ...]:
     """Docstring summary.
 
-    :param reduce: :func:`~lsfiles.utils._Tree.reduce`
+    :param a: Description of a.
     :returns: Return description.
     """
 '''
@@ -4355,9 +4350,8 @@ class _PReturnAnyWArgsWKwargsSRs(_BaseTemplate):
 def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     """Docstring summary.
 
-    :param args: Manipulate string(s).
-    :key format: Return a string instead of a tuple if strings are
-        passed as tuple.
+    :param args: Description of args.
+    :key format: Description of format.
     :returns: Return description.
     """
 '''
@@ -4380,10 +4374,10 @@ def function(
     Standard behaviour would be to return None, so do not bypass
      silently.
 
-     :param id: The post's ID.
-     :param version: If provided populate session object with
+     :param a: Description of a.
+     :param b: Description of version.
         version.
-     :param checkauthor: Rule whether to check for author ID.
+     :param c: Description of checkauthor.
     :returns: Return description.
     """
 '''
@@ -4398,11 +4392,11 @@ class _PBinOpSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     """Docstring summary.
 
-    :param index: Index to get.
-    :param seq: Sequence object that can be indexed.
+    :param a: Description of a.
+    :param b: Description of b.
     :returns: Return description.
     """
     try:
@@ -4421,7 +4415,7 @@ class _FBinOpReprSRs(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int) -> _T | None:
+def function(a: int) -> _T | None:
     """Docstring summary.
 
     :returns: Return description.
@@ -4440,7 +4434,7 @@ class _PPropertyReturnSRs(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary.
 
         :returns: Return description.
@@ -4478,7 +4472,7 @@ class _PInconsistentSpaceSRs(_BaseTemplate):
 def fixture_main(monkeypatch) -> t.Callable[..., None]:
     """Docstring summary.
 
-    :param monkeypatch: ``pytest`` fixture for mocking attributes.
+    :param monkeypatch: Description of monkeypatch.
     :returns: Return description.
     """
 '''
@@ -4511,15 +4505,15 @@ class _PKWOnlyArgsWArgsSRs(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-    *path: _Path,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    *args: _Path,
+    a: _t.List[str] | None = None,
+    b: _t.List[str] | None = None,
 ) -> bool:
     """Docstring summary.
 
-    :param path: Path(s) to check.
-    :param targets: List of errors to target.
-    :param disable: List of errors to disable.
+    :param args: Description of args.
+    :param a: Description of a.
+    :param b: Description of b.
     :returns: Return description.
     """
 '''
@@ -4537,12 +4531,12 @@ class _FClassRetNoneSRs(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     :returns: Return description.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -4559,12 +4553,12 @@ class _FSIG504SRs(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     :returns: Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -4579,7 +4573,7 @@ class _PFuncPropReturnSRs(_BaseTemplate):
     def template(self) -> str:
         return '''
 @property
-def function(*_, **__) -> int:
+def function() -> int:
     """Docstring summary.
 
     :returns: Return description.
@@ -4596,13 +4590,13 @@ class _PParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Passes.
-        param2 (int): Passes.
-        param3 (int): Passes.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4616,13 +4610,13 @@ class _FParamDocsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Passes.
-        param2 (int): Passes.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4636,12 +4630,12 @@ class _FParamSigG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -4655,13 +4649,13 @@ class _FOutOfOrderG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Args:
-        param2 (int): Fails.
-        param3 (int): Fails.
-        param1 (int): Fails.
+        b (int): Description of b.
+        c (int): Description of c.
+        a (int): Description of a.
     """
 '''
 
@@ -4675,13 +4669,13 @@ class _PRetTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        param2 (int): Pass.
-        param3 (int): Pass.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
 
     Returns:
         bool: Return description.
@@ -4698,13 +4692,13 @@ class _FRetTypeDocsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
 
     Returns:
         bool: Return description.
@@ -4721,13 +4715,13 @@ class _FRetTypeSigG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4741,13 +4735,13 @@ class _FSIG501NoRetNoTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4761,13 +4755,13 @@ class _FNoRetDocsNoTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3):
+def function(a, b, c):
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
 
     Returns:
         bool: Return description.
@@ -4784,11 +4778,11 @@ class _FRetDocsAttrTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> t.Optional[str]:
+def function(a) -> t.Optional[str]:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
+        a (int): Description of a.
     """
 '''
 
@@ -4802,11 +4796,11 @@ class _FRetDocsNameTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1) -> Optional[str]:
+def function(a) -> Optional[str]:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
+        a (int): Description of a.
     """
 '''
 
@@ -4820,13 +4814,13 @@ class _FSIG402OutOfOrderSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param2 (int): Fails.
-        param3 (int): Fails.
-        param1 (int): Fails.
+        b (int): Description of b.
+        c (int): Description of c.
+        a (int): Description of a.
     """
 '''
 
@@ -4840,13 +4834,13 @@ class _FSIG202ParamDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4860,12 +4854,12 @@ class _FSIG203ParamSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -4879,13 +4873,13 @@ class _FSIG502RetTypeDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
 
     Returns:
         bool: Return description.
@@ -4902,13 +4896,13 @@ class _FSIG503RetTypeSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> int:
+def function(a, b, c) -> int:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4922,14 +4916,14 @@ class _FDupesSumG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -4943,13 +4937,13 @@ class _PWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        *args (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        *args (int): Description of args.
     """
 '''
 
@@ -4963,12 +4957,12 @@ class _FWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, *args) -> None:
+def function(a, b, *args) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        param2 (int): Pass.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -4982,13 +4976,13 @@ class _PWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        param2 (int): Pass.
-        **kwargs (int): Pass.
+        a (int): Description of a.
+        b (int): Description of b.
+        **kwargs (int): Description of kwargs.
     """
 '''
 
@@ -5002,12 +4996,12 @@ class _FWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        param2 (int): Pass.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -5021,30 +5015,30 @@ class _MFailG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param2 (int): Fails.
-        param3 (int): Fails.
-        param1 (int): Fails.
+        b (int): Description of b.
+        c (int): Description of c.
+        a (int): Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -5066,12 +5060,12 @@ class _FMethodWKwargsG(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        param2 (int): Pass.
+        a (int): Description of a.
+        b (int): Description of b.
         """
 '''
 
@@ -5086,11 +5080,11 @@ class _PClassSelfG(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Args:
-            param1 (int): Pass.
+            a (int): Description of a.
         """
 '''
 
@@ -5104,12 +5098,12 @@ class _PWKwargsKeyG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Pass.
-        **kwargs (int): Pass.
+        a (int): Description of a.
+        **kwargs (int): Description of kwargs.
     """
 '''
 
@@ -5123,13 +5117,13 @@ class _FWKwargsOutOfSectG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
-    **kwargs (int): Fails
+    **kwargs (int): Description of kwargs.
 
     Args:
-        param1 (int): Fails.
+        a (int): Description of a.
     """
 '''
 
@@ -5143,12 +5137,12 @@ class _FKwargsOutOfOrderG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
     Args:
-        **kwargs (int): Fails.
-        param1 (int): Fails.
+        **kwargs (int): Description of kwargs.
+        a (int): Description of a.
     """
 '''
 
@@ -5162,16 +5156,15 @@ class _PDualColonWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(attachments, sync, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Docstring description.
 
     Args:
-        attachments (int): Iterable of kwargs to construct attachment.
-        sync (int): Don't thread if True: Defaults to False.
-        **kwargs (int): Keyword args to pass to ``Message``: See
-            ``flask_mail.Message``.
+        a (int): Description of a.
+        b (int): Description of b.
+        **kwargs (int): Description of kwargs.
     """
 '''
 
@@ -5210,9 +5203,8 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
     """Docstring summary.
 
     Args:
-        *args (int): Manipulate string(s).
-        **kwargs (int): Return a string instead of a tuple if strings
-            are passed as tuple.
+        *args (int): Description of args.
+        **kwargs (int): Description of kwargs.
 
     Returns:
         int: Return description.
@@ -5229,12 +5221,12 @@ class _PBinOpG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int, seq: _t.Sequence[_T]) -> _T | None:
+def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     """Docstring summary.
 
     Args:
-        index (int): Index to get.
-        seq (int): Sequence object that can be indexed.
+        a (int): Description of a.
+        b (int): Description of b.
 
     Returns:
         int: Return description.
@@ -5251,7 +5243,7 @@ class _FBinOpReprG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(index: int) -> _T | None:
+def function(a: int) -> _T | None:
     """Docstring summary.
 
     Returns:
@@ -5269,12 +5261,12 @@ class _PDoubleUnderscoreParamG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2, __) -> None:
+def function(a, b, __) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Passes.
-        param2 (int): Passes.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 '''
 
@@ -5290,7 +5282,7 @@ class _PPropertyReturnG(_BaseTemplate):
         return '''
 class Klass:
     @property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary.
 
         Returns:
@@ -5346,16 +5338,16 @@ class _PKWOnlyArgsWArgsG(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(
-    *path: _Path,
-    targets: _t.List[str] | None = None,
-    disable: _t.List[str] | None = None,
+    *args: _Path,
+    a: _t.List[str] | None = None,
+    b: _t.List[str] | None = None,
 ) -> bool:
     """Docstring summary.
 
     Args:
-        path (int): Path(s) to check.
-        targets (int): List of errors to target.
-        disable (int): List of errors to disable.
+        args (int): Description of args.
+        a (int): Description of a.
+        b (int): Description of b.
 
     Returns:
         int: Return description.
@@ -5376,12 +5368,12 @@ class Klass:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -5399,11 +5391,11 @@ class Klass:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 
-    def __init__(self, param1, param2):
+    def __init__(self, a, b):
         pass
 '''
 
@@ -5421,12 +5413,12 @@ class Klass:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
     """
 
     # bad typing, but leave that up to mypy
-    def __init__(self, param1, param2) -> int:
+    def __init__(self, a, b) -> int:
         pass
 '''
 
@@ -5444,14 +5436,14 @@ class Klass:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
 
     Returns:
         int: Return description.
     """
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         pass
 '''
 
@@ -5469,14 +5461,14 @@ class Klass:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
 
     Returns:
         int: Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -5490,13 +5482,13 @@ class _FProtectFuncG(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def _function(param1, param2) -> None:
+def _function(a, b) -> None:
     """Docstring summary.
 
     Args:
-        param1 (int): Fails.
-        param2 (int): Fails.
-        param3 (int): Fails.
+        a (int): Description of a.
+        b (int): Description of b.
+        c (int): Description of c.
     """
 '''
 
@@ -5515,7 +5507,7 @@ def function(self) -> int:
     """Docstring summary.
 
     Args:
-        self (Klass): Fails.
+        self (Klass): Description of self.
     """
 '''
 
@@ -5569,12 +5561,12 @@ class _PStaticSelfG(_BaseTemplate):
         return '''
 class Klass:
     @staticmethod
-    def method(self, param1) -> None:
+    def method(self, a) -> None:
         """Docstring summary.
 
         Args:
-            self (Klass): Pass.
-            param1 (int): Pass.
+            self (Klass): Description of self.
+            a (int): Description of a.
         """
 '''
 
@@ -5589,12 +5581,12 @@ class _FProtectClsWKwargsG(_BaseTemplate):
     def template(self) -> str:
         return '''
 class _Klass:
-    def method(self, param1, param2, **kwargs) -> None:
+    def method(self, a, b, **kwargs) -> None:
         """Docstring summary.
 
         Args:
-            param1 (int): Pass.
-            param2 (int): Pass.
+            a (int): Description of a.
+            b (int): Description of b.
         """
 '''
 
@@ -5609,13 +5601,13 @@ class _FDundersParamG(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def __dunder__(self, param1, param2) -> None:
+    def __dunder__(self, a, b) -> None:
         """Docstring summary.
 
         Args:
-            param1 (int): Fail.
-            param2 (int): Fail.
-            param3 (int): Fail.
+            a (int): Description of a.
+            b (int): Description of b.
+            c (int): Description of c.
         """
 '''
 
@@ -5633,7 +5625,7 @@ def function(param) -> None:
     """Docstring summary.
 
     Args:
-        pram (int): Misspelled.
+        pram (int): Description of pram.
     """
 '''
 
@@ -5647,15 +5639,14 @@ class _PEscapedKwargWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(attachments, sync, **kwargs) -> None:
+def function(a, b, **kwargs) -> None:
     """Docstring summary.
 
     Docstring description.
 
-    :param attachments: Iterable of kwargs to construct attachment.
-    :param sync: Don't thread if True: Defaults to False.
-    :param **kwargs: Keyword args to pass to ``Message``:
-        See ``flask_mail.Message``.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param **kwargs: Description of **kwargs.
     """
 '''
 
@@ -5669,10 +5660,10 @@ class _FNoKwargsIncludedWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, **kwargs) -> None:
+def function(a, **kwargs) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1
+    :param a: Description of a.
     """
 '''
 
@@ -5687,7 +5678,7 @@ class _FNoDocClassS(_BaseTemplate):
     def template(self) -> str:
         return """
 class Klass:
-    def __init__(param1, param2, param3) -> None:
+    def __init__(a, b, c) -> None:
         pass
 """
 
@@ -5708,10 +5699,10 @@ def function(str_lin: str, a: str) -> bool:
 
     Parameters
     ----------
-    str_lin: str
+    a: str
         special string produced by function_of_y ["a"]
             a second wrong indent line
-    a: str
+    b: str
         string stuff
 
     Returns
@@ -5743,7 +5734,7 @@ class _MutableSequence(_t.MutableSequence[T]):
     def __init__(self) -> None:
         self._list: list[T] = []
 
-    def insert(self, index: int, value: T) -> None:
+    def insert(self, a: int, a: T) -> None:
         self._list.insert(index, value)
 
     @_t.overload
@@ -5795,7 +5786,7 @@ class Param(_t.NamedTuple):
 class Params(_MutableSequence[Param]):
     """Docstring summary."""
 
-    def insert(self, index: int, value: Param) -> None:
+    def insert(self, a: int, a: Param) -> None:
         pass
 '''
 
@@ -5809,11 +5800,11 @@ class _PStringAnnotation(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(some_input: int) -> "int":
+def function(a: int) -> "int":
     """Docstring summary.
 
     Args:
-        some_input: Random integer
+        a: Description of a.
 
     Returns:
         Return description.
@@ -5830,7 +5821,7 @@ class _FNoParamS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(some_input: int) -> int:
+def function(a: int) -> int:
     """Docstring summary."""
 '''
 
@@ -5847,12 +5838,12 @@ class _FMethodReturnHintS(_BaseTemplate):
 class Klass:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     :return: Return description.
     """
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         pass
 '''
 
@@ -5881,12 +5872,12 @@ def function(
     Waits for all to finish, then returns the results.
 
     Args:
-        fun: ...
-        iterable: ...
-        *args: Static arguments passed to the function.
-        timeout: ...
-        show_progress: ...
-        **kwargs: Static keyword-arguments passed to the function.
+        fun: Description of fun.
+        iterable: Description of iterable.
+        *args: Description of args.
+        timeout: Description of timeout.
+        show_progress: Description of timeout.
+        **kwargs: Description of kwargs.
 
     Returns:
         Return description.
@@ -5920,12 +5911,12 @@ class Klass:
         Waits for all to finish, then returns the results.
 
         Args:
-            fun: ...
-            iterable: ...
-            *args: Static arguments passed to the function.
-            timeout: ...
-            show_progress: ...
-            **kwargs: Static keyword-arguments passed to the function.
+            fun: Description of fun.
+            iterable: Description of iterable.
+            *args: Description of args.
+            timeout: Description of timeout.
+            show_progress: Description of timeout.
+            **kwargs: Description of kwargs.
 
         Returns:
             Return description.
@@ -5943,21 +5934,21 @@ class _MPassOverloadS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @overload
-def function(response: int) -> tuple[int, str]:
+def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(response: bytes) -> str:
+def function(a: bytes) -> str:
     ...
 
-def function(response):
+def function(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     :returns: Return description.
     """
 '''
@@ -5973,21 +5964,21 @@ class _MFailOverloadMissingReturnS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @overload
-def function(response: int) -> tuple[int, str]:
+def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(response: bytes) -> str:
+def function(a: bytes) -> str:
     ...
 
-def function(response):
+def function(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     """
 '''
 
@@ -6005,15 +5996,15 @@ class _MFailOverloadMissingParamS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @overload
-def function(response: int) -> tuple[int, str]:
+def function(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function(response: bytes) -> str:
+def function(a: bytes) -> str:
     ...
 
 def function(response):
@@ -6037,21 +6028,21 @@ class _MPassOverloadNoReturnS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @overload
-def function(response: int) -> None:
+def function(a: int) -> None:
     ...
 
 @overload
-def function(response: bytes) -> None:
+def function(a: bytes) -> None:
     ...
 
-def function(response):
+def function(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     """
 '''
 
@@ -6066,40 +6057,40 @@ class _MPassMultiOverloadsS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function_1(response: None) -> None:
+def function_1(a: None) -> None:
     ...
 
 @overload
-def function_1(response: int) -> tuple[int, str]:
+def function_1(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function_1(response: bytes) -> str:
+def function_1(a: bytes) -> str:
     ...
 
-def function_1(response):
+def function_1(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     :returns: Return description.
     """
 
 @overload
-def function_2(response: int) -> tuple[int, str]:
+def function_2(a: int) -> tuple[int, str]:
     ...
 
 @overload
-def function_2(response: bool) -> None:
+def function_2(a: bool) -> None:
     ...
 
 @overload
-def function_2(response: str) -> int:
+def function_2(a: str) -> int:
     ...
 
-def function_2(response):
+def function_2(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     :returns: Return description.
     """
 '''
@@ -6115,21 +6106,21 @@ class _MFailOverloadNoReturnDocumentedS(_BaseTemplate):
     def template(self) -> str:
         return '''
 @overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @overload
-def function(response: int) -> None:
+def function(a: int) -> None:
     ...
 
 @overload
-def function(response: bytes) -> None:
+def function(a: bytes) -> None:
     ...
 
-def function(response):
+def function(a):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     :return: Return description.
     """
 '''
@@ -6149,21 +6140,21 @@ class _MPassOverloadMethodS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
-    def process(self, response):
+    def process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of response.
         :returns: Return description.
         """
 '''
@@ -6180,21 +6171,21 @@ class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
-    def process(self, response):
+    def process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of a.
         """
 '''
 
@@ -6213,15 +6204,15 @@ class _MFailOverloadMethodMissingParamS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
     def process(self, response):
@@ -6246,21 +6237,21 @@ class _MFailOverloadMethodNoReturnS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> None:
+    def process(self, a: bytes) -> None:
         ...
 
-    def process(self, response):
+    def process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of response.
         """
 '''
 
@@ -6279,40 +6270,40 @@ class _MPassMultiOverloadMethodsS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> str:
+    def process(self, a: bytes) -> str:
         ...
 
-    def process(self, response):
+    def process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of a.
         :returns: Return description.
         """
 
     @overload
-    def another_process(self, response: int) -> tuple[int, str]:
+    def another_process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def another_process(self, response: bool) -> None:
+    def another_process(self, a: bool) -> None:
         ...
 
     @overload
-    def another_process(self, response: str) -> int:
+    def another_process(self, a: str) -> int:
         ...
 
-    def another_process(self, response):
+    def another_process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of a.
         :returns: Return description.
         """
 '''
@@ -6329,21 +6320,21 @@ class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
         return '''
 class SomeClass:
     @overload
-    def process(self, response: None) -> None:
+    def process(self, a: None) -> None:
         ...
 
     @overload
-    def process(self, response: int) -> tuple[int, str]:
+    def process(self, a: int) -> tuple[int, str]:
         ...
 
     @overload
-    def process(self, response: bytes) -> None:
+    def process(self, a: bytes) -> None:
         ...
 
-    def process(self, response):
+    def process(self, a):
         """Docstring summary.
 
-        :param response: The response to process
+        :param a: Description of a.
         :return: Return description.
         """
 '''
@@ -6359,12 +6350,12 @@ class _PParamDocsCommentModuleS(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: disable
-def function(param1, param2) -> None:
+def function(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -6378,12 +6369,12 @@ class _PParamDocsCommentFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:  # docsig: disable
+def function(a, b) -> None:  # docsig: disable
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -6397,27 +6388,27 @@ class _MFailCommentDisableFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:  # docsig: disable
+def function_1(a, b, c) -> None:  # docsig: disable
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6437,27 +6428,27 @@ class _MPassCommentDisableModuleFirstS(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: disable
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6471,28 +6462,28 @@ class _MFailCommentDisableModuleSecondS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # docsig: disable
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6509,28 +6500,28 @@ class _MFailCommentDisableModuleThirdS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
 # docsig: disable
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6549,29 +6540,29 @@ class _MFailCommentDisableModuleEnableS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # docsig: disable
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 # docsig: enable
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6590,54 +6581,54 @@ class _MFailCommentDisableMixedS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # docsig: disable
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 # docsig: enable
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 
-def function_4(param1, param2, param3) -> None:  # docsig: disable
+def function_4(a, b, c) -> None:  # docsig: disable
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # docsig: disable
-def function_5(param1, param2) -> None:
+def function_5(a, b) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 # docsig: enable
 
-def function_6(param1, param2, param3) -> None:
+def function_6(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6658,12 +6649,12 @@ class _PParamDocsCommentNoSpaceAfterCommentS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:  #docsig:disable
+def function(a, b) -> None:  #docsig:disable
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -6677,12 +6668,12 @@ class _PParamDocsCommentNoSpaceAfterColonS(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(param1, param2) -> None:  # docsig:disable
+def function(a, b) -> None:  # docsig:disable
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -6697,27 +6688,27 @@ class _MFailCommentDisableEnableOneFuncS(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: disable
-def function_1(param1, param2, param3) -> None:
+def function_1(a, b, c) -> None:
     """Docstring summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:  # docsig: enable
+def function_2(a, b) -> None:  # docsig: enable
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_3(param1, param2, param3) -> None:
+def function_3(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -6735,20 +6726,20 @@ class _MPassBadInlineDirective(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: disable
-def function_1(param1, param2, param3) -> None:  # docsig: ena
+def function_1(a, b, c) -> None:  # docsig: ena
     """Description summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
-def function_2(param1, param2) -> None:  # docsig: ena
+def function_2(a, b) -> None:  # docsig: ena
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 '''
 
@@ -6768,20 +6759,20 @@ class _MPassBadModuleDirective(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: disa
-def function_1(param1, param2) -> None:
+def function_1(a, b) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_2(param1, param2, param3) -> None:
+def function_2(a, b, c) -> None:
     """Description summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 '''
 
@@ -6803,65 +6794,65 @@ class _MPylintDirective(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: unknown
-def function_1(param1, param2, param3) -> None:  # pylint: disable
+def function_1(a, b, c) -> None:  # pylint: disable
     """Description summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # pylint: disable=unknown,unknown-the-third
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
 def function_3(  # docsig: enable=unknown,unknown-the-third
-    param1, param2, param3
+    a, b, c
 ) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 
-def function_4(param1, param2, param3) -> None:
+def function_4(a, b, c) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 
-def function_5(param1, param2, param3) -> int:
+def function_5(a, b, c) -> int:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_6(param, param2, param3) -> None:
+def function_6(d, b, c) -> None:
     """Description summary.
 
-    :param param: Description of params.
-    :param param: Description of params.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param d: Description of d.
+    :param d: Description of d.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_7(param, param2, param3) -> None:
+def function_7(d, b, c) -> None:
     """Description summary.
 
-    :param param: Description of params.
-    :param param: Description of params.
-    :param param2: Description of param2.
-    :param: Description of param.
+    :param d: Description of d.
+    :param d: Description of d.
+    :param b: Description of b.
+    :param: Description of d.
     """
 '''
 
@@ -6901,65 +6892,65 @@ class _MInvalidDirectiveOptions(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: unknown
-def function_1(param1, param2, param3) -> None:  # pylint: disable
+def function_1(a, b, c) -> None:  # pylint: disable
     """Description summary.
 
-    :param param2: Description of param2.
-    :param param3: Description of param3.
-    :param param1: Description of param1.
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
     """
 
 # pylint: disable=unknown,unknown-the-third
-def function_2(param1, param2) -> None:
+def function_2(a, b) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
 def function_3(  # docsig: enable=unknown,unknown-the-third
-    param1, param2, param3
+    a, b, c
 ) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 
-def function_4(param1, param2, param3) -> None:
+def function_4(a, b, c) -> None:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     :return: Return description.
     """
 
-def function_5(param1, param2, param3) -> int:
+def function_5(a, b, c) -> int:
     """Description summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_6(param, param2, param3) -> None:
+def function_6(d, b, c) -> None:
     """Description summary.
 
-    :param param: Description of params.
-    :param param: Description of params.
-    :param param2: Description of param2.
-    :param param3: Description of param3.
+    :param d: Description of d.
+    :param d: Description of d.
+    :param b: Description of b.
+    :param c: Description of c.
     """
 
-def function_7(param, param2, param3) -> None:
+def function_7(d, b, c) -> None:
     """Description summary.
 
-    :param param: Description of params.
-    :param param: Description of params.
-    :param param2: Description of param2.
-    :param: Description of param.
+    :param d: Description of d.
+    :param d: Description of d.
+    :param b: Description of b.
+    :param: Description of d.
     """
 '''
 
@@ -6999,12 +6990,12 @@ class _MInvalidSingleDirectiveOptions(_BaseTemplate):
     def template(self) -> str:
         return '''
 def function(  # docsig: enable=unknown
-    param1, param2, param3
+    a, b, c
 ) -> None:
     """
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -7025,12 +7016,12 @@ class _FWClassConstructorFS(_BaseTemplate):
 class Klass:
     """Docstring summary."""
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
-        :param param3: Description of param3.
+        :param a: Description of a.
+        :param b: Description of b.
+        :param c: Description of c.
         """
 '''
 
@@ -7047,11 +7038,11 @@ class _FWClassConstructorInitNoRetS(_BaseTemplate):
 class Klass:
     """Docstring summary."""
 
-    def __init__(self, param1, param2):
+    def __init__(self, a, b):
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         """
 '''
 
@@ -7069,11 +7060,11 @@ class Klass:
     """Docstring summary."""
 
     # bad typing, but leave that up to mypy
-    def __init__(self, param1, param2) -> int:
+    def __init__(self, a, b) -> int:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         """
 '''
 
@@ -7090,11 +7081,11 @@ class _FWClassConstructorRetNoneFS(_BaseTemplate):
 class Klass:
     """Docstring summary."""
 
-    def __init__(self, param1, param2) -> None:
+    def __init__(self, a, b) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         :return: Return description.
         """
 '''
@@ -7112,11 +7103,11 @@ class _FWClassConstructorSIG504FS(_BaseTemplate):
 class Klass:
     """Docstring summary."""
 
-    def __init__(param1, param2) -> None:
+    def __init__(a, b) -> None:
         """Docstring summary.
 
-        :param param1: Description of param1.
-        :param param2: Description of param2.
+        :param a: Description of a.
+        :param b: Description of b.
         :return: Return description.
         """
 '''
@@ -7132,11 +7123,11 @@ class _MInvalidSingleModuleDirectiveOptions(_BaseTemplate):
     def template(self) -> str:
         return '''
 # docsig: enable=unknown
-def function(param1, param2, param3) -> None:
+def function(a, b, c) -> None:
     """Docstring summary.
 
-    :param param1: Description of param1.
-    :param param2: Description of param2.
+    :param a: Description of a.
+    :param b: Description of b.
     """
 '''
 
@@ -7158,10 +7149,10 @@ class _Messages(_t.Dict[int, Message]):
     def __init__(self) -> None:
         self._this_should_not_need_a_docstring
 
-    def fromcode(self, ref: str) -> Message:
+    def fromcode(self, a: str) -> Message:
         """Docstring summary.
 
-        :param ref: Codes or symbolic reference.
+        :param a: Description of a.
         """
 '''
 
@@ -7188,12 +7179,12 @@ class _MessageSequence(_t.List[str]):  # docsig: disable
     ) -> None:
         pass
 
-    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+    def add(self, a: _Message, b: bool = False, **kwargs) -> None:
         """Docstring summary.
 
-        :param value: Value to add.
-        :param hint: Whether to print a hint or not.
-        :param kwargs: Variable(s) if format string.
+        :param a: Description of a.
+        :param b: Description of b.
+        :param kwargs: Description of kwargs.
         """
 
 class Report(_MessageSequence):
@@ -7223,12 +7214,12 @@ class _MessageSequence(_t.List[str]):
     ) -> None:
         pass
 
-    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+    def add(self, a: _Message, b: bool = False, **kwargs) -> None:
         """Docstring summary.
 
-        :param value: Value to add.
-        :param hint: Whether to print a hint or not.
-        :param kwargs: Variable(s) if format string.
+        :param a: Description of a.
+        :param b: Description of b.
+        :param kwargs: Description of kwargs.
         """
 
 # docsig: enable
@@ -7260,12 +7251,12 @@ class _MessageSequence(_t.List[str]):
     ) -> None:
         pass
 
-    def add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+    def add(self, a: _Message, b: bool = False, **kwargs) -> None:
         """Docstring summary.
 
-        :param value: Value to add.
-        :param hint: Whether to print a hint or not.
-        :param kwargs: Variable(s) if format string.
+        :param a: Description of a.
+        :param b: Description of b.
+        :param kwargs: Description of kwargs.
         """
 
 class Report(_MessageSequence):
@@ -7283,13 +7274,13 @@ class _FFuncInIfStatementN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    argument : int, optional
-        The input argument, by default 42
+    a : int, optional
+        Description of a.
 
     Returns
     -------
@@ -7299,7 +7290,7 @@ def function(argument: int = 42) -> int:
 
 if True:
     my_function(42)
-    def nested_function(argument: int = 42) -> int:
+    def nested_function(a: int = 42) -> int:
         pass
 '''
 
@@ -7316,7 +7307,7 @@ class _FKlassInIfStatementN(_BaseTemplate):
 if True:
     class Klass:
         """Docstring summary."""
-        def my_external_function(self, argument: int = 42) -> int:
+        def my_external_function(self, a: int = 42) -> int:
             pass
 '''
 
@@ -7332,7 +7323,7 @@ class _FFuncInIfInIfStatementN(_BaseTemplate):
         return """
 if True:
     if True:
-        def function(argument: int = 42) -> int:
+        def function(a: int = 42) -> int:
             pass
 """
 
@@ -7347,12 +7338,12 @@ class _FKlassNotMethodOkN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    def __init__(self, this) -> None:
-        self.this = this
-    def my_external_function(self, argument: int = 42) -> int:
+    def __init__(self, a) -> None:
+        self.a = a
+    def my_external_function(self, a: int = 42) -> int:
         """Docstring summary.
 
-        :param argument: An int.
+        :param a: Description of a.
         :returns: Return description.
         """
 '''
@@ -7370,7 +7361,7 @@ class _FFuncInForLoopN(_BaseTemplate):
 container = []
 
 for argument in container:
-    def function(argument: int = 42) -> int:
+    def function(a: int = 42) -> int:
         pass
 """
 
@@ -7386,7 +7377,7 @@ class _FFuncInForLoopIfN(_BaseTemplate):
         return """
 for argument in container:
     if argument > 0:
-        def function(argument: int = 42) -> int:
+        def function(a: int = 42) -> int:
             pass
 """
 
@@ -7400,20 +7391,20 @@ class _FNestedFuncN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    argument : int, optional
-        The input argument, by default 42
+    a : int, optional
+        Description of a.
 
     Returns
     -------
     int
         Return description.
     """
-    def nested_function(argument: int = 42) -> int:
+    def nested_function(a: int = 42) -> int:
         pass
 '''
 
@@ -7430,13 +7421,13 @@ class _MNestedKlassNotMethodOkN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    argument : int, optional
-        The input argument, by default 42
+    a : int, optional
+        Description of a.
 
     Returns
     -------
@@ -7444,12 +7435,12 @@ def function(argument: int = 42) -> int:
         Return description.
     """
     class Klass:
-        def __init__(self, this) -> None:
+        def __init__(self, a) -> None:
             pass
-        def my_external_function(self, argument: int = 42) -> int:
+        def my_external_function(self, a: int = 42) -> int:
             """Docstring summary.
 
-            :param argument: An int.
+            :param a: Description of a.
             :returns: Return description.
             """
 '''
@@ -7467,13 +7458,13 @@ class _MNestedKlassNotMethodNotN(_BaseTemplate):
     @property
     def template(self) -> str:
         return '''
-def function(argument: int = 42) -> int:
+def function(a: int = 42) -> int:
     """Docstring summary.
 
     Parameters
     ----------
-    argument : int, optional
-        The input argument, by default 42
+    a : int, optional
+        Description of a.
 
     Returns
     -------
@@ -7483,7 +7474,7 @@ def function(argument: int = 42) -> int:
     class Klass:
         def __init__(self, this) -> None:
             pass
-        def my_external_function(self, argument: int = 42) -> int:
+        def my_external_function(self, a: int = 42) -> int:
             pass
 '''
 
@@ -7505,22 +7496,22 @@ class _MPassOverloadNoReturnAliasS(_BaseTemplate):
 from typing import overload as _overload
 
 @_overload
-def function(response: None) -> None:
+def function(a: None) -> None:
     ...
 
 @_overload
-def function(response: int) -> None:
+def function(a: int) -> None:
     ...
 
 @_overload
-def function(response: bytes) -> None:
+def function(a: bytes) -> None:
     ...
 
 @_overload
 def function(response):
     """Docstring summary.
 
-    :param response: The response to process
+    :param a: Description of a.
     """
 '''
 
@@ -7538,7 +7529,7 @@ from functools import cached_property as _cached_property
 
 class Klass:
     @_cached_property
-    def function(*_, **__) -> int:
+    def function() -> int:
         """Docstring summary.
 
         Returns
@@ -7559,23 +7550,19 @@ class _FIncorrectDocDotS(_BaseTemplate):
     def template(self) -> str:
         return r'''
 def function(
-    define: tuple[tuple[str, str], ...],
-    data: list[_t.Any],
-    sort_by_field: int | None = None,
-    summary_line: _t.Iterable[_t.Any] | None = None,
-    print_field_total: int | None = None,
+    a: tuple[tuple[str, str], ...],
+    b: list[_t.Any],
+    c: int | None = None,
+    d: _t.Iterable[_t.Any] | None = None,
+    e: int | None = None,
 ) -> None:
     """Docstring summary.
 
-    :param define: Define the headers and the format of the fields
-        belonging to the headers.
-    :param data: Data to display.
-    :param sort_by_field. Sort the table by the index of the field to
-        sort by.
-    :param summary_line: Add a row to the end of the table that will not
-        be sorted if `sort_by_field` is provided.
-    :param print_field_total: Print the total number in the same format
-        of the index of the field provided.
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c. Description of c.
+    :param d: Description of d.
+    :param e: Description of e.
     """
 '''
 
@@ -7589,10 +7576,10 @@ class _FPropertyReturnMissingDescS(_BaseTemplate):
     @property
     def template(self) -> str:
         return r'''
-def function(ticker: str) -> str:
+def function(a: str) -> str:
     """Docstring summary.
 
-    :param ticker: Ticker to normalize.
+    :param a: Description of a.
     :return:
     """
 '''
