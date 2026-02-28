@@ -3,7 +3,7 @@ tests.misc_test
 ===============
 """
 
-# pylint: disable=protected-access
+# pylint: disable=protected-access,too-many-lines
 from __future__ import annotations
 
 import io
@@ -505,7 +505,14 @@ def test_ignore_typechecker_and_no_prop_returns(
     assert main(".") == 1
     std = capsys.readouterr()
     assert expected in std.out
-    assert main(".", "--ignore-typechecker") == 0
+    assert (
+        main(
+            ".",
+            "--disable=SIG501,SIG502,SIG503,SIG504,SIG505,SIG506",
+            test_flake8=False,
+        )
+        == 0
+    )
     std = capsys.readouterr()
     assert expected not in std.out
 
@@ -910,7 +917,14 @@ def function():
     main(".")
     std = capsys.readouterr()
     assert E[501].ref in std.out
-    assert main(".", "--ignore-typechecker") == 0
+    assert (
+        main(
+            ".",
+            "--disable=SIG501,SIG502,SIG503,SIG504,SIG505,SIG506",
+            test_flake8=False,
+        )
+        == 0
+    )
 
 
 def test_ignore_typechecker_prop_numpy(
@@ -940,7 +954,14 @@ class Klass:
     main(".")
     std = capsys.readouterr()
     assert E[505].ref in std.out
-    assert main(".", "--ignore-typechecker") == 0
+    assert (
+        main(
+            ".",
+            "--disable=SIG501,SIG502,SIG503,SIG504,SIG505,SIG506",
+            test_flake8=False,
+        )
+        == 0
+    )
 
 
 def test_compressed_short_form_warning(
