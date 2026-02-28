@@ -4,7 +4,7 @@ import ast
 import os
 import sys
 import typing as t
-from argparse import SUPPRESS, Namespace
+from argparse import Namespace
 from pathlib import Path
 
 from ._config import Check as _Check
@@ -12,7 +12,7 @@ from ._config import Config as _Config
 from ._config import Ignore as _Ignore
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
-from ._core import handle_deprecations, runner, setup_logger
+from ._core import runner, setup_logger
 from ._version import __version__
 from .messages import FLAKE8, E
 
@@ -113,12 +113,6 @@ class Docsig:
             help="ignore kwargs prefixed with two asterisks",
         )
         parser.add_option(
-            "--sig-ignore-typechecker",
-            action="store_true",
-            parse_from_config=True,
-            help=SUPPRESS,
-        )
-        parser.add_option(
             "--sig-verbose",
             action="store_true",
             parse_from_config=True,
@@ -131,15 +125,6 @@ class Docsig:
 
         :param a: Argparse namespace.
         """
-        if getattr(a, "sig_ignore_typechecker", False):
-            a.extend_ignore = list(a.extend_ignore or [])
-            handle_deprecations(
-                getattr(a, "sig_ignore_typechecker", False),
-                a.extend_ignore,
-                ["SIG501", "SIG502", "SIG503", "SIG504", "SIG505", "SIG506"],
-                stacklevel=8,
-            )
-
         cls.a.__dict__ = _merge_configs(
             {k.replace("sig_", ""): v for k, v in a.__dict__.items()},
             _get_config(__package__),

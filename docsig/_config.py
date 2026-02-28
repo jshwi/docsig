@@ -189,11 +189,6 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         help="ignore docstrings where parameters are not documented",
     )
     parser.add_argument(
-        "--ignore-typechecker",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-    )
-    parser.add_argument(
         "-d",
         "--disable",
         metavar="LIST",

@@ -9,7 +9,6 @@ import logging as _logging
 import os as _os
 import sys as _sys
 import typing as _t
-import warnings as _warnings
 from pathlib import Path as _Path
 
 import astroid as _ast
@@ -28,7 +27,6 @@ from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import print_checks as _print_checks
 from .messages import TEMPLATE as _TEMPLATE
-from .messages import E as _E
 from .messages import Messages as _Messages
 
 _DEFAULT_EXCLUDES = """\
@@ -234,28 +232,6 @@ def _run_docsig(
     return _report(failures, config)
 
 
-def handle_deprecations(
-    ignore_typechecker: bool,
-    disable: list,
-    messages: list,
-    stacklevel: int,
-) -> None:
-    """Warn for deprecated arguments.
-
-    :param ignore_typechecker: Whether using or not.
-    :param disable: List to add messages to.
-    :param messages: Messages.
-    :param stacklevel: Warning stacklevel.
-    """
-    if ignore_typechecker:
-        _warnings.warn(
-            "ignore-typechecker is deprecated, use disable for SIG5xx instead",
-            category=FutureWarning,
-            stacklevel=stacklevel,
-        )
-        disable.extend(messages)
-
-
 def runner(path: _Path, config: _Config) -> _Failures:
     """Per path runner.
 
@@ -285,7 +261,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_no_params: bool = False,
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
-    ignore_typechecker: bool = False,  # deprecated
     no_ansi: bool = False,
     verbose: bool = False,
     target: _Messages | None = None,
@@ -321,7 +296,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         documented
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param ignore_typechecker: Ignore checking return values.
     :param no_ansi: Disable ANSI output.
     :param verbose: Increase output verbosity.
     :param target: List of errors to target.
@@ -331,20 +305,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether a test failed or not.
     """
-    disable = disable or _Messages()
-    handle_deprecations(
-        ignore_typechecker,
-        disable,
-        [
-            _E[501],
-            _E[502],
-            _E[503],
-            _E[504],
-            _E[505],
-            _E[506],
-        ],
-        stacklevel=5,
-    )
     exclude_ = [_DEFAULT_EXCLUDES]
     if exclude is not None:
         exclude_.append(exclude)
@@ -372,7 +332,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         no_ansi=no_ansi,
         verbose=verbose,
         target=target or _Messages(),
-        disable=disable,
+        disable=disable or _Messages(),
         exclude=exclude_,
         excludes=excludes,
     )
