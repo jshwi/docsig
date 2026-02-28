@@ -10,7 +10,6 @@ import ast as _ast
 import os as _os
 import sys as _sys
 import typing as _t
-from argparse import SUPPRESS as _SUPPRESS
 from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
@@ -19,7 +18,6 @@ from .._config import Config as _Config
 from .._config import Ignore as _Ignore
 from .._config import get_config as _get_config
 from .._config import merge_configs as _merge_configs
-from .._core import handle_deprecations as _handle_deprecations
 from .._core import runner as _runner
 from .._core import setup_logger as _setup_logger
 from .._version import __version__
@@ -132,12 +130,6 @@ class Flake8:
             parse_from_config=True,
             help="ignore docstrings where parameters are not documented",
         )
-        parser.add_option(
-            "--sig-ignore-typechecker",
-            action="store_true",
-            parse_from_config=True,
-            help=_SUPPRESS,
-        )
 
     @classmethod
     def parse_options(cls, a: _Namespace) -> None:
@@ -145,15 +137,6 @@ class Flake8:
 
         :param a: Argparse namespace from flake8.
         """
-        if getattr(a, "sig_ignore_typechecker", False):
-            a.extend_ignore = list(a.extend_ignore or [])
-            _handle_deprecations(
-                getattr(a, "sig_ignore_typechecker", False),
-                a.extend_ignore,
-                ["SIG501", "SIG502", "SIG503", "SIG504", "SIG505", "SIG506"],
-                stacklevel=8,
-            )
-
         cls.a.__dict__ = _merge_configs(
             {k.replace("sig_", ""): v for k, v in a.__dict__.items()},
             _get_config(__package__),
