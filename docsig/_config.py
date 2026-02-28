@@ -193,11 +193,6 @@ def build_parser() -> _ArgumentParser:
         help="ignore docstrings where parameters are not documented",
     )
     parser.add_argument(
-        "--ignore-typechecker",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-    )
-    parser.add_argument(
         "-d",
         "--disable",
         metavar="LIST",

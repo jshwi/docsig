@@ -55,8 +55,8 @@ def _run_check(
 
     # recurse for either class methods or, if enabled, nested functions
     if not isinstance(child, _Function) or config.check.nested:
-        for child_of_child in child.children:
-            _run_check(child_of_child, child, config, failures)
+        for func in child.children:
+            _run_check(func, child, config, failures)
 
 
 def run_checks(module: _Parent, config: _Config) -> _Failures:
@@ -71,12 +71,12 @@ def run_checks(module: _Parent, config: _Config) -> _Failures:
     :return: A list of function and class failures.
     """
     failures = _Failures()
-    for child in module.children:
+    for top_level in module.children:
         if (
-            not child.isprotected
+            not top_level.isprotected
             or config.check.protected
             or config.check.protected_class_methods
         ):
-            _run_check(child, module, config, failures)
+            _run_check(top_level, module, config, failures)
 
     return failures
