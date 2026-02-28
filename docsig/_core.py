@@ -7,7 +7,6 @@ Entry point and orchestration for running docstring/signature checks.
 
 import logging as _logging
 import sys as _sys
-import warnings as _warnings
 from pathlib import Path as _Path
 from pprint import pformat as _pformat
 
@@ -25,7 +24,6 @@ from ._parsers import parse_from_string as _parse_from_string
 from ._report import print_checks as _print_checks
 from ._report import report as _report
 from ._traverse import run_checks as _run_checks
-from .messages import E as _E
 from .messages import Messages as _Messages
 
 
@@ -42,28 +40,6 @@ def setup_logger(verbose: bool) -> None:
     if not logger.handlers:
         stream_handler = _logging.StreamHandler(_sys.stdout)
         logger.addHandler(stream_handler)
-
-
-def handle_deprecations(
-    ignore_typechecker: bool,
-    disable: list,
-    messages: list,
-    stacklevel: int,
-) -> None:
-    """Warn for deprecated arguments.
-
-    :param ignore_typechecker: Whether using or not.
-    :param disable: List to add messages to.
-    :param messages: Messages.
-    :param stacklevel: Warning stacklevel.
-    """
-    if ignore_typechecker:
-        _warnings.warn(
-            "ignore-typechecker is deprecated, use disable for SIG5xx instead",
-            category=FutureWarning,
-            stacklevel=stacklevel,
-        )
-        disable.extend(messages)
 
 
 def runner(file: _Path, config: _Config) -> _Failures:
@@ -110,7 +86,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_no_params: bool = False,
     ignore_args: bool = False,
     ignore_kwargs: bool = False,
-    ignore_typechecker: bool = False,  # deprecated
     no_ansi: bool = False,
     verbose: bool = False,
     target: _Messages | None = None,
@@ -144,7 +119,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         documented.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-    :param ignore_typechecker: Ignore checking return values.
     :param no_ansi: Disable ANSI output.
     :param verbose: Increase output verbosity.
     :param target: List of errors to target.
@@ -154,20 +128,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit code (non-zero if any check failed).
     """
-    disable = disable or _Messages()
-    handle_deprecations(
-        ignore_typechecker,
-        disable,
-        [
-            _E[501],
-            _E[502],
-            _E[503],
-            _E[504],
-            _E[505],
-            _E[506],
-        ],
-        stacklevel=5,
-    )
     exclude_patterns = [_DEFAULT_EXCLUDES]
     if isinstance(exclude, str):
         exclude_patterns.append(exclude)
@@ -205,7 +165,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         no_ansi=no_ansi,
         verbose=verbose,
         target=target or _Messages(),
-        disable=disable,
+        disable=disable or _Messages(),
     )
     setup_logger(config.verbose)
     _logging.getLogger(__package__).debug(_pformat(config))
