@@ -27,6 +27,18 @@ SYMBOLIC = [
     (E[503].ref, E[503].symbolic),
     (E[201].ref, E[201].symbolic),
 ]
+MATRIX = [
+    f"{ES[0]},{ES[1]}",
+    f"{ES[0]},{ES[1]},{ES[2]}",
+    f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
+    f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
+    f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+    f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+    f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+    f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
+    f"{ES[4]},{ES[5]},{ES[6]}",
+    f"{ES[5]},{ES[6]}",
+]
 DISABLE_FILE_1 = '''
 def function_1(param1, param2, param3) -> None:
     """Description summary.
@@ -1383,21 +1395,7 @@ def test_individual_inline_disable_checks(
     assert all(E.from_ref(i).ref in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(
-    "rules",
-    [
-        f"{ES[0]},{ES[1]}",
-        f"{ES[0]},{ES[1]},{ES[2]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[5]},{ES[6]}",
-    ],
-)
+@pytest.mark.parametrize("rules", MATRIX)
 def test_comma_separated_inline_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
@@ -1451,21 +1449,7 @@ def test_individual_module_disable_checks(
     assert all(i in std.out for i in enabled_rules)
 
 
-@pytest.mark.parametrize(
-    "rules",
-    [
-        f"{ES[0]},{ES[1]}",
-        f"{ES[0]},{ES[1]},{ES[2]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[5]},{ES[6]}",
-    ],
-)
+@pytest.mark.parametrize("rules", MATRIX)
 def test_comma_separated_module_disable_checks(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
@@ -1519,21 +1503,7 @@ def test_individual_inline_enable_checks(
     assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
-@pytest.mark.parametrize(
-    "rules",
-    [
-        f"{ES[0]},{ES[1]}",
-        f"{ES[0]},{ES[1]},{ES[2]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[5]},{ES[6]}",
-    ],
-)
+@pytest.mark.parametrize("rules", MATRIX)
 def test_comma_separated_inline_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
@@ -1587,21 +1557,7 @@ def test_individual_module_enable_checks(
     assert not any(E.from_ref(i).ref in std.out for i in disabled_rules)
 
 
-@pytest.mark.parametrize(
-    "rules",
-    [
-        f"{ES[0]},{ES[1]}",
-        f"{ES[0]},{ES[1]},{ES[2]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]}",
-        f"{ES[0]},{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[1]},{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[2]},{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[3]},{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[4]},{ES[5]},{ES[6]}",
-        f"{ES[5]},{ES[6]}",
-    ],
-)
+@pytest.mark.parametrize("rules", MATRIX)
 def test_comma_separated_module_enable_checks(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
