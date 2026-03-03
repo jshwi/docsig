@@ -254,7 +254,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
     parser.add_argument(
         "--ignore-typechecker",
         action="store_true",
-        help="ignore checking return values",
+        help=_argparse.SUPPRESS,
     )
     parser.add_argument(
         "-d",
@@ -338,13 +338,11 @@ class Ignore:
         documented.
     :param args: Ignore args prefixed with an asterisk.
     :param kwargs: Ignore kwargs prefixed with two asterisks.
-    :param typechecker: Ignore checking return values.
     """
 
     no_params: bool = False
     args: bool = False
     kwargs: bool = False
-    typechecker: bool = False
 
 
 @_dataclass(frozen=True)

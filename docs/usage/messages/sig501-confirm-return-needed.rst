@@ -35,5 +35,16 @@ Cannot determine whether a return statement should exist or not
 
 .. code-block:: python
 
-    >>> docsig(string=string, ignore_typechecker=True, no_ansi=True)
+    >>> docsig(
+    ...     string=string,
+    ...     disable=[
+    ...         "SIG501",
+    ...         "SIG502",
+    ...         "SIG503",
+    ...         "SIG504",
+    ...         "SIG505",
+    ...         "SIG506"
+    ...     ],
+    ...     no_ansi=True,
+    ... )
     0

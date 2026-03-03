@@ -86,8 +86,8 @@ Commandline
                   [--check-dunders] [--check-nested] [--check-overridden]
                   [--check-property-returns] [--check-protected]
                   [--check-protected-class-methods] [--ignore-args] [--ignore-kwargs]
-                  [--ignore-no-params] [--ignore-typechecker] [-d LIST] [-t LIST] [-e PATTERN]
-                  [-E PATH [PATH ...]] [-I] [-s STR]
+                  [--ignore-no-params] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]]
+                  [-I] [-s STR]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -115,7 +115,6 @@ Commandline
       --ignore-args         ignore args prefixed with an asterisk
       --ignore-kwargs       ignore kwargs prefixed with two asterisks
       --ignore-no-params    ignore docstrings where parameters are not documented
-      --ignore-typechecker  ignore checking return values
       -d LIST, --disable LIST
                             comma separated list of rules to disable
       -t LIST, --target LIST
