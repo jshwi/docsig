@@ -45,7 +45,6 @@ class Failure(_t.List[Failed]):
     :param func: Function object.
     :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
-    :param ignore_typechecker: Ignore checking return values.
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
@@ -54,7 +53,6 @@ class Failure(_t.List[Failed]):
         func: _Function,
         target: _Messages,
         check_property_returns: bool,
-        ignore_typechecker: bool,
     ) -> None:
         super().__init__()
         self._retcode = 0
@@ -85,8 +83,8 @@ class Failure(_t.List[Failed]):
                     self._sig3xx_description(doc)
                     sig = self._func.signature.args.get(index)
                     self._sig4xx_parameters(doc, sig)
-                if not ignore_typechecker:
-                    self._sig5xx_returns()
+
+                self._sig5xx_returns()
 
         self.sort()
 

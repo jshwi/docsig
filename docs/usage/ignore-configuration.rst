@@ -12,8 +12,3 @@
    :titlesonly:
 
    configuration/ignore-no-params
-
-.. toctree::
-   :titlesonly:
-
-   configuration/ignore-typechecker

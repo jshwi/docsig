@@ -254,7 +254,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
     parser.add_argument(
         "--ignore-typechecker",
         action="store_true",
-        help="ignore checking return values",
+        help=_argparse.SUPPRESS,
     )
     parser.add_argument(
         "-d",
