@@ -395,7 +395,9 @@ def test_gitignore_patterns(
     "args,expected",
     [
         (
-            ["docs/*"],
+            [
+                "docs/*",
+            ],
             [
                 Path("docs/index.rst"),
                 Path("docs/requirements.txt"),
@@ -404,13 +406,17 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            [".pyaud_cache/7.5.1/CACHEDIR.TAG"],
+            [
+                ".pyaud_cache/7.5.1/CACHEDIR.TAG",
+            ],
             [
                 Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
             ],
         ),
         (
-            ["docs/examples/*"],
+            [
+                "docs/examples/*",
+            ],
             [
                 Path("docs/examples/classes.rst"),
                 Path("docs/examples/message-control.rst"),
@@ -465,7 +471,9 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            ["*.md"],
+            [
+                "*.md",
+            ],
             [
                 Path("CODE_OF_CONDUCT.md"),
                 Path("CHANGELOG.md"),
@@ -473,20 +481,26 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            ["**/*.md"],
+            [
+                "**/*.md",
+            ],
             [
                 Path("tests/TESTS.md"),
             ],
         ),
         (
-            ["docs/**/*.rst"],
+            [
+                "docs/**/*.rst",
+            ],
             [
                 Path("docs/examples/classes.rst"),
                 Path("docs/examples/message-control.rst"),
             ],
         ),
         (
-            ["file?.txt"],
+            [
+                "file?.txt",
+            ],
             [
                 Path("file1.txt"),
                 Path("file2.txt"),
@@ -496,7 +510,9 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            ["file[1-3].txt"],
+            [
+                "file[1-3].txt",
+            ],
             [
                 Path("file1.txt"),
                 Path("file2.txt"),
@@ -504,14 +520,19 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            ["file[!1-3].txt"],
+            [
+                "file[!1-3].txt",
+            ],
             [
                 Path("file4.txt"),
                 Path("file5.txt"),
             ],
         ),
         (
-            [".pyaud_cache/7.5.1/*", "tests/*"],
+            [
+                ".pyaud_cache/7.5.1/*",
+                "tests/*",
+            ],
             [
                 Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
                 Path(".pyaud_cache/7.5.1/files.json"),
@@ -541,7 +562,11 @@ def test_gitignore_patterns(
             ],
         ),
         (
-            ["tests/*", ".pyaud_cache/7.5.1/CACHEDIR.TAG", "docs/examples/*"],
+            [
+                "tests/*",
+                ".pyaud_cache/7.5.1/CACHEDIR.TAG",
+                "docs/examples/*",
+            ],
             [
                 Path(".pyaud_cache/7.5.1/CACHEDIR.TAG"),
                 Path("tests/misc_test.py"),
