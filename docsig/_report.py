@@ -70,14 +70,6 @@ class Failure(list[Failed]):
                 i for i in _E.all if i not in config.target
             )
 
-        self._name = self._func.name
-        if (
-            self._func.parent is not None
-            and self._func.parent.name
-            and not isinstance(self._func.parent, _ast.nodes.Module)
-        ):
-            self._name = f"{self._func.parent.name}.{self._name}"
-
         if self._func.error is not None:
             self._sig9xx_error()
         else:
@@ -104,7 +96,7 @@ class Failure(list[Failed]):
     ) -> None:
         self._retcode = int(not value.new)
         failed = Failed(
-            self._name,
+            self.name,
             value.ref,
             value.description.format(**kwargs),
             value.symbolic,
@@ -334,7 +326,14 @@ class Failure(list[Failed]):
     @property
     def name(self) -> str:
         """Qualified name (Class.method) when nested, else bare name."""
-        return self._name
+        if (
+            self._func.parent is not None
+            and self._func.parent.name
+            and not isinstance(self._func.parent, _ast.nodes.Module)
+        ):
+            return f"{self._func.parent.name}.{self._func.name}"
+
+        return self._func.name
 
     @property
     def lineno(self) -> int:
