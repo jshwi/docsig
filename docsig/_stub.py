@@ -80,7 +80,7 @@ class DocType(_Enum):
 # todo: consider a parent object that can be used for returns that do
 # todo: not include the name attribute
 class Param:
-    """A tuple of param types and their names.
+    """Represents a docstring or signature param.
 
     :param kind: The type of the parameter.
     :param name: The name of the parameter.
