@@ -84,7 +84,7 @@ Commandline
                   [--check-property-returns] [--check-protected]
                   [--check-protected-class-methods] [--ignore-args] [--ignore-kwargs]
                   [--ignore-no-params] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]]
-                  [--include-ignored] [-s STR]
+                  [-i] [-s STR]
                   [path [path ...]]
 
     Check signature params for proper documentation
@@ -120,7 +120,8 @@ Commandline
                             regular expression of files or dirs to exclude from checks
       -E PATH [PATH ...], --excludes PATH [PATH ...]
                             path glob patterns to exclude from checks
-      --include-ignored     check files even if they match a gitignore pattern
+      -i, --include-ignored
+                            check files even if they match a gitignore pattern
       -s STR, --string STR  string to parse instead of files
 
 Options can also be configured with the pyproject.toml file
