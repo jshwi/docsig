@@ -303,8 +303,8 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
     return parser.parse_args(args)
 
 
-# pylint: disable=too-many-instance-attributes,too-few-public-methods
 @_dataclass
+# pylint: disable-next=too-many-instance-attributes,too-few-public-methods
 class Check:
     """Configuration for what to check.
 
@@ -331,6 +331,7 @@ class Check:
 
 
 @_dataclass
+# pylint: disable-next=too-few-public-methods
 class Ignore:
     """Configuration for what to ignore.
 
@@ -346,6 +347,7 @@ class Ignore:
 
 
 @_dataclass(frozen=True)
+# pylint: disable-next=too-many-instance-attributes,too-few-public-methods
 class Config:
     """Internal run configuration for docsig.
 

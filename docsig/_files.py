@@ -63,7 +63,7 @@ class _Gitignore(_PathSpec):
 
 
 def _glob(path: _Path, pattern: str) -> bool:
-    # pylint: disable=no-member
+    # pylint: disable-next=no-member
     return _WcPath(str(path)).globmatch(pattern)  # type: ignore
 
 

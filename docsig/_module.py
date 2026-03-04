@@ -47,7 +47,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     :param error: Represents an unrecoverable error, if any.
     """
 
-    # pylint: disable=too-many-arguments,too-many-positional-arguments
+    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
         node: (
@@ -171,7 +171,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         return self._children
 
 
-class Function(Parent):
+class Function(Parent):  # pylint: disable=too-many-instance-attributes
     """Represents a function with signature and docstring parameters.
 
     :param node: Function's abstract syntax tree.
@@ -188,8 +188,7 @@ class Function(Parent):
     :param error: Represents an unrecoverable error, if any.
     """
 
-    # pylint: disable=too-many-arguments,too-many-instance-attributes
-    # pylint: disable=too-many-positional-arguments
+    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
         node: _ast.nodes.FunctionDef | _ast.nodes.NodeNG | None = None,
