@@ -17,6 +17,7 @@ from ._hooks import excepthook as _excepthook
 
 def _warn_on_deprecated_short_flags() -> None:
     deprecated_short_flags = {
+        "-I": "--include-ignored",
         "-c": "--check-class",
         "-D": "--check-dunders",
         "-o": "--check-overridden",
