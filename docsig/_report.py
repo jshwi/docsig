@@ -47,7 +47,6 @@ class Failure(_t.List[Failed]):
     :param check_property_returns: Run return checks on properties.
     """
 
-    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
         func: _Function,
