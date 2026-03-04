@@ -225,12 +225,6 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         help="path glob patterns to exclude from checks",
     )
     parser.add_argument(
-        "-I",
-        action="store_true",
-        help=_argparse.SUPPRESS,
-        dest="include_ignored",
-    )
-    parser.add_argument(
         "-i",
         "--include-ignored",
         action="store_true",
