@@ -64,7 +64,7 @@ class Failure(_t.List[Failed]):
             and self._func.parent.name
             and not isinstance(self._func.parent, _scoped_nodes.Module)
         ):
-            self._name = f"{self._func.parent.name}.{self._func.name}"
+            self._name = f"{self._func.parent.name}.{self._name}"
 
         self._check_property_returns = check_property_returns
         if self._func.error is not None:
