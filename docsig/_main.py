@@ -29,30 +29,6 @@ def _excepthook(no_ansi: bool = False) -> None:
         )
 
 
-def _warn_on_deprecated_short_flags() -> None:
-    deprecated_short_flags = {
-        "-I": "--include-ignored",
-    }
-    raw_args = _sys.argv[1:]
-    expanded_flags = []
-    for arg in raw_args:
-        if arg.startswith("--") or not arg.startswith("-") or arg == "-":
-            expanded_flags.append(arg)
-        elif len(arg) > 2:
-            expanded_flags.extend([f"-{ch}" for ch in arg[1:]])
-        else:
-            expanded_flags.append(arg)
-
-    used_flags = set(expanded_flags)
-    for short, long in deprecated_short_flags.items():
-        if short in used_flags:
-            _warnings.warn(
-                f"short option '{short}' is deprecated, use '{long}' instead",
-                category=FutureWarning,
-                stacklevel=2,
-            )
-
-
 def main() -> str | int:
     """Parse CLI args, install the exception hook, and run docsig.
 
@@ -61,7 +37,6 @@ def main() -> str | int:
     if _os.getenv("_DOCSIG_FORMAT_JSON"):
         _warnings.simplefilter("ignore", FutureWarning)
 
-    _warn_on_deprecated_short_flags()
     a = _parse_args()
     _excepthook(a.no_ansi)
     kwargs = vars(a)

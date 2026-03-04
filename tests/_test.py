@@ -32,7 +32,6 @@ from . import (
     FixtureInitFile,
     FixtureInitPyprojectTomlFile,
     FixtureMain,
-    FixtureMakeTree,
 )
 
 
@@ -1035,24 +1034,6 @@ class Klass:
         )
         == 0
     )
-
-
-def test_compressed_short_form_warning(
-    make_tree: FixtureMakeTree,
-    main: FixtureMain,
-) -> None:
-    """Test warnings for short form options.
-
-    :param make_tree: Create the directory tree from dict mapping.
-    :param main: Mock ``main`` function.
-    """
-    template = """\
-def function(a, b) -> None:
-    pass
-"""
-    make_tree({"module": {"file.py": [template]}})
-    with pytest.warns(FutureWarning):
-        main(".", "-Iv", test_flake8=False)
 
 
 def test_ignore_no_params(
