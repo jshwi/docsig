@@ -92,7 +92,7 @@ class Failure(_t.List[Failed]):
             value.ref,
             value.description.format(**kwargs),
             value.symbolic,
-            self._func.lineno,
+            self.lineno,
             value.hint if hint else None,
             value.new,
         )
