@@ -24,7 +24,7 @@ from ._version import __version__
 from .messages import FLAKE8 as _FLAKE8
 from .messages import E as _E
 
-_Flake8Error = _t.Tuple[int, int, str, _t.Type]
+_Flake8Error = _t.Tuple[int, int, str, _t.Type[_t.Any]]
 _sys.path.append(_os.path.abspath(_os.getcwd()))
 
 
