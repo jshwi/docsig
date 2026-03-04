@@ -93,7 +93,12 @@ class Failure(_t.List[Failed]):
 
         self.sort()
 
-    def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
+    def _add(
+        self,
+        value: _Message,
+        hint: bool = False,
+        **kwargs: _t.Any,
+    ) -> None:
         self._retcode = int(not value.new)
         failed = Failed(
             self._name,

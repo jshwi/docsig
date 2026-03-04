@@ -22,7 +22,7 @@ from ._core import handle_deprecations, runner, setup_logger
 from ._version import __version__
 from .messages import FLAKE8, E
 
-Flake8Error = t.Tuple[int, int, str, t.Type]
+Flake8Error = t.Tuple[int, int, str, t.Type[t.Any]]
 sys.path.append(os.path.abspath(os.getcwd()))
 
 
