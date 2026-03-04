@@ -83,7 +83,7 @@ class Failure(_t.List[Failed]):
             value.ref,
             value.description.format(**kwargs),
             value.symbolic,
-            self._func.lineno,
+            self.lineno,
             value.hint if hint else None,
         )
         if value not in self._func.messages and failed not in self:
