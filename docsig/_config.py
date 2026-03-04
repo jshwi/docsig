@@ -266,6 +266,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         dest="include_ignored",
     )
     parser.add_argument(
+        "-i",
         "--include-ignored",
         action="store_true",
         help="check files even if they match a gitignore pattern",
