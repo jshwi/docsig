@@ -23,7 +23,6 @@ from ._stub import Param as _Param
 from ._stub import Params as _Params
 from ._stub import RetType as _RetType
 from ._utils import almost_equal as _almost_equal
-from ._utils import has_bad_return as _has_bad_return
 from ._utils import sentence_tokenizer as _sentence_tokenizer
 from .messages import E as _E
 from .messages import Message as _Message
@@ -290,9 +289,14 @@ class Failure(_t.List[Failed]):
             # return-type is some, so return should be documented
             elif self._func.signature.returns:
                 # return-missing
+                lines = str(self._func.docstring.string).splitlines()
                 self._add(
                     _E[503],
-                    hint=_has_bad_return(str(self._func.docstring.string)),
+                    hint=(
+                        len(lines) > 1
+                        and "return" in lines[-1]
+                        and ":param" not in lines[-1]
+                    ),
                 )
         elif self._func.docstring.returns:
             # this method is init, so no return should be documented

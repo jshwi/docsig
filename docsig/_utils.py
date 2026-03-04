@@ -60,25 +60,6 @@ def print_checks() -> None:
         print(msg.fstring(_TEMPLATE))
 
 
-def has_bad_return(string: str) -> bool:
-    """Search for return documented with poor syntax.
-
-    Put this here in case the function increases in complexity.
-
-    Do more than search the docstring for the word return as return
-    statements come last, so only search the last line params can also
-    come last, so make sure it is not a param declaration.
-
-    :param string: Docstring to check.
-    :return: Boolean value indicating if a function has a bad return
-        statement.
-    """
-    lines = string.splitlines()
-    return (
-        len(lines) > 1 and "return" in lines[-1] and ":param" not in lines[-1]
-    )
-
-
 def sentence_tokenizer(text: str) -> list[str]:
     """Split text on sentence boundaries, skipping common abbreviations.
 

@@ -117,7 +117,7 @@ def _run_check(
 def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
-        module_name = _derive_module_name(path)
+        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
         parent = _from_str(code, config, module_name, path=path)
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
@@ -206,35 +206,6 @@ def _report(
                 print(f"    {extra}")
 
     return max(retcodes)
-
-
-def _run_docsig(
-    *path: str | _Path,
-    string: str | None = None,
-    config: _Config,
-) -> int:
-    setup_logger(config.verbose)
-    if config.list_checks:
-        return int(bool(_print_checks()))  # type: ignore
-
-    if string is None:
-        retcodes = [0]
-        paths = _Paths(
-            *path,
-            patterns=config.exclude,
-            excludes=config.excludes,
-            include_ignored=config.include_ignored,
-        )
-        for path_ in paths:
-            failures = runner(path_, config)
-            retcode = _report(failures, config, str(path_))
-            retcodes.append(retcode)
-
-        return max(retcodes)
-
-    module = _from_str(string, config)
-    failures = _get_failures(module, config)
-    return _report(failures, config)
 
 
 def runner(path: _Path, config: _Config) -> _Failures:
@@ -339,11 +310,25 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         exclude=exclude_,
         excludes=excludes,
     )
-    return _run_docsig(*path, string=string, config=config)
+    setup_logger(config.verbose)
+    if config.list_checks:
+        return int(bool(_print_checks()))  # type: ignore
 
+    if string is None:
+        retcodes = [0]
+        paths = _Paths(
+            *path,
+            patterns=config.exclude,
+            excludes=config.excludes,
+            include_ignored=config.include_ignored,
+        )
+        for path_ in paths:
+            failures = runner(path_, config)
+            retcode = _report(failures, config, str(path_))
+            retcodes.append(retcode)
 
-def _derive_module_name(file_path: str | _Path) -> str:
-    converted = _os.path.splitext(str(file_path))[0]
-    converted = converted.replace(_os.sep, ".")
-    converted = converted.replace("-", "_")
-    return converted
+        return max(retcodes)
+
+    module = _from_str(string, config)
+    failures = _get_failures(module, config)
+    return _report(failures, config)
