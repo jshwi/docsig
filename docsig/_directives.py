@@ -1,6 +1,8 @@
 """
 docsig._directives
 ==================
+
+Parsing and storage for docsig comment directives.
 """
 
 from __future__ import annotations as _
@@ -14,10 +16,10 @@ from .messages import Messages as _Messages
 
 
 class Comment(_Messages):
-    """Represents a comment directive.
+    """A single comment directive.
 
-    :param string: Text to construct comment from.
-    :param col: The column this directive is positioned at.
+    :param string: Text to construct the directive from.
+    :param col: Column for directive (0 means module-level).
     """
 
     _valid_kinds = "enable", "disable"
@@ -39,32 +41,31 @@ class Comment(_Messages):
 
     @property
     def isvalid(self) -> bool:
-        """Whether this directive is valid or not."""
+        """Whether this directive is valid."""
         return self._kind in self._valid_kinds
 
     @property
     def ismodule(self) -> bool:
-        """Whether this is a module level directive or not."""
+        """Whether this is a module-level directive."""
         return self._ismodule
 
     @property
     def enable(self) -> bool:
-        """Whether this is an `enable` directive or not."""
+        """Whether this is an enable directive."""
         return self._kind == self._valid_kinds[0]
 
     @property
     def disable(self) -> bool:
-        """Whether this is a `disable` directive or not."""
+        """Whether this is a disable directive."""
         return self._kind == self._valid_kinds[1]
 
     @classmethod
     def parse(cls, comment: str, col: int) -> Comment | None:
-        """Parse string into directive object if possible.
+        """Parse a comment into a docsig directive when present.
 
-        :param comment: Comment to parse.
-        :param col: Column of comment to instantiate directive.
-        :return: Instantiated directive object if valid directive or
-            None if not a valid directive.
+        :param comment: Raw comment text from the tokenizer.
+        :param col: Column at which the comment appears.
+        :return: Comment instance if valid; None otherwise.
         """
         if comment[1:].strip().startswith(f"{__package__}:"):
             return cls(comment.split(":")[1].strip(), col)
@@ -77,28 +78,20 @@ class Comments(_t.List[Comment]):
 
 
 class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
-    """Data for directives:
+    """Map line number to comments and disabled messages for that line.
 
-    Dict-like object with the line number of directive as the key a
-    tuple containing comments and messages.
-
-    Comments can be either `disable` or `enable` comments, and messages
-    are what messages are to be disabled.
-
-    Comments influence what messages can be added to the list, but are
-    different in that they communicate the directive, but the messages
-    are the final product of messages to disable.
-
-    Comments are collected here for later analysis.
+    Keys are line numbers; values are tuples of comment directives and
+    the messages to disable at that line. Used when running checks to
+    respect inline and module-level docsig enable/disable directives.
     """
 
     @classmethod
     def from_text(cls, text: str, messages: _Messages) -> Directives:
-        """Create directives from a string.
+        """Build a directives map from docsig directives in the code.
 
-        :param text: Python code.
-        :param messages: List of checks to disable.
-        :return: Instantiated directives object.
+        :param text: Python source code to scan for directives.
+        :param messages: Initial list of messages to disable.
+        :return: Directives instance keyed by line number.
         """
         directives = cls()
         fin = _StringIO(text)

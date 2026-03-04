@@ -1,6 +1,11 @@
 """
 docsig._report
 ==============
+
+Collect and format docstring-check failures for reporting. This module
+defines Failure (per-function validation results), Failed (one reported
+issue), Failures (sequence of failures), and report() to print them and
+return the highest exit code.
 """
 
 from __future__ import annotations as _
@@ -29,7 +34,7 @@ _MAX_MATCH = 1.0
 
 
 class Failed(_t.NamedTuple):
-    """Report info object."""
+    """Single reported issue."""
 
     name: str
     ref: str
@@ -40,9 +45,12 @@ class Failed(_t.NamedTuple):
 
 
 class Failure(_t.List[Failed]):
-    """Compile and produce the report.
+    """Collect docstring and signature failures for one function.
 
-    :param func: Function object.
+    Runs configured checks and appends Failed entries for each
+    violation.
+
+    :param func: Function under check.
     :param target: List of errors to target.
     :param check_property_returns: Run return checks on properties.
     """
@@ -291,19 +299,19 @@ class Failure(_t.List[Failed]):
 
     @property
     def name(self) -> str:
-        """Function name."""
+        """Qualified name (Class.method) when nested, else bare name."""
         return self._name
 
     @property
     def lineno(self) -> int:
-        """Function line number."""
+        """Line number of the function in the source."""
         return self._func.lineno
 
     @property
     def retcode(self) -> int:
-        """How to exit the program."""
+        """Exit code (non-zero if any check failed)."""
         return self._retcode
 
 
 class Failures(_t.List[Failure]):
-    """Sequence of failed functions."""
+    """Sequence of Failure instances (one per function checked)."""
