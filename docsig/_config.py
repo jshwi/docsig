@@ -265,6 +265,11 @@ def build_parser() -> _ArgumentParser:
     )
     parser.add_argument(
         "-I",
+        action="store_true",
+        help=_argparse.SUPPRESS,
+        dest="include_ignored",
+    )
+    parser.add_argument(
         "--include-ignored",
         action="store_true",
         help="check files even if they match a gitignore pattern",
