@@ -1,23 +1,25 @@
 """Flake8 implementation of docsig."""
 
-import ast
-import os
-import sys
-import typing as t
-from argparse import Namespace
-from pathlib import Path
+import ast as _ast
+import os as _os
+import sys as _sys
+import typing as _t
+from argparse import Namespace as _Namespace
+from pathlib import Path as _Path
 
 from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Ignore as _Ignore
 from ._config import get_config as _get_config
 from ._config import merge_configs as _merge_configs
-from ._core import runner, setup_logger
+from ._core import runner as _runner
+from ._core import setup_logger as _setup_logger
 from ._version import __version__
-from .messages import FLAKE8, E
+from .messages import E as _E
+from .messages import FLAKE8 as _FLAKE8
 
-Flake8Error = t.Tuple[int, int, str, t.Type]
-sys.path.append(os.path.abspath(os.getcwd()))
+_Flake8Error = _t.Tuple[int, int, str, _t.Type]
+_sys.path.append(_os.path.abspath(_os.getcwd()))
 
 
 class Docsig:
@@ -30,9 +32,9 @@ class Docsig:
     off_by_default = False
     name = __package__
     version = __version__
-    a = Namespace()
+    a = _Namespace()
 
-    def __init__(self, tree: ast.Module, filename: str) -> None:
+    def __init__(self, tree: _ast.Module, filename: str) -> None:
         _tree = tree  # noqa
         self.filename = filename
 
@@ -41,7 +43,7 @@ class Docsig:
     # might require that flake8 actually be installed, which is not a
     # requirement for this package
     @classmethod
-    def add_options(cls, parser: t.Any) -> None:
+    def add_options(cls, parser: _t.Any) -> None:
         """Add flake8 commandline and config options.
 
         :param parser: Flake8 option manager.
@@ -120,7 +122,7 @@ class Docsig:
         )
 
     @classmethod
-    def parse_options(cls, a: Namespace) -> None:
+    def parse_options(cls, a: _Namespace) -> None:
         """Parse flake8 options into an instance-accessible dict.
 
         :param a: Argparse namespace.
@@ -130,22 +132,22 @@ class Docsig:
             _get_config(__package__),
         )
 
-    def run(self) -> t.Generator[Flake8Error, None, None]:
+    def run(self) -> _t.Generator[_Flake8Error, None, None]:
         """Run docsig and possibly yield a flake8 error.
 
         :return: Flake8 error, if there is one.
         """
         if self.a.check_class and self.a.check_class_constructor:
             line = "{msg}".format(
-                msg=FLAKE8.format(
-                    ref=E[5].ref,
-                    description=E[5].description,
-                    symbolic=E[5].symbolic,
+                msg=_FLAKE8.format(
+                    ref=_E[5].ref,
+                    description=_E[5].description,
+                    symbolic=_E[5].symbolic,
                 ),
             )
             yield 0, 0, line, self.__class__
         else:
-            setup_logger(self.a.verbose)
+            _setup_logger(self.a.verbose)
             check = _Check(
                 class_=self.a.check_class,
                 class_constructor=self.a.check_class_constructor,
@@ -166,11 +168,11 @@ class Docsig:
                 ignore=ignore,
                 verbose=self.a.verbose,
             )
-            results = runner(Path(self.filename), config)
+            results = _runner(_Path(self.filename), config)
             for result in results:
                 for info in result:
                     line = "{msg} '{name}'".format(
-                        msg=FLAKE8.format(
+                        msg=_FLAKE8.format(
                             ref=info.ref,
                             description=info.description,
                             symbolic=info.symbolic,
