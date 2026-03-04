@@ -67,7 +67,6 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         error: Error | None = None,
     ) -> None:
         super().__init__()
-        self._name = "module"
         self._error = error
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
@@ -76,6 +75,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._imports = imports or _Imports()
         self._overloads = _Overloads()
         if node is None:
+            self._name = "module"
             if not isinstance(self, Function) and error is not None:
                 self._children.append(Function(path, error=error))
         else:
