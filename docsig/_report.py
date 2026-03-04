@@ -75,7 +75,6 @@ class Failure(_t.List[Failed]):
         ):
             self._name = f"{self._func.parent.name}.{self._name}"
 
-        self._check_property_returns = check_property_returns
         if self._func.error is not None:
             self._sig9xx_error()
         else:
@@ -90,7 +89,7 @@ class Failure(_t.List[Failed]):
                     sig = self._func.signature.args.get(index)
                     self._sig4xx_parameters(doc, sig)
 
-                self._sig5xx_returns()
+                self._sig5xx_returns(check_property_returns)
 
         self.sort()
 
@@ -270,9 +269,9 @@ class Failure(_t.List[Failed]):
                     # param-not-equal-to-arg
                     self._add(_E[404])
 
-    def _sig5xx_returns(self) -> None:
+    def _sig5xx_returns(self, check_property_returns: bool) -> None:
         if not self._func.isinit and not (
-            self._func.isproperty and not self._check_property_returns
+            self._func.isproperty and not check_property_returns
         ):
             # no types, cannot know either way
             if self._func.signature.rettype == _RetType.UNTYPED:
@@ -303,7 +302,7 @@ class Failure(_t.List[Failed]):
                 # class-return-documented
                 self._add(_E[504], hint=True)
             # method is property and not set to document property
-            elif self._func.isproperty and not self._check_property_returns:
+            elif self._func.isproperty and not check_property_returns:
                 # return-documented-for-property
                 self._add(_E[505], hint=True)
 
