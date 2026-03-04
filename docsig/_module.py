@@ -68,6 +68,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     ) -> None:
         super().__init__()
         self._error = error
+        self._directives = directives or _Directives()
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self._check_class_constructor = check_class_constructor
@@ -80,7 +81,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                 self._children.append(Function(path, error=error))
         else:
             self._name = node.name
-            self._parse_ast(node, directives or _Directives(), path)
+            self._parse_ast(node, path)
 
     def _parse_ast(
         self,
@@ -90,19 +91,18 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             | _ast.nodes.FunctionDef
             | _ast.nodes.NodeNG
         ),
-        directives: _Directives,
         path: _Path | None = None,
     ) -> None:
         # need to keep track of `comments` as, even though they are
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
-        parent_comments, parent_disabled = directives.get(
+        parent_comments, parent_disabled = self._directives.get(
             node.lineno,
             (_Comments(), _Messages()),
         )
         if hasattr(node, "body"):
             for subnode in node.body:
-                comments, disabled = directives.get(
+                comments, disabled = self._directives.get(
                     subnode.lineno,
                     (_Comments(), _Messages()),
                 )
@@ -119,7 +119,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     func = Function(
                         subnode,
                         comments,
-                        directives,
+                        self._directives,
                         disabled,
                         path,
                         self._ignore_args,
@@ -145,7 +145,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     self._children.append(
                         Parent(
                             subnode,
-                            directives,
+                            self._directives,
                             path,
                             self._ignore_args,
                             self._ignore_kwargs,
@@ -154,7 +154,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         ),
                     )
                 else:
-                    self._parse_ast(subnode, directives, path)
+                    self._parse_ast(subnode, path)
 
     @property
     def isprotected(self) -> bool:
