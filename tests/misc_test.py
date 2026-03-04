@@ -957,4 +957,4 @@ def function(a, b) -> None:
 """
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
-        main(".", "-cDopPI", test_flake8=False)
+        main(".", "-cDopPIv", test_flake8=False)
