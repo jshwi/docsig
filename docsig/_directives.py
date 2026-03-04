@@ -65,17 +65,17 @@ class Comment(_Messages):
 
     @property
     def isnext(self) -> bool:
-        """Whether this is a `next` directive or not."""
+        """Whether this directive applies to the next line only."""
         return self._isnext
 
     @property
     def isvalidflag(self) -> bool:
-        """Whether this directive flag is valid or not."""
+        """Whether the directive flag (if any) is valid."""
         return self._flag is None or self._flag in self._valid_flags
 
     @property
     def flag(self) -> str | None:
-        """The flag belonging to this directive."""
+        """Flag for this directive (e.g. next), or None."""
         return self._flag
 
     @classmethod
