@@ -88,8 +88,6 @@ class Paths(_t.List[_Path]):
         include_ignored: bool = False,
     ) -> None:
         super().__init__()
-        self._patterns = patterns
-        self._excludes = excludes or []
         self._include_ignored = include_ignored
         self._gitignore = _Gitignore()
         self._logger = _logging.getLogger(__package__)
@@ -98,8 +96,8 @@ class Paths(_t.List[_Path]):
 
         for path in list(self):
             if str(path) != "." and (
-                any(_re.match(i, str(path)) for i in self._patterns)
-                or any(_glob(path, i) for i in self._excludes)
+                any(_re.match(i, str(path)) for i in patterns)
+                or any(_glob(path, i) for i in excludes or [])
             ):
                 self._logger.debug(
                     FILE_INFO,
