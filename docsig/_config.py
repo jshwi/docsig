@@ -18,7 +18,7 @@ from pathlib import Path as _Path
 import tomli as _tomli
 
 from ._version import __version__
-from .messages import Messages
+from .messages import Messages as _Messages
 
 PYPROJECT_TOML = "pyproject.toml"
 
@@ -361,8 +361,8 @@ class Config:
 
     check: Check = _field(default_factory=Check)
     ignore: Ignore = _field(default_factory=Ignore)
-    target: Messages = _field(default_factory=Messages)
-    disable: Messages = _field(default_factory=Messages)
+    target: _Messages = _field(default_factory=_Messages)
+    disable: _Messages = _field(default_factory=_Messages)
     exclude: list[str] = _field(default_factory=list)
     excludes: list[str] | None = None
     list_checks: bool = False
