@@ -22,15 +22,23 @@ from ._stub import Signature as _Signature
 from .messages import Messages as _Messages
 
 
+class _Imports(_t.Dict[str, str]):
+    """Represents python imports."""
+
+
+class _Overloads(_t.Dict[str, "Function"]):
+    """Represents overloaded methods."""
+
+
+class _Children(_t.List[_t.Union["Parent", "Function"]]):
+    """Represents children of an object."""
+
+
 class Error(_Enum):
     """Represents an unrecoverable error."""
 
     SYNTAX = 1
     UNICODE = 2
-
-
-class _Imports(_t.Dict[str, str]):
-    """Represents python imports."""
 
 
 class Parent:  # pylint: disable=too-many-instance-attributes
@@ -364,11 +372,3 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         :param rettype: Return type of the overloaded variant.
         """
         self._signature.overload(rettype)
-
-
-class _Overloads(_t.Dict[str, Function]):
-    """Represents overloaded methods."""
-
-
-class _Children(_t.List[_t.Union[Parent, Function]]):
-    """Represents children of an object."""

@@ -24,6 +24,10 @@ NEW = """\
 """
 
 
+class Messages(_t.List["Message"]):
+    """Sequence of Message instances, typically for one failure."""
+
+
 class Message(_t.NamedTuple):
     """One docstring-check error (ref, description, symbolic, hint)."""
 
@@ -61,10 +65,6 @@ class Message(_t.NamedTuple):
             description=self.description,
             symbolic=self.symbolic,
         )
-
-
-class Messages(_t.List[Message]):
-    """Sequence of Message instances, typically for one failure."""
 
 
 class MessageMap(_t.Dict[int, Message]):

@@ -32,6 +32,10 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
+class Failures(_t.List["Failure"]):
+    """Sequence of Failure instances (one per function checked)."""
+
+
 class Failed(_t.NamedTuple):
     """Single reported issue."""
 
@@ -331,7 +335,3 @@ class Failure(_t.List[Failed]):
     def retcode(self) -> int:
         """Exit code (non-zero if any check failed)."""
         return self._retcode
-
-
-class Failures(_t.List[Failure]):
-    """Sequence of Failure instances (one per function checked)."""
