@@ -13,6 +13,10 @@ from .messages import E as _E
 from .messages import Messages as _Messages
 
 
+class Comments(_t.List["Comment"]):
+    """List of comments."""
+
+
 class Comment(_Messages):
     """Represents a comment directive.
 
@@ -70,10 +74,6 @@ class Comment(_Messages):
             return cls(comment.split(":")[1].strip(), col)
 
         return None
-
-
-class Comments(_t.List[Comment]):
-    """List of comments."""
 
 
 class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):

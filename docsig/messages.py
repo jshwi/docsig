@@ -17,6 +17,10 @@ TEMPLATE = "{ref}: {description} ({symbolic})"
 FLAKE8 = "{ref} {description} ({symbolic})"
 
 
+class Messages(_t.List["Message"]):
+    """List of messages."""
+
+
 class Message(_t.NamedTuple):
     """Represents an error message."""
 
@@ -52,10 +56,6 @@ class Message(_t.NamedTuple):
             description=self.description,
             symbolic=self.symbolic,
         )
-
-
-class Messages(_t.List[Message]):
-    """List of messages."""
 
 
 class MessageMap(_t.Dict[int, Message]):
