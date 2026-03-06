@@ -170,7 +170,7 @@ def _from_str(
 
 
 def _get_failures(module: _Parent, config: _Config) -> _Failures:
-    failures = _Failures()
+    failures: _Failures = []
     for top_level in module.children:
         if (
             not top_level.isprotected
@@ -310,8 +310,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ignore=ignore,
         no_ansi=no_ansi,
         verbose=verbose,
-        target=target or _Messages(),
-        disable=disable or _Messages(),
+        target=target or [],
+        disable=disable or [],
         exclude=exclude_,
         excludes=excludes,
     )

@@ -289,8 +289,8 @@ class Config:
 
     check: Check = _field(default_factory=Check)
     ignore: Ignore = _field(default_factory=Ignore)
-    target: _Messages = _field(default_factory=_Messages)
-    disable: _Messages = _field(default_factory=_Messages)
+    target: _Messages = _field(default_factory=list)
+    disable: _Messages = _field(default_factory=list)
     exclude: list[str] = _field(default_factory=list)
     excludes: list[str] | None = None
     list_checks: bool = False

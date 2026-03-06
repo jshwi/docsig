@@ -19,17 +19,9 @@ from ._stub import RetType as _RetType
 from ._stub import Signature as _Signature
 from .messages import Messages as _Messages
 
-
-class _Imports(_t.Dict[str, str]):
-    """Represents python imports."""
-
-
-class _Overloads(_t.Dict[str, "Function"]):
-    """Represents overloaded methods."""
-
-
-class _Children(_t.List[_t.Union["Parent", "Function"]]):
-    """Represents children of an object."""
+_Imports: _t.TypeAlias = dict[str, str]
+_Overloads: _t.TypeAlias = _t.Dict[str, "Function"]
+_Children: _t.TypeAlias = _t.List[_t.Union["Parent", "Function"]]
 
 
 class Error(_Enum):
@@ -79,9 +71,9 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._ignore_args = ignore_args
         self._ignore_kwargs = ignore_kwargs
         self._check_class_constructor = check_class_constructor
-        self._children = _Children()
-        self._imports = imports or _Imports()
-        self._overloads = _Overloads()
+        self._children: _Children = []
+        self._imports: _Imports = imports or {}
+        self._overloads: _Overloads = {}
         if node is None:
             self._name = "module"
             if not isinstance(self, Function) and error is not None:
@@ -105,13 +97,13 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         # the user in the case that they are invalid
         parent_comments, parent_disabled = self._directives.get(
             node.lineno,
-            (_Comments(), _Messages()),
+            ([], []),
         )
         if hasattr(node, "body"):
             for subnode in node.body:
                 comments, disabled = self._directives.get(
                     subnode.lineno,
-                    (_Comments(), _Messages()),
+                    ([], []),
                 )
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
@@ -219,8 +211,8 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
             check_class_constructor,
             imports,
         )
-        self._comments = comments or _Comments()
-        self._messages = messages or _Messages()
+        self._comments = comments or []
+        self._messages = messages or []
         self._parent = None
         self._decorators = None
         self._signature = _Signature()

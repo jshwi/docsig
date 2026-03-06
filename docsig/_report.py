@@ -27,8 +27,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class Failures(_t.List["Failure"]):
-    """Sequence of failed functions."""
+Failures: _t.TypeAlias = _t.List["Failure"]
 
 
 class Failed(_t.NamedTuple):
