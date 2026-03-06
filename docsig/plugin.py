@@ -15,8 +15,8 @@ from ._config import merge_configs as _merge_configs
 from ._core import runner as _runner
 from ._core import setup_logger as _setup_logger
 from ._version import __version__
-from .messages import E as _E
 from .messages import FLAKE8 as _FLAKE8
+from .messages import E as _E
 
 _Flake8Error = _t.Tuple[int, int, str, _t.Type]
 _sys.path.append(_os.path.abspath(_os.getcwd()))
@@ -49,6 +49,12 @@ class Docsig:
         :param parser: Flake8 option manager.
         """
         parser.add_option(
+            "--sig-verbose",
+            action="store_true",
+            parse_from_config=True,
+            help="increase output verbosity",
+        )
+        parser.add_option(
             "--sig-check-class",
             action="store_true",
             parse_from_config=True,
@@ -67,12 +73,6 @@ class Docsig:
             help="check dunder methods",
         )
         parser.add_option(
-            "--sig-check-protected-class-methods",
-            action="store_true",
-            parse_from_config=True,
-            help="check public methods belonging to protected classes",
-        )
-        parser.add_option(
             "--sig-check-nested",
             action="store_true",
             parse_from_config=True,
@@ -85,22 +85,22 @@ class Docsig:
             help="check overridden methods",
         )
         parser.add_option(
-            "--sig-check-protected",
-            action="store_true",
-            parse_from_config=True,
-            help="check protected functions and classes",
-        )
-        parser.add_option(
             "--sig-check-property-returns",
             action="store_true",
             parse_from_config=True,
             help="check property return values",
         )
         parser.add_option(
-            "--sig-ignore-no-params",
+            "--sig-check-protected",
             action="store_true",
             parse_from_config=True,
-            help="ignore docstrings where parameters are not documented",
+            help="check protected functions and classes",
+        )
+        parser.add_option(
+            "--sig-check-protected-class-methods",
+            action="store_true",
+            parse_from_config=True,
+            help="check public methods belonging to protected classes",
         )
         parser.add_option(
             "--sig-ignore-args",
@@ -115,10 +115,10 @@ class Docsig:
             help="ignore kwargs prefixed with two asterisks",
         )
         parser.add_option(
-            "--sig-verbose",
+            "--sig-ignore-no-params",
             action="store_true",
             parse_from_config=True,
-            help="increase output verbosity",
+            help="ignore docstrings where parameters are not documented",
         )
 
     @classmethod
