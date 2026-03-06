@@ -115,6 +115,13 @@ def _run_check(
             _run_check(func, child, config, failures)
 
 
+def _derive_module_name(file_path: str | _Path) -> str:
+    converted = _os.path.splitext(str(file_path))[0]
+    converted = converted.replace(_os.sep, ".")
+    converted = converted.replace("-", "_")
+    return converted
+
+
 def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
@@ -329,10 +336,3 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     module = _from_str({"code": string}, config)
     failures = _get_failures(module, config)
     return _report(failures, config)
-
-
-def _derive_module_name(file_path: str | _Path) -> str:
-    converted = _os.path.splitext(str(file_path))[0]
-    converted = converted.replace(_os.sep, ".")
-    converted = converted.replace("-", "_")
-    return converted
