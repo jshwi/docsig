@@ -10,7 +10,7 @@ return the highest exit code.
 
 from __future__ import annotations as _
 
-import contextlib
+import contextlib as _contextlib
 import typing as _t
 
 from astroid.nodes.scoped_nodes import scoped_nodes as _scoped_nodes
@@ -131,7 +131,7 @@ class Failure(_t.List[Failed]):
             # then we know that they aren't almost equal, param1 is
             # missing and does need to be inserted in the docstring
             if is_equal:
-                with contextlib.suppress(IndexError):
+                with _contextlib.suppress(IndexError):
                     is_equal = to[count].name != from_[count + 1].name
 
             if not is_equal:
