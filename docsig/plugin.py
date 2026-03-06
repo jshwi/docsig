@@ -63,7 +63,10 @@ class Docsig:
             "--sig-check-class-constructor",
             action="store_true",
             parse_from_config=True,
-            help="check __init__ methods. Note: mutually incompatible with -c",
+            help=(
+                "check __init__ methods (mutually incompatible with"
+                " --sig-check-class)"
+            ),
         )
         parser.add_option(
             "--sig-check-dunders",
