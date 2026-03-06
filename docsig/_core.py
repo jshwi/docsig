@@ -93,43 +93,6 @@ def _should_check_function(
     return True
 
 
-def _run_check(
-    child: _Parent,
-    parent: _Parent,
-    config: _Config,
-    failures: _Failures,
-) -> None:
-    if isinstance(child, _Function) and _should_check_function(
-        child,
-        parent,
-        config,
-    ):
-        failure = _Failure(child, config.target, config.check.property_returns)
-        if failure:
-            failures.append(failure)
-
-    # recurse for either class methods or, if enabled, nested functions
-    if not isinstance(child, _Function) or config.check.nested:
-        for func in child.children:
-            _run_check(func, child, config, failures)
-
-
-def _from_file(path: _Path, config: _Config) -> _Parent:
-    try:
-        code = path.read_text(encoding="utf-8")
-        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
-        parent = _from_str(code, config, module_name, path=path)
-    except UnicodeDecodeError as err:
-        logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.UNICODE)
-
-    if parent.error is not None and not path.name.endswith(".py"):
-        parent = _Parent()
-
-    return parent
-
-
 def _from_str(
     code: str,
     config: _Config,
@@ -156,6 +119,43 @@ def _from_str(
 
     logger.debug(_FILE_INFO, source_name, msg)
     return parent
+
+
+def _from_file(path: _Path, config: _Config) -> _Parent:
+    try:
+        code = path.read_text(encoding="utf-8")
+        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
+        parent = _from_str(code, config, module_name, path=path)
+    except UnicodeDecodeError as err:
+        logger = _logging.getLogger(__package__)
+        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.UNICODE)
+
+    if parent.error is not None and not path.name.endswith(".py"):
+        parent = _Parent()
+
+    return parent
+
+
+def _run_check(
+    child: _Parent,
+    parent: _Parent,
+    config: _Config,
+    failures: _Failures,
+) -> None:
+    if isinstance(child, _Function) and _should_check_function(
+        child,
+        parent,
+        config,
+    ):
+        failure = _Failure(child, config.target, config.check.property_returns)
+        if failure:
+            failures.append(failure)
+
+    # recurse for either class methods or, if enabled, nested functions
+    if not isinstance(child, _Function) or config.check.nested:
+        for func in child.children:
+            _run_check(func, child, config, failures)
 
 
 def _get_failures(module: _Parent, config: _Config) -> _Failures:
