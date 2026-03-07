@@ -291,7 +291,7 @@ class Config:
     ignore: Ignore
     target: _Messages = _field(default_factory=list)
     disable: _Messages = _field(default_factory=list)
-    exclude: list[str] = _field(default_factory=list)
+    exclude: str | None = None
     excludes: list[str] | None = None
     list_checks: bool = False
     include_ignored: bool = False

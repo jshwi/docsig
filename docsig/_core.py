@@ -29,25 +29,6 @@ from ._utils import print_checks as _print_checks
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
-_DEFAULT_EXCLUDES = """\
-(?x)^(
-    |\\.?venv[\\\\/].*
-    |\\.git[\\\\/].*
-    |\\.hg[\\\\/].*
-    |\\.idea[\\\\/].*
-    |\\.mypy_cache[\\\\/].*
-    |\\.nox[\\\\/].*
-    |\\.pytest_cache[\\\\/].*
-    |\\.svn[\\\\/].*
-    |\\.tox[\\\\/].*
-    |\\.vscode[\\\\/].*
-    |_?build[\\\\/].*
-    |.*[\\\\/]__pycache__[\\\\/].*
-    |dist[\\\\/].*
-    |node_modules[\\\\/].*
-)$
-"""
-
 
 def setup_logger(verbose: bool) -> None:
     """Setup docsig logger.
@@ -284,10 +265,6 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit status for whether a test failed or not.
     """
-    exclude_ = [_DEFAULT_EXCLUDES]
-    if exclude is not None:
-        exclude_.append(exclude)
-
     check = _Check(
         class_=check_class,
         class_constructor=check_class_constructor,
@@ -312,7 +289,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         verbose=verbose,
         target=target or [],
         disable=disable or [],
-        exclude=exclude_,
+        exclude=exclude,
         excludes=excludes,
     )
     setup_logger(config.verbose)
