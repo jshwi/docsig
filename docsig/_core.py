@@ -329,7 +329,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         )
         for path_ in paths:
             failures = runner(path_, config)
-            retcodes.append(_report(failures, config, str(path_)))
+            retcode = _report(failures, config, str(path_))
+            retcodes.append(retcode)
 
         return max(retcodes)
 
