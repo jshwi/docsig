@@ -126,7 +126,7 @@ def test_gitignore(
     """
     make_tree(TREE)
     # remove default excludes to better test nested gitignore files
-    monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
+    monkeypatch.setattr("docsig._files._DEFAULT_EXCLUDES", "^$")
     main(".", "--verbose", test_flake8=False)
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
@@ -744,7 +744,7 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
         Path("file10.txt"),
         Path("file[1].txt"),
     ]
-    monkeypatch.setattr("docsig._core._DEFAULT_EXCLUDES", "^$")
+    monkeypatch.setattr("docsig._files._DEFAULT_EXCLUDES", "^$")
     make_tree(TREE)
     main(
         ".",
