@@ -117,10 +117,10 @@ def _run_check(
             _run_check(func, child, config, failures)
 
 
-def _from_file(path: _Path, config: _Config) -> _Parent:
+def _parse_from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
-        parent = _from_str(
+        parent = _parse_from_string(
             code,
             config,
             str(path)[:-3].replace(_os.sep, ".").replace("-", "_"),
@@ -137,7 +137,7 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
     return parent
 
 
-def _from_str(
+def _parse_from_string(
     code: str,
     config: _Config,
     module_name: str = "",
@@ -173,7 +173,7 @@ def _from_str(
     return parent
 
 
-def _get_failures(module: _Parent, config: _Config) -> _Failures:
+def _run_checks(module: _Parent, config: _Config) -> _Failures:
     failures = _Failures()
     for top_level in module.children:
         if (
@@ -252,8 +252,8 @@ def runner(path: _Path, config: _Config) -> _Failures:
     :param config: Configuration object.
     :return: Collected failures for the file.
     """
-    module = _from_file(path, config)
-    return _get_failures(module, config)
+    module = _parse_from_file(path, config)
+    return _run_checks(module, config)
 
 
 @_decorators.parse_msgs
@@ -368,8 +368,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return int(bool(_print_checks()))  # type: ignore
 
     if string:
-        module = _from_str(string, config)
-        failures = _get_failures(module, config)
+        module = _parse_from_string(string, config)
+        failures = _run_checks(module, config)
         return _report(failures, config)
 
     retcodes = [0]
