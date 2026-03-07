@@ -367,20 +367,20 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if config.list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
-    if string is None:
-        retcodes = [0]
-        paths = _Paths(
-            *path,
-            patterns=config.exclude,
-            excludes=config.excludes,
-            include_ignored=config.include_ignored,
-        )
-        for path_ in paths:
-            failures = runner(path_, config)
-            retcodes.append(_report(failures, config, str(path_)))
+    if string:
+        module = _from_str(string, config)
+        failures = _get_failures(module, config)
+        return _report(failures, config)
 
-        return max(retcodes)
+    retcodes = [0]
+    paths = _Paths(
+        *path,
+        patterns=config.exclude,
+        excludes=config.excludes,
+        include_ignored=config.include_ignored,
+    )
+    for path_ in paths:
+        failures = runner(path_, config)
+        retcodes.append(_report(failures, config, str(path_)))
 
-    module = _from_str(string, config)
-    failures = _get_failures(module, config)
-    return _report(failures, config)
+    return max(retcodes)
