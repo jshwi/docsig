@@ -287,8 +287,8 @@ class Config:
     takes a single config object instead of many parameters.
     """
 
-    check: Check = _field(default_factory=Check)
-    ignore: Ignore = _field(default_factory=Ignore)
+    check: Check
+    ignore: Ignore
     target: _Messages = _field(default_factory=list)
     disable: _Messages = _field(default_factory=list)
     exclude: list[str] = _field(default_factory=list)
