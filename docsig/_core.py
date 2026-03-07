@@ -125,7 +125,7 @@ def _derive_module_name(file_path: str | _Path) -> str:
 def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
-        parent = _from_str(
+        parent = _parse_from_string(
             context={
                 "code": code,
                 "module_name": _derive_module_name(path),
@@ -145,7 +145,7 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
     return parent
 
 
-def _from_str(
+def _parse_from_string(
     context: dict[str, _t.Any],
     config: _Config,
     path: _Path | None = None,
@@ -169,7 +169,7 @@ def _from_str(
     return parent
 
 
-def _get_failures(module: _Parent, config: _Config) -> _Failures:
+def _run_checks(module: _Parent, config: _Config) -> _Failures:
     failures: _Failures = []
     for top_level in module.children:
         if (
@@ -219,7 +219,7 @@ def runner(path: _Path, config: _Config) -> _Failures:
     :return: Exit status for whether the test failed or not.
     """
     module = _from_file(path, config)
-    return _get_failures(module, config)
+    return _run_checks(module, config)
 
 
 @_decorators.parse_msgs
@@ -320,8 +320,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return int(bool(_print_checks()))  # type: ignore
 
     if string:
-        module = _from_str({"code": string}, config)
-        failures = _get_failures(module, config)
+        module = _parse_from_string({"code": string}, config)
+        failures = _run_checks(module, config)
         return _report(failures, config)
 
     retcodes = [0]
