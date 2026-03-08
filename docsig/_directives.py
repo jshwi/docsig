@@ -72,6 +72,16 @@ class Comment(_Messages):
         """Whether this is a `next` directive or not."""
         return self._isnext
 
+    @property
+    def isvalidopt(self) -> bool:
+        """Whether this directive option is valid or not."""
+        return self._opt is None or self._opt in self._valid_opts
+
+    @property
+    def opt(self) -> str | None:
+        """The type of this directive."""
+        return self._opt
+
     @classmethod
     def parse(cls, comment: str, col: int) -> Comment | None:
         """Parse string into directive object if possible.
