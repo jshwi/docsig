@@ -153,8 +153,8 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
                     # if module level directive, then make changes
                     # globally
                     if comment.ismodule:
-                        messages = scoped_messages
                         comments = scoped_comments
+                        messages = scoped_messages
 
             # if in a 'next' module level scope and the line type is a
             # newline (not a comment to allow 'next' directives to be
@@ -162,8 +162,8 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
             # reset the global messages to before the 'next' directive
             elif enable_next and line.type != _tokenize.NL:
                 enable_next = False
-                messages = next_messages
                 comments = next_comments
+                messages = next_messages
 
             # check that a scoped message has not updated this first, as
             # they take precedence over global messages
