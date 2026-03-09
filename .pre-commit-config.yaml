@@ -207,7 +207,7 @@ repos:
       - id: add-trailing-comma
         name: add trailing commas
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: "26.1.0"
+    rev: "26.3.0"
     hooks:
       - id: black
         additional_dependencies:
@@ -217,7 +217,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/codespell-project/codespell
-    rev: "v2.4.1"
+    rev: "v2.4.2"
     hooks:
       - id: codespell
         additional_dependencies:
@@ -237,7 +237,7 @@ repos:
       - id: actionlint
         name: lint github actions workflow files
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: "3.6.0"
+    rev: "3.6.1"
     hooks:
       - id: editorconfig-checker
         name: check .editorconfig rules
