@@ -122,8 +122,8 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
                     # if module level directive, then make changes
                     # globally
                     if comment.ismodule:
-                        messages = scoped_messages
                         comments = scoped_comments
+                        messages = scoped_messages
 
             # check that a scoped message has not updated this first, as
             # they take precedence over global messages
