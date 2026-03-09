@@ -125,6 +125,16 @@ E = MessageMap(
             "both mutually exclusive class options configured",
             "mutually-exclusive-options",
         ),
+        6: Message(
+            "SIG006",
+            "unknown module comment flag for {directive} '{flag}'",
+            "unknown-module-directive-flag",
+        ),
+        7: Message(
+            "SIG007",
+            "unknown inline comment flag for {directive} '{flag}'",
+            "unknown-inline-directive-flag",
+        ),
         #: SIG1xx Missing
         101: Message(
             "SIG101",
