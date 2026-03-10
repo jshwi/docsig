@@ -16,6 +16,7 @@ from warnings import warn as _warn
 import astroid as _ast
 
 from . import _decorators
+from ._check import run_checks as _run_checks
 from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Ignore as _Ignore
@@ -23,9 +24,7 @@ from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
 from ._files import Paths as _Paths
 from ._module import Error as _Error
-from ._module import Function as _Function
 from ._module import Parent as _Parent
-from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import print_checks as _print_checks
 from .messages import NEW as _NEW
@@ -46,32 +45,6 @@ def setup_logger(verbose: bool) -> None:
     if not logger.handlers:
         stream_handler = _logging.StreamHandler(_sys.stdout)
         logger.addHandler(stream_handler)
-
-
-def _should_check_function(
-    child: _Function,
-    parent: _Parent,
-    config: _Config,
-) -> bool:
-    if child.isoverridden and not config.check.overridden:
-        return False
-
-    if child.isprotected and not config.check.protected:
-        return False
-
-    if child.isdunder and not config.check.dunders:
-        return False
-
-    if child.docstring.bare and config.ignore.no_params:
-        return False
-
-    if child.isinit and (
-        not (config.check.class_ or config.check.class_constructor)
-        or (parent.isprotected and not config.check.protected)
-    ):
-        return False
-
-    return True
 
 
 def _parse_from_string(
@@ -116,40 +89,6 @@ def _parse_from_file(path: _Path, config: _Config) -> _Parent:
         parent = _Parent()
 
     return parent
-
-
-def _run_check(
-    child: _Parent,
-    parent: _Parent,
-    config: _Config,
-    failures: _Failures,
-) -> None:
-    if isinstance(child, _Function) and _should_check_function(
-        child,
-        parent,
-        config,
-    ):
-        failure = _Failure(child, config.target, config.check.property_returns)
-        if failure:
-            failures.append(failure)
-
-    # recurse for either class methods or, if enabled, nested functions
-    if not isinstance(child, _Function) or config.check.nested:
-        for func in child.children:
-            _run_check(func, child, config, failures)
-
-
-def _run_checks(module: _Parent, config: _Config) -> _Failures:
-    failures = _Failures()
-    for top_level in module.children:
-        if (
-            not top_level.isprotected
-            or config.check.protected
-            or config.check.protected_class_methods
-        ):
-            _run_check(top_level, module, config, failures)
-
-    return failures
 
 
 def _report(
