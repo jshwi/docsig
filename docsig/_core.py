@@ -11,7 +11,6 @@ import logging as _logging
 import os as _os
 import sys as _sys
 from pathlib import Path as _Path
-from warnings import warn as _warn
 
 import astroid as _ast
 
@@ -26,9 +25,8 @@ from ._files import Paths as _Paths
 from ._module import Error as _Error
 from ._module import Parent as _Parent
 from ._report import Failures as _Failures
+from ._report import report as _report
 from ._utils import print_checks as _print_checks
-from .messages import NEW as _NEW
-from .messages import TEMPLATE as _TEMPLATE
 from .messages import Messages as _Messages
 
 
@@ -89,43 +87,6 @@ def _parse_from_file(path: _Path, config: _Config) -> _Parent:
         parent = _Parent()
 
     return parent
-
-
-def _report(
-    failures: _Failures,
-    config: _Config,
-    path: str | None = None,
-) -> int:
-    retcodes = [0]
-    for failure in failures:
-        retcodes.append(failure.retcode)
-        path_prefix = f"{path}:" if path is not None else ""
-        header = f"{path_prefix}{failure.lineno} in {failure.name}"
-        if not config.no_ansi and _sys.stdout.isatty():
-            header = f"\033[35m{header}\033[0m"
-
-        print(header)
-        for item in failure:
-            extra = None
-            if item.hint:
-                extra = f"hint: {item.hint}"
-
-            if item.new:
-                extra = "warning: please remember to fix this or disable it"
-                _warn(_NEW.format(ref=item.ref), FutureWarning, stacklevel=2)
-
-            print(
-                "    "
-                + _TEMPLATE.format(
-                    ref=item.ref,
-                    description=item.description,
-                    symbolic=item.symbolic,
-                ),
-            )
-            if extra is not None:
-                print(f"    {extra}")
-
-    return max(retcodes)
 
 
 def runner(path: _Path, config: _Config) -> _Failures:
