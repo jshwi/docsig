@@ -157,10 +157,10 @@ def _from_str(
             config.ignore.kwargs,
             config.check.class_constructor,
         )
-        msg = "Parsing Python code successful"
+        msg = "parsing python code successful"
     except _ast.AstroidSyntaxError as err:
         parent = _Parent(error=_Error.SYNTAX)
-        msg = str(err).replace("\n", " ")
+        msg = str(err).replace("\n", " ").lower()
 
     logger.debug(_FILE_INFO, source_name, msg)
     return parent
