@@ -122,12 +122,9 @@ def _run_check(
 def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
+        module_name = _derive_module_name(path)
         parent = _from_str(
-            context={
-                "code": code,
-                "module_name": _derive_module_name(path),
-                "path": path,
-            },
+            context={"code": code, "module_name": module_name, "path": path},
             config=config,
             path=path,
         )
@@ -150,19 +147,22 @@ def _from_str(
     logger = _logging.getLogger(__package__)
     source_name = path or "stdin"
     try:
+        node = _ast.parse(**context)
+        directives = _Directives.from_text(context["code"], config.disable)
         parent = _Parent(
-            _ast.parse(**context),
-            _Directives.from_text(context["code"], config.disable),
+            node,
+            directives,
             path,
             config.ignore.args,
             config.ignore.kwargs,
             config.check.class_constructor,
         )
-        logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
+        msg = "Parsing Python code successful"
     except _ast.AstroidSyntaxError as err:
-        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.SYNTAX)
+        msg = str(err).replace("\n", " ")
 
+    logger.debug(_FILE_INFO, source_name, msg)
     return parent
 
 
@@ -235,7 +235,8 @@ def _run_docsig(
         )
         for path_ in paths:
             failures = runner(path_, config)
-            retcodes.append(_report(failures, config, str(path_)))
+            retcode = _report(failures, config, str(path_))
+            retcodes.append(retcode)
 
         return max(retcodes)
 
