@@ -10,7 +10,6 @@ from __future__ import annotations as _
 import logging as _logging
 import os as _os
 import sys as _sys
-import typing as _t
 import warnings as _warnings
 from pathlib import Path as _Path
 from warnings import warn as _warn
@@ -125,13 +124,10 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
         parent = _from_str(
-            {
-                "code": code,
-                "module_name": _derive_module_name(path),
-                "path": path,
-            },
+            code,
             config,
-            path=path,
+            _derive_module_name(path),
+            path,
         )
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
@@ -145,16 +141,17 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
 
 
 def _from_str(
-    context: dict[str, _t.Any],
+    code: str,
     config: _Config,
+    module_name: str = "",
     path: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
     source_name = path or "stdin"
     try:
         parent = _Parent(
-            _ast.parse(**context),
-            _Directives.from_text(context["code"], config.disable),
+            _ast.parse(code, module_name, str(path)),
+            _Directives.from_text(code, config.disable),
             path,
             config.ignore.args,
             config.ignore.kwargs,
@@ -241,7 +238,7 @@ def _run_docsig(
 
         return max(retcodes)
 
-    module = _from_str({"code": string}, config)
+    module = _from_str(string, config)
     failures = _get_failures(module, config)
     return _report(failures, config)
 
