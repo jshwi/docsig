@@ -102,13 +102,13 @@ class Paths(_t.List[_Path]):
         config: _Config,
     ) -> None:
         super().__init__()
+        logger = _logging.getLogger(__package__)
         patterns = [_DEFAULT_EXCLUDES]
         if config.exclude is not None:
             patterns.append(config.exclude)
 
         self._include_ignored = config.include_ignored
         self._gitignore = _Gitignore()
-        self._logger = _logging.getLogger(__package__)
         for path in paths:
             self._populate(_Path(path))
 
@@ -117,25 +117,22 @@ class Paths(_t.List[_Path]):
                 any(_re.match(i, str(path)) for i in patterns)
                 or any(_glob(path, i) for i in config.excludes or [])
             ):
-                self._logger.debug(
-                    FILE_INFO,
-                    path,
-                    "in exclude list, skipping",
-                )
+                logger.debug(FILE_INFO, path, "in exclude list, skipping")
                 self.remove(path)
 
         self.sort()
 
     def _populate(self, root: _Path) -> None:
+        logger = _logging.getLogger(__package__)
         if not root.exists():
             if root.is_symlink():
-                self._logger.debug(FILE_INFO, root, "broken link, skipping")
+                logger.debug(FILE_INFO, root, "broken link, skipping")
                 return
 
             raise FileNotFoundError(root)
 
         if not self._include_ignored and self._gitignore.match_file(root):
-            self._logger.debug(FILE_INFO, root, "in gitignore, skipping")
+            logger.debug(FILE_INFO, root, "in gitignore, skipping")
             return
 
         if root.is_file():
