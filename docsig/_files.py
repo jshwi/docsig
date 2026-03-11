@@ -10,7 +10,6 @@ from __future__ import annotations as _
 import logging as _logging
 import os as _os
 import re as _re
-import typing as _t
 from pathlib import Path as _Path
 
 from pathspec import PathSpec as _PathSpec
@@ -71,7 +70,7 @@ def _glob(path: _Path, pattern: str) -> bool:
     return _WcPath(str(path)).globmatch(pattern)  # type: ignore
 
 
-class Files(_t.List[_Path]):
+class Files(list[_Path]):
     """Collect paths to check (gitignore and exclude applied).
 
     :param paths: Path(s) to collect (files or directories).

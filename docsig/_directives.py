@@ -8,14 +8,13 @@ Parsing and storage for docsig comment directives.
 from __future__ import annotations as _
 
 import tokenize as _tokenize
-import typing as _t
 from io import StringIO as _StringIO
 
 from .messages import E as _E
 from .messages import Messages as _Messages
 
 
-class Comments(_t.List["Comment"]):
+class Comments(list["Comment"]):
     """List of comments."""
 
 
@@ -96,7 +95,7 @@ class Comment(_Messages):
         return None
 
 
-class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
+class Directives(dict[int, tuple[Comments, _Messages]]):
     """Map line number to comments and disabled messages for that line.
 
     Keys are line numbers; values are tuples of comment directives and

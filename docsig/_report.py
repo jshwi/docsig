@@ -36,7 +36,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class Failures(_t.List["Failure"]):
+class Failures(list["Failure"]):
     """Sequence of Failure instances (one per function checked)."""
 
 
@@ -52,7 +52,7 @@ class Failed(_t.NamedTuple):
     new: bool = False
 
 
-class Failure(_t.List[Failed]):
+class Failure(list[Failed]):
     """Collect docstring and signature failures for one function.
 
     Runs configured checks and appends Failed entries for each
