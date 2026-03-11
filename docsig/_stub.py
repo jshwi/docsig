@@ -9,7 +9,6 @@ from __future__ import annotations as _
 
 import re as _re
 import textwrap as _textwrap
-import typing as _t
 from collections import Counter as _Counter
 from enum import Enum as _Enum
 
@@ -153,7 +152,7 @@ class Param:
         return self._closing_token
 
 
-class Params(_t.List[Param]):
+class Params(list[Param]):
     """A list-like collection of params.
 
     :param ignore: Configuration object for what to ignore.

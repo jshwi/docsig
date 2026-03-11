@@ -24,7 +24,7 @@ NEW = """\
 """
 
 
-class Messages(_t.List["Message"]):
+class Messages(list["Message"]):
     """Sequence of Message instances, typically for one failure."""
 
 
@@ -41,7 +41,7 @@ class Message(_t.NamedTuple):
     symbolic: str = ""
 
     #: A hint, if any, suggesting why the error may have occurred.
-    hint: _t.Optional[str] = None
+    hint: str | None = None
 
     #: Whether this message is a new addition.
     new: bool = False
@@ -67,7 +67,7 @@ class Message(_t.NamedTuple):
         )
 
 
-class MessageMap(_t.Dict[int, Message]):
+class MessageMap(dict[int, Message]):
     """Mapping from integer key to Message (used for the E registry)."""
 
     def from_ref(self, ref: str) -> Message:

@@ -9,7 +9,6 @@ from __future__ import annotations as _
 
 import re as _re
 import sys as _sys
-import typing as _t
 from difflib import SequenceMatcher as _SequenceMatcher
 
 from .messages import TEMPLATE as _TEMPLATE
@@ -34,7 +33,7 @@ def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
 
 
 def pretty_print_error(
-    exception_type: _t.Type[BaseException],
+    exception_type: type[BaseException],
     msg: str,
     no_ansi: bool,
 ) -> None:

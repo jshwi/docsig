@@ -23,15 +23,15 @@ from ._stub import Signature as _Signature
 from .messages import Messages as _Messages
 
 
-class _Imports(_t.Dict[str, str]):
+class _Imports(dict[str, str]):
     """Represents python imports."""
 
 
-class _Overloads(_t.Dict[str, "Function"]):
+class _Overloads(dict[str, "Function"]):
     """Represents overloaded methods."""
 
 
-class _Children(_t.List[_t.Union["Parent", "Function"]]):
+class _Children(list[_t.Union["Parent", "Function"]]):
     """Represents children of an object."""
 
 
