@@ -132,7 +132,7 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         action="store_true",
         help="increase output verbosity",
     )
-    group = parser.add_mutually_exclusive_group(required=False)
+    group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "-c",
         action="store_true",

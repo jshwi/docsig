@@ -133,7 +133,7 @@ class Failure(_t.List[Failed]):
             if not is_equal:
                 to.insert(
                     count,
-                    _Param(arg.kind, arg.name, _VALID_DESCRIPTION, 0),
+                    _Param(arg.kind, arg.name, _VALID_DESCRIPTION),
                 )
 
     def _sig0xx_config(self) -> None:
