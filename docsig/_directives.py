@@ -26,27 +26,27 @@ class Comment(_Messages):
     :param col: Column for directive (0 means module-level).
     """
 
-    _valid_kinds = "enable", "disable"
+    _valid_types = "enable", "disable"
 
     def __init__(self, string: str, col: int) -> None:
         super().__init__()
         self._ismodule = col == 0
         parts = string.split("=")
-        self._kind = parts[0]
+        self._type = parts[0]
         if len(parts) == 1:
             self.extend(_E.all)
         else:
             self.extend(_E.from_ref(i) for i in parts[1].split(","))
 
     @property
-    def kind(self) -> str:
+    def type(self) -> str:
         """The type of this directive."""
-        return self._kind
+        return self._type
 
     @property
     def isvalid(self) -> bool:
         """Whether this directive is valid."""
-        return self._kind in self._valid_kinds
+        return self._type in self._valid_types
 
     @property
     def ismodule(self) -> bool:
@@ -56,12 +56,12 @@ class Comment(_Messages):
     @property
     def enable(self) -> bool:
         """Whether this is an enable directive."""
-        return self._kind == self._valid_kinds[0]
+        return self._type == self._valid_types[0]
 
     @property
     def disable(self) -> bool:
         """Whether this is a disable directive."""
-        return self._kind == self._valid_kinds[1]
+        return self._type == self._valid_types[1]
 
     @classmethod
     def parse(cls, comment: str, col: int) -> Comment | None:

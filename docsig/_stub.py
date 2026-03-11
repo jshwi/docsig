@@ -26,7 +26,7 @@ VALID_DESCRIPTION = " A valid description."
 
 
 class RetType(_Enum):
-    """Possible kinds of return annotation."""
+    """Possible types of return annotation."""
 
     NONE = 1
     SOME = 2
@@ -86,7 +86,7 @@ class DocType(_Enum):
 class Param:
     """Single parameter from a docstring or function signature.
 
-    :param kind: The type of the parameter.
+    :param type_: The type of the parameter.
     :param name: Parameter name.
     :param description: Optional description text.
     :param indent: Indent width in spaces.
@@ -96,13 +96,13 @@ class Param:
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
-        kind: DocType = DocType.PARAM,
+        type_: DocType = DocType.PARAM,
         name: str | None = None,
         description: str | None = None,
         indent: int = 0,
         closing_token: str = ":",
     ) -> None:
-        self._kind = kind
+        self._type = type_
         self._name = name
         self._description = description
         self._indent = indent
@@ -112,7 +112,7 @@ class Param:
         iseq = False
         if isinstance(other, Param):
             args = self, other
-            iseq = all(i.kind == DocType.KWARG for i in args) or (
+            iseq = all(i.type == DocType.KWARG for i in args) or (
                 self.name == other.name
                 and all(i.name is not None for i in args)
             )
@@ -128,9 +128,9 @@ class Param:
         return str(self.name).startswith("_")
 
     @property
-    def kind(self) -> DocType:
+    def type(self) -> DocType:
         """Type of the param."""
-        return self._kind
+        return self._type
 
     @property
     def name(self) -> str | None:
@@ -167,13 +167,13 @@ class Params(_t.List[Param]):
     def append(self, value: Param) -> None:
         if not value.isprotected and any(
             (
-                value.kind == DocType.PARAM,
-                (value.kind == DocType.ARG and not self._ignore.args),
+                value.type == DocType.PARAM,
+                (value.type == DocType.ARG and not self._ignore.args),
                 (
-                    value.kind == DocType.KWARG
+                    value.type == DocType.KWARG
                     and not (
                         self._ignore.kwargs
-                        or any(i.kind == DocType.KWARG for i in self)
+                        or any(i.type == DocType.KWARG for i in self)
                     )
                 ),
             ),
@@ -381,12 +381,12 @@ class Docstring(_Stub):
             string,
         ):
             if match:
-                kinds = match[0].split()
-                if kinds:
+                types = match[0].split()
+                if types:
                     docstring.args.append(
                         Param(
-                            DocType.from_str(kinds[0]),
-                            UNNAMED if len(kinds) == 1 else kinds[-1],
+                            DocType.from_str(types[0]),
+                            UNNAMED if len(types) == 1 else types[-1],
                             match[2] or None,
                             int(indent_anomaly),
                             match[1],

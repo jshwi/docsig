@@ -149,7 +149,7 @@ class Failure(_t.List[Failed]):
             if not is_equal:
                 to.insert(
                     count,
-                    _Param(arg.kind, arg.name, _VALID_DESCRIPTION),
+                    _Param(arg.type, arg.name, _VALID_DESCRIPTION),
                 )
 
     def _sig0xx_config(self) -> None:
@@ -157,10 +157,10 @@ class Failure(_t.List[Failed]):
             if not comment.isvalid:
                 if comment.ismodule:
                     # unknown-module-directive
-                    self._add(_E[1], directive=comment.kind)
+                    self._add(_E[1], directive=comment.type)
                 else:
                     # unknown-inline-directive
-                    self._add(_E[2], directive=comment.kind)
+                    self._add(_E[2], directive=comment.type)
             else:
                 for rule in comment:
                     if not rule.isknown:
@@ -168,14 +168,14 @@ class Failure(_t.List[Failed]):
                             # unknown-module-directive-option
                             self._add(
                                 _E[3],
-                                directive=comment.kind,
+                                directive=comment.type,
                                 option=rule.description,
                             )
                         else:
                             # unknown-inline-directive-option
                             self._add(
                                 _E[4],
-                                directive=comment.kind,
+                                directive=comment.type,
                                 option=rule.description,
                             )
 
