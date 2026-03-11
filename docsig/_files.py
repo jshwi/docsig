@@ -115,7 +115,7 @@ class Paths(_t.List[_Path]):
         for path in list(self):
             if str(path) != "." and (
                 any(_re.match(i, str(path)) for i in patterns)
-                or any(_glob(path, i) for i in config.excludes or [])
+                or any(_glob(path, i) for i in config.excludes)
             ):
                 logger.debug(FILE_INFO, path, "in exclude list, skipping")
                 self.remove(path)
