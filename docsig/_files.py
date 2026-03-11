@@ -78,7 +78,11 @@ class Paths(_t.List[_Path]):
     :param config: Configuration object.
     """
 
-    def __init__(self, *paths: _Path | str, config: _Config) -> None:
+    def __init__(
+        self,
+        paths: tuple[str | _Path, ...],
+        config: _Config,
+    ) -> None:
         super().__init__()
         self._include_ignored = config.include_ignored
         self._gitignore = _Gitignore()
