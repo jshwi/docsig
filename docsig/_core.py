@@ -21,7 +21,7 @@ from ._config import Config as _Config
 from ._config import Ignore as _Ignore
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
-from ._files import Paths as _Paths
+from ._files import Files as _Files
 from ._module import Error as _Error
 from ._module import Parent as _Parent
 from ._report import Failures as _Failures
@@ -49,17 +49,17 @@ def _parse_from_string(
     code: str,
     config: _Config,
     module_name: str = "",
-    path: _Path | None = None,
+    file: _Path | None = None,
 ) -> _Parent:
     logger = _logging.getLogger(__package__)
-    source_name = path or "stdin"
+    source_name = file or "stdin"
     try:
-        node = _ast.parse(code, module_name, str(path))
+        node = _ast.parse(code, module_name, str(file))
         directives = _Directives.from_text(code, config.disable)
         parent = _Parent(
             node,
             directives,
-            path,
+            file,
             config,
         )
         msg = "parsing python code successful"
@@ -71,30 +71,30 @@ def _parse_from_string(
     return parent
 
 
-def _parse_from_file(path: _Path, config: _Config) -> _Parent:
+def _parse_from_file(file: _Path, config: _Config) -> _Parent:
     try:
-        code = path.read_text(encoding="utf-8")
-        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
-        parent = _parse_from_string(code, config, module_name, path=path)
+        code = file.read_text(encoding="utf-8")
+        module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
+        parent = _parse_from_string(code, config, module_name, file)
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
+        logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.UNICODE)
 
-    if parent.error is not None and not path.name.endswith(".py"):
+    if parent.error is not None and not file.name.endswith(".py"):
         parent = _Parent()
 
     return parent
 
 
-def runner(path: _Path, config: _Config) -> _Failures:
+def runner(file: _Path, config: _Config) -> _Failures:
     """Run checks for a single file and return collected failures.
 
-    :param path: Path to the file to check.
+    :param file: Path to the file to check.
     :param config: Configuration object.
     :return: Collected failures for the file.
     """
-    module = _parse_from_file(path, config)
+    module = _parse_from_file(file, config)
     return _run_checks(module, config)
 
 
@@ -195,10 +195,10 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return _report(failures, config)
 
     retcodes = [0]
-    paths = _Paths(path, config)
-    for path_ in paths:
-        failures = runner(path_, config)
-        retcode = _report(failures, config, str(path_))
+    files = _Files(path, config)
+    for file in files:
+        failures = runner(file, config)
+        retcode = _report(failures, config, str(file))
         retcodes.append(retcode)
 
     return max(retcodes)

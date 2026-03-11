@@ -89,7 +89,7 @@ def _glob(path: _Path, pattern: str) -> bool:
     return _WcPath(str(path)).globmatch(pattern)  # type: ignore
 
 
-class Paths(_t.List[_Path]):
+class Files(_t.List[_Path]):
     """Collect paths to check (gitignore and exclude applied).
 
     :param paths: Path(s) to collect (files or directories).
