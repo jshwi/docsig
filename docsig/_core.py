@@ -124,8 +124,8 @@ def _from_file(path: _Path, config: _Config) -> _Parent:
         code = path.read_text(encoding="utf-8")
         module_name = _derive_module_name(path)
         parent = _from_str(
-            context={"code": code, "module_name": module_name, "path": path},
-            config=config,
+            {"code": code, "module_name": module_name, "path": path},
+            config,
             path=path,
         )
     except UnicodeDecodeError as err:
