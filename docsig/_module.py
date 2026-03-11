@@ -269,10 +269,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def isproperty(self) -> bool:
         """Whether this function is a property."""
-        valid_properties = [
-            "property",
-            "cached_property",
-        ]
+        valid_properties = "property", "cached_property"
         return self.ismethod and any(
             self._decorated_with(i) for i in valid_properties
         )
