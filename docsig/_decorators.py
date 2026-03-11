@@ -12,7 +12,7 @@ from pathlib import Path as _Path
 
 from .messages import E as _E
 
-_FuncType = _t.Callable[..., _t.Union[int]]
+_FuncType = _t.Callable[..., int]
 _WrappedFuncType = _t.Callable[..., _t.Union[str, int]]
 
 
