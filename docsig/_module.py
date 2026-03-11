@@ -48,7 +48,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
 
     :param node: AST node for this scope.
     :param directives: Directives and excluded errors per line.
-    :param path: Path for this scope (or None).
+    :param file: Path for this scope (or None).
     :param config: Configuration object.
     :param imports: Imports in this scope.
     :param error: Unrecoverable error for this scope, if any.
@@ -65,7 +65,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             | None
         ) = None,
         directives: _Directives | None = None,
-        path: _Path | None = None,
+        file: _Path | None = None,
         config: _Config | None = None,
         imports: _Imports | None = None,
         error: Error | None = None,
@@ -81,11 +81,11 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             self._name = "module"
             if not isinstance(self, Function) and error is not None:
                 self._children.append(
-                    Function(path, config=config, error=error),
+                    Function(file, config=config, error=error),
                 )
         else:
             self._name = node.name
-            self._parse_ast(node, path)
+            self._parse_ast(node, file)
 
     def _parse_ast(
         self,
@@ -95,7 +95,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             | _ast.nodes.FunctionDef
             | _ast.nodes.NodeNG
         ),
-        path: _Path | None = None,
+        file: _Path | None = None,
     ) -> None:
         # need to keep track of `comments` as, even though they are
         # resolved in the directive object, they are needed to notify
@@ -125,7 +125,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         comments,
                         self._directives,
                         disabled,
-                        path,
+                        file,
                         self._config,
                         self._imports,
                     )
@@ -148,13 +148,13 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         Parent(
                             subnode,
                             self._directives,
-                            path,
+                            file,
                             self._config,
                             self._imports,
                         ),
                     )
                 else:
-                    self._parse_ast(subnode, path)
+                    self._parse_ast(subnode, file)
 
     @property
     def isprotected(self) -> bool:
@@ -179,7 +179,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     :param comments: Comment directives for this function.
     :param directives: Directives keyed by line.
     :param messages: Disabled checks for this function.
-    :param path: Path for this function (or None).
+    :param file: Path for this function (or None).
     :param config: Configuration object.
     :param imports: Imports in this scope.
     :param error: Unrecoverable error for this function, if any.
@@ -192,7 +192,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         comments: _Comments | None = None,
         directives: _Directives | None = None,
         messages: _Messages | None = None,
-        path: _Path | None = None,
+        file: _Path | None = None,
         config: _Config | None = None,
         imports: _Imports | None = None,
         error: Error | None = None,
@@ -200,7 +200,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         super().__init__(
             node,
             directives or _Directives(),
-            path,
+            file,
             config,
             imports,
         )

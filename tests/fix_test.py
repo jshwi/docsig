@@ -14,7 +14,7 @@ import pytest
 from docsig._config import _ArgumentParser, _split_comma
 
 # noinspection PyProtectedMember
-from docsig._files import Paths
+from docsig._files import Files
 from docsig.messages import E
 
 from . import (
@@ -101,15 +101,15 @@ def test_exclude_dirs_392(
     :param main: Patch package entry point.
     """
     init_pyproject_toml({"exclude": r".*src[\\/]design[\\/].*"})
-    path_obj = Paths  # define to avoid recursion
+    path_obj = Files  # define to avoid recursion
     paths_list = []
 
-    def _paths(*args, **kwargs) -> Paths:
+    def _paths(*args, **kwargs) -> Files:
         paths = path_obj(*args, **kwargs)
         paths_list.append(paths)
         return paths
 
-    monkeypatch.setattr("docsig._core._Paths", _paths)
+    monkeypatch.setattr("docsig._core._Files", _paths)
     make_tree(
         {
             "src": {"design": {"file1.py": []}},
