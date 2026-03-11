@@ -98,9 +98,9 @@ class Paths(_t.List[_Path]):
 
     def __init__(self, *paths: _Path | str, config: _Config) -> None:
         super().__init__()
-        exclude = [_DEFAULT_EXCLUDES]
+        patterns = [_DEFAULT_EXCLUDES]
         if config.exclude is not None:
-            exclude.append(config.exclude)
+            patterns.append(config.exclude)
 
         self._include_ignored = config.include_ignored
         self._gitignore = _Gitignore()
@@ -110,7 +110,7 @@ class Paths(_t.List[_Path]):
 
         for path in list(self):
             if str(path) != "." and (
-                any(_re.match(i, str(path)) for i in exclude)
+                any(_re.match(i, str(path)) for i in patterns)
                 or any(_glob(path, i) for i in config.excludes or [])
             ):
                 self._logger.debug(

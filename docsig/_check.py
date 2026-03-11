@@ -13,23 +13,23 @@ from ._report import Failures as _Failures
 
 
 def _should_check_function(
-    child: _Function,
+    function: _Function,
     parent: _Parent,
     config: _Config,
 ) -> bool:
-    if child.isoverridden and not config.check.overridden:
+    if function.isoverridden and not config.check.overridden:
         return False
 
-    if child.isprotected and not config.check.protected:
+    if function.isprotected and not config.check.protected:
         return False
 
-    if child.isdunder and not config.check.dunders:
+    if function.isdunder and not config.check.dunders:
         return False
 
-    if child.docstring.bare and config.ignore.no_params:
+    if function.docstring.bare and config.ignore.no_params:
         return False
 
-    if child.isinit and (
+    if function.isinit and (
         not (config.check.class_ or config.check.class_constructor)
         or (parent.isprotected and not config.check.protected)
     ):
@@ -55,8 +55,8 @@ def _run_check(
 
     # recurse for either class methods or, if enabled, nested functions
     if not isinstance(child, _Function) or config.check.nested:
-        for func in child.children:
-            _run_check(func, child, config, failures)
+        for child_of_child in child.children:
+            _run_check(child_of_child, child, config, failures)
 
 
 def run_checks(module: _Parent, config: _Config) -> _Failures:
@@ -71,12 +71,12 @@ def run_checks(module: _Parent, config: _Config) -> _Failures:
     :return: A list of function and class failures.
     """
     failures = _Failures()
-    for top_level in module.children:
+    for child in module.children:
         if (
-            not top_level.isprotected
+            not child.isprotected
             or config.check.protected
             or config.check.protected_class_methods
         ):
-            _run_check(top_level, module, config, failures)
+            _run_check(child, module, config, failures)
 
     return failures
