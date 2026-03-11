@@ -211,7 +211,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return _report(failures, config)
 
     retcodes = [0]
-    paths = _Paths(*path, config=config)
+    paths = _Paths(path, config)
     for path_ in paths:
         failures = runner(path_, config)
         retcode = _report(failures, config, str(path_))
