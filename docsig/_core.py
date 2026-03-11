@@ -60,9 +60,7 @@ def _parse_from_string(
             node,
             directives,
             path,
-            config.ignore.args,
-            config.ignore.kwargs,
-            config.check.class_constructor,
+            config,
         )
         msg = "parsing python code successful"
     except _ast.AstroidSyntaxError as err:
@@ -197,12 +195,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return _report(failures, config)
 
     retcodes = [0]
-    paths = _Paths(
-        *path,
-        patterns=config.exclude,
-        excludes=config.excludes,
-        include_ignored=config.include_ignored,
-    )
+    paths = _Paths(*path, config=config)
     for path_ in paths:
         failures = runner(path_, config)
         retcode = _report(failures, config, str(path_))

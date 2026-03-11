@@ -49,7 +49,7 @@ def _run_check(
         parent,
         config,
     ):
-        failure = _Failure(child, config.target, config.check.property_returns)
+        failure = _Failure(child, config)
         if failure:
             failures.append(failure)
 

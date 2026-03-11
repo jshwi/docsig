@@ -17,6 +17,8 @@ from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 from wcmatch.pathlib import Path as _WcPath
 
+from ._config import Config as _Config
+
 FILE_INFO = "%s: %s"
 _DEFAULT_EXCLUDES = """\
 (?x)^(
@@ -91,26 +93,16 @@ class Paths(_t.List[_Path]):
     """Collect paths to check (gitignore and exclude applied).
 
     :param paths: Path(s) to collect (files or directories).
-    :param patterns: List pf regular expression of files and dirs to
-        exclude from checks.
-    :param excludes: Files or dirs to exclude from checks.
-    :param include_ignored: Check files even if they match a gitignore
-        pattern.
+    :param config: Configuration object.
     """
 
-    def __init__(
-        self,
-        *paths: _Path | str,
-        patterns: str | None = None,
-        excludes: list[str] | None = None,
-        include_ignored: bool = False,
-    ) -> None:
+    def __init__(self, *paths: _Path | str, config: _Config) -> None:
         super().__init__()
         exclude = [_DEFAULT_EXCLUDES]
-        if patterns is not None:
-            exclude.append(patterns)
+        if config.exclude is not None:
+            exclude.append(config.exclude)
 
-        self._include_ignored = include_ignored
+        self._include_ignored = config.include_ignored
         self._gitignore = _Gitignore()
         self._logger = _logging.getLogger(__package__)
         for path in paths:
@@ -119,7 +111,7 @@ class Paths(_t.List[_Path]):
         for path in list(self):
             if str(path) != "." and (
                 any(_re.match(i, str(path)) for i in exclude)
-                or any(_glob(path, i) for i in excludes or [])
+                or any(_glob(path, i) for i in config.excludes or [])
             ):
                 self._logger.debug(
                     FILE_INFO,
