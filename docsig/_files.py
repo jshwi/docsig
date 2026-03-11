@@ -96,7 +96,11 @@ class Paths(_t.List[_Path]):
     :param config: Configuration object.
     """
 
-    def __init__(self, *paths: _Path | str, config: _Config) -> None:
+    def __init__(
+        self,
+        paths: tuple[str | _Path, ...],
+        config: _Config,
+    ) -> None:
         super().__init__()
         patterns = [_DEFAULT_EXCLUDES]
         if config.exclude is not None:
