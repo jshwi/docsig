@@ -1,0 +1,96 @@
+"""
+docsig._parsers
+===============
+"""
+
+from __future__ import annotations as _
+
+import logging as _logging
+import os as _os
+from pathlib import Path as _Path
+from tokenize import TokenError as _TokenError
+
+import astroid as _ast
+
+from ._config import Config as _Config
+from ._directives import Directives as _Directives
+from ._files import FILE_INFO as _FILE_INFO
+from ._module import Error as _Error
+from ._module import Parent as _Parent
+
+
+def parse_from_string(
+    code: str,
+    config: _Config,
+    module_name: str = "",
+    path: _Path | None = None,
+) -> _Parent:
+    """Build a Parent from a string of Python code.
+
+    Parses AST and comment directives (AST does not include comments,
+    so directives are parsed separately). On syntax error, returns a
+    Parent with an error set.
+
+    :param code: Python source to parse.
+    :param config: Configuration object.
+    :param module_name: Module name, or empty string.
+    :param path: Path for the source (or None for stdin).
+    :return: Parent for the parsed code or syntax error.
+    """
+    logger = _logging.getLogger(__package__)
+    source_name = path or "stdin"
+    try:
+        node = _ast.parse(code, module_name, str(path))
+        try:
+            directives = _Directives.from_text(code, config.disable)
+        except _TokenError as err:
+            directives = _Directives()
+            logger.debug(
+                _FILE_INFO,
+                source_name,
+                f"error parsing comments {err}".lower(),
+            )
+
+        parent = _Parent(
+            node,
+            directives,
+            path,
+            config.ignore.args,
+            config.ignore.kwargs,
+            config.check.class_constructor,
+        )
+        logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
+    except _ast.AstroidSyntaxError as err:
+        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.SYNTAX)
+    except RecursionError as err:
+        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.RECURSION)
+
+    return parent
+
+
+def parse_from_file(path: _Path, config: _Config) -> _Parent:
+    """Build a Parent from a file containing Python code.
+
+    Reads the file and delegates to parse_from_string. On UnicodeError,
+    returns a Parent with a Unicode error. On syntax error and a non-.py
+    path, returns an empty Parent (not treated as Python).
+
+    :param path: Path to the file to parse.
+    :param config: Configuration object.
+    :return: Parent for the parsed file or an error/empty Parent.
+    """
+    try:
+        code = path.read_text(encoding="utf-8")
+        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
+        parent = parse_from_string(code, config, module_name, path)
+    except UnicodeDecodeError as err:
+        logger = _logging.getLogger(__package__)
+        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.UNICODE)
+
+    if parent.error is not None and not path.name.endswith(".py"):
+        parent = _Parent()
+
+    return parent
