@@ -1,0 +1,35 @@
+---
+description: Comments must not exceed 72 characters per line
+alwaysApply: true
+---
+
+# Comment Line Length
+
+Keep each line of a comment to a maximum of **72 characters**. This applies to:
+
+- Inline comments (`# ...`)
+- Block comments and docstrings
+- Multi-line comment blocks
+
+Wrap long comment text onto the next line so no line exceeds 72 characters.
+
+## Examples
+
+```python
+# ❌ BAD — line exceeds 72 characters
+# This function fetches the user profile from the API and caches it in memory for 5 minutes.
+
+# ✅ GOOD — wrapped at 72 characters
+# This function fetches the user profile from the API and caches it in
+# memory for 5 minutes.
+```
+
+```python
+# ❌ BAD — docstring line exceeds 72 characters
+def fetch_user(id: int):
+    """Return the user record from the database by primary key as a User instance or None if found."""
+
+# ✅ GOOD — single sentence, within 72 characters (and fits docstring-summary rule)
+def fetch_user(id: int):
+    """Return the user record from the database by primary key."""
+```

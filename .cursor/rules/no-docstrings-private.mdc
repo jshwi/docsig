@@ -1,0 +1,35 @@
+---
+description: Do not add docstrings to private functions
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# No Docstrings on Private Functions
+
+Do not add docstrings to private functions or methods. In Python, "private" means names that start with a single leading underscore (`_`).
+
+## Examples
+
+```python
+# ❌ BAD — private function with docstring
+def _helper(value: int) -> int:
+    """Convert value to normalized form."""
+    return value * 2
+
+# ✅ GOOD — private function without docstring
+def _helper(value: int) -> int:
+    return value * 2
+```
+
+```python
+# ❌ BAD — private method with docstring
+def _parse_config(self, path: str) -> dict:
+    """Load and parse config from path."""
+    ...
+
+# ✅ GOOD — private method without docstring
+def _parse_config(self, path: str) -> dict:
+    ...
+```
+
+Public functions and methods should still have docstrings when they are part of the module’s API.

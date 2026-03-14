@@ -1,0 +1,11 @@
+---
+description: Do not change files under ./tests unless the user explicitly asks
+globs: "tests/**"
+alwaysApply: true
+---
+
+# Do Not Change Tests Unless Instructed
+
+Do **not** add, edit, or delete files under `./tests` unless the user explicitly asks you to (e.g "add a test for X", "fix the tests", "update tests to …").
+
+When implementing features or fixes, leave the test suite unchanged. Do not "update tests to match" or add tests on your own initiative. If tests fail after your change, report the failure and suggest next steps; do not modify test code to make them pass unless the user has asked you to change tests.

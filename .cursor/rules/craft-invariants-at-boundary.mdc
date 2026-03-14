@@ -1,0 +1,17 @@
+---
+description: Enforce collection invariants in one place (e.g. override append)
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Enforce Invariants at the Boundary
+
+When a **collection** has rules (e.g. "only these items are allowed"), enforce
+them at the **boundary** — the method that changes the collection.
+
+Override `append` (or the relevant mutator) so that the rule is applied in one
+place. Callers cannot add an invalid item; the collection protects itself.
+The invariant is then visible and consistent. Example: `Params` overrides
+`append` to respect `_ignore` and param kind; only valid params enter the list.
+
+Do not scatter checks at every call site. One gate, one rule.

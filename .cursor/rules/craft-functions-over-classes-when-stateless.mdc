@@ -1,0 +1,20 @@
+---
+description: Prefer a function when there is no state or only one clear operation
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Functions When There Is No State
+
+If a routine needs **no self** and **no shared mutable state**, make it a
+**function**. Do not create a class to hold a single function.
+
+`almost_equal`, `sentence_tokenizer`, `merge_configs`, `parse_from_string` —
+each is a clear operation on its arguments. A class would add a box around
+one action without adding meaning. Functions are the right unit when the
+operation is stateless and the name is a verb or verb phrase.
+
+Use a class when you have **state** (attributes that live across calls), **multiple
+related operations** on that state, or a **type** that represents a domain
+object (Parent, Function, Config). Use a function when you have "given these
+inputs, compute this result."

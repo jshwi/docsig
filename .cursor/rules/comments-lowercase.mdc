@@ -1,0 +1,23 @@
+---
+description: Comments must be written in lower case only
+alwaysApply: true
+---
+
+# Comments: Lower Case Only
+
+Write all comments in **lower case** only. This applies to:
+
+- Inline comments (`# ...`)
+- Block comments
+
+Do not capitalize the first letter of a comment or use mid-sentence capitals except for placeholders (e.g. `TODO`, `FIXME`) or other conventional tokens if the project allows them.
+
+## Examples
+
+```python
+# ❌ BAD — capitalized
+# This function fetches the user profile
+
+# ✅ GOOD — lower case
+# this function fetches the user profile
+```

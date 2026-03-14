@@ -1,0 +1,21 @@
+---
+description: Use inheritance when subclasses share the same shape and meaning
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Inheritance for Shared Shape
+
+Use a **base class** when subclasses share the same **shape** — the same
+attributes and the same kind of responsibility — and the base name captures
+what they have in common.
+
+`Signature` and `Docstring` both have `args` and `returns`; `_Stub` is that
+common shape. The inheritance says: "these two types are the same kind of
+thing (stub of args and returns), built differently." Not inheritance for
+reuse alone, but for *meaning*: the base type is the concept; the
+subclasses are variants.
+
+When the shared part is only a few lines, prefer composition or a helper
+instead of a deep hierarchy. The codebase uses shallow trees: Parent →
+Function; _Stub → Signature, Docstring. Each level adds a clear dimension.

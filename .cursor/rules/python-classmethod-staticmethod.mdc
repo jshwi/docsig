@@ -1,0 +1,33 @@
+---
+description: Use @classmethod for factories; @staticmethod for pure helpers
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Class Method vs Static Method
+
+- **@classmethod**: Use for **alternate constructors** and **factory methods**
+  that need `cls` (e.g. `from_ast`, `from_str`, `from_text`, `parse`).
+  Return an instance of the class (or a subclass).
+- **@staticmethod**: Use for **pure helpers** that do not use `cls` or
+  `self` (e.g. `_normalize_docstring`, `_indent_anomaly`). Prefer
+  @staticmethod over a module-level function when the helper is tightly
+  tied to the class (e.g. used only by that class’s methods).
+
+Do not use @classmethod or @staticmethod when an instance method is
+appropriate (the method needs `self`).
+
+## Examples
+
+```python
+# ✅ GOOD — classmethod as factory
+@classmethod
+def from_ast(cls, node: _ast.Const) -> Docstring:
+    ...
+    return cls(...)
+
+# ✅ GOOD — staticmethod as pure helper (no cls/self)
+@staticmethod
+def _normalize_docstring(string: str) -> str:
+    return ...
+```

@@ -1,0 +1,34 @@
+---
+description: When improving docstrings, include the module docstring
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstrings: Include Module Docstring
+
+When you improve, add, or review docstrings in a Python file, **also consider the
+module docstring** (the string at the top of the file).
+
+Do not skip it by default. If the module docstring is missing or minimal (e.g.
+only a title), add or extend it with a single-sentence summary of the module’s
+purpose. **Use the format in `module-docstring-format.mdc`**: title line, `=`
+underline, blank line, then description. Apply the same docstring style rules
+(capitalisation, line length) as for functions and classes.
+
+## Example
+
+```python
+# minimal — consider improving
+"""
+mypackage._config
+================
+"""
+
+# improved — one-sentence summary of what the module does
+"""
+mypackage._config
+================
+
+Config dataclasses and loading from pyproject.toml and the CLI.
+"""
+```
