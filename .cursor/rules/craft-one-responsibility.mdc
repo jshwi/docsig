@@ -1,0 +1,19 @@
+---
+description: One clear responsibility per function or class; name states it
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# One Responsibility, One Name
+
+Give each function and class **one clear job**. Its name should state that job.
+
+The reader should understand *what this unit does* from its name alone. If you
+cannot name it without "and" or "or," split it. A function that "checks whether
+we should check a function" is `_should_check_function`. A function that "runs
+checks on a module" is `run_checks`. The name is a promise; the body fulfills it.
+
+Classes the same: `Parent` contains children; `Function` is a function with
+signature and docstring; `Failure` compiles and produces the report. No mixed
+purposes. When a class grows many concerns, extract or split so each type has
+one life, one reason to exist.

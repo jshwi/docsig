@@ -30,6 +30,7 @@ exclude: |
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
     | plugin\/vscode\/package-lock\.json
     | docs\/static\/.*
+    | \.cursor\/rules\/.*
   )$
 repos:
   - repo: local

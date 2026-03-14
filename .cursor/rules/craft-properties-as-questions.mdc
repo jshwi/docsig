@@ -1,0 +1,20 @@
+---
+description: Boolean properties read as yes/no questions; implementation answers one
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Properties as Questions
+
+Name **boolean** properties so they read as **questions**. The implementation
+answers that question, and only that question.
+
+`isprotected` — "is this protected?" `ismethod` — "is this a method?"
+`isinit` — "is this the class constructor?" Each property is one predicate.
+The reader asks the object a question; the object answers. No compound
+questions (avoid "is_valid_and_ready" — split into two properties or a
+single clear predicate).
+
+For non-boolean properties, the name should still be a noun or noun phrase
+that describes what is returned: `signature`, `docstring`, `children`.
+The property returns that thing and nothing more.

@@ -1,0 +1,17 @@
+---
+description: Python source lines must not exceed 79 characters
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Python Line Length
+
+Keep each line of **source code** to a maximum of **79 characters**.
+
+This matches `[tool.black] line-length`, `[tool.isort] line_length`, and
+`.editorconfig` `[*.py] max_line_length` for this project. Docstrings and
+comments have a separate limit (see docstring-line-length and
+comment-line-length).
+
+Wrap long statements over multiple lines. Break after binary operators,
+commas, or parentheses so that continuation lines are clearly indented.

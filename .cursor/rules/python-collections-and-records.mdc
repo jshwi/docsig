@@ -1,0 +1,33 @@
+---
+description: NamedTuple for records; subclass list/dict when adding behavior
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Collections and Record Types
+
+- **Immutable records** (fixed set of fields, no behavior): use
+  **typing.NamedTuple** or a **@dataclass(frozen=True)** with no methods.
+- **Collections with custom behavior**: subclass **list** or **dict**. In
+  `__init__`, call **super().__init__()** (and optionally pass initial
+  items). Add methods and private attributes as needed; expose via
+  @property when appropriate.
+- **Closed sets of values**: use **enum.Enum** with UPPER_CASE members.
+
+When subclassing list/dict, use generic parameters in the class definition
+(e.g. `class Failures(list["Failure"]):`, `class MessageMap(dict[int, Message]):`).
+
+## Examples
+
+```python
+# record — NamedTuple
+class Failed(NamedTuple):
+    name: str
+    lineno: int
+    hint: str | None = None
+
+# collection with behavior — subclass list, call super().__init__()
+class Failures(list["Failure"]):
+    def __init__(self) -> None:
+        super().__init__()
+```

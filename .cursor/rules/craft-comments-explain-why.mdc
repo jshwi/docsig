@@ -1,0 +1,20 @@
+---
+description: Comments explain why or non-obvious branches; code shows what
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Comments Explain Why, Not What
+
+Use comments to explain **why** something is done or to clarify a **non-obvious**
+branch. The code itself shows *what* is done.
+
+Good: "need to keep track of comments as, even though they are resolved in the
+directive object, they are needed to notify the user in the case that they
+are invalid." Good: "recurse for either class methods or, if enabled, nested
+functions." The reader learns the intent. Avoid restating the code: "loop over
+children" above a for-loop adds no value.
+
+When a block is long or the logic is subtle, a short comment that states the
+*purpose* or the *invariant* helps the next reader. Comments are for humans;
+keep them lowercase and within line length (see comment rules).

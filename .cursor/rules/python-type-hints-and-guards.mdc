@@ -1,0 +1,36 @@
+---
+description: Full type hints on functions; use early returns for guards
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Type Hints and Control Flow
+
+- **Type hints**: Annotate **all** function and method parameters and return
+  types. Use `from __future__ import annotations` when forward references or
+  long unions would otherwise be awkward.
+- **Early returns**: Use **early return** for guard clauses and error cases
+  so the main path is clear. Prefer `if not valid: return ...` over deep
+  nesting.
+- **Default mutable arguments**: Do not use mutable defaults (e.g. `def f(x=[])`).
+  Use `None` and assign in the body, or use `default_factory` in dataclasses.
+
+## Examples
+
+```python
+# ✅ GOOD — full annotations, early return
+def get_config(prog: str) -> dict[str, Any]:
+    pyproject_file = _find_pyproject_toml()
+    if pyproject_file is None:
+        return {}
+    return {...}
+
+# ❌ BAD — mutable default
+def append(item, items=[]): ...
+
+# ✅ GOOD
+def append(item: str, items: list[str] | None = None) -> None:
+    if items is None:
+        items = []
+    items.append(item)
+```

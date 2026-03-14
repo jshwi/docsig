@@ -1,0 +1,34 @@
+---
+description: Use guard clauses as a flat list of rules; avoid nested conditionals
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Guard Clauses as a List of Rules
+
+Use **early returns** so that conditions read like a **list of rules**, not a
+tree of nested ifs.
+
+The reader should see: "if not allowed: return. if not allowed: return."
+Each line is one rule. The main path stays at the end, unindented and visible.
+This makes the control flow scannable and the intent clear.
+
+## Example
+
+```python
+# ✅ GOOD — flat list of rules
+def _should_check_function(function, parent, config):
+    if function.isoverridden and not config.check.overridden:
+        return False
+    if function.isprotected and not config.check.protected:
+        return False
+    if function.isdunder and not config.check.dunders:
+        return False
+    return True
+
+# ❌ BAD — nested logic, hard to scan
+def _should_check_function(function, parent, config):
+    if not (function.isoverridden and not config.check.overridden):
+        if not (function.isprotected and not config.check.protected):
+            ...
+```

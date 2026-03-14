@@ -1,0 +1,25 @@
+---
+description: Do not escape double quotes inside triple-quoted docstrings
+alwaysApply: true
+---
+
+# Docstrings: No Escape for Double Quotes
+
+Inside a **triple-quoted** Python string (`"""..."""`), a single double quote
+`"` does **not** end the string. Only the sequence `"""` ends it.
+
+Do **not** escape double quotes in docstrings: write `"1"` not `\"1\"`.
+Escaping is unnecessary and makes the text harder to read.
+
+## Example
+
+```python
+# unnecessary
+"""Skipped when DOCSIG_DEBUG is set to \"1\"."""
+
+# correct
+"""Skipped when DOCSIG_DEBUG is set to "1"."""
+```
+
+This applies only to triple-quoted strings. Inside a single- or double-quoted
+string, escaping rules are different.
