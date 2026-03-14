@@ -143,7 +143,7 @@ E = MessageMap(
             "parameters missing",
             "params-missing",
         ),
-        #: SIG3xx Parameters
+        #: SIG3xx Description
         301: Message(
             "SIG301",
             "description missing from parameter",
@@ -170,7 +170,7 @@ E = MessageMap(
             "description does not begin with a capital letter",
             "description-not-capitalized",
         ),
-        #: SIG4xx Description
+        #: SIG4xx Parameters
         401: Message(
             "SIG401",
             "param not indented correctly",
