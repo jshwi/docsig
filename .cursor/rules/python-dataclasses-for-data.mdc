@@ -1,0 +1,36 @@
+---
+description: Use dataclasses for data-only config and option types
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Dataclasses for Data-Only Types
+
+Use **@dataclass** for types that mainly carry data (e.g. config, options)
+with typed fields and defaults.
+
+- Use **default_factory** for mutable defaults (e.g. `list`, `dict`, or
+  another dataclass): `excludes: list[str] = field(default_factory=list)`.
+- Use **frozen=True** for immutable config that should not be changed after
+  creation.
+- Keep dataclasses focused on data; put behavior in functions or methods
+  that take the dataclass as an argument.
+
+Pylint disables (e.g. too-many-instance-attributes, too-few-public-methods)
+are acceptable when the type is intentionally a data container.
+
+## Examples
+
+```python
+# ✅ GOOD — data-only config with defaults
+@dataclass
+class Check:
+    class_: bool = False
+    nested: bool = False
+
+# ✅ GOOD — immutable config, mutable defaults via factory
+@dataclass(frozen=True)
+class Config:
+    check: Check = field(default_factory=Check)
+    excludes: list[str] = field(default_factory=list)
+```

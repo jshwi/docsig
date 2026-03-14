@@ -1,0 +1,27 @@
+---
+description: Docstrings and comments are distinct; do not treat docstrings as comments
+alwaysApply: true
+---
+
+# Docstrings Are Not Comments
+
+**Docstrings** and **comments** are different:
+
+- **Comments**: `# ...` (inline) or block comments. They are ignored by the language and used only for human readers or tooling.
+- **Docstrings**: string literals (e.g. `"""..."""`) that document a module, class, or callable. They are part of the program (e.g. `__doc__`) and are used by help(), IDE hover text, and doc tools.
+
+When applying or writing rules:
+
+- Do **not** assume a rule that applies to "comments" also applies to docstrings unless the rule explicitly includes docstrings.
+- Do **not** refer to docstrings as "comments" in explanations or rule text.
+- Style or formatting rules for comments do not extend to docstrings by default; use separate rules for docstring style (e.g. capitalization, line length) if needed.
+
+## Example
+
+```python
+# this is a comment — comment rules apply here
+def fetch_user(id: int):
+    """Return the user record from the database."""  # docstring — docstring rules apply
+```
+
+A rule that says "comments must be lower case" applies to the `#` line only, not to the docstring, unless that rule explicitly states it also covers docstrings.

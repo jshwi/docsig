@@ -1,0 +1,58 @@
+---
+description: Docstring summaries and new sentences must be capitalized
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstrings: Capitalize Summary and New Sentences
+
+In docstrings, always capitalize:
+
+- The first letter of the **summary** (the first line)
+- The first letter of **each new sentence** (including after a period or in a new line/paragraph)
+
+This applies to the docstring summary and to any following sentences in the body or in section blocks.
+This does not apply to parameters definitions (e.g. :return: not :Return:) but does apply to parameter descriptions.
+
+## Examples
+
+```python
+# ❌ BAD — summary not capitalized
+def fetch_user(id: int):
+    """return the user record from the database."""
+
+# ✅ GOOD — summary capitalized
+def fetch_user(id: int):
+    """Return the user record from the database."""
+```
+
+```python
+# ❌ BAD — new sentence not capitalized
+def parse_config(path: str):
+    """Docstring summary.
+
+    Load the config from path. it also validates the schema.
+    """
+
+# ✅ GOOD — each sentence capitalized
+def parse_config(path: str):
+  """Docstring summary.
+
+  Load the config from path. It also validates the schema.
+  """
+```
+
+```python
+# ❌ BAD — new line / paragraph not capitalized
+def run():
+    """Run the main process.
+
+    this function may be called multiple times."""
+
+# ✅ GOOD — new paragraph capitalized
+def run():
+    """Run the main process.
+
+    This function may be called multiple times.
+    """
+```

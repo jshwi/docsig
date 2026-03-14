@@ -1,0 +1,20 @@
+---
+description: Give types names from the domain so the type system carries vocabulary
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Domain Types Carry the Vocabulary
+
+Name types after **concepts in the problem**, not after implementation details.
+
+`Failures` is not "list of failure dicts" — it is *failures*. `_Children` is
+*children of an object*. `Config` holds *configuration*; `Check` and `Ignore`
+are *what to check* and *what to ignore*. The type system then speaks the
+language of the domain. A function that returns `_Parent` or `Failures` or
+`Config` announces what it returns in the terms the reader cares about.
+
+Use these names consistently: the same concept should have the same type name
+across the codebase. When you introduce a new concept (e.g. "directives," "params"),
+give it a type that can live in signatures and docstrings. The code becomes
+readable as a story about the domain.

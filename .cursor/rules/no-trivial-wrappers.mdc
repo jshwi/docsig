@@ -1,0 +1,33 @@
+---
+description: Do not add functions that only wrap a single stdlib/library call with no added value
+alwaysApply: true
+---
+
+# No Trivial Wrappers
+
+Do **not** add functions whose only purpose is to call a single standard-library or library function and return its result. That replaces one call with another and improves nothing.
+
+Use the original API at the call site (or a module-level constant if you need to refer to the same object in one place).
+
+## Bad
+
+```python
+def _logger():
+    return logging.getLogger(__package__)
+
+# use _logger() everywhere instead of getLogger
+```
+
+## Good
+
+```python
+# use the API directly, or a module-level name if the same instance is used in many places
+_LOG = logging.getLogger(__package__)
+```
+
+## Allowed
+
+- Functions that add behaviour (e.g set level, add handlers, format) before/after the call.
+- Functions that choose which API to call or what arguments to pass based on logic.
+
+The rule is: if the function body only does `return some_module.some_call(...)` with no extra logic, do not add the function; use `some_module.some_call` at the call site (or a single shared name at module scope if appropriate).

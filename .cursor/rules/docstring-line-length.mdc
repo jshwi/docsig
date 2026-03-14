@@ -1,0 +1,46 @@
+---
+description: Docstring lines must not exceed 72 characters
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstring Line Length
+
+Keep each line of a docstring to a maximum of **72 characters**.
+
+Count the **entire line** as it appears in the file: leading spaces
+(indent), the opening or closing `"""` when on the same line, and the
+text in between. It is not just the quoted content; the full line length
+must be ≤ 72.
+
+Wrap long lines onto the next line so no line exceeds 72. This applies
+to the summary, body, and any section blocks (e.g. :param:, :return:).
+After editing docstrings, verify every line inside each `"""..."""` block
+with `len(line.rstrip('\n')) <= 72`.
+
+## Examples
+
+```python
+# ❌ BAD — line exceeds 72 characters
+def fetch_user(id: int):
+    """Return the user record from the database by primary key as a User instance or None if found."""
+
+# ✅ GOOD — within 72 characters
+def fetch_user(id: int):
+    """Return the user record from the database by primary key."""
+```
+
+```python
+# ❌ BAD — param description too long
+def run(path: Path):
+    """Run the checker.
+    :param path: Path to the directory or file to check for docstrings.
+    """
+
+# ✅ GOOD — wrapped
+def run(path: Path):
+    """Run the checker.
+    :param path: Path to the directory or file to check for
+        docstrings.
+    """
+```

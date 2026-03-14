@@ -1,0 +1,33 @@
+---
+description: Docstring summaries must be a single sentence
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstring Summary: Single Sentence Only
+
+The first line (summary) of a docstring must be exactly one sentence. Do not use a period in the middle of the summary; use one clear sentence and end it with a period.
+
+Additional paragraphs or sections (e.g. `args:`, `returns:`) may follow the summary on subsequent lines.
+
+## Examples
+
+```python
+# ❌ BAD — two sentences in the summary
+def fetch_user(id: int):
+    """Retrieve the user record from the database. Return it as a User instance."""
+
+# ✅ GOOD — single sentence summary
+def fetch_user(id: int):
+    """Return the user record from the database as a User instance."""
+```
+
+```python
+# ❌ BAD — summary contains multiple sentences
+def parse_config(path: str):
+    """Load the config file from path. It also validates the schema."""
+
+# ✅ GOOD — one sentence; more detail can go in following paragraphs
+def parse_config(path: str):
+    """Load and validate the config file from the given path."""
+```

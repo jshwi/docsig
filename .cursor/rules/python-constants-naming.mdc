@@ -1,0 +1,13 @@
+---
+description: Module-level constants use UPPER_SNAKE_CASE
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Python Constants Naming
+
+Use **UPPER_SNAKE_CASE** for module-level constants (including public and
+private): e.g. `PYPROJECT_TOML`, `FILE_INFO`, `_DEFAULT_EXCLUDES`.
+
+This matches the style used in `_config.py`, `_files.py`, `messages.py`, and
+`_stub.py`.
