@@ -8,22 +8,17 @@ Entry point and orchestration for running docstring/signature checks.
 from __future__ import annotations as _
 
 import logging as _logging
-import os as _os
 import sys as _sys
 from pathlib import Path as _Path
-
-import astroid as _ast
 
 from . import _decorators
 from ._check import run_checks as _run_checks
 from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Ignore as _Ignore
-from ._directives import Directives as _Directives
-from ._files import FILE_INFO as _FILE_INFO
 from ._files import Files as _Files
-from ._module import Error as _Error
-from ._module import Parent as _Parent
+from ._parsers import parse_from_file as _parse_from_file
+from ._parsers import parse_from_string as _parse_from_string
 from ._report import Failures as _Failures
 from ._report import report as _report
 from ._utils import print_checks as _print_checks
@@ -43,48 +38,6 @@ def setup_logger(verbose: bool) -> None:
     if not logger.handlers:
         stream_handler = _logging.StreamHandler(_sys.stdout)
         logger.addHandler(stream_handler)
-
-
-def _parse_from_string(
-    code: str,
-    config: _Config,
-    module_name: str = "",
-    file: _Path | None = None,
-) -> _Parent:
-    logger = _logging.getLogger(__package__)
-    source_name = file or "stdin"
-    try:
-        node = _ast.parse(code, module_name, str(file))
-        directives = _Directives.from_text(code, config.disable)
-        parent = _Parent(
-            node,
-            directives,
-            file,
-            config,
-        )
-        msg = "parsing python code successful"
-    except _ast.AstroidSyntaxError as err:
-        parent = _Parent(error=_Error.SYNTAX)
-        msg = str(err).replace("\n", " ").lower()
-
-    logger.debug(_FILE_INFO, source_name, msg)
-    return parent
-
-
-def _parse_from_file(file: _Path, config: _Config) -> _Parent:
-    try:
-        code = file.read_text(encoding="utf-8")
-        module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
-        parent = _parse_from_string(code, config, module_name, file)
-    except UnicodeDecodeError as err:
-        logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.UNICODE)
-
-    if parent.error is not None and not file.name.endswith(".py"):
-        parent = _Parent()
-
-    return parent
 
 
 def runner(file: _Path, config: _Config) -> _Failures:
