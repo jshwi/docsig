@@ -1,0 +1,22 @@
+---
+description: Internal Python modules use leading-underscore import aliasing
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Python Import Aliasing
+
+In **internal** package modules (any `docsig` module except `__init__.py`):
+
+- Alias stdlib and third-party imports with a leading underscore:
+  `import logging as _logging`, `from pathlib import Path as _Path`.
+- Alias same-package imports with a leading underscore:
+  `from ._config import Config as _Config`, `from .messages import E as _E`.
+- Use `from __future__ import annotations as _` when using type annotations.
+
+In **`__init__.py`** (public API surface), do **not** use underscore aliasing
+for re-exports: use `from ._core import docsig` and `from . import messages`
+so that public names appear without a `_` prefix.
+
+This keeps the module namespace clean and makes it obvious which names are
+internal to the implementation.

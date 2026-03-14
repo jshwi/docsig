@@ -1,0 +1,34 @@
+---
+description: Do not add functions that only pass arguments through to class constructors
+alwaysApply: true
+---
+
+# No Passthrough Constructor Functions
+
+Do **not** introduce functions whose only purpose is to accept arguments and pass them straight through to a class constructor. The classes exist to structure and receive those arguments; a wrapper function adds verbosity and no value.
+
+Call the class directly at the call site instead of routing through an extra function.
+
+## Bad
+
+```python
+def _build_config(path: Path, strict: bool) -> Config:
+    return Config(path=path, strict=strict)
+
+# elsewhere
+config = _build_config(path, strict)
+```
+
+## Good
+
+```python
+# use the class directly
+config = Config(path=path, strict=strict)
+```
+
+## Allowed
+
+- Functions that actually build or derive values before constructing (e.g load from file, merge defaults, validate).
+- Factory functions that choose which class to instantiate or how to construct it based on logic.
+
+The rule is: if the function body is only `return SomeClass(...)` with the same arguments it received, delete the function and construct the class at the call site.

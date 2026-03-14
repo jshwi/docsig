@@ -1,0 +1,22 @@
+---
+description: Comments have no full stops; each new sentence starts on a new line
+alwaysApply: true
+---
+
+# Comments: No Full Stops, New Line Per Sentence
+
+- **No full stops**: Do not use periods (`.`) in comments.
+- **One sentence per line**: Start each new sentence or clause on its own line.
+
+This applies to inline comments (`# ...`) and block comments.
+
+## Examples
+
+```python
+# ❌ BAD — full stops and multiple sentences on one line
+# Fetch the user. Return None if not found.
+
+# ✅ GOOD — no full stops, new sentence on new line
+# fetch the user
+# return None if not found
+```

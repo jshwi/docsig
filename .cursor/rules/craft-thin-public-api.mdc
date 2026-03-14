@@ -1,0 +1,19 @@
+---
+description: Keep public functions thin; put complexity in named helpers
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Thin Public API, Rich Internals
+
+**Public** entry points should be thin: build inputs, call helpers, return.
+
+The caller sees a simple contract (e.g. `run_checks(module, config) ->
+Failures`). The complexity lives in **named** helpers (`_run_check`,
+`_should_check_function`). The reader can read the public function in one
+pass and then dive into a helper by name when they need the detail.
+
+Avoid putting long loops or many branches in the same function that is the
+public face. Extract a step into a function whose name describes the step.
+The top level then reads like a table of contents; the helpers are the
+chapters.
