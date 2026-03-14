@@ -1,0 +1,20 @@
+---
+description: After editing docstrings, always run make lint
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstrings: Run Lint After Edit
+
+When you **add, change, or remove** any docstring in a Python file, **always**
+run the project linter afterwards:
+
+```bash
+make lint
+```
+
+Run it from the project root. Do not skip this step. Fix any lint failures
+before considering the change complete.
+
+This applies to module docstrings, function and method docstrings, and class
+docstrings.

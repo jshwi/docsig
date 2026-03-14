@@ -1,0 +1,35 @@
+---
+description: Store instance state in private attributes; expose via @property
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Instance Attributes: Private Storage, Property API
+
+Store instance state in **private** attributes (e.g. `self._name`, `self._children`).
+Expose a public API via **@property** (e.g. `def name(self) -> str: return self._name`).
+
+Do not assign to public instance attributes (e.g. `self.name = ...`) for the
+package’s own types. Exception: when implementing an external interface (e.g.
+a flake8 plugin) that requires specific attribute names.
+
+## Examples
+
+```python
+# ❌ BAD — public instance attribute for internal state
+class Node:
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+# ✅ GOOD — private attribute, property for API
+class Node:
+    def __init__(self, name: str) -> None:
+        self._name = name
+
+    @property
+    def name(self) -> str:
+        return self._name
+```
+
+When inheriting, call `super().__init__()` and set `self._attr` in `__init__`;
+expose only what callers need via `@property`.

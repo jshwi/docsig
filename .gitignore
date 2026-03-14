@@ -1,11 +1,11 @@
 *build/
-*coverage*
 *venv
 .DS_Store
 .benchmarks/
 .env
 .make/
 .tox
+/*coverage*
 __pycache__/
 bin
 dist/

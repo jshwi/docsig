@@ -25,6 +25,7 @@ exclude: |
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
     | \.vscode/.*
     | docs\/static\/.*
+    | \.cursor\/rules\/.*
   )$
 repos:
   - repo: local
