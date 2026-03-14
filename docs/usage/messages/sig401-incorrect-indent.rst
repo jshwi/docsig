@@ -23,7 +23,7 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
     1
 
 .. code-block:: python
@@ -40,7 +40,7 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
     1
 
 .. code-block:: python
@@ -59,5 +59,5 @@ Param not indented correctly
 
     >>> docsig(string=string, no_ansi=True)
     2 in function
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
     1
