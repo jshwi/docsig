@@ -23,16 +23,13 @@ from ._stub import Signature as _Signature
 from .messages import Messages as _Messages
 
 
-class _Imports(dict[str, str]):
-    """Represents python imports."""
+class _Imports(dict[str, str]): ...
 
 
-class _Overloads(dict[str, "Function"]):
-    """Represents overloaded methods."""
+class _Overloads(dict[str, "Function"]): ...
 
 
-class _Children(list[_t.Union["Parent", "Function"]]):
-    """Represents children of an object."""
+class _Children(list[_t.Union["Parent", "Function"]]): ...
 
 
 class Error(_Enum):
