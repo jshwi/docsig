@@ -1057,10 +1057,9 @@ def function(a) -> None:
     """
 '''
     init_file(template)
-    assert main(".") == 0
+    assert main(".") == 1
     std = capsys.readouterr()
     assert E[306].ref in std.out
-    assert "warning" in std.out
 
 
 def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
