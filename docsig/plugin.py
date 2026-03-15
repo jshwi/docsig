@@ -195,6 +195,9 @@ class Docsig:
             )
             results = runner(Path(self.filename), config)
             for result in results:
+                if not result.retcode:
+                    continue
+
                 for info in result:
                     line = "{msg} '{name}'".format(
                         msg=FLAKE8.format(

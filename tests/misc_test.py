@@ -14,13 +14,14 @@ from pathlib import Path
 import pytest
 from templatest import templates
 
-from docsig import docsig
+import docsig
+from docsig import docsig as _docsig
 
 # noinspection PyProtectedMember
 from docsig._utils import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
-from docsig.messages import E
+from docsig.messages import E, Message
 
 from . import (
     CHECK_ARGS,
@@ -80,7 +81,7 @@ def test_class_and_class_constructor(
 
 def test_class_and_class_constructor_in_interpreter() -> None:
     """Test that docsig errors when passed incompatible options."""
-    assert docsig(
+    assert _docsig(
         string="def function(): pass",
         check_class=True,
         check_class_constructor=True,
@@ -305,7 +306,7 @@ def test_str_path_via_api() -> None:
 
         AttributeError: 'str' object has no attribute 'exists'
     """
-    docsig(".")
+    _docsig(".")
 
 
 def test_no_duplicate_codes() -> None:
@@ -420,11 +421,11 @@ def function(a, b) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    docsig(string=template)
+    _docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" in std.out
     monkeypatch.setattr("sys.stdout.isatty", lambda: False)
-    docsig(string=template)
+    _docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" not in std.out
 
@@ -958,3 +959,37 @@ def function(a, b) -> None:
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
         main(".", "-cDmNopPiI", test_flake8=False)
+
+
+def test_new_violation(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test new violations that don't fail pipeline yet.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = """
+def function(a, b, c) -> None:
+    pass
+"""
+    monkeypatch.setitem(
+        docsig.messages.E,
+        101,
+        Message(
+            "SIG101",
+            "function is missing a docstring",
+            "function-doc-missing",
+            new=True,
+        ),
+    )
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[101].ref in std.out
+    assert "warning" in std.out

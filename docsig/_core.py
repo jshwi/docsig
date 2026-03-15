@@ -13,6 +13,7 @@ import sys as _sys
 import typing as _t
 import warnings as _warnings
 from pathlib import Path as _Path
+from warnings import warn as _warn
 
 import astroid as _ast
 
@@ -29,6 +30,7 @@ from ._module import Parent as _Parent
 from ._report import Failure as _Failure
 from ._report import Failures as _Failures
 from ._utils import print_checks as _print_checks
+from .messages import NEW as _NEW
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 from .messages import Messages as _Messages
@@ -194,6 +196,14 @@ def _report(
 
         print(header)
         for item in failure:
+            extra = None
+            if item.hint:
+                extra = f"hint: {item.hint}"
+
+            if item.new:
+                extra = "warning: please remember to fix this or disable it"
+                _warn(_NEW.format(ref=item.ref), FutureWarning, stacklevel=2)
+
             print(
                 "    "
                 + _TEMPLATE.format(
@@ -202,8 +212,8 @@ def _report(
                     symbolic=item.symbolic,
                 ),
             )
-            if item.hint:
-                print(f"    hint: {item.hint}")
+            if extra is not None:
+                print(f"    {extra}")
 
     return max(retcodes)
 

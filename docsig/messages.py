@@ -19,6 +19,10 @@ TEMPLATE = "{ref}: {description} ({symbolic})"
 #: Flake8 template to format message strings.
 FLAKE8 = "{ref} {description} ({symbolic})"
 
+NEW = """\
+{ref} is a new violation and will error in a future version\
+"""
+
 
 class Message(_t.NamedTuple):
     """One docstring-check error (ref, description, symbolic, hint)."""
@@ -35,6 +39,9 @@ class Message(_t.NamedTuple):
     #: A hint, if any, suggesting why the error may have occurred.
     hint: _t.Optional[str] = None
 
+    #: Whether this message is a new addition.
+    new: bool = False
+
     @property
     def isknown(self) -> bool:
         """True if ref is a known code, else False (typo or missing)."""
@@ -48,6 +55,7 @@ class Message(_t.NamedTuple):
         :param template: Format string with ref, description, symbolic.
         :return: Formatted string.
         """
+        template = f"W {template}" if self.new else template
         return template.format(
             ref=self.ref,
             description=self.description,
