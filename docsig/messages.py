@@ -190,7 +190,6 @@ E = MessageMap(
             "SIG306",
             "description does not end in a period",
             "description-missing-period",
-            new=True,
         ),
         #: SIG4xx Parameters
         401: Message(
