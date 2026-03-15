@@ -179,6 +179,12 @@ E = MessageMap(
             "description does not begin with a capital letter",
             "description-not-capitalized",
         ),
+        306: Message(
+            "SIG306",
+            "description does not end in a period",
+            "description-missing-period",
+            new=True,
+        ),
         #: SIG4xx Parameters
         401: Message(
             "SIG401",
