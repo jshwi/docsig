@@ -219,9 +219,9 @@ class Failure(_t.List[Failed]):
             # bad-closing-token
             self._add(_E[304], token=doc.closing_token, hint=True)
         if doc.description is not None and not all(
-            i.strip()[0].isupper()
+            stripped[0].isupper()
             for i in _sentence_tokenizer(doc.description)
-            if i and not any(i.startswith(x) for x in (":", ".", "`"))
+            if i and (stripped := i.strip())[0].isalpha()
         ):
             # description is not capitalized
             self._add(_E[305])
