@@ -756,6 +756,30 @@ def function(a) -> None:
     assert E[305].ref in std.out
 
 
+def test_enforce_capitalisation_should_not_after_nonalpha(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test enforce capitalisation after nonalpha character.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialise a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a=False) -> None:
+    """Docstring summary.
+
+    :param a: (Optional) Description of a.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out
+
+
 def test_enforce_capitalisation_should_not_591(
     init_file: FixtureInitFile,
     main: FixtureMain,
