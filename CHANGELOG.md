@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.80.1](https://github.com/jshwi/docsig/tree/v0.80.1) - 2026-03-16
+
+### Fixed
+
+- skip nonalpha characters ([#755](https://github.com/jshwi/docsig/issues/755))
+
 ## [0.80.0](https://github.com/jshwi/docsig/tree/v0.80.0) - 2026-03-07
 
 ### Deprecated
