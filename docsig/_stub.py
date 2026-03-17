@@ -218,9 +218,13 @@ class Params(list[Param]):
 
 
 class _Stub:
-    def __init__(self, ignore: _Ignore | None = None) -> None:
+    def __init__(
+        self,
+        ignore: _Ignore | None = None,
+        returns: bool = False,
+    ) -> None:
         self._args = Params(ignore or _Ignore())
-        self._returns = False
+        self._returns = returns
 
     @property
     def args(self) -> Params:
@@ -247,9 +251,8 @@ class Signature(_Stub):
         returns: bool = False,
         ignore: _Ignore | None = None,
     ) -> None:
-        super().__init__(ignore or _Ignore())
+        super().__init__(ignore or _Ignore(), returns)
         self._rettype = rettype
-        self._returns = returns
 
     @classmethod
     def from_ast(
@@ -348,9 +351,8 @@ class Docstring(_Stub):
         returns: bool = False,
         ret_description_missing: bool = False,
     ) -> None:
-        super().__init__()
+        super().__init__(returns=returns)
         self._string = string
-        self._returns = returns
         self._ret_description_missing = ret_description_missing
 
     @classmethod
