@@ -3,7 +3,7 @@ tests.misc_test
 ===============
 """
 
-# pylint: disable=protected-access
+# pylint: disable=protected-access,too-many-lines
 from __future__ import annotations
 
 import io
@@ -983,3 +983,20 @@ def function(a, b) -> None:
     make_tree({"module": {"file.py": [template]}})
     with pytest.warns(FutureWarning):
         main(".", "-cDmNopPiI", test_flake8=False)
+
+
+def test_ignore_no_params(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test ignore no params.
+
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a=False) -> None:
+    """Docstring summary."""
+'''
+    init_file(template)
+    assert main(".", "--ignore-no-params") == 0
