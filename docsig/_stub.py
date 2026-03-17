@@ -370,10 +370,7 @@ class Docstring(_Stub):
             _re.IGNORECASE,
         )
         returns = bool(match)
-        ret_description_missing = False
-        if match:
-            ret_description_missing = not match.group(1)
-
+        ret_description_missing = not match or not match.group(1)
         docstring = cls(string, returns, ret_description_missing)
         for match in _re.findall(
             r":([\w\s]+(?:\s\|\s[\w\s]+|\w+))([^\w\s])((?:.|\n)*?)(?=\n:|$)",
