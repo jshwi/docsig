@@ -9,6 +9,7 @@ from __future__ import annotations as _
 
 import re as _re
 import textwrap as _textwrap
+import typing as _t
 from collections import Counter as _Counter
 from enum import Enum as _Enum
 
@@ -80,8 +81,6 @@ class DocType(_Enum):
         return cls.UNKNOWN
 
 
-# todo: consider a parent object that can be used for returns that do
-# todo: not include the name attribute
 class Param:
     """Single parameter from a docstring or function signature.
 
@@ -152,6 +151,13 @@ class Param:
         return self._closing_token
 
 
+# single return from a docstring or function signature
+class _Return(_t.NamedTuple):
+    returns: bool = False
+    type: RetType = RetType.UNTYPED
+    description_missing: bool = False
+
+
 class Params(list[Param]):
     """A list-like collection of params.
 
@@ -220,11 +226,11 @@ class Params(list[Param]):
 class _Stub:
     def __init__(
         self,
+        returns: _Return | None = None,
         ignore: _Ignore | None = None,
-        returns: bool = False,
     ) -> None:
         self._args = Params(ignore or _Ignore())
-        self._returns = returns
+        self._returns = returns or _Return()
 
     @property
     def args(self) -> Params:
@@ -232,7 +238,7 @@ class _Stub:
         return self._args
 
     @property
-    def returns(self) -> bool:
+    def returns(self) -> _Return:
         """True if a return (or yield) is declared or documented."""
         return self._returns
 
@@ -240,19 +246,16 @@ class _Stub:
 class Signature(_Stub):
     """Parsed function signature (args and return type).
 
-    :param rettype: Kind of return (none, some, untyped).
     :param returns: True if return is declared in the signature.
     :param ignore: Configuration object for what to ignore.
     """
 
     def __init__(
         self,
-        rettype: RetType = RetType.NONE,
-        returns: bool = False,
+        returns: _Return | None = None,
         ignore: _Ignore | None = None,
     ) -> None:
-        super().__init__(ignore or _Ignore(), returns)
-        self._rettype = rettype
+        super().__init__(returns, ignore or _Ignore())
 
     @classmethod
     def from_ast(
@@ -267,8 +270,8 @@ class Signature(_Stub):
         :return: Signature with args and return type.
         """
         rettype = RetType.from_ast(node.returns)
-        returns = rettype == RetType.SOME
-        signature = cls(rettype, returns, ignore)
+        returns = _Return(rettype == RetType.SOME, rettype)
+        signature = cls(returns, ignore)
         # noinspection PyUnresolvedReferences
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)
@@ -285,18 +288,12 @@ class Signature(_Stub):
 
         return signature
 
-    @property
-    def rettype(self) -> RetType:
-        """Return annotation kind (none, some, or untyped)."""
-        return self._rettype
-
     def overload(self, rettype: RetType) -> None:
         """Set this signature's return type (for overloads).
 
         :param rettype: Return type for the overloaded variant.
         """
-        self._rettype = rettype
-        self._returns = rettype != RetType.NONE
+        self._returns = _Return(rettype != RetType.NONE, rettype)
 
 
 class Docstring(_Stub):
@@ -304,7 +301,6 @@ class Docstring(_Stub):
 
     :param string: Raw docstring text after normalization.
     :param returns: True if a return or yield section is present.
-    :param ret_description_missing: True if return has no description.
     """
 
     @staticmethod
@@ -348,12 +344,10 @@ class Docstring(_Stub):
     def __init__(
         self,
         string: str | None = None,
-        returns: bool = False,
-        ret_description_missing: bool = False,
+        returns: _Return | None = None,
     ) -> None:
-        super().__init__(returns=returns)
+        super().__init__(returns)
         self._string = string
-        self._ret_description_missing = ret_description_missing
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
@@ -364,16 +358,16 @@ class Docstring(_Stub):
         """
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
-        # todo: we can start building return objects for more detailed
-        # todo: checks that are in common with the params class
         match = _re.search(
             r":(?:returns?|yields?):\s*(.*)",
             string,
             _re.IGNORECASE,
         )
-        returns = bool(match)
-        ret_description_missing = not match or not match.group(1)
-        docstring = cls(string, returns, ret_description_missing)
+        returns = _Return(
+            bool(match),
+            description_missing=not match or not match.group(1),
+        )
+        docstring = cls(string, returns)
         for match in _re.findall(
             r":([\w\s]+(?:\s\|\s[\w\s]+|\w+))([^\w\s])((?:.|\n)*?)(?=\n:|$)",
             string,
@@ -404,9 +398,8 @@ class Docstring(_Stub):
 
         Used when the function has a docstring but documents nothing.
         """
-        return self._string is not None and not self._args and not self.returns
-
-    @property
-    def ret_description_missing(self) -> bool:
-        """True if a return section exists but has no description."""
-        return self._ret_description_missing
+        return (
+            self._string is not None
+            and not self._args
+            and not self.returns.returns
+        )

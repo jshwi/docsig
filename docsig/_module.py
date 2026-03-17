@@ -127,14 +127,18 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     if func.isoverloaded:
                         if (
                             func.name not in self._overloads
-                            or self._overloads[func.name].signature.rettype
+                            or self._overloads[
+                                func.name
+                            ].signature.returns.type
                             == _RetType.NONE
                         ):
                             self._overloads[func.name] = func
                     else:
                         if func.name in self._overloads:
                             func.overload(
-                                self._overloads[func.name].signature.rettype,
+                                self._overloads[
+                                    func.name
+                                ].signature.returns.type,
                             )
 
                         self._children.append(func)

@@ -288,18 +288,18 @@ class Failure(list[Failed]):
             self._func.isproperty and not check_property_returns
         ):
             # no types, cannot know either way
-            if self._func.signature.rettype == _RetType.UNTYPED:
+            if self._func.signature.returns.type == _RetType.UNTYPED:
                 # confirm-return-needed
                 self._add(_E[501], hint=True)
             # return-type is none, so no return should be documented
-            elif self._func.docstring.returns:
-                if self._func.signature.rettype == _RetType.NONE:
+            elif self._func.docstring.returns.returns:
+                if self._func.signature.returns.type == _RetType.NONE:
                     # return-documented-for-none
                     self._add(_E[502])
-                if self._func.docstring.ret_description_missing:
+                if self._func.docstring.returns.description_missing:
                     self._add(_E[506])
             # return-type is some, so return should be documented
-            elif self._func.signature.returns:
+            elif self._func.signature.returns.returns:
                 # return-missing
                 lines = str(self._func.docstring.string).splitlines()
                 self._add(
@@ -310,7 +310,7 @@ class Failure(list[Failed]):
                         and ":param" not in lines[-1]
                     ),
                 )
-        elif self._func.docstring.returns:
+        elif self._func.docstring.returns.returns:
             # this method is init, so no return should be documented
             if self._func.isinit:
                 # class-return-documented
