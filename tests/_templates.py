@@ -1250,7 +1250,6 @@ class Klass:
     # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
-        return None
 '''
 
     @property
@@ -2008,7 +2007,6 @@ class Klass:
     @property
     def method(self) -> int:
         """Docstring summary."""
-        return self._method
 '''
 
     @property
@@ -4399,10 +4397,6 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
     :param b: Description of b.
     :returns: Return description.
     """
-    try:
-        return seq[index]
-    except IndexError:
-        return None
 '''
 
     @property
