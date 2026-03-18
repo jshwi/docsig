@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 from templatest import templates
 
-from docsig import docsig
+from docsig import docsig as _docsig
 
 # noinspection PyProtectedMember
 from docsig._utils import pretty_print_error
@@ -81,7 +81,7 @@ def test_class_and_class_constructor(
 def test_class_and_class_constructor_in_interpreter() -> None:
     """Test that docsig errors when passed incompatible options."""
     assert (
-        docsig(
+        _docsig(
             string="def function(): pass",
             check_class=True,
             check_class_constructor=True,
@@ -306,7 +306,7 @@ def test_str_path_via_api() -> None:
 
         AttributeError: 'str' object has no attribute 'exists'
     """
-    docsig(".")
+    _docsig(".")
 
 
 def test_no_duplicate_codes() -> None:
@@ -421,11 +421,11 @@ def function(a, b) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    docsig(string=template)
+    _docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" in std.out
     monkeypatch.setattr("sys.stdout.isatty", lambda: False)
-    docsig(string=template)
+    _docsig(string=template)
     std = capsys.readouterr()
     assert "\033[35m" not in std.out
 
