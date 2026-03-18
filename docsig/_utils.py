@@ -1,6 +1,8 @@
 """
 docsig._utils
 =============
+
+Shared helpers.
 """
 
 from __future__ import annotations as _
@@ -15,14 +17,15 @@ from .messages import E as _E
 
 
 def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
-    """Show the result for more than the min but less than the max.
+    """Return True if the strings are equal or ratio in (mini, maxi).
 
-    :param str1: String one to compare with string two.
-    :param str2: String two to compare with string one.
-    :param mini: Minimum difference allowed between two strings.
-    :param maxi: Maximum difference allowed to be considered almost
-        equal.
-    :return: Boolean result for whether both strings are almost equal.
+    Uses SequenceMatcher ratio; exact match always returns True.
+
+    :param str1: First string.
+    :param str2: Second string.
+    :param mini: Lower bound on ratio (exclusive) when not equal.
+    :param maxi: Upper bound on ratio (exclusive) when not equal.
+    :return: True when equal or mini < ratio < maxi.
     """
     return (str1 == str2) or mini < _SequenceMatcher(
         a=str1,
@@ -35,11 +38,11 @@ def pretty_print_error(
     msg: str,
     no_ansi: bool,
 ) -> None:
-    """Print user-friendly exception.
+    """Print exception type and message to stderr (ANSI color if tty).
 
-    :param exception_type: Type of the exception.
-    :param msg: The exception message.
-    :param no_ansi: Whether to disable ANSI escape codes.
+    :param exception_type: Exception class.
+    :param msg: Exception message.
+    :param no_ansi: If True, do not use ANSI escape codes.
     """
     exception_type_name = exception_type.__name__
     if not no_ansi and _sys.stdout.isatty():
@@ -49,7 +52,10 @@ def pretty_print_error(
 
 
 def print_checks() -> None:
-    """Print all available checks."""
+    """Print all available docstring-check codes and descriptions.
+
+    Output goes to stdout.
+    """
     for msg in _E.values():
         print(msg.fstring(_TEMPLATE))
 
@@ -74,10 +80,13 @@ def has_bad_return(string: str) -> bool:
 
 
 def sentence_tokenizer(text: str) -> list[str]:
-    """Split text into sentences.
+    """Split text on sentence boundaries, skipping common abbreviations.
 
-    :param text: Text to split.
-    :return: List of sentences.
+    Splits on . ! ? followed by whitespace; treats abbreviations such as
+    e.g. and i.e. as non-boundaries.
+
+    :param text: Input string.
+    :return: Non-overlapping sentence strings in order.
     """
     abbreviations = {"e.g.", "i.e.", "mr.", "dr.", "vs.", "etc.", "u.s."}
     result = []

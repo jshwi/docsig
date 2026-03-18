@@ -17,7 +17,10 @@ _WrappedFuncType = _t.Callable[..., _t.Union[str, int]]
 
 
 def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
-    """Parse error codes or symbolic messages into message objects.
+    """Convert disable and target kwargs to message objects.
+
+    The wrapped function receives kwargs with disable and target as
+    Message lists instead of raw strings.
 
     :param func: Function to wrap.
     :return: Wrapped function.
@@ -35,7 +38,14 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
 
 
 def validate_args(func: _FuncType) -> _WrappedFuncType:
-    """Confirm args passed to the function are valid.
+    """Validate arguments before calling the wrapped function.
+
+    If path or string is missing, or disable and target options are
+    unknown, or mutually exclusive options are set, return an error
+    string instead of calling the function.
+
+    Argparse is not sufficient if there is an issue with the
+    pyproject.toml file or the API is used incorrectly.
 
     :param func: Function to wrap.
     :return: Wrapped function.

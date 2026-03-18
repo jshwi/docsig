@@ -1,6 +1,8 @@
 """
 docsig._config
 ==============
+
+Config dataclasses, pyproject.toml loader, and commandline.
 """
 
 from __future__ import annotations as _
@@ -42,10 +44,10 @@ def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
 
 
 def get_config(prog: str) -> dict[str, _t.Any]:
-    """Get the config object from the package's tool section the config.
+    """Return the program's tool-section config from pyproject.toml.
 
     :param prog: Program name.
-    :return: Config dict.
+    :return: Config dict, or empty dict if no config is found.
     """
     pyproject_file = _find_pyproject_toml()
     if pyproject_file is None:
@@ -64,11 +66,14 @@ def merge_configs(
     obj1: dict[str, _t.Any],
     obj2: dict[str, _t.Any],
 ) -> dict[str, _t.Any]:
-    """Merge two config dicts.
+    """Merge the second config dict into the first and return the first.
 
-    :param obj1: Config dict one.
-    :param obj2: Config dict two.
-    :return: Config dict.
+    List values in obj2 are added to lists in obj1; other keys are
+    overridden.
+
+    :param obj1: Base config dict (modified in place).
+    :param obj2: Overrides and extra keys to merge in.
+    :return: The merged dict (same object as obj1).
     """
     for key, n_val in obj1.items():
         c_val = obj2.get(key)
@@ -93,10 +98,10 @@ class _ArgumentParser(_argparse.ArgumentParser):
 
 
 def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
-    """Parse commandline arguments.
+    """Parse CLI arguments and merge in config from pyproject.toml.
 
-    :param args: Args for manual parsing.
-    :return: Parsed arguments.
+    :param args: Argument list to parse (defaults to sys.argv).
+    :return: Parsed namespace with config merged in.
     """
     parser = _ArgumentParser(
         description="Check signature params for proper documentation",
@@ -306,11 +311,10 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
 @_dataclass
 # pylint: disable-next=too-many-instance-attributes,too-few-public-methods
 class Check:
-    """Configuration for what to check.
+    """Configuration for which docstrings and members to check.
 
-    :param class: Check class docstrings.
-    :param class_constructor: Check ``__init__`` methods. Note
-        that this is mutually incompatible with check_class.
+    :param class_: Check class docstrings.
+    :param class_constructor: Check ``__init__`` methods.
     :param dunders: Check dunder methods.
     :param nested: Check nested functions and classes.
     :param overridden: Check overridden methods.
@@ -333,12 +337,12 @@ class Check:
 @_dataclass
 # pylint: disable-next=too-few-public-methods
 class Ignore:
-    """Configuration for what to ignore.
+    """Configuration for which docstring elements to ignore.
 
     :param no_params: Ignore docstrings where parameters are not
         documented.
-    :param args: Ignore args prefixed with an asterisk.
-    :param kwargs: Ignore kwargs prefixed with two asterisks.
+    :param args: Ignore *args in parameter documentation.
+    :param kwargs: Ignore **kwargs in parameter documentation.
     """
 
     no_params: bool = False
@@ -351,7 +355,7 @@ class Ignore:
 class Config:
     """Internal run configuration for docsig.
 
-    Groups check/ignore settings and run options, so the core runner
+    Groups check, ignore settings, and run options so the core runner
     takes a single config object instead of many parameters.
     """
 

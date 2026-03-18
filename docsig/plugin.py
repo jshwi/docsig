@@ -1,4 +1,10 @@
-"""Flake8 implementation of docsig."""
+"""
+docsig.plugin
+=============
+
+Flake8 plugin entry point that runs docsig checks and reports as flake8
+errors.
+"""
 
 import ast
 import os
@@ -21,10 +27,11 @@ sys.path.append(os.path.abspath(os.getcwd()))
 
 
 class Docsig:
-    """Flake8 implementation of docsig class.
+    """Plugin that runs docsig on a file and yields flake8 errors.
 
-    :param tree: Ast module, which is not used by flake8.
-    :param filename: Filename to pass to docsig.
+    :param tree: Parsed AST module (unused; flake8 requires it for the
+        API).
+    :param filename: Path to the file to check.
     """
 
     off_by_default = False
@@ -42,9 +49,9 @@ class Docsig:
     # requirement for this package
     @classmethod
     def add_options(cls, parser: t.Any) -> None:
-        """Add flake8 commandline and config options.
+        """Register CLI and config opts with the flake8 option parser.
 
-        :param parser: Flake8 option manager.
+        :param parser: Flake8 option manager to extend.
         """
         parser.add_option(
             "--sig-check-class",
@@ -127,9 +134,9 @@ class Docsig:
 
     @classmethod
     def parse_options(cls, a: Namespace) -> None:
-        """Parse flake8 options into an instance-accessible dict.
+        """Merge parsed options with pyproject config into class state.
 
-        :param a: Argparse namespace.
+        :param a: Argparse namespace from flake8.
         """
         if getattr(a, "sig_ignore_typechecker", False):
             a.extend_ignore = list(a.extend_ignore or [])
@@ -146,9 +153,14 @@ class Docsig:
         )
 
     def run(self) -> t.Generator[Flake8Error, None, None]:
-        """Run docsig and possibly yield a flake8 error.
+        """Run docsig on the file and yield flake8 errors per failure.
 
-        :return: Flake8 error, if there is one.
+        If both class and class-constructor checks are enabled,
+        yield one error and return, otherwise run checks with current
+        config and yield one (line, col, message, checker_class) per
+        failure.
+
+        :return: Generator of flake8-style error tuples.
         """
         if self.a.check_class and self.a.check_class_constructor:
             line = "{msg}".format(

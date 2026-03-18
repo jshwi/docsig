@@ -2,7 +2,7 @@
 docsig._main
 ============
 
-Contains package entry point.
+CLI entry point that parses args and runs docsig.
 """
 
 from __future__ import annotations as _
@@ -48,11 +48,9 @@ def _warn_on_deprecated_short_flags() -> None:
 
 
 def main() -> str | int:
-    """Main function for package.
+    """Parse CLI args, install the exception hook, and run docsig.
 
-    Collect config and arguments for the commandline.
-
-    :return: Exit status for whether the test failed or not.
+    :return: Exit code (non-zero if any check failed).
     """
     _warn_on_deprecated_short_flags()
     a = _parse_args()

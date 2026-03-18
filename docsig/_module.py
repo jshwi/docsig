@@ -1,6 +1,8 @@
 """
 docsig._module
 ==============
+
+AST-backed modules, classes, and functions for docstring checking.
 """
 
 from __future__ import annotations as _
@@ -32,19 +34,18 @@ class _Imports(_t.Dict[str, str]):
 
 
 class Parent:  # pylint: disable=too-many-instance-attributes
-    """Represents an object that contains functions or methods.
+    """Container for functions or methods (module, class, or function).
 
-    :param node: Parent's abstract syntax tree.
-    :param directives: Data for directives and, subsequently, the total
-        of errors which are excluded from function checks.
-    :param path: Path to base path representation on.
+    :param node: AST node for this scope.
+    :param directives: Directives and excluded errors per line.
+    :param path: Path for this scope (or None).
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param check_class_constructor: Check the class constructor's
         docstring. Otherwise, expect the constructor's documentation to
         be on the class level docstring.
-    :param imports: Imports within this scope.
-    :param error: Represents an unrecoverable error, if any.
+    :param imports: Imports in this scope.
+    :param error: Unrecoverable error for this scope, if any.
     """
 
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
@@ -157,35 +158,35 @@ class Parent:  # pylint: disable=too-many-instance-attributes
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether this class is protected."""
+        """Whether this scope is protected (name starts with _)."""
         return self._name.startswith("_")
 
     @property
     def error(self) -> Error | None:
-        """Represents an unrecoverable error, if any."""
+        """Unrecoverable error for this scope, if any."""
         return self._error
 
     @property
     def children(self) -> _Children:
-        """Children of this parent."""
+        """Child scopes (functions or nested classes)."""
         return self._children
 
 
 class Function(Parent):  # pylint: disable=too-many-instance-attributes
-    """Represents a function with signature and docstring parameters.
+    """A callable with parsed signature and docstring for checking.
 
-    :param node: Function's abstract syntax tree.
-    :param comments: Comments in list form containing directives.
-    :param directives: Directive, if any, belonging to this function.
-    :param messages: List of disabled checks specific to this function.
-    :param path: Path to base path representation on.
+    :param node: AST node for the function (or None for error).
+    :param comments: Comment directives for this function.
+    :param directives: Directives keyed by line.
+    :param messages: Disabled checks for this function.
+    :param path: Path for this function (or None).
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     :param check_class_constructor: If the function is the class
         constructor, use its own docstring. Otherwise, use the class
         level docstring for the constructor function.
-    :param imports: Imports within this scope.
-    :param error: Represents an unrecoverable error, if any.
+    :param imports: Imports in this scope.
+    :param error: Unrecoverable error for this function, if any.
     """
 
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
@@ -245,7 +246,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
                 self._docstring = self.docstring.from_ast(relevant_doc_node)
 
     def __len__(self) -> int:
-        """Length of the longest sequence of args."""
+        """Length of the longest of signature args or docstring args."""
         return max(len(self.signature.args), len(self.docstring.args))
 
     def _decorated_with(self, name: str) -> bool:
@@ -262,12 +263,12 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
 
     @property
     def ismethod(self) -> bool:
-        """Boolean value for whether this function is a method."""
+        """Whether this function is defined in a class (method)."""
         return isinstance(self._parent, _ast.ClassDef)
 
     @property
     def isproperty(self) -> bool:
-        """Boolean value for whether this function is a property."""
+        """Whether this function is a property."""
         valid_properties = [
             "property",
             "cached_property",
@@ -278,17 +279,17 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
 
     @property
     def isoverloaded(self) -> bool:
-        """Boolean value for whether this function is a property."""
+        """Whether this function is an overload (typing.overload)."""
         return self._decorated_with("overload")
 
     @property
     def isinit(self) -> bool:
-        """Bool value for whether this func is a class constructor."""
+        """Whether this function is a class constructor (__init__)."""
         return self.ismethod and self.name == "__init__"
 
     @property
     def isoverridden(self) -> bool:
-        """Boolean value for whether this function is overridden."""
+        """Whether this function overrides a base class method."""
         if self.ismethod and not self.isinit and self._parent is not None:
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
@@ -301,17 +302,17 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether this function is protected."""
+        """Whether this function is protected."""
         return super().isprotected and not self.isinit and not self.isdunder
 
     @property
     def isstaticmethod(self) -> bool:
-        """Bool value for whether this function is a static method."""
+        """Whether this function is a static method."""
         return self.ismethod and self._decorated_with("staticmethod")
 
     @property
     def isdunder(self) -> bool:
-        """Boolean value for whether this func is a dunder method."""
+        """Whether this function is a dunder method."""
         return (
             self.ismethod
             and not self.isinit
@@ -352,18 +353,18 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
 
     @property
     def messages(self) -> _Messages:
-        """List of disabled checks specific to this function."""
+        """Disabled checks for this function."""
         return self._messages
 
     @property
     def comments(self) -> _Comments:
-        """Comments, if any, belonging to this function."""
+        """Comment directives for this function."""
         return self._comments
 
     def overload(self, rettype: _RetType) -> None:
-        """Overload function with new signature return type.
+        """Merge an overload return type into this function's signature.
 
-        :param rettype: The return type of the overloaded signature.
+        :param rettype: Return type of the overloaded variant.
         """
         self._signature.overload(rettype)
 

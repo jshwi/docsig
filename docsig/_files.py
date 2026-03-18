@@ -1,6 +1,8 @@
 """
 docsig._files
 =============
+
+Path collection and filtering for files to check.
 """
 
 from __future__ import annotations as _
@@ -68,9 +70,9 @@ def _glob(path: _Path, pattern: str) -> bool:
 
 
 class Paths(_t.List[_Path]):
-    """Collect a list of valid paths.
+    """Collect paths to check (gitignore and exclude applied).
 
-    :param paths: Path(s) to parse Module(s) from.
+    :param paths: Path(s) to collect (files or directories).
     :param patterns: List pf regular expression of files and dirs to
         exclude from checks.
     :param excludes: Files or dirs to exclude from checks.

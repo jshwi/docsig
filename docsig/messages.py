@@ -1,6 +1,9 @@
 """
 docsig.messages
 ===============
+
+Error message definitions (Message, MessageMap, E) and format templates
+for docstring-check output.
 """
 
 from __future__ import annotations
@@ -22,7 +25,7 @@ NEW = """\
 
 
 class Message(_t.NamedTuple):
-    """Represents an error message."""
+    """One docstring-check error (ref, description, symbolic, hint)."""
 
     #: An error code the message can be referenced by.
     ref: str
@@ -41,17 +44,15 @@ class Message(_t.NamedTuple):
 
     @property
     def isknown(self) -> bool:
-        """Whether this is a known error.
-
-        This might exist due to a typo or an attempt to retrieve an
-        error that does not exist.
-        """
+        """True if ref is a known code, else False (typo or missing)."""
         return self.ref != UNKNOWN
 
     def fstring(self, template: str) -> str:
-        """Return message values as a string.
+        """Format this message with the given template.
 
-        :param template: String to interpolate values.
+        Placeholders: ref, description, symbolic.
+
+        :param template: Format string with ref, description, symbolic.
         :return: Formatted string.
         """
         template = f"W {template}" if self.new else template
@@ -63,17 +64,17 @@ class Message(_t.NamedTuple):
 
 
 class Messages(_t.List[Message]):
-    """List of messages."""
+    """Sequence of Message instances, typically for one failure."""
 
 
 class MessageMap(_t.Dict[int, Message]):
-    """Messages mapped under an integer version of their codes."""
+    """Mapping from integer key to Message (used for the E registry)."""
 
     def from_ref(self, ref: str) -> Message:
-        """Get a message by its code or symbolic reference.
+        """Return Message for the given code or symbolic ref.
 
-        :param ref: Code or symbolic reference.
-        :return: Message if valid ref else an unknown message type.
+        :param ref: Code (e.g. SIG101) or symbolic name.
+        :return: Matching Message, or unknown if not found.
         """
         for value in self.values():
             if ref in (value.ref, value.symbolic):
@@ -82,16 +83,16 @@ class MessageMap(_t.Dict[int, Message]):
         return Message(UNKNOWN, ref)
 
     def from_codes(self, refs: list[str]) -> Messages:
-        """Get the list of message types from codes or symbolic refs.
+        """Return Messages for the given codes or symbolic refs.
 
-        :param refs: List of codes or symbolic references.
-        :return: List of message types.
+        :param refs: Codes or symbolic names.
+        :return: One Message per ref (unknown if not found).
         """
         return Messages(self.from_ref(i) for i in refs)
 
     @property
     def all(self) -> Messages:
-        """Get all messages that aren't a config error."""
+        """All Messages except single-digit config errors (SIG0xx)."""
         return Messages(v for k, v in self.items() if len(str(k)) > 1)
 
 

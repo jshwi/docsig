@@ -1,6 +1,8 @@
 """
 docsig._stub
 ============
+
+Stub types for parsed docstrings and signatures.
 """
 
 from __future__ import annotations as _
@@ -22,7 +24,7 @@ VALID_DESCRIPTION = " A valid description."
 
 
 class RetType(_Enum):
-    """Defines the possible types of a return annotation."""
+    """Possible kinds of return annotation."""
 
     NONE = 1
     SOME = 2
@@ -30,10 +32,10 @@ class RetType(_Enum):
 
     @classmethod
     def from_ast(cls, returns: _ast.nodes.NodeNG | None) -> RetType:
-        """Construct a return type object from an AST node.
+        """Build return type from the function's return AST node.
 
-        :param returns: Ast node or None.
-        :return: Constructed return type.
+        :param returns: Return annotation AST node or None.
+        :return: RetType.NONE, RetType.SOME, or RetType.UNTYPED.
         """
         if isinstance(returns, _ast.nodes.Const) and returns.value is None:
             return cls.NONE
@@ -54,7 +56,7 @@ class RetType(_Enum):
 
 
 class DocType(_Enum):
-    """Defines the possible types of a docstring."""
+    """Type of docstring parameter."""
 
     PARAM = 1
     ARG = 2
@@ -63,10 +65,10 @@ class DocType(_Enum):
 
     @classmethod
     def from_str(cls, docstring: str) -> DocType:
-        """Construct a doc type object from a docstring.
+        """Map a docstring keyword to docstring type.
 
-        :param docstring: Docstring string.
-        :return: Constructed doc type.
+        :param docstring: Keyword from docstring (param, arg, etc.).
+        :return: Corresponding DocType or DocType.UNKNOWN.
         """
         try:
             return cls[docstring.upper()]
@@ -80,13 +82,13 @@ class DocType(_Enum):
 # todo: consider a parent object that can be used for returns that do
 # todo: not include the name attribute
 class Param:
-    """A tuple of param types and their names.
+    """Single parameter from a docstring or function signature.
 
     :param kind: The type of the parameter.
-    :param name: The name of the parameter.
-    :param description: The description of the parameter.
-    :param indent: The number that the parameter is indented.
-    :param closing_token: The token used for closing the parameter.
+    :param name: Parameter name.
+    :param description: Optional description text.
+    :param indent: Indent width in spaces.
+    :param closing_token: Token after the name (colon by default).
     """
 
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
@@ -120,7 +122,7 @@ class Param:
 
     @property
     def isprotected(self) -> bool:
-        """Boolean value for whether this parameter is protected."""
+        """True if the parameter name starts with an underscore."""
         return str(self.name).startswith("_")
 
 
@@ -158,13 +160,10 @@ class Params(_t.List[Param]):
             super().append(value)
 
     def get(self, index: int) -> Param:
-        """Get a param.
+        """Return Param at index, or a Param with name None if missing.
 
-        If the index does not exist, return a `Param` with None as
-        `Param.name`.
-
-        :param index: Index of param to get.
-        :return: Param belonging to the index.
+        :param index: Index into this list.
+        :return: Param at that index or an empty Param.
         """
         try:
             return self[index]
@@ -173,16 +172,14 @@ class Params(_t.List[Param]):
 
     @property
     def names(self) -> list[str | None]:
-        """Get names of params."""
+        """Parameter names in order."""
         return [i.name for i in self]
 
     @property
     def duplicated(self) -> bool:
-        """Boolean value for whether there are duplicate parameters.
+        """True if any parameter name appears more than once.
 
-        Ensure only the names of the parameters are needed to be
-        considered duplicates. It is not relevant whether the
-        descriptions match.
+        Only names are compared; descriptions are ignored.
         """
         for k, v in _Counter(i.name for i in self).items():
             if v > 1:
@@ -196,7 +193,7 @@ class Params(_t.List[Param]):
 
     @property
     def duplicates(self) -> list[Param]:
-        """Duplicated parameters."""
+        """Params that share a name."""
         return self._duplicates
 
 
@@ -211,20 +208,20 @@ class _Stub:
 
     @property
     def args(self) -> Params:
-        """Collection of `Param` types."""
+        """Params for this stub (signature or docstring)."""
         return self._args
 
     @property
     def returns(self) -> bool:
-        """Boolean value for whether this returns a value."""
+        """True if a return (or yield) is declared or documented."""
         return self._returns
 
 
 class Signature(_Stub):
-    """Represents a function signature.
+    """Parsed function signature (args and return type).
 
-    :param rettype: The return type.
-    :param returns: Returns declared in signature.
+    :param rettype: Kind of return (none, some, untyped).
+    :param returns: True if return is declared in the signature.
     :param ignore_args: Ignore args prefixed with an asterisk.
     :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
     """
@@ -247,12 +244,12 @@ class Signature(_Stub):
         ignore_args: bool = False,
         ignore_kwargs: bool = False,
     ) -> Signature:
-        """Parse signature from ast.
+        """Build Signature from a function or class AST node.
 
-        :param node: Abstract syntax tree.
+        :param node: AST node (function, class, or module).
         :param ignore_args: Ignore args prefixed with an asterisk.
         :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
-        :return: Instantiated signature object.
+        :return: Signature with args and return type.
         """
         rettype = RetType.from_ast(node.returns)
         returns = rettype == RetType.SOME
@@ -275,29 +272,24 @@ class Signature(_Stub):
 
     @property
     def rettype(self) -> RetType:
-        """Function's return value.
-
-        If a function is typed to return None, return `str(None)`. If no
-        typehint exists, then return None (NoneType).
-        """
+        """Return annotation kind (none, some, or untyped)."""
         return self._rettype
 
     def overload(self, rettype: RetType) -> None:
-        """Overload signature with a return-type.
+        """Set this signature's return type (for overloads).
 
-        :param rettype: Return-type of overloaded signature.
+        :param rettype: Return type for the overloaded variant.
         """
         self._rettype = rettype
         self._returns = rettype != RetType.NONE
 
 
 class Docstring(_Stub):
-    """Represents a function docstring.
+    """Parsed function docstring (params and return section).
 
-    :param string: The raw docstring.
-    :param returns: Whether this docstring has a return.
-    :param ret_description_missing: Whether description for return is
-        missing from this docstrings.
+    :param string: Raw docstring text after normalization.
+    :param returns: True if a return or yield section is present.
+    :param ret_description_missing: True if return has no description.
     """
 
     @staticmethod
@@ -351,10 +343,10 @@ class Docstring(_Stub):
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
-        """Parse function docstring from ast.
+        """Build Docstring from the function's docstring AST node.
 
-        :param node: Docstring AST node.
-        :return: Instantiated docstring object.
+        :param node: Const node holding the docstring string.
+        :return: Docstring with args and return flag.
         """
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
@@ -392,18 +384,18 @@ class Docstring(_Stub):
 
     @property
     def string(self) -> str | None:
-        """The raw documentation string, if it exists, else None."""
+        """Raw docstring text after normalization, or None."""
         return self._string
 
     @property
     def bare(self) -> bool:
-        """Boolean value for whether params are documented.
+        """True if docstring exists but has no params and no return.
 
-        Docstring has to exist for docstring to be considered bare.
+        Used when the function has a docstring but documents nothing.
         """
         return self._string is not None and not self._args and not self.returns
 
     @property
     def ret_description_missing(self) -> bool:
-        """Is the return description missing?"""
+        """True if a return section exists but has no description."""
         return self._ret_description_missing
