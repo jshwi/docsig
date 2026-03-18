@@ -14,13 +14,14 @@ from pathlib import Path
 import pytest
 from templatest import templates
 
+import docsig
 from docsig import docsig as _docsig
 
 # noinspection PyProtectedMember
 from docsig._utils import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
-from docsig.messages import E
+from docsig.messages import E, Message
 
 from . import (
     CHECK_ARGS,
@@ -1000,3 +1001,73 @@ def function(a=False) -> None:
 '''
     init_file(template)
     assert main(".", "--ignore-no-params") == 0
+
+
+@pytest.mark.parametrize(
+    "template,expected,retcode",
+    [
+        (
+            """
+def function(a, b, c) -> None:
+    pass
+""",
+            (E[101].ref, "warning"),
+            0,
+        ),
+        (
+            '''
+class Class:
+    """Docstring summary."""
+    def run(self, leaves) -> defaultdict[BaseFix, list[Node | Leaf]]:
+        """Docstring summary.
+
+        Args:
+           The leaves of the AST tree to be matched
+
+        Returns:
+           A dictionary of node matches with fixers as the keys
+        """
+''',
+            (E[302].ref,),
+            1,
+        ),
+    ],
+    ids=[
+        "fail-sig101",
+        "fail-for-syntax",
+    ],
+)
+# pylint: disable-next=too-many-arguments,too-many-positional-arguments
+def test_new_violation(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+    template: str,
+    expected: tuple[str, ...],
+    retcode: int,
+) -> None:
+    """Test new violations that don't fail pipeline yet.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    :param template: The template to test.
+    :param expected: Expected in stdout.
+    :param retcode: Exit status.
+    """
+    monkeypatch.setitem(
+        docsig.messages.E,
+        101,
+        Message(
+            "SIG101",
+            "function is missing a docstring",
+            "function-doc-missing",
+            new=True,
+        ),
+    )
+    init_file(template)
+    assert main(".") == retcode
+    std = capsys.readouterr()
+    assert all(i in std.out for i in expected)

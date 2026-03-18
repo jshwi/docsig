@@ -16,6 +16,10 @@ TEMPLATE = "{ref}: {description} ({symbolic})"
 #: Flake8 template to format message strings.
 FLAKE8 = "{ref} {description} ({symbolic})"
 
+NEW = """\
+{ref} is a new violation and will error in a future version\
+"""
+
 
 class Message(_t.NamedTuple):
     """Represents an error message."""
@@ -32,6 +36,9 @@ class Message(_t.NamedTuple):
     #: A hint, if any, suggesting why the error may have occurred.
     hint: _t.Optional[str] = None
 
+    #: Whether this message is a new addition.
+    new: bool = False
+
     @property
     def isknown(self) -> bool:
         """Whether this is a known error.
@@ -47,6 +54,7 @@ class Message(_t.NamedTuple):
         :param template: String to interpolate values.
         :return: Formatted string.
         """
+        template = f"W {template}" if self.new else template
         return template.format(
             ref=self.ref,
             description=self.description,

@@ -7,11 +7,18 @@ import sys
 from pathlib import Path
 
 from docsig import main
+from docsig.messages import NEW
 
 SCRIPTS_DIR = Path(__file__).parent
 REPO = SCRIPTS_DIR.parent
 DOCS_DIR = REPO / "docs"
 USAGE = DOCS_DIR / "usage"
+ADMONITION = f"""
+
+.. admonition:: New Violation
+
+   {NEW}
+"""
 TOC = """\
 .. toctree::
    :titlesonly:
@@ -21,7 +28,7 @@ TOC = """\
 TEMPLATE = """\
 {title}
 {underline}
-
+{admonition}
 {description}
 
 .. code-block:: python
@@ -69,6 +76,7 @@ def generate_configurations() -> None:
                         TEMPLATE.format(
                             title=title,
                             underline=len(title) * "=",
+                            admonition="",
                             description=" ".join(parts[2:]),
                         ),
                         encoding="utf-8",
@@ -86,7 +94,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
     """Generate documentation for messages."""
     messages_dir = USAGE / "messages"
     messages_dir.mkdir(exist_ok=True, parents=True)
-    pattern = re.compile(r"([^:]+): ([^(]+) \(([^)]+)\)")
+    pattern = re.compile(r"(?:. )?([^:]+): ([^(]+) \(([^)]+)\)")
     msgio = io.StringIO()
     with contextlib.redirect_stdout(msgio), contextlib.suppress(SystemExit):
         sys.argv = ["docsig", "--list"]
@@ -110,10 +118,16 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
                     tocs.append(TOC.format(option=f"messages/{option}"))
                     path = messages_dir / f"{option}.rst"
                     if not path.is_file():
+                        admonition = (
+                            ADMONITION.format(ref=code)
+                            if message.startswith("W")
+                            else ""
+                        )
                         path.write_text(
                             TEMPLATE.format(
                                 title=title,
                                 underline=len(title) * "=",
+                                admonition=admonition,
                                 description=match.group(2).capitalize(),
                             ),
                             encoding="utf-8",

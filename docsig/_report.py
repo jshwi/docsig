@@ -37,6 +37,7 @@ class Failed(_t.NamedTuple):
     symbolic: str
     lineno: int
     hint: str | None = None
+    new: bool = False
 
 
 class Failure(_t.List[Failed]):
@@ -88,7 +89,7 @@ class Failure(_t.List[Failed]):
         self.sort()
 
     def _add(self, value: _Message, hint: bool = False, **kwargs) -> None:
-        self._retcode = 1
+        self._retcode = int(not value.new)
         failed = Failed(
             self._name,
             value.ref,
@@ -96,6 +97,7 @@ class Failure(_t.List[Failed]):
             value.symbolic,
             self._func.lineno,
             value.hint if hint else None,
+            value.new,
         )
         if value not in self._func.messages and failed not in self:
             super().append(failed)
