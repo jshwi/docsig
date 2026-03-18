@@ -559,7 +559,6 @@ def test_no_erroneous_301_in_duplicate(
     :param main: Mock ``main`` function.
     """
     template = r'''
-# pylint: disable=too-many-locals,too-many-statements
 @_g.cache("arb.json")
 @_g.cache("diff.json")
 def function(
@@ -727,7 +726,7 @@ def test_sig401_false_positives_562(
     """
     template = '''
 class Classy:
-    @remove_last_args(['normalize'])  # since 8.2.0
+    @remove_last_args(['normalize'])
     def method(self, force_iso: bool = False) -> str:
         """Docstring summary.
 
@@ -861,7 +860,7 @@ def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
     template = '''
 @_decorators.parse_msgs
 @_decorators.validate_args
-def function(  # pylint: disable=too-many-locals,too-many-arguments
+def function(
     *path: str | _Path,
     string: str | None = None,
     list_checks: bool = False,

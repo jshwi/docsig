@@ -1080,7 +1080,6 @@ class Klass:
     :param b: Description of b.
     """
 
-    # bad typing, but leave that up to mypy
     def __init__(self, a, b) -> int:
         pass
 '''
@@ -1247,7 +1246,6 @@ class _PClassNoSelfS(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
 '''
@@ -2569,7 +2567,6 @@ class Klass:
         Description of b.
     """
 
-    # bad typing, but leave that up to mypy
     def __init__(self, a, b) -> int:
         pass
 '''
@@ -2770,7 +2767,6 @@ class _PClassNoSelfN(_BaseTemplate):
     def template(self) -> str:
         return '''
 class Klass:
-    # against convention but not up to this package to decide
     def method(self) -> None:
         """Docstring summary."""
 '''
@@ -3993,7 +3989,6 @@ class Klass:
         Description of b.
     """
 
-    # bad typing, but leave that up to mypy
     def __init__(self, a, b) -> int:
         pass
 '''
@@ -5411,7 +5406,6 @@ class Klass:
         b (int): Description of b.
     """
 
-    # bad typing, but leave that up to mypy
     def __init__(self, a, b) -> int:
         pass
 '''
@@ -5767,8 +5761,6 @@ class _MutableSequence(_t.MutableSequence[T]):
     def __len__(self):
         return self._list.__len__()
 
-# without this, the test will fail (not ideal)
-# TODO: remove this to test for why
 class Param(_t.NamedTuple):
     """Docstring summary."""
 
