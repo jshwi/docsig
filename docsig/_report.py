@@ -235,6 +235,17 @@ class Failure(_t.List[Failed]):
         ):
             # description is not capitalized
             self._add(_E[305])
+        # description-missing-period
+        if (
+            doc.description
+            and doc.description.strip()
+            and doc.description.strip()[-1]
+            not in (
+                "`",
+                ".",
+            )
+        ):
+            self._add(_E[306])
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         if doc.indent > 0:

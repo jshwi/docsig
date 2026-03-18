@@ -1071,3 +1071,28 @@ def test_new_violation(
     assert main(".") == retcode
     std = capsys.readouterr()
     assert all(i in std.out for i in expected)
+
+
+def test_missing_period(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test missing period.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    :param a: Description of a
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[306].ref in std.out
+    assert "warning" in std.out

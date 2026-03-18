@@ -22,3 +22,8 @@
    :titlesonly:
 
    messages/sig305-description-not-capitalized
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig306-description-missing-period
