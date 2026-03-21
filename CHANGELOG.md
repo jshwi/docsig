@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.81.1](https://github.com/jshwi/docsig/tree/v0.81.1) - 2026-03-21
+
+### Fixed
+
+- avoid crash on token error ([#763](https://github.com/jshwi/docsig/issues/763))
+
 ## [0.81.0](https://github.com/jshwi/docsig/tree/v0.81.0) - 2026-03-21
 
 ### Added
