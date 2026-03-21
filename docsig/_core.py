@@ -147,9 +147,9 @@ def _from_str(
     source_name = path or "stdin"
     try:
         try:
-            directive = _Directives.from_text(code, config.disable)
+            directives = _Directives.from_text(code, config.disable)
         except _TokenError as err:
-            directive = _Directives()
+            directives = _Directives()
             logger.debug(
                 _FILE_INFO,
                 source_name,
@@ -158,7 +158,7 @@ def _from_str(
 
         parent = _Parent(
             _ast.parse(code, module_name, str(path)),
-            directive,
+            directives,
             path,
             config.ignore.args,
             config.ignore.kwargs,
