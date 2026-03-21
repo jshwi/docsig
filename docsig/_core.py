@@ -12,6 +12,7 @@ import os as _os
 import sys as _sys
 import warnings as _warnings
 from pathlib import Path as _Path
+from tokenize import TokenError as _TokenError
 from warnings import warn as _warn
 
 import astroid as _ast
@@ -145,9 +146,19 @@ def _from_str(
     logger = _logging.getLogger(__package__)
     source_name = path or "stdin"
     try:
+        try:
+            directive = _Directives.from_text(code, config.disable)
+        except _TokenError as err:
+            directive = _Directives()
+            logger.debug(
+                _FILE_INFO,
+                source_name,
+                f"error parsing comments {err}".lower(),
+            )
+
         parent = _Parent(
             _ast.parse(code, module_name, str(path)),
-            _Directives.from_text(code, config.disable),
+            directive,
             path,
             config.ignore.args,
             config.ignore.kwargs,

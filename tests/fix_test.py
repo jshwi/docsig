@@ -955,3 +955,22 @@ def function(a, b) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[301].ref not in std.out
+
+
+def test_fix_token_error_763(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Skip parsing directives instead of crashing.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = r'''
+"""The problem is the trailing line continuation at the end of the line,
+which produces a TokenError."""
+# +2: [syntax-error]
+""\
+'''
+    init_file(template)
+    assert main(".") == 0
