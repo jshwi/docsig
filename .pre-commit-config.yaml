@@ -19,11 +19,8 @@ default_stages:
 exclude: |
   (?x)^(
     | poetry\.lock
-    | migrations\/.*
-    | \.bumpversion\.cfg
     | whitelist\.py
     | \.idea\/.*
-    | tests\/TESTS\.md
     | docs\/conf\.py
     | changelog\/.*
   )$
@@ -122,7 +119,6 @@ repos:
       - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
-        exclude: ^(.*test\.key)$
       - id: forbid-submodules
       - id: no-commit-to-branch
       - id: end-of-file-fixer
@@ -151,7 +147,6 @@ repos:
             | CHANGELOG\.md
             | .*\.json
             | SECURITY\.md
-            | docs\/deprecated\/messages\.md
           )$
   - repo: https://github.com/pappasam/toml-sort
     rev: "v0.24.4"
