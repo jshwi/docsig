@@ -38,24 +38,24 @@ help: $(VENV)
 ########################################################################
 # Main Targets
 $(BUILD): .make/doctest \
-	format \
-	lint \
-	unused \
-	update-docs \
-	.mypy_cache/CACHEDIR.TAG \
-	README.rst \
-	test-source \
-	docs/_build/html/index.html \
-	docs/_build/linkcheck/output.json
+		format \
+		lint \
+		unused \
+		update-docs \
+		.mypy_cache/CACHEDIR.TAG \
+		README.rst \
+		test-source \
+		docs/_build/html/index.html \
+		docs/_build/linkcheck/output.json
 	@$(POETRY) build
 	@touch $@
 
 docs/_build/html/index.html: $(VENV) \
-	$(PYTHON_FILES) \
-	$(DOCS_FILES) \
-	CHANGELOG.md \
-	.conform.yaml \
-	CONTRIBUTING.md
+		$(PYTHON_FILES) \
+		$(DOCS_FILES) \
+		CHANGELOG.md \
+		.conform.yaml \
+		CONTRIBUTING.md
 	@$(POETRY) run $(MAKE) -C docs html
 
 $(VENV): $(POETRY) poetry.lock
@@ -155,11 +155,11 @@ coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@touch $@
 
 docs/_build/linkcheck/output.json: $(VENV) \
-	$(PYTHON_FILES) \
-	$(DOCS_FILES) \
-	CHANGELOG.md \
-	.conform.yaml \
-	CONTRIBUTING.md
+		$(PYTHON_FILES) \
+		$(DOCS_FILES) \
+		CHANGELOG.md \
+		.conform.yaml \
+		CONTRIBUTING.md
 	@trap "rm -f $(@); exit 1" ERR; \
 		{ \
 			ping -c 1 docsig.io >/dev/null 2>&1 \
