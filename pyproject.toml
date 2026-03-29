@@ -64,6 +64,7 @@ omit = [
   "*/sitecustomize.py",
   "docs/conf.py",
   "docsig/__main__.py",
+  "docsig/_vendor/sphinx/ext/napoleon.py",
   "whitelist.py"
 ]
 
@@ -72,6 +73,7 @@ DEP004 = [
   "flake8",
   "git",
   "pytest",
+  "sphinx",
   "tomli_w",
   "yaml"
 ]
@@ -125,7 +127,6 @@ repository = "https://github.com/jshwi/docsig"
 version = "0.83.0"
 
 [tool.poetry.dependencies]
-Sphinx = ">=7,<9"
 astroid = "^4.0.2"
 pathspec = ">=0.12.1,<1.2.0"
 python = "^3.10"
@@ -150,6 +151,7 @@ validate-pyproject = {extras = ["all", "store"], version = "^0.25"}
 vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
+Sphinx = ">=7,<9"
 furo = ">=2024.4.27,<2026.0.0"
 myst-parser = ">=3.0.1,<5.0.0"
 pytest = "9.0.3"
@@ -247,6 +249,7 @@ name = "Security"
 
 [tool.vulture]
 exclude = [
+  "_vendor",
   "tests/base_test.py",
   "tests/conftest.py"
 ]
