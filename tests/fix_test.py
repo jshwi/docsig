@@ -974,3 +974,36 @@ which produces a TokenError."""
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_prevent_parsing_file_for_directives_if_ast_parse_failed_770(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Prevent parsing file for directives if AST parse failed.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = r"""
+CONDITION=true
+EXECUTABLE=C
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --executable=*)
+      EXECUTABLE="${1#*=}"
+      ;;
+    --no-build*)
+      CONDITION=false
+      ;;
+    *)
+      echo "invalid argument '${1}'"
+      exit 1
+      ;;
+  esac
+  shift
+done
+"""
+    init_file(template, Path("script.sh"))
+    assert main(".") == 0

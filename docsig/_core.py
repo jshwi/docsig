@@ -146,6 +146,7 @@ def _from_str(
     logger = _logging.getLogger(__package__)
     source_name = path or "stdin"
     try:
+        node = _ast.parse(code, module_name, str(path))
         try:
             directives = _Directives.from_text(code, config.disable)
         except _TokenError as err:
@@ -157,7 +158,7 @@ def _from_str(
             )
 
         parent = _Parent(
-            _ast.parse(code, module_name, str(path)),
+            node,
             directives,
             path,
             config.ignore.args,
