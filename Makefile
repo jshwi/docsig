@@ -11,7 +11,7 @@ POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
 # File lists
-PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py')
+PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")

@@ -22,6 +22,7 @@ exclude: |
     | \.idea\/.*
     | docs\/conf\.py
     | changelog\/.*
+    | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
   )$
 repos:
   - repo: local
