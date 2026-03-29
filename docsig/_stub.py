@@ -14,9 +14,9 @@ from collections import Counter as _Counter
 from enum import Enum as _Enum
 
 import astroid as _ast
-import sphinx.ext.napoleon as _s
 
 from ._config import Ignore as _Ignore
+from ._vendor.sphinx.ext import napoleon as _s
 
 # no function will accidentally have this name
 UNNAMED = "-1000"
@@ -330,9 +330,9 @@ class Docstring(_Stub):
         # convert Google and numpy style docstrings to parse docstrings
         # as restructured text
         return str(
-            _s.NumpyDocstring(
+            _s.NumpyDocstring(  # type: ignore
                 str(
-                    _s.GoogleDocstring(
+                    _s.GoogleDocstring(  # type: ignore
                         _textwrap.dedent(
                             "\n".join(string.splitlines()[1:]),
                         ).replace("*", ""),
