@@ -974,3 +974,37 @@ which produces a TokenError."""
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_indent_error(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Fix tokenize issues.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = r"""
+# Default values of arguments
+BUILD_VIGNETTES=true
+LGB_R_EXECUTABLE=R
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --r-executable=*)
+      LGB_R_EXECUTABLE="${1#*=}"
+      ;;
+    --no-build-vignettes*)
+      BUILD_VIGNETTES=false
+      ;;
+    *)
+      echo "invalid argument '${1}'"
+      exit 1
+      ;;
+  esac
+  shift
+done
+"""
+    init_file(template, Path("script.sh"))
+    assert main(".") == 0
