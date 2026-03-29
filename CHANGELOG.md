@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.81.2](https://github.com/jshwi/docsig/tree/v0.81.2) - 2026-03-29
+
+### Fixed
+
+- parse directives after ast ([#770](https://github.com/jshwi/docsig/issues/770))
+
 ## [0.81.1](https://github.com/jshwi/docsig/tree/v0.81.1) - 2026-03-21
 
 ### Fixed
