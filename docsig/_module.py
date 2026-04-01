@@ -39,6 +39,7 @@ class Error(_Enum):
 
     SYNTAX = 1
     UNICODE = 2
+    RECURSION = 3
 
 
 class Parent:  # pylint: disable=too-many-instance-attributes

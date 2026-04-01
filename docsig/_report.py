@@ -320,6 +320,8 @@ class Failure(_t.List[Failed]):
             self._retcode = 123
         if self._func.error == _Error.UNICODE:
             self._add(_E[902])
+        if self._func.error == _Error.RECURSION:
+            self._add(_E[903])
 
     @property
     def name(self) -> str:

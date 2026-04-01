@@ -7,3 +7,8 @@
    :titlesonly:
 
    messages/sig902-unicode-decode-error
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig903-recursion-error

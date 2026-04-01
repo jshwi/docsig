@@ -121,6 +121,9 @@ def _parse_from_string(
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.SYNTAX)
+    except RecursionError as err:
+        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
+        parent = _Parent(error=_Error.RECURSION)
 
     return parent
 
