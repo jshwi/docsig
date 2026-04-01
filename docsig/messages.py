@@ -252,5 +252,10 @@ E = MessageMap(
             "failed to read file",
             "unicode-decode-error",
         ),
+        903: Message(
+            "SIG903",
+            "maximum recursion depth exceeded",
+            "recursion-error",
+        ),
     },
 )
