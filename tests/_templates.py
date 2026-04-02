@@ -9,7 +9,7 @@ Test package for ``docsig``.
 from pathlib import Path
 
 from templatest import BaseTemplate as _BaseTemplate
-from templatest import templates as _templates
+from templatest import templates
 
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
@@ -17,7 +17,7 @@ from docsig.messages import E
 PATH = Path("module") / "file.py"
 
 
-@_templates.register
+@templates.register
 class _PParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -36,7 +36,7 @@ def function(a, b, c) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FParamDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -55,7 +55,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FParamSigS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -73,7 +73,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoDocNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -87,7 +87,7 @@ def function(a, b, c) -> None:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PNoParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -101,7 +101,7 @@ def function() -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -119,7 +119,7 @@ def function(a, b, _) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -138,7 +138,7 @@ def function(a, b, c):
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -158,7 +158,7 @@ def function(a, b, c) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FRetTypeDocsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -178,7 +178,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetTypeSigS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -197,7 +197,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501NoRetNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -216,7 +216,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoRetDocsNoTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -236,7 +236,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsAttrTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -253,7 +253,7 @@ def function(a) -> t.Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsNameTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -270,7 +270,7 @@ def function(a) -> Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG402OutOfOrderSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -289,7 +289,7 @@ def function(a, b, c) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FIncorrectDocS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -307,7 +307,7 @@ def function(a) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG202ParamDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -326,7 +326,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG203ParamSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -344,7 +344,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG502RetTypeDocsSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -364,7 +364,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG503RetTypeSigSingleErrorS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -383,7 +383,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDupesSumS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -403,7 +403,7 @@ def function(a, b, c) -> None:
         return E[201].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FIncorrectDocSumS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -423,7 +423,7 @@ def function(a, b, c) -> None:
         return E[303].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -442,7 +442,7 @@ def function(a, b, *args) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -460,7 +460,7 @@ def function(a, b, *args) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -479,7 +479,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -497,7 +497,7 @@ def function(a, b, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MFailS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -538,7 +538,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _FMethodWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -557,7 +557,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PClassSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -575,7 +575,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsClassS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -591,7 +591,7 @@ class Klass:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsKeyS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -610,7 +610,7 @@ def function(a, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FKwargsOutOfOrderS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -629,7 +629,7 @@ def function(a, **kwargs) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDualColonWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -650,7 +650,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _POnlyParamsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -668,7 +668,7 @@ def function(a: bool = False) -> _t.Tuple[str, ...]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PReturnAnyWArgsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -687,7 +687,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FMsgPoorIndentS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -711,7 +711,7 @@ def function(
         return E[401].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG302NoSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -728,7 +728,7 @@ def function(a) -> None:
         return E[302].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PBinOpS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -747,7 +747,7 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FBinOpReprS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -764,7 +764,7 @@ def function(a: int) -> _T | None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDoubleUnderscoreParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -782,7 +782,7 @@ def function(a, b, __) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PUnderscoreArgsKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -796,7 +796,7 @@ def function(*_, **__) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -812,7 +812,7 @@ class Klass:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -831,7 +831,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FHintMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -848,7 +848,7 @@ def function() -> Post:
         return E[503].hint or ""
 
 
-@_templates.register
+@templates.register
 class _FOverriddenS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -884,7 +884,7 @@ class MutableSet(_t.MutableSet[T]):
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoDocRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -898,7 +898,7 @@ def function() -> int:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PInconsistentSpaceS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -917,7 +917,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FSIG501WRetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -934,7 +934,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501WORetQuestionS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -948,7 +948,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG404NES(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -966,7 +966,7 @@ def function(arg, param2) -> None:
         return E[404].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FMethodHeaderWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -985,7 +985,7 @@ class Klass:
         return f"{PATH}:3 in Klass"
 
 
-@_templates.register
+@templates.register
 class _PKWOnlyArgsWArgsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1009,7 +1009,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1031,7 +1031,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1047,7 +1047,7 @@ class Klass:
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1068,7 +1068,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1089,7 +1089,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassRetNoneS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1111,7 +1111,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG504S(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1133,7 +1133,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1152,7 +1152,7 @@ def _function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncPropS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1170,7 +1170,7 @@ def function(a) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PFuncPropReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1188,7 +1188,7 @@ def function() -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FFuncPropNoRetTypeS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1206,7 +1206,7 @@ def function(a):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectNInitS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1220,7 +1220,7 @@ def function(a, b) -> None:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PStaticSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1240,7 +1240,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PClassNoSelfS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1255,7 +1255,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FProtectClsWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1274,7 +1274,7 @@ class _Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1300,7 +1300,7 @@ class MutableSet:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1320,7 +1320,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG403S(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1337,7 +1337,7 @@ def function(param) -> None:
         return E[403].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PParamN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1361,7 +1361,7 @@ def function(a, b, c) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FParamDocsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1385,7 +1385,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FParamSigN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1407,7 +1407,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoDocNoRetN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1421,7 +1421,7 @@ def function(a, b, c) -> None:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PNoParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1435,7 +1435,7 @@ def function() -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1457,7 +1457,7 @@ def function(a, b, _) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FOutOfOrderN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1481,7 +1481,7 @@ def function(a, b, c):
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PRetTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1510,7 +1510,7 @@ def function(a, b, c) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FRetTypeDocsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1539,7 +1539,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetTypeSigN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1563,7 +1563,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501NoRetNoTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1587,7 +1587,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoRetDocsNoTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1616,7 +1616,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsAttrTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1636,7 +1636,7 @@ def function(a) -> t.Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsNameTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1656,7 +1656,7 @@ def function(a) -> Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG402OutOfOrderSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1680,7 +1680,7 @@ def function(a, b, c) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG202ParamDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1704,7 +1704,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG203ParamSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1726,7 +1726,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG502RetTypeDocsSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1755,7 +1755,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG503RetTypeSigSingleErrorN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1779,7 +1779,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDupesSumN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1805,7 +1805,7 @@ def function(a, b, c) -> None:
         return E[201].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1829,7 +1829,7 @@ def function(a, b, *args) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1851,7 +1851,7 @@ def function(a, b, *args) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1875,7 +1875,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1897,7 +1897,7 @@ def function(a, b, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MFailN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1952,7 +1952,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _FMethodWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1975,7 +1975,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PClassSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -1996,7 +1996,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsClassN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2012,7 +2012,7 @@ class Klass:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsKeyN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2034,7 +2034,7 @@ def function(a, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FKwargsOutOfSectN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2056,7 +2056,7 @@ def function(a, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FKwargsOutOfOrderN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2078,7 +2078,7 @@ def function(a, **kwargs) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDualColonWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2104,7 +2104,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _POnlyParamsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2129,7 +2129,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PReturnAnyWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2156,7 +2156,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PBinOpN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2183,7 +2183,7 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FBinOpReprN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2203,7 +2203,7 @@ def function(a: int) -> _T | None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDoubleUnderscoreParamN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2225,7 +2225,7 @@ def function(a, b, __) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PUnderscoreArgsKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2239,7 +2239,7 @@ def function(*_, **__) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2255,7 +2255,7 @@ class Klass:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2277,7 +2277,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnCachedN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2299,7 +2299,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnFunctoolsCachedN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2321,7 +2321,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FOverriddenN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2357,7 +2357,7 @@ class MutableSet(_t.MutableSet[T]):
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoDocRetN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2371,7 +2371,7 @@ def function() -> int:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501WRetQuestionN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2391,7 +2391,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501WORetQuestionN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2405,7 +2405,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG404NEN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2427,7 +2427,7 @@ def function(arg, param2) -> None:
         return E[404].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FMethodHeaderWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2450,7 +2450,7 @@ class Klass:
         return f"{PATH}:3 in Klass"
 
 
-@_templates.register
+@templates.register
 class _PKWOnlyArgsWArgsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2483,7 +2483,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2510,7 +2510,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnsTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2526,7 +2526,7 @@ class Klass:
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PInitNoRetN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2551,7 +2551,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PInitBadRetN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2576,7 +2576,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassRetNoneN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2606,7 +2606,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG504N(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2636,7 +2636,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectFuncN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2660,7 +2660,7 @@ def _function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncPropN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2681,7 +2681,7 @@ def function(a) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PFuncPropReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2702,7 +2702,7 @@ def function(*_, **__) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FFuncPropNoRetTypeN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2723,7 +2723,7 @@ def function(a):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectNInitN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2737,7 +2737,7 @@ def __init__(a, b) -> None:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PStaticSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2761,7 +2761,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PClassNoSelfN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2776,7 +2776,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FProtectClsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2799,7 +2799,7 @@ class _Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2825,7 +2825,7 @@ class MutableSet:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersParamN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2850,7 +2850,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG403N(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2870,7 +2870,7 @@ def function(param) -> None:
         return E[403].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PSphinxWNumpy(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2887,7 +2887,7 @@ def function() -> str:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PNoIdentN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2907,7 +2907,7 @@ def function(a) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PColonSpaceN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2927,7 +2927,7 @@ def function(a) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PIssue36ParamN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2952,7 +2952,7 @@ def function(a: Union[str, int]) -> str:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PIssue36ReturnN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -2979,7 +2979,7 @@ def function(a: str) -> bool:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3003,7 +3003,7 @@ def function(a, b, c) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FParamDocsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3027,7 +3027,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FParamSigNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3049,7 +3049,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3071,7 +3071,7 @@ def function(a, b, _) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FOutOfOrderNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3095,7 +3095,7 @@ def function(a, b, c):
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PRetTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3124,7 +3124,7 @@ def function(a, b, c) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FRetTypeDocsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3153,7 +3153,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetTypeSigNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3177,7 +3177,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501NoRetNoTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3201,7 +3201,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoRetDocsNoTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3230,7 +3230,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsAttrTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3250,7 +3250,7 @@ def function(a) -> t.Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsNameTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3270,7 +3270,7 @@ def function(a) -> Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG402OutOfOrderSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3294,7 +3294,7 @@ def function(a, b, c) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG202ParamDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3318,7 +3318,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG203ParamSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3340,7 +3340,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG502RetTypeDocsSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3369,7 +3369,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG503RetTypeSigSingleErrorNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3393,7 +3393,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDupesSumNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3419,7 +3419,7 @@ def function(a, b, c) -> None:
         return E[201].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3443,7 +3443,7 @@ def function(a, b, *args) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3465,7 +3465,7 @@ def function(a, b, *args) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3489,7 +3489,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3511,7 +3511,7 @@ def function(a, b, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MFailNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3566,7 +3566,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _FMethodWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3589,7 +3589,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PClassSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3610,7 +3610,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PWKwargsKeyNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3632,7 +3632,7 @@ def function(a, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsOutOfSectNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3655,7 +3655,7 @@ def function(a, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FKwargsOutOfOrderNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3677,7 +3677,7 @@ def function(a, **kwargs) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDualColonWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3703,7 +3703,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _POnlyParamsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3728,7 +3728,7 @@ def function(a: bool = False) -> tuple[str, ...]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PReturnAnyWArgsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3755,7 +3755,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PBinOpNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3782,7 +3782,7 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FBinOpReprNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3802,7 +3802,7 @@ def function(a: int) -> _T | None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDoubleUnderscoreParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3824,7 +3824,7 @@ def function(a, b, __) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3846,7 +3846,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FSIG501WRetQuestionNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3866,7 +3866,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG404NENI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3888,7 +3888,7 @@ def function(arg, param2) -> None:
         return E[404].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PKWOnlyArgsWArgsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3921,7 +3921,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3948,7 +3948,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PInitNoRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3973,7 +3973,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PInitBadRetNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -3998,7 +3998,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassRetNoneNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4028,7 +4028,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG504NI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4058,7 +4058,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectFuncNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4082,7 +4082,7 @@ def _function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncPropNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4103,7 +4103,7 @@ def function(a) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PFuncPropReturnNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4124,7 +4124,7 @@ def function() -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FFuncPropNoRetTypeNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4145,7 +4145,7 @@ def function(a):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PStaticSelfNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4169,7 +4169,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FProtectClsWKwargsNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4192,7 +4192,7 @@ class _Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersParamNI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4217,7 +4217,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG403NI(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4237,7 +4237,7 @@ def function(param) -> None:
         return E[403].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PRetTypeSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4257,7 +4257,7 @@ def function(a, b, c) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FRetTypeDocsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4277,7 +4277,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoRetDocsNoTypeSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4297,7 +4297,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG502RetTypeDocsSingleErrorSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4317,7 +4317,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _POnlyParamsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4335,7 +4335,7 @@ def function(a: bool = False) -> _t.Tuple[str, ...]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PReturnAnyWArgsWKwargsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4354,7 +4354,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FMsgPoorIndentSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4380,7 +4380,7 @@ def function(
         return E[401].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PBinOpSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4399,7 +4399,7 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FBinOpReprSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4416,7 +4416,7 @@ def function(a: int) -> _T | None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4435,7 +4435,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FHintMissingReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4452,7 +4452,7 @@ def function() -> Post:
         return E[503].hint or ""
 
 
-@_templates.register
+@templates.register
 class _PInconsistentSpaceSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4471,7 +4471,7 @@ def fixture_main(monkeypatch) -> t.Callable[..., None]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FSIG501WRetQuestionSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4488,7 +4488,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PKWOnlyArgsWArgsSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4512,7 +4512,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassRetNoneSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4534,7 +4534,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG504SRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4556,7 +4556,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PFuncPropReturnSRs(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4574,7 +4574,7 @@ def function() -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PParamG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4594,7 +4594,7 @@ def function(a, b, c) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FParamDocsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4614,7 +4614,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FParamSigG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4633,7 +4633,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FOutOfOrderG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4653,7 +4653,7 @@ def function(a, b, c):
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PRetTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4676,7 +4676,7 @@ def function(a, b, c) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FRetTypeDocsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4699,7 +4699,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetTypeSigG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4719,7 +4719,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG501NoRetNoTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4739,7 +4739,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoRetDocsNoTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4762,7 +4762,7 @@ def function(a, b, c):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsAttrTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4780,7 +4780,7 @@ def function(a) -> t.Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FRetDocsNameTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4798,7 +4798,7 @@ def function(a) -> Optional[str]:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG402OutOfOrderSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4818,7 +4818,7 @@ def function(a, b, c) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG202ParamDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4838,7 +4838,7 @@ def function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG203ParamSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4857,7 +4857,7 @@ def function(a, b, c) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG502RetTypeDocsSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4880,7 +4880,7 @@ def function(a, b, c) -> None:
         return E[502].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG503RetTypeSigSingleErrorG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4900,7 +4900,7 @@ def function(a, b, c) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDupesSumG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4921,7 +4921,7 @@ def function(a, b, c) -> None:
         return E[201].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4941,7 +4941,7 @@ def function(a, b, *args) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4960,7 +4960,7 @@ def function(a, b, *args) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4980,7 +4980,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -4999,7 +4999,7 @@ def function(a, b, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MFailG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5043,7 +5043,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _FMethodWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5063,7 +5063,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PClassSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5082,7 +5082,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PWKwargsKeyG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5101,7 +5101,7 @@ def function(a, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FWKwargsOutOfSectG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5121,7 +5121,7 @@ def function(a, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FKwargsOutOfOrderG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5140,7 +5140,7 @@ def function(a, **kwargs) -> None:
         return E[402].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDualColonWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5162,7 +5162,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _POnlyParamsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5183,7 +5183,7 @@ def function(reduce: bool = False) -> _t.Tuple[str, ...]:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PReturnAnyWArgsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5205,7 +5205,7 @@ def function(*args: _t.Any, **kwargs: bool) -> _t.Any:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PBinOpG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5227,7 +5227,7 @@ def function(a: int, b: _t.Sequence[_T]) -> _T | None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FBinOpReprG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5245,7 +5245,7 @@ def function(a: int) -> _T | None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PDoubleUnderscoreParamG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5264,7 +5264,7 @@ def function(a, b, __) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5284,7 +5284,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FSIG501WRetQuestionG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5302,7 +5302,7 @@ def function():
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG404NEG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5321,7 +5321,7 @@ def function(arg, param2) -> None:
         return E[404].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PKWOnlyArgsWArgsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5348,7 +5348,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5371,7 +5371,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PInitNoRetG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5393,7 +5393,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PInitBadRetG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5415,7 +5415,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FClassRetNoneG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5440,7 +5440,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG504G(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5465,7 +5465,7 @@ class Klass:
         return E[504].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FProtectFuncG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5485,7 +5485,7 @@ def _function(a, b) -> None:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncPropG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5504,7 +5504,7 @@ def function(a) -> int:
         return E[503].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PFuncPropReturnG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5523,7 +5523,7 @@ def function(*_, **__) -> int:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FFuncPropNoRetTypeG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5542,7 +5542,7 @@ def function(a):
         return E[501].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PStaticSelfG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5563,7 +5563,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FProtectClsWKwargsG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5583,7 +5583,7 @@ class _Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FDundersParamG(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5604,7 +5604,7 @@ class Klass:
         return E[202].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FSIG403G(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5622,7 +5622,7 @@ def function(param) -> None:
         return E[403].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PEscapedKwargWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5643,7 +5643,7 @@ def function(a, b, **kwargs) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FNoKwargsIncludedWKwargsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5660,7 +5660,7 @@ def function(a, **kwargs) -> None:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNoDocClassS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5675,7 +5675,7 @@ class Klass:
         return E[102].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FIssue36OffIndentN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5705,7 +5705,7 @@ def function(str_lin: str, a: str) -> bool:
         return E[302].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FOverriddenAncestorsMultipleS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5781,7 +5781,7 @@ class Params(_MutableSequence[Param]):
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _PStringAnnotation(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5802,7 +5802,7 @@ def function(a: int) -> "int":
         return ""
 
 
-@_templates.register
+@templates.register
 class _FNoParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5816,7 +5816,7 @@ def function(a: int) -> int:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FMethodReturnHintS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5838,7 +5838,7 @@ class Klass:
         return E[504].hint or ""
 
 
-@_templates.register
+@templates.register
 class _PIssue114PosOnlyArgsWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5875,7 +5875,7 @@ def function(
         return ""
 
 
-@_templates.register
+@templates.register
 class _PIssue114PosOnlyArgsSelfWArgsWKwargsN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5914,7 +5914,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _MPassOverloadS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5944,7 +5944,7 @@ def function(a):
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -5976,7 +5976,7 @@ def function(a):
 """
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadMissingParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6008,7 +6008,7 @@ def function(response):
 """
 
 
-@_templates.register
+@templates.register
 class _MPassOverloadNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6037,7 +6037,7 @@ def function(a):
         return ""
 
 
-@_templates.register
+@templates.register
 class _MPassMultiOverloadsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6086,7 +6086,7 @@ def function_2(a):
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadNoReturnDocumentedS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6119,7 +6119,7 @@ def function(a):
 """
 
 
-@_templates.register
+@templates.register
 class _MPassOverloadMethodS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6150,7 +6150,7 @@ class SomeClass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadMethodMissingReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6183,7 +6183,7 @@ class SomeClass:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadMethodMissingParamS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6216,7 +6216,7 @@ class SomeClass:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailOverloadMethodNoReturnS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6249,7 +6249,7 @@ class SomeClass:
 """
 
 
-@_templates.register
+@templates.register
 class _MPassMultiOverloadMethodsS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6299,7 +6299,7 @@ class SomeClass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _MPassOverloadMethodNoReturnDocumentedS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6330,7 +6330,7 @@ class SomeClass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PParamDocsCommentModuleS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6350,7 +6350,7 @@ def function(a, b) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _PParamDocsCommentFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6369,7 +6369,7 @@ def function(a, b) -> None:  # docsig: disable
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6408,7 +6408,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MPassCommentDisableModuleFirstS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6443,7 +6443,7 @@ def function_3(a, b, c) -> None:
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableModuleSecondS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6481,7 +6481,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableModuleThirdS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6521,7 +6521,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableModuleEnableS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6562,7 +6562,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableMixedS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6630,7 +6630,7 @@ def function_6(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _PParamDocsCommentNoSpaceAfterCommentS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6649,7 +6649,7 @@ def function(a, b) -> None:  #docsig:disable
         return ""
 
 
-@_templates.register
+@templates.register
 class _PParamDocsCommentNoSpaceAfterColonS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6668,7 +6668,7 @@ def function(a, b) -> None:  # docsig:disable
         return ""
 
 
-@_templates.register
+@templates.register
 class _MFailCommentDisableEnableOneFuncS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6706,7 +6706,7 @@ def function_3(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MPassBadInlineDirective(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6739,7 +6739,7 @@ def function_2(a, b) -> None:  # docsig: ena
 """
 
 
-@_templates.register
+@templates.register
 class _MPassBadModuleDirective(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6774,7 +6774,7 @@ def function_2(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MPylintDirective(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6872,7 +6872,7 @@ def function_7(d, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MInvalidDirectiveOptions(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6970,7 +6970,7 @@ def function_7(d, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MInvalidSingleDirectiveOptions(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -6994,7 +6994,7 @@ def function(  # docsig: enable=unknown
 """
 
 
-@_templates.register
+@templates.register
 class _FWClassConstructorFS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7016,7 +7016,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FWClassConstructorInitNoRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7037,7 +7037,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FWClassConstructorInitBadRetS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7059,7 +7059,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FWClassConstructorRetNoneFS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7081,7 +7081,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FWClassConstructorSIG504FS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7103,7 +7103,7 @@ class Klass:
         return E[203].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MInvalidSingleModuleDirectiveOptions(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7126,7 +7126,7 @@ def function(a, b, c) -> None:
 """
 
 
-@_templates.register
+@templates.register
 class _MFailProtectedMethods(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7152,7 +7152,7 @@ class _Messages(_t.Dict[int, Message]):
 """
 
 
-@_templates.register
+@templates.register
 class _MFDisableClassInlineCommentS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7186,7 +7186,7 @@ class Report(_MessageSequence):
 """
 
 
-@_templates.register
+@templates.register
 class _MFDisableClassModuleCommentDisableEnableS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7223,7 +7223,7 @@ class Report(_MessageSequence):
 """
 
 
-@_templates.register
+@templates.register
 class _MFDisableClassModuleCommentDisableS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7255,7 +7255,7 @@ class Report(_MessageSequence):
         return ""
 
 
-@_templates.register
+@templates.register
 class _FFuncInIfStatementN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7285,7 +7285,7 @@ if True:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FKlassInIfStatementN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7302,7 +7302,7 @@ if True:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncInIfInIfStatementN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7318,7 +7318,7 @@ if True:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FKlassNotMethodOkN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7339,7 +7339,7 @@ class Klass:
         return E[102].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncInForLoopN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7356,7 +7356,7 @@ for argument in container:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FFuncInForLoopIfN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7372,7 +7372,7 @@ for argument in container:
         return E[101].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _FNestedFuncN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7402,7 +7402,7 @@ def function(a: int = 42) -> int:
 # starts with `M` for multi instead of `F` so we don't run
 # `test_single_flag` with this as it needs `-N/--check-nested` and
 # `-c/--check-class` to fail
-@_templates.register
+@templates.register
 class _MNestedKlassNotMethodOkN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7439,7 +7439,7 @@ def function(a: int = 42) -> int:
 """
 
 
-@_templates.register
+@templates.register
 class _MNestedKlassNotMethodNotN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7474,7 +7474,7 @@ def function(a: int = 42) -> int:
 """
 
 
-@_templates.register
+@templates.register
 class _MPassOverloadNoReturnAliasS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7506,7 +7506,7 @@ def function(response):
         return ""
 
 
-@_templates.register
+@templates.register
 class _PPropertyReturnFunctoolsCachedAliasN(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7530,7 +7530,7 @@ class Klass:
         return ""
 
 
-@_templates.register
+@templates.register
 class _FIncorrectDocDotS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7557,7 +7557,7 @@ def function(
         return E[304].fstring(T).format(token=".")
 
 
-@_templates.register
+@templates.register
 class _FPropertyReturnMissingDescS(_BaseTemplate):
     @property
     def template(self) -> str:
@@ -7575,7 +7575,7 @@ def function(a: str) -> str:
         return E[506].fstring(T)
 
 
-@_templates.register
+@templates.register
 class _MInvalidDirectiveFlag(_BaseTemplate):
     @property
     def template(self) -> str:
