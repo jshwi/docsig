@@ -72,12 +72,8 @@ def setup_logger(verbose: bool) -> None:
 def _parse_from_file(path: _Path, config: _Config) -> _Parent:
     try:
         code = path.read_text(encoding="utf-8")
-        parent = _parse_from_string(
-            code,
-            config,
-            str(path)[:-3].replace(_os.sep, ".").replace("-", "_"),
-            path,
-        )
+        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
+        parent = _parse_from_string(code, config, module_name, path)
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
@@ -323,6 +319,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     )
     for path_ in paths:
         failures = runner(path_, config)
-        retcodes.append(_report(failures, config, str(path_)))
+        retcode = _report(failures, config, str(path_))
+        retcodes.append(retcode)
 
     return max(retcodes)
