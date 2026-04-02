@@ -239,7 +239,7 @@ name = "Security"
 
 [tool.vulture]
 exclude = [
-  "tests/_test.py",
+  "tests/base_test.py",
   "tests/conftest.py"
 ]
 make_whitelist = true

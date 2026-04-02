@@ -23,7 +23,7 @@ TEST_RST = """
 tests
 =====
 
-.. automodule:: tests._test
+.. automodule:: tests.base_test
     :members:
     :undoc-members:
     :show-inheritance:
@@ -160,7 +160,7 @@ def generate_tests() -> None:
     lines = (build / "index.md").read_text(encoding="utf-8").splitlines()
     skip_lines = False
     for line in lines:
-        match = re.match(r"(.*)tests\._test\.test_(.*)\((.*)", line)
+        match = re.match(r"(.*)tests\.base_test\.test_(.*)\((.*)", line)
         if match:
             skip_lines = False
             content.append(
