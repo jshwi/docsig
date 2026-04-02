@@ -1,6 +1,6 @@
 """
-tests._test
-===========
+tests.conf_test
+===============
 """
 
 from __future__ import annotations

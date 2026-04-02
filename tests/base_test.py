@@ -13,9 +13,9 @@ special case tests.
 Some tests overlap, which is why some templates are found by their
 prefix, their suffix, or whether they simply contain a substring.
 
-All templates ending with ``S`` are ``Sphinx`` style docstrings, all
-templates ending with ``N`` are ``NumPy`` style docstrings, all
-templates ending with ``NI`` are ``NumPy`` style docstrings with an
+Templates ending with ``S`` are ``Sphinx`` style docstrings.
+Templates ending with ``N`` are ``NumPy`` style docstrings.
+Templates ending with ``NI`` are ``NumPy`` style docstrings with an
 unusual indent, and all templates ending with ``G`` are ``Google`` style
 docstrings.
 """
