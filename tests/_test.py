@@ -715,13 +715,13 @@ def test_fail_on_unicode_decode_error_if_py_file(
 
 
 def test_pre_commit_compatibility_issue_with_pythonpath_522(
-    tmp_path: Path,
+    init_file,
     capsys: pytest.CaptureFixture,
     main: FixtureMain,
 ) -> None:
     """Test compatibility issues with a Python path.
 
-    :param tmp_path: Create and return the temporary directory.
+    :param init_file: Initialize a test file.
     :param capsys: Capture sys out.
     :param main: Patch package entry point.
     """
@@ -744,14 +744,9 @@ class Implementation(BaseClass):
     def method(self, a) -> None:
         """Docstring summary."""
 '''
-    root = tmp_path / "folder"
-    bases = root / "bases"
-    bases.mkdir(exist_ok=True, parents=True)
-    (root / "__init__.py").touch()
-    p1 = bases / "base_class.py"
-    p2 = root / "implementation1.py"
-    p1.write_text(t1)
-    p2.write_text(t2)
+    init_file("", Path("folder") / "__init__.py")
+    init_file(t1, Path("folder") / "bases" / "base_class.py")
+    init_file(t2, Path("folder") / "implementation1.py")
     main(".")
     std = capsys.readouterr()
     assert not std.out
