@@ -365,7 +365,6 @@ def test_list_checks(
 
 def test_bad_py_file(
     monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -373,7 +372,6 @@ def test_bad_py_file(
     """Test invalid syntax on a python file.
 
     :param monkeypatch: Mock patch environment and attributes.
-    :param tmp_path: Create and return the temporary directory.
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -388,8 +386,8 @@ def function(a, b) -> None:
     """
 '''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    init_file(WILL_ERROR, tmp_path / "module" / "file1.py")
-    init_file(template2, tmp_path / "module" / "file2.py")
+    init_file(WILL_ERROR, Path("module") / "file1.py")
+    init_file(template2, Path("module") / "file2.py")
     assert main(".", test_flake8=False, no_ansi=False) == 123
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
