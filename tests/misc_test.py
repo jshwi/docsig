@@ -31,7 +31,7 @@ from . import (
     FixtureMain,
     FixtureMakeTree,
 )
-from ._templates import PATH
+from ._test import PATH
 
 
 @pytest.mark.parametrize(

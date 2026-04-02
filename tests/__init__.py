@@ -8,8 +8,6 @@ Test package for ``docsig``.
 import typing as t
 from pathlib import Path
 
-from . import _templates  # noqa
-
 FixtureMain = t.Callable[..., t.Union[str, int]]
 FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
