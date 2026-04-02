@@ -1,6 +1,6 @@
 """
-tests.exclude_test
-==================
+tests.fix_test
+==============
 """
 
 # pylint: disable=protected-access,line-too-long,too-many-lines
@@ -33,7 +33,9 @@ def test_fix_optional_return_statements_with_overload_func_sig502(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Test ignore typechecker.
+    """Allow optional return as something when overloaded.
+
+    Fix return statement documented for None.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -74,7 +76,7 @@ def test_no_fail_on_unicode_decode_error_384(
     tmp_path: Path,
     main: FixtureMain,
 ) -> None:
-    """Ensure the unicode-decode error is handled without error.
+    """Ensure the unicode-decode error is handled without crashing.
 
     :param tmp_path: Create and return the temporary directory.
     :param main: Patch package entry point.
@@ -371,6 +373,8 @@ def test_class_and_class_constructor_452(
 ) -> None:
     """Test command lines errors when passed incompatible options.
 
+    Flake8 doesn't have mutually exclusive options like argparse does..
+
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
     :param flake8: Patch package entry point.
@@ -466,7 +470,7 @@ def test_properties_not_recognized_when_underneath_other_decorators_509(
 ) -> None:
     """Fix properties not recognized when stacked.
 
-    Also, check this does fail with --check-property-returns.
+    Also, check this does fail with ``check_property_returns``.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -510,7 +514,7 @@ def test_properties_not_recognized_when_on_top_of_other_decorators_509(
 ) -> None:
     """Fix properties not recognized when stacked.
 
-    Also, check this does fail with --check-property-returns.
+    Also, check this does fail with ``check_property_returns``.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -552,7 +556,7 @@ def test_no_erroneous_301_in_duplicate(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Make sure 301 does not appear for duplicate parameters.
+    """Make sure SIG301 does not appear for duplicate parameters.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -825,7 +829,7 @@ def test_fix_no_402_for_very_similar_names_683(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """402 should not be showing for very similar names.
+    """SIG402 should not be showing for very similar names.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
