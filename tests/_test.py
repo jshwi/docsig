@@ -12,7 +12,6 @@ import pickle
 from pathlib import Path
 
 import pytest
-from templatest import templates
 
 import docsig
 from docsig import docsig as _docsig
@@ -183,9 +182,31 @@ def test_lineno(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    init_file(
-        templates.registered.getbyname("m-fail-s").template,  # type: ignore
-    )
+    template = '''
+def function_1(a, b, c) -> None:
+    """Docstring summary.
+
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
+    """
+
+def function_2(a, b) -> None:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
+    """
+
+def function_3(a, b, c) -> None:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    """
+'''
+    init_file(template)
     main(".")
     std = capsys.readouterr()
     assert f"{PATH}:2" in std.out
@@ -562,28 +583,40 @@ def test_multiple_exit_codes(
     :param init_file: Initialize a test file.
     :param main: Patch package entry point.
     """
-    init_file(
-        templates.registered.getbyname(
-            "f-param-docs-s",
-        ).template,  # type: ignore
-        Path("module") / "file1.py",
-    )
-    init_file(
-        templates.registered.getbyname(
-            "f-param-sig-s",
-        ).template,  # type: ignore
-        Path("module") / "file2.py",
-    )
-    init_file(
-        templates.registered.getbyname(
-            "f-no-doc-no-ret-s",
-        ).template,  # type: ignore
-        Path("module") / "file3.py",
-    )
-    init_file(
-        templates.registered.getbyname("p-param-s").template,  # type: ignore
-        Path("module") / "file4.py",
-    )
+    t1 = '''\
+def function(a, b) -> None:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
+    """
+'''
+    t2 = '''\
+def function(a, b, c) -> None:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    """
+'''
+    t3 = """\
+def function(a, b, c) -> None:
+    pass
+"""
+    t4 = '''\
+def function(a, b, c) -> None:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
+    """
+'''
+    init_file(t1, Path("module") / "file1.py")
+    init_file(t2, Path("module") / "file2.py")
+    init_file(t3, Path("module") / "file3.py")
+    init_file(t4, Path("module") / "file4.py")
     assert (
         main(
             ".",
