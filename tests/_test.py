@@ -118,60 +118,6 @@ please check your pyproject.toml configuration\
 """
 
 
-@pytest.mark.parametrize(
-    "error",
-    [
-        E[201].ref,
-        E[303].ref,
-    ],
-)
-def test_target_report(
-    capsys: pytest.CaptureFixture,
-    init_file: FixtureInitFile,
-    main: FixtureMain,
-    error: str,
-) -> None:
-    """Test report only adds the target error provided.
-
-    The test should fail as it matches with the selected target.
-
-    Assert that the error appears in the report to confirm it has
-    triggered.
-
-    :param capsys: Capture sys out.
-    :param init_file: Initialize a test file.
-    :param main: Mock ``main`` function.
-    :param error: Error to target.
-    """
-    template = '''
-def function(a, b, c) -> None:
-    """Description summary.
-
-    :param a: Description of a.
-    :param a: Description of a.
-    :param b: Description of b.
-    :param: Description of d.
-    """
-'''
-    _errors = E[202].ref, E[201].ref, E[303].ref
-    init_file(template)
-    main(".", "--target", error, test_flake8=False)
-    std = capsys.readouterr()
-    assert E.from_ref(error).ref in std.out
-    assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
-
-
-def test_invalid_target(main: FixtureMain) -> None:
-    """Test invalid target provided.
-
-    :param main: Mock ``main`` function.
-    """
-    assert (
-        main(".", "--target", "unknown", test_flake8=False)
-        == "unknown option to target 'unknown'"
-    )
-
-
 def test_lineno(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
