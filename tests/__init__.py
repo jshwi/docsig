@@ -41,7 +41,6 @@ CHECK_ARGS = (
     "--check-protected-class-methods",
     "--check-nested",
 )
-FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 WILL_ERROR = 'echo "Hello World!"'
 TREE = {
     "file1.txt": [],

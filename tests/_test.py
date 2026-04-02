@@ -28,7 +28,9 @@ from templatest import Template, templates
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, FAIL_CHECK_ARGS, FixtureInitFile, FixtureMain
+from . import CHECK_ARGS, FixtureInitFile, FixtureMain
+
+FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
 
 
 @pytest.mark.parametrize(
