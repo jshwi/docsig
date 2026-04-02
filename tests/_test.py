@@ -377,19 +377,9 @@ def test_bad_py_file(
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
     """
-    template2 = '''
-def function(a, b) -> None:
-    """Docstring summary.
-
-    :param a: Description of a.
-    :param b: Description of b.
-    :param c: Description of c.
-    """
-'''
     monkeypatch.setattr("sys.stdout.isatty", lambda: True)
-    init_file(WILL_ERROR, Path("module") / "file1.py")
-    init_file(template2, Path("module") / "file2.py")
-    assert main(".", test_flake8=False, no_ansi=False) == 123
+    init_file(WILL_ERROR)
+    assert main(".", test_flake8=False) == 123
     std = capsys.readouterr()
     assert E[901].fstring(T) in std.out
 
