@@ -25,13 +25,13 @@ from docsig.messages import E, Message
 
 from . import (
     CHECK_ARGS,
+    PATH,
     WILL_ERROR,
     FixtureInitFile,
     FixtureInitPyprojectTomlFile,
     FixtureMain,
     FixtureMakeTree,
 )
-from ._test import PATH
 
 
 @pytest.mark.parametrize(

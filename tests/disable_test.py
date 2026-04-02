@@ -9,7 +9,7 @@ import pytest
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from ._test import PATH, FixtureInitFile, FixtureMain
+from . import PATH, FixtureInitFile, FixtureMain
 
 ES = (
     E[402].ref,

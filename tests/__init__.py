@@ -13,6 +13,8 @@ FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
 FixtureInitPyprojectTomlFile = t.Callable[[dict[str, t.Any]], Path]
 
+PATH = Path("module") / "file.py"
+
 
 class FixtureInitFile(
     t.Protocol,

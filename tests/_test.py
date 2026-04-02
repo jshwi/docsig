@@ -22,8 +22,6 @@ docstrings.
 
 # pylint: disable=protected-access,too-many-lines
 
-from pathlib import Path
-
 import pytest
 from templatest import BaseTemplate as _BaseTemplate
 from templatest import Template, templates
@@ -31,11 +29,9 @@ from templatest import Template, templates
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E
 
-from . import CHECK_ARGS, FixtureInitFile, FixtureMain
+from . import CHECK_ARGS, PATH, FixtureInitFile, FixtureMain
 
 FAIL_CHECK_ARGS = tuple(f"f-{i[8:]}" for i in CHECK_ARGS)
-
-PATH = Path("module") / "file.py"
 
 
 @templates.register
