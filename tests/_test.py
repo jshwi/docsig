@@ -23,7 +23,6 @@ docstrings.
 # pylint: disable=protected-access
 
 import pytest
-import templatest
 from templatest import Template, templates
 
 from docsig.messages import TEMPLATE as T
@@ -113,10 +112,10 @@ def test_stdout(
 
 @pytest.mark.parametrize(
     "_,template,expected",
-    [i for i in templatest.templates.registered if "single-error" in i.name],
+    [i for i in templates.registered if "single-error" in i.name],
     ids=[
         i.replace("-", "").upper()[4:8] if "e-1-0" in i else i
-        for i in templatest.templates.registered.getids()
+        for i in templates.registered.getids()
         if "single-error" in i
     ],
 )
