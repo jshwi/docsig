@@ -64,12 +64,11 @@ def test_print_version(
     assert std.out.strip() == "1.0.0"
 
 
-def test_class_and_class_constructor(
+def test_class_and_class_constructor_with_commandline(
     capsys: pytest.CaptureFixture,
     main: FixtureMain,
 ) -> None:
-    """Test that docsig command lines errors when passed incompatible
-    options.
+    """Test that docsig errors when passed incompatible options.
 
     :param capsys: Capture sys out.
     :param main: Patch package entry point.
@@ -95,7 +94,7 @@ argument to check class constructor not allowed with argument to check class\
     )
 
 
-def test_class_and_class_constructor_in_interpreter_with_config(
+def test_class_and_class_constructor_in_commandline_with_config(
     monkeypatch: pytest.MonkeyPatch,
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
     main: FixtureMain,
@@ -198,7 +197,7 @@ def test_lineno(
 def test_file_not_found_error(main: FixtureMain) -> None:
     """Test file-not-found error for incorrect path arg.
 
-    :param main: Description of main.
+    :param main: Mock ``main`` function.
     """
     with pytest.raises(FileNotFoundError) as err:
         main("does-not-exist")
@@ -755,10 +754,10 @@ def test_enforce_capitalisation_should_591(
     main: FixtureMain,
     template: str,
 ) -> None:
-    """Test enforce capitalisation.
+    """Test enforce capitalization.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialise a test file.
+    :param init_file: Initialize a test file.
     :param main: Patch package entry point.
     :param template: Contents to write to file.
     """
@@ -773,10 +772,10 @@ def test_enforce_capitalisation_should_not_after_nonalpha(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Test enforce capitalisation after nonalpha character.
+    """Test enforce capitalization after nonalpha character.
 
     :param capsys: Capture sys out.
-    :param init_file: Initialise a test file.
+    :param init_file: Initialize a test file.
     :param main: Patch package entry point.
     """
     template = '''
