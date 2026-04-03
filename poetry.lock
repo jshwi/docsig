@@ -2394,21 +2394,6 @@ files = [
 widechars = ["wcwidth"]
 
 [[package]]
-name = "templatest"
-version = "0.12.0"
-description = "Templates for testing with strings"
-optional = false
-python-versions = "<4.0,>=3.10"
-groups = ["docs", "tests"]
-files = [
-    {file = "templatest-0.12.0-py3-none-any.whl", hash = "sha256:dcee45151261eda1a1406f09c969a1d404d749fe3c63cfc62794fc128b38aac3"},
-    {file = "templatest-0.12.0.tar.gz", hash = "sha256:c96b3a488eb5835910f6c8ac23ccb82fe60ab9782958c95f42f9e178cb4febf4"},
-]
-
-[package.dependencies]
-typing-extensions = ">=4.8.0,<5.0.0"
-
-[[package]]
 name = "termcolor"
 version = "3.3.0"
 description = "ANSI color formatting for output in terminal"
@@ -2577,7 +2562,7 @@ files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
 ]
-markers = {main = "python_version == \"3.10\""}
+markers = {main = "python_version == \"3.10\"", tests = "python_version == \"3.10\""}
 
 [[package]]
 name = "typing-inspection"
@@ -2715,4 +2700,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "e178b888f4fbc6c8f163b21897383d4d6ee7dc941e8af0ef77b476d790dfc9b8"
+content-hash = "dfbdef483e6604548b8f61acc46e904c1d813d6111002d31c1f59ba06c3461f7"
