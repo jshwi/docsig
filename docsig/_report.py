@@ -161,6 +161,13 @@ class Failure(_t.List[Failed]):
                 else:
                     # unknown-inline-directive
                     self._add(_E[2], directive=comment.kind)
+            elif not comment.isvalidflag:
+                if comment.ismodule:
+                    # unknown-module-directive-flag
+                    self._add(_E[6], directive=comment.kind, flag=comment.flag)
+                else:
+                    # unknown-inline-directive-flag
+                    self._add(_E[7], directive=comment.kind, flag=comment.flag)
             else:
                 for rule in comment:
                     if not rule.isknown:
