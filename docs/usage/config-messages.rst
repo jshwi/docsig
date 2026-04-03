@@ -22,3 +22,13 @@
    :titlesonly:
 
    messages/sig005-mutually-exclusive-options
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig006-unknown-module-directive-flag
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig007-unknown-inline-directive-flag

@@ -42,6 +42,29 @@ To disable individual function checks add an inline comment similar to the examp
         SIG203: parameters missing (params-missing)
     1
 
+or for longer lists use disable-next to avoid lines that are too long
+
+.. code-block:: python
+
+    >>> from docsig import docsig
+
+.. code-block:: python
+
+    >>> string = '''
+    ... # docsig: disable-next=duplicate-params-found,params-out-of-order
+    ... # docsig: disable-next=spelling-error,confirm-return-needed
+    ... def function_1(param1, param2, param3):
+    ...     """Description summary.
+    ...
+    ...     :param para1: Description of param1.
+    ...     :param param3: Description of param3.
+    ...     :param param2: Description of param2.
+    ...     :param param2: Description of param2.
+    ...     """
+    ... '''
+    >>> docsig(string=string, no_ansi=True)
+    0
+
 To disable all function checks add a module level comment similar to the example below
 
 .. code-block:: python

@@ -27,12 +27,16 @@ class Comment(_Messages):
     """
 
     _valid_types = "enable", "disable"
+    _valid_flags = ("next",)
 
     def __init__(self, string: str, col: int) -> None:
         super().__init__()
         self._ismodule = col == 0
         parts = string.split("=")
-        self._type = parts[0]
+        subparts = parts[0].split("-")
+        self._type = subparts[0]
+        self._flag = None if len(subparts) == 1 else subparts[1]
+        self._isnext = self._flag == "next"
         if len(parts) == 1:
             self.extend(_E.all)
         else:
@@ -62,6 +66,21 @@ class Comment(_Messages):
     def disable(self) -> bool:
         """Whether this is a disable directive."""
         return self._type == self._valid_types[1]
+
+    @property
+    def isnext(self) -> bool:
+        """Whether this directive applies to the next line only."""
+        return self._isnext
+
+    @property
+    def isvalidflag(self) -> bool:
+        """Whether the directive flag (if any) is valid."""
+        return self._flag is None or self._flag in self._valid_flags
+
+    @property
+    def flag(self) -> str | None:
+        """Flag for this directive (e.g. next), or None."""
+        return self._flag
 
     @classmethod
     def parse(cls, comment: str, col: int) -> Comment | None:
@@ -96,6 +115,9 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
         directives = cls()
         fin = _StringIO(text)
         comments = Comments()
+        enable_next = False
+        next_comments = Comments(comments)
+        next_messages = _Messages(messages)
         for line in _tokenize.generate_tokens(fin.readline):
             # do nothing for these line types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
@@ -119,11 +141,29 @@ class Directives(_t.Dict[int, _t.Tuple[Comments, _Messages]]):
                             i for i in messages if i not in comment
                         )
 
+                    # if directive has a 'next' flag then alter the
+                    # module level scope, not the inline scope (which
+                    # behaves similar to next), so that inline
+                    # directives are included and not overwritten
+                    if comment.isnext and not enable_next:
+                        enable_next = True
+                        next_comments = Comments(comments)
+                        next_messages = _Messages(messages)
+
                     # if module level directive, then make changes
                     # globally
                     if comment.ismodule:
                         comments = scoped_comments
                         messages = scoped_messages
+
+            # if in a 'next' module level scope and the line type is a
+            # newline (not a comment to allow 'next' directives to be
+            # stacked) then leave the 'next' module level scope and
+            # reset the global messages to before the 'next' directive
+            elif enable_next and line.type != _tokenize.NL:
+                enable_next = False
+                comments = next_comments
+                messages = next_messages
 
             # check that a scoped message has not updated this first, as
             # they take precedence over global messages

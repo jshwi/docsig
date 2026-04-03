@@ -7573,3 +7573,51 @@ def function(a: str) -> str:
     @property
     def expected(self) -> str:
         return E[506].fstring(T)
+
+
+@_templates.register
+class _MInvalidDirectiveFlag(_BaseTemplate):
+    @property
+    def template(self) -> str:
+        return '''\
+# docsig: disable-nexto
+def function_1(a, b, c) -> None:
+    """Description summary.
+
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
+    """
+
+# docsig: disable-ext=SIG202
+def function_2(a, b) -> None:
+    """Description summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    :param c: Description of c.
+    """
+
+def function_3(  # docsig: enable-nexto=SIG202
+    a, b, c
+) -> None:
+    """Description summary.
+
+    :param a: Description of a.
+    :param b: Description of b.
+    """
+'''
+
+    @property
+    def expected(self) -> str:
+        return f"""\
+{PATH}:2 in function_1
+    {E[6].fstring(T).format(directive="disable", flag='nexto')}
+{PATH}:11 in function_2
+    {E[6].fstring(T).format(directive="disable", flag='ext')}
+    {E[6].fstring(T).format(directive="disable", flag='nexto')}
+{PATH}:19 in function_3
+    {E[6].fstring(T).format(directive="disable", flag='ext')}
+    {E[6].fstring(T).format(directive="disable", flag='nexto')}
+    {E[7].fstring(T).format(directive="enable", flag='nexto')}
+"""
