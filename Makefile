@@ -45,8 +45,7 @@ $(BUILD): .make/doctest \
 		.mypy_cache/CACHEDIR.TAG \
 		README.rst \
 		test-source \
-		docs/_build/html/index.html \
-		docs/_build/linkcheck/output.json
+		docs/_build/html/index.html
 	@$(POETRY) build
 	@touch $@
 
@@ -254,7 +253,7 @@ lint: .make/pylint .make/docsig
 lock-deps: poetry.lock
 
 #: publish distribution
-publish: $(BUILD)
+publish: $(BUILD) check-links
 	@$(POETRY) publish
 
 #: run tests on scripts
