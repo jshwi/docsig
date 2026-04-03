@@ -72,7 +72,7 @@ def function(a: Optional[int]) -> Optional[str]:
     assert E[502].ref not in std.out
 
 
-def test_no_fail_on_unicode_decode_error_384(
+def test_fix_handle_unicode_decode_error_384(
     tmp_path: Path,
     main: FixtureMain,
 ) -> None:
@@ -89,7 +89,7 @@ def test_no_fail_on_unicode_decode_error_384(
     assert main(pkl, test_flake8=False) == 0
 
 
-def test_exclude_dirs_392(
+def test_fix_handle_directory_exclude_patterns_392(
     monkeypatch: pytest.MonkeyPatch,
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
     make_tree: FixtureMakeTree,
@@ -130,7 +130,7 @@ def test_exclude_dirs_392(
     )
 
 
-def test_exclude_defaults_396(
+def test_fix_default_exclude_pattern_for_pycache_396(
     make_tree: FixtureMakeTree,
     patch_logger: io.StringIO,
     main: FixtureMain,
@@ -284,7 +284,7 @@ def test_exclude_defaults_396(
     assert all(i in patch_logger.getvalue() for i in expected)
 
 
-def test_sig401_false_positive_427(
+def test_fix_only_check_params_for_incorrect_indent_false_positives_427(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -347,7 +347,7 @@ def function(d, b, c, d) -> int:
     ],
     ids=["one", "two", "all"],
 )
-def test_indent_427(
+def test_fix_only_check_params_for_incorrect_indent_427(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -366,7 +366,7 @@ def test_indent_427(
     assert E[401].ref in std.out
 
 
-def test_class_and_class_constructor_452(
+def test_fix_disallow_both_class_args_with_flake8_452(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     flake8: FixtureFlake8,
@@ -394,7 +394,7 @@ def function(a, b, c) -> None:
     assert E[5].ref in std.out
 
 
-def test_description_missing_and_description_syntax_error_461(
+def test_fix_missing_description_with_multiple_args_461(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -423,7 +423,7 @@ def function(a, b) -> None:
     assert E[301].ref in std.out
 
 
-def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
+def test_fix_correctly_load_config_for_windows_488(
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
     patch_argv: FixturePatchArgv,
 ) -> None:
@@ -463,7 +463,7 @@ def test_config_not_correctly_loaded_when_running_pre_commit_on_windows_488(
     assert all(i in namespace.disable for i in disable)
 
 
-def test_properties_not_recognized_when_underneath_other_decorators_509(
+def test_fix_recognize_all_decorators_when_stacked_bottom_509(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -507,7 +507,7 @@ class Account(dict[str, _t.Any]):
     assert E[503].ref in std.out
 
 
-def test_properties_not_recognized_when_on_top_of_other_decorators_509(
+def test_fix_recognize_all_decorators_when_stacked_top_509(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -551,7 +551,7 @@ class Account(dict[str, _t.Any]):
     assert E[503].ref in std.out
 
 
-def test_no_erroneous_301_in_duplicate(
+def test_fix_description_missing_appears_in_duplicate_check_523(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -589,7 +589,7 @@ def function(
     assert E[301].ref not in std.out
 
 
-def test_handle_empty_symlinks(
+def test_fix_crash_with_broken_symlinks_531(
     tmp_path: Path,
     capsys: pytest.CaptureFixture,
     main: FixtureMain,
@@ -606,7 +606,7 @@ def test_handle_empty_symlinks(
     assert E[301].ref not in std.out
 
 
-def test_no_erroneous_402_when_order_cannot_be_confirmed(
+def test_fix_params_out_of_order_showing_on_single_doc542(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -633,7 +633,7 @@ class Transactions(_Transactions):
     assert E[402].ref not in std.out
 
 
-def test_fix_allow_or_operator_in_type_545(
+def test_fix_allow_binary_bitwise_operator_with_type_545(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -661,7 +661,7 @@ def function(a, **kwargs) -> None:
     assert E[304].ref.format(token="|") not in std.out
 
 
-def test_close_with_bitwise_operator_545(
+def test_fix_allow_binary_bitwise_operator_close_545(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -685,7 +685,7 @@ def function(**kwargs) -> None:
     assert E[304].ref.format(token="|") in std.out
 
 
-def test_recognise_yield_550(
+def test_fix_allow_yield_as_a_return_doc_550(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -717,7 +717,7 @@ def function(n: int) -> _t.Generator[int, None, None]:
     assert not std.out
 
 
-def test_sig401_false_positives_562(
+def test_fix_ignore_indents_within_directives_562(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -753,7 +753,7 @@ class Classy:
     assert not std.out
 
 
-def test_fix_incorrect_sig402_when_it_should_only_be_sig203(
+def test_fix_incorrect_params_out_of_order_only_sig203_660(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -789,7 +789,7 @@ class ChildTransactions(Transactions):
     assert E[404].ref not in std.out
 
 
-def test_fix_incorrect_sig402_when_it_should_also_be_sig203(
+def test_fix_incorrect_params_out_of_order_also_sig203_660(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -824,7 +824,7 @@ class ChildTransactions(Transactions):
     assert E[402].ref in std.out
 
 
-def test_fix_no_402_for_very_similar_names_683(
+def test_fix_incorrect_params_out_of_order_for_similar_names_683(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -850,7 +850,7 @@ def function(a, b, c, d) -> None:
     assert E[402].ref not in std.out
 
 
-def test_fix_incorrect_sig402_when_it_should_only_be_sig203_701(
+def test_fix_incorrect_params_out_of_order_701(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -935,7 +935,7 @@ def function(
     assert E[402].ref not in std.out
 
 
-def test_incorrect_sig301_with_both_sig202_and_sig402_707(
+def test_fix_incorrect_sig301_with_both_sig202_and_sig402_707(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
@@ -961,7 +961,7 @@ def function(a, b) -> None:
     assert E[301].ref not in std.out
 
 
-def test_fix_token_error_763(
+def test_fix_avoid_crash_on_token_error_763(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
@@ -980,7 +980,7 @@ which produces a TokenError."""
     assert main(".") == 0
 
 
-def test_prevent_parsing_file_for_directives_if_ast_parse_failed_770(
+def test_fix_parse_directives_after_ast_770(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
@@ -1013,7 +1013,7 @@ done
     assert main(".") == 0
 
 
-def test_fix_docsig_crashes_on_recursion_error_777(
+def test_fix_recursion_error_777(
     capsys: pytest.CaptureFixture,
     init_file: FixtureInitFile,
     main: FixtureMain,
