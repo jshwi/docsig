@@ -156,17 +156,11 @@ Everything should now be set up to make changes to the code
 
 docsig currently maintains 100% coverage and the pipeline will fail otherwise
 
-Tests are composed of string input, string expected tests, handled by
-[templatest](https://github.com/jshwi/templatest) - see
-[templatest documentation](https://github.com/jshwi/templatest/blob/master/README.rst)
+If an issue is being fixed add tests to `tests.fix_test`
 
-String input involves a function, its signature, and its docstring
+For anything else, add tests to `tests._test`
 
-String output includes expected error output (a passing test expects no output)
-
-Changes to tests should not need to be made in `tests._tests` but instead `tests.__init__`.
-
-Tests are organized into the following
+Base tests for core functionality are organized into the following
 [categories](https://docsig.io/en/latest/development/tests.html)
 
 ## Styleguides
