@@ -7971,7 +7971,7 @@ def test_ignore_no_params(
     template: str,
     expected: str,
 ) -> None:
-    """Test that failing funcs pass with `-i/--ignore-no-params` flag.
+    """Test that failing funcs pass with `--ignore-no-params` flag.
 
     ``SIG203``, ``SIG503``, ``SIG501``, and ``H102`` all indicate
     parameters missing from this docstring. These should not trigger
@@ -8039,7 +8039,7 @@ def test_no_check_property_returns_flag(
     main: FixtureMain,
     template: _Template,
 ) -> None:
-    """Test that passing property fails without a ``-P`` flag.
+    """Test passing prop fails without ``--check-property-returns``.
 
     Only test templates prefixed with ``PPropertyReturn`` are collected
     for this test, and all tests should fail.
@@ -8071,10 +8071,10 @@ def test_ignore_args(
     template: str,
     _: str,
 ) -> None:
-    """Test that for passing/failing tests with ``-a/--ignore-args``.
+    """Test that for passing/failing tests with ``--ignore-args``.
 
     Test that docs without args, where the signature contains args,
-    don’t fail with ``-a/--ignore-args``.
+    don’t fail with ``--ignore-args``.
 
     All templates containing args in their signature must have `WArgs` in
     their name.
