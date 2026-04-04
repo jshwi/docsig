@@ -342,7 +342,7 @@ class Failure(_t.List[Failed]):
 def report(
     failures: Failures,
     config: _Config,
-    path: str | None = None,
+    file: str | None = None,
 ) -> int:
     """Print failures to stdout and return the highest exit code.
 
@@ -351,13 +351,13 @@ def report(
 
     :param failures: Failures to print (one Failure per function).
     :param config: Config for ANSI and formatting.
-    :param path: Module path when failures came from a file (optional).
+    :param file: Module path when failures came from a file (optional).
     :return: Exit code (non-zero if any check failed).
     """
     retcodes = [0]
     for failure in failures:
         retcodes.append(failure.retcode)
-        path_prefix = f"{path}:" if path is not None else ""
+        path_prefix = f"{file}:" if file is not None else ""
         header = f"{path_prefix}{failure.lineno} in {failure.name}"
         if not config.no_ansi and _sys.stdout.isatty():
             header = f"\033[35m{header}\033[0m"

@@ -23,7 +23,7 @@ def parse_from_string(
     code: str,
     config: _Config,
     module_name: str = "",
-    path: _Path | None = None,
+    file: _Path | None = None,
 ) -> _Parent:
     """Build a Parent from a string of Python code.
 
@@ -34,13 +34,13 @@ def parse_from_string(
     :param code: Python source to parse.
     :param config: Configuration object.
     :param module_name: Module name, or empty string.
-    :param path: Path for the source (or None for stdin).
+    :param file: Path for the source (or None for stdin).
     :return: Parent for the parsed code or syntax error.
     """
     logger = _logging.getLogger(__package__)
-    source_name = path or "stdin"
+    source_name = file or "stdin"
     try:
-        node = _ast.parse(code, module_name, str(path))
+        node = _ast.parse(code, module_name, str(file))
         try:
             directives = _Directives.from_text(code, config.disable)
         except _TokenError as err:
@@ -51,7 +51,7 @@ def parse_from_string(
                 f"error parsing comments {err}".lower(),
             )
 
-        parent = _Parent(node, directives, path, config)
+        parent = _Parent(node, directives, file, config)
         logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
@@ -63,27 +63,27 @@ def parse_from_string(
     return parent
 
 
-def parse_from_file(path: _Path, config: _Config) -> _Parent:
+def parse_from_file(file: _Path, config: _Config) -> _Parent:
     """Build a Parent from a file containing Python code.
 
     Reads the file and delegates to parse_from_string. On UnicodeError,
     returns a Parent with a Unicode error. On syntax error and a non-.py
     path, returns an empty Parent (not treated as Python).
 
-    :param path: Path to the file to parse.
+    :param file: Path to the file to parse.
     :param config: Configuration object.
     :return: Parent for the parsed file or an error/empty Parent.
     """
     try:
-        code = path.read_text(encoding="utf-8")
-        module_name = str(path)[:-3].replace(_os.sep, ".").replace("-", "_")
-        parent = parse_from_string(code, config, module_name, path)
+        code = file.read_text(encoding="utf-8")
+        module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
+        parent = parse_from_string(code, config, module_name, file)
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
-        logger.debug(_FILE_INFO, path, str(err).replace("\n", " "))
+        logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
         parent = _Parent(error=_Error.UNICODE)
 
-    if parent.error is not None and not path.name.endswith(".py"):
+    if parent.error is not None and not file.name.endswith(".py"):
         parent = _Parent()
 
     return parent

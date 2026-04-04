@@ -17,7 +17,7 @@ from ._check import run_checks as _run_checks
 from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Ignore as _Ignore
-from ._files import Paths as _Paths
+from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
 from ._parsers import parse_from_string as _parse_from_string
 from ._report import Failures as _Failures
@@ -83,14 +83,14 @@ def handle_deprecations(
         disable.extend(messages)
 
 
-def runner(path: _Path, config: _Config) -> _Failures:
+def runner(file: _Path, config: _Config) -> _Failures:
     """Run checks for a single file and return collected failures.
 
-    :param path: Path to the file to check.
+    :param file: Path to the file to check.
     :param config: Configuration object.
     :return: Collected failures for the file.
     """
-    module = _parse_from_file(path, config)
+    module = _parse_from_file(file, config)
     return _run_checks(module, config)
 
 
@@ -211,10 +211,10 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return _report(failures, config)
 
     retcodes = [0]
-    paths = _Paths(path, config)
-    for path_ in paths:
-        failures = runner(path_, config)
-        retcode = _report(failures, config, str(path_))
+    files = _Files(path, config)
+    for file in files:
+        failures = runner(file, config)
+        retcode = _report(failures, config, str(file))
         retcodes.append(retcode)
 
     return max(retcodes)
