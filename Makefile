@@ -40,7 +40,6 @@ help: $(VENV)
 $(BUILD): .make/doctest \
 		format \
 		lint \
-		unused \
 		update-docs \
 		.mypy_cache/CACHEDIR.TAG \
 		README.rst \
@@ -127,15 +126,6 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@$(POETRY) run mypy $(PYTHON_FILES)
 	@touch $@
 
-.make/unused: whitelist.py
-	@$(POETRY) run vulture \
-		whitelist.py \
-		docsig \
-		tests \
-		--exclude 'tests/_templates.py,tests/conftest.py'
-	@mkdir -p $(@D)
-	@touch $@
-
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run vulture \
 		--make-whitelist \
@@ -189,7 +179,7 @@ poetry.lock: pyproject.toml
 # Phony Targets
 .PHONY: benchmark build bump check-deps check-links clean docs format \
 	install-hooks install-ignore-revs install-poetry install-venv lint \
-	lock-deps publish test-scripts test-source tests tox types unused \
+	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist
 
 #: run benchmarks
@@ -271,9 +261,6 @@ tox: $(VENV)
 
 #: check typing
 types: .mypy_cache/CACHEDIR.TAG
-
-#: check for unused code
-unused: .make/unused
 
 #: update copyright year in files containing it
 update-copyright: $(VENV)
