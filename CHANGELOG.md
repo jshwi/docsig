@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.82.0](https://github.com/jshwi/docsig/tree/v0.82.0) - 2026-04-04
+
+### Added
+
+- next directive flag ([#779](https://github.com/jshwi/docsig/issues/779))
+
 ## [0.81.3](https://github.com/jshwi/docsig/tree/v0.81.3) - 2026-04-01
 
 ### Fixed
