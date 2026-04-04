@@ -9,7 +9,7 @@ repo = Path(__file__).parent.parent
 
 
 def _replace_year(match: Match) -> str:
-    return f"{match.group(0)[:-4]}{datetime.now().year}"
+    return f"{match.group()[:-4]}{datetime.now().year}"
 
 
 files = {

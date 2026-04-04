@@ -182,7 +182,7 @@ class Test:
         cls.fragments.mkdir(exist_ok=True, parents=True)
         cls.pyproject = tmp_path / "pyproject.toml"
         cls.repo = git.Repo.init(tmp_path)
-        config = cls.repo.config_writer(config_level="repository")
+        config = cls.repo.config_writer()
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test.user@example.com")
         config.set_value("commit", "gpgsign", False)

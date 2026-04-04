@@ -74,7 +74,7 @@ def test_bump(  # pylint: disable=too-many-locals
     this = Path(__file__).parent.parent
     path = tmp_path / this.name
     repo = git.Repo.clone_from(this, path)
-    config = repo.config_writer(config_level="repository")
+    config = repo.config_writer()
     config.set_value("user", "name", "Test User")
     config.set_value("user", "email", "test.user@example.com")
     changelog = path / "changelog"
