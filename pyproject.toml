@@ -236,3 +236,14 @@ name = "Removed"
 
 [tool.towncrier.fragment.security]
 name = "Security"
+
+[tool.vulture]
+exclude = [
+  "tests/_templates.py",
+  "tests/conftest.py"
+]
+make_whitelist = true
+paths = [
+  "docsig",
+  "tests"
+]
