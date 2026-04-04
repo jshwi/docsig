@@ -31,7 +31,6 @@ from .messages import NEW as _NEW
 from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 from .messages import Message as _Message
-from .messages import Messages as _Messages
 
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
@@ -60,21 +59,17 @@ class Failure(_t.List[Failed]):
     violation.
 
     :param func: Function under check.
-    :param target: List of errors to target.
-    :param check_property_returns: Run return checks on properties.
+    :param config: Configuration object.
     """
 
-    def __init__(
-        self,
-        func: _Function,
-        target: _Messages,
-        check_property_returns: bool,
-    ) -> None:
+    def __init__(self, func: _Function, config: _Config) -> None:
         super().__init__()
         self._retcode = 0
         self._func = func
-        if target:
-            self._func.messages.extend(i for i in _E.all if i not in target)
+        if config.target:
+            self._func.messages.extend(
+                i for i in _E.all if i not in config.target
+            )
 
         self._name = self._func.name
         if (
@@ -98,7 +93,7 @@ class Failure(_t.List[Failed]):
                     sig = self._func.signature.args.get(index)
                     self._sig4xx_parameters(doc, sig)
 
-                self._sig5xx_returns(check_property_returns)
+                self._sig5xx_returns(config.check.property_returns)
 
         self.sort()
 

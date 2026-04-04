@@ -16,6 +16,8 @@ from enum import Enum as _Enum
 import astroid as _ast
 import sphinx.ext.napoleon as _s
 
+from ._config import Ignore as _Ignore
+
 # no function will accidentally have this name
 UNNAMED = "-1000"
 
@@ -154,29 +156,23 @@ class Param:
 class Params(_t.List[Param]):
     """A list-like collection of params.
 
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param ignore: Configuration object for what to ignore.
     """
 
-    def __init__(
-        self,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-    ) -> None:
+    def __init__(self, ignore: _Ignore) -> None:
         super().__init__()
-        self._ignore_args = ignore_args
-        self._ignore_kwargs = ignore_kwargs
+        self._ignore = ignore
         self._duplicates: list[Param] = []
 
     def append(self, value: Param) -> None:
         if not value.isprotected and any(
             (
                 value.kind == DocType.PARAM,
-                (value.kind == DocType.ARG and not self._ignore_args),
+                (value.kind == DocType.ARG and not self._ignore.args),
                 (
                     value.kind == DocType.KWARG
                     and not (
-                        self._ignore_kwargs
+                        self._ignore.kwargs
                         or any(i.kind == DocType.KWARG for i in self)
                     )
                 ),
@@ -223,12 +219,8 @@ class Params(_t.List[Param]):
 
 
 class _Stub:
-    def __init__(
-        self,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
-    ) -> None:
-        self._args = Params(ignore_args, ignore_kwargs)
+    def __init__(self, ignore: _Ignore | None = None) -> None:
+        self._args = Params(ignore or _Ignore())
         self._returns = False
 
     @property
@@ -247,18 +239,16 @@ class Signature(_Stub):
 
     :param rettype: Kind of return (none, some, untyped).
     :param returns: True if return is declared in the signature.
-    :param ignore_args: Ignore args prefixed with an asterisk.
-    :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+    :param ignore: Configuration object for what to ignore.
     """
 
     def __init__(
         self,
         rettype: RetType = RetType.NONE,
         returns: bool = False,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
+        ignore: _Ignore | None = None,
     ) -> None:
-        super().__init__(ignore_args, ignore_kwargs)
+        super().__init__(ignore or _Ignore())
         self._rettype = rettype
         self._returns = returns
 
@@ -266,19 +256,17 @@ class Signature(_Stub):
     def from_ast(
         cls,
         node: _ast.nodes.Module | _ast.nodes.ClassDef | _ast.nodes.FunctionDef,
-        ignore_args: bool = False,
-        ignore_kwargs: bool = False,
+        ignore: _Ignore,
     ) -> Signature:
         """Build Signature from a function or class AST node.
 
         :param node: AST node (function, class, or module).
-        :param ignore_args: Ignore args prefixed with an asterisk.
-        :param ignore_kwargs: Ignore kwargs prefixed with two asterisks.
+        :param ignore: Configuration object for what to ignore.
         :return: Signature with args and return type.
         """
         rettype = RetType.from_ast(node.returns)
         returns = rettype == RetType.SOME
-        signature = cls(rettype, returns, ignore_args, ignore_kwargs)
+        signature = cls(rettype, returns, ignore)
         # noinspection PyUnresolvedReferences
         for i in [
             a if isinstance(a, Param) else Param(name=a.name)

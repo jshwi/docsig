@@ -51,14 +51,7 @@ def parse_from_string(
                 f"error parsing comments {err}".lower(),
             )
 
-        parent = _Parent(
-            node,
-            directives,
-            path,
-            config.ignore.args,
-            config.ignore.kwargs,
-            config.check.class_constructor,
-        )
+        parent = _Parent(node, directives, path, config)
         logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
     except _ast.AstroidSyntaxError as err:
         logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
