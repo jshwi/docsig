@@ -364,7 +364,7 @@ class Config:
     target: _Messages = _field(default_factory=_Messages)
     disable: _Messages = _field(default_factory=_Messages)
     exclude: list[str] = _field(default_factory=list)
-    excludes: list[str] | None = None
+    excludes: list[str] = _field(default_factory=list)
     list_checks: bool = False
     include_ignored: bool = False
     no_ansi: bool = False

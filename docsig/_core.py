@@ -199,7 +199,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         target=target or _Messages(),
         disable=disable,
         exclude=exclude_,
-        excludes=excludes,
+        excludes=excludes or [],
     )
     setup_logger(config.verbose)
     if config.list_checks:
