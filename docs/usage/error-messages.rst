@@ -12,3 +12,8 @@
    :titlesonly:
 
    messages/sig903-recursion-error
+
+.. toctree::
+   :titlesonly:
+
+   messages/sig904-duplicates-found-in-mros

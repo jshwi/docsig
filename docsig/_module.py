@@ -35,6 +35,7 @@ ERRORS = (
     _ast.AstroidSyntaxError,
     UnicodeDecodeError,
     RecursionError,
+    _ast.DuplicateBasesError,
 )
 
 

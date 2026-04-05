@@ -329,6 +329,8 @@ class Failure(list[Failed]):
             self._add(_E[902])
         if self._func.error is RecursionError:
             self._add(_E[903])
+        if self._func.error is _ast.DuplicateBasesError:
+            self._add(_E[904])
 
     @property
     def name(self) -> str:

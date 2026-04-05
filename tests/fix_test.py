@@ -1542,3 +1542,42 @@ def fct() -> bool:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_docsig_crashes_on_duplicate_bases_error_783(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test fix docsig crashes on duplicates found in mros.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = """\
+from dataclasses import dataclass
+import typing as t
+from abc import ABC
+
+A = t.TypeVar("A")
+B = t.TypeVar("B", bound=t.SupportsFloat)
+C = t.TypeVar("C")
+
+
+class D(t.Protocol[B, A]): ...
+
+
+class E(D[B, A], t.Protocol[B, A, C]): ...
+
+
+class F(E[B, A, C], t.Generic[B, A, C], ABC): ...
+
+
+@dataclass(frozen=True)
+class G(F[B, A, C], t.Generic[B, A, C]): ...
+"""
+    init_file(template)
+    assert main(".") == 1
+    std = capsys.readouterr()
+    assert E[904].ref in std.out

@@ -267,5 +267,10 @@ E = MessageMap(
             "maximum recursion depth exceeded",
             "recursion-error",
         ),
+        904: Message(
+            "SIG904",
+            "duplicates found in mros",
+            "duplicates-found-in-mros",
+        ),
     },
 )
