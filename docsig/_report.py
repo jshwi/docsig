@@ -16,7 +16,6 @@ import typing as _t
 from warnings import warn as _warn
 
 import astroid as _ast
-from astroid.nodes.scoped_nodes import scoped_nodes as _scoped_nodes
 
 from ._config import Config as _Config
 from ._module import Function as _Function
@@ -75,7 +74,7 @@ class Failure(list[Failed]):
         if (
             self._func.parent is not None
             and self._func.parent.name
-            and not isinstance(self._func.parent, _scoped_nodes.Module)
+            and not isinstance(self._func.parent, _ast.nodes.Module)
         ):
             self._name = f"{self._func.parent.name}.{self._name}"
 
