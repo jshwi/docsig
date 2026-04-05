@@ -15,10 +15,10 @@ import sys as _sys
 import typing as _t
 from warnings import warn as _warn
 
+import astroid as _ast
 from astroid.nodes.scoped_nodes import scoped_nodes as _scoped_nodes
 
 from ._config import Config as _Config
-from ._module import Error as _Error
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
@@ -322,12 +322,12 @@ class Failure(list[Failed]):
 
     def _sig9xx_error(self) -> None:
         # invalid-syntax
-        if self._func.error == _Error.SYNTAX:
+        if self._func.error is _ast.AstroidSyntaxError:
             self._add(_E[901])
             self._retcode = 123
-        if self._func.error == _Error.UNICODE:
+        if self._func.error is UnicodeDecodeError:
             self._add(_E[902])
-        if self._func.error == _Error.RECURSION:
+        if self._func.error is RecursionError:
             self._add(_E[903])
 
     @property

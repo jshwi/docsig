@@ -15,7 +15,7 @@ import astroid as _ast
 from ._config import Config as _Config
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
-from ._module import Error as _Error
+from ._module import ERRORS as _ERRORS
 from ._module import Parent as _Parent
 
 
@@ -53,12 +53,9 @@ def parse_from_string(
 
         parent = _Parent(node, directives, file, config)
         logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
-    except _ast.AstroidSyntaxError as err:
+    except _ERRORS as err:
         logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.SYNTAX)
-    except RecursionError as err:
-        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.RECURSION)
+        parent = _Parent(error=type(err))
 
     return parent
 
@@ -81,7 +78,7 @@ def parse_from_file(file: _Path, config: _Config) -> _Parent:
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
-        parent = _Parent(error=_Error.UNICODE)
+        parent = _Parent(error=type(err))
 
     if parent.error is not None and not file.name.endswith(".py"):
         parent = _Parent()
