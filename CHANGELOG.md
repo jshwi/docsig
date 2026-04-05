@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.82.2](https://github.com/jshwi/docsig/tree/v0.82.2) - 2026-04-05
+
+### Fixed
+
+- duplicate bases error ([#783](https://github.com/jshwi/docsig/issues/783))
+
 ## [0.82.1](https://github.com/jshwi/docsig/tree/v0.82.1) - 2026-04-05
 
 ### Fixed
