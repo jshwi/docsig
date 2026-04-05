@@ -365,7 +365,7 @@ class Docstring(_Stub):
         # todo: we can start building return objects for more detailed
         # todo: checks that are in common with the params class
         match = _re.search(
-            ":(?:returns?|yields?):(.*)?",
+            r":(?:returns?|yields?):\s*(.*)",
             string,
             _re.IGNORECASE,
         )

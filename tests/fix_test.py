@@ -1516,3 +1516,29 @@ lambda s1, s2, s3, s4, s5, s6: (
     assert main(".") == 1
     std = capsys.readouterr()
     assert E[903].ref in std.out
+
+
+def test_fix_google_style_multiline_return_desc_false_positive_sig506_781(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Description of return on multiple lines generates an error.
+
+    This code uses Google style with a multiple line Returns comment. If
+    the long line is on a single line there is no error, but then
+    violates other rules with line length.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''\
+def fct() -> bool:
+    """Function.
+
+    Returns:
+        bool: Very long description
+            on multiple lines
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
