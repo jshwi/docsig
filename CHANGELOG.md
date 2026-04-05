@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.82.1](https://github.com/jshwi/docsig/tree/v0.82.1) - 2026-04-05
+
+### Fixed
+
+- false positive Google style SIG506 ([#781](https://github.com/jshwi/docsig/issues/781))
+
 ## [0.82.0](https://github.com/jshwi/docsig/tree/v0.82.0) - 2026-04-04
 
 ### Added
