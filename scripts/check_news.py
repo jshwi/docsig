@@ -163,10 +163,9 @@ class Test:
     commit_file: Path
     repo: git.Repo
 
-    @classmethod
     @pytest.fixture(autouse=True)
-    def setup_class(
-        cls,
+    def setup(
+        self,
         tmp_path: Path,
         monkeypatch: pytest.MonkeyPatch,
     ) -> None:
@@ -178,21 +177,21 @@ class Test:
         monkeypatch.chdir(tmp_path)
         this_pyproject = Path(__file__).parent.parent / "pyproject.toml"
         conf = tomli.loads(this_pyproject.read_text(encoding="utf-8"))
-        cls.fragments = tmp_path / "changelog"
-        cls.fragments.mkdir(exist_ok=True, parents=True)
-        cls.pyproject = tmp_path / "pyproject.toml"
-        cls.repo = git.Repo.init(tmp_path)
-        config = cls.repo.config_writer()
+        self.fragments = tmp_path / "changelog"
+        self.fragments.mkdir(exist_ok=True, parents=True)
+        self.pyproject = tmp_path / "pyproject.toml"
+        self.repo = git.Repo.init(tmp_path)
+        config = self.repo.config_writer()
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test.user@example.com")
         config.set_value("commit", "gpgsign", False)
-        conf["tool"]["towncrier"]["directory"] = str(cls.fragments)
+        conf["tool"]["towncrier"]["directory"] = str(self.fragments)
         del conf["tool"]["towncrier"]["template"]
-        cls.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
-        cls.repo.git.add(tmp_path)
-        cls.repo.git.commit(message="Initial commit")
-        cls.commit_file = tmp_path / ".git" / "COMMIT_EDITMSG"
-        monkeypatch.setattr("sys.argv", ["__main__.py", str(cls.commit_file)])
+        self.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
+        self.repo.git.add(tmp_path)
+        self.repo.git.commit(message="Initial commit")
+        self.commit_file = tmp_path / ".git" / "COMMIT_EDITMSG"
+        monkeypatch.setattr("sys.argv", ["__main__.py", str(self.commit_file)])
 
     def _touch_unique_file(self) -> None:
         Path(self.repo.git.rev_parse("HEAD")).touch()
