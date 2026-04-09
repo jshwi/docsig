@@ -38,6 +38,8 @@ ERRORS = (
     _ast.DuplicateBasesError,
 )
 
+_DEFAULT_NAME = "module"
+
 
 class Parent:  # pylint: disable=too-many-instance-attributes
     """Container for functions or methods (module, class, or function).
@@ -74,7 +76,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         self._imports = imports or _Imports()
         self._overloads = _Overloads()
         if node is None:
-            self._name = "module"
+            self._name = _DEFAULT_NAME
             if not isinstance(self, Function) and error is not None:
                 self._children.append(Function(file, error=error))
         else:
