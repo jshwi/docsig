@@ -17,6 +17,7 @@ TEMPLATE = "{ref}: {description} ({symbolic})"
 #: Flake8 template to format message strings.
 FLAKE8 = "{ref} {description} ({symbolic})"
 
+#: Template for future messages that don't raise a violation yet
 NEW = "{ref} is a new violation and will error in a future version"
 
 
