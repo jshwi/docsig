@@ -83,6 +83,10 @@ def parse_from_file(file: _Path, config: _Config) -> _Parent:
         logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
         parent = _Parent(error=type(err))
 
+    # not all python files end with .py, but considering this isn't a
+    # *.py file and there was an error parsing the file it's likely not
+    # meant to bea a python file
+    # return empty parent without the error
     if parent.error is not None and not file.name.endswith(".py"):
         parent = _Parent()
 

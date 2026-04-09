@@ -134,6 +134,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     if exclude is not None:
         exclude_.append(exclude)
 
+    # while some params could be taken out for one time use (such as
+    # verbose), bundling all the configuration together makes it easier
+    # to report what args were provided in verbose mode
     check = _Check(
         class_=check_class,
         class_constructor=check_class_constructor,
