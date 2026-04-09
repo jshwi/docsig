@@ -79,6 +79,7 @@ def parse_from_file(file: _Path, config: _Config) -> _Parent:
         code = file.read_text(encoding="utf-8")
         module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
         parent = parse_from_string(code, config, module_name, file)
+
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
