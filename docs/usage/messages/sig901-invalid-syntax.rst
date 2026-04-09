@@ -11,6 +11,6 @@ This is only raised for files ending in ``.py``, all other files will be ignored
 
 .. code-block:: console
 
-    $ docsig py2.py
-    py2.py:0 in module
+    $ docsig example.py
+    example.py:0 in module
         SIG901: parsing python code failed: invalid syntax (syntax-error)
