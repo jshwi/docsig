@@ -11,4 +11,4 @@
 Please don't report security-related issues, vulnerabilities, or bugs
 including sensitive information to the issue tracker, or elsewhere in
 public. Instead, please send sensitive bugs by email to
-<stephen@jshwisolutions.com>.
+<s.whitlock@live.com>.

@@ -103,7 +103,7 @@ non_interactive = true
 
 [tool.poetry]
 authors = [
-  "jshwi <stephen@jshwisolutions.com>"
+  "jshwi <s.whitlock@live.com>"
 ]
 description = "Check signature params for proper documentation"
 documentation = "https://docsig.io/en/latest"
@@ -117,7 +117,7 @@ keywords = [
 ]
 license = "MIT"
 maintainers = [
-  "jshwi <stephen@jshwisolutions.com>"
+  "jshwi <s.whitlock@live.com>"
 ]
 name = "docsig"
 readme = "README.rst"
