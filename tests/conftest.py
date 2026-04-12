@@ -96,6 +96,7 @@ def fixture_main(
 
     def _main(
         *args: str,
+        test_main: bool = True,
         test_flake8: bool = True,
         no_ansi: bool = True,
     ) -> str | int:
@@ -105,11 +106,18 @@ def fixture_main(
             argv.append("--no-ansi")
 
         monkeypatch.setattr("sys.argv", argv)
-        retcode = docsig.main()
+        retcode = 0
+        if test_main:
+            retcode = docsig.main()  # type: ignore
+
         if test_flake8:
             flake8_retcode = flake8(
                 *[str(a).replace("--", "--sig-") for a in args],
             )
+
+            if not test_main:
+                retcode = flake8_retcode
+
             assert flake8_retcode == retcode
 
         return retcode
