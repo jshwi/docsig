@@ -5,8 +5,6 @@ docsig._core
 Entry point and orchestration for running docstring/signature checks.
 """
 
-from __future__ import annotations as _
-
 import logging as _logging
 import sys as _sys
 from pathlib import Path as _Path

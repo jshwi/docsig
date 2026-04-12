@@ -3,8 +3,6 @@ docsig._check
 =============
 """
 
-from __future__ import annotations as _
-
 from ._config import Config as _Config
 from ._module import Function as _Function
 from ._module import Parent as _Parent

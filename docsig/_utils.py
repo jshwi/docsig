@@ -5,8 +5,6 @@ docsig._utils
 Shared helpers.
 """
 
-from __future__ import annotations as _
-
 import re as _re
 import sys as _sys
 from difflib import SequenceMatcher as _SequenceMatcher

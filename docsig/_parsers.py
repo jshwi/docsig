@@ -3,8 +3,6 @@ docsig._parsers
 ===============
 """
 
-from __future__ import annotations as _
-
 import logging as _logging
 import os as _os
 from pathlib import Path as _Path

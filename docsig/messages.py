@@ -6,8 +6,6 @@ Error message definitions (Message, MessageMap, E) and format templates
 for docstring-check output.
 """
 
-from __future__ import annotations as _
-
 import typing as _t
 
 #: Error code for unknown errors.
