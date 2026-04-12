@@ -8,8 +8,6 @@ issue), Failures (sequence of failures), and report() to print them and
 return the highest exit code.
 """
 
-from __future__ import annotations as _
-
 import contextlib as _contextlib
 import sys as _sys
 import typing as _t

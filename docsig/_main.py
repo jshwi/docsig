@@ -5,8 +5,6 @@ docsig._main
 CLI entry point that parses args and runs docsig.
 """
 
-from __future__ import annotations as _
-
 import sys as _sys
 import warnings as _warnings
 

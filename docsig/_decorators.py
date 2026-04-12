@@ -3,8 +3,6 @@ docsig._decorators
 ==================
 """
 
-from __future__ import annotations as _
-
 import functools as _functools
 import sys as _sys
 import typing as _t

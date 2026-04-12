@@ -5,8 +5,6 @@ docsig._files
 Path collection and filtering for files to check.
 """
 
-from __future__ import annotations as _
-
 import logging as _logging
 import os as _os
 import re as _re

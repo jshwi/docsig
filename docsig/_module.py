@@ -5,8 +5,6 @@ docsig._module
 AST-backed modules, classes, and functions for docstring checking.
 """
 
-from __future__ import annotations as _
-
 import re as _re
 import typing as _t
 from pathlib import Path as _Path
