@@ -575,14 +575,7 @@ def function(a, b, c) -> None:
     init_file(t2, Path("module") / "file2.py")
     init_file(t3, Path("module") / "file3.py")
     init_file(t4, Path("module") / "file4.py")
-    assert (
-        main(
-            ".",
-            *CHECK_ARGS,
-            test_flake8=False,  # won't need, flake runs one file at a time
-        )
-        == 1
-    )
+    assert main(".", *CHECK_ARGS) == 1
 
 
 def test_sys_excepthook(
@@ -632,7 +625,7 @@ class ArgumentParser(_a.ArgumentParser):
         """
 '''
     init_file(template)
-    main(".", "--ignore-args", "--ignore-kwargs", test_flake8=False)
+    main(".", "--ignore-args", "--ignore-kwargs")
     std = capsys.readouterr()
     assert E[202].ref in std.out
 
