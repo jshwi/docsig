@@ -119,7 +119,7 @@ def test_fix_handle_directory_exclude_patterns_392(
             "parent": {"src": {"design": {"file3.py": []}}},
         },
     )
-    main(".", test_flake8=False)
+    main(".")
     assert not any(
         i in paths_list[0]
         for i in [
@@ -143,7 +143,7 @@ def test_fix_default_exclude_pattern_for_pycache_396(
     """
     make_tree(TREE)
     Path(".gitignore").unlink()
-    main(".", "--verbose", test_flake8=False)
+    main(".", "--verbose")
     expected = [
         f"{Path('.pyaud_cache/7.5.1/CACHEDIR.TAG')}: in gitignore, skipping",
         f"{Path('.pyaud_cache/7.5.1/files.json')}: in gitignore, skipping",
@@ -361,7 +361,7 @@ def test_fix_only_check_params_for_incorrect_indent_427(
     :param template: Python code.
     """
     init_file(template)
-    main(".", test_flake8=False)
+    main(".")
     std = capsys.readouterr()
     assert E[401].ref in std.out
 
@@ -418,7 +418,7 @@ def function(a, b) -> None:
     """
 '''
     init_file(template)
-    main(".", test_flake8=False)
+    main(".")
     std = capsys.readouterr()
     assert E[301].ref in std.out
 
@@ -501,8 +501,8 @@ class Account(dict[str, _t.Any]):
         """Docstring summary."""
 '''
     init_file(template)
-    assert not main(".", test_flake8=False)
-    main(".", "--check-property-returns", test_flake8=False)
+    assert not main(".")
+    main(".", "--check-property-returns")
     std = capsys.readouterr()
     assert E[503].ref in std.out
 
@@ -545,8 +545,8 @@ class Account(dict[str, _t.Any]):
         """Docstring summary."""
 '''
     init_file(template)
-    assert not main(".", test_flake8=False)
-    main(".", "--check-property-returns", test_flake8=False)
+    assert not main(".")
+    main(".", "--check-property-returns")
     std = capsys.readouterr()
     assert E[503].ref in std.out
 
