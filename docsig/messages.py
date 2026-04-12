@@ -17,9 +17,7 @@ TEMPLATE = "{ref}: {description} ({symbolic})"
 #: Flake8 template to format message strings.
 FLAKE8 = "{ref} {description} ({symbolic})"
 
-NEW = """\
-{ref} is a new violation and will error in a future version\
-"""
+NEW = "{ref} is a new violation and will error in a future version"
 
 
 class Messages(list["Message"]):
