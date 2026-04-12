@@ -291,6 +291,23 @@ class Ignore:
     kwargs: bool = False
 
 
+@_dataclass
+# pylint: disable-next=too-few-public-methods
+class Filters:
+    """Configuration for which paths to filter.
+
+    :param exclude: Regular expression of files and dirs to exclude from
+        checks.
+    :param excludes: Files or dirs to exclude from checks.
+    :param include_ignored: Check files even if they match a gitignore
+        pattern.
+    """
+
+    exclude: list[str] = _field(default_factory=list)
+    excludes: list[str] = _field(default_factory=list)
+    include_ignored: bool = False
+
+
 @_dataclass(frozen=True)
 # pylint: disable-next=too-many-instance-attributes,too-few-public-methods
 class Config:
@@ -302,11 +319,9 @@ class Config:
 
     check: Check = _field(default_factory=Check)
     ignore: Ignore = _field(default_factory=Ignore)
+    filters: Filters = _field(default_factory=Filters)
     target: _Messages = _field(default_factory=_Messages)
     disable: _Messages = _field(default_factory=_Messages)
-    exclude: list[str] = _field(default_factory=list)
-    excludes: list[str] = _field(default_factory=list)
     list_checks: bool = False
-    include_ignored: bool = False
     no_ansi: bool = False
     verbose: bool = False

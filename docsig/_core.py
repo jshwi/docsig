@@ -16,6 +16,7 @@ from . import _decorators
 from ._check import run_checks as _run_checks
 from ._config import Check as _Check
 from ._config import Config as _Config
+from ._config import Filters as _Filters
 from ._config import Ignore as _Ignore
 from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
@@ -150,17 +151,20 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         args=ignore_args,
         kwargs=ignore_kwargs,
     )
+    filters = _Filters(
+        include_ignored=include_ignored,
+        exclude=exclude_,
+        excludes=excludes or [],
+    )
     config = _Config(
         list_checks=list_checks,
-        include_ignored=include_ignored,
         check=check,
         ignore=ignore,
+        filters=filters,
         no_ansi=no_ansi,
         verbose=verbose,
         target=target or _Messages(),
         disable=disable or _Messages(),
-        exclude=exclude_,
-        excludes=excludes or [],
     )
     setup_logger(config.verbose)
     logger = _logging.getLogger(__package__)
@@ -174,7 +178,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         return _report(failures, config)
 
     retcodes = [0]
-    files = _Files(path, config)
+    files = _Files(path, config.filters)
     for file in files:
         failures = runner(file, config)
         retcode = _report(failures, config, str(file))
