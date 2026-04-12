@@ -313,6 +313,14 @@ class Config:
 
     Groups check, ignore settings, and run options so the core runner
     takes a single config object instead of many parameters.
+
+    :param check: Configuration for which docstrings and members to
+        check.
+    :param ignore: Configuration for which docstring elements to ignore.
+    :param filters: Configuration for which paths to filter.
+    :param target: List of errors to target.
+    :param disable: List of errors to disable.
+    :param no_ansi: Disable ANSI output.
     """
 
     check: Check = _field(default_factory=Check)
