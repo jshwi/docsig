@@ -16,7 +16,7 @@ from pathspec import PathSpec as _PathSpec
 from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 from wcmatch.pathlib import Path as _WcPath
 
-from ._config import Config as _Config
+from ._config import Filters as _Filters
 
 FILE_INFO = "%s: %s"
 
@@ -74,16 +74,16 @@ class Files(list[_Path]):
     """Collect paths to check (gitignore and exclude applied).
 
     :param paths: Path(s) to collect (files or directories).
-    :param config: Configuration object.
+    :param filters: Filters object.
     """
 
     def __init__(
         self,
         paths: tuple[str | _Path, ...],
-        config: _Config,
+        filters: _Filters,
     ) -> None:
         super().__init__()
-        self._include_ignored = config.include_ignored
+        self._include_ignored = filters.include_ignored
         self._gitignore = _Gitignore()
         logger = _logging.getLogger(__package__)
         for path in paths:
@@ -91,8 +91,8 @@ class Files(list[_Path]):
 
         for path in list(self):
             if str(path) != "." and (
-                any(_re.match(i, str(path)) for i in config.exclude)
-                or any(_glob(path, i) for i in config.excludes)
+                any(_re.match(i, str(path)) for i in filters.exclude)
+                or any(_glob(path, i) for i in filters.excludes)
             ):
                 logger.debug(FILE_INFO, path, "in exclude list, skipping")
                 self.remove(path)
