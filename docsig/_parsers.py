@@ -25,9 +25,9 @@ def parse_from_string(
 ) -> _Parent:
     """Build a Parent from a string of Python code.
 
-    Parses AST and comment directives (AST does not include comments,
-    so directives are parsed separately). On syntax error, returns a
-    Parent with an error set.
+    Parses AST and comment directives (AST does not include comments, so
+    directives are parsed separately). On syntax error, returns a Parent
+    with an error set.
 
     :param code: Python source to parse.
     :param config: Configuration object.
