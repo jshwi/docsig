@@ -341,16 +341,25 @@ def test_bash_script(
     assert main(".") == 0
 
 
+@pytest.mark.parametrize(
+    "test_main,test_flake8",
+    [(True, False), (False, True)],
+    ids=["main-verbose", "flake8-verbose"],
+)
 def test_verbose(
     init_file: FixtureInitFile,
     patch_logger: io.StringIO,
     main: FixtureMain,
+    test_main: bool,
+    test_flake8: bool,
 ) -> None:
     """Test verbose.
 
     :param init_file: Initialize a test file.
     :param patch_logger: Logs as an io instance.
     :param main: Mock ``main`` function.
+    :param test_main: Whether to test main.
+    :param test_flake8: Whether to test flake8.
     """
     template = '''\
 def function_1(a, b, c) -> None:
@@ -362,7 +371,7 @@ def function_1(a, b, c) -> None:
     """
 '''
     init_file(template)
-    main(".", "--verbose", test_flake8=False)
+    main(".", "--verbose", test_main=test_main, test_flake8=test_flake8)
     assert "parsing python code successful" in patch_logger.getvalue()
 
 
