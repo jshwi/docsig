@@ -5,8 +5,6 @@ docsig._config
 Config dataclasses, pyproject.toml loader, and commandline.
 """
 
-from __future__ import annotations as _
-
 import argparse as _argparse
 import os as _os
 import re as _re
