@@ -5,4 +5,9 @@ from ._core import docsig
 from ._main import main
 from ._version import __version__
 
-__all__ = ["__version__", "docsig", "main", "messages"]
+__all__ = [
+    "__version__",
+    "docsig",
+    "main",
+    "messages",
+]
