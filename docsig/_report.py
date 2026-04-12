@@ -2,10 +2,7 @@
 docsig._report
 ==============
 
-Collect and format docstring-check failures for reporting. This module
-defines Failure (per-function validation results), Failed (one reported
-issue), Failures (sequence of failures), and report() to print them and
-return the highest exit code.
+Format and print docstring-check diagnostics for CLI and tooling.
 """
 
 import contextlib as _contextlib
@@ -74,7 +71,7 @@ class Failures(list["_FunctionChecker"]):
 
 @_dataclass(frozen=True, order=True)
 class Diagnostic:  # pylint: disable=too-few-public-methods
-    """Single reported issue."""
+    """Single reported issue for one function."""
 
     name: str
     ref: str
@@ -446,12 +443,13 @@ def report(
     config: _Config,
     file: str | None = None,
 ) -> int:
-    """Print failures to stdout and return the highest exit code.
+    """Print failures and return the highest exit code.
 
     Iterates over failures, prints each with path, line header, and
     messages, then returns the maximum retcode (0 or non-zero).
 
-    :param failures: Failures to print (one Failure per function).
+    :param failures: Failures to print (one FunctionResult per
+        function).
     :param config: Config for ANSI and formatting.
     :param file: Module path when failures came from a file (optional).
     :return: Exit code (non-zero if any check failed).
