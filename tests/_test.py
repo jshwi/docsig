@@ -352,9 +352,18 @@ def test_verbose(
     :param patch_logger: Logs as an io instance.
     :param main: Mock ``main`` function.
     """
-    init_file(WILL_ERROR, Path("module") / "file")
+    template = '''\
+def function_1(a, b, c) -> None:
+    """Docstring summary.
+
+    :param b: Description of b.
+    :param c: Description of c.
+    :param a: Description of a.
+    """
+'''
+    init_file(template)
     main(".", "--verbose", test_flake8=False)
-    assert "invalid syntax" in patch_logger.getvalue()
+    assert "parsing python code successful" in patch_logger.getvalue()
 
 
 def test_no_color_with_pipe(
