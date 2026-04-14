@@ -1,6 +1,6 @@
 """
-docsig.plugin
-=============
+docsig.plugin._flake8
+=====================
 
 Flake8 plugin entry point that runs docsig checks and reports as flake8
 errors.
@@ -14,17 +14,17 @@ from argparse import SUPPRESS as _SUPPRESS
 from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
-from ._config import Check as _Check
-from ._config import Config as _Config
-from ._config import Ignore as _Ignore
-from ._config import get_config as _get_config
-from ._config import merge_configs as _merge_configs
-from ._core import handle_deprecations as _handle_deprecations
-from ._core import runner as _runner
-from ._core import setup_logger as _setup_logger
-from ._version import __version__
-from .messages import FLAKE8 as _FLAKE8
-from .messages import E as _E
+from .._config import Check as _Check
+from .._config import Config as _Config
+from .._config import Ignore as _Ignore
+from .._config import get_config as _get_config
+from .._config import merge_configs as _merge_configs
+from .._core import handle_deprecations as _handle_deprecations
+from .._core import runner as _runner
+from .._core import setup_logger as _setup_logger
+from .._version import __version__
+from ..messages import FLAKE8 as _FLAKE8
+from ..messages import E as _E
 
 _Flake8Error = tuple[int, int, str, type[_t.Any]]
 _sys.path.append(_os.path.abspath(_os.getcwd()))
