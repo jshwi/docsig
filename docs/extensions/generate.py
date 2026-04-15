@@ -15,7 +15,6 @@ from sphinx.application import Sphinx
 from docsig.plugin import ValidatePyproject
 
 DOCS_DIR = Path(__file__).parent.parent.absolute()
-USAGE = DOCS_DIR / "usage"
 GENERATED = DOCS_DIR / "_generated"
 GITIGNORE = GENERATED / ".gitignore"
 REPO = DOCS_DIR.parent
