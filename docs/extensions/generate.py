@@ -16,9 +16,7 @@ from docsig.plugin import ValidatePyproject
 
 DOCS_DIR = Path(__file__).parent.parent.absolute()
 USAGE = DOCS_DIR / "usage"
-CONFIGURATION = USAGE / "configuration"
 GENERATED = DOCS_DIR / "_generated"
-MESSAGES_DIR = USAGE / "messages"
 GITIGNORE = GENERATED / ".gitignore"
 REPO = DOCS_DIR.parent
 README = REPO / "README.rst"
@@ -90,8 +88,6 @@ def make_generated_dir() -> None:
     if GENERATED.is_dir():
         shutil.rmtree(GENERATED)
 
-    MESSAGES_DIR.mkdir(exist_ok=True, parents=True)
-    CONFIGURATION.mkdir(exist_ok=True, parents=True)
     GENERATED.mkdir(exist_ok=True, parents=True)
     GITIGNORE.write_text("*", encoding="utf-8")
 
