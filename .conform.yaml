@@ -37,4 +37,5 @@ policies:
           - changelog
           - readme
           - pre-commit
+          - extension
         descriptionLength: 72
