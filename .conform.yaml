@@ -38,4 +38,5 @@ policies:
           - readme
           - script
           - pre-commit
+          - extension
         descriptionLength: 72
