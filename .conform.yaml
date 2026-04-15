@@ -37,4 +37,5 @@ policies:
           - changelog
           - readme
           - script
+          - pre-commit
         descriptionLength: 72
