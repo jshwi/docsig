@@ -90,7 +90,7 @@ repos:
           - commit-msg
       - id: check-news
         name: check news
-        entry: poetry run python scripts/check_news.py
+        entry: make .make/test-check-news
         language: system
         stages:
           - commit-msg
