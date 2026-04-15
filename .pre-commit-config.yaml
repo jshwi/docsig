@@ -84,7 +84,7 @@ repos:
           - pre-commit
       - id: commit-fix
         name: test fix
-        entry: poetry run python scripts/commit_fix.py
+        entry: bin/poetry/bin/poetry run python scripts/commit_fix.py
         language: system
         stages:
           - commit-msg
