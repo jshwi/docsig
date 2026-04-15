@@ -85,9 +85,6 @@ def get_docsig_help() -> t.Optional[str]:
 @extension
 def make_generated_dir() -> None:
     """Make dir for generated files and make sure it is ignored."""
-    if GENERATED.is_dir():
-        shutil.rmtree(GENERATED)
-
     GENERATED.mkdir(exist_ok=True, parents=True)
     GITIGNORE.write_text("*", encoding="utf-8")
 
