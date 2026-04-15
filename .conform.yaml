@@ -39,4 +39,5 @@ policies:
           - script
           - pre-commit
           - package
+          - contributing
         descriptionLength: 72
