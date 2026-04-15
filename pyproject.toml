@@ -225,6 +225,9 @@ name = "Changed"
 [tool.towncrier.fragment.deprecate]
 name = "Deprecated"
 
+[tool.towncrier.fragment.feat]
+name = "Feature"
+
 [tool.towncrier.fragment.fix]
 name = "Fixed"
 
