@@ -39,4 +39,5 @@ policies:
           - script
           - pre-commit
           - extension
+          - package
         descriptionLength: 72
