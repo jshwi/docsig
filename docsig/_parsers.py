@@ -52,9 +52,13 @@ def parse_from_string(
             )
 
         parent = _Parent(node, directives, file, config)
-        logger.debug(_FILE_INFO, source_name, "Parsing Python code successful")
+        logger.debug(_FILE_INFO, source_name, "parsing python code successful")
     except _ERRORS as err:
-        logger.debug(_FILE_INFO, source_name, str(err).replace("\n", " "))
+        logger.debug(
+            _FILE_INFO,
+            source_name,
+            str(err).replace("\n", " ").lower(),
+        )
         parent = _Parent(error=type(err))
 
     return parent
