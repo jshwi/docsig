@@ -39,4 +39,5 @@ policies:
           - pre-commit
           - extension
           - contributing
+          - ai
         descriptionLength: 72
