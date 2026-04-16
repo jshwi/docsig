@@ -32,4 +32,5 @@ policies:
         scopes:
           - deps
           - deps-dev
+          - policy
         descriptionLength: 72
