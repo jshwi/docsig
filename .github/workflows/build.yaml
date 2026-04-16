@@ -49,14 +49,6 @@ jobs:
           key: >
             poetry-${{ runner.os }}-${{
               steps.get-poetry-version.outputs.version}}
-      - name: Cache Virtualenv
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: >
-            ${{ matrix.os }}-python${{ matrix.python-version }}-${{
-              hashFiles('poetry.lock')}}
-          restore-keys: "${{ matrix.os }}-python${{ matrix.python-version }}-"
       - name: Build
         id: build
         run: make build
