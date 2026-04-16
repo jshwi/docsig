@@ -40,4 +40,5 @@ policies:
           - pre-commit
           - extension
           - package
+          - ai
         descriptionLength: 72
