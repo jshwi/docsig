@@ -43,4 +43,5 @@ policies:
           - plugin
           - make
           - editorconfig
+          - ai
         descriptionLength: 72
