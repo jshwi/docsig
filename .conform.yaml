@@ -49,4 +49,5 @@ policies:
           - gitignore
           - ide
           - vscode-extension
+          - ai
         descriptionLength: 72
