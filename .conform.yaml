@@ -35,4 +35,5 @@ policies:
           - policy
           - project
           - changelog
+          - readme
         descriptionLength: 72
