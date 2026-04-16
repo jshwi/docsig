@@ -40,4 +40,5 @@ policies:
           - extension
           - contributing
           - ai
+          - package
         descriptionLength: 72
