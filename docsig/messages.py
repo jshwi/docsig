@@ -198,7 +198,7 @@ E = MessageMap(
         #: SIG4xx Parameters
         401: Message(
             "SIG401",
-            "param not indented correctly",
+            "parameter not indented correctly",
             "incorrect-indent",
         ),
         402: Message(

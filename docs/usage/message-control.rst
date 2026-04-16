@@ -55,7 +55,7 @@ Commandline
         SIG203: parameters missing (params-missing)
         SIG301: description missing from parameter (description-missing)
         SIG302: syntax error in description (syntax-error-in-description)
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
         SIG503: return missing from docstring (return-missing)
     1
 
@@ -65,7 +65,7 @@ Commandline
     2 in function
         SIG301: description missing from parameter (description-missing)
         SIG302: syntax error in description (syntax-error-in-description)
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
         SIG503: return missing from docstring (return-missing)
     1
 
@@ -109,7 +109,7 @@ Directives
     >>> docsig(string=string, disable=["SIG203"], no_ansi=True)
     2 in function
         SIG302: syntax error in description (syntax-error-in-description)
-        SIG401: param not indented correctly (incorrect-indent)
+        SIG401: parameter not indented correctly (incorrect-indent)
         SIG503: return missing from docstring (return-missing)
     1
 
