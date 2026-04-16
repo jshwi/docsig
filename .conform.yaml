@@ -33,4 +33,5 @@ policies:
           - deps
           - deps-dev
           - policy
+          - project
         descriptionLength: 72
