@@ -34,4 +34,5 @@ policies:
           - deps-dev
           - policy
           - project
+          - changelog
         descriptionLength: 72
