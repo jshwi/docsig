@@ -11,6 +11,7 @@ import logging as _logging
 import sys as _sys
 import warnings as _warnings
 from pathlib import Path as _Path
+from pprint import pformat as _pformat
 
 from . import _decorators
 from ._check import run_checks as _run_checks
@@ -202,6 +203,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         excludes=excludes or [],
     )
     setup_logger(config.verbose)
+    logger = _logging.getLogger(__package__)
+    logger.debug(_pformat(config))
     if config.list_checks:
         return int(bool(_print_checks()))  # type: ignore
 
