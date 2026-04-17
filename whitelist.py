@@ -1,4 +1,4 @@
-Docsig  # unused class (docsig/plugin.py:33)
+Flake8  # unused class (docsig/plugin.py:33)
 off_by_default  # unused variable (docsig/plugin.py:41)
 version  # unused variable (docsig/plugin.py:43)
 _.add_options  # unused method (docsig/plugin.py:54)

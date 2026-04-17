@@ -30,7 +30,7 @@ _Flake8Error = tuple[int, int, str, type[_t.Any]]
 _sys.path.append(_os.path.abspath(_os.getcwd()))
 
 
-class Docsig:
+class Flake8:
     """Plugin that runs docsig on a file and yields flake8 errors.
 
     :param tree: Parsed AST module (unused; flake8 requires it for the

@@ -173,7 +173,7 @@ pytest-xdist = "^3.6.1"
 templatest = ">=0.10.1,<0.13.0"
 
 [tool.poetry.plugins."flake8.extension"]
-SIG = "docsig.plugin:Docsig"
+SIG = "docsig.plugin:Flake8"
 
 [tool.poetry.scripts]
 docsig = "docsig.__main__:main"
