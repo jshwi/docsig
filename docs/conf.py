@@ -51,6 +51,8 @@ extensions = [
     "sphinx_copybutton",
     "generate",
     "sphinx_sitemap",
+    "files",
+    "sphinx-jsonschema",
 ]
 
 sitemap_url_scheme = "{lang}latest/{link}"

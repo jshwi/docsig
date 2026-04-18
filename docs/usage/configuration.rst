@@ -10,6 +10,8 @@ below.
 
 .. include:: ../_generated/pyproject-toml-example.rst
 
+.. include:: ../_generated/pyproject-schema-info.rst
+
 Commandline
 -----------
 

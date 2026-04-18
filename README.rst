@@ -143,6 +143,20 @@ Options can also be configured with the pyproject.toml file
         "SIG201",
     ]
 
+.. schema-info start
+
+.. _here: https://docsig.io/en/latest/usage/configuration/schema.html
+
+.. _schema: https://docsig.io/en/latest/usage/configuration/schema.json
+
+.. _validate-pyproject: https://github.com/abravalheri/validate-pyproject
+
+Configuration options can be found `here`_ or see the full JSON `schema`_
+
+You can validate your `docsig` configuration with `validate-pyproject`_
+
+.. schema-info end
+
 Flake8
 ******
 

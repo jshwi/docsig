@@ -637,6 +637,21 @@ files = [
 testing = ["hatch", "pre-commit", "pytest", "tox"]
 
 [[package]]
+name = "fastjsonschema"
+version = "2.21.2"
+description = "Fastest Python implementation of JSON schema"
+optional = false
+python-versions = "*"
+groups = ["dev"]
+files = [
+    {file = "fastjsonschema-2.21.2-py3-none-any.whl", hash = "sha256:1c797122d0a86c5cace2e54bf4e819c36223b552017172f32c5c024a6b77e463"},
+    {file = "fastjsonschema-2.21.2.tar.gz", hash = "sha256:b1eb43748041c880796cd077f1a07c3d94e93ae84bba5ed36800a33554ae05de"},
+]
+
+[package.extras]
+devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
 name = "filelock"
 version = "3.28.0"
 description = "A platform independent file lock."
@@ -895,6 +910,18 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jsonpointer"
+version = "3.1.1"
+description = "Identify specific nodes in a JSON document (RFC 6901) "
+optional = false
+python-versions = ">=3.10"
+groups = ["docs"]
+files = [
+    {file = "jsonpointer-3.1.1-py3-none-any.whl", hash = "sha256:8ff8b95779d071ba472cf5bc913028df06031797532f08a7d5b602d8b2a488ca"},
+    {file = "jsonpointer-3.1.1.tar.gz", hash = "sha256:0b801c7db33a904024f6004d526dcc53bbb8a4a0f4e32bfd10beadf60adf1900"},
+]
 
 [[package]]
 name = "librt"
@@ -2235,6 +2262,23 @@ code-style = ["pre-commit (==2.12.1)"]
 rtd = ["ipython", "myst-nb", "sphinx", "sphinx-book-theme", "sphinx-examples"]
 
 [[package]]
+name = "sphinx-jsonschema"
+version = "1.19.2"
+description = "Sphinx extension to display JSON Schema"
+optional = false
+python-versions = "*"
+groups = ["docs"]
+files = [
+    {file = "sphinx_jsonschema-1.19.2.tar.gz", hash = "sha256:1a48954217c2b3c6759c89b9ddd2c8e5b668b8730564e0283b009f23932be150"},
+]
+
+[package.dependencies]
+docutils = "*"
+jsonpointer = "*"
+pyyaml = "*"
+requests = "*"
+
+[[package]]
 name = "sphinx-last-updated-by-git"
 version = "0.3.8"
 description = "Get the \"last updated\" time for each Sphinx page from Git"
@@ -2564,6 +2608,18 @@ virtualenv = ">=21.1"
 completion = ["argcomplete (>=3.6.3)"]
 
 [[package]]
+name = "trove-classifiers"
+version = "2026.1.14.14"
+description = "Canonical source for classifiers on PyPI (pypi.org)."
+optional = false
+python-versions = "*"
+groups = ["dev"]
+files = [
+    {file = "trove_classifiers-2026.1.14.14-py3-none-any.whl", hash = "sha256:1f9553927f18d0513d8e5ff80ab8980b8202ce37ecae0e3274ed2ef11880e74d"},
+    {file = "trove_classifiers-2026.1.14.14.tar.gz", hash = "sha256:00492545a1402b09d4858605ba190ea33243d361e2b01c9c296ce06b5c3325f3"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.15.0"
 description = "Backported and Experimental Type Hints for Python 3.9+"
@@ -2608,6 +2664,45 @@ brotli = ["brotli (>=1.2.0) ; platform_python_implementation == \"CPython\"", "b
 h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
+
+[[package]]
+name = "validate-pyproject"
+version = "0.25"
+description = "Validation library and CLI tool for checking on 'pyproject.toml' files using JSON Schema"
+optional = false
+python-versions = ">=3.8"
+groups = ["dev"]
+files = [
+    {file = "validate_pyproject-0.25-py3-none-any.whl", hash = "sha256:f9d05e2686beff82f9ea954f582306b036ced3d3feb258c1110f2c2a495b1981"},
+    {file = "validate_pyproject-0.25.tar.gz", hash = "sha256:e68c12d1cb0d8ddc269ffc42875a81727ddb7865000aa6d2f77d833b55c53f0b"},
+]
+
+[package.dependencies]
+fastjsonschema = ">=2.16.2,<=3"
+packaging = {version = ">=24.2", optional = true, markers = "extra == \"all\""}
+tomli = {version = ">=1.2.1", optional = true, markers = "python_version < \"3.11\" and extra == \"all\""}
+trove-classifiers = {version = ">=2021.10.20", optional = true, markers = "extra == \"all\""}
+validate-pyproject-schema-store = {version = "*", optional = true, markers = "extra == \"store\""}
+
+[package.extras]
+all = ["packaging (>=24.2)", "tomli (>=1.2.1) ; python_version < \"3.11\"", "trove-classifiers (>=2021.10.20)"]
+store = ["validate-pyproject-schema-store"]
+
+[[package]]
+name = "validate-pyproject-schema-store"
+version = "2026.4.11"
+description = "A plugin set for validate-pyproject and schema-store."
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "validate_pyproject_schema_store-2026.4.11-py3-none-any.whl", hash = "sha256:f0eefe74360d75c9cbab56632c3fe3e59878744ac9c57981169d268325787073"},
+    {file = "validate_pyproject_schema_store-2026.4.11.tar.gz", hash = "sha256:c8d9a25416b94c25595002b6ccc0679d809d6d60dec10fdce13e79d7b7a78731"},
+]
+
+[package.extras]
+all = ["validate-pyproject[all]"]
+validate-pyproject = ["validate-pyproject"]
 
 [[package]]
 name = "virtualenv"
@@ -2673,4 +2768,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "099fc6e0f1c214469f354ad0d895a4d3de2d6250a91f407882593d83e8b9fd71"
+content-hash = "70e302cecbd9a975a41dc437f4ad26155db5391cd8663110df4b51497e1da4a4"
