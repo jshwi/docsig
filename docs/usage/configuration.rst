@@ -10,6 +10,14 @@ below.
 
 .. include:: ../_generated/pyproject-toml-example.rst
 
+.. _schema: configuration/schema.json
+
+.. _validate-pyproject: https://github.com/abravalheri/validate-pyproject
+
+Configuration options can be found :doc:`here <configuration/schema>` or see the full JSON `schema`_
+
+You can validate your `docsig` configuration with `validate-pyproject`_
+
 Commandline
 -----------
 

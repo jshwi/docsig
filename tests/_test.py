@@ -22,6 +22,7 @@ from docsig._utils import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E, Message
+from docsig.plugin import ValidatePyproject
 
 from . import (
     CHECK_ARGS,
@@ -1096,3 +1097,122 @@ def function(a) -> None:
     std = capsys.readouterr()
     assert E[306].ref in std.out
     assert "warning" in std.out
+
+
+def test_validate_pyproject() -> None:
+    """Test validate pyproject schema plugin."""
+    schema = {
+        "$comment": "schema for the docsig tool section in pyproject.toml",
+        "$id": "https://docsig.io/en/latest/usage/configuration/schema.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "additionalProperties": False,
+        "properties": {
+            "no-ansi": {
+                "type": "boolean",
+                "description": "disable ansi output",
+                "default": False,
+            },
+            "verbose": {
+                "type": "boolean",
+                "description": "increase output verbosity",
+                "default": False,
+            },
+            "check-class": {
+                "type": "boolean",
+                "description": "check class docstrings",
+                "default": False,
+            },
+            "check-class-constructor": {
+                "type": "boolean",
+                "description": "check __init__ methods",
+                "default": False,
+            },
+            "check-dunders": {
+                "type": "boolean",
+                "description": "check dunder methods",
+                "default": False,
+            },
+            "check-nested": {
+                "type": "boolean",
+                "description": "check nested functions and classes",
+                "default": False,
+            },
+            "check-overridden": {
+                "type": "boolean",
+                "description": "check overridden methods",
+                "default": False,
+            },
+            "check-property-returns": {
+                "type": "boolean",
+                "description": "check property return values",
+                "default": False,
+            },
+            "check-protected": {
+                "type": "boolean",
+                "description": "check protected functions and classes",
+                "default": False,
+            },
+            "check-protected-class-methods": {
+                "type": "boolean",
+                "description": (
+                    "check public methods belonging to protected classes"
+                ),
+                "default": False,
+            },
+            "ignore-args": {
+                "type": "boolean",
+                "description": "ignore args prefixed with an asterisk",
+                "default": False,
+            },
+            "ignore-kwargs": {
+                "type": "boolean",
+                "description": "ignore kwargs prefixed with two asterisks",
+                "default": False,
+            },
+            "ignore-no-params": {
+                "type": "boolean",
+                "description": (
+                    "ignore docstrings where parameters are not documented"
+                ),
+                "default": False,
+            },
+            "disable": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "list of rules to disable",
+                "default": [],
+            },
+            "target": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "list of rules to target",
+                "default": [],
+            },
+            "exclude": {
+                "type": "string",
+                "description": (
+                    "regular expression of files or dirs to exclude from"
+                    " checks"
+                ),
+                "default": None,
+            },
+            "excludes": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "path glob patterns to exclude from checks",
+                "default": None,
+            },
+            "include-ignored": {
+                "type": "boolean",
+                "description": (
+                    "check files even if they match a gitignore pattern"
+                ),
+                "default": False,
+            },
+        },
+        "allOf": [
+            {"not": {"required": ["check-class", "check-class-constructor"]}},
+        ],
+    }
+    assert ValidatePyproject() == schema

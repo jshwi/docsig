@@ -97,11 +97,10 @@ class _ArgumentParser(_argparse.ArgumentParser):
         return namespace, args
 
 
-def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
-    """Parse CLI arguments and merge in config from pyproject.toml.
+def build_parser() -> _ArgumentParser:
+    """Build and return the argument parser.
 
-    :param args: Argument list to parse (defaults to sys.argv).
-    :return: Parsed namespace with config merged in.
+    :return: The argument parser.
     """
     parser = _ArgumentParser(
         description="Check signature params for proper documentation",
@@ -305,6 +304,16 @@ def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
         metavar="STR",
         help="string to parse instead of files",
     )
+    return parser
+
+
+def parse_args(args: _t.Sequence[str] | None = None) -> _argparse.Namespace:
+    """Parse CLI arguments and merge in config from pyproject.toml.
+
+    :param args: Argument list to parse (defaults to sys.argv).
+    :return: Parsed namespace with config merged in.
+    """
+    parser = build_parser()
     return parser.parse_args(args)
 
 

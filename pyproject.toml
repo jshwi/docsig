@@ -146,6 +146,7 @@ tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 towncrier = ">=23.11,<26.0"
 tox = "^4.15.0"
+validate-pyproject = {extras = ["all", "store"], version = "^0.25"}
 vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
@@ -155,6 +156,7 @@ pytest = "9.0.3"
 pyyaml = "^6.0.1"
 roman-numerals = "4.1.0"
 sphinx-copybutton = "^0.5.2"
+sphinx-jsonschema = "^1.19.2"
 sphinx-markdown-builder = ">=0.5.5,<0.7.0"
 sphinx-sitemap = "^2.9.0"
 templatest = ">=0.10.1,<0.13.0"
@@ -174,6 +176,9 @@ templatest = ">=0.10.1,<0.13.0"
 
 [tool.poetry.plugins."flake8.extension"]
 SIG = "docsig.plugin:Flake8"
+
+[tool.poetry.plugins."validate_pyproject.tool_schema"]
+docsig = "docsig.plugin:ValidatePyproject"
 
 [tool.poetry.scripts]
 docsig = "docsig.__main__:main"

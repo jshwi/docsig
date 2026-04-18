@@ -1,6 +1,7 @@
 """Generate version of changelog suitable for documentation."""
 
 import functools
+import json
 import os
 import re
 import shutil
@@ -10,6 +11,8 @@ from pathlib import Path
 
 import yaml
 from sphinx.application import Sphinx
+
+from docsig.plugin import ValidatePyproject
 
 DOCS_DIR = Path(__file__).parent.parent.absolute()
 USAGE = DOCS_DIR / "usage"
@@ -248,6 +251,14 @@ def generate_flake8_help() -> None:
         build.write_text(match.group(1).strip()[:-2].strip(), encoding="utf-8")
 
 
+@extension
+def generate_schema() -> None:
+    """Generate docsig schema."""
+    (GENERATED / "schema.json").write_text(
+        json.dumps(ValidatePyproject(), indent=2),
+    )
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -263,3 +274,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_pre_commit_flake8_example)
     app.connect("builder-inited", generate_commit_policy)
     app.connect("builder-inited", generate_flake8_help)
+    app.connect("builder-inited", generate_schema)
