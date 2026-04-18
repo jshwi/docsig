@@ -11,6 +11,20 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.83.0](https://github.com/jshwi/docsig/tree/v0.83.0) - 2026-04-18
+
+### Added
+
+- validate-pyproject plugin ([#801](https://github.com/jshwi/docsig/issues/801))
+
+### Changed
+
+- update public scope ([#791](https://github.com/jshwi/docsig/issues/791))
+- log configured options with verbose mode ([#793](https://github.com/jshwi/docsig/issues/793))
+- log in lower case ([#795](https://github.com/jshwi/docsig/issues/795))
+- use parameter for incorrect-indent ([#797](https://github.com/jshwi/docsig/issues/797))
+- flake8 plugin name ([#799](https://github.com/jshwi/docsig/issues/799))
+
 ## [0.82.2](https://github.com/jshwi/docsig/tree/v0.82.2) - 2026-04-05
 
 ### Fixed
