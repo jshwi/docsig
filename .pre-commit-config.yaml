@@ -220,7 +220,7 @@ repos:
       - id: rm-unneeded-f-str
         name: remove unneeded f-strings
   - repo: https://github.com/rhysd/actionlint
-    rev: "v1.7.11"
+    rev: "v1.7.12"
     hooks:
       - id: actionlint
         name: lint github actions workflow files
@@ -230,7 +230,7 @@ repos:
       - id: editorconfig-checker
         name: check .editorconfig rules
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.19.1"
+    rev: "v1.20.1"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
