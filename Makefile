@@ -10,11 +10,15 @@ VERSION := $(shell bash scripts/get_docsig_version.sh)
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
+# IntelliJ Plugin
+PLUGIN_INTELLIJ_DIR := plugin/intellij
+
 # File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
+PLUGIN_INTELLIJ_FILES := $(shell git ls-files "$(PLUGIN_INTELLIJ_DIR)/*.kt*")
 
 # Virtual environment path
 ifeq ($(OS),Windows_NT)
@@ -24,7 +28,8 @@ else
 endif
 
 # Build artifact
-BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
+BUILD := dist/docsig-$(VERSION)-py3-none-any.whl$(PLUGIN_INTELLIJ_DIR)
+PLUGIN_INTELLIJ := $(PLUGIN_INTELLIJ_DIR)/build/distributions/docsig-$(VERSION).zip
 
 ########################################################################
 # Implicit Phony Targets
@@ -170,12 +175,32 @@ poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
 
+.make/intellij/format: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C $(PLUGIN_INTELLIJ_DIR) .make/format
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/intellij/test: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C $(PLUGIN_INTELLIJ_DIR) .make/test
+	@mkdir -p $(@D)
+	@touch $@
+
+$(PLUGIN_INTELLIJ): .make/intellij/format .make/intellij/test .make/intellij/detekt
+	@$(MAKE) -C $(PLUGIN_INTELLIJ_DIR) build/distributions/docsig-$(VERSION).zip
+	@touch $@
+
+.make/intellij/detekt: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C $(PLUGIN_INTELLIJ_DIR) .make/detekt
+	@mkdir -p $(@D)
+	@touch $@
+
 ########################################################################
 # Phony Targets
 .PHONY: benchmark build bump check-deps check-links clean docs format \
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
-	update-copyright update-deps update-docs update-readme whitelist
+	update-copyright update-deps update-docs update-readme whitelist \
+	ide intellij
 
 #: run benchmarks
 benchmark: $(VENV)
@@ -217,7 +242,7 @@ clean:
 docs: docs/_build/html/index.html
 
 #: run formatters
-format: .make/black .make/flynt .make/isort
+format: .make/black .make/flynt .make/isort .make/intellij/format
 
 #: install pre-commit hooks
 install-hooks: .make/pre-commit
@@ -248,7 +273,7 @@ test-scripts: .make/test-check-news .make/test-bump
 test-source: .make/doctest coverage.xml
 
 #: run all tests
-tests: test-scripts test-source
+tests: test-scripts test-source .make/intellij/test
 
 #: run tox
 tox: $(VENV)
@@ -273,3 +298,10 @@ update-readme: README.rst
 
 #: generate whitelist of allowed unused code
 whitelist: whitelist.py
+
+#: launch test ide for intellij plugin
+ide:
+	@$(MAKE) -C $(PLUGIN_INTELLIJ_DIR) ide
+
+#: build intellij plugin
+intellij: $(PLUGIN_INTELLIJ)

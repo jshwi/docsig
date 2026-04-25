@@ -11,6 +11,7 @@ ci:
     - check-unstaged-news
     - check-news
     - commit-fix
+    - intellij
 default_language_version:
   python: "3.10"
 default_stages:
@@ -95,6 +96,10 @@ repos:
         language: system
         stages:
           - commit-msg
+      - id: intellij
+        name: intellij
+        entry: make intellij
+        language: system
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v6.0.0"
     hooks:
@@ -110,6 +115,7 @@ repos:
       - id: check-toml
       - id: check-vcs-permalinks
       - id: check-xml
+        exclude: plugin\/intellij\/detekt-baseline\.xml
       - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
@@ -230,6 +236,7 @@ repos:
     hooks:
       - id: editorconfig-checker
         name: check .editorconfig rules
+        exclude: \.*\/DocsigTest\.kt
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v1.20.1"
     hooks:

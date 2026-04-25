@@ -1,0 +1,25 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.jshwi.docsig</id>
+    <name>docsig</name>
+    <vendor>jshwi</vendor>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>PythonCore</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <localInspection
+      language="Python"
+      implementationClass="com.github.jshwi.docsig.DocsigInspection"
+      displayName="docsig"
+      groupName="docsig"
+      enabledByDefault="true"/>
+    <applicationConfigurable
+      id="docsig.settings"
+      displayName="Docsig"
+      instance="com.github.jshwi.docsig.DocsigConfigurable"/>
+    <projectListeners>
+      <listener
+        class="com.github.jshwi.docsig.DocsigSaveListener"
+        topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener" />
+    </projectListeners>
+  </extensions>
+</idea-plugin>
