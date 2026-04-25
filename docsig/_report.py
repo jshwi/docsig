@@ -381,14 +381,12 @@ def report(
                 extra = "warning: please remember to fix this or disable it"
                 _warn(_NEW.format(ref=item.ref), FutureWarning, stacklevel=3)
 
-            output.append(
-                "    "
-                + _TEMPLATE.format(
-                    ref=item.ref,
-                    description=item.description,
-                    symbolic=item.symbolic,
-                ),
+            msg = _TEMPLATE.format(
+                ref=item.ref,
+                description=item.description,
+                symbolic=item.symbolic,
             )
+            output.append(f"    {msg}")
             if extra is not None:
                 output.append(f"    {extra}")
 
