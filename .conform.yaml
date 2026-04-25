@@ -40,4 +40,5 @@ policies:
           - pre-commit
           - package
           - contributing
+          - plugin
         descriptionLength: 72
