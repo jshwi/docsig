@@ -4,6 +4,8 @@ docsig._decorators
 """
 
 import functools as _functools
+import json as _json
+import os as _os
 import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
@@ -35,6 +37,7 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
     return _wrapper
 
 
+# TODO: make report json by default and wrap with a reporter for cli
 def validate_args(func: _FuncType) -> _WrappedFuncType:
     """Validate arguments before calling the wrapped function.
 
@@ -51,6 +54,8 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
 
     @_functools.wraps(func)
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> int:
+        format_json = _os.getenv("DOCSIG_FORMAT_JSON") is not None
+        retcode = 2
         stderr = []
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string"):
@@ -87,10 +92,19 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
                     stderr.append(
                         "please check your pyproject.toml configuration",
                     )
-
         if stderr:
-            print("\n".join(stderr), file=_sys.stderr)
-            _sys.exit(2)
+            message = "\n".join(stderr)
+            if format_json:
+                obj = [  # pragma: no cover
+                    {"line": None, "message": message, "exit": retcode},
+                ]
+                if format_json:  # pragma: no cover
+                    print(_json.dumps(obj).strip())  # pragma: no cover
+
+            else:
+                print(message, file=_sys.stderr)
+
+            _sys.exit(retcode)
 
         return func(*args, **kwargs)
 

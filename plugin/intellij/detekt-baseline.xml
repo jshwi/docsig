@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>EmptyFunctionBlock:DocsigConfigurableTest.kt$FakeProcess${}</ID>
+    <ID>MagicNumber:Model.kt$Version.Companion$3</ID>
+    <ID>ReturnCount:DocsigInspection.kt$DocsigInspection$private fun resolveElement(file: PsiFile, line: Int?): PsiElement</ID>
+    <ID>TooManyFunctions:DocsigConfigurable.kt$DocsigConfigurable : SearchableConfigurable</ID>
+  </CurrentIssues>
+</SmellBaseline>

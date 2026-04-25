@@ -12,11 +12,15 @@ VERSION := $(shell bash scripts/get_docsig_version.sh)
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
+# IntelliJ Plugin
+PLUGIN_INTELLIJ_DIR := plugin/intellij
+
 # File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
+PLUGIN_INTELLIJ_FILES := $(shell git ls-files "plugin/intellij/*.kt*")
 
 # Virtual environment path
 ifeq ($(OS),Windows_NT)
@@ -172,13 +176,32 @@ poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
 
+.make/intellij/format: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C plugin/intellij .make/format
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/intellij/test: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C plugin/intellij .make/test
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/intellij/detekt: $(PLUGIN_INTELLIJ_FILES)
+	@$(MAKE) -C plugin/intellij .make/detekt
+	@mkdir -p $(@D)
+	@touch $@
+
+.make/intellij/build: .make/intellij/format .make/intellij/test .make/intellij/detekt
+	@$(MAKE) -C plugin/intellij build
+	@touch $@
+
 ########################################################################
 # Phony Targets
 .PHONY: benchmark build bump check-deps check-links clean docs format \
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist \
-	version
+	version ide intellij
 
 #: show this help message and exit
 version: $(POETRY)
@@ -224,7 +247,7 @@ clean:
 docs: docs/_build/html/index.html
 
 #: run formatters
-format: .make/black .make/flynt .make/isort
+format: .make/black .make/flynt .make/isort .make/intellij/format
 
 #: install pre-commit hooks
 install-hooks: .make/pre-commit
@@ -255,7 +278,7 @@ test-scripts: .make/test-check-news .make/test-bump
 test-source: .make/doctest coverage.xml
 
 #: run all tests
-tests: test-scripts test-source
+tests: test-scripts test-source .make/intellij/test
 
 #: run tox
 tox: $(VENV)
@@ -280,3 +303,10 @@ update-readme: README.rst
 
 #: generate whitelist of allowed unused code
 whitelist: whitelist.py
+
+#: launch test ide for intellij plugin
+ide:
+	@$(MAKE) -C plugin/intellij ide
+
+#: build intellij plugin
+intellij: .make/intellij/build

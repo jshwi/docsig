@@ -11,3 +11,8 @@ bin
 dist/
 node_modules/
 package-lock.json
+plugin/intellij/.gradle
+plugin/intellij/.idea
+plugin/intellij/.intellijPlatform
+plugin/intellij/.kotlin
+plugin/intellij/build
