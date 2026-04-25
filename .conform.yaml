@@ -42,4 +42,5 @@ policies:
           - package
           - ai
           - contributing
+          - plugin
         descriptionLength: 72
