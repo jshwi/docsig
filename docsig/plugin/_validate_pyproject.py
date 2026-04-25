@@ -49,7 +49,7 @@ class ValidatePyproject(dict[str, _t.Any]):
             return True
 
         if action.help == _SUPPRESS:
-            return True
+            return True  # pragma: no cover
 
         if name in _EXCLUDED_OPTIONS:
             return True
@@ -85,7 +85,7 @@ class ValidatePyproject(dict[str, _t.Any]):
             for action in group._group_actions:
                 name = action.dest.replace("_", "-")
                 if self._skip_action(action, name):
-                    continue
+                    continue  # pragma: no cover
 
                 names.append(name)
 
