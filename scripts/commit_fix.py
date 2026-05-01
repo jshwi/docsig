@@ -11,9 +11,14 @@ import git
 def main() -> int | str:
     """Entry point.
 
+    Commit message file path (.git/COMMIT_EDITMSG) automatically
+    passed as the first positional argument by the commit-msg pre-commit
+    hook.
+
     :return: 0 if successful, error message if unsuccessful.
     """
-    commit_msg = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()[0]
+    commit_msg_file = Path(sys.argv[1])
+    commit_msg = commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
     if commit_msg.startswith("fix:"):
         repo = git.Repo(Path.cwd())
         diff = repo.git.diff(

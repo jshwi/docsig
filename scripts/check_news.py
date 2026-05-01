@@ -103,6 +103,10 @@ def create_news_fragment(
 def main() -> int | str:
     """Entry point.
 
+    Commit message file path (.git/COMMIT_EDITMSG) automatically
+    passed as the first positional argument by the commit-msg pre-commit
+    hook.
+
     This script reads the commit message file and cannot determine the
     commit from the commandline.
 
@@ -110,7 +114,8 @@ def main() -> int | str:
     """
     conf = (Path.cwd() / "pyproject.toml").read_text(encoding="utf-8")
     allowed_kinds = tuple(tomli.loads(conf)["tool"]["towncrier"]["fragment"])
-    commit_msg = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()[0]
+    commit_msg_file = Path(sys.argv[1])
+    commit_msg = commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
     repo = git.Repo(Path.cwd())
     diff = repo.git.diff("HEAD", cached=True, name_only=True)
     unversioned_news = NEWS.findall(diff)
