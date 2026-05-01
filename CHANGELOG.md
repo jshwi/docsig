@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.84.0](https://github.com/jshwi/docsig/tree/v0.84.0) - 2026-05-02
+
+### Removed
+
+- short form for check-nested ([#812](https://github.com/jshwi/docsig/issues/812))
+
 ## [0.83.0](https://github.com/jshwi/docsig/tree/v0.83.0) - 2026-04-18
 
 ### Added
