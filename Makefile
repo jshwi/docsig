@@ -4,6 +4,8 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 
 # Extract version from pyproject.toml
+# Use this instead of `$ poetry version --short` as the version may be
+# needed before poetry is installed
 VERSION := $(shell bash scripts/get_docsig_version.sh)
 
 # Poetry configuration
