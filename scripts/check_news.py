@@ -101,7 +101,7 @@ def create_news_fragment(
     return output
 
 
-def main() -> int | str:
+def main() -> int | str:  # pylint: disable=too-many-return-statements
     """Entry point.
 
     Commit message file path (.git/COMMIT_EDITMSG) automatically
@@ -118,7 +118,13 @@ def main() -> int | str:
     o = p.parse_args()
     conf = (Path.cwd() / "pyproject.toml").read_text(encoding="utf-8")
     allowed_kinds = tuple(tomli.loads(conf)["tool"]["towncrier"]["fragment"])
-    commit_msg = o.commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
+    try:
+        commit_msg = o.commit_msg_file.read_text(
+            encoding="utf-8",
+        ).splitlines()[0]
+    except IndexError:
+        return "did not receive a commit message"
+
     repo = git.Repo(Path.cwd())
     diff = repo.git.diff("HEAD", cached=True, name_only=True)
     unversioned_news = NEWS.findall(diff)
@@ -321,6 +327,11 @@ class Test:
         self.repo.git.add(Path.cwd())
         self._ci(message="bump: version 0.56.0 → 0.57.0")
         assert not news.is_file()
+
+    def test_no_msg(self) -> None:
+        """Test for correct error when no commit message provided."""
+        self.repo.git.add(Path.cwd())
+        assert self._ci(message="") == "did not receive a commit message"
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -21,7 +21,13 @@ def main() -> int | str:
     p = ArgumentParser()
     p.add_argument("commit_msg_file", type=Path, help="commit msg file path")
     o = p.parse_args()
-    commit_msg = o.commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
+    try:
+        commit_msg = o.commit_msg_file.read_text(
+            encoding="utf-8",
+        ).splitlines()[0]
+    except IndexError:
+        return "did not receive a commit message"
+
     if commit_msg.startswith("fix:"):
         repo = git.Repo(Path.cwd())
         diff = repo.git.diff(
