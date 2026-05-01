@@ -19,6 +19,13 @@ def _main() -> int | str:
     p.add_argument("part", choices=["patch", "minor", "major"])
     o = p.parse_args()
     repo = git.Repo(Path.cwd())
+
+    # synchronize index with working tree (mtime, stat info, etc.)
+    # otherwise checking out from one branch to master can result in
+    # "there are uncommitted changes in the working directory" when
+    # there are none
+    repo.git.update_index(refresh=True)
+
     try:
         repo.git.diff_index("HEAD", quiet=True)
     except git.exc.GitCommandError:
