@@ -212,7 +212,7 @@ class Test:
         if message is not None:
             # if a commit message provided, prepare the message as would
             # be done before the `commit-msg` hook
-            self.commit_file.write_text(message, encoding="utf-8")
+            self.commit_file.write_text(message or "", encoding="utf-8")
 
         # `main` in this context is the pre-commit hook
         returncode = main()
