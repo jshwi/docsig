@@ -41,4 +41,5 @@ policies:
           - package
           - contributing
           - plugin
+          - make
         descriptionLength: 72
