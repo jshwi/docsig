@@ -64,11 +64,6 @@ replace = 'version = "{new_version}"'
 search = 'version = "{current_version}"'
 
 [[tool.bumpversion.files]]
-filename = "package.json"
-replace = '"version": "{new_version}"'
-search = '"version": "{current_version}"'
-
-[[tool.bumpversion.files]]
 filename = "README.rst"
 replace = "rev: v{new_version}"
 search = "rev: v{current_version}"
