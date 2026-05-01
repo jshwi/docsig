@@ -176,7 +176,11 @@ poetry.lock: pyproject.toml
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist \
-	news commit-fix
+	news commit-fix version
+
+#: show program's version number and exit
+version: $(POETRY)
+	@echo $(VERSION)
 
 #: run benchmarks
 benchmark: $(VENV)
