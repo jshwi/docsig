@@ -175,7 +175,12 @@ poetry.lock: pyproject.toml
 .PHONY: benchmark build bump check-deps check-links clean docs format \
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
-	update-copyright update-deps update-docs update-readme whitelist
+	update-copyright update-deps update-docs update-readme whitelist \
+	version
+
+#: show this help message and exit
+version: $(POETRY)
+	@echo $(VERSION)
 
 #: run benchmarks
 benchmark: $(VENV)
