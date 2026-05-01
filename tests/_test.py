@@ -6,6 +6,7 @@ tests._test
 # pylint: disable=protected-access,too-many-lines
 from __future__ import annotations
 
+import argparse
 import io
 import os
 import pickle
@@ -1099,8 +1100,11 @@ def function(a) -> None:
     assert "warning" in std.out
 
 
-def test_validate_pyproject() -> None:
-    """Test validate pyproject schema plugin."""
+def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Test validate pyproject schema plugin.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
     schema = {
         "$comment": "schema for the docsig tool section in pyproject.toml",
         "$id": "https://docsig.io/en/latest/usage/configuration/schema.json",
@@ -1215,4 +1219,210 @@ def test_validate_pyproject() -> None:
             {"not": {"required": ["check-class", "check-class-constructor"]}},
         ],
     }
+
+    parser = argparse.ArgumentParser(
+        description="Check signature params for proper documentation",
+    )
+    parser.add_argument(
+        "path",
+        nargs="*",
+        action="store",
+        type=Path,
+        help="directories or files to check",
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=docsig.__version__,
+    )
+    parser.add_argument(
+        "-l",
+        "--list-checks",
+        action="store_true",
+        help="display a list of all checks and their messages",
+    )
+    parser.add_argument(
+        "-n",
+        "--no-ansi",
+        action="store_true",
+        help="disable ansi output",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="increase output verbosity",
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "-c",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_class",
+    )
+    group.add_argument(
+        "--check-class",
+        action="store_true",
+        help="check class docstrings",
+        dest="check_class",
+    )
+    group.add_argument(
+        "-C",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_class_constructor",
+    )
+    group.add_argument(
+        "--check-class-constructor",
+        action="store_true",
+        help="check __init__ methods",
+        dest="check_class_constructor",
+    )
+    parser.add_argument(
+        "-D",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_dunders",
+    )
+    parser.add_argument(
+        "--check-dunders",
+        action="store_true",
+        help="check dunder methods",
+        dest="check_dunders",
+    )
+    parser.add_argument(
+        "-N",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_nested",
+    )
+    parser.add_argument(
+        "--check-nested",
+        action="store_true",
+        help="check nested functions and classes",
+        dest="check_nested",
+    )
+    parser.add_argument(
+        "-o",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_overridden",
+    )
+    parser.add_argument(
+        "--check-overridden",
+        action="store_true",
+        help="check overridden methods",
+        dest="check_overridden",
+    )
+    parser.add_argument(
+        "-P",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_property_returns",
+    )
+    parser.add_argument(
+        "--check-property-returns",
+        action="store_true",
+        help="check property return values",
+        dest="check_property_returns",
+    )
+    parser.add_argument(
+        "-p",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_protected",
+    )
+    parser.add_argument(
+        "--check-protected",
+        action="store_true",
+        help="check protected functions and classes",
+        dest="check_protected",
+    )
+    parser.add_argument(
+        "-m",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="check_protected_class_methods",
+    )
+    parser.add_argument(
+        "--check-protected-class-methods",
+        action="store_true",
+        help="check public methods belonging to protected classes",
+        dest="check_protected_class_methods",
+    )
+    parser.add_argument(
+        "--ignore-args",
+        action="store_true",
+        help="ignore args prefixed with an asterisk",
+    )
+    parser.add_argument(
+        "--ignore-kwargs",
+        action="store_true",
+        help="ignore kwargs prefixed with two asterisks",
+    )
+    parser.add_argument(
+        "-i",
+        action="store_true",
+        help=argparse.SUPPRESS,
+        dest="ignore_no_params",
+    )
+    parser.add_argument(
+        "--ignore-no-params",
+        action="store_true",
+        help="ignore docstrings where parameters are not documented",
+        dest="ignore_no_params",
+    )
+    parser.add_argument(
+        "--ignore-typechecker",
+        action="store_true",
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "-d",
+        "--disable",
+        metavar="LIST",
+        action="store",
+        default=[],
+        help="comma separated list of rules to disable",
+    )
+    parser.add_argument(
+        "-t",
+        "--target",
+        metavar="LIST",
+        action="store",
+        default=[],
+        help="comma separated list of rules to target",
+    )
+    parser.add_argument(
+        "-e",
+        "--exclude",
+        metavar="PATTERN",
+        help="regular expression of files or dirs to exclude from checks",
+    )
+    parser.add_argument(
+        "-E",
+        "--excludes",
+        nargs="+",
+        metavar="PATH",
+        help="path glob patterns to exclude from checks",
+    )
+    parser.add_argument(
+        "-I",
+        "--include-ignored",
+        action="store_true",
+        help="check files even if they match a gitignore pattern",
+    )
+    parser.add_argument(
+        "-s",
+        "--string",
+        action="store",
+        metavar="STR",
+        help="string to parse instead of files",
+    )
+
+    monkeypatch.setattr(
+        "docsig.plugin._validate_pyproject._build_parser",
+        lambda: parser,
+    )
     assert ValidatePyproject() == schema
