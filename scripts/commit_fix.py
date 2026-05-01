@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from argparse import ArgumentParser
 from pathlib import Path
 
 import git
@@ -17,8 +18,10 @@ def main() -> int | str:
 
     :return: 0 if successful, error message if unsuccessful.
     """
-    commit_msg_file = Path(sys.argv[1])
-    commit_msg = commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
+    p = ArgumentParser()
+    p.add_argument("commit_msg_file", type=Path, help="commit msg file path")
+    o = p.parse_args()
+    commit_msg = o.commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
     if commit_msg.startswith("fix:"):
         repo = git.Repo(Path.cwd())
         diff = repo.git.diff(

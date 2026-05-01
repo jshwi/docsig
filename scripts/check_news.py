@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import typing as t
+from argparse import ArgumentParser
 from pathlib import Path
 
 import git
@@ -112,10 +113,12 @@ def main() -> int | str:
 
     :return: 0 if successful, error message if unsuccessful.
     """
+    p = ArgumentParser()
+    p.add_argument("commit_msg_file", type=Path, help="commit msg file path")
+    o = p.parse_args()
     conf = (Path.cwd() / "pyproject.toml").read_text(encoding="utf-8")
     allowed_kinds = tuple(tomli.loads(conf)["tool"]["towncrier"]["fragment"])
-    commit_msg_file = Path(sys.argv[1])
-    commit_msg = commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
+    commit_msg = o.commit_msg_file.read_text(encoding="utf-8").splitlines()[0]
     repo = git.Repo(Path.cwd())
     diff = repo.git.diff("HEAD", cached=True, name_only=True)
     unversioned_news = NEWS.findall(diff)
