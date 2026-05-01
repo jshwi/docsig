@@ -36,4 +36,5 @@ policies:
           - project
           - changelog
           - readme
+          - script
         descriptionLength: 72
