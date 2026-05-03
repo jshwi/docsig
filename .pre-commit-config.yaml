@@ -23,6 +23,7 @@ exclude: |
     | docs\/conf\.py
     | changelog\/.*
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
+    | \.vscode/.*
   )$
 repos:
   - repo: local
