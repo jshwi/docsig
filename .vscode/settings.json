@@ -1,0 +1,21 @@
+{
+    "files.exclude": {
+        "**/.coverage": true,
+        "**/.idea": true,
+        "**/.make": true,
+        "**/.venv": true,
+        "**/.vscode": true,
+        "**/benchmarks": true,
+        "**/bin": true,
+        "**/coverage.xml": true,
+        "**/dist": true,
+        "**/node_modules": true,
+        "**/benchmarks": true
+        "**/.ai": true,
+        "**/.pytest_cache": true,
+        "**/changelog": true,
+        "**/docs/_generated": true,
+        "**/.mypy_cache": true
+    },
+    "explorer.excludeGitIgnore": true
+}
