@@ -29,6 +29,7 @@
       <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.kotlin" />
       <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.make" />
       <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.vscode" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (docsig)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

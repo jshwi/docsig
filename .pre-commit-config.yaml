@@ -24,6 +24,7 @@ exclude: |
     | docs\/conf\.py
     | changelog\/.*
     | .*\/CHANGELOG\.md
+    | \.vscode/.*
   )$
 repos:
   - repo: local
