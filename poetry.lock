@@ -206,14 +206,14 @@ wcmatch = ">=8.5.1"
 
 [[package]]
 name = "cachetools"
-version = "7.0.6"
+version = "7.1.1"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "cachetools-7.0.6-py3-none-any.whl", hash = "sha256:4e94956cfdd3086f12042cdd29318f5ced3893014f7d0d059bf3ead3f85b7f8b"},
-    {file = "cachetools-7.0.6.tar.gz", hash = "sha256:e5d524d36d65703a87243a26ff08ad84f73352adbeafb1cde81e207b456aaf24"},
+    {file = "cachetools-7.1.1-py3-none-any.whl", hash = "sha256:0335cd7a0952d2b22327441fb0628139e234c565559eeb91a8a4ac7551c5353d"},
+    {file = "cachetools-7.1.1.tar.gz", hash = "sha256:27bdf856d68fd3c71c26c01b5edc312124ed427524d1ddb31aa2b7746fe20d4b"},
 ]
 
 [[package]]
@@ -2582,14 +2582,14 @@ dev = ["furo (>=2024.05.06)", "nox", "packaging", "sphinx (>=5)", "twisted"]
 
 [[package]]
 name = "tox"
-version = "4.53.0"
+version = "4.53.1"
 description = "tox is a generic virtualenv management and test command line tool"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "tox-4.53.0-py3-none-any.whl", hash = "sha256:cc4e716d18c4889aa179d785175c438fa60c35deef20ce689ec288d8fb656096"},
-    {file = "tox-4.53.0.tar.gz", hash = "sha256:62c780e42f87d34ee60f2ea20342156253794fdcbd6885fd797d98ee05009f22"},
+    {file = "tox-4.53.1-py3-none-any.whl", hash = "sha256:4a9948607e976a337c22d64a1b4fafd486125e82f00ab6ce32fa6cacc23f48b1"},
+    {file = "tox-4.53.1.tar.gz", hash = "sha256:7be9805ed4a34242510c7acc9a7e3a01a35942e08f31f8bd69067c3a37130afc"},
 ]
 
 [package.dependencies]
@@ -2757,14 +2757,14 @@ bracex = ">=2.1.1"
 
 [[package]]
 name = "wcwidth"
-version = "0.6.0"
+version = "0.7.0"
 description = "Measures the displayed width of unicode strings in a terminal"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "wcwidth-0.6.0-py3-none-any.whl", hash = "sha256:1a3a1e510b553315f8e146c54764f4fb6264ffad731b3d78088cdb1478ffbdad"},
-    {file = "wcwidth-0.6.0.tar.gz", hash = "sha256:cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159"},
+    {file = "wcwidth-0.7.0-py3-none-any.whl", hash = "sha256:5d69154c429a82910e241c738cd0e2976fac8a2dd47a1a805f4afed1c0f136f2"},
+    {file = "wcwidth-0.7.0.tar.gz", hash = "sha256:90e3a7ea092341c44b99562e75d09e4d5160fe7a3974c6fb842a101a95e7eed0"},
 ]
 
 [metadata]
