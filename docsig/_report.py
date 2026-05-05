@@ -61,7 +61,7 @@ class Failure(list[Failed]):
 
     def __init__(self, func: _Function, config: _Config) -> None:
         super().__init__()
-        self._retcode = 0
+        self._retcode = [0]
         self._func = func
         if config.target:
             self._func.messages.extend(
@@ -92,7 +92,7 @@ class Failure(list[Failed]):
         hint: bool = False,
         **kwargs: _t.Any,
     ) -> None:
-        self._retcode = int(not value.new)
+        self._retcode.append(int(not value.new))
         failed = Failed(
             self.name,
             value.ref,
@@ -313,7 +313,7 @@ class Failure(list[Failed]):
         # invalid-syntax
         if self._func.error is _ast.AstroidSyntaxError:
             self._add(_E[901])
-            self._retcode = 123
+            self._retcode.append(123)
         # unicode-decode-error
         if self._func.error is UnicodeDecodeError:
             self._add(_E[902])
@@ -344,7 +344,7 @@ class Failure(list[Failed]):
     @property
     def retcode(self) -> int:
         """Exit code (non-zero if any check failed)."""
-        return self._retcode
+        return max(self._retcode)
 
 
 def report(
