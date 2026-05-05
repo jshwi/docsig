@@ -1582,15 +1582,21 @@ def test_commandline_disables(
     assert all(i[1] in std.out for i in SYMBOLIC if i[1] != symbolic)
 
 
-def test_unknown_commandline_disables(main: FixtureMain) -> None:
+def test_unknown_commandline_disables(
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
     """Test invalid `disable` option provided.
 
+    :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     """
-    assert (
+    with pytest.raises(SystemExit) as err:
         main(".", "--disable", "unknown", test_flake8=False)
-        == "unknown option to disable 'unknown'"
-    )
+
+    assert err.value.code == 2
+    std = capsys.readouterr()
+    assert std.err.strip() == "unknown option to disable 'unknown'"
 
 
 def test_module_disables(
@@ -2364,12 +2370,18 @@ def function(a, b, c) -> None:
     assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
 
 
-def test_invalid_target(main: FixtureMain) -> None:
+def test_invalid_target(
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
     """Test invalid target provided.
 
+    :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     """
-    assert (
+    with pytest.raises(SystemExit) as err:
         main(".", "--target", "unknown", test_flake8=False)
-        == "unknown option to target 'unknown'"
-    )
+
+    assert err.value.code == 2
+    std = capsys.readouterr()
+    assert std.err.strip() == "unknown option to target 'unknown'"
