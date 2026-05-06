@@ -154,32 +154,32 @@ class DocsigConfigurable : SearchableConfigurable {
      * @return True when Apply should persist a new snapshot.
      */
     override fun isModified(): Boolean {
-        val s = DocsigSettings.getInstance(project)
+        val settings = DocsigSettings.getInstance(project)
 
-        return field.text != s.state.cliPath ||
+        return field.text != settings.state.cliPath ||
 
-            options.any { it.isModified(s) }
+            options.any { it.isModified(settings) }
     }
 
     /**
      * Copies widget values into [DocsigSettings] application state.
      */
     override fun apply() {
-        val s = DocsigSettings.getInstance(project)
+        val settings = DocsigSettings.getInstance(project)
 
-        s.state.cliPath = field.text
+        settings.state.cliPath = field.text
 
-        options.forEach { it.applyTo(s) }
+        options.forEach { it.applyTo(settings) }
     }
 
     /**
      * Reloads widgets from [DocsigSettings] after cancel or reopen.
      */
     override fun reset() {
-        val s = DocsigSettings.getInstance(project)
+        val settings = DocsigSettings.getInstance(project)
 
-        field.text = s.state.cliPath
+        field.text = settings.state.cliPath
 
-        options.forEach { it.resetFrom(s) }
+        options.forEach { it.resetFrom(settings) }
     }
 }
