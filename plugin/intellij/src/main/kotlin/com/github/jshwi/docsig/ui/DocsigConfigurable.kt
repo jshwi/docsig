@@ -19,6 +19,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.dsl.builder.AlignX
+import com.intellij.ui.dsl.builder.Panel
 import com.intellij.ui.dsl.builder.panel
 import javax.swing.JComponent
 
@@ -45,7 +46,7 @@ class DocsigConfigurable : SearchableConfigurable {
      */
     override fun getId(): String = "docsig.settings"
 
-    private fun com.intellij.ui.dsl.builder.Panel.executableRow() {
+    private fun Panel.executableRow() {
         row("Path to Docsig executable:") {
             cell(field).resizableColumn().align(AlignX.FILL)
             button("...") { chooseExecutable() }

@@ -66,14 +66,3 @@ fun runDocsigBackground(task: () -> Unit) {
         }
     }
 }
-
-/**
- * Returns a PSI element covering the start of a logical line.
- *
- * Falls back to the line end offset when the start has no leaf
- * element.
- *
- * @param file PSI file whose document supplies line offsets.
- * @param line Zero-based line index inside the editor document.
- * @return Leaf at line start, at line end, or null when out of range.
- */
