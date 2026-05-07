@@ -9,6 +9,8 @@ return the highest exit code.
 """
 
 import contextlib as _contextlib
+import json as _json
+import os as _os
 import sys as _sys
 import typing as _t
 from warnings import warn as _warn
@@ -348,6 +350,7 @@ class Failure(list[Failed]):
         return max(self._retcode)
 
 
+# TODO: make report json by default and wrap with a reporter for cli
 def report(
     failures: Failures,
     config: _Config,
@@ -363,8 +366,10 @@ def report(
     :param file: Module path when failures came from a file (optional).
     :return: Exit code (non-zero if any check failed).
     """
+    format_json = _os.getenv("DOCSIG_FORMAT_JSON") is not None
     retcodes = [0]
     output = []
+    obj = []
     for failure in failures:
         retcodes.append(failure.retcode)
         path_prefix = f"{file}:" if file is not None else ""
@@ -391,7 +396,18 @@ def report(
             if extra is not None:
                 output.append(f"    {extra}")
 
-    if output:
+            obj.append(
+                {
+                    "line": None if failure.retcode == 2 else item.lineno,
+                    "message": msg,
+                    "exit": failure.retcode,
+                },
+            )
+
+    if format_json:
+        print(_json.dumps(obj).strip())  # pragma: no cover
+
+    elif output:
         print("\n".join(output))
 
     return max(retcodes)
