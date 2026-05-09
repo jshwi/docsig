@@ -42,4 +42,5 @@ policies:
           - contributing
           - plugin
           - make
+          - editorconfig
         descriptionLength: 72
