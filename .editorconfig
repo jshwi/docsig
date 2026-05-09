@@ -17,11 +17,7 @@ indent_size = 4
 max_line_length = 88
 indent_style = tab
 
-[tests/*.py]
-max_line_length = unset
-indent_size = unset
-
-[{scripts,docs/extensions}/*.py]
+[{tests,scripts,docs/extensions}/*.py]
 max_line_length = unset
 indent_size = unset
 
