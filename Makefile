@@ -40,12 +40,16 @@ help: $(VENV)
 ########################################################################
 # Main Targets
 $(BUILD): .make/doctest \
-		format \
-		lint \
-		update-docs \
+		.make/black \
+		.make/flynt \
+		.make/isort \
+		.make/pylint \
+		.make/docsig \
+		.make/update-docs \
 		.mypy_cache/CACHEDIR.TAG \
 		README.rst \
-		test-source \
+		.make/doctest \
+		coverage.xml \
 		docs/_build/html/index.html
 	@$(POETRY) build
 	@touch $@
