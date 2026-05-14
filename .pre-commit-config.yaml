@@ -29,6 +29,7 @@ exclude: |
     | .*\.vscode/.*
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
     | plugin\/vscode\/package-lock\.json
+    | docs\/static\/.*
   )$
 repos:
   - repo: local
