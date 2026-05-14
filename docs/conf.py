@@ -82,6 +82,7 @@ html_show_sphinx = False
 myst_heading_anchors = 3
 todo_include_todos = True
 html_logo = "static/docsig.svg"
+html_favicon = "static/favicon.ico"
 
 # SEO Configuration
 html_baseurl = "https://docsig.io/"
