@@ -1,3 +1,4 @@
+---
 policies:
   - type: commit
     spec:
