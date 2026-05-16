@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.85.0](https://github.com/jshwi/docsig/tree/v0.85.0) - 2026-05-16
+
+### Removed
+
+- short form for check-protected-class-methods ([#823](https://github.com/jshwi/docsig/issues/823))
+
 ## [0.84.0](https://github.com/jshwi/docsig/tree/v0.84.0) - 2026-05-02
 
 ### Removed
