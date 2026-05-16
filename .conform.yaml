@@ -42,4 +42,5 @@ policies:
           - contributing
           - make
           - editorconfig
+          - config
         descriptionLength: 72
