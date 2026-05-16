@@ -183,9 +183,9 @@ avoid any potential conflicts with other plugins
 .. code-block:: ini
 
     [flake8]
-    sig-check-dunders = True
-    sig-check-overridden = True
-    sig-check-protected = True
+    sig-check-dunders = true
+    sig-check-overridden = true
+    sig-check-protected = true
 
 ..
    end flake8
