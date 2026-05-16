@@ -84,7 +84,7 @@ repos:
           - pre-commit
       - id: commit-fix
         name: test fix
-        entry: poetry run python scripts/commit_fix.py
+        entry: bash -c 'make commit-fix MSG="$1"' --
         language: system
         stages:
           - commit-msg

@@ -176,7 +176,7 @@ poetry.lock: pyproject.toml
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist \
-	news
+	news commit-fix
 
 #: run benchmarks
 benchmark: $(VENV)
@@ -278,3 +278,7 @@ whitelist: whitelist.py
 #: make news fragment
 news: $(VENV)
 	@$(POETRY) run python scripts/check_news.py $(MSG)
+
+#: check test written for fix
+commit-fix: $(VENV)
+	@$(POETRY) run python scripts/commit_fix.py $(MSG)
