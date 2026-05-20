@@ -12,6 +12,7 @@ ci:
     - check-unstaged-news
     - check-news
     - commit-fix
+    - intellij
 default_language_version:
   python: "3.10"
 default_stages:
@@ -20,13 +21,14 @@ exclude: |
   (?x)^(
     | poetry\.lock
     | whitelist\.py
-    | \.idea\/.*
+    | .*\.idea\/.*
     | docs\/conf\.py
     | changelog\/.*
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
     | \.vscode/.*
     | docs\/static\/.*
     | \.cursor\/rules\/.*
+    | .*\/CHANGELOG\.md
   )$
 repos:
   - repo: local
@@ -99,6 +101,10 @@ repos:
         language: system
         stages:
           - commit-msg
+      - id: intellij
+        name: intellij
+        entry: make intellij
+        language: system
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v6.0.0"
     hooks:

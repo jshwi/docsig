@@ -171,6 +171,9 @@ sphinx-sitemap = "^2.9.0"
 [tool.poetry.group.flake8.dependencies]
 flake8 = "^7.1.0"
 
+[tool.poetry.group.plugin.dependencies]
+shiv = "^1.0.8"
+
 [tool.poetry.group.tests.dependencies]
 pytest = ">=8.2,<10.0"
 pytest-benchmark = ">=4,<6"
