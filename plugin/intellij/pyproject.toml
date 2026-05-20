@@ -1,0 +1,31 @@
+[project]
+name = "Docsig"
+version = "0.0.0"
+
+[tool.bumpversion]
+allow_dirty = true
+commit = true
+commit_args = "-sS"
+current_version = "0.0.0"
+message = "bump(plugin): version {current_version} → {new_version}"
+sign_tags = true
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+replace = 'version = "{new_version}"'
+search = 'version = "{current_version}"'
+
+[[tool.bumpversion.files]]
+filename = "gradle.properties"
+replace = "version = {new_version}"
+search = "version = {current_version}"
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+replace = """
+[Unreleased](https://github.com/jshwi/docsig/compare/v{new_version}...HEAD)
+------------------------------------------------------------------------
+
+[{new_version}](https://github.com/jshwi/docsig/releases/tag/v{new_version}) - {now:%Y-%m-%d}\
+"""
+search = "[Unreleased](https://github.com/jshwi/docsig/compare/v{current_version}...HEAD)"

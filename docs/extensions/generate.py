@@ -22,6 +22,7 @@ MESSAGES_DIR = USAGE / "messages"
 GITIGNORE = GENERATED / ".gitignore"
 REPO = DOCS_DIR.parent
 README = REPO / "README.rst"
+INTELLIJ_README = REPO / "plugin" / "intellij" / "README.md"
 TEST_RST = """
 tests
 =====
@@ -274,6 +275,31 @@ def generate_schema() -> None:
     )
 
 
+@extension
+def generate_intellij_readme() -> None:
+    """Generate intellij documentation."""
+    start = "<!-- Plugin description -->"
+    end = "<!-- Plugin description end -->"
+    content = INTELLIJ_README.read_text(encoding="utf-8")
+    description = content.split(start)[1].split(end)[0]
+    lines = []
+    for line in description.splitlines():
+        if line.startswith("## Docsig"):
+            continue
+
+        if line.startswith("## "):
+            line = line.replace("## ", "")
+            lines.append(line)
+            lines.append(len(line) * "-")
+        else:
+            lines.append(line)
+
+    (GENERATED / "intellij-description.rst").write_text(
+        "\n".join(lines),
+        encoding="utf-8",
+    )
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -291,3 +317,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_commit_policy)
     app.connect("builder-inited", generate_flake8_help)
     app.connect("builder-inited", generate_schema)
+    app.connect("builder-inited", generate_intellij_readme)
