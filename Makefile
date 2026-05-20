@@ -176,13 +176,30 @@ poetry.lock: pyproject.toml
 	@$(POETRY) lock
 	@touch $@
 
+build/requirements.txt: $(BUILD)
+	@mkdir -p $(@D)
+	@$(POETRY) export -f requirements.txt --output $@
+	@touch $@
+
+build/site-packages/$(VERSION): build/requirements.txt
+	@rm -rf $(@D) >/dev/null
+	@$(POETRY) run pip install -r $< --target $(@D)
+	@touch $@
+
+build/docsig.pyz: build/site-packages/$(VERSION)
+	@$(POETRY) run shiv \
+		--site-packages $(<D) \
+		--entry-point docsig.__main__:main \
+		--output-file $@
+	@touch $@
+
 ########################################################################
 # Phony Targets
 .PHONY: benchmark build bump check-deps check-links clean docs format \
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist \
-	news commit-fix version
+	news commit-fix version ide intellij
 
 #: show program's version number and exit
 version: $(POETRY)
@@ -223,6 +240,7 @@ clean:
 	@rm -rf docs/_generated
 	@rm -rf .tox
 	@rm -rf node_modules
+	@$(MAKE) -C plugin/intellij clean
 
 #: build documentation
 docs: docs/_build/html/index.html
@@ -292,3 +310,11 @@ news: $(VENV)
 #: check test written for fix
 commit-fix: $(VENV)
 	@$(POETRY) run python scripts/commit_fix.py $(MSG)
+
+#: launch test ide for intellij plugin
+ide:
+	@$(MAKE) -C plugin/intellij ide
+
+#: build intellij plugin
+intellij:
+	@$(MAKE) -C plugin/intellij build
