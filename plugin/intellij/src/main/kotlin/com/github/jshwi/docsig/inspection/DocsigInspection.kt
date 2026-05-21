@@ -14,7 +14,6 @@
  */
 package com.github.jshwi.docsig.inspection
 
-import com.github.jshwi.docsig.models.Issue
 import com.github.jshwi.docsig.service.DocsigService
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
@@ -84,14 +83,6 @@ internal class DocsigInspection : LocalInspectionTool() {
         return findBestHighlightTarget(element)
     }
 
-    // maps an issue exit code to an intellij highlight type
-    private fun Issue.toHighlightType(): ProblemHighlightType =
-        if (exit == 2) {
-            ProblemHighlightType.ERROR
-        } else {
-            ProblemHighlightType.WARNING
-        }
-
     /**
      * Visit file roots to register cached docsig issues as problems.
      *
@@ -137,7 +128,11 @@ internal class DocsigInspection : LocalInspectionTool() {
                     holder.registerProblem(
                         element,
                         issue.message,
-                        issue.toHighlightType(),
+                        if (issue.exit == 2) {
+                            ProblemHighlightType.ERROR
+                        } else {
+                            ProblemHighlightType.WARNING
+                        },
                     )
                 }
             }
