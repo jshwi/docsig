@@ -14,14 +14,14 @@ pluginManagement {
     }
 
     plugins {
-        id("org.jetbrains.kotlin.jvm") version extra["kotlinVersion"] as String
-        id("org.jetbrains.intellij.platform") version extra["intellijPlatformVersion"] as String
-        id("org.jetbrains.intellij.platform.settings") version extra["intellijPlatformVersion"] as String
-        id("org.jetbrains.changelog") version extra["changelogVersion"] as String
-        id("org.jlleitschuh.gradle.ktlint") version extra["ktlintPluginVersion"] as String
-        id("org.jetbrains.kotlinx.kover") version extra["koverVersion"] as String
-        id("io.gitlab.arturbosch.detekt") version extra["detektVersion"] as String
-        id("org.jetbrains.dokka") version extra["dokkaVersion"] as String
+        id("org.jetbrains.kotlin.jvm") version "2.3.0"
+        id("org.jetbrains.intellij.platform") version "2.14.0"
+        id("org.jetbrains.intellij.platform.settings") version "2.14.0"
+        id("org.jetbrains.changelog") version "2.5.0"
+        id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
+        id("org.jetbrains.kotlinx.kover") version "0.9.8"
+        id("io.gitlab.arturbosch.detekt") version "1.23.6"
+        id("org.jetbrains.dokka") version "2.2.0"
     }
 }
 

@@ -15,16 +15,13 @@ plugins {
 
 // #####################################################################
 // Dependencies
-val junitVersion = providers.gradleProperty("junitVersion").get()
-val mockkVersion = providers.gradleProperty("mockkVersion").get()
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("io.mockk:mockk:1.13.12")
 
     intellijPlatform {
-        pycharm(providers.gradleProperty("pycharmVersion"))
-
+        pycharm("2026.1")
         testFramework(TestFrameworkType.Platform)
         bundledPlugin("PythonCore")
         bundledPlugin("Pythonid")
@@ -36,12 +33,7 @@ dependencies {
 java {
     toolchain {
         languageVersion.set(
-            JavaLanguageVersion.of(
-                providers
-                    .gradleProperty("javaVersion")
-                    .get()
-                    .toInt(),
-            ),
+            JavaLanguageVersion.of(21),
         )
     }
 }
@@ -54,8 +46,6 @@ kotlin {
 
 // #####################################################################
 // IntelliJ Platform
-val sinceVersion = providers.gradleProperty("sinceVersion").get()
-val untilVersion = providers.gradleProperty("untilVersion").get()
 intellijPlatform {
     pluginConfiguration {
         ideaVersion {
@@ -100,7 +90,7 @@ intellijPlatform {
 // Ktlint
 ktlint {
     version.set(
-        providers.gradleProperty("ktlintVersion"),
+        "1.2.1",
     )
 
     debug.set(false)
@@ -120,7 +110,7 @@ ktlint {
 // #####################################################################
 // Detekt
 detekt {
-    toolVersion = providers.gradleProperty("detektVersion").get()
+    toolVersion = "1.23.6"
 
     buildUponDefaultConfig = true
 
