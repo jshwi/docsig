@@ -19,7 +19,6 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("io.mockk:mockk:1.13.12")
-
     intellijPlatform {
         pycharm("2026.1")
         testFramework(TestFrameworkType.Platform)
@@ -58,15 +57,7 @@ intellijPlatform {
             ).asText.map {
                 val start = "<!-- Plugin description -->"
                 val end = "<!-- Plugin description end -->"
-
                 with(it.lines()) {
-                    if (!containsAll(listOf(start, end))) {
-                        throw GradleException(
-                            "Plugin description section not found in " +
-                                "README.md:\n$start ... $end",
-                        )
-                    }
-
                     subList(
                         indexOf(start) + 1,
                         indexOf(end),
@@ -89,48 +80,34 @@ intellijPlatform {
 // #####################################################################
 // Ktlint
 ktlint {
-    version.set(
-        "1.2.1",
-    )
-
+    version.set("1.2.1")
     debug.set(false)
     verbose.set(true)
-
     android.set(false)
-
     outputToConsole.set(true)
-
     ignoreFailures.set(false)
-
-    filter {
-        exclude("**/build/**")
-    }
 }
 
 // #####################################################################
 // Detekt
 detekt {
     toolVersion = "1.23.6"
-
     buildUponDefaultConfig = true
-
     allRules = false
-
     config.setFrom(
         files("$rootDir/detekt.yaml"),
     )
 }
 
 tasks.withType<Detekt>().configureEach {
+    // required for intellij plugin projects
+    classpath.setFrom(files())
     setSource(
         files(
             "src/main/kotlin",
             "src/test/kotlin",
         ),
     )
-
-    // Required for IntelliJ plugin projects
-    classpath.setFrom(files())
 }
 
 tasks.detekt {

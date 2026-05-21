@@ -40,7 +40,6 @@ plugins {
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-
         intellijPlatform {
             defaultRepositories()
         }
