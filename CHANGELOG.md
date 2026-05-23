@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.85.1](https://github.com/jshwi/docsig/tree/v0.85.1) - 2026-05-23
+
+### Fixed
+
+- recognize directive for indented func ([#827](https://github.com/jshwi/docsig/issues/827))
+
 ## [0.85.0](https://github.com/jshwi/docsig/tree/v0.85.0) - 2026-05-16
 
 ### Removed
