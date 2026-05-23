@@ -104,7 +104,11 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
     """
 
     @classmethod
-    def from_text(cls, text: str, messages: _Messages) -> Directives:
+    def from_text(  # pylint: disable=too-many-locals
+        cls,
+        text: str,
+        messages: _Messages,
+    ) -> Directives:
         """Build a directives map from docsig directives in the code.
 
         :param text: Python source code to scan for directives.
@@ -117,6 +121,8 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
         enable_next = False
         next_comments = Comments(comments)
         next_messages = _Messages(messages)
+        pending_inline: tuple[Comments, _Messages] | None = None
+        pending_inline_lineno: int | None = None
         for line in _tokenize.generate_tokens(fin.readline):
             # do nothing for these line types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
@@ -154,6 +160,14 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                     if comment.ismodule:
                         comments = scoped_comments
                         messages = scoped_messages
+                    else:
+                        # defer scoped state for the next line without
+                        # changing module-level messages
+                        pending_inline = (
+                            Comments(scoped_comments),
+                            _Messages(scoped_messages),
+                        )
+                        pending_inline_lineno = lineno
 
             # if in a 'next' module level scope and the line type is a
             # newline (not a comment to allow 'next' directives to be
@@ -163,6 +177,17 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                 enable_next = False
                 comments = next_comments
                 messages = next_messages
+
+            # inherit deferred inline scope on the first line after
+            # the comment (e.g. an indented def on the following line)
+            if (
+                pending_inline is not None
+                and pending_inline_lineno is not None
+                and lineno > pending_inline_lineno
+            ):
+                scoped_comments, scoped_messages = pending_inline
+                pending_inline = None
+                pending_inline_lineno = None
 
             # check that a scoped message has not updated this first, as
             # they take precedence over global messages

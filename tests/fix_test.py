@@ -1585,3 +1585,31 @@ class G(F[B, A, C], t.Generic[B, A, C]): ...
     assert main(".") == 1
     std = capsys.readouterr()
     assert E[904].ref in std.out
+
+
+def test_fix_recognize_directive_for_indented_func_827(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test disable directive on indented line before definition.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+class Class:
+    # docsig: disable=SIG503
+    def method(self, a, b, c) -> str:
+        """Description summary.
+
+        :param a: Description of a.
+        :param b: Description of b.
+        :param c: Description of c.
+        """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[503].ref not in std.out
