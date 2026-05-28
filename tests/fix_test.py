@@ -1613,3 +1613,44 @@ class Class:
     main(".")
     std = capsys.readouterr()
     assert E[503].ref not in std.out
+
+
+def test_fix_extra_colon_in_directive_830(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Fix directives that look like `docsig: disable: SIG101.
+
+    This results in:
+
+    - ['docsig', 'disable']
+
+    and not
+
+    - ['docsig', 'disable: SIG101']
+
+    Making it confusing if everything is disabled by mistaken syntax.
+
+    Should see this:
+
+    - SIG001: unknown module comment directive 'disable: SIG101'
+      (unknown-module-directive)
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+# docsig: disable: SIG101
+def function_1(a) -> str:
+    pass
+
+def function_2() -> str:
+    """Function description."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[503].ref in std.out
+    assert E[1].ref in std.out

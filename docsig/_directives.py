@@ -90,7 +90,7 @@ class Comment(_Messages):
         :return: Comment instance if valid; None otherwise.
         """
         if comment[1:].strip().startswith(f"{__package__}:"):
-            return cls(comment.split(":")[1].strip(), col)
+            return cls(comment.split(":", maxsplit=1)[1].strip(), col)
 
         return None
 
