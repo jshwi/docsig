@@ -1654,3 +1654,29 @@ def function_2() -> str:
     std = capsys.readouterr()
     assert E[503].ref in std.out
     assert E[1].ref in std.out
+
+
+def test_directive_treated_as_global_if_error_in_flag_832(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Fix directives that look like `docsig: disable-next: SIG101.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+# docsig: disable-next: SIG101
+def function_1(a) -> str:
+    pass
+
+def function_2() -> str:
+    """Function description."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[503].ref in std.out
+    assert E[6].ref in std.out

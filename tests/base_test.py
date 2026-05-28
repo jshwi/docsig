@@ -7629,13 +7629,16 @@ def function_3(  # docsig: enable-nexto=SIG202
         return f"""\
 {PATH}:2 in function_1
     {E[6].fstring(T).format(directive="disable", flag='nexto')}
+    {E[402].fstring(T)}
 {PATH}:11 in function_2
     {E[6].fstring(T).format(directive="disable", flag='ext')}
     {E[6].fstring(T).format(directive="disable", flag='nexto')}
+    {E[202].fstring(T)}
 {PATH}:19 in function_3
     {E[6].fstring(T).format(directive="disable", flag='ext')}
     {E[6].fstring(T).format(directive="disable", flag='nexto')}
     {E[7].fstring(T).format(directive="enable", flag='nexto')}
+    {E[203].fstring(T)}
 """
 
 

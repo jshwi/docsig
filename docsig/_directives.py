@@ -36,10 +36,23 @@ class Comment(_Messages):
         self._kind = subparts[0]
         self._flag = None if len(subparts) == 1 else subparts[1]
         self._isnext = self._flag == "next"
-        if len(parts) == 1:
-            self.extend(_E.all)
-        else:
-            self.extend(_E.from_ref(i) for i in parts[1].split(","))
+
+        # if the flag is not valid, the preceding directive is not valid
+        # either
+        # at first it seems like the directive should be valid, i.e.
+        # `docsig: disable-next: SIG101` should still at least disable
+        # `SIG101`, but this causes more problems than it solves, at the
+        # module level
+        # disabling the check for the whole file is likely
+        # unexpected, confusing, and the opposite of what was intended
+        # better not disable the commented function than disable the
+        # whole file
+        # note that no directive flag at all is still a valid flag
+        if self.isvalidflag:
+            if len(parts) == 1:
+                self.extend(_E.all)
+            else:
+                self.extend(_E.from_ref(i) for i in parts[1].split(","))
 
     @property
     def kind(self) -> str:

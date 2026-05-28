@@ -22,4 +22,5 @@ Unknown inline comment flag for {directive} '{flag}'
     >>> docsig(string=string, no_ansi=True)
     2 in function
         SIG007: unknown inline comment flag for disable 'nexto' (unknown-inline-directive-flag)
+        SIG403: spelling error found in documented parameter (spelling-error)
     1
