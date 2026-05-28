@@ -11,6 +11,13 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.85.2](https://github.com/jshwi/docsig/tree/v0.85.2) - 2026-05-28
+
+### Fixed
+
+- extra colon in directive ([#830](https://github.com/jshwi/docsig/issues/830))
+- directive treated as global if error in flag ([#832](https://github.com/jshwi/docsig/issues/832))
+
 ## [0.85.1](https://github.com/jshwi/docsig/tree/v0.85.1) - 2026-05-23
 
 ### Fixed
