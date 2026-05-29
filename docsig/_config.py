@@ -27,7 +27,7 @@ def _split_comma(value: str) -> list[str]:
 
 # attempt to locate a pyproject.toml file if one exists in parents
 def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
-    if not path:
+    if path is None:
         path = _Path.cwd()
 
     pyproject_toml = path / PYPROJECT_TOML
