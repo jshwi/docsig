@@ -100,7 +100,7 @@ class Failure(list[Failed]):
     def _add(
         self,
         value: _Message,
-        hint: bool = False,
+        include_hint: bool = False,
         **kwargs: _t.Any,
     ) -> None:
         self._retcode.append(int(not value.new))
@@ -110,7 +110,7 @@ class Failure(list[Failed]):
             value.description.format(**kwargs),
             value.symbolic,
             self.lineno,
-            value.hint if hint else None,
+            value.hint if include_hint else None,
             value.new,
         )
         if value not in self._func.messages and failed not in self:
@@ -240,7 +240,7 @@ class Failure(list[Failed]):
             self._add(_E[303])
         elif doc.closing_token != ":":
             # bad-closing-token
-            self._add(_E[304], token=doc.closing_token, hint=True)
+            self._add(_E[304], token=doc.closing_token, include_hint=True)
         if doc.description is not None and not all(
             stripped[0].isupper()
             for i in _sentence_tokenizer(doc.description)
@@ -290,7 +290,7 @@ class Failure(list[Failed]):
             # no types, cannot know either way
             if self._func.signature.returns.type == _RetType.UNTYPED:
                 # confirm-return-needed
-                self._add(_E[501], hint=True)
+                self._add(_E[501], include_hint=True)
             # return-type is none, so no return should be documented
             elif self._func.docstring.returns.returns:
                 if self._func.signature.returns.type == _RetType.NONE:
@@ -304,7 +304,7 @@ class Failure(list[Failed]):
                 lines = str(self._func.docstring.string).splitlines()
                 self._add(
                     _E[503],
-                    hint=(
+                    include_hint=(
                         len(lines) > 1
                         and "return" in lines[-1]
                         and ":param" not in lines[-1]
@@ -314,11 +314,11 @@ class Failure(list[Failed]):
             # this method is init, so no return should be documented
             if self._func.isinit:
                 # class-return-documented
-                self._add(_E[504], hint=True)
+                self._add(_E[504], include_hint=True)
             # method is property and not set to document property
             elif self._func.isproperty and not check_property_returns:
                 # return-documented-for-property
-                self._add(_E[505], hint=True)
+                self._add(_E[505], include_hint=True)
 
     def _sig9xx_error(self) -> None:
         # invalid-syntax

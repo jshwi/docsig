@@ -56,29 +56,29 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> int:
         format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
         retcode = 2
-        stderr = []
+        errors = []
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string"):
-                stderr.append(
+                errors.append(
                     "the following arguments are required: path(s) or string",
                 )
 
             for message in kwargs.get("disable") or []:
                 if not message.isknown:
-                    stderr.append(
+                    errors.append(
                         f"unknown option to disable '{message.description}'",
                     )
 
             for message in kwargs.get("target") or []:
                 if not message.isknown:
-                    stderr.append(
+                    errors.append(
                         f"unknown option to target '{message.description}'",
                     )
 
             if kwargs.get("check_class") and kwargs.get(
                 "check_class_constructor",
             ):
-                stderr.append(
+                errors.append(
                     "argument to check class constructor not allowed with"
                     " argument to check class",
                 )
@@ -89,11 +89,11 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
                     # passing both commandline args as argparse won't
                     # allow it, therefore, this must be an issue with
                     # the pyproject.toml configuration
-                    stderr.append(
+                    errors.append(
                         "please check your pyproject.toml configuration",
                     )
-        if stderr:
-            message = "\n".join(stderr)
+        if errors:
+            message = "\n".join(errors)
             if format_json:
                 obj = [  # pragma: no cover
                     {"line": None, "message": message, "exit": retcode},
