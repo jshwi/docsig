@@ -6,7 +6,7 @@ SHELL := /bin/bash
 # Extract version from pyproject.toml
 # Use this instead of `$ poetry version --short` as the version may be
 # needed before poetry is installed
-VERSION := $(shell bash scripts/get_docsig_version.sh)
+VERSION := $(shell bash scripts/get_docsig_version.sh pyproject.toml)
 
 # Poetry configuration
 POETRY := bin/poetry/bin/poetry
