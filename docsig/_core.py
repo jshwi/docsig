@@ -211,6 +211,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     logger = _logging.getLogger(__package__)
     logger.debug(_pformat(config))
     if config.list_checks:
+        # noinspection PyNoneFunctionAssignment
         return int(bool(_print_checks()))  # type: ignore
 
     if string:
