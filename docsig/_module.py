@@ -82,7 +82,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                 # later inspected to report on the module error (the
                 # report doesn't analyze modules or classes - it
                 # analyzes functions)
-                self._children.append(Function(file, error=error))
+                self._children.append(Function(error=error))
         else:
             self._name = node.name
             self._parse_ast(node, file)
