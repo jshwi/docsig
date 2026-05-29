@@ -6,7 +6,6 @@ Config dataclasses, pyproject.toml loader, and commandline.
 """
 
 import argparse as _argparse
-import os as _os
 import re as _re
 import typing as _t
 from dataclasses import dataclass as _dataclass
@@ -35,7 +34,7 @@ def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
     if pyproject_toml.is_file():
         return pyproject_toml
 
-    if str(path) == _os.path.abspath(_os.sep):
+    if path.parent == path:
         return None
 
     return _find_pyproject_toml(path.parent)

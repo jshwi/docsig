@@ -24,7 +24,7 @@ class _Gitignore(_PathSpec):
         if (path / ".git" / "HEAD").is_file():
             return path
 
-        if str(path) == _os.path.abspath(_os.sep):
+        if path.parent == path:
             return None
 
         return self._get_repo_relative_to(path.parent)
