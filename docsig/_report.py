@@ -226,9 +226,15 @@ class Failure(list[Failed]):
             self._add(_E[203])
 
     def _sig3xx_description(self, doc: _Param) -> None:
-        if doc.description is None and doc.name is not None:
+        # freeze result as it is a property and PyCharm complains
+        # `Member 'None' of 'str | None' does not have attribute
+        # 'startswith'` as property could theoretically have different
+        # result from doc.description is None to
+        # doc.description.startswith
+        doc_description = doc.description
+        if doc_description is None and doc.name is not None:
             self._add(_E[301])
-        elif doc.description is not None and not doc.description.startswith(
+        elif doc_description is not None and not doc_description.startswith(
             " ",
         ):
             # syntax-error-in-description
@@ -241,18 +247,18 @@ class Failure(list[Failed]):
         elif doc.closing_token != ":":
             # bad-closing-token
             self._add(_E[304], token=doc.closing_token, include_hint=True)
-        if doc.description is not None and not all(
+        if doc_description is not None and not all(
             stripped[0].isupper()
-            for i in _sentence_tokenizer(doc.description)
+            for i in _sentence_tokenizer(doc_description)
             if i and (stripped := i.strip())[0].isalpha()
         ):
             # description is not capitalized
             self._add(_E[305])
         # description-missing-period
         if (
-            doc.description
-            and doc.description.strip()
-            and doc.description.strip()[-1]
+            doc_description
+            and doc_description.strip()
+            and doc_description.strip()[-1]
             not in (
                 "`",
                 ".",
@@ -261,22 +267,28 @@ class Failure(list[Failed]):
             self._add(_E[306])
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
+        # freeze result as it is a property and PyCharm complains
+        # `Expected type 'str', got 'str | None' instead ' in
+        # _almost_equal as property could theoretically have different
+        # result from sig.name is not None and doc.name is not None
+        sig_name = sig.name
+        doc_name = doc.name
         if doc.indent > 0:
             # incorrect-indent
             self._add(_E[401])
         elif doc != sig:
             if (
-                sig.name in self._func.docstring.args.names
-                or doc.name in self._func.signature.args.names
+                sig_name in self._func.docstring.args.names
+                or doc_name in self._func.signature.args.names
             ) and len(self._func.docstring.args) > 1:
                 # params-out-of-order
                 self._add(_E[402])
             elif (
-                doc.name != _UNNAMED
-                and sig.name is not None
-                and doc.name is not None
+                doc_name != _UNNAMED
+                and sig_name is not None
+                and doc_name is not None
             ):
-                if _almost_equal(sig.name, doc.name, _MIN_MATCH, _MAX_MATCH):
+                if _almost_equal(sig_name, doc_name, _MIN_MATCH, _MAX_MATCH):
                     # spelling-error
                     self._add(_E[403])
                 else:
