@@ -389,7 +389,7 @@ def test_bad_py_file(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Test invalid syntax on a python file.
+    """Test invalid syntax on a Python file.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
