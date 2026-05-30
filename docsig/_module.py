@@ -119,7 +119,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     for name in subnode.names:
                         original, alias = name
                         self._imports[original] = alias or original
-                elif isinstance(subnode, _ast.FunctionDef):
+                elif isinstance(subnode, _ast.nodes.FunctionDef):
                     func = Function(
                         subnode,
                         comments,
@@ -147,7 +147,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                             )
 
                         self._children.append(func)
-                elif isinstance(subnode, _ast.ClassDef):
+                elif isinstance(subnode, _ast.nodes.ClassDef):
                     self._children.append(
                         Parent(
                             subnode,
@@ -259,7 +259,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def ismethod(self) -> bool:
         """Whether this function is defined in a class (method)."""
-        return isinstance(self._parent, _ast.ClassDef)
+        return isinstance(self._parent, _ast.nodes.ClassDef)
 
     @property
     def isproperty(self) -> bool:
@@ -286,7 +286,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
                     ancestor[self.name],
-                    _ast.FunctionDef,
+                    _ast.nodes.FunctionDef,
                 ):
                     return True
 
