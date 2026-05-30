@@ -73,6 +73,7 @@ class Failure(list[Failed]):
         self._name = self._func.name
         if (
             self._func.parent is not None
+            and hasattr(self._func.parent, "name")
             and self._func.parent.name
             and not isinstance(self._func.parent, _ast.nodes.Module)
         ):

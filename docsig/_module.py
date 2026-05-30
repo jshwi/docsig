@@ -57,7 +57,6 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             _ast.nodes.Module
             | _ast.nodes.ClassDef
             | _ast.nodes.FunctionDef
-            | _ast.nodes.NodeNG
             | None
         ) = None,
         directives: _Directives | None = None,
@@ -101,13 +100,13 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
         parent_comments, parent_disabled = self._directives.get(
-            node.lineno,
+            node.lineno or 0,
             (_Comments(), _Messages()),
         )
         if hasattr(node, "body"):
             for subnode in node.body:
                 comments, disabled = self._directives.get(
-                    subnode.lineno,
+                    subnode.lineno or 0,
                     (_Comments(), _Messages()),
                 )
                 comments.extend(parent_comments)
@@ -192,7 +191,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
-        node: _ast.nodes.FunctionDef | _ast.nodes.NodeNG | None = None,
+        node: _ast.nodes.FunctionDef | None = None,
         comments: _Comments | None = None,
         directives: _Directives | None = None,
         messages: _Messages | None = None,
@@ -216,7 +215,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         self._docstring = _Docstring()
         self._lineno = 0
         self._error = error
-        if node is not None:
+        if node is not None and node.parent is not None:
             self._parent = node.parent.frame()
             self._decorators = node.decorators
             self._lineno = node.lineno
@@ -230,7 +229,11 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
                 node,
                 self._config.ignore,
             )
-            if self.isinit and not self._config.check.class_constructor:
+            if (
+                self.isinit
+                and not self._config.check.class_constructor
+                and not isinstance(self._parent, _ast.nodes.Lambda)
+            ):
                 # docstring for __init__ is expected on the class
                 # docstring
                 relevant_doc_node = self._parent.doc_node
@@ -282,7 +285,12 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def isoverridden(self) -> bool:
         """Whether this function overrides a base class method."""
-        if self.ismethod and not self.isinit and self._parent is not None:
+        if (
+            self.ismethod
+            and not self.isinit
+            and self._parent is not None
+            and isinstance(self._parent, _ast.nodes.ClassDef)
+        ):
             for ancestor in self._parent.ancestors():
                 if self.name in ancestor and isinstance(
                     ancestor[self.name],
@@ -324,6 +332,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         | _ast.nodes.Module
         | _ast.nodes.ClassDef
         | _ast.nodes.Lambda
+        | None
     ):
         """Function's parent node."""
         return self._parent
@@ -331,7 +340,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def lineno(self) -> int:
         """Line number of function declaration."""
-        return self._lineno
+        return self._lineno or 0
 
     @property
     def signature(self) -> _Signature:

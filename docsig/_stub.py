@@ -260,7 +260,7 @@ class Signature(_Stub):
     @classmethod
     def from_ast(
         cls,
-        node: _ast.nodes.Module | _ast.nodes.ClassDef | _ast.nodes.FunctionDef,
+        node: _ast.nodes.FunctionDef,
         ignore: _Ignore,
     ) -> Signature:
         """Build Signature from a function or class AST node.
