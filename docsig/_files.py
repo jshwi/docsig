@@ -15,23 +15,15 @@ from pathspec.patterns import GitWildMatchPattern as _GitWildMatchPattern
 from wcmatch.pathlib import Path as _WcPath
 
 from ._config import Filters as _Filters
+from ._utils import get_parent_that_has as _get_parent_that_has
 
 FILE_INFO = "%s: %s"
 
 
 class _Gitignore(_PathSpec):
-    def _get_repo_relative_to(self, path: _Path) -> _Path | None:
-        if (path / ".git" / "HEAD").is_file():
-            return path
-
-        if path.parent == path:
-            return None
-
-        return self._get_repo_relative_to(path.parent)
-
     def __init__(self) -> None:
         patterns = []
-        repo = self._get_repo_relative_to(_Path.cwd())
+        repo = _get_parent_that_has(".git/HEAD")
         # only consider gitignore patterns valid if inside a git repo
         # there might be stray gitignore files lying about
         if repo is not None:

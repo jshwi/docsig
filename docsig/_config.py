@@ -14,6 +14,7 @@ from pathlib import Path as _Path
 
 import tomli as _tomli
 
+from ._utils import get_parent_that_has as _get_parent_that_has
 from ._version import __version__
 from .messages import Messages as _Messages
 
@@ -25,31 +26,18 @@ def _split_comma(value: str) -> list[str]:
     return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
 
 
-# attempt to locate a pyproject.toml file if one exists in parents
-def _find_pyproject_toml(path: _Path | None = None) -> _Path | None:
-    if path is None:
-        path = _Path.cwd()
-
-    pyproject_toml = path / PYPROJECT_TOML
-    if pyproject_toml.is_file():
-        return pyproject_toml
-
-    if path.parent == path:
-        return None
-
-    return _find_pyproject_toml(path.parent)
-
-
 def get_config(prog: str) -> dict[str, _t.Any]:
     """Return the program's tool-section config from pyproject.toml.
 
     :param prog: Program name.
     :return: Config dict, or empty dict if no config is found.
     """
-    pyproject_file = _find_pyproject_toml()
+    # attempt to locate a pyproject.toml file if one exists in parents
+    pyproject_file = _get_parent_that_has(PYPROJECT_TOML)
     if pyproject_file is None:
         return {}
 
+    pyproject_file /= PYPROJECT_TOML
     return {
         k.replace("-", "_"): v
         for k, v in _tomli.loads(pyproject_file.read_text())
