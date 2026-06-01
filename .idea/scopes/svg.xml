@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="svg" pattern="file:docs/static/docsig.svg||file:docs/static/favicon.svg" />
+</component>
