@@ -71,7 +71,7 @@ class Failures(list["Failure"]):
     """Sequence of Failure instances (one per function checked)."""
 
 
-class Failed(_t.NamedTuple):
+class Diagnostic(_t.NamedTuple):
     """Single reported issue."""
 
     name: str
@@ -83,7 +83,7 @@ class Failed(_t.NamedTuple):
     new: bool = False
 
 
-class Failure(list[Failed]):
+class Failure(list[Diagnostic]):
     """Collect docstring and signature failures for one function.
 
     Runs configured checks and appends Failed entries for each
@@ -137,7 +137,7 @@ class Failure(list[Failed]):
         **kwargs: _t.Any,
     ) -> None:
         self._retcode.add(int(not value.new))
-        failed = Failed(
+        failed = Diagnostic(
             self._name,
             value.ref,
             value.description.format(**kwargs),
