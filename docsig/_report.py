@@ -40,7 +40,7 @@ def check_function(func: _Function, config: _Config) -> "FunctionChecker":
     :param config: Configuration object.
     :return: Collected diagnostics for the function.
     """
-    return FunctionChecker(func, config)
+    return FunctionChecker(func, config).run()
 
 
 class RetCode:
@@ -112,6 +112,12 @@ class FunctionChecker:
             self._name = f"{self._func.parent.name}.{self._name}"
 
         self._collector = _Collector(func, self._name, self._func.lineno)
+
+    def run(self) -> "FunctionChecker":
+        """Run the function checks and return the result.
+
+        :return: Function result.
+        """
         if self._func.error is not None:
             self._collector.retcode.add(2)
             self._sig9xx_error()
@@ -130,6 +136,7 @@ class FunctionChecker:
                 self._sig5xx_returns(self._config.check.property_returns)
 
         self._diagnostics.sort()
+        return self
 
     def _add(
         self,
