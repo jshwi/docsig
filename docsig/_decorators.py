@@ -10,6 +10,7 @@ import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
+from ._report import RetCode as _RetCode
 from .messages import E as _E
 
 _FuncType = _t.Callable[..., int]
@@ -55,7 +56,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
     @_functools.wraps(func)
     def _wrapper(*args: str | _Path, **kwargs: _t.Any) -> int:
         format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
-        retcode = 2
+        retcode = _RetCode(2)
         errors = []
         if not kwargs.get("list_checks", False):
             if not args and not kwargs.get("string"):
@@ -96,7 +97,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
             message = "\n".join(errors)
             if format_json:
                 obj = [  # pragma: no cover
-                    {"line": None, "message": message, "exit": retcode},
+                    {"line": None, "message": message, "exit": retcode.result},
                 ]
                 if format_json:  # pragma: no cover
                     print(_json.dumps(obj).strip())  # pragma: no cover
@@ -104,7 +105,7 @@ def validate_args(func: _FuncType) -> _WrappedFuncType:
             else:
                 print(message, file=_sys.stderr)
 
-            return retcode
+            return retcode.result
 
         return func(*args, **kwargs)
 

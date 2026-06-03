@@ -35,6 +35,28 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
+class RetCode:
+    """RetCode object.
+
+    :param code: Initial return code, if any, otherwise zero.
+    """
+
+    def __init__(self, code: int = 0) -> None:
+        self._data = [code]
+
+    def add(self, code: int) -> None:
+        """Add a return code.
+
+        :param code: Return code to add.
+        """
+        self._data.append(code)
+
+    @property
+    def result(self) -> int:
+        """Maximum return code."""
+        return max(self._data)
+
+
 class Failures(list["Failure"]):
     """Sequence of Failure instances (one per function checked)."""
 
@@ -63,7 +85,7 @@ class Failure(list[Failed]):
 
     def __init__(self, func: _Function, config: _Config) -> None:
         super().__init__()
-        self._retcode = [0]
+        self._retcode = RetCode()
         self._func = func
         if config.target:
             self._func.messages.extend(
@@ -80,7 +102,7 @@ class Failure(list[Failed]):
             self._name = f"{self._func.parent.name}.{self._name}"
 
         if self._func.error is not None:
-            self._retcode.append(2)
+            self._retcode.add(2)
             self._sig9xx_error()
         else:
             self._sig0xx_config()
@@ -104,7 +126,7 @@ class Failure(list[Failed]):
         include_hint: bool = False,
         **kwargs: _t.Any,
     ) -> None:
-        self._retcode.append(int(not value.new))
+        self._retcode.add(int(not value.new))
         failed = Failed(
             self._name,
             value.ref,
@@ -337,7 +359,7 @@ class Failure(list[Failed]):
         # invalid-syntax
         if self._func.error is _ast.AstroidSyntaxError:
             self._add(_E[901])
-            self._retcode.append(123)
+            self._retcode.add(123)
         # unicode-decode-error
         if self._func.error is UnicodeDecodeError:
             self._add(_E[902])
@@ -361,7 +383,7 @@ class Failure(list[Failed]):
     @property
     def retcode(self) -> int:
         """Exit code (non-zero if any check failed)."""
-        return max(self._retcode)
+        return self._retcode.result
 
 
 # TODO: make report json by default and wrap with a reporter for cli
@@ -381,11 +403,11 @@ def report(
     :return: Exit code (non-zero if any check failed).
     """
     format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
-    retcodes = [0]
+    retcodes = RetCode()
     output = []
     obj = []
     for failure in failures:
-        retcodes.append(failure.retcode)
+        retcodes.add(failure.retcode)
         path_prefix = f"{file}:" if file is not None else ""
         header = f"{path_prefix}{failure.lineno} in {failure.name}"
         if not config.no_ansi and _sys.stdout.isatty():
@@ -424,4 +446,4 @@ def report(
     elif output:
         print("\n".join(output))
 
-    return max(retcodes)
+    return retcodes.result

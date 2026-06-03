@@ -21,6 +21,7 @@ from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
 from ._parsers import parse_from_string as _parse_from_string
 from ._report import Failures as _Failures
+from ._report import RetCode as _RetCode
 from ._report import report as _report
 from ._utils import get_parent_that_has as _get_parent_that_has
 from ._utils import print_checks as _print_checks
@@ -220,12 +221,12 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         failures = _run_checks(module, config)
         return _report(failures, config)
 
-    retcodes = [0]
+    retcodes = _RetCode()
     repo = _get_parent_that_has(".git/HEAD")
     files = _Files(path, config.filters, repo)
     for file in files:
         failures = runner(file, config)
         retcode = _report(failures, config, str(file))
-        retcodes.append(retcode)
+        retcodes.add(retcode)
 
-    return max(retcodes)
+    return retcodes.result
