@@ -6,8 +6,8 @@ docsig._check
 from ._config import Config as _Config
 from ._module import Function as _Function
 from ._module import Parent as _Parent
-from ._report import Failure as _Failure
 from ._report import Failures as _Failures
+from ._report import check_function as _check_function
 
 
 def _should_check_function(
@@ -47,7 +47,7 @@ def _run_check(
         parent,
         config,
     ):
-        failure = _Failure(child, config)
+        failure = _check_function(child, config)
         if failure:
             failures.append(failure)
 

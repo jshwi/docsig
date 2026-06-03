@@ -35,6 +35,16 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
+def check_function(func: _Function, config: _Config) -> "Failure":
+    """Run configured checks for one function and return the result.
+
+    :param func: Function under check.
+    :param config: Configuration object.
+    :return: Collected diagnostics for the function.
+    """
+    return Failure(func, config)
+
+
 class RetCode:
     """RetCode object.
 
