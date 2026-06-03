@@ -1,6 +1,8 @@
 """
 docsig._check
 =============
+
+Traverse modules and run docstring/signature checks per function.
 """
 
 from ._config import Config as _Config
