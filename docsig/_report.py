@@ -36,14 +36,14 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-def check_function(func: _Function, config: _Config) -> "Failure":
+def check_function(func: _Function, config: _Config) -> "_Failure":
     """Run configured checks for one function and return the result.
 
     :param func: Function under check.
     :param config: Configuration object.
     :return: Collected diagnostics for the function.
     """
-    return Failure(func, config)
+    return _Failure(func, config)
 
 
 class RetCode:
@@ -68,7 +68,7 @@ class RetCode:
         return max(self._data)
 
 
-class Failures(list["Failure"]):
+class Failures(list["_Failure"]):
     """Sequence of Failure instances (one per function checked)."""
 
 
@@ -85,16 +85,7 @@ class Diagnostic:  # pylint: disable=too-few-public-methods
     new: bool = False
 
 
-class Failure(list[Diagnostic]):
-    """Collect docstring and signature failures for one function.
-
-    Runs configured checks and appends Failed entries for each
-    violation.
-
-    :param func: Function under check.
-    :param config: Configuration object.
-    """
-
+class _Failure(list[Diagnostic]):
     def __init__(self, func: _Function, config: _Config) -> None:
         super().__init__()
         self._retcode = RetCode()
