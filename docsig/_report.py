@@ -33,7 +33,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-def check_function(func: _Function, config: _Config) -> "FunctionChecker":
+def check_function(func: _Function, config: _Config) -> "_FunctionResult":
     """Run configured checks for one function and return the result.
 
     :param func: Function under check.
@@ -65,8 +65,8 @@ class RetCode:
         return max(self._data)
 
 
-class Failures(list["FunctionChecker"]):
-    """Sequence of Failure instances (one per function checked)."""
+class Failures(list["_FunctionResult"]):
+    """Sequence of result instances (one per function checked)."""
 
 
 @_dataclass(frozen=True, order=True)
@@ -82,7 +82,7 @@ class Diagnostic:  # pylint: disable=too-few-public-methods
     new: bool = False
 
 
-class FunctionChecker:
+class FunctionChecker:  # pylint: disable=too-few-public-methods
     """Collect docstring and signature failures for one function.
 
     Runs configured checks and appends Failed entries for each
@@ -93,7 +93,6 @@ class FunctionChecker:
     """
 
     def __init__(self, func: _Function, config: _Config) -> None:
-        super().__init__()
         self._func = func
         self._config = config
         self._diagnostics: list[Diagnostic] = []
@@ -113,7 +112,7 @@ class FunctionChecker:
 
         self._collector = _Collector(func, self._name, self._func.lineno)
 
-    def run(self) -> "FunctionChecker":
+    def run(self) -> "_FunctionResult":
         """Run the function checks and return the result.
 
         :return: Function result.
@@ -135,8 +134,7 @@ class FunctionChecker:
 
                 self._sig5xx_returns(self._config.check.property_returns)
 
-        self._diagnostics.sort()
-        return self
+        return _FunctionResult(self._name, self._func.lineno, self._collector)
 
     def _add(
         self,
@@ -377,27 +375,6 @@ class FunctionChecker:
         if self._func.error is _ast.DuplicateBasesError:
             self._add(_E[904])
 
-    @property
-    def name(self) -> str:
-        """Qualified name (Class.method) when nested, else bare name."""
-        return self._name
-
-    @property
-    def lineno(self) -> int:
-        """Line number of the function in the source."""
-        return self._func.lineno
-
-    @property
-    def retcode(self) -> int:
-        """Exit code (non-zero if any check failed)."""
-        return self._collector.retcode.result
-
-    def __iter__(self) -> _t.Iterator[Diagnostic]:
-        return iter(self._collector.diagnostics)
-
-    def __bool__(self) -> bool:
-        return bool(self._collector)
-
 
 class _Collector:
     def __init__(
@@ -452,6 +429,39 @@ class _Collector:
 
     def __bool__(self) -> bool:
         return bool(self._diagnostics)
+
+
+class _FunctionResult:
+    def __init__(
+        self,
+        name: str,
+        lineno: int,
+        collector: _Collector,
+    ) -> None:
+        self._name = name
+        self._lineno = lineno
+        self._collector = collector
+
+    @property
+    def name(self) -> str:
+        """Qualified name (Class.method) when nested, else bare name."""
+        return self._name
+
+    @property
+    def lineno(self) -> int:
+        """Line number of the function in the source."""
+        return self._lineno
+
+    @property
+    def retcode(self) -> int:
+        """Exit code (non-zero if any check failed)."""
+        return self._collector.retcode.result
+
+    def __iter__(self) -> _t.Iterator[Diagnostic]:
+        return iter(self._collector.diagnostics)
+
+    def __bool__(self) -> bool:
+        return bool(self._collector)
 
 
 # TODO: make report json by default and wrap with a reporter for cli
