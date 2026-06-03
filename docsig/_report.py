@@ -416,15 +416,15 @@ def report(
     retcodes = RetCode()
     output = []
     obj = []
-    for failure in failures:
-        retcodes.add(failure.retcode)
+    for result in failures:
+        retcodes.add(result.retcode)
         path_prefix = f"{file}:" if file is not None else ""
-        header = f"{path_prefix}{failure.lineno} in {failure.name}"
+        header = f"{path_prefix}{result.lineno} in {result.name}"
         if not config.no_ansi and _sys.stdout.isatty():
             header = f"\033[35m{header}\033[0m"
 
         output.append(header)
-        for item in failure:
+        for item in result:
             extra = None
             if item.hint:
                 extra = f"hint: {item.hint}"
@@ -444,9 +444,9 @@ def report(
 
             obj.append(
                 {
-                    "line": None if failure.retcode == 2 else item.lineno,
+                    "line": None if result.retcode == 2 else item.lineno,
                     "message": msg,
-                    "exit": failure.retcode,
+                    "exit": result.retcode,
                 },
             )
 
