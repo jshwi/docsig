@@ -97,7 +97,6 @@ class FunctionChecker:
 
     def __init__(self, func: _Function, config: _Config) -> None:
         super().__init__()
-        self._retcode = RetCode()
         self._func = func
         self._config = config
         self._diagnostics: list[Diagnostic] = []
@@ -115,8 +114,9 @@ class FunctionChecker:
         ):
             self._name = f"{self._func.parent.name}.{self._name}"
 
+        self._collector = _Collector(func, self._name, self._func.lineno)
         if self._func.error is not None:
-            self._retcode.add(2)
+            self._collector.retcode.add(2)
             self._sig9xx_error()
         else:
             self._sig0xx_config()
@@ -140,18 +140,7 @@ class FunctionChecker:
         include_hint: bool = False,
         **kwargs: _t.Any,
     ) -> None:
-        self._retcode.add(int(not value.new))
-        failed = Diagnostic(
-            self._name,
-            value.ref,
-            value.description.format(**kwargs),
-            value.symbolic,
-            self.lineno,
-            value.hint if include_hint else None,
-            value.new,
-        )
-        if value not in self._func.messages and failed not in self:
-            self._diagnostics.append(failed)
+        self._collector.add(value, include_hint=include_hint, **kwargs)
 
     @staticmethod
     def _normalize_params(from_: _Params, to: _Params) -> None:
@@ -373,7 +362,7 @@ class FunctionChecker:
         # invalid-syntax
         if self._func.error is _ast.AstroidSyntaxError:
             self._add(_E[901])
-            self._retcode.add(123)
+            self._collector.retcode.add(123)
         # unicode-decode-error
         if self._func.error is UnicodeDecodeError:
             self._add(_E[902])
@@ -397,10 +386,65 @@ class FunctionChecker:
     @property
     def retcode(self) -> int:
         """Exit code (non-zero if any check failed)."""
-        return self._retcode.result
+        return self._collector.retcode.result
 
     def __iter__(self) -> _t.Iterator[Diagnostic]:
-        return iter(self._diagnostics)
+        return iter(self._collector.diagnostics)
+
+    def __bool__(self) -> bool:
+        return bool(self._collector)
+
+
+class _Collector:
+    def __init__(
+        self,
+        func: _Function,
+        qualified_name: str,
+        lineno: int,
+    ) -> None:
+        self._func = func
+        self._qualified_name = qualified_name
+        self._lineno = lineno
+        self._diagnostics: list[Diagnostic] = []
+        self._retcode = RetCode()
+
+    def add(
+        self,
+        value: _Message,
+        include_hint: bool = False,
+        **kwargs: _t.Any,
+    ) -> None:
+        """Add a diagnostic message.
+
+        :param value: Message to add.
+        :param include_hint: Whether to include the hint.
+        :param kwargs: Additional arguments to format the description.
+        """
+        self._retcode.add(int(not value.new))
+        diagnostic = Diagnostic(
+            self._qualified_name,
+            value.ref,
+            value.description.format(**kwargs),
+            value.symbolic,
+            self._lineno,
+            value.hint if include_hint else None,
+            value.new,
+        )
+        if (
+            value not in self._func.messages
+            and diagnostic not in self._diagnostics
+        ):
+            self._diagnostics.append(diagnostic)
+
+    @property
+    def diagnostics(self) -> list[Diagnostic]:
+        """Diagnostics sorted for stable output."""
+        return sorted(self._diagnostics)
+
+    @property
+    def retcode(self) -> RetCode:
+        """Exit code (non-zero if any check failed)."""
+        return self._retcode
 
     def __bool__(self) -> bool:
         return bool(self._diagnostics)
