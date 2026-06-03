@@ -13,6 +13,7 @@ import json as _json
 import os as _os
 import sys as _sys
 import typing as _t
+from dataclasses import dataclass as _dataclass
 from warnings import warn as _warn
 
 import astroid as _ast
@@ -71,7 +72,8 @@ class Failures(list["Failure"]):
     """Sequence of Failure instances (one per function checked)."""
 
 
-class Diagnostic(_t.NamedTuple):
+@_dataclass(frozen=True, order=True)
+class Diagnostic:  # pylint: disable=too-few-public-methods
     """Single reported issue."""
 
     name: str
