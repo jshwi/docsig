@@ -85,7 +85,7 @@ class Diagnostic:  # pylint: disable=too-few-public-methods
     new: bool = False
 
 
-class FunctionChecker(list[Diagnostic]):
+class FunctionChecker:
     """Collect docstring and signature failures for one function.
 
     Runs configured checks and appends Failed entries for each
@@ -100,6 +100,7 @@ class FunctionChecker(list[Diagnostic]):
         self._retcode = RetCode()
         self._func = func
         self._config = config
+        self._diagnostics: list[Diagnostic] = []
         if config.target:
             self._func.messages.extend(
                 i for i in _E.all if i not in config.target
@@ -131,7 +132,7 @@ class FunctionChecker(list[Diagnostic]):
 
                 self._sig5xx_returns(self._config.check.property_returns)
 
-        self.sort()
+        self._diagnostics.sort()
 
     def _add(
         self,
@@ -150,7 +151,7 @@ class FunctionChecker(list[Diagnostic]):
             value.new,
         )
         if value not in self._func.messages and failed not in self:
-            super().append(failed)
+            self._diagnostics.append(failed)
 
     @staticmethod
     def _normalize_params(from_: _Params, to: _Params) -> None:
@@ -397,6 +398,12 @@ class FunctionChecker(list[Diagnostic]):
     def retcode(self) -> int:
         """Exit code (non-zero if any check failed)."""
         return self._retcode.result
+
+    def __iter__(self) -> _t.Iterator[Diagnostic]:
+        return iter(self._diagnostics)
+
+    def __bool__(self) -> bool:
+        return bool(self._diagnostics)
 
 
 # TODO: make report json by default and wrap with a reporter for cli
