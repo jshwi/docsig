@@ -90,6 +90,7 @@ class _FunctionChecker(list[Diagnostic]):
         super().__init__()
         self._retcode = RetCode()
         self._func = func
+        self._config = config
         if config.target:
             self._func.messages.extend(
                 i for i in _E.all if i not in config.target
@@ -119,7 +120,7 @@ class _FunctionChecker(list[Diagnostic]):
                     sig = self._func.signature.args.get(index)
                     self._sig4xx_parameters(doc, sig)
 
-                self._sig5xx_returns(config.check.property_returns)
+                self._sig5xx_returns(self._config.check.property_returns)
 
         self.sort()
 
