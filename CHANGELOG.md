@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.86.1](https://github.com/jshwi/docsig/tree/v0.86.1) - 2026-06-04
+
+### Fixed
+
+- exit 2 for critical issues ([#837](https://github.com/jshwi/docsig/issues/837))
+
 ## [0.86.0](https://github.com/jshwi/docsig/tree/v0.86.0) - 2026-05-30
 
 ### Removed
