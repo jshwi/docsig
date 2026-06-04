@@ -77,6 +77,7 @@ class Failure(list[Failed]):
             self._name = f"{self._func.parent.name}.{self._name}"
 
         if self._func.error is not None:
+            self._retcode.append(2)
             self._sig9xx_error()
         else:
             self._sig0xx_config()

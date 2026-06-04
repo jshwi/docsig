@@ -1517,7 +1517,7 @@ lambda s1, s2, s3, s4, s5, s6: (
 )
 """
     init_file(template)
-    assert main(".") == 1
+    assert main(".", test_flake8=False) == 2
     std = capsys.readouterr()
     assert E[903].ref in std.out
 
@@ -1582,7 +1582,7 @@ class F(E[B, A, C], t.Generic[B, A, C], ABC): ...
 class G(F[B, A, C], t.Generic[B, A, C]): ...
 """
     init_file(template)
-    assert main(".") == 1
+    assert main(".", test_flake8=False) == 2
     std = capsys.readouterr()
     assert E[904].ref in std.out
 
@@ -1680,3 +1680,13 @@ def function_2() -> str:
     std = capsys.readouterr()
     assert E[503].ref in std.out
     assert E[6].ref in std.out
+
+
+def test_exit_status_2_for_critical_config_issues_837(
+    main: FixtureMain,
+) -> None:
+    """Errors without a line number are file wide and critical.
+
+    :param main: Mock ``main`` function.
+    """
+    assert main(".", "--disable", "SIG11111", test_flake8=False) == 2

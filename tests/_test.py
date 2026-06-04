@@ -79,28 +79,36 @@ def test_class_and_class_constructor_with_commandline(
     assert "not allowed with argument" in std.err.strip()
 
 
-def test_class_and_class_constructor_in_interpreter() -> None:
-    """Test that docsig errors when passed incompatible options."""
+def test_class_and_class_constructor_in_interpreter(
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """Test that docsig errors when passed incompatible options.
+
+    :param capsys: Capture sys out.
+    """
     assert (
         _docsig(
             string="def function(): pass",
             check_class=True,
             check_class_constructor=True,
         )
-        == """\
+    ) == 2
+    std = capsys.readouterr()
+    assert std.err.strip() == """\
 argument to check class constructor not allowed with argument to check class\
 """
-    )
 
 
 def test_class_and_class_constructor_in_commandline_with_config(
     monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
     init_pyproject_toml: FixtureInitPyprojectTomlFile,
     main: FixtureMain,
 ) -> None:
     """Test that docsig errors when passed incompatible options.
 
     :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
     :param init_pyproject_toml: Initialize a test pyproject.toml file.
     :param main: Patch package entry point.
     """
@@ -112,7 +120,9 @@ def test_class_and_class_constructor_in_commandline_with_config(
         },
     )
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
-    assert main(".", test_flake8=False) == """\
+    assert main(".", test_flake8=False) == 2
+    std = capsys.readouterr()
+    assert std.err.strip() == """\
 argument to check class constructor not allowed with argument to check class
 please check your pyproject.toml configuration\
 """
@@ -161,15 +171,18 @@ def function(a, b, c) -> None:
     assert not any(E.from_ref(e).ref in std.out for e in _errors if e != error)
 
 
-def test_invalid_target(main: FixtureMain) -> None:
+def test_invalid_target(
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
     """Test invalid target provided.
 
+    :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     """
-    assert (
-        main(".", "--target", "unknown", test_flake8=False)
-        == "unknown option to target 'unknown'"
-    )
+    assert main(".", "--target", "unknown", test_flake8=False) == 2
+    std = capsys.readouterr()
+    assert std.err.strip() == "unknown option to target 'unknown'"
 
 
 def test_lineno(
@@ -311,13 +324,19 @@ class _Messages(_t.Dict[int, Message]):
     assert std.out == expected
 
 
-def test_no_path_or_string(main: FixtureMain) -> None:
+def test_no_path_or_string(
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
     """Test error raised when missing essential arguments.
 
+    :param capsys: Capture sys out.
     :param main: Mock ``main`` function.
     """
+    assert main(test_flake8=False) == 2
+    std = capsys.readouterr()
     assert (
-        main(test_flake8=False)
+        std.err.strip()
         == "the following arguments are required: path(s) or string"
     )
 
@@ -711,7 +730,7 @@ def test_fail_on_unicode_decode_error_if_py_file(
     with open(pkl, "wb") as fout:
         pickle.dump(serialize, fout)  # type: ignore
 
-    assert main(pkl, test_flake8=False) == 1
+    assert main(pkl, test_flake8=False) == 2
     std = capsys.readouterr()
     assert E[902].fstring(T) in std.out
 
