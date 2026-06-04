@@ -20,9 +20,10 @@ exclude: |
   (?x)^(
     | poetry\.lock
     | whitelist\.py
-    | \.idea\/.*
+    | .*\.idea\/.*
     | docs\/conf\.py
     | changelog\/.*
+    | .*\/CHANGELOG\.md
   )$
 repos:
   - repo: local

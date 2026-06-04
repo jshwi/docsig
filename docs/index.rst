@@ -7,6 +7,7 @@
 
    usage/api
    usage/flake8
+   usage/integrations
    usage/configuration
    usage/messages
    usage/message-control

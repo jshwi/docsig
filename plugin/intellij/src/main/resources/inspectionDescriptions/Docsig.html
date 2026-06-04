@@ -1,0 +1,28 @@
+<html lang="en">
+  <body>
+    <p>
+      Reports docstring and signature mismatches for the current Python file
+      using the bundled <code>docsig</code> checker.
+    </p>
+    <p>
+      Issues come from the same checker you run on the command line. The plugin
+      runs it in the background (for example after save) and maps each message
+      onto the reported source line as a warning or error.
+    </p>
+    <p>
+      Only files on the local file system are checked; the inspection skips
+      non-local or synthetic roots.
+    </p>
+    <pre><code>
+def f(a: int) -&gt; None:
+    """Missing params section."""
+    pass
+</code></pre>
+    <!-- tooltip end -->
+    <p>
+      Configure CLI-equivalent options under
+      <strong>Settings | Tools | Docsig</strong>. Analysis uses the project's
+      Python 3.10+ interpreter and the bundled <code>docsig</code> executable.
+    </p>
+  </body>
+</html>

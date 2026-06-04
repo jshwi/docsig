@@ -23,6 +23,12 @@
       <excludeFolder url="file://$MODULE_DIR$/.make" />
       <excludeFolder url="file://$MODULE_DIR$/.tox" />
       <excludeFolder url="file://$MODULE_DIR$/scripts/.benchmarks" />
+      <excludeFolder url="file://$MODULE_DIR$/.poetry" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.intellijPlatform" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.kotlin" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.make" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/build" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (docsig)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
