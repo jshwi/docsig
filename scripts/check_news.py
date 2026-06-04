@@ -18,6 +18,7 @@ import tomli_w
 MSG = re.compile(r"^(\w+):\s+(.+)\s+\(#(\d+)\)$", re.MULTILINE)
 NEWS = re.compile(r"^changelog/.*\.md$", re.MULTILINE)
 CREATED_NEWS = "Created news fragment at {path}"
+SCOPE = re.compile(r"^[a-zA-Z-]+\(([^)]+)\):")
 
 
 class E:  # pylint: disable=too-few-public-methods
@@ -128,6 +129,10 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     repo = git.Repo(Path.cwd())
     diff = repo.git.diff("HEAD", cached=True, name_only=True)
     unversioned_news = NEWS.findall(diff)
+
+    # bypass with scope
+    if SCOPE.match(commit_msg) is not None:
+        return 0
 
     # only allowed commit types will be logged
     # commit types such as refactor will not
@@ -332,6 +337,12 @@ class Test:
         """Test for correct error when no commit message provided."""
         self.repo.git.add(Path.cwd())
         assert self._ci(message="") == "did not receive a commit message"
+
+    def test_bypass_with_scope(self) -> None:
+        """A scope like `plugin` might need to be separate."""
+        self._touch_unique_file()
+        self.repo.git.add(Path.cwd())
+        assert self._ci(message="add(plugin): feature") == 0
 
 
 if __name__ == "__main__":  # pragma: no cover
