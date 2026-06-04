@@ -46,7 +46,7 @@ search = "- docsig=={current_version}"
 filename = "SECURITY.md"
 
 [tool.codespell]
-ignore-words-list = "astroid"
+ignore-words-list = "astroid,atLeast"
 
 [tool.coverage.report]
 exclude_lines = [
@@ -159,6 +159,9 @@ templatest = ">=0.10.1,<0.13.0"
 [tool.poetry.group.flake8.dependencies]
 flake8 = "^7.1.0"
 
+[tool.poetry.group.plugin.dependencies]
+shiv = "^1.0.8"
+
 [tool.poetry.group.tests.dependencies]
 pytest = ">=8.2,<10.0"
 pytest-benchmark = ">=4,<6"
@@ -174,6 +177,9 @@ SIG = "docsig.plugin:Flake8"
 
 [tool.poetry.plugins."validate_pyproject.tool_schema"]
 docsig = "docsig.plugin:ValidatePyproject"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 [tool.poetry.scripts]
 docsig = "docsig.__main__:main"
