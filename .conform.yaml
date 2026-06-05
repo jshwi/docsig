@@ -43,4 +43,5 @@ policies:
           - make
           - editorconfig
           - config
+          - intellij-plugin
         descriptionLength: 72
