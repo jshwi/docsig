@@ -5,6 +5,7 @@ docsig._main
 CLI entry point that parses args and runs docsig.
 """
 
+import os as _os
 import sys as _sys
 import warnings as _warnings
 
@@ -47,6 +48,9 @@ def main() -> str | int:
 
     :return: Exit code (non-zero if any check failed).
     """
+    if _os.getenv("_DOCSIG_FORMAT_JSON"):
+        _warnings.simplefilter("ignore", FutureWarning)  # pragma: no cover
+
     _warn_on_deprecated_short_flags()
     a = _parse_args()
     _excepthook(a.no_ansi)
