@@ -16,7 +16,7 @@ import astroid as _ast
 
 from ._config import Config as _Config
 from ._diagnostic import Collector as _Collector
-from ._diagnostic import Diagnostic as _Diagnostic
+from ._diagnostic import FunctionResult as _FunctionResult
 from ._diagnostic import RetCode as _RetCode
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
@@ -35,7 +35,7 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-def check_function(func: _Function, config: _Config) -> "_FunctionResult":
+def check_function(func: _Function, config: _Config) -> _FunctionResult:
     """Run configured checks for one function and return the result.
 
     :param func: Function under check.
@@ -69,7 +69,7 @@ class _FunctionChecker:  # pylint: disable=too-few-public-methods
 
         self._collector = _Collector(func, self._name, self._func.lineno)
 
-    def run(self) -> "_FunctionResult":
+    def run(self) -> _FunctionResult:
         """Run the function checks and return the result.
 
         :return: Function result.
@@ -331,39 +331,6 @@ class _FunctionChecker:  # pylint: disable=too-few-public-methods
         # duplicates-found-in-mros
         if self._func.error is _ast.DuplicateBasesError:
             self._add(_E[904])
-
-
-class _FunctionResult:
-    def __init__(
-        self,
-        name: str,
-        lineno: int,
-        collector: _Collector,
-    ) -> None:
-        self._name = name
-        self._lineno = lineno
-        self._collector = collector
-
-    @property
-    def name(self) -> str:
-        """Qualified name (Class.method) when nested, else bare name."""
-        return self._name
-
-    @property
-    def lineno(self) -> int:
-        """Line number of the function in the source."""
-        return self._lineno
-
-    @property
-    def retcode(self) -> int:
-        """Exit code (non-zero if any check failed)."""
-        return self._collector.retcode.result
-
-    def __iter__(self) -> _t.Iterator[_Diagnostic]:
-        return iter(self._collector.diagnostics)
-
-    def __bool__(self) -> bool:
-        return bool(self._collector)
 
 
 # TODO: make report json by default and wrap with a reporter for cli
