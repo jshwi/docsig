@@ -62,21 +62,21 @@ jobs:
         run: make verify
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plugin-distribution
           path: ${{ env.PLUGIN_DIR }}/build/distributions/*.zip
 
       - name: Collect Tests Result
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tests-result
           path: ${{ env.PLUGIN_DIR }}/build/reports/tests
 
       - name: Collect Plugin Verifier Result
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plugin-verifier-result
           path: ${{ env.PLUGIN_DIR }}/build/reports/pluginVerifier
