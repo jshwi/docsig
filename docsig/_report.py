@@ -16,6 +16,7 @@ import astroid as _ast
 
 from ._config import Config as _Config
 from ._diagnostic import Diagnostic as _Diagnostic
+from ._diagnostic import RetCode as _RetCode
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
@@ -41,28 +42,6 @@ def check_function(func: _Function, config: _Config) -> "_FunctionResult":
     :return: Collected diagnostics for the function.
     """
     return _FunctionChecker(func, config).run()
-
-
-class RetCode:
-    """RetCode object.
-
-    :param code: Initial return code, if any, otherwise zero.
-    """
-
-    def __init__(self, code: int = 0) -> None:
-        self._data = [code]
-
-    def add(self, code: int) -> None:
-        """Add a return code.
-
-        :param code: Return code to add.
-        """
-        self._data.append(code)
-
-    @property
-    def result(self) -> int:
-        """Maximum return code."""
-        return max(self._data)
 
 
 class Failures(list["_FunctionResult"]):
@@ -364,7 +343,7 @@ class _Collector:
         self._qualified_name = qualified_name
         self._lineno = lineno
         self._diagnostics: list[_Diagnostic] = []
-        self._retcode = RetCode()
+        self._retcode = _RetCode()
 
     def add(
         self,
@@ -400,7 +379,7 @@ class _Collector:
         return sorted(self._diagnostics)
 
     @property
-    def retcode(self) -> RetCode:
+    def retcode(self) -> _RetCode:
         """Exit code (non-zero if any check failed)."""
         return self._retcode
 
@@ -459,7 +438,7 @@ def report(
     :return: Exit code (non-zero if any check failed).
     """
     format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
-    retcodes = RetCode()
+    retcodes = _RetCode()
     output = []
     obj = []
     for result in failures:

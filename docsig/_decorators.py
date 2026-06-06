@@ -10,7 +10,7 @@ import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
-from ._report import RetCode as _RetCode
+from ._diagnostic import RetCode as _RetCode
 from .messages import E as _E
 
 _FuncType = _t.Callable[..., int]
