@@ -48,10 +48,10 @@ jobs:
           java-version: "21"
 
       - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4
+        uses: gradle/actions/wrapper-validation@v6
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Build Linted Plugin
         working-directory: ${{ env.PLUGIN_DIR }}
