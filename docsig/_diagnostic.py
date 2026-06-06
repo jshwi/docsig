@@ -108,3 +108,44 @@ class Collector:
 
     def __bool__(self) -> bool:
         return bool(self._diagnostics)
+
+
+class FunctionResult:
+    """Diagnostics and exit code for one checked function.
+
+    :param name: Qualified name (Class.method) when nested, else bare
+        name.
+    :param lineno: Line number of the function in the source.
+    :param collector: Collector for the function.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        lineno: int,
+        collector: Collector,
+    ) -> None:
+        self._name = name
+        self._lineno = lineno
+        self._collector = collector
+
+    @property
+    def name(self) -> str:
+        """Qualified name (Class.method) when nested, else bare name."""
+        return self._name
+
+    @property
+    def lineno(self) -> int:
+        """Line number of the function in the source."""
+        return self._lineno
+
+    @property
+    def retcode(self) -> int:
+        """Exit code (non-zero if any check failed)."""
+        return self._collector.retcode.result
+
+    def __iter__(self) -> _t.Iterator[Diagnostic]:
+        return iter(self._collector.diagnostics)
+
+    def __bool__(self) -> bool:
+        return bool(self._collector)
