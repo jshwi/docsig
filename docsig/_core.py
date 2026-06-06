@@ -16,11 +16,11 @@ from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Filters as _Filters
 from ._config import Ignore as _Ignore
+from ._diagnostic import Failures as _Failures
 from ._diagnostic import RetCode as _RetCode
 from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
 from ._parsers import parse_from_string as _parse_from_string
-from ._report import Failures as _Failures
 from ._report import report as _report
 from ._utils import get_parent_that_has as _get_parent_that_has
 from ._utils import print_checks as _print_checks

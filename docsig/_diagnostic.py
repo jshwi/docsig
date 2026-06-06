@@ -14,6 +14,10 @@ from ._module import Function as _Function
 from .messages import Message as _Message
 
 
+class Failures(list["FunctionResult"]):
+    """Sequence of result instances (one per function checked)."""
+
+
 class RetCode:
     """RetCode object.
 

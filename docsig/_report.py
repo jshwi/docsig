@@ -16,6 +16,7 @@ import astroid as _ast
 
 from ._config import Config as _Config
 from ._diagnostic import Collector as _Collector
+from ._diagnostic import Failures as _Failures
 from ._diagnostic import FunctionResult as _FunctionResult
 from ._diagnostic import RetCode as _RetCode
 from ._module import Function as _Function
@@ -43,10 +44,6 @@ def check_function(func: _Function, config: _Config) -> _FunctionResult:
     :return: Collected diagnostics for the function.
     """
     return _FunctionChecker(func, config).run()
-
-
-class Failures(list["_FunctionResult"]):
-    """Sequence of result instances (one per function checked)."""
 
 
 class _FunctionChecker:  # pylint: disable=too-few-public-methods
@@ -335,7 +332,7 @@ class _FunctionChecker:  # pylint: disable=too-few-public-methods
 
 # TODO: make report json by default and wrap with a reporter for cli
 def report(
-    failures: Failures,
+    failures: _Failures,
     config: _Config,
     file: str | None = None,
 ) -> int:
