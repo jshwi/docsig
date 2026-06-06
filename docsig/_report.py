@@ -10,12 +10,12 @@ import json as _json
 import os as _os
 import sys as _sys
 import typing as _t
-from dataclasses import dataclass as _dataclass
 from warnings import warn as _warn
 
 import astroid as _ast
 
 from ._config import Config as _Config
+from ._diagnostic import Diagnostic as _Diagnostic
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
@@ -67,19 +67,6 @@ class RetCode:
 
 class Failures(list["_FunctionResult"]):
     """Sequence of result instances (one per function checked)."""
-
-
-@_dataclass(frozen=True, order=True)
-class Diagnostic:  # pylint: disable=too-few-public-methods
-    """Single reported issue for one function."""
-
-    name: str
-    ref: str
-    description: str
-    symbolic: str
-    lineno: int
-    hint: str | None = None
-    new: bool = False
 
 
 class _FunctionChecker:  # pylint: disable=too-few-public-methods
@@ -376,7 +363,7 @@ class _Collector:
         self._func = func
         self._qualified_name = qualified_name
         self._lineno = lineno
-        self._diagnostics: list[Diagnostic] = []
+        self._diagnostics: list[_Diagnostic] = []
         self._retcode = RetCode()
 
     def add(
@@ -392,7 +379,7 @@ class _Collector:
         :param kwargs: Additional arguments to format the description.
         """
         self._retcode.add(int(not value.new))
-        diagnostic = Diagnostic(
+        diagnostic = _Diagnostic(
             self._qualified_name,
             value.ref,
             value.description.format(**kwargs),
@@ -408,7 +395,7 @@ class _Collector:
             self._diagnostics.append(diagnostic)
 
     @property
-    def diagnostics(self) -> list[Diagnostic]:
+    def diagnostics(self) -> list[_Diagnostic]:
         """Diagnostics sorted for stable output."""
         return sorted(self._diagnostics)
 
@@ -447,7 +434,7 @@ class _FunctionResult:
         """Exit code (non-zero if any check failed)."""
         return self._collector.retcode.result
 
-    def __iter__(self) -> _t.Iterator[Diagnostic]:
+    def __iter__(self) -> _t.Iterator[_Diagnostic]:
         return iter(self._collector.diagnostics)
 
     def __bool__(self) -> bool:
