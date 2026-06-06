@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/jshwi/docsig/compare/intellij-plugin-v1.0.0...HEAD)
 
+### Fixed
+
+- pin sphinx below 8.2 so the intellij plugin bundle runs on python 3.10
+  (docsig v0.86.1)
+
 ## [1.0.0](https://github.com/jshwi/docsig/tree/intellij-plugin-v1.0.0) - 2026-06-06
 
 ### Added
