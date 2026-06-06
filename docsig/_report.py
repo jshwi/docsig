@@ -15,6 +15,7 @@ from warnings import warn as _warn
 import astroid as _ast
 
 from ._config import Config as _Config
+from ._diagnostic import Collector as _Collector
 from ._diagnostic import Diagnostic as _Diagnostic
 from ._diagnostic import RetCode as _RetCode
 from ._module import Function as _Function
@@ -330,61 +331,6 @@ class _FunctionChecker:  # pylint: disable=too-few-public-methods
         # duplicates-found-in-mros
         if self._func.error is _ast.DuplicateBasesError:
             self._add(_E[904])
-
-
-class _Collector:
-    def __init__(
-        self,
-        func: _Function,
-        qualified_name: str,
-        lineno: int,
-    ) -> None:
-        self._func = func
-        self._qualified_name = qualified_name
-        self._lineno = lineno
-        self._diagnostics: list[_Diagnostic] = []
-        self._retcode = _RetCode()
-
-    def add(
-        self,
-        value: _Message,
-        include_hint: bool = False,
-        **kwargs: _t.Any,
-    ) -> None:
-        """Add a diagnostic message.
-
-        :param value: Message to add.
-        :param include_hint: Whether to include the hint.
-        :param kwargs: Additional arguments to format the description.
-        """
-        self._retcode.add(int(not value.new))
-        diagnostic = _Diagnostic(
-            self._qualified_name,
-            value.ref,
-            value.description.format(**kwargs),
-            value.symbolic,
-            self._lineno,
-            value.hint if include_hint else None,
-            value.new,
-        )
-        if (
-            value not in self._func.messages
-            and diagnostic not in self._diagnostics
-        ):
-            self._diagnostics.append(diagnostic)
-
-    @property
-    def diagnostics(self) -> list[_Diagnostic]:
-        """Diagnostics sorted for stable output."""
-        return sorted(self._diagnostics)
-
-    @property
-    def retcode(self) -> _RetCode:
-        """Exit code (non-zero if any check failed)."""
-        return self._retcode
-
-    def __bool__(self) -> bool:
-        return bool(self._diagnostics)
 
 
 class _FunctionResult:
