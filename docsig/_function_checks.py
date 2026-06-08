@@ -28,13 +28,17 @@ _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
 
 
-class FunctionChecker:  # pylint: disable=too-few-public-methods
-    """Function checker.
+def check_function(func: _Function, config: _Config) -> _FunctionResult:
+    """Run configured checks for one function and return the result.
 
-    :param func: Function.
-    :param config: Configuration.
+    :param func: Function under check.
+    :param config: Configuration object.
+    :return: Collected diagnostics for the function.
     """
+    return _FunctionChecker(func, config).run()
 
+
+class _FunctionChecker:  # pylint: disable=too-few-public-methods
     def __init__(self, func: _Function, config: _Config) -> None:
         self._func = func
         self._config = config

@@ -12,22 +12,9 @@ from warnings import warn as _warn
 
 from ._config import Config as _Config
 from ._diagnostic import Failures as _Failures
-from ._diagnostic import FunctionResult as _FunctionResult
 from ._diagnostic import RetCode as _RetCode
-from ._function_checks import FunctionChecker as _FunctionChecker
-from ._module import Function as _Function
 from .messages import NEW as _NEW
 from .messages import TEMPLATE as _TEMPLATE
-
-
-def check_function(func: _Function, config: _Config) -> _FunctionResult:
-    """Run configured checks for one function and return the result.
-
-    :param func: Function under check.
-    :param config: Configuration object.
-    :return: Collected diagnostics for the function.
-    """
-    return _FunctionChecker(func, config).run()
 
 
 # TODO: make report json by default and wrap with a reporter for cli
