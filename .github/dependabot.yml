@@ -13,3 +13,7 @@ updates:
     directory: "/plugin/intellij"
     schedule:
       interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/plugin/vscode"
+    schedule:
+      interval: "daily"

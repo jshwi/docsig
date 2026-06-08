@@ -1,0 +1,157 @@
+{
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "bugs": "https://github.com/jshwi/docsig/issues",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    }
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "contributes": {
+    "configuration": {
+      "properties": {
+        "docsig.checkDunders": {
+          "default": false,
+          "description": "Check dunder methods.",
+          "type": "boolean"
+        },
+        "docsig.checkNested": {
+          "default": false,
+          "description": "Check nested functions and classes.",
+          "type": "boolean"
+        },
+        "docsig.checkOverridden": {
+          "default": false,
+          "description": "Check overridden methods.",
+          "type": "boolean"
+        },
+        "docsig.checkPropertyReturns": {
+          "default": false,
+          "description": "Check property return values.",
+          "type": "boolean"
+        },
+        "docsig.checkProtected": {
+          "default": false,
+          "description": "Check protected functions and classes.",
+          "type": "boolean"
+        },
+        "docsig.classCheckMode": {
+          "default": "none",
+          "description": "Check class docstrings, __init__ methods, or neither.",
+          "enum": [
+            "none",
+            "checkClass",
+            "checkClassConstructor"
+          ],
+          "enumDescriptions": [
+            "Do not check class docstrings or constructors.",
+            "Check class docstrings.",
+            "Check class constructor (__init__) methods."
+          ],
+          "type": "string"
+        },
+        "docsig.disable": {
+          "default": [],
+          "description": "Comma separated list of rules to disable.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "docsig.exclude": {
+          "default": "",
+          "description": "Regular expression of files or dirs to exclude from checks.",
+          "type": "string"
+        },
+        "docsig.excludes": {
+          "default": [],
+          "description": "Path glob patterns to exclude from checks.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "docsig.ignoreArgs": {
+          "default": false,
+          "description": "Ignore args prefixed with an asterisk.",
+          "type": "boolean"
+        },
+        "docsig.ignoreKwargs": {
+          "default": false,
+          "description": "Ignore kwargs prefixed with two asterisks.",
+          "type": "boolean"
+        },
+        "docsig.ignoreNoParams": {
+          "default": false,
+          "description": "Ignore docstrings where parameters are not documented.",
+          "type": "boolean"
+        },
+        "docsig.includeIgnored": {
+          "default": false,
+          "description": "Check files even if they match a gitignore pattern.",
+          "type": "boolean"
+        },
+        "docsig.target": {
+          "default": [],
+          "description": "Comma separated list of rules to target.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "title": "Docsig"
+    }
+  },
+  "description": "Check signature params for proper documentation",
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/sinon": "^17.0.4",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
+    "sinon": "^21.0.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1"
+  },
+  "displayName": "Docsig",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "extensionDependencies": [
+    "ms-python.python"
+  ],
+  "galleryBanner": {
+    "color": "#093d65",
+    "theme": "dark"
+  },
+  "homepage": "https://github.com/jshwi/docsig.git",
+  "icon": "media/icon.png",
+  "keywords": [
+    "python",
+    "docstring",
+    "lint",
+    "docsig"
+  ],
+  "license": "MIT",
+  "main": "./out/extension.js",
+  "name": "docsig",
+  "publisher": "jshwi",
+  "qa": "https://github.com/jshwi/docsig/issues",
+  "repository": {
+    "directory": "plugin/vscode",
+    "type": "git",
+    "url": "https://github.com/jshwi/docsig.git"
+  },
+  "scripts": {},
+  "version": "0.0.0"
+}
