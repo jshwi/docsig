@@ -60,6 +60,16 @@ def _last_prose_char(text: str) -> tuple[str | None, bool]:
     return last_char, in_block
 
 
+def check_function(func: _Function, config: _Config) -> _FunctionResult:
+    """Run configured checks for one function and return the result.
+
+    :param func: Function under check.
+    :param config: Configuration object.
+    :return: Collected diagnostics for the function.
+    """
+    return FunctionChecker(func, config).run()
+
+
 class FunctionChecker:  # pylint: disable=too-few-public-methods
     """Collect docstring and signature failures for one function.
 

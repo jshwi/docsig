@@ -5,11 +5,11 @@ docsig._traverse
 Traverse modules and run docstring/signature checks per function.
 """
 
+from ._checker import check_function as _check_function
 from ._config import Config as _Config
 from ._diagnostic import Failures as _Failures
 from ._module import Function as _Function
 from ._module import Parent as _Parent
-from ._report import check_function as _check_function
 
 
 def _should_check_function(
