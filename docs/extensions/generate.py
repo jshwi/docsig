@@ -23,6 +23,7 @@ GITIGNORE = GENERATED / ".gitignore"
 REPO = DOCS_DIR.parent
 README = REPO / "README.rst"
 INTELLIJ_README = REPO / "plugin" / "intellij" / "README.md"
+VSCODE_README = REPO / "plugin" / "vscode" / "README.md"
 TEST_RST = """
 tests
 =====
@@ -312,6 +313,16 @@ def generate_intellij_readme() -> None:
     )
 
 
+@extension
+def generate_vscode_readme() -> None:
+    """Generate intellij documentation."""
+    description = get_plugin_description(VSCODE_README)
+    (GENERATED / "vscode-description.rst").write_text(
+        description,
+        encoding="utf-8",
+    )
+
+
 def setup(app: Sphinx) -> None:
     """Set up the Sphinx extension.
 
@@ -330,3 +341,4 @@ def setup(app: Sphinx) -> None:
     app.connect("builder-inited", generate_flake8_help)
     app.connect("builder-inited", generate_schema)
     app.connect("builder-inited", generate_intellij_readme)
+    app.connect("builder-inited", generate_vscode_readme)

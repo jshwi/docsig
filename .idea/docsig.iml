@@ -30,6 +30,13 @@
       <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/.make" />
       <excludeFolder url="file://$MODULE_DIR$/plugin/intellij/build" />
       <excludeFolder url="file://$MODULE_DIR$/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/.make" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/.vscode" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/.vscode-test" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/out" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/resources" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/licenses" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (docsig)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

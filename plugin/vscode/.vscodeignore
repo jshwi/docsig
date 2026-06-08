@@ -1,0 +1,16 @@
+**/*.map
+**/*.ts
+**/.vscode-test.*
+**/eslint.config.mjs
+**/test/**
+**/tsconfig.json
+.gitignore
+.make/**
+.vscode-test/**
+.vscode/**
+Makefile
+build/**
+coverage/**
+pyproject.toml
+scripts/**
+src/**
