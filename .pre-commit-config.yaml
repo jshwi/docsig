@@ -12,6 +12,7 @@ ci:
     - check-unstaged-news
     - check-news
     - commit-fix
+    - vscode-extension
 default_language_version:
   python: "3.10"
 default_stages:
@@ -24,8 +25,9 @@ exclude: |
     | docs\/conf\.py
     | changelog\/.*
     | .*\/CHANGELOG\.md
-    | \.vscode/.*
+    | .*\.vscode/.*
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
+    | plugin\/vscode\/package-lock\.json
   )$
 repos:
   - repo: local
@@ -36,6 +38,12 @@ repos:
         entry: make lint
         language: system
         pass_filenames: false
+      - id: vscode-extension
+        name: vscode extension
+        entry: make -C plugin/vscode format lint
+        language: system
+        pass_filenames: false
+        files: ^plugin/vscode/
       # script also handles coverage
       - id: coverage
         name: test source code coverage
