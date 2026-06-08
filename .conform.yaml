@@ -48,4 +48,5 @@ policies:
           - extension
           - gitignore
           - ide
+          - vscode-extension
         descriptionLength: 72
