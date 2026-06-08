@@ -1,0 +1,9 @@
+.make/
+.vscode-test/
+LICENSE
+build/
+coverage/
+licenses/
+node_modules/
+out/
+resources/

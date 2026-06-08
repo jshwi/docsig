@@ -242,6 +242,7 @@ clean:
 	@rm -rf .tox
 	@rm -rf node_modules
 	@$(MAKE) -C plugin/intellij clean
+	@$(MAKE) -C plugin/vscode clean
 
 #: build documentation
 docs: docs/_build/html/index.html

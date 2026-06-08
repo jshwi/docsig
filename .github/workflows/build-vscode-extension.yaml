@@ -1,0 +1,64 @@
+---
+name: Build VS Code Extension
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - plugin/vscode/**
+      - plugin/vscode
+      - .github/workflows/build-vscode-extension.yaml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - plugin/vscode/**
+      - plugin/vscode
+      - .github/workflows/build-vscode-extension.yaml
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event.pull_request.number || github.ref
+    }}
+  cancel-in-progress: true
+
+env:
+  PLUGIN_DIR: plugin/vscode
+
+jobs:
+  build:
+    name: vscode-extension
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ${{ env.PLUGIN_DIR }}/package-lock.json
+
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Build Extension
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: xvfb-run -a make build verify
+
+      - name: Upload Distribution
+        uses: actions/upload-artifact@v7
+        with:
+          name: plugin-distribution
+          path: ${{ env.PLUGIN_DIR }}/build/*.vsix
+
+      - name: Upload Coverage Report on Failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vscode-extension-coverage
+          path: ${{ env.PLUGIN_DIR }}/coverage
