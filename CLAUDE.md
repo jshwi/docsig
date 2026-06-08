@@ -67,7 +67,7 @@ CLI args / pyproject.toml
   │
   _traverse.py (traverse functions)
   │
-  _report.py (per-function validation, emits error codes)
+  _checker.py (per-function validation, emits error codes)
   │
   _diagnostic.py (Collector / Diagnostic / Failures)
   │
@@ -83,9 +83,10 @@ CLI args / pyproject.toml
 | `_config.py`          | `Config`, `Check`, `Ignore` dataclasses; loads from pyproject.toml                   |
 | `_module.py`          | AST-backed `Module`, `Class`, `Function` types with parsed signatures and docstrings |
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
-| `_traverse.py`        | Traverses function tree, dispatches to `_report.py` per function                     |
+| `_traverse.py`        | Traverses function tree, dispatches to `_checker.py` per function                    |
+| `_checker.py`         | All individual check implementations; each emits a `Message` on failure              |
 | `_diagnostic.py`      | `Collector` aggregates results; `Diagnostic`/`FunctionResult`/`Failures`             |
-| `_report.py`          | All individual check implementations; formats and prints diagnostics                 |
+| `_report.py`          | Formats and prints diagnostics (plain text or `--json`)                              |
 | `_parsers.py`         | Parses Python source files/strings into module object trees                          |
 | `_files.py`           | File discovery; respects `.gitignore` and exclude patterns                           |
 | `_directives.py`      | Handles inline `# noqa`-style suppression comments                                   |
