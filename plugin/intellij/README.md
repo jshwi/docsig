@@ -14,7 +14,8 @@ Issues come from the same checker you run on the command line. The plugin
 runs it in the background after save and maps each message onto the reported
 source line as a warning or error.
 
-Configure CLI-equivalent options under **Settings | Tools | Docsig** (per
+Install [Docsig IntelliJ IDE plugin](https://plugins.jetbrains.com/plugin/32129-docsig),
+and configure CLI-equivalent options under **Settings | Tools | Docsig** (per
 project). Analysis uses the project's configured Python 3.10+ interpreter
 and the bundled `docsig` executable shipped with the plugin.
 
