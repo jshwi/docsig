@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
+|License| |PyPI| |Jetbrains Plugin| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -45,6 +45,9 @@
 .. |Security Status| image:: https://img.shields.io/badge/security-bandit-yellow.svg
    :target: https://github.com/PyCQA/bandit
    :alt: Security Status
+.. |Jetbrains Plugin| image:: https://img.shields.io/jetbrains/plugin/v/32129.svg
+   :target: https://plugins.jetbrains.com/plugin/32129
+   :alt: Jetbrains Plugin
 
 Check Python signature params for proper documentation
 -------------------------------------------------------

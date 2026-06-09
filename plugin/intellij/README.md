@@ -1,6 +1,7 @@
 # docsig
 
 [![Build](https://github.com/jshwi/docsig/actions/workflows/build-intellij-plugin.yaml/badge.svg)](https://github.com/jshwi/docsig/actions/workflows/build-intellij-plugin.yaml)
+[![Version](https://img.shields.io/jetbrains/plugin/v/32129.svg)](https://plugins.jetbrains.com/plugin/32129)
 
 <!-- Plugin description -->
 
