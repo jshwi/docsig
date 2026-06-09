@@ -282,6 +282,8 @@ def generate_intellij_readme() -> None:
     end = "<!-- Plugin description end -->"
     content = INTELLIJ_README.read_text(encoding="utf-8")
     description = content.split(start)[1].split(end)[0]
+    md_link = re.compile(r"\[([^]]+)]\(([^)]+)\)")
+    description = md_link.sub(r"`\1 <\2>`_", description)
     lines = []
     for line in description.splitlines():
         if line.startswith("## Docsig"):
