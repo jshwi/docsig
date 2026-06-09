@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |Jetbrains Plugin| |CI| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
+|License| |PyPI| |Jetbrains Plugin| |CI| |Jetbrains Build| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -48,6 +48,9 @@
 .. |Jetbrains Plugin| image:: https://img.shields.io/jetbrains/plugin/v/32129.svg
    :target: https://plugins.jetbrains.com/plugin/32129
    :alt: Jetbrains Plugin
+.. |Jetbrains Build| image:: https://github.com/jshwi/docsig/actions/workflows/build-intellij-plugin.yaml/badge.svg
+   :target: https://github.com/jshwi/docsig/actions/workflows/build-intellij-plugin.yaml
+   :alt: Build
 
 Check Python signature params for proper documentation
 -------------------------------------------------------
