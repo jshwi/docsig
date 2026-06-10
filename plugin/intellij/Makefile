@@ -65,7 +65,7 @@ build/distributions/docsig-$(VERSION).zip: .make/format .make/test detekt-baseli
 
 ########################################################################
 # Phony Targets
-.PHONY: format test detect docs build refresh verify
+.PHONY: format test detect docs build refresh verify venv
 
 #: format source code
 format: .make/format
@@ -90,3 +90,7 @@ verify:
 #: publish plugin
 publish:
 	@$(GRADLE) publishPlugin
+
+#: install venv
+venv:
+	@$(MAKE) -C ../../ install-venv
