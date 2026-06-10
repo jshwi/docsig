@@ -64,7 +64,7 @@ Maintain accurate and up-to-date Python documentation by automatically checking
 that all parameters in function signatures match their docstring documentation.
 Use docsig as a standalone tool, integrate it with ``flake8``, or add it as a
 ``pre-commit`` hook to catch documentation issues before they reach your
-repository.
+repository. **docsig** is also available as a ``PyCharm`` plugin
 
 Contributing
 ------------
