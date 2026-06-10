@@ -65,7 +65,7 @@ build/distributions/docsig-$(VERSION).zip: .make/format .make/test detekt-baseli
 
 ########################################################################
 # Phony Targets
-.PHONY: format test detect docs build refresh verify venv
+.PHONY: format test detect docs build refresh verify venv bump
 
 #: format source code
 format: .make/format
@@ -94,3 +94,8 @@ publish:
 #: install venv
 venv:
 	@$(MAKE) -C ../../ install-venv
+
+bump: part = patch
+#: bump version (use: make bump part=major|minor|patch)
+bump: venv
+	@../../.venv/bin/bump-my-version bump $(part) --verbose

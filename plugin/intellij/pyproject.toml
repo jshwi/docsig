@@ -1,0 +1,16 @@
+[tool.bumpversion]
+allow_dirty = true
+commit = true
+commit_args = "--signoff --gpg-sign --no-verify"
+current_version = "1.0.1"
+message = "bump(intellij-plugin): version {current_version} → {new_version}"
+pre_commit_hooks = [
+  "./gradlew patchChangelog",
+  "git add CHANGELOG.md"
+]
+sign_tags = true
+tag = true
+tag_name = "intellij-plugin-v{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "gradle.properties"
