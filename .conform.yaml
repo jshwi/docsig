@@ -46,4 +46,5 @@ policies:
           - config
           - intellij-plugin
           - extension
+          - gitignore
         descriptionLength: 72
