@@ -23,7 +23,7 @@ copyright = "2026, Stephen Whitlock"
 author = "Stephen Whitlock"
 
 # The full version, including alpha/beta/rc tags
-release = "0.87.0"
+release = "0.87.1"
 
 # SEO-friendly project description
 description = """\

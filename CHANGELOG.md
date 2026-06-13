@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.87.1](https://github.com/jshwi/docsig/tree/v0.87.1) - 2026-06-13
+
+### Changed
+
+- vendor docstring converter ([#851](https://github.com/jshwi/docsig/issues/851))
+
 ## [0.87.0](https://github.com/jshwi/docsig/tree/v0.87.0) - 2026-06-13
 
 ### Removed
