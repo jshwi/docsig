@@ -25,6 +25,7 @@ exclude: |
     | changelog\/.*
     | .*\/CHANGELOG\.md
     | \.vscode/.*
+    | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
   )$
 repos:
   - repo: local
