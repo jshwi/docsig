@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.87.0](https://github.com/jshwi/docsig/tree/v0.87.0) - 2026-06-13
+
+### Removed
+
+- short form for ignore-no-params ([#849](https://github.com/jshwi/docsig/issues/849))
+
 ## [0.86.1](https://github.com/jshwi/docsig/tree/v0.86.1) - 2026-06-04
 
 ### Fixed
