@@ -1,12 +1,13 @@
 *build/
-*coverage*
 *venv
 .DS_Store
 .benchmarks/
+.coverage
 .env
 .make/
 .tox
 __pycache__/
 bin
+coverage.xml
 dist/
 node_modules/
