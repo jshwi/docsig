@@ -85,6 +85,33 @@ def get_docsig_help() -> t.Optional[str]:
     return None
 
 
+def get_plugin_description(path: Path) -> str:
+    """extract plugin description from readme.
+
+    :param path: Path to the readme.
+    :return: Plugin description.
+    """
+    start = "<!-- Plugin description -->"
+    end = "<!-- Plugin description end -->"
+    content = path.read_text(encoding="utf-8")
+    description = content.split(start)[1].split(end)[0]
+    md_link = re.compile(r"\[([^]]+)]\(([^)]+)\)")
+    description = md_link.sub(r"`\1 <\2>`_", description)
+    lines = []
+    for line in description.splitlines():
+        if line.startswith("## Docsig"):
+            continue
+
+        if line.startswith("## "):
+            line = line.replace("## ", "")
+            lines.append(line)
+            lines.append(len(line) * "-")
+        else:
+            lines.append(line)
+
+    return "\n".join(lines)
+
+
 @extension
 def make_generated_dir() -> None:
     """Make dir for generated files and make sure it is ignored."""
@@ -278,26 +305,9 @@ def generate_schema() -> None:
 @extension
 def generate_intellij_readme() -> None:
     """Generate intellij documentation."""
-    start = "<!-- Plugin description -->"
-    end = "<!-- Plugin description end -->"
-    content = INTELLIJ_README.read_text(encoding="utf-8")
-    description = content.split(start)[1].split(end)[0]
-    md_link = re.compile(r"\[([^]]+)]\(([^)]+)\)")
-    description = md_link.sub(r"`\1 <\2>`_", description)
-    lines = []
-    for line in description.splitlines():
-        if line.startswith("## Docsig"):
-            continue
-
-        if line.startswith("## "):
-            line = line.replace("## ", "")
-            lines.append(line)
-            lines.append(len(line) * "-")
-        else:
-            lines.append(line)
-
+    description = get_plugin_description(INTELLIJ_README)
     (GENERATED / "intellij-description.rst").write_text(
-        "\n".join(lines),
+        description,
         encoding="utf-8",
     )
 
