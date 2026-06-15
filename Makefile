@@ -62,11 +62,11 @@ docs/_build/html/index.html: $(VENV) \
 		CONTRIBUTING.md
 	@$(POETRY) run $(MAKE) -C docs html
 
-$(VENV): $(POETRY) poetry.lock
-	@[ ! $$(basename "$$($< env info --path)") = ".venv" ] \
-		&& rm -rf "$$($< env info --path)" \
+$(VENV): poetry.lock
+	@[ ! $$(basename "$$($(POETRY) env info --path)") = ".venv" ] \
+		&& rm -rf "$$($(POETRY) env info --path)" \
 		|| exit 0
-	@POETRY_VIRTUALENVS_IN_PROJECT=1 $< install
+	@POETRY_VIRTUALENVS_IN_PROJECT=1 $(POETRY) install
 	@touch $@
 
 .make/pre-commit: $(VENV)
@@ -172,8 +172,8 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
-poetry.lock: pyproject.toml
-	@$(POETRY) lock
+poetry.lock: $(POETRY) pyproject.toml
+	@$< lock
 	@touch $@
 
 build/requirements.txt: $(BUILD)
