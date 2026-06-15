@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- include licenses in bundle
+  (docsig v0.87.1)
+
 ## [1.0.2] - 2026-06-13
 
 ### Changed
