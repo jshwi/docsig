@@ -121,7 +121,7 @@
     "prettier": "^3.6.2",
     "sinon": "^21.0.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.61.1"
   },
   "displayName": "Docsig",
   "engines": {
