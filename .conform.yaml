@@ -50,4 +50,5 @@ policies:
           - ide
           - vscode-extension
           - ai
+          - neovim-plugin
         descriptionLength: 72
