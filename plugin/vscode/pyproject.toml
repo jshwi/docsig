@@ -27,3 +27,13 @@ replace = """
 [{new_version}](https://github.com/jshwi/docsig/releases/tag/vscode-extension-v{new_version}) - {now:%Y-%m-%d}\
 """
 search = "[Unreleased](https://github.com/jshwi/docsig/compare/vscode-extension-v{current_version}...HEAD)"
+
+[[tool.bumpversion.files]]
+filename = "../../README.rst"
+replace = "vscode%20extension-v{new_version}"
+search = "vscode%20extension-v{current_version}"
+
+[[tool.bumpversion.files]]
+filename = "README.md"
+replace = "vscode%20extension-v{new_version}"
+search = "vscode%20extension-v{current_version}"

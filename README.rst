@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |Jetbrains Plugin| |CI| |Jetbrains Build| |VS Code Build| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
+|License| |PyPI| |Jetbrains Plugin| |VS Code Extension| |CI| |Jetbrains Build| |VS Code Build| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -54,6 +54,9 @@
 .. |VS Code Build| image:: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml/badge.svg
    :target: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml.yaml
    :alt: Build
+.. |VS Code Extension| image:: https://img.shields.io/badge/vscode%20extension-v1.0.0-007ACC
+   :target: https://marketplace.visualstudio.com/items?itemName=jshwi.docsig
+   :alt: VS Code Extension Version
 
 Check Python signature params for proper documentation
 -------------------------------------------------------
