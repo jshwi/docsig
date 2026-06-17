@@ -227,6 +227,7 @@ check-links: docs/_build/linkcheck/output.json
 #: clean compiled files
 clean:
 	@find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name '.benchmarks' -exec rm -rf {} + 2>/dev/null || true
 	@rm -rf .coverage
 	@rm -rf .git/blame-ignore-revs
 	@rm -rf .git/hooks/*
@@ -241,6 +242,8 @@ clean:
 	@rm -rf docs/_generated
 	@rm -rf .tox
 	@rm -rf node_modules
+	@rm -rf .poetry
+	@rm -rf build
 	@$(MAKE) -C plugin/intellij clean
 	@$(MAKE) -C plugin/vscode clean
 
