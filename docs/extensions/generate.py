@@ -303,6 +303,7 @@ def generate_integration_docs() -> None:
     docs = (
         REPO / "plugin" / "intellij",
         REPO / "plugin" / "vscode",
+        REPO / "editors" / "neovim",
     )
     for doc in docs:
         description = get_plugin_description(doc / "README.md")

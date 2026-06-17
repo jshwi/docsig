@@ -1,0 +1,7 @@
+*.log
+.luarocks/
+.make/
+.venv/
+coverage/
+resources/
+tests/tmp/

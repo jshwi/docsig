@@ -315,3 +315,7 @@ news: $(VENV)
 #: check test written for fix
 commit-fix: $(VENV)
 	@$(POETRY) run python scripts/commit_fix.py $(MSG)
+
+neovim: build/docsig.pyz
+	@ln -s editors/neovim/lua lua
+	@ln -s editors/neovim/plugin plugin

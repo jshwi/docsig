@@ -1,0 +1,63 @@
+---
+name: Build Neovim Plugin
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - plugin/neovim/**
+      - plugin/neovim
+      - .github/workflows/build-neovim-plugin.yaml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - plugin/neovim/**
+      - plugin/neovim
+      - .github/workflows/build-neovim-plugin.yaml
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event.pull_request.number || github.ref
+    }}
+  cancel-in-progress: true
+
+env:
+  PLUGIN_DIR: plugin/neovim
+
+jobs:
+  build:
+    name: neovim-plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Neovim
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y neovim
+
+      - name: Install Luarocks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            luarocks \
+            cmake \
+            build-essential \
+            lua5.4 \
+            liblua5.4-dev \
+            luajit \
+            libluajit-5.1-dev
+
+      - name: Build and Test Plugin
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: make deps lint bundle test verify

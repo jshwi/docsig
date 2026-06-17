@@ -7,8 +7,10 @@
 .make/
 .tox
 /*coverage*
+/lua
 __pycache__/
 bin
 coverage.xml
 dist/
 node_modules/
+plugin/docsig*
