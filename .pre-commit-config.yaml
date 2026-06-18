@@ -13,6 +13,7 @@ ci:
     - check-news
     - commit-fix
     - vscode-extension
+    - intellij-plugin
 default_language_version:
   python: "3.10"
 default_stages:
@@ -38,6 +39,12 @@ repos:
         entry: make lint
         language: system
         pass_filenames: false
+      - id: intellij-plugin
+        name: intellij plugin
+        entry: make -C plugin/intellij format detect
+        language: system
+        pass_filenames: false
+        files: ^plugin/intellij/
       - id: vscode-extension
         name: vscode extension
         entry: make -C plugin/vscode format lint
