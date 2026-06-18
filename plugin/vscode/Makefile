@@ -45,6 +45,13 @@ clean:
 node_modules/.package-lock.json: package.json package-lock.json
 	@npm install --include=dev
 
+../../bin/poetry/bin/poetry:
+	@$(MAKE) -C ../../ bin/poetry/bin/poetry
+
+../../.venv/bin/python: ../../bin/poetry/bin/poetry
+
+../../scripts/check_coverage.py: ../../.venv/bin/python
+
 ../../build/docsig.pyz:
 	@$(MAKE) -C ../../ build/docsig.pyz
 
@@ -78,13 +85,13 @@ out/main/extension.js: node_modules/.package-lock.json $(SOURCE_FILES) $(CONFIG_
 	@mkdir -p $(@D)
 	@touch $@
 
-coverage/coverage-summary.json: out/main/extension.js scripts/check-coverage.mjs
+coverage/coverage-summary.json: out/main/extension.js ../../scripts/check_coverage.py
 	@npx vscode-test --coverage
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test: coverage/coverage-summary.json
-	@node scripts/check-coverage.mjs
+	@../../.venv/bin/python ../../scripts/check_coverage.py --threshold 100
 	@mkdir -p $(@D)
 	@touch $@
 
