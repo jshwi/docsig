@@ -15,7 +15,8 @@ runs it in the background when you open a file, while you edit (debounced),
 on save, or after Docsig or Python settings change. Each message is mapped
 onto the reported source line as a warning or error.
 
-Configure CLI-equivalent options under **Settings | Docsig** (per
+Install [Docsig VS Code Extension](https://marketplace.visualstudio.com/items?itemName=jshwi.docsig),
+and configure CLI-equivalent options under **Settings | Docsig** (per
 workspace). Analysis uses the workspace Python 3.10+ interpreter from the
 Python extension and the bundled `docsig` executable shipped with the
 extension.
