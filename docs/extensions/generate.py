@@ -94,19 +94,15 @@ def get_plugin_description(path: Path) -> str:
     end = "<!-- Plugin description end -->"
     content = path.read_text(encoding="utf-8")
     description = content.split(start)[1].split(end)[0]
-    md_link = re.compile(r"\[([^]]+)]\(([^)]+)\)")
-    description = md_link.sub(r"`\1 <\2>`_", description)
     lines = []
     for line in description.splitlines():
         if line.startswith("## Docsig"):
             continue
 
-        if line.startswith("## "):
-            line = line.replace("## ", "")
-            lines.append(line)
-            lines.append(len(line) * "-")
-        else:
-            lines.append(line)
+        if line.startswith("##"):
+            line = line[1:]
+
+        lines.append(line)
 
     return "\n".join(lines)
 
@@ -310,7 +306,7 @@ def generate_integration_docs() -> None:
     )
     for doc in docs:
         description = get_plugin_description(doc / "README.md")
-        (GENERATED / f"{doc.name}-description.rst").write_text(
+        (GENERATED / f"{doc.name}-description.md").write_text(
             description,
             encoding="utf-8",
         )
