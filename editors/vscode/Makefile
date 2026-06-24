@@ -53,7 +53,7 @@ node_modules/.package-lock.json: package.json package-lock.json
 ../../scripts/check_coverage.py: ../../.venv/bin/python
 
 ../../build/docsig.pyz:
-	@$(MAKE) -C ../../ build/docsig.pyz
+	@$(MAKE) -C ../../ build build/docsig.pyz
 
 resources/docsig.pyz: ../../build/docsig.pyz
 	@mkdir -p $(@D)

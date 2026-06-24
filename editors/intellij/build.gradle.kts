@@ -177,6 +177,7 @@ val buildPyz by tasks.registering(Exec::class) {
     workingDir = file("../../")
     commandLine(
         "make",
+        "build",
         "build/docsig.pyz",
     )
 }
