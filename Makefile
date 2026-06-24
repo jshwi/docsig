@@ -177,7 +177,7 @@ poetry.lock: $(POETRY) pyproject.toml
 	@$< lock
 	@touch $@
 
-build/requirements.txt: $(BUILD)
+build/requirements.txt: $(VENV)
 	@mkdir -p $(@D)
 	@$(POETRY) export -f requirements.txt --output $@
 	@touch $@
