@@ -1,12 +1,12 @@
 ---
 description: No package-level functions; put functions on classes or objects
-globs: plugin/intellij/**/*.kt
+globs: editors/intellij/**/*.kt
 alwaysApply: false
 ---
 
 # Kotlin: No Top-Level Functions
 
-In the IntelliJ plugin (`plugin/intellij`), do **not** add **top-level**
+In the IntelliJ plugin (`editors/intellij`), do **not** add **top-level**
 `fun` declarations in `.kt` files under `src/`.
 
 ## Do instead

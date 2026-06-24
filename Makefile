@@ -244,8 +244,8 @@ clean:
 	@rm -rf node_modules
 	@rm -rf .poetry
 	@rm -rf build
-	@$(MAKE) -C plugin/intellij clean
-	@$(MAKE) -C plugin/vscode clean
+	@$(MAKE) -C editors/intellij clean
+	@$(MAKE) -C editors/vscode clean
 
 #: build documentation
 docs: docs/_build/html/index.html

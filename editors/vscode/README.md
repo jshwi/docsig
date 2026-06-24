@@ -56,10 +56,10 @@ The extension does not download or execute remote code.
 
 ```bash
 # from repo root
-make -C plugin/vscode build
+make -C editors/vscode build
 ```
 
-Press **F5** in `plugin/vscode` to launch an Extension Development Host.
+Press **F5** in `editors/vscode` to launch an Extension Development Host.
 
 ## Publishing
 

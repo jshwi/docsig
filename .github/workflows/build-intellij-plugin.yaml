@@ -5,15 +5,15 @@ on:
     branches:
       - master
     paths:
-      - plugin/intellij/**
-      - plugin/intellij
+      - editors/intellij/**
+      - editors/intellij
       - .github/workflows/build-intellij-plugin.yaml
   pull_request:
     branches:
       - master
     paths:
-      - plugin/intellij/**
-      - plugin/intellij
+      - editors/intellij/**
+      - editors/intellij
       - .github/workflows/build-intellij-plugin.yaml
 
 concurrency:
@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PLUGIN_DIR: plugin/intellij
+  PLUGIN_DIR: editors/intellij
 
 jobs:
   build:

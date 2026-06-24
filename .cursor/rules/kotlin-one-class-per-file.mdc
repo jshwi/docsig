@@ -1,12 +1,12 @@
 ---
 description: One top-level type per .kt file; filename matches the type name
-globs: plugin/intellij/**/*.kt
+globs: editors/intellij/**/*.kt
 alwaysApply: false
 ---
 
 # One Class (or Object) per File; Filename Matches the Type
 
-In the IntelliJ plugin (`plugin/intellij`), each `.kt` file under `src/`
+In the IntelliJ plugin (`editors/intellij`), each `.kt` file under `src/`
 is dedicated to **one** top-level **`class` or `object`**.
 
 ## Naming

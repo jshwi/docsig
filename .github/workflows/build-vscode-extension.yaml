@@ -5,15 +5,15 @@ on:
     branches:
       - master
     paths:
-      - plugin/vscode/**
-      - plugin/vscode
+      - editors/vscode/**
+      - editors/vscode
       - .github/workflows/build-vscode-extension.yaml
   pull_request:
     branches:
       - master
     paths:
-      - plugin/vscode/**
-      - plugin/vscode
+      - editors/vscode/**
+      - editors/vscode
       - .github/workflows/build-vscode-extension.yaml
 
 concurrency:
@@ -24,7 +24,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PLUGIN_DIR: plugin/vscode
+  PLUGIN_DIR: editors/vscode
 
 jobs:
   build:

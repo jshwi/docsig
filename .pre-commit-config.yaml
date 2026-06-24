@@ -43,16 +43,16 @@ repos:
         pass_filenames: false
       - id: intellij-plugin
         name: intellij plugin
-        entry: make -C plugin/intellij format detect
+        entry: make -C editors/intellij format detect
         language: system
         pass_filenames: false
-        files: ^plugin/intellij/
+        files: ^editors/intellij/
       - id: vscode-extension
         name: vscode extension
-        entry: make -C plugin/vscode format lint
+        entry: make -C editors/vscode format lint
         language: system
         pass_filenames: false
-        files: ^plugin/vscode/
+        files: ^editors/vscode/
       # script also handles coverage
       - id: coverage
         name: test source code coverage

@@ -158,7 +158,7 @@
   "publisher": "jshwi",
   "qna": "https://github.com/jshwi/docsig/issues",
   "repository": {
-    "directory": "plugin/vscode",
+    "directory": "editors/vscode",
     "type": "git",
     "url": "https://github.com/jshwi/docsig.git"
   },

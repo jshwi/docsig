@@ -10,10 +10,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "gradle"
-    directory: "/plugin/intellij"
+    directory: "/editors/intellij"
     schedule:
       interval: "daily"
   - package-ecosystem: "npm"
-    directory: "/plugin/vscode"
+    directory: "/editors/vscode"
     schedule:
       interval: "daily"
