@@ -44,7 +44,7 @@ jobs:
           echo "version=$ver" >> "$GITHUB_OUTPUT"
         shell: bash
       - name: Cache Poetry
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: bin/poetry
           key: >
