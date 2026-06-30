@@ -204,6 +204,7 @@ class Test:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test.user@example.com")
         config.set_value("commit", "gpgsign", False)
+        config.release()
         conf["tool"]["towncrier"]["directory"] = str(self.fragments)
         del conf["tool"]["towncrier"]["template"]
         self.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
