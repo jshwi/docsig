@@ -214,14 +214,14 @@ uvloop = ["uvloop (>=0.15.2) ; sys_platform != \"win32\"", "winloop (>=0.5.0) ; 
 
 [[package]]
 name = "bracex"
-version = "2.6"
+version = "3.0"
 description = "Bash style brace expander."
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["main", "dev"]
 files = [
-    {file = "bracex-2.6-py3-none-any.whl", hash = "sha256:0b0049264e7340b3ec782b5cb99beb325f36c3782a32e36e876452fd49a09952"},
-    {file = "bracex-2.6.tar.gz", hash = "sha256:98f1347cd77e22ee8d967a30ad4e310b233f7754dbf31ff3fceb76145ba47dc7"},
+    {file = "bracex-3.0-py3-none-any.whl", hash = "sha256:3833e61c2f092d5aa0468fa2e6c6e990a306185abf763b6d122f0158e59c58a5"},
+    {file = "bracex-3.0.tar.gz", hash = "sha256:b73f718d6bd98d8419e45df02426c86e9967c179949f779340d6c3a8c83b9111"},
 ]
 
 [[package]]
@@ -2727,14 +2727,14 @@ store = ["validate-pyproject-schema-store"]
 
 [[package]]
 name = "validate-pyproject-schema-store"
-version = "2026.6.26"
+version = "2026.6.30"
 description = "A plugin set for validate-pyproject and schema-store."
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "validate_pyproject_schema_store-2026.6.26-py3-none-any.whl", hash = "sha256:fc4d9766c3bd751d931650d4330983b721f044308f1c422fe44ecd48a104bd46"},
-    {file = "validate_pyproject_schema_store-2026.6.26.tar.gz", hash = "sha256:3902cb54c81a235edf10d404c860bedd7e32bea49ec6bdf45f33b0228d8110ba"},
+    {file = "validate_pyproject_schema_store-2026.6.30-py3-none-any.whl", hash = "sha256:2769e85f5e0a0df7bb7c7d881bf24b91c9556988523e6031c447196f3012c96f"},
+    {file = "validate_pyproject_schema_store-2026.6.30.tar.gz", hash = "sha256:2b41bbd4a20e82d0e5ec28552f26168c34860c626317bc3b1f7ad45d787abf7b"},
 ]
 
 [package.extras]
@@ -2792,14 +2792,14 @@ bracex = ">=2.1.1"
 
 [[package]]
 name = "wcwidth"
-version = "0.8.1"
+version = "0.8.2"
 description = "Measures the displayed width of unicode strings in a terminal"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "wcwidth-0.8.1-py3-none-any.whl", hash = "sha256:f453740b1e4a4f3291faa37944c555d71056c4da08d59809b307ef4feba695c8"},
-    {file = "wcwidth-0.8.1.tar.gz", hash = "sha256:faf5b4a5366a72dc49cad48cdf21f52bdf63bdda995178e483ba247ff79089b9"},
+    {file = "wcwidth-0.8.2-py3-none-any.whl", hash = "sha256:d63947694a0539a1d51e01eda7caf800c291020e6cdd7e28ad7b14dd33ad4f85"},
+    {file = "wcwidth-0.8.2.tar.gz", hash = "sha256:91fbef97204b96a3d4d421609b80340b760cf33e26da123ff243d76b1fda8dda"},
 ]
 
 [metadata]
