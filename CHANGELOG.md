@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.89.0](https://github.com/jshwi/docsig/tree/v0.89.0) - 2026-07-04
+
+### Removed
+
+- short form for check-property-returns ([#900](https://github.com/jshwi/docsig/issues/900))
+
 ## [0.88.0](https://github.com/jshwi/docsig/tree/v0.88.0) - 2026-06-27
 
 ### Added
