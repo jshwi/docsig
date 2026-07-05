@@ -102,6 +102,7 @@ omit = [
 
 [tool.deptry.per_rule_ignores]
 DEP004 = [
+  "docutils",
   "flake8",
   "git",
   "pytest",
@@ -159,13 +160,13 @@ vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
 Sphinx = ">=7,<8.2"
+docutils = ">=0.18,<0.22"
 furo = ">=2024.4.27,<2026.0.0"
 myst-parser = ">=3.0.1,<5.0.0"
 pytest = "9.1.1"
 pyyaml = "^6.0.1"
 roman-numerals = "4.1.0"
 sphinx-copybutton = "^0.5.2"
-sphinx-jsonschema = "^1.19.2"
 sphinx-markdown-builder = ">=0.5.5,<0.7.0"
 sphinx-sitemap = "^2.9.0"
 
