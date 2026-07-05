@@ -970,18 +970,6 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
-name = "jsonpointer"
-version = "3.1.1"
-description = "Identify specific nodes in a JSON document (RFC 6901) "
-optional = false
-python-versions = ">=3.10"
-groups = ["docs"]
-files = [
-    {file = "jsonpointer-3.1.1-py3-none-any.whl", hash = "sha256:8ff8b95779d071ba472cf5bc913028df06031797532f08a7d5b602d8b2a488ca"},
-    {file = "jsonpointer-3.1.1.tar.gz", hash = "sha256:0b801c7db33a904024f6004d526dcc53bbb8a4a0f4e32bfd10beadf60adf1900"},
-]
-
-[[package]]
 name = "librt"
 version = "0.12.0"
 description = "Mypyc runtime library"
@@ -2304,23 +2292,6 @@ code-style = ["pre-commit (==2.12.1)"]
 rtd = ["ipython", "myst-nb", "sphinx", "sphinx-book-theme", "sphinx-examples"]
 
 [[package]]
-name = "sphinx-jsonschema"
-version = "1.19.2"
-description = "Sphinx extension to display JSON Schema"
-optional = false
-python-versions = "*"
-groups = ["docs"]
-files = [
-    {file = "sphinx_jsonschema-1.19.2.tar.gz", hash = "sha256:1a48954217c2b3c6759c89b9ddd2c8e5b668b8730564e0283b009f23932be150"},
-]
-
-[package.dependencies]
-docutils = "*"
-jsonpointer = "*"
-pyyaml = "*"
-requests = "*"
-
-[[package]]
 name = "sphinx-last-updated-by-git"
 version = "0.3.8"
 description = "Get the \"last updated\" time for each Sphinx page from Git"
@@ -2808,4 +2779,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "460e7ddda1bd626805d0485539c170c5470bce835ce328d83b95c6ac1366edfd"
+content-hash = "3f8fed413c731dc5aa53461d6127ba5f2d64f69e8f397e4fd9bb2a3d8312da93"

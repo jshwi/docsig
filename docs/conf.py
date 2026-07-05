@@ -50,7 +50,7 @@ extensions = [
     "generate",
     "sphinx_sitemap",
     "files",
-    "sphinx-jsonschema",
+    "jsonschema",
 ]
 
 sitemap_url_scheme = "{lang}latest/{link}"
