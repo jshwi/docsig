@@ -20,6 +20,11 @@ PACKAGE_FILES := \
 VERSION := $(shell node -p "require('./package.json').version")
 VSIX := build/docsig-$(VERSION).vsix
 
+# Use a virtual display when $DISPLAY is unset (CI / remote SSH).
+ifeq ($(strip $(DISPLAY)),)
+VSCODE_TEST_PREFIX := xvfb-run -a
+endif
+
 ########################################################################
 # Implicit Phony Targets
 .PHONY: all help clean
@@ -79,7 +84,7 @@ out/main/extension.js: node_modules/.package-lock.json $(SOURCE_FILES) $(CONFIG_
 	@touch $@
 
 coverage/coverage-summary.json: out/main/extension.js scripts/check-coverage.mjs
-	@npx vscode-test --coverage
+	@$(VSCODE_TEST_PREFIX) npx vscode-test --coverage
 	@mkdir -p $(@D)
 	@touch $@
 
