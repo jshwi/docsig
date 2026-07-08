@@ -15,7 +15,7 @@ plugins {
 
 dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.22.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.22.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.22.1")
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.1")
     testImplementation("junit:junit:4.13.2")
