@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [Unreleased](https://github.com/jshwi/docsig/compare/vscode-extension-v1.0.0...HEAD)
 ------------------------------------------------------------------------
+### Fixed
+- fix(vscode-extension): avoid EXDEV when extracting CLI on Linux
+  (docsig v0.89.0)
 
 [1.0.0](https://github.com/jshwi/docsig/releases/tag/vscode-extension-v1.0.0) - 2026-06-17
 ------------------------------------------------------------------------

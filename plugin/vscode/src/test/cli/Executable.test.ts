@@ -122,7 +122,7 @@ suite("Executable", () => {
 
     try {
       await assert.rejects(() => executablePath(context));
-      const temp = join(tmpdir(), `docsig.pyz.${process.pid}.tmp`);
+      const temp = join(storagePath, `docsig.pyz.${process.pid}.tmp`);
       assert.equal(existsSync(temp), false);
     } finally {
       rmSync(cached, { recursive: true, force: true });

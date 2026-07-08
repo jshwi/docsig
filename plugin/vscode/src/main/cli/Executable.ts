@@ -9,7 +9,6 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
 import * as vscode from "vscode";
 import * as Log from "../messages/Log";
@@ -81,10 +80,12 @@ function extract(context: vscode.ExtensionContext): void {
     throw new Error("missing bundled cli");
   }
 
+  const storagePath = context.globalStorageUri.fsPath;
   const target = cachePath(context);
-  mkdirSync(context.globalStorageUri.fsPath, { recursive: true });
+  mkdirSync(storagePath, { recursive: true });
 
-  const temp = join(tmpdir(), `${BUNDLE_NAME}.${process.pid}.tmp`);
+  // write temp next to target so rename stays on one filesystem (linux exdev)
+  const temp = join(storagePath, `${BUNDLE_NAME}.${process.pid}.tmp`);
   try {
     copyFileSync(source, temp);
     renameSync(temp, target);
