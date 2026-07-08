@@ -64,7 +64,7 @@ licenses/SPHINX_LICENSE: ../../licenses/SPHINX_LICENSE
 
 out/main/extension.js: node_modules/.package-lock.json $(SOURCE_FILES) $(CONFIG_FILES)
 	@rm -rf out
-	@tsc -p ./
+	@npx tsc -p ./
 	@mkdir -p $(@D)
 	@touch $@
 
