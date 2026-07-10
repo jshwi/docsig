@@ -54,7 +54,7 @@
 .. |VS Code Build| image:: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml/badge.svg
    :target: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml.yaml
    :alt: Build
-.. |VS Code Extension| image:: https://img.shields.io/badge/vscode%20extension-v1.0.0-007ACC
+.. |VS Code Extension| image:: https://img.shields.io/badge/vscode%20extension-v1.0.1-007ACC
    :target: https://marketplace.visualstudio.com/items?itemName=jshwi.docsig
    :alt: VS Code Extension Version
 

@@ -1,7 +1,7 @@
 # docsig
 
 [![Build](https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml/badge.svg)](https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml)
-[![VS Code](https://img.shields.io/badge/vscode%20extension-v1.0.0-007ACC)](https://marketplace.visualstudio.com/items?itemName=jshwi.docsig)
+[![VS Code](https://img.shields.io/badge/vscode%20extension-v1.0.1-007ACC)](https://marketplace.visualstudio.com/items?itemName=jshwi.docsig)
 
 <!-- Plugin description -->
 
