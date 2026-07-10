@@ -7,6 +7,8 @@ export default defineConfig({
   tests: [
     {
       files: "out/test/**/*.test.js",
+      // Avoid hanging on a locked GNOME keyring (libsecret) over SSH/headless.
+      launchArgs: ["--use-inmemory-secretstorage"],
     },
   ],
 });
