@@ -9,6 +9,7 @@ SHELL := /bin/bash
 VERSION := $(shell bash scripts/get_docsig_version.sh pyproject.toml)
 
 # Poetry configuration
+export POETRY_KEYRING_ENABLED := false
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
 
