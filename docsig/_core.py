@@ -12,6 +12,7 @@ from pathlib import Path as _Path
 from pprint import pformat as _pformat
 
 from . import _decorators
+from ._config import DEFAULT_EXCLUDES as _DEFAULT_EXCLUDES
 from ._config import Check as _Check
 from ._config import Config as _Config
 from ._config import Filters as _Filters
@@ -27,25 +28,6 @@ from ._utils import get_parent_that_has as _get_parent_that_has
 from ._utils import print_checks as _print_checks
 from .messages import E as _E
 from .messages import Messages as _Messages
-
-_DEFAULT_EXCLUDES = """\
-(?x)^(
-    |\\.?venv[\\\\/].*
-    |\\.git[\\\\/].*
-    |\\.hg[\\\\/].*
-    |\\.idea[\\\\/].*
-    |\\.mypy_cache[\\\\/].*
-    |\\.nox[\\\\/].*
-    |\\.pytest_cache[\\\\/].*
-    |\\.svn[\\\\/].*
-    |\\.tox[\\\\/].*
-    |\\.vscode[\\\\/].*
-    |_?build[\\\\/].*
-    |.*[\\\\/]__pycache__[\\\\/].*
-    |dist[\\\\/].*
-    |node_modules[\\\\/].*
-)$
-"""
 
 
 def setup_logger(verbose: bool) -> None:

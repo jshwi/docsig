@@ -20,6 +20,25 @@ from .messages import Messages as _Messages
 
 PYPROJECT_TOML = "pyproject.toml"
 
+DEFAULT_EXCLUDES = """\
+(?x)^(
+    |\\.?venv[\\\\/].*
+    |\\.git[\\\\/].*
+    |\\.hg[\\\\/].*
+    |\\.idea[\\\\/].*
+    |\\.mypy_cache[\\\\/].*
+    |\\.nox[\\\\/].*
+    |\\.pytest_cache[\\\\/].*
+    |\\.svn[\\\\/].*
+    |\\.tox[\\\\/].*
+    |\\.vscode[\\\\/].*
+    |_?build[\\\\/].*
+    |.*[\\\\/]__pycache__[\\\\/].*
+    |dist[\\\\/].*
+    |node_modules[\\\\/].*
+)$
+"""
+
 
 # split str by comma but allow for escaping
 def _split_comma(value: str) -> list[str]:
