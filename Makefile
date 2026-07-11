@@ -274,7 +274,8 @@ lock-deps: poetry.lock
 
 #: publish distribution
 publish: $(BUILD) check-links
-	@$(POETRY) publish
+	@# Keyring is disabled globally to avoid hangs; publish needs it for PyPI token
+	@POETRY_KEYRING_ENABLED=true $(POETRY) publish
 
 #: run tests on scripts
 test-scripts: .make/test-check-news .make/test-bump
