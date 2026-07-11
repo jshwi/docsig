@@ -47,9 +47,9 @@ def _run_check(
         parent,
         config,
     ):
-        failure = _check_function(child, config)
-        if failure:
-            failures.append(failure)
+        result = _check_function(child, config)
+        if result:
+            failures.append(result)
 
     # recurse for either class methods or, if enabled, nested functions
     if not isinstance(child, _Function) or config.check.nested:
