@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.90.0](https://github.com/jshwi/docsig/tree/v0.90.0) - 2026-07-11
+
+### Removed
+
+- short form for check-protected ([#919](https://github.com/jshwi/docsig/issues/919))
+
 ## [0.89.0](https://github.com/jshwi/docsig/tree/v0.89.0) - 2026-07-04
 
 ### Removed

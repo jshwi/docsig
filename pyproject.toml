@@ -29,7 +29,7 @@ maintainers = [
 name = "docsig"
 readme = "README.rst"
 requires-python = ">=3.10"
-version = "0.89.0"
+version = "0.90.0"
 
 [project.entry-points."flake8.extension"]
 SIG = "docsig.plugin:Flake8"
@@ -47,7 +47,7 @@ line-length = 79
 allow_dirty = true
 commit = true
 commit_args = "-sS"
-current_version = "0.89.0"
+current_version = "0.90.0"
 message = "bump: version {current_version} → {new_version}"
 sign_tags = true
 tag = true
