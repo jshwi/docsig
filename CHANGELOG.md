@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.90.1](https://github.com/jshwi/docsig/tree/v0.90.1) - 2026-07-11
+
+### Fixed
+
+- honor disable on decorated function lines ([#855](https://github.com/jshwi/docsig/issues/855))
+
 ## [0.90.0](https://github.com/jshwi/docsig/tree/v0.90.0) - 2026-07-11
 
 ### Removed
