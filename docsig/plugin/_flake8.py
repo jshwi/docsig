@@ -7,6 +7,7 @@ errors.
 """
 
 import ast as _ast
+import contextlib as _contextlib
 import os as _os
 import sys as _sys
 import typing as _t
@@ -27,7 +28,22 @@ from ..messages import FLAKE8 as _FLAKE8
 from ..messages import E as _E
 
 _Flake8Error = tuple[int, int, str, type[_t.Any]]
-_sys.path.append(_os.path.abspath(_os.getcwd()))
+
+
+@_contextlib.contextmanager
+def _cwd_on_sys_path() -> _t.Iterator[None]:
+    # so astroid can resolve project packages for overridden checks
+    # (#522) without mutating sys.path at import time
+    cwd = _os.path.abspath(_os.getcwd())
+    added = cwd not in _sys.path
+    if added:
+        _sys.path.append(cwd)
+    try:
+        yield
+    finally:
+        if added:
+            with _contextlib.suppress(ValueError):
+                _sys.path.remove(cwd)
 
 
 class Flake8:
@@ -200,7 +216,9 @@ class Flake8:
                 ignore=ignore,
                 verbose=self.a.verbose,
             )
-            results = _runner(_Path(self.filename), config)
+            with _cwd_on_sys_path():
+                results = _runner(_Path(self.filename), config)
+
             for result in results:
                 if not result.retcode:
                     continue
