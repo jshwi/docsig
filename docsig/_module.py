@@ -109,6 +109,22 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                     subnode.lineno or 0,
                     (_Comments(), _Messages()),
                 )
+
+                # astroid sets lineno to the first decorator
+                # inline disable on the def line is at fromlineno
+                fromlineno = getattr(subnode, "fromlineno", 0)
+                if (
+                    isinstance(subnode, _ast.nodes.FunctionDef)
+                    and fromlineno
+                    and fromlineno != (subnode.lineno or 0)
+                ):
+                    more_comments, more_disabled = self._directives.get(
+                        fromlineno,
+                        (_Comments(), _Messages()),
+                    )
+                    comments.extend(more_comments)
+                    disabled.extend(more_disabled)
+
                 comments.extend(parent_comments)
                 disabled.extend(parent_disabled)
                 if isinstance(

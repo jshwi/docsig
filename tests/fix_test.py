@@ -1690,3 +1690,47 @@ def test_exit_status_2_for_critical_config_issues_837(
     :param main: Mock ``main`` function.
     """
     assert main(".", "--disable", "SIG11111", test_flake8=False) == 2
+
+
+def test_fix_disable_on_decorator_line_with_string_855(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Honor inline disable on a decorator call with a string arg.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+@deprecated_signature(since='11.4.0')  # docsig: disable=SIG501
+def my_function():
+    """This is my docstring."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[501].ref not in std.out
+
+
+def test_fix_disable_on_def_line_under_decorator_855(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Honor inline disable on the def line when a decorator is above.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+@deprecated_signature(since='11.4.0')
+def my_function():  # docsig: disable=SIG501
+    """This is my docstring."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[501].ref not in std.out

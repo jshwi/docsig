@@ -174,6 +174,14 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                         comments = scoped_comments
                         messages = scoped_messages
                     else:
+                        # keep disable on this line even if an earlier
+                        # token already recorded an empty entry (e.g.
+                        # a string arg before an inline comment)
+                        directives[lineno] = (
+                            Comments(scoped_comments),
+                            _Messages(scoped_messages),
+                        )
+
                         # defer scoped state for the next line without
                         # changing module-level messages
                         pending_inline = (
