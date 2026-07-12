@@ -326,18 +326,43 @@ class Docstring(_Stub):
         return False
 
     @staticmethod
+    def _docstring_style(string: str) -> str:
+        # prefer existing rst fields over napoleon section headers
+        if _re.search(r"^:\w+", string, _re.MULTILINE):
+            return "rst"
+
+        if _re.search(
+            r"^(Parameters|Other Parameters|Returns|Yields|Raises|"
+            r"See Also|Notes|Examples|Attributes|Methods)\n"
+            r"\s*-{3,}\s*$",
+            string,
+            _re.MULTILINE,
+        ):
+            return "numpy"
+
+        if _re.search(
+            r"^(Args|Arguments|Parameters|Returns|Yields|Raises|"
+            r"Attributes|Example|Examples):\s*$",
+            string,
+            _re.MULTILINE,
+        ):
+            return "google"
+
+        return "rst"
+
+    @staticmethod
     def _normalize_docstring(string: str) -> str:
-        # convert Google and numpy style docstrings to parse docstrings
-        # as restructured text
-        return str(
-            _s.NumpyDocstring(  # type: ignore
-                str(
-                    _s.GoogleDocstring(  # type: ignore
-                        _inspect.cleandoc(string),
-                    ),
-                ),
-            ),
-        )
+        # convert Google or numpy style to rst when detected
+        # leave rst (including field lists) unchanged
+        string = _inspect.cleandoc(string)
+        style = Docstring._docstring_style(string)
+        if style == "google":
+            return str(_s.GoogleDocstring(string))  # type: ignore
+
+        if style == "numpy":
+            return str(_s.NumpyDocstring(string))  # type: ignore
+
+        return string
 
     def __init__(
         self,

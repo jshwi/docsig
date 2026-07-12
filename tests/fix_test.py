@@ -1763,3 +1763,37 @@ def function() -> str:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[503].ref not in std.out
+
+
+def test_fix_normalize_skips_napoleon_when_rst_fields_present(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Leave RST field lists alone when Napoleon would mangle them.
+
+    An RST docstring may use an underlined Returns heading for prose
+    and still document params with sphinx field lists. Always running
+    Numpy conversion rewrites those fields and falsely reports missing
+    parameters.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a) -> str:
+    """Fetch the record.
+
+    Returns
+    -------
+    Always a string for callers.
+
+    :param a: Record id.
+    :returns: The record.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[203].ref not in std.out
