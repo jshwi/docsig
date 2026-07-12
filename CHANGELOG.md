@@ -11,6 +11,13 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.90.2](https://github.com/jshwi/docsig/tree/v0.90.2) - 2026-07-12
+
+### Fixed
+
+- evaluate docstring when description is missing ([#922](https://github.com/jshwi/docsig/issues/922))
+- false missing params when rst has returns heading ([#924](https://github.com/jshwi/docsig/issues/924))
+
 ## [0.90.1](https://github.com/jshwi/docsig/tree/v0.90.1) - 2026-07-11
 
 ### Fixed
