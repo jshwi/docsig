@@ -333,7 +333,7 @@ class Docstring(_Stub):
             _s.NumpyDocstring(  # type: ignore
                 str(
                     _s.GoogleDocstring(  # type: ignore
-                        _inspect.cleandoc(string).replace("*", ""),
+                        _inspect.cleandoc(string),
                     ),
                 ),
             ),
@@ -369,16 +369,24 @@ class Docstring(_Stub):
         # the suggestion is broken
         # noinspection RegExpSingleCharAlternation
         for match in _re.findall(
-            r":([\w\s]+(?:\s\|\s[\w\s]+|\w+))([^\w\s])((?:.|\n)*?)(?=\n:|$)",
+            r":((?:\\?\*){0,2}[\w]+"
+            r"(?:\s+(?:\\?\*){0,2}[\w]+|"
+            r"\s\|\s(?:\\?\*){0,2}[\w]+)*)"
+            r"([^\w\s\\*])"
+            r"((?:.|\n)*?)(?=\n:|$)",
             string,
         ):
             if match:
                 kinds = match[0].split()
                 if kinds:
+                    name = None
+                    if len(kinds) > 1:
+                        # drop * / ** / napoleon-escaped stars on the name
+                        name = kinds[-1].lstrip("\\*")
                     docstring.args.append(
                         Param(
                             DocType.from_str(kinds[0]),
-                            UNNAMED if len(kinds) == 1 else kinds[-1],
+                            UNNAMED if name is None else name,
                             match[2] or None,
                             int(indent_anomaly),
                             match[1],
