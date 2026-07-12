@@ -7,8 +7,8 @@ Stub types for parsed docstrings and signatures.
 
 from __future__ import annotations as _
 
+import inspect as _inspect
 import re as _re
-import textwrap as _textwrap
 import typing as _t
 from collections import Counter as _Counter
 from enum import Enum as _Enum
@@ -333,9 +333,7 @@ class Docstring(_Stub):
             _s.NumpyDocstring(  # type: ignore
                 str(
                     _s.GoogleDocstring(  # type: ignore
-                        _textwrap.dedent(
-                            "\n".join(string.splitlines()[1:]),
-                        ).replace("*", ""),
+                        _inspect.cleandoc(string).replace("*", ""),
                     ),
                 ),
             ),

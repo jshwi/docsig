@@ -1734,3 +1734,32 @@ def my_function():  # docsig: disable=SIG501
     main(".")
     std = capsys.readouterr()
     assert E[501].ref not in std.out
+
+
+def test_fix_normalize_docstring_keeps_first_line(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Keep a leading Numpy section header when normalizing.
+
+    A docstring may start with ``Returns`` (no summary line). Dropping
+    the first line removes that header and falsely reports a missing
+    return.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function() -> str:
+    """Returns
+    -------
+    str
+        The name.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[503].ref not in std.out
