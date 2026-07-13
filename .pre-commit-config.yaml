@@ -220,7 +220,7 @@ repos:
         additional_dependencies:
           - tomli==2.0.1
   - repo: https://github.com/pycqa/isort
-    rev: "9.0.0a3"
+    rev: "9.0.0b1"
     hooks:
       - id: isort
   - repo: https://github.com/codespell-project/codespell
@@ -230,7 +230,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.7.1"
+    rev: "1.7.2"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
@@ -249,7 +249,7 @@ repos:
       - id: editorconfig-checker
         name: check .editorconfig rules
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.1.0"
+    rev: "v2.3.0"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
