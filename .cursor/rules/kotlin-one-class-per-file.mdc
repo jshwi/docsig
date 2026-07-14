@@ -1,0 +1,36 @@
+---
+description: One top-level type per .kt file; filename matches the type name
+globs: plugin/intellij/**/*.kt
+alwaysApply: false
+---
+
+# One Class (or Object) per File; Filename Matches the Type
+
+In the IntelliJ plugin (`plugin/intellij`), each `.kt` file under `src/`
+is dedicated to **one** top-level **`class` or `object`**.
+
+## Naming
+
+- **`src/main/kotlin`**: file name **`MyThing.kt`** → exactly one top-level
+  **`class MyThing`** or **`object MyThing`** (same PascalCase identifier).
+- **`src/test/kotlin`**: file **`MyThingTest.kt`** → top-level **`class MyThingTest`**
+  (or the project’s chosen test type name) matching the file name.
+
+## Do
+
+- Split extra top-level classes or objects into **new** files whose names
+  match those types.
+
+## Allowed in the same file
+
+- **`companion object`**, nested classes, enum members.
+- **Sealed** `class` / `interface` with subclasses in that file; the file
+  is named after the **sealed** type (e.g. `Outcome.kt` + `sealed class Outcome`).
+- **`private`** top-level helpers (`private fun`, `private const`, etc.) in
+  support of the single public top-level type.
+
+## Avoid
+
+- A file named `Foo.kt` whose main top-level type is **`Bar`**.
+- Multiple peer top-level `class` / `object` declarations each deserving
+  their own name (give each its own file).

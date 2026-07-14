@@ -1,0 +1,34 @@
+---
+description: Line-coverage tasks must not lower overall coverage
+alwaysApply: true
+---
+
+# Coverage Requests: No Overall Regression
+
+When the user asks to **get coverage on a line** (or a small region), treat
+the work as **invalid** if **overall coverage is lower** after the change
+than before.
+
+## What to do
+
+1. **Establish a baseline** for the relevant suite (or whole repo) before
+   changing code—e.g. run the same coverage command the project uses
+   (`make tests` / `coverage.xml` for Python; `make test` or
+   `koverVerify` for the IntelliJ plugin) and note the **aggregate**
+   metric (line %, branch %, or the project’s enforced minimum).
+2. After the change, run the **same** coverage path again.
+3. If **overall coverage dropped**, the outcome **does not satisfy** the
+   request: fix it (better tests, less dead code, Kover-friendly shapes
+   without deleting exercised code, etc.) until aggregate is **≥ baseline**.
+
+## Not sufficient
+
+- Covering the asked-for line while **new** uncovered code, **removed**
+  tests, or **weaker** verification drives **total** coverage down.
+- Satisfying only a **local** HTML report for one file while **verify**
+  or **CI** thresholds fail.
+
+## Valid result
+
+- The target line/region is covered **and** overall coverage is **not
+  worse** than before the task (preferably unchanged or improved).

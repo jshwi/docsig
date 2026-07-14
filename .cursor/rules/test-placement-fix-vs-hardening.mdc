@@ -1,0 +1,33 @@
+---
+description: Where to put fix vs hardening tests
+alwaysApply: true
+---
+
+# Test Placement: fix_test vs _test
+
+## `tests/fix_test.py`
+
+Use only for **bug fixes** — regressions, false positives/negatives, or
+broken behavior a user can hit today.
+
+- Name tests `test_fix_…` (optionally with an issue number).
+- On `dev/main`, the matching commit is `wip: fix …` (see
+  atomic-commits), not `refactor:`.
+
+## `tests/_test.py` (and other non-fix modules)
+
+Use for **hardening**, characterization, API locks, and new behavior
+that is not fixing a current user-facing bug.
+
+- Do **not** put these in `fix_test.py`.
+- Do **not** use `fix` in the test function name.
+
+```text
+# ❌ BAD — hardening parked as a fix
+# tests/fix_test.py
+def test_fix_normalize_docstring_parses_starred_param_names(...):
+
+# ✅ GOOD — hardening lock-in
+# tests/_test.py
+def test_normalize_docstring_parses_starred_param_names(...):
+```

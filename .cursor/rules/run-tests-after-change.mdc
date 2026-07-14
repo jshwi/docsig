@@ -1,0 +1,14 @@
+---
+description: Run `make tests` after every change
+alwaysApply: true
+---
+
+# Run Tests After Every Change
+
+After making any code change, run the test suite:
+
+```bash
+make tests
+```
+
+Run it in the project root. Do not skip this step; fix any failing tests before considering the change complete.

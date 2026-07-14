@@ -1,0 +1,20 @@
+---
+description: Python formatting follows Black and isort; use Python 3.10+ style
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Python Formatting
+
+Write code that conforms to the project’s automated formatting:
+
+- **Black** style with line length 79 (see python-line-length).
+- **isort** for import order (profile black, line length 79). Group order:
+  `__future__`, stdlib, third-party, local. Use trailing commas in
+  multi-line import lists.
+- **Python 3.10+**: Use `X | Y` for unions and modern syntax; pyupgrade
+  runs with `--py310-plus` in pre-commit.
+- **Trailing commas** where appropriate (add-trailing-comma hook).
+
+Autoformatting runs on commit; avoid introducing style that Black or isort
+will change.

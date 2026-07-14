@@ -1,0 +1,18 @@
+---
+description: One method or function for one kind of action; no duplicated logic
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# One Place for One Kind of Action
+
+When "doing X" is a repeated concept (e.g. "add a failure to the report"),
+give it **one** method or function. All call sites use that entry point.
+
+Example: `_add` in `Failure` is the only way to append a `Failed` record. The
+construction of `Failed` and the check "not already in list" live there. No
+ad-hoc `Failed(...); self.append(...)` elsewhere. The reader knows where to
+look to understand "how we add a failure," and the behavior stays consistent.
+
+Same for "create Parent from string" — one function; "create Parent from file"
+calls it or shares the same construction path. One kind of action, one home.

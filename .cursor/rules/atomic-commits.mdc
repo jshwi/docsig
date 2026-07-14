@@ -1,0 +1,106 @@
+---
+description: Atomic commits — one change each, pipeline-green, conform types
+alwaysApply: true
+---
+
+# Atomic Commit Policy
+
+Follow [`.conform.yaml`](.conform.yaml) for conventional commit shape
+(types, scopes, header length, lower case, imperative, no trailing
+period, DCO, GPG).
+
+## One change per commit
+
+- A commit describes **exactly one** change.
+- The subject must **not** contain `and`. If you need `and`, split into
+  two or more commits.
+- Prefer a verb phrase that names one action (add X, fix Y, refactor Z).
+- One mechanical action is one commit. Moving a constant, adding a
+  factory, wiring a caller, and exporting a public name are separate
+  commits even when they serve the same feature.
+
+```text
+# ❌ BAD — two changes in one subject
+fix: correct exclude globs and update docs
+
+# ✅ GOOD — split
+fix: correct exclude globs
+doc: document exclude glob behavior
+
+# ❌ BAD — relocation mixed with new API work
+wip: add export Config from public API
+# (also moved DEFAULT_EXCLUDES and added from_mapping)
+
+# ✅ GOOD — one action each
+refactor: move default excludes to config module
+refactor: construct run Config via from_mapping
+wip: add export Config from public API
+```
+
+## Pipeline must pass
+
+- Every commit must leave the tree in a state that passes the pipeline
+  (tests, lint, and other CI checks this repo runs).
+- Do not land a commit that only works when followed by another commit
+  in the same push, except as noted for `wip` below.
+
+## Types for preparatory and unfinished work
+
+- Changes that only prepare the ground for a later changelog-worthy
+  commit use type **`refactor`** (not the eventual loggable type).
+- On **`dev/main`**, a change that *will* be changelog-worthy later is
+  still committed as **`wip`**. Do **not** open a GitHub issue yet;
+  promotion to master (cherry-pick or similar) may come later, when an
+  issue can be created if instructed.
+- Form the `wip` subject from the *eventual* conventional subject by
+  dropping the colon after the future type and prefixing `wip:`:
+
+```text
+# eventual (on master, with issue)
+add: export Config from public API
+
+# on dev/main until then
+wip: add export Config from public API
+```
+
+- `wip` commits may be amended or rebased later into the final typed
+  message once ready for master.
+- A new or updated case in **`tests/fix_test.py`** is a **fix**, not a
+  refactor. On `dev/main` use `wip: fix …`, never `refactor: …`.
+
+## Subject is the user-facing change
+
+- The subject must read like a **changelog line for the end user** (or
+  API consumer): what behavior is fixed, added, or changed.
+- Do **not** name the implementation mechanism, helper, or library call
+  in the subject. Those belong in the commit body if needed.
+- Ask: “If this appeared in the release notes, would a user understand
+  the benefit without reading the diff?” If not, rewrite.
+
+```text
+# ❌ BAD — implementation, not user value
+refactor: clean docstrings with inspect cleandoc
+fix: use cleandoc instead of splitlines
+
+# ❌ BAD — too narrow / symptom-only without the product meaning
+wip: fix false SIG503 on Returns header
+
+# ✅ GOOD — user-facing behavior on dev/main
+wip: fix evaluate docstring when description is missing
+```
+
+## Approve the message before committing
+
+- Before `git commit`, show the exact subject (and body, if any) in
+  chat and **wait for explicit approval** (e.g. “commit” or an edited
+  message). Do not commit on the first draft without that go-ahead.
+
+## Before committing
+
+- Split the diff into atomic commits when the working tree mixes
+  concerns.
+- Choose type and scope from `.conform.yaml` (and `wip:` on `dev/main`
+  when the change is eventually loggable).
+- Write a subject without `and`, within the conform length limit, that
+  passes the changelog test above.
+- Get the user’s approval of the message, then commit.

@@ -1,0 +1,40 @@
+---
+description: Do not add from __future__ import annotations unless required
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# No Unnecessary Future Annotations
+
+Do **not** add `from __future__ import annotations` (or
+`from __future__ import annotations as _`) unless the module actually
+needs postponed evaluation of annotations.
+
+This project targets Python 3.10+, so builtin generics (`list[str]`,
+`dict[str, Any]`) and `X | Y` unions work without it.
+
+## When it is needed
+
+- A forward reference that cannot be quoted cleanly otherwise
+- An annotation that must refer to a name not yet bound at runtime
+  (e.g. a classmethod returning the class being defined: `-> Config`)
+- Another concrete case where the file fails type-checking or import
+  without postponed evaluation
+
+## When it is not needed
+
+- Ordinary 3.10+ type hints alone
+- Matching style in neighboring files that already have the import
+
+```python
+# ❌ BAD — unnecessary on 3.10+
+from __future__ import annotations as _
+
+def parse_args(args: list[str] | None = None) -> Namespace: ...
+
+# ✅ GOOD — no future import
+def parse_args(args: list[str] | None = None) -> Namespace: ...
+```
+
+If you add the import, alias it as `_` in internal modules (see
+python-import-aliasing).

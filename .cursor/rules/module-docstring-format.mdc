@@ -1,0 +1,55 @@
+---
+description: Module docstring format (title, underline, description)
+globs: **/*.py
+alwaysApply: true
+---
+
+# Module Docstring Format
+
+**Apply this whenever you add or edit a module docstring** (the top-level
+docstring in a Python file). Referenced by `docstrings-include-module.mdc`.
+
+Module docstrings must use this structure:
+
+1. **First line**: The module name (e.g. the dotted path or logical name).
+2. **Second line**: An underline of `=` characters, same length as line 1.
+3. **Blank line**.
+4. **Description**: One or more lines describing what the module does.
+
+## Template
+
+```python
+"""
+$module_name
+$underline_same_length_as_module_name
+
+$description
+"""
+```
+
+## Examples
+
+```python
+# ❌ BAD — no title/underline, only description
+"""Run docstring/signature checks on module functions and classes."""
+
+# ❌ BAD — underline length does not match module name
+"""
+docsig._check
+=========
+
+Run checks on module functions and classes.
+"""
+
+# ✅ GOOD
+"""
+docsig._check
+=============
+
+Run docstring/signature checks on module functions and classes.
+"""
+```
+
+Keep the description to a single sentence when possible. Wrap long
+description lines so each line (including indent) is at most 72 characters
+(see `docstring-line-length.mdc`).

@@ -1,0 +1,18 @@
+---
+description: Prefix class names with _ when not part of public API
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Private Classes
+
+Prefix class names with a **leading underscore** when the class is an
+**implementation detail** and not part of the package’s public API.
+
+- Use **`_ClassName`** for helpers, wrappers, or base classes that are
+  only used inside the package (e.g. `_ArgumentParser`, `_Stub`, `_Gitignore`,
+  `_Imports`).
+- Do **not** prefix classes that are part of the public API (e.g. re-exported
+  from `__init__.py` or documented for users): `Config`, `Check`, `Function`.
+
+Public classes may inherit from private base classes (e.g. `Signature(_Stub)`).

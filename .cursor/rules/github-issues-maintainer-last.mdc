@@ -1,0 +1,43 @@
+---
+description: Evaluate open issues from the maintainer’s last comment
+alwaysApply: true
+---
+
+# GitHub Issues: Maintainer Comment First
+
+When reviewing or acting on a GitHub issue for this repo:
+
+## Whose words win
+
+- If **you (the maintainer)** are the **last** person to comment, treat
+  that comment as the source of truth — **more than** the reporter’s
+  original framing or later assumptions that ignore it.
+- Do not re-litigate the reporter’s feature ask as if the thread ended
+  on their opening post.
+
+## What to evaluate
+
+Ask whether **you** need to do more on the issue, not “how do we
+implement the reporter’s request.” Outcomes are one of:
+
+1. **Follow up** — ask or clarify something still open
+2. **Reconsider** — change your position or scope in a new comment
+3. **Close** — nothing left to do (wontfix, answered, waiting forever
+   with a clear workaround, etc.)
+
+## What not to do
+
+- Do not jump to an implementation plan while your last comment left
+  questions for the reporter and they have not answered.
+- Do not treat a documented workaround plus an atypical directive
+  request as an automatic “bug to fix.”
+- If the ball is in the reporter’s court, say so and stop.
+
+```text
+# ❌ BAD
+# Reporter asked for line suppression → plan the fix
+
+# ✅ GOOD
+# Maintainer asked three clarifying questions; no reply →
+# ball not in our court (follow up later, reconsider, or close)
+```

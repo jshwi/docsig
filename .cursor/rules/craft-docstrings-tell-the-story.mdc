@@ -1,0 +1,21 @@
+---
+description: Docstrings describe branches and outcomes so the reader knows the shape
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Docstrings Tell the Story
+
+Write docstrings so the reader learns **what branches and outcomes exist**
+before reading the code.
+
+Describe the shape: "If X, then Y. If Z, return W." Or: "Parse the string.
+If AST cannot be parsed, construct a Parent object for the syntax error."
+The body then fills in the how. This way the docstring is a map; the code is
+the territory.
+
+Keep the summary to one sentence (see docstring-summary-single-sentence).
+Use :param: and :return: to name the contract. When the function has several
+possible results or paths, a short line per outcome helps: "If valid Python
+code get the Parent from the parsed string. If Unicode error, construct a
+Parent for the Unicode error."

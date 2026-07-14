@@ -1,0 +1,32 @@
+---
+description: No package-level functions; put functions on classes or objects
+globs: plugin/intellij/**/*.kt
+alwaysApply: false
+---
+
+# Kotlin: No Top-Level Functions
+
+In the IntelliJ plugin (`plugin/intellij`), do **not** add **top-level**
+`fun` declarations in `.kt` files under `src/`.
+
+## Do instead
+
+- Put logic on an **`object`** (singleton namespace), **`companion object`**,
+  **`class`**, **`interface`** (default/static pattern as appropriate), or
+  **nested** type.
+- **Extension functions**: define as members on a containing `object` /
+  `companion object`, or as member extensions on a class, not as file-level
+  `fun Receiver.foo()`.
+
+## Allowed at file / package scope
+
+- **`import`**, **`class`**, **`object`**, **`interface`**, **`enum`**, and
+  **`typealias`**, consistent with `kotlin-one-class-per-file.mdc`.
+
+## Avoid
+
+- `fun foo()` or `internal fun bar()` at the root of a file (outside any
+  type).
+
+When editing existing files that still use legacy top-level functions, do
+not expand that pattern; prefer moving new or touched logic into a type.

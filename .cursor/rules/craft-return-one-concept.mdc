@@ -1,0 +1,20 @@
+---
+description: Functions return one kind of domain concept; type announces it
+globs: "**/*.py"
+alwaysApply: true
+---
+
+# Return One Kind of Concept
+
+A function should return **one kind of thing** — a single domain concept — and
+the **return type** should announce it.
+
+`parse_from_string` and `parse_from_file` both return `_Parent`. The caller
+always gets "a parent" (success or an error-shaped parent). `run_checks`
+returns `_Failures`. The return type is not "list of dicts" or "tuple"; it is
+the concept the caller cares about. That keeps the contract clear and the
+vocabulary consistent.
+
+Avoid returning ad-hoc tuples or dicts when a named type (dataclass,
+NamedTuple, or domain class) would express the concept. The type is part of
+the documentation.

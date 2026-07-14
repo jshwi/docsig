@@ -32,6 +32,7 @@ exclude: |
     | plugin\/vscode\/package-lock\.json
     | CLAUDE\.md
     | plugin\/neovim\/doc\/docsig\.txt
+    | \.cursor\/rules\/.*
   )$
 repos:
   - repo: local
