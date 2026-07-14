@@ -1853,3 +1853,70 @@ def function() -> None:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[202].ref not in std.out
+
+
+def test_fix_setter_does_not_trigger_return_check(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Property setter is exempt from return documentation checks.
+
+    A setter decorated with ``@<name>.setter`` never returns a value
+    and must not trigger confirm-return-needed.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+class MyClass:
+    @property
+    def value(self):
+        """Get the value."""
+        return self._value
+
+    @value.setter
+    def value(self, val):
+        """Set the value.
+
+        :param val: New value.
+        """
+        self._value = val
+'''
+    init_file(template)
+    assert main(".", "--check-class") == 0
+    std = capsys.readouterr()
+    assert E[501].ref not in std.out
+
+
+def test_fix_deleter_does_not_trigger_return_check(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Property deleter is exempt from return documentation checks.
+
+    A deleter decorated with ``@<name>.deleter`` never returns a value
+    and must not trigger confirm-return-needed.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+class MyClass:
+    @property
+    def value(self):
+        """Get the value."""
+        return self._value
+
+    @value.deleter
+    def value(self):
+        """Delete the value."""
+        del self._value
+'''
+    init_file(template)
+    assert main(".", "--check-class") == 0
+    std = capsys.readouterr()
+    assert E[501].ref not in std.out
