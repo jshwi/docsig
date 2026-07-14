@@ -155,6 +155,18 @@ internal class DocsigService(private val project: Project) {
         schedule(path, saveAlarms, "save", resetDebounce = true)
     }
 
+    // drop stale results when a file changes outside the ide
+    // restarting the daemon makes the inspection see an empty cache and
+    // schedule a fresh run, but only for files the editor is actually
+    // analysing, so bulk external changes do not fan out cli runs
+    internal fun invalidateExternalChange(path: String) {
+        if (cache.remove(path) == null) return
+
+        log.debug("external change path=$path")
+
+        notifyPsi(path)
+    }
+
     private fun pathsAffectedBySettingsChange(): Set<String> {
         val paths = linkedSetOf<String>()
 

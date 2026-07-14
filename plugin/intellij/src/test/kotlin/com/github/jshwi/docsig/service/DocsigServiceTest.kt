@@ -509,6 +509,48 @@ class DocsigServiceTest {
     }
 
     @Test
+    fun `invalidateExternalChange clears cache and restarts daemon`() {
+        val vFile = mockk<VirtualFile>()
+        val psiFile = mockk<PsiFile>()
+        val daemon = mockk<DaemonCodeAnalyzer>(relaxed = true)
+
+        mockPsiRefresh(
+            project,
+            vFile = vFile,
+            psiFile = psiFile,
+            daemon = daemon,
+        )
+
+        val service = DocsigService(project)
+        putCache(service, "/ext.py", listOf(Issue(1, "old", 1)))
+
+        service.invalidateExternalChange("/ext.py")
+
+        assertFalse(service.hasCached("/ext.py"))
+        verify(exactly = 1) {
+            daemon.restart(psiFile, "docsig")
+        }
+    }
+
+    @Test
+    fun `invalidateExternalChange ignores paths without cached results`() {
+        val daemon = mockk<DaemonCodeAnalyzer>(relaxed = true)
+
+        mockPsiRefresh(
+            project,
+            vFile = mockk<VirtualFile>(),
+            psiFile = mockk<PsiFile>(),
+            daemon = daemon,
+        )
+
+        val service = DocsigService(project)
+
+        service.invalidateExternalChange("/never/seen.py")
+
+        verify(exactly = 0) { daemon.restart(any<PsiFile>(), any()) }
+    }
+
+    @Test
     fun `scheduleFromSave resets debounce timer before queueing work`() {
         var cancelCalls = 0
         var requestCalls = 0

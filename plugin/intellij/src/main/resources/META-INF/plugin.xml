@@ -30,4 +30,9 @@
       class="com.github.jshwi.docsig.listener.DocsigSaveListener"
       topic="com.intellij.openapi.fileEditor.FileDocumentManagerListener"/>
   </applicationListeners>
+  <projectListeners>
+    <listener
+      class="com.github.jshwi.docsig.listener.DocsigExternalChangeListener"
+      topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+  </projectListeners>
 </idea-plugin>

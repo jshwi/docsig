@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- invalidate stale results when a file is changed outside the ide, so
+  highlights refresh without needing to edit and re-save the file
+
 ## [1.0.2] - 2026-06-13
 
 ### Changed
