@@ -382,9 +382,9 @@ class Docstring(_Stub):
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
         match = _re.search(
-            r":(?:returns?|yields?):\s*(.*)",
+            r"^[ \t]*:(?:returns?|yields?):\s*(.*)",
             string,
-            _re.IGNORECASE,
+            _re.IGNORECASE | _re.MULTILINE,
         )
         returns = _Return(
             bool(match),
@@ -394,12 +394,13 @@ class Docstring(_Stub):
         # the suggestion is broken
         # noinspection RegExpSingleCharAlternation
         for match in _re.findall(
-            r":((?:\\?\*){0,2}[\w]+"
+            r"^[ \t]*:((?:\\?\*){0,2}[\w]+"
             r"(?:\s+(?:\\?\*){0,2}[\w]+|"
             r"\s\|\s(?:\\?\*){0,2}[\w]+)*)"
             r"([^\w\s\\*])"
-            r"((?:.|\n)*?)(?=\n:|$)",
+            r"((?:.|\n)*?)(?=\n[ \t]*:|\Z)",
             string,
+            _re.MULTILINE,
         ):
             if match:
                 kinds = match[0].split()

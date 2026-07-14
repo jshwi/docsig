@@ -1797,3 +1797,59 @@ def function(a) -> str:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[203].ref not in std.out
+
+
+def test_fix_rst_field_in_prose_does_not_trigger_return_check(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """RST field syntax in description prose must not flag a return.
+
+    A description mentioning ``:returns:`` mid-sentence is prose, not a
+    return declaration, and must not trigger return-documented-for-none.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    This calls foo which :returns: a value.
+
+    :param a: A parameter.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[502].ref not in std.out
+
+
+def test_fix_rst_field_in_prose_does_not_trigger_param_check(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """RST field syntax in description prose must not flag a parameter.
+
+    A description mentioning ``:param x:`` mid-sentence is prose, not a
+    parameter declaration, and must not trigger params-do-not-exist.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function() -> None:
+    """Docstring summary.
+
+    Pass :param x: to configure the behavior.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[202].ref not in std.out
