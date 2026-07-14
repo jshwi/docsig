@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.90.3](https://github.com/jshwi/docsig/tree/v0.90.3) - 2026-07-14
+
+### Fixed
+
+- false positives for rst fields in description prose ([#935](https://github.com/jshwi/docsig/issues/935))
+- false SIG501 for property setter/deleter methods ([#936](https://github.com/jshwi/docsig/issues/936))
+- treat NoReturn/Never annotations as non-returning ([#937](https://github.com/jshwi/docsig/issues/937))
+
 ## [0.90.2](https://github.com/jshwi/docsig/tree/v0.90.2) - 2026-07-12
 
 ### Fixed
