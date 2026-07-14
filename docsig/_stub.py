@@ -42,6 +42,18 @@ class RetType(_Enum):
         if isinstance(returns, _ast.nodes.Const) and returns.value is None:
             return cls.NONE
 
+        # NoReturn / Never mean the function never returns a value, so
+        # treat them the same as -> None for documentation purposes
+        _no_return = {"NoReturn", "Never"}
+        if isinstance(returns, _ast.nodes.Name) and returns.name in _no_return:
+            return cls.NONE
+
+        if (
+            isinstance(returns, _ast.nodes.Attribute)
+            and returns.attrname in _no_return
+        ):
+            return cls.NONE
+
         if isinstance(
             returns,
             (

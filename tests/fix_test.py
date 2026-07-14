@@ -1920,3 +1920,39 @@ class MyClass:
     assert main(".", "--check-class") == 0
     std = capsys.readouterr()
     assert E[501].ref not in std.out
+
+
+def test_fix_noreturn_annotation_does_not_require_return_documentation(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """NoReturn and Never annotations suppress the return-missing check.
+
+    A function annotated ``-> NoReturn`` or ``-> Never`` never returns a
+    value, so requiring a ``:return:`` entry in its docstring is wrong.
+    The fix treats these annotations as equivalent to ``-> None`` for
+    documentation purposes, preventing SIG503.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+import typing
+from typing import NoReturn, Never
+def crash() -> NoReturn:
+    """Always raises."""
+    raise RuntimeError()
+def loop() -> Never:
+    """Loops forever."""
+    while True:
+        pass
+def also_crash() -> typing.NoReturn:
+    """Also always raises."""
+    raise RuntimeError()
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[503].ref not in std.out
