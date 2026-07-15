@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- update bundled docsig from v0.87.1 to v0.90.3 for several false
+  positive fixes, see the
+  [docsig changelog](https://github.com/jshwi/docsig/blob/master/CHANGELOG.md)
+  for details
+  (docsig v0.90.3)
+
 ## [1.0.2] - 2026-06-13
 
 ### Changed
