@@ -1,0 +1,8 @@
+return {
+  verbose = true,
+  output = "plainTerminal",
+  ROOT = {"tests"},
+  pattern = "_spec",
+  helper = "tests/helper.lua",
+  jobs = 1,
+}

@@ -107,6 +107,17 @@ CLI args / pyproject.toml
 
 pyproject.toml `[tool.docsig]` → CLI arguments override (CLI wins). The `Config` class in `_config.py` handles merging. For the flake8 plugin, all options are prefixed with `--sig-` to avoid conflicts.
 
+### Editor Plugins
+
+Editor integrations live under `plugin/` (`plugin/intellij`, `plugin/vscode`,
+`plugin/neovim`). The neovim plugin is mirrored to the standalone
+`jshwi/docsig.nvim` repo by the `publish-mirror` job in
+`.github/workflows/build-neovim-plugin.yaml` on pushes to master (requires
+the `DOCSIG_NVIM_DEPLOY_KEY` secret); users install `jshwi/docsig.nvim`, never
+the monorepo root — the repo root must not be treated as a Neovim
+runtimepath entry, since Neovim would recursively source every `.lua` file
+under `plugin/`.
+
 ### Testing Patterns
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
