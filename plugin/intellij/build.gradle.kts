@@ -181,8 +181,8 @@ val buildPyz by tasks.registering(Exec::class) {
     )
 }
 
-val bundleCli by tasks.registering(Copy::class) {
-    description = "Add bundled python cli"
+val bundleResources by tasks.registering(Copy::class) {
+    description = "Add bundled cli and license files"
     dependsOn(buildPyz)
 
     from(
@@ -190,10 +190,21 @@ val bundleCli by tasks.registering(Copy::class) {
             "../../build/docsig.pyz",
         ),
     )
-
+    from(
+        rootProject.file(
+            "../../LICENSE",
+        ),
+    )
+    from(
+        rootProject.file(
+            "../../licenses/SPHINX_LICENSE",
+        ),
+    ) {
+        into("licenses")
+    }
     into(
         layout.buildDirectory.dir(
-            "generated/resources/cli",
+            "generated/resources",
         ),
     )
 }
@@ -201,7 +212,7 @@ val bundleCli by tasks.registering(Copy::class) {
 sourceSets {
     main {
         resources {
-            srcDir(bundleCli)
+            srcDir(bundleResources)
         }
     }
 }
