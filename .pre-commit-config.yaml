@@ -14,6 +14,7 @@ ci:
     - commit-fix
     - vscode-extension
     - intellij-plugin
+    - neovim-plugin
 default_language_version:
   python: "3.10"
 default_stages:
@@ -30,6 +31,7 @@ exclude: |
     | docsig\/_vendor\/sphinx\/ext\/napoleon\.py
     | plugin\/vscode\/package-lock\.json
     | CLAUDE\.md
+    | plugin\/neovim\/doc\/docsig\.txt
   )$
 repos:
   - repo: local
@@ -52,6 +54,12 @@ repos:
         language: system
         pass_filenames: false
         files: ^plugin/vscode/
+      - id: neovim-plugin
+        name: neovim plugin
+        entry: make -C plugin/neovim format lint
+        language: system
+        pass_filenames: false
+        files: ^plugin/neovim/
       # script also handles coverage
       - id: coverage
         name: test source code coverage
@@ -160,6 +168,7 @@ repos:
             | CHANGELOG\.md
             | .*\.json
             | SECURITY\.md
+            | plugin\/neovim\/README\.md
           )$
   - repo: https://github.com/pappasam/toml-sort
     rev: "v0.24.4"

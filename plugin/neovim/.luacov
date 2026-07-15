@@ -1,0 +1,9 @@
+return {
+  statsfile = "coverage/luacov.stats.out",
+  reportfile = "coverage/luacov.report.out",
+  include = {
+    "lua/docsig/.+",
+  },
+  runreport = false,
+  deletestats = false,
+}

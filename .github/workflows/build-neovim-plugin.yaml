@@ -1,0 +1,143 @@
+---
+name: Build Neovim Plugin
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+    paths:
+      - plugin/neovim/**
+      - plugin/neovim
+      - .github/workflows/build-neovim-plugin.yaml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - plugin/neovim/**
+      - plugin/neovim
+      - .github/workflows/build-neovim-plugin.yaml
+
+concurrency:
+  group: >-
+    ${{ github.workflow }}-${{
+      github.event.pull_request.number || github.ref
+    }}
+  cancel-in-progress: true
+
+env:
+  PLUGIN_DIR: plugin/neovim
+
+jobs:
+  build:
+    name: neovim-plugin
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Neovim
+        env:
+          NVIM_VERSION: v0.10.4
+        run: |
+          base=https://github.com/neovim/neovim/releases/download
+          curl -fsSL -o /tmp/nvim.tar.gz \
+            "$base/$NVIM_VERSION/nvim-linux-x86_64.tar.gz"
+          sudo tar -xzf /tmp/nvim.tar.gz -C /opt
+          echo "/opt/nvim-linux-x86_64/bin" >> "$GITHUB_PATH"
+          /opt/nvim-linux-x86_64/bin/nvim --version | head -1
+
+      - name: Install Luarocks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            luarocks \
+            cmake \
+            build-essential \
+            lua5.4 \
+            liblua5.4-dev \
+            luajit \
+            libluajit-5.1-dev
+
+      - name: Build and Test Plugin
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: make deps lint bundle test verify
+
+  publish:
+    name: publish-mirror
+    needs: build
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && (github.ref == 'refs/heads/master'
+      || startsWith(github.ref, 'refs/tags/v')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build Bundled Checker
+        run: make -C ${{ env.PLUGIN_DIR }} bundle
+
+      - name: Clone Mirror
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/docsig_nvim
+          chmod 600 ~/.ssh/docsig_nvim
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/docsig_nvim"
+          echo "GIT_SSH_COMMAND=${GIT_SSH_COMMAND}" >> "$GITHUB_ENV"
+          git clone git@github.com:jshwi/docsig.nvim mirror
+        env:
+          DEPLOY_KEY: ${{ secrets.DOCSIG_NVIM_DEPLOY_KEY }}
+
+      - name: Sync Plugin
+        run: |
+          rsync -a --delete \
+            --exclude .git \
+            --exclude .make \
+            --exclude .venv \
+            --exclude .luarocks \
+            --exclude coverage \
+            --exclude tests/tmp \
+            --exclude '*.log' \
+            "${PLUGIN_DIR}/" mirror/
+          cp LICENSE mirror/LICENSE
+
+      - name: Commit and Push
+        working-directory: mirror
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git add -f resources/docsig.pyz
+          if git diff --cached --quiet; then
+            echo "mirror up to date"
+            exit 0
+          fi
+          git commit -m "sync from jshwi/docsig@${GITHUB_SHA}"
+          git push -u origin HEAD
+
+      - name: Tag Version
+        working-directory: mirror
+        run: |
+          version="$(make -s version)"
+          if ! git rev-parse "v${version}" >/dev/null 2>&1; then
+            git tag "v${version}"
+            git push origin "v${version}"
+          fi

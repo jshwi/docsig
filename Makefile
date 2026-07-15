@@ -201,7 +201,7 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 	install-hooks install-ignore-revs install-poetry install-venv lint \
 	lock-deps publish test-scripts test-source tests tox types \
 	update-copyright update-deps update-docs update-readme whitelist \
-	news commit-fix version
+	news commit-fix version neovim
 
 #: show program's version number and exit
 version: $(POETRY)
@@ -317,3 +317,6 @@ news: $(VENV)
 #: check test written for fix
 commit-fix: $(VENV)
 	@$(POETRY) run python scripts/commit_fix.py $(MSG)
+
+neovim:
+	@$(MAKE) -C plugin/neovim bundle

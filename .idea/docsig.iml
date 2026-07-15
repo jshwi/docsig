@@ -37,6 +37,12 @@
       <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/out" />
       <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/resources" />
       <excludeFolder url="file://$MODULE_DIR$/plugin/vscode/licenses" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/.luarocks" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/.make" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/resources" />
+      <excludeFolder url="file://$MODULE_DIR$/plugin/neovim/tests/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (docsig)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,0 +1,89 @@
+*docsig.txt*	Check signature params for proper documentation
+
+Author:  Stephen Whitlock <https://github.com/jshwi>
+License: MIT
+
+==============================================================================
+CONTENTS						*docsig* *docsig.nvim*
+
+    1. Introduction ......................... |docsig-introduction|
+    2. Requirements ......................... |docsig-requirements|
+    3. Setup ................................ |docsig-setup|
+    4. Configuration ........................ |docsig-configuration|
+    5. Commands ............................. |docsig-commands|
+    6. Health ............................... |docsig-health|
+
+==============================================================================
+1. INTRODUCTION					*docsig-introduction*
+
+docsig.nvim reports docstring and signature mismatches for Python files
+using the bundled docsig checker. Diagnostics are published through
+|vim.diagnostic| whenever a Python buffer is opened, edited, or saved.
+
+==============================================================================
+2. REQUIREMENTS					*docsig-requirements*
+
+- Neovim 0.10+
+- Python 3.10+ (|g:python3_host_prog| or `python3` on `$PATH`)
+- The bundled checker, built with `make bundle` in the plugin directory
+
+==============================================================================
+3. SETUP					*docsig-setup* *docsig.setup()*
+
+The plugin sets itself up on startup unless `vim.g.docsig` is set to
+`false`. Options may be provided through `vim.g.docsig`: >lua
+
+    vim.g.docsig = {
+      check_nested = true,
+      class_check_mode = "Check class",
+    }
+<
+Or by calling setup explicitly: >lua
+
+    require("docsig").setup({
+      check_nested = true,
+      python = "/usr/bin/python3",
+    })
+<
+==============================================================================
+4. CONFIGURATION				*docsig-configuration*
+
+Options mirror the VS Code extension (`docsig.*` settings):
+
+	Option				Default		CLI flag ~
+	`debounce_ms`			600		—
+	`python`			auto		—
+	`executable`			bundled pyz	—
+	`class_check_mode`		"None"		--check-class /
+						--check-class-constructor
+	`check_dunders`			false		--check-dunders
+	`check_nested`			false		--check-nested
+	`check_overridden`		false		--check-overridden
+	`check_property_returns`	false		--check-property-returns
+	`check_protected`		false		--check-protected
+	`check_protected_class_methods`	false	--check-protected-class-methods
+	`ignore_args`			false		--ignore-args
+	`ignore_kwargs`			false		--ignore-kwargs
+	`ignore_no_params`		false		--ignore-no-params
+	`include_ignored`		false		--include-ignored
+	`exclude`			""		--exclude
+	`excludes`			{}		--excludes
+	`disable`			{}		--disable
+	`target`			{}		--target
+
+Set `vim.g.docsig_debug = true` to log checker invocations.
+
+==============================================================================
+5. COMMANDS					*docsig-commands*
+
+						*:DocsigRefresh*
+:DocsigRefresh		Re-check the current buffer and refresh docsig
+			diagnostics.
+
+==============================================================================
+6. HEALTH					*docsig-health*
+
+Run `:checkhealth docsig` to verify the Neovim version, the resolved
+Python interpreter, and the bundled docsig executable.
+
+vim:tw=78:ts=8:noet:ft=help:norl:
