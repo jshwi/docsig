@@ -154,7 +154,7 @@ docs/_build/linkcheck/output.json: $(VENV) \
 		CONTRIBUTING.md
 	@trap "rm -f $(@); exit 1" ERR; \
 		{ \
-			ping -c 1 docsig.io >/dev/null 2>&1 \
+			curl -fsI --max-time 5 https://docsig.io >/dev/null 2>&1 \
 			|| { echo "could not establish connection, skipping"; exit 0; }; \
 			$(POETRY) run $(MAKE) -C docs linkcheck; \
 		}
