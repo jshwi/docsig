@@ -120,9 +120,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
                     path = messages_dir / f"{option}.rst"
                     if not path.is_file():
                         admonition = (
-                            ADMONITION.format(ref=code)
-                            if message.startswith("W")
-                            else ""
+                            ADMONITION if message.startswith("W") else ""
                         )
                         path.write_text(
                             TEMPLATE.format(
