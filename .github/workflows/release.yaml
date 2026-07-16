@@ -1,0 +1,70 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/docsig/
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout Build
+        id: checkout-build
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Verify Tag on Master
+        id: verify-tag-on-master
+        run: git merge-base --is-ancestor HEAD origin/master
+      - name: Setup Python
+        id: setup-python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Build Distribution
+        id: build-distribution
+        run: |
+          python -m pip install build
+          python -m build
+      - name: Publish Distribution
+        id: publish-distribution
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: Create GitHub Release
+    needs: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Build
+        id: checkout-build
+        uses: actions/checkout@v7
+      - name: Extract Release Notes
+        id: extract-release-notes
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          ver="${TAG#v}"
+          awk -v ver="$ver" '
+            index($0, "## [" ver "]") == 1 { found = 1; next }
+            found && index($0, "## [") == 1 { exit }
+            found { print }
+          ' CHANGELOG.md > notes.md
+          if ! grep -q '[^[:space:]]' notes.md; then
+            echo "no changelog section found for $ver"
+            exit 1
+          fi
+      - name: Create Release
+        id: create-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release create "$TAG" --title "$TAG" --notes-file notes.md
