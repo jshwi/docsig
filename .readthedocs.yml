@@ -6,7 +6,7 @@ build:
     python: "3.10"
   jobs:
     post_create_environment:
-      - python -m pip install poetry
+      - python -m pip install poetry==$(cat .poetry-version)
     post_install:
       - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs
 
