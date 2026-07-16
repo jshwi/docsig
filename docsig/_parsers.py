@@ -64,7 +64,7 @@ def parse_from_string(
             source_name,
             str(err).replace("\n", " ").lower(),
         )
-        parent = _Parent(error=type(err))
+        parent = _Parent.from_error(type(err))
 
     return parent
 
@@ -100,7 +100,7 @@ def parse_from_file(file: _Path, config: _Config) -> _Parent:
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
-        parent = _Parent(error=type(err))
+        parent = _Parent.from_error(type(err))
 
     # not all python files end with .py, but considering this isn't a
     # *.py file and there was an error parsing the file it's likely not

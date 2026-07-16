@@ -174,7 +174,6 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     :param file: Path for this scope (or None).
     :param config: Configuration object.
     :param imports: Imports in this scope.
-    :param error: Unrecoverable error for this scope, if any.
     """
 
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
@@ -185,24 +184,16 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         file: _Path | None = None,
         config: _Config | None = None,
         imports: _Imports | None = None,
-        error: type[BaseException] | None = None,
     ) -> None:
         super().__init__()
-        self._error = error
+        self._error: type[BaseException] | None = None
         self._directives = directives or _Directives()
         self._config = config or _Config()
         self._children = _Children()
         self._imports = imports or _Imports()
         if node is None:
-            # this is either an empty module object (name it module)
-            # or an error preventing the module from being parsed
+            # an empty scope, e.g. a file that isn't really python
             self._name = _DEFAULT_NAME
-            if error is not None:
-                # the only "function" belonging to the module can be
-                # later inspected to report on the module error (the
-                # report doesn't analyze modules or classes - it
-                # analyzes functions)
-                self._children.append(Function(error=error))
         else:
             self._name = node.name
             walker = _Walker(
@@ -213,6 +204,18 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             )
             walker.walk(node)
             self._children = walker.children
+
+    @classmethod
+    def from_error(cls, error: type[BaseException]) -> "Parent":
+        """Represent a scope which could not be parsed.
+
+        :param error: The error which prevented parsing.
+        :return: A scope with a single function carrying the error.
+        """
+        parent = cls()
+        parent._error = error
+        parent._children.append(Function.from_error(error))
+        return parent
 
     @property
     def isprotected(self) -> bool:
@@ -239,7 +242,6 @@ class Function:  # pylint: disable=too-many-instance-attributes
     :param config: Configuration object.
     :param imports: Imports in this scope.
     :param children: Children parsed from the function body.
-    :param error: Unrecoverable error for this function, if any.
     """
 
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
@@ -251,7 +253,6 @@ class Function:  # pylint: disable=too-many-instance-attributes
         config: _Config | None = None,
         imports: _Imports | None = None,
         children: _Children | None = None,
-        error: type[BaseException] | None = None,
     ) -> None:
         self._name = node.name if node is not None else _DEFAULT_NAME
         self._comments = comments or _Comments()
@@ -264,7 +265,7 @@ class Function:  # pylint: disable=too-many-instance-attributes
         self._signature = _Signature()
         self._docstring = _Docstring()
         self._lineno = 0
-        self._error = error
+        self._error: type[BaseException] | None = None
         if node is not None and node.parent is not None:
             self._frame = node.parent.frame()
             self._decorators = node.decorators
@@ -277,6 +278,21 @@ class Function:  # pylint: disable=too-many-instance-attributes
             relevant_doc_node = self._select_doc_node(node)
             if relevant_doc_node is not None:
                 self._docstring = self.docstring.from_ast(relevant_doc_node)
+
+    @classmethod
+    def from_error(cls, error: type[BaseException]) -> "Function":
+        """Represent a module which could not be parsed.
+
+        The report does not analyze modules or classes, it analyzes
+        functions, so a module error is carried by a synthetic function
+        for later inspection.
+
+        :param error: The error which prevented parsing.
+        :return: A function carrying the error.
+        """
+        func = cls()
+        func._error = error
+        return func
 
     def _select_doc_node(
         self,
