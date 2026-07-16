@@ -205,7 +205,7 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 	news commit-fix version neovim
 
 #: show program's version number and exit
-version: $(POETRY)
+version:
 	@echo $(VERSION)
 
 #: run benchmarks
