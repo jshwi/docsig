@@ -91,7 +91,8 @@ html_use_index = True
 html_show_sourcelink = True
 html_show_sphinx = False
 myst_heading_anchors = 3
-todo_include_todos = True
+# keep `.. todo::` development notes out of the published site
+todo_include_todos = False
 html_logo = "static/docsig.svg"
 html_favicon = "static/favicon.ico"
 
