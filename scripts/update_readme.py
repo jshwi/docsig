@@ -17,10 +17,11 @@ from docsig import main
 
 
 def _normalize_for_alternate_argparse_versions(text: str) -> str:
-    if "[path [path ...]]" not in text:
-        text = text.replace("[path ...]", "[path [path ...]]")
+    # requires-python is >=3.10, where argparse prints "options:" and
+    # "[path ...]"; normalize help from older interpreters to that form
+    text = text.replace("[path [path ...]]", "[path ...]")
 
-    return text.replace("    options:", "    optional arguments:")
+    return text.replace("    optional arguments:", "    options:")
 
 
 shutil.get_terminal_size = lambda: os.terminal_size((93, 24))  # type: ignore

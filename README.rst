@@ -97,14 +97,14 @@ Commandline
                   [--check-protected-class-methods] [--ignore-args] [--ignore-kwargs]
                   [--ignore-no-params] [-d LIST] [-t LIST] [-e PATTERN] [-E PATH [PATH ...]]
                   [-i] [-s STR]
-                  [path [path ...]]
+                  [path ...]
 
     Check signature params for proper documentation
 
     positional arguments:
       path                  directories or files to check
 
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       -V, --version         show program's version number and exit
       -l, --list-checks     display a list of all checks and their messages
