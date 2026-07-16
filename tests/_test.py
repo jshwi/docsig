@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import json
 import os
 import pickle
 from pathlib import Path
@@ -1596,3 +1597,194 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref in std.out
+
+
+@pytest.mark.parametrize(
+    "description",
+    (
+        "Send it to Mr. smith for review.",
+        "Send it to Dr. smith for review.",
+        "Compare option a vs. option b.",
+        "Handles lists, dicts, etc. and other types.",
+        "Only valid in the U.S. for now.",
+    ),
+)
+def test_abbreviations_do_not_trigger_sig305(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+    description: str,
+) -> None:
+    """Every known sentence abbreviation is exempt from SIG305.
+
+    The sentence tokenizer knows mr., dr., vs., etc., and u.s. as well
+    as the e.g. and i.e. abbreviations asserted elsewhere. Without the
+    exemption the text after the abbreviation becomes its own sentence
+    fragment, and its lowercase first letter fires SIG305.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    :param description: Parameter description with an abbreviation.
+    """
+    template = f'''
+def function(x) -> None:
+    """Docstring summary.
+
+    :param x: {description}
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out
+
+
+def test_numpy_style_detected_by_other_parameters(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Numpy style is detected when Other Parameters is the only header.
+
+    Style detection falls back to rst when no numpy section header
+    matches, in which case the numpy-documented parameter would not be
+    parsed and params-missing would be reported.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    Other Parameters
+    ----------------
+    a : int
+        Description of a.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert not std.out
+
+
+def test_google_style_detected_by_arguments(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Google style is detected via the Arguments section header.
+
+    Arguments is an accepted alias for Args, and the only marker of
+    google style in this docstring. Without it the docstring falls back
+    to rst, the parameter is not parsed, and params-missing is
+    reported.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    Arguments:
+        a (int): Description of a.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert not std.out
+
+
+def test_auto_enumerated_list_does_not_trigger_sig306(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Descriptions ending with an auto-enumerated list are exempt.
+
+    The rst auto-enumerator (#.) is a list marker like - or 1. and a
+    description ending on a list item does not need to end in a period.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(x) -> None:
+    """Docstring summary.
+
+    :param x: Steps to run are:
+
+        #. First step
+        #. Second step
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
+
+
+def test_sig503_hint_not_shown_for_param_return(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """The SIG503 syntax hint is not shown for a return param.
+
+    The hint fires when the last docstring line mentions a return that
+    looks like a documentation attempt, but :param return: is already
+    reported as a parameter that does not exist, so the hint would be
+    noise.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Patch package entry point.
+    """
+    template = '''
+def function(a) -> int:
+    """Docstring summary.
+
+    :param a: Description of a.
+    :param return: Return value.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[503].fstring(T) in std.out
+    assert E[503].hint not in std.out
+
+
+def test_json_line_null_for_file_error(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
+    """JSON reports use a null line number for whole-file errors.
+
+    Editor plugins consume this contract to mark the whole file rather
+    than a single line when a file cannot be checked at all.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param tmp_path: Create and return the temporary directory.
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    """
+    pkl = tmp_path / "test.py"
+    with open(pkl, "wb") as fout:
+        pickle.dump([1, 2, 3], fout)  # type: ignore
+
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    assert main(pkl, test_flake8=False) == 2
+    std = capsys.readouterr()
+    issues = json.loads(std.out)
+    assert issues[0]["line"] is None
+    assert issues[0]["exit"] == 2
