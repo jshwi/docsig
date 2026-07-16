@@ -65,7 +65,7 @@ CLI args / pyproject.toml
   │
   _parsers.py → _module.py (Module/Class/Function AST wrappers)
   │
-  _check.py (traverse functions)
+  _traverse.py (traverse functions)
   │
   _report.py (per-function validation, emits error codes)
   │
@@ -83,7 +83,7 @@ CLI args / pyproject.toml
 | `_config.py`          | `Config`, `Check`, `Ignore` dataclasses; loads from pyproject.toml                   |
 | `_module.py`          | AST-backed `Module`, `Class`, `Function` types with parsed signatures and docstrings |
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
-| `_check.py`           | Traverses function tree, dispatches to `_report.py` per function                     |
+| `_traverse.py`        | Traverses function tree, dispatches to `_report.py` per function                     |
 | `_diagnostic.py`      | `Collector` aggregates results; `Diagnostic`/`FunctionResult`/`Failures`             |
 | `_report.py`          | All individual check implementations; formats and prints diagnostics                 |
 | `_parsers.py`         | Parses Python source files/strings into module object trees                          |

@@ -1,6 +1,6 @@
 """
-docsig._check
-=============
+docsig._traverse
+================
 
 Traverse modules and run docstring/signature checks per function.
 """
