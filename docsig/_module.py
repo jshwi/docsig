@@ -218,14 +218,14 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         )
         self._comments = comments or _Comments()
         self._messages = messages or _Messages()
-        self._parent = None
+        self._frame = None
         self._decorators = None
         self._signature = _Signature()
         self._docstring = _Docstring()
         self._lineno = 0
         self._error = error
         if node is not None and node.parent is not None:
-            self._parent = node.parent.frame()
+            self._frame = node.parent.frame()
             self._decorators = node.decorators
             self._lineno = node.lineno
             self._signature = self._signature.from_ast(
@@ -236,11 +236,11 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
             if (
                 self.isinit
                 and not self._config.check.class_constructor
-                and not isinstance(self._parent, _ast.nodes.Lambda)
+                and not isinstance(self._frame, _ast.nodes.Lambda)
             ):
                 # docstring for __init__ is expected on the class
                 # docstring
-                relevant_doc_node = self._parent.doc_node
+                relevant_doc_node = self._frame.doc_node
             else:
                 relevant_doc_node = node.doc_node
 
@@ -266,7 +266,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def ismethod(self) -> bool:
         """Whether this function is defined in a class (method)."""
-        return isinstance(self._parent, _ast.nodes.ClassDef)
+        return isinstance(self._frame, _ast.nodes.ClassDef)
 
     @property
     def isproperty(self) -> bool:
@@ -292,10 +292,10 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         if (
             self.ismethod
             and not self.isinit
-            and self._parent is not None
-            and isinstance(self._parent, _ast.nodes.ClassDef)
+            and self._frame is not None
+            and isinstance(self._frame, _ast.nodes.ClassDef)
         ):
-            for ancestor in self._parent.ancestors():
+            for ancestor in self._frame.ancestors():
                 if self.name in ancestor and isinstance(
                     ancestor[self.name],
                     _ast.nodes.FunctionDef,
@@ -329,7 +329,7 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         return self._name
 
     @property
-    def parent(
+    def frame(
         self,
     ) -> (
         _ast.nodes.FunctionDef
@@ -338,8 +338,8 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         | _ast.nodes.Lambda
         | None
     ):
-        """Function's parent node."""
-        return self._parent
+        """Astroid frame node enclosing this function."""
+        return self._frame
 
     @property
     def lineno(self) -> int:

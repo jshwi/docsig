@@ -101,12 +101,12 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
 
         self._name = self._func.name
         if (
-            self._func.parent is not None
-            and hasattr(self._func.parent, "name")
-            and self._func.parent.name
-            and not isinstance(self._func.parent, _ast.nodes.Module)
+            self._func.frame is not None
+            and hasattr(self._func.frame, "name")
+            and self._func.frame.name
+            and not isinstance(self._func.frame, _ast.nodes.Module)
         ):
-            self._name = f"{self._func.parent.name}.{self._name}"
+            self._name = f"{self._func.frame.name}.{self._name}"
 
         self._collector = _Collector(self._name, self._func.lineno, disabled)
 
