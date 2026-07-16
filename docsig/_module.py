@@ -29,13 +29,6 @@ class _Overloads(dict[str, "Function"]): ...
 class _Children(list[_t.Union["Parent", "Function"]]): ...
 
 
-ERRORS = (
-    _ast.AstroidSyntaxError,
-    UnicodeDecodeError,
-    RecursionError,
-    _ast.DuplicateBasesError,
-)
-
 _DEFAULT_NAME = "module"
 
 
