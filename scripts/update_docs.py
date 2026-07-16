@@ -87,7 +87,7 @@ def generate_configurations() -> None:
         content = "\n\n".join(sorted(tocs))
         content = f"{content}\n"
         if cur_content != content:
-            toc_file.write_text(content)
+            toc_file.write_text(content, encoding="utf-8")
 
 
 def generate_messages() -> None:  # pylint: disable=too-many-locals
@@ -136,7 +136,7 @@ def generate_messages() -> None:  # pylint: disable=too-many-locals
         content = "\n\n".join(sorted(tocs))
         content = f"{content}\n"
         if cur_content != content:
-            toc_file.write_text(content)
+            toc_file.write_text(content, encoding="utf-8")
             sys.exit("new docs generated that need to be added to commit")
 
 

@@ -183,7 +183,7 @@ def generate_tests() -> None:
     content = []
     source = DOCS_DIR / "_build"
     build = source / "markdown"
-    (source / "index.rst").write_text(TEST_RST)
+    (source / "index.rst").write_text(TEST_RST, encoding="utf-8")
     subprocess.run(
         [
             "sphinx-build",
@@ -224,6 +224,7 @@ def generate_tests() -> None:
                 .replace("# tests", "# Tests"),
             ),
         ),
+        encoding="utf-8",
     )
 
 
@@ -294,6 +295,7 @@ def generate_schema() -> None:
     """Generate docsig schema."""
     (GENERATED / "schema.json").write_text(
         json.dumps(ValidatePyproject(), indent=2),
+        encoding="utf-8",
     )
 
 
