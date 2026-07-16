@@ -25,7 +25,8 @@ author = "Stephen Whitlock"
 # The full version, including alpha/beta/rc tags
 release = "0.91.0"
 
-# SEO-friendly project description
+# SEO-friendly project description, rendered into meta tags by
+# _templates/base.html
 description = """\
 docsig is a Python tool for checking signature parameters in docstrings.
  Ensures proper documentation of function and method parameters for Sphinx,
@@ -85,29 +86,10 @@ html_favicon = "static/favicon.ico"
 # SEO Configuration
 html_baseurl = "https://docsig.io/"
 
-# Meta tags for SEO
-html_meta = {
-    "description": description,
-    "keywords": """\
-python, docstring, documentation, linting, sphinx, numpy, google,
- parameters, signature, type checking, code quality, pre-commit, flake8"
-""",
-    "author": author,
-    "viewport": "width=device-width, initial-scale=1.0",
-    "og:type": "website",
-    "og:site_name": "docsig",
-    "og:title": f"""\
-{project} - Check Python signature params for proper documentation"
-""",
-    "og:description": description,
-    "og:url": "https://docsig.io/",
-    "og:image": "https://docsig.io/_static/docsig.svg",
-    "twitter:card": "summary",
-    "twitter:title": f"""\
-{project} - Check Python signature params for proper documentation
-""",
-    "twitter:description": description,
-    "twitter:image": "https://docsig.io/_static/docsig.svg",
+# Variables for the SEO meta tags rendered by _templates/base.html
+html_context = {
+    "seo_description": " ".join(description.split()),
+    "seo_author": author,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

@@ -1,9 +1,7 @@
-{% extends "!layout.html" %} {% block extrahead %} {{ super() }} {# Add meta
-tags for SEO #}
-<meta
-  name="description"
-  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats. Use as a standalone tool, flake8 plugin, or pre-commit hook to maintain accurate Python documentation."
-/>
+{# Furo renders pages through base.html (it does not support layout.html), so
+SEO meta tags are added by overriding its empty extrahead block. #} {% extends
+"!base.html" %} {% block extrahead %} {{ super() }} {# Add meta tags for SEO #}
+<meta name="description" content="{{ seo_description }}" />
 <meta
   name="keywords"
   content="python, docstring, documentation, linting, sphinx, numpy, google, parameters, signature, type checking, code quality, pre-commit, flake8"
@@ -14,21 +12,18 @@ tags for SEO #}
   property="og:title"
   content="{{ project }} - Check Python signature params for proper documentation"
 />
+<meta property="og:description" content="{{ seo_description }}" />
 <meta
-  property="og:description"
-  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats."
+  property="og:url"
+  content="{{ pageurl if pageurl else 'https://docsig.io/' }}"
 />
-<meta property="og:url" content="https://docsig.io/" />
 <meta property="og:image" content="https://docsig.io/_static/docsig.svg" />
 <meta name="twitter:card" content="summary" />
 <meta
   name="twitter:title"
   content="{{ project }} - Check Python signature params for proper documentation"
 />
-<meta
-  name="twitter:description"
-  content="docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats."
-/>
+<meta name="twitter:description" content="{{ seo_description }}" />
 <meta name="twitter:image" content="https://docsig.io/_static/docsig.svg" />
 {# Add JSON-LD structured data for better SEO #}
 <script type="application/ld+json">
@@ -36,14 +31,14 @@ tags for SEO #}
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "{{ project }}",
-    "description": "docsig is a Python tool for checking signature parameters in docstrings. Ensures proper documentation of function and method parameters for Sphinx, NumPy, and Google docstring formats. Use as a standalone tool, flake8 plugin, or pre-commit hook to maintain accurate Python documentation.",
+    "description": "{{ seo_description }}",
     "url": "https://docsig.io/",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Any",
     "programmingLanguage": "Python",
     "author": {
       "@type": "Person",
-      "name": "{{ author }}"
+      "name": "{{ seo_author }}"
     },
     "publisher": {
       "@type": "Organization",
