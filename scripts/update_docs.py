@@ -77,7 +77,7 @@ def generate_configurations() -> None:
                             title=title,
                             underline=len(title) * "=",
                             admonition="",
-                            description=" ".join(parts[2:]),
+                            description=" ".join(parts[2:]).capitalize(),
                         ),
                         encoding="utf-8",
                     )
