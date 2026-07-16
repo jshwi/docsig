@@ -9,6 +9,6 @@ Editor/IDE
 
 .. include:: editor.rst
 
-Editors and tools not listed will require external contributions.
-
-Contributors welcome
+Editors and tools not listed will require external contributions, and
+contributors are welcome. See
+`contributing <https://docsig.io/en/latest/development/contributing.html>`_.
