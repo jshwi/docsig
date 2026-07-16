@@ -260,29 +260,41 @@ class Signature(_Stub):
         cls,
         node: _ast.nodes.FunctionDef,
         ignore: _Ignore,
+        skip_bound_arg: bool = False,
     ) -> Signature:
         """Build Signature from a function or class AST node.
 
         :param node: AST node (function, class, or module).
         :param ignore: Configuration object for what to ignore.
+        :param skip_bound_arg: Drop the first positional argument (self
+            or cls) without mutating the AST node.
         :return: Signature with args and return type.
         """
         rettype = RetType.from_ast(node.returns)
         returns = _Return(rettype == RetType.SOME, rettype)
         signature = cls(returns, ignore)
-        # noinspection PyUnresolvedReferences
-        for i in [
-            a if isinstance(a, Param) else Param(name=a.name)
-            for a in [
-                *node.args.posonlyargs,
-                *node.args.args,
-                Param(DocType.ARG, name=node.args.vararg),
-                *node.args.kwonlyargs,
-                Param(DocType.KWARG, name=node.args.kwarg),
-            ]
-            if a is not None and a.name
-        ]:
-            signature.args.append(i)
+        posonlyargs = list(node.args.posonlyargs)
+        if node.args.args is not None:
+            args = list(node.args.args)
+            if skip_bound_arg:
+                if posonlyargs:
+                    posonlyargs = posonlyargs[1:]
+                elif args:
+                    args = args[1:]
+
+            # noinspection PyUnresolvedReferences
+            for i in [
+                a if isinstance(a, Param) else Param(name=a.name)
+                for a in [
+                    *posonlyargs,
+                    *args,
+                    Param(DocType.ARG, name=node.args.vararg),
+                    *node.args.kwonlyargs,
+                    Param(DocType.KWARG, name=node.args.kwarg),
+                ]
+                if a is not None and a.name
+            ]:
+                signature.args.append(i)
 
         return signature
 
