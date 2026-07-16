@@ -1,0 +1,44 @@
+---
+name: Conform
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  conform:
+    name: conform
+    # commit policy is held to by the maintainer, not required of
+    # bots or contributors, so only enforce on the owner's own pull
+    # requests and skip everything else
+    if: github.event.pull_request.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Head
+        id: checkout-head
+        uses: actions/checkout@v7
+        with:
+          # check the branch head itself, not the unsigned merge
+          # commit github synthesizes for pull requests
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Setup Go
+        id: setup-go
+        uses: actions/setup-go@v6
+        with:
+          go-version: stable
+      - name: Install Conform
+        id: install-conform
+        env:
+          CONFORM: github.com/siderolabs/conform/cmd/conform
+        run: |
+          go install "$CONFORM@v0.1.0-alpha.31"
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Enforce Policy
+        id: enforce-policy
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: conform enforce --revision-range "$BASE..$HEAD"
