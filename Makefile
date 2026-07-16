@@ -17,7 +17,8 @@ POETRY_VERSION := $(shell cat .poetry-version)
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
 PACKAGE_FILES := $(shell git ls-files "docsig/*.py")
 TEST_FILES := $(shell git ls-files "tests/*.py")
-DOCS_FILES := $(shell git ls-files "docs/*.rst" "docs/*.md")
+DOCS_FILES := $(shell git ls-files \
+	"docs/*.rst" "docs/*.md" "docs/_templates" "docs/static")
 
 # Virtual environment path
 ifeq ($(OS),Windows_NT)
