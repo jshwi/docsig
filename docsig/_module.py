@@ -154,7 +154,7 @@ class _Walker:
                         self._children.append(func)
                 elif isinstance(subnode, _ast.nodes.ClassDef):
                     self._children.append(
-                        Parent(
+                        Parent.from_ast(
                             subnode,
                             self._directives,
                             self._file,
@@ -166,44 +166,41 @@ class _Walker:
                     self.walk(subnode)
 
 
-class Parent:  # pylint: disable=too-many-instance-attributes
-    """Container for functions or methods (module, class, or function).
+class Parent:
+    """Container for functions or methods (module or class).
 
-    :param node: AST node for this scope.
-    :param directives: Directives and excluded errors per line.
-    :param file: Path for this scope (or None).
-    :param config: Configuration object.
-    :param imports: Imports in this scope.
+    :param name: Name of this scope.
     """
 
-    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
-    def __init__(
-        self,
-        node: _ast.nodes.Module | _ast.nodes.ClassDef | None = None,
-        directives: _Directives | None = None,
-        file: _Path | None = None,
-        config: _Config | None = None,
-        imports: _Imports | None = None,
-    ) -> None:
-        super().__init__()
+    def __init__(self, name: str = _DEFAULT_NAME) -> None:
+        self._name = name
         self._error: type[BaseException] | None = None
-        self._directives = directives or _Directives()
-        self._config = config or _Config()
         self._children = _Children()
-        self._imports = imports or _Imports()
-        if node is None:
-            # an empty scope, e.g. a file that isn't really python
-            self._name = _DEFAULT_NAME
-        else:
-            self._name = node.name
-            walker = _Walker(
-                self._directives,
-                file,
-                self._config,
-                self._imports,
-            )
-            walker.walk(node)
-            self._children = walker.children
+
+    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
+    @classmethod
+    def from_ast(
+        cls,
+        node: _ast.nodes.Module | _ast.nodes.ClassDef,
+        directives: _Directives,
+        file: _Path | None,
+        config: _Config,
+        imports: _Imports | None = None,
+    ) -> "Parent":
+        """Build a scope from the body of an AST node.
+
+        :param node: AST node for this scope.
+        :param directives: Directives and excluded errors per line.
+        :param file: Path for this scope (or None).
+        :param config: Configuration object.
+        :param imports: Imports shared across the whole tree.
+        :return: A scope with children parsed from the node's body.
+        """
+        parent = cls(node.name)
+        walker = _Walker(directives, file, config, imports or _Imports())
+        walker.walk(node)
+        parent._children = walker.children
+        return parent
 
     @classmethod
     def from_error(cls, error: type[BaseException]) -> "Parent":

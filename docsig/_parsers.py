@@ -56,7 +56,7 @@ def parse_from_string(
                 f"error parsing comments {err}".lower(),
             )
 
-        parent = _Parent(node, directives, file, config)
+        parent = _Parent.from_ast(node, directives, file, config)
         logger.debug(_FILE_INFO, source_name, "parsing python code successful")
     except _ERRORS as err:
         logger.debug(
