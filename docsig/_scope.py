@@ -1,8 +1,8 @@
 """
-docsig._module
-==============
+docsig._scope
+=============
 
-AST-backed modules, classes, and functions for docstring checking.
+AST-backed scopes and functions for docstring checking.
 """
 
 import re as _re

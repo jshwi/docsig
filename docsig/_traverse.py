@@ -8,8 +8,8 @@ Traverse modules and run docstring/signature checks per function.
 from ._checker import check_function as _check_function
 from ._config import Config as _Config
 from ._diagnostic import Failures as _Failures
-from ._module import Function as _Function
-from ._module import Scope as _Scope
+from ._scope import Function as _Function
+from ._scope import Scope as _Scope
 
 
 def _should_check_function(

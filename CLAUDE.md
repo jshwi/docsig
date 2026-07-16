@@ -63,7 +63,7 @@ CLI args / pyproject.toml
   │
   _config.py (Config)
   │
-  _parsers.py → _module.py (Module/Class/Function AST wrappers)
+  _parsers.py → _scope.py (Scope/Function AST wrappers)
   │
   _traverse.py (traverse functions)
   │
@@ -81,7 +81,7 @@ CLI args / pyproject.toml
 | `_core.py`            | `docsig()` entry point — wires config, file discovery, checks, and reporting         |
 | `_main.py`            | CLI argument parsing and top-level exception handling                                |
 | `_config.py`          | `Config`, `Check`, `Ignore` dataclasses; loads from pyproject.toml                   |
-| `_module.py`          | AST-backed `Module`, `Class`, `Function` types with parsed signatures and docstrings |
+| `_scope.py`           | AST-backed `Scope` and `Function` types with parsed signatures and docstrings        |
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
 | `_traverse.py`        | Traverses function tree, dispatches to `_checker.py` per function                    |
 | `_checker.py`         | All individual check implementations; each emits a `Message` on failure              |

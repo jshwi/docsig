@@ -14,7 +14,7 @@ import astroid as _ast
 from ._config import Config as _Config
 from ._diagnostic import Collector as _Collector
 from ._diagnostic import FunctionResult as _FunctionResult
-from ._module import Function as _Function
+from ._scope import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
 from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param

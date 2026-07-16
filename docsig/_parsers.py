@@ -14,7 +14,7 @@ import astroid as _ast
 from ._config import Config as _Config
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
-from ._module import Scope as _Scope
+from ._scope import Scope as _Scope
 
 _ERRORS = (
     _ast.AstroidSyntaxError,
