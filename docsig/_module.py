@@ -26,7 +26,7 @@ class _Imports(dict[str, str]): ...
 class _Overloads(dict[str, "Function"]): ...
 
 
-class _Children(list[_t.Union["Parent", "Function"]]): ...
+class _Children(list[_t.Union["Scope", "Function"]]): ...
 
 
 _DEFAULT_NAME = "module"
@@ -80,7 +80,7 @@ class _Walker:
         # need to keep track of `comments` as, even though they are
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
-        parent_comments, parent_disabled = self._directives.get(
+        scope_comments, scope_disabled = self._directives.get(
             node.lineno or 0,
             (_Comments(), _Messages()),
         )
@@ -106,8 +106,8 @@ class _Walker:
                     comments.extend(more_comments)
                     disabled.extend(more_disabled)
 
-                comments.extend(parent_comments)
-                disabled.extend(parent_disabled)
+                comments.extend(scope_comments)
+                disabled.extend(scope_disabled)
                 if isinstance(
                     subnode,
                     (_ast.nodes.Import, _ast.nodes.ImportFrom),
@@ -154,7 +154,7 @@ class _Walker:
                         self._children.append(func)
                 elif isinstance(subnode, _ast.nodes.ClassDef):
                     self._children.append(
-                        Parent.from_ast(
+                        Scope.from_ast(
                             subnode,
                             self._directives,
                             self._file,
@@ -166,7 +166,7 @@ class _Walker:
                     self.walk(subnode)
 
 
-class Parent:
+class Scope:
     """Container for functions or methods (module or class).
 
     :param name: Name of this scope.
@@ -186,7 +186,7 @@ class Parent:
         file: _Path | None,
         config: _Config,
         imports: _Imports | None = None,
-    ) -> "Parent":
+    ) -> "Scope":
         """Build a scope from the body of an AST node.
 
         :param node: AST node for this scope.
@@ -196,23 +196,23 @@ class Parent:
         :param imports: Imports shared across the whole tree.
         :return: A scope with children parsed from the node's body.
         """
-        parent = cls(node.name)
+        scope = cls(node.name)
         walker = _Walker(directives, file, config, imports or _Imports())
         walker.walk(node)
-        parent._children = walker.children
-        return parent
+        scope._children = walker.children
+        return scope
 
     @classmethod
-    def from_error(cls, error: type[BaseException]) -> "Parent":
+    def from_error(cls, error: type[BaseException]) -> "Scope":
         """Represent a scope which could not be parsed.
 
         :param error: The error which prevented parsing.
         :return: A scope with a single function carrying the error.
         """
-        parent = cls()
-        parent._error = error
-        parent._children.append(Function.from_error(error))
-        return parent
+        scope = cls()
+        scope._error = error
+        scope._children.append(Function.from_error(error))
+        return scope
 
     @property
     def isprotected(self) -> bool:

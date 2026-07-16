@@ -9,12 +9,12 @@ from ._checker import check_function as _check_function
 from ._config import Config as _Config
 from ._diagnostic import Failures as _Failures
 from ._module import Function as _Function
-from ._module import Parent as _Parent
+from ._module import Scope as _Scope
 
 
 def _should_check_function(
     function: _Function,
-    parent: _Parent | _Function,
+    parent: _Scope | _Function,
     config: _Config,
 ) -> bool:
     if function.isoverridden and not config.check.overridden:
@@ -39,8 +39,8 @@ def _should_check_function(
 
 
 def _run_check(
-    child: _Parent | _Function,
-    parent: _Parent | _Function,
+    child: _Scope | _Function,
+    parent: _Scope | _Function,
     config: _Config,
     failures: _Failures,
 ) -> None:
@@ -59,7 +59,7 @@ def _run_check(
             _run_check(child_of_child, child, config, failures)
 
 
-def run_checks(module: _Parent, config: _Config) -> _Failures:
+def run_checks(module: _Scope, config: _Config) -> _Failures:
     """Run checks on the module and return a list of failures.
 
     Traverse the module's functions and classes. A callable is checked

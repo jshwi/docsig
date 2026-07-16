@@ -14,7 +14,7 @@ import astroid as _ast
 from ._config import Config as _Config
 from ._directives import Directives as _Directives
 from ._files import FILE_INFO as _FILE_INFO
-from ._module import Parent as _Parent
+from ._module import Scope as _Scope
 
 _ERRORS = (
     _ast.AstroidSyntaxError,
@@ -29,18 +29,18 @@ def parse_from_string(
     config: _Config,
     module_name: str = "",
     file: _Path | None = None,
-) -> _Parent:
-    """Build a Parent from a string of Python code.
+) -> _Scope:
+    """Build a scope from a string of Python code.
 
     Parses AST and comment directives (AST does not include comments, so
-    directives are parsed separately). On syntax error, returns a Parent
+    directives are parsed separately). On syntax error, returns a scope
     with an error set.
 
     :param code: Python source to parse.
     :param config: Configuration object.
     :param module_name: Module name, or empty string.
     :param file: Path for the source (or None for stdin).
-    :return: Parent for the parsed code or syntax error.
+    :return: Scope for the parsed code or syntax error.
     """
     logger = _logging.getLogger(__package__)
     source_name = file or "stdin"
@@ -56,7 +56,7 @@ def parse_from_string(
                 f"error parsing comments {err}".lower(),
             )
 
-        parent = _Parent.from_ast(node, directives, file, config)
+        scope = _Scope.from_ast(node, directives, file, config)
         logger.debug(_FILE_INFO, source_name, "parsing python code successful")
     except _ERRORS as err:
         logger.debug(
@@ -64,9 +64,9 @@ def parse_from_string(
             source_name,
             str(err).replace("\n", " ").lower(),
         )
-        parent = _Parent.from_error(type(err))
+        scope = _Scope.from_error(type(err))
 
-    return parent
+    return scope
 
 
 def _source_encoding(file: _Path) -> str:
@@ -81,32 +81,32 @@ def _source_encoding(file: _Path) -> str:
         return "utf-8"
 
 
-def parse_from_file(file: _Path, config: _Config) -> _Parent:
-    """Build a Parent from a file containing Python code.
+def parse_from_file(file: _Path, config: _Config) -> _Scope:
+    """Build a scope from a file containing Python code.
 
     Reads the file and delegates to parse_from_string. On UnicodeError,
-    returns a Parent with a Unicode error. On syntax error and a non-.py
-    path, returns an empty Parent (not treated as Python).
+    returns a scope with a Unicode error. On syntax error and a non-.py
+    path, returns an empty scope (not treated as Python).
 
     :param file: Path to the file to parse.
     :param config: Configuration object.
-    :return: Parent for the parsed file or an error/empty Parent.
+    :return: Scope for the parsed file or an error/empty scope.
     """
     try:
         code = file.read_text(encoding=_source_encoding(file))
         module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
-        parent = parse_from_string(code, config, module_name, file)
+        scope = parse_from_string(code, config, module_name, file)
 
     except UnicodeDecodeError as err:
         logger = _logging.getLogger(__package__)
         logger.debug(_FILE_INFO, file, str(err).replace("\n", " "))
-        parent = _Parent.from_error(type(err))
+        scope = _Scope.from_error(type(err))
 
     # not all python files end with .py, but considering this isn't a
     # *.py file and there was an error parsing the file it's likely not
     # meant to bea a python file
-    # return empty parent without the error
-    if parent.error is not None and not file.name.endswith(".py"):
-        parent = _Parent()
+    # return empty scope without the error
+    if scope.error is not None and not file.name.endswith(".py"):
+        scope = _Scope()
 
-    return parent
+    return scope
