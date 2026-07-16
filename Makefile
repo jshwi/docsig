@@ -49,8 +49,7 @@ $(BUILD): .make/doctest \
 		.make/docsig \
 		.make/update-docs \
 		.mypy_cache/CACHEDIR.TAG \
-		README.rst \
-		.make/doctest \
+		.make/update-readme \
 		coverage.xml \
 		docs/_build/html/index.html
 	@$(POETRY) build
@@ -96,8 +95,9 @@ $(POETRY): .poetry-version
 		--version $(POETRY_VERSION)
 	@touch $@
 
-README.rst: $(VENV) $(PACKAGE_FILES)
-	@$(POETRY) run python scripts/update_readme.py >/dev/null 2>&1 || exit 0
+.make/update-readme: $(VENV) $(PACKAGE_FILES)
+	@$(POETRY) run python scripts/update_readme.py
+	@mkdir -p $(@D)
 	@touch $@
 
 .make/update-docs: $(VENV) $(PACKAGE_FILES)
@@ -141,7 +141,7 @@ coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
 	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
 		&& $(POETRY) run coverage xml
 
-.make/doctest: $(VENV) README.rst $(PYTHON_FILES) $(DOCS_FILES)
+.make/doctest: $(VENV) .make/update-readme $(PYTHON_FILES) $(DOCS_FILES)
 	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
 	@mkdir -p $(@D)
 	@touch $@
@@ -306,7 +306,7 @@ update-deps: $(VENV)
 update-docs: .make/update-docs
 
 #: update commandline documentation if needed
-update-readme: README.rst
+update-readme: .make/update-readme
 
 #: generate whitelist of allowed unused code
 whitelist: whitelist.py
