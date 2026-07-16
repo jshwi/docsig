@@ -55,7 +55,6 @@ extensions = [
 ]
 
 sitemap_url_scheme = "{lang}latest/{link}"
-sitemap_excludes = ["_generated/*"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -63,7 +62,20 @@ templates_path = ["_templates"]
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+# Files only ever pulled in with `.. include::` are excluded so they are
+# not also built as standalone duplicate pages.
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    "_generated",
+    "docsig.rst",
+    "usage/classes.rst",
+    "usage/editor.rst",
+    "usage/check-configuration.rst",
+    "usage/ignore-configuration.rst",
+    "usage/*-messages.rst",
+]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_dark_style = "monokai"
