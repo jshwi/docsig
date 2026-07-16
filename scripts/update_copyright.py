@@ -21,7 +21,4 @@ for file, pattern in files.items():
     text = file.read_text(encoding="utf-8")
     new = pattern.sub(_replace_year, text)
     if text != new:
-        file.write_text(
-            pattern.sub(_replace_year, text),
-            encoding="utf-8",
-        )
+        file.write_text(new, encoding="utf-8")
