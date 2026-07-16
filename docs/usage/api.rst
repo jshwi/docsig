@@ -5,8 +5,8 @@ API
 Python script
 
 For this documentation, and to accurately outline what goes into each call,
-we'll be using the API. The parameters are available to the commandline as
-outlined in the next page.
+we'll be using the API. The parameters are also available to the commandline,
+as outlined in :doc:`configuration`.
 
 .. code-block:: python
 
