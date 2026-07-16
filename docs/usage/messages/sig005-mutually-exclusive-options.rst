@@ -16,7 +16,7 @@ When running ``docsig`` on its own an exception will be raised instead
 .. code-block:: console
 
     $ docsig example.py --check-class --check-class-constructor 2>&1 | tail -n 1
-    docsig: error: argument -C/--check-class-constructor: not allowed with argument -c/--check-class
+    docsig: error: argument --check-class-constructor: not allowed with argument --check-class
 
 Configuring only one of the two options resolves the check, as documented
 in :doc:`../configuration`
