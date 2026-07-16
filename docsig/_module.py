@@ -116,14 +116,23 @@ class _Walker:
                         original, alias = name
                         self._imports[original] = alias or original
                 elif isinstance(subnode, _ast.nodes.FunctionDef):
-                    func = Function(
-                        subnode,
-                        comments,
+                    # walk the function body before constructing the
+                    # function, so imports it contains are collected
+                    # before decorators or the signature are resolved
+                    body_walker = _Walker(
                         self._directives,
-                        disabled,
                         self._file,
                         self._config,
                         self._imports,
+                    )
+                    body_walker.walk(subnode)
+                    func = Function(
+                        subnode,
+                        comments,
+                        disabled,
+                        self._config,
+                        self._imports,
+                        body_walker.children,
                     )
                     if func.isoverloaded:
                         if (
@@ -171,12 +180,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
     # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
-        node: (
-            _ast.nodes.Module
-            | _ast.nodes.ClassDef
-            | _ast.nodes.FunctionDef
-            | None
-        ) = None,
+        node: _ast.nodes.Module | _ast.nodes.ClassDef | None = None,
         directives: _Directives | None = None,
         file: _Path | None = None,
         config: _Config | None = None,
@@ -193,7 +197,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             # this is either an empty module object (name it module)
             # or an error preventing the module from being parsed
             self._name = _DEFAULT_NAME
-            if not isinstance(self, Function) and error is not None:
+            if error is not None:
                 # the only "function" belonging to the module can be
                 # later inspected to report on the module error (the
                 # report doesn't analyze modules or classes - it
@@ -226,16 +230,15 @@ class Parent:  # pylint: disable=too-many-instance-attributes
         return self._children
 
 
-class Function(Parent):  # pylint: disable=too-many-instance-attributes
+class Function:  # pylint: disable=too-many-instance-attributes
     """A callable with parsed signature and docstring for checking.
 
     :param node: AST node for the function (or None for error).
     :param comments: Comment directives for this function.
-    :param directives: Directives keyed by line.
     :param messages: Disabled checks for this function.
-    :param file: Path for this function (or None).
     :param config: Configuration object.
     :param imports: Imports in this scope.
+    :param children: Children parsed from the function body.
     :param error: Unrecoverable error for this function, if any.
     """
 
@@ -244,22 +247,18 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
         self,
         node: _ast.nodes.FunctionDef | None = None,
         comments: _Comments | None = None,
-        directives: _Directives | None = None,
         messages: _Messages | None = None,
-        file: _Path | None = None,
         config: _Config | None = None,
         imports: _Imports | None = None,
+        children: _Children | None = None,
         error: type[BaseException] | None = None,
     ) -> None:
-        super().__init__(
-            node,
-            directives or _Directives(),
-            file,
-            config,
-            imports,
-        )
+        self._name = node.name if node is not None else _DEFAULT_NAME
         self._comments = comments or _Comments()
         self._messages = messages or _Messages()
+        self._config = config or _Config()
+        self._imports = imports or _Imports()
+        self._children = children or _Children()
         self._frame = None
         self._decorators = None
         self._signature = _Signature()
@@ -355,7 +354,21 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
     @property
     def isprotected(self) -> bool:
         """Whether this function is protected."""
-        return super().isprotected and not self.isinit and not self.isdunder
+        return (
+            self._name.startswith("_")
+            and not self.isinit
+            and not self.isdunder
+        )
+
+    @property
+    def error(self) -> type[BaseException] | None:
+        """Unrecoverable error for this function, if any."""
+        return self._error
+
+    @property
+    def children(self) -> _Children:
+        """Functions or classes parsed from the function body."""
+        return self._children
 
     @property
     def isstaticmethod(self) -> bool:

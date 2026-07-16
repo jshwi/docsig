@@ -14,7 +14,7 @@ from ._module import Parent as _Parent
 
 def _should_check_function(
     function: _Function,
-    parent: _Parent,
+    parent: _Parent | _Function,
     config: _Config,
 ) -> bool:
     if function.isoverridden and not config.check.overridden:
@@ -39,8 +39,8 @@ def _should_check_function(
 
 
 def _run_check(
-    child: _Parent,
-    parent: _Parent,
+    child: _Parent | _Function,
+    parent: _Parent | _Function,
     config: _Config,
     failures: _Failures,
 ) -> None:
