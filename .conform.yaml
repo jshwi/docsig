@@ -52,4 +52,5 @@ policies:
           - ai
           - neovim-plugin
           - plugin
+          - build
         descriptionLength: 72
