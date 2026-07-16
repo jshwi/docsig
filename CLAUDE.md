@@ -131,6 +131,27 @@ under `plugin/`.
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
 
+### Documentation
+
+- The docs build with `-W` (warnings are errors), and every `.rst` file —
+  including README.rst — is doctested. Console (`$`) code blocks are NOT
+  doctested and drift silently; verify them manually when CLI output changes.
+- Furo does not render `layout.html` (it ships an error page for anything
+  inheriting it). Theme overrides belong in `docs/_templates/base.html`
+  extending `!base.html`; SEO meta tags live in its `extrahead` block, with
+  the description single-sourced from `conf.py` via `html_context`.
+- Files pulled in only via `.. include::` must be added to `exclude_patterns`
+  in `docs/conf.py`, or Sphinx also publishes them as standalone duplicate
+  pages (and they land in the sitemap).
+- Message pages (`docs/usage/messages/`) show the failing case and end with a
+  doctested resolution example (exit `0`). `scripts/update_docs.py` scaffolds
+  new pages but never overwrites — extend them by hand after generation.
+- `make build` fails the first time README or generated docs regenerate
+  (update-readme/update-docs stamp targets, same "blocks the first attempt"
+  pattern as the commit-msg hook); rerun and commit the regenerated files.
+- Read the Docs builds `latest` from master, so docs changes only go live on
+  docsig.io once they reach master.
+
 ### Changelog / Release Workflow
 
 - Changelog fragments go in `changelog/` (managed by **towncrier**)
