@@ -32,54 +32,39 @@ class _Children(list[_t.Union["Parent", "Function"]]): ...
 _DEFAULT_NAME = "module"
 
 
-class Parent:  # pylint: disable=too-many-instance-attributes
-    """Container for functions or methods (module, class, or function).
+class _Walker:
+    """Walk an AST body, collecting a scope's children.
 
-    :param node: AST node for this scope.
+    A new walker is used for each scope so that children, along with
+    the overloads they merge into, are collected per scope. The one
+    exception is imports, which are shared across the whole tree.
+
     :param directives: Directives and excluded errors per line.
     :param file: Path for this scope (or None).
     :param config: Configuration object.
-    :param imports: Imports in this scope.
-    :param error: Unrecoverable error for this scope, if any.
+    :param imports: Imports shared across the whole tree.
     """
 
-    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
-        node: (
-            _ast.nodes.Module
-            | _ast.nodes.ClassDef
-            | _ast.nodes.FunctionDef
-            | None
-        ) = None,
-        directives: _Directives | None = None,
-        file: _Path | None = None,
-        config: _Config | None = None,
-        imports: _Imports | None = None,
-        error: type[BaseException] | None = None,
+        directives: _Directives,
+        file: _Path | None,
+        config: _Config,
+        imports: _Imports,
     ) -> None:
-        super().__init__()
-        self._error = error
-        self._directives = directives or _Directives()
-        self._config = config or _Config()
+        self._directives = directives
+        self._file = file
+        self._config = config
+        self._imports = imports
         self._children = _Children()
-        self._imports = imports or _Imports()
         self._overloads = _Overloads()
-        if node is None:
-            # this is either an empty module object (name it module)
-            # or an error preventing the module from being parsed
-            self._name = _DEFAULT_NAME
-            if not isinstance(self, Function) and error is not None:
-                # the only "function" belonging to the module can be
-                # later inspected to report on the module error (the
-                # report doesn't analyze modules or classes - it
-                # analyzes functions)
-                self._children.append(Function(error=error))
-        else:
-            self._name = node.name
-            self._parse_ast(node, file)
 
-    def _parse_ast(
+    @property
+    def children(self) -> _Children:
+        """Children collected from the walked scope."""
+        return self._children
+
+    def walk(
         self,
         node: (
             _ast.nodes.Module
@@ -87,8 +72,11 @@ class Parent:  # pylint: disable=too-many-instance-attributes
             | _ast.nodes.FunctionDef
             | _ast.nodes.NodeNG
         ),
-        file: _Path | None = None,
     ) -> None:
+        """Collect children from the body of an AST node.
+
+        :param node: AST node whose body to walk.
+        """
         # need to keep track of `comments` as, even though they are
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
@@ -133,7 +121,7 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         comments,
                         self._directives,
                         disabled,
-                        file,
+                        self._file,
                         self._config,
                         self._imports,
                     )
@@ -160,13 +148,67 @@ class Parent:  # pylint: disable=too-many-instance-attributes
                         Parent(
                             subnode,
                             self._directives,
-                            file,
+                            self._file,
                             self._config,
                             self._imports,
                         ),
                     )
                 else:
-                    self._parse_ast(subnode, file)
+                    self.walk(subnode)
+
+
+class Parent:  # pylint: disable=too-many-instance-attributes
+    """Container for functions or methods (module, class, or function).
+
+    :param node: AST node for this scope.
+    :param directives: Directives and excluded errors per line.
+    :param file: Path for this scope (or None).
+    :param config: Configuration object.
+    :param imports: Imports in this scope.
+    :param error: Unrecoverable error for this scope, if any.
+    """
+
+    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
+    def __init__(
+        self,
+        node: (
+            _ast.nodes.Module
+            | _ast.nodes.ClassDef
+            | _ast.nodes.FunctionDef
+            | None
+        ) = None,
+        directives: _Directives | None = None,
+        file: _Path | None = None,
+        config: _Config | None = None,
+        imports: _Imports | None = None,
+        error: type[BaseException] | None = None,
+    ) -> None:
+        super().__init__()
+        self._error = error
+        self._directives = directives or _Directives()
+        self._config = config or _Config()
+        self._children = _Children()
+        self._imports = imports or _Imports()
+        if node is None:
+            # this is either an empty module object (name it module)
+            # or an error preventing the module from being parsed
+            self._name = _DEFAULT_NAME
+            if not isinstance(self, Function) and error is not None:
+                # the only "function" belonging to the module can be
+                # later inspected to report on the module error (the
+                # report doesn't analyze modules or classes - it
+                # analyzes functions)
+                self._children.append(Function(error=error))
+        else:
+            self._name = node.name
+            walker = _Walker(
+                self._directives,
+                file,
+                self._config,
+                self._imports,
+            )
+            walker.walk(node)
+            self._children = walker.children
 
     @property
     def isprotected(self) -> bool:
