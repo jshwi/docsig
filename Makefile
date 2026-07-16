@@ -319,5 +319,6 @@ news: $(VENV)
 commit-fix: $(VENV)
 	@$(POETRY) run python scripts/commit_fix.py $(MSG)
 
+#: bundle neovim plugin
 neovim:
 	@$(MAKE) -C plugin/neovim bundle
