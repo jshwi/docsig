@@ -9,9 +9,6 @@ import re as _re
 from difflib import SequenceMatcher as _SequenceMatcher
 from pathlib import Path as _Path
 
-from .messages import TEMPLATE as _TEMPLATE
-from .messages import E as _E
-
 SENTENCE_ABBREVIATIONS = frozenset(
     {
         "al.",
@@ -55,15 +52,6 @@ def almost_equal(str1: str, str2: str, mini: float, maxi: float) -> bool:
         a=str1,
         b=str2,
     ).ratio() < maxi
-
-
-def print_checks() -> None:
-    """Print all available docstring-check codes and descriptions.
-
-    Output goes to stdout.
-    """
-    for msg in _E.values():
-        print(msg.fstring(_TEMPLATE))
 
 
 def sentence_tokenizer(text: str) -> list[str]:

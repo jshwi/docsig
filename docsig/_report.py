@@ -17,6 +17,7 @@ from ._diagnostic import Failures as _Failures
 from ._diagnostic import RetCode as _RetCode
 from .messages import NEW as _NEW
 from .messages import TEMPLATE as _TEMPLATE
+from .messages import E as _E
 
 
 # pylint: disable=too-few-public-methods
@@ -99,6 +100,15 @@ def _build_report(
         )
 
     return payload
+
+
+def print_checks() -> None:
+    """Print all available docstring-check codes and descriptions.
+
+    Output goes to stdout.
+    """
+    for msg in _E.values():
+        print(msg.fstring(_TEMPLATE))
 
 
 def pretty_print_error(
