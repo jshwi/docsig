@@ -31,6 +31,9 @@ class _Children(list[_t.Union["Scope", "Function"]]): ...
 
 _DEFAULT_NAME = "module"
 
+#: decorators marking a method as a property or property method
+_PROPERTY_DECORATORS = "property", "cached_property", "setter", "deleter"
+
 #: astroid node enclosing a function, or None outside any frame
 _Frame: _t.TypeAlias = (
     _ast.nodes.FunctionDef
@@ -343,9 +346,8 @@ class Function:  # pylint: disable=too-many-instance-attributes
     @property
     def isproperty(self) -> bool:
         """Whether this function is a property or property method."""
-        valid_properties = "property", "cached_property", "setter", "deleter"
         return self.ismethod and any(
-            self._decorated_with(i) for i in valid_properties
+            self._decorated_with(i) for i in _PROPERTY_DECORATORS
         )
 
     @property
