@@ -19,6 +19,7 @@ from .._config import Config as _Config
 from .._config import Ignore as _Ignore
 from .._core import runner as _runner
 from .._core import setup_logger as _setup_logger
+from .._diagnostic import Diagnostic as _Diagnostic
 from .._version import __version__
 from ..messages import FLAKE8 as _FLAKE8
 from ..messages import E as _E
@@ -133,6 +134,15 @@ class Flake8:
         )
         return _Config(check=check, ignore=ignore, verbose=options.verbose)
 
+    @staticmethod
+    def _format_error(info: _Diagnostic) -> str:
+        message = _FLAKE8.format(
+            ref=info.ref,
+            description=info.description,
+            symbolic=info.symbolic,
+        )
+        return f"{message} '{info.name}'"
+
     def run(self) -> _t.Generator[_Flake8Error, None, None]:
         """Run docsig on the file and yield flake8 errors per failure.
 
@@ -144,30 +154,17 @@ class Flake8:
         :return: Generator of flake8-style error tuples.
         """
         if self.a.check_class and self.a.check_class_constructor:
-            line = "{msg}".format(
-                msg=_FLAKE8.format(
-                    ref=_E[5].ref,
-                    description=_E[5].description,
-                    symbolic=_E[5].symbolic,
-                ),
-            )
-            yield 0, 0, line, self.__class__
-        else:
-            _setup_logger(self.a.verbose)
-            with _cwd_on_sys_path():
-                results = _runner(_Path(self.filename), self._build_config())
+            # mutually-exclusive-options
+            yield 0, 0, _E[5].fstring(_FLAKE8), self.__class__
+            return
 
-            for result in results:
-                if not result.retcode:
-                    continue
+        _setup_logger(self.a.verbose)
+        with _cwd_on_sys_path():
+            results = _runner(_Path(self.filename), self._build_config())
 
-                for info in result:
-                    line = "{msg} '{name}'".format(
-                        msg=_FLAKE8.format(
-                            ref=info.ref,
-                            description=info.description,
-                            symbolic=info.symbolic,
-                        ),
-                        name=info.name,
-                    )
-                    yield info.lineno, 0, line, self.__class__
+        for result in results:
+            if not result.retcode:
+                continue
+
+            for info in result:
+                yield info.lineno, 0, self._format_error(info), self.__class__
