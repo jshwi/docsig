@@ -77,6 +77,21 @@ def runner(file: _Path, config: _Config) -> _Failures:
     return _run_checks(module, config)
 
 
+def _check_string(string: str, config: _Config) -> int:
+    module = _parse_from_string(string, config)
+    failures = _run_checks(module, config)
+    return _report(failures, config)
+
+
+def _check_files(paths: tuple[str | _Path, ...], config: _Config) -> int:
+    retcodes = _RetCode()
+    for file in _Files(paths, config.filters):
+        failures = runner(file, config)
+        retcodes.add(_report(failures, config, str(file)))
+
+    return retcodes.result
+
+
 @_decorators.parse_msgs
 @_decorators.validate_args
 def docsig(  # pylint: disable=too-many-locals,too-many-arguments
@@ -193,22 +208,12 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         disable=disable,
     )
     setup_logger(config.verbose)
-    logger = _logging.getLogger(__package__)
-    logger.debug(_pformat(config))
+    _logging.getLogger(__package__).debug(_pformat(config))
     if config.list_checks:
         # noinspection PyNoneFunctionAssignment
         return int(bool(_print_checks()))  # type: ignore
 
     if string:
-        module = _parse_from_string(string, config)
-        failures = _run_checks(module, config)
-        return _report(failures, config)
+        return _check_string(string, config)
 
-    retcodes = _RetCode()
-    files = _Files(path, config.filters)
-    for file in files:
-        failures = runner(file, config)
-        retcode = _report(failures, config, str(file))
-        retcodes.add(retcode)
-
-    return retcodes.result
+    return _check_files(path, config)
