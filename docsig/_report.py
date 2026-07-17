@@ -8,6 +8,7 @@ Format and print docstring-check diagnostics for CLI and tooling.
 import json as _json
 import os as _os
 import sys as _sys
+import typing as _t
 from dataclasses import dataclass as _dataclass
 from warnings import warn as _warn
 
@@ -134,27 +135,22 @@ def print_error(message: str, retcode: int) -> None:
         print(message, file=_sys.stderr)
 
 
-# TODO: make report json by default and wrap with a reporter for cli
-def report(
-    failures: _Failures,
-    config: _Config,
-    file: str | None = None,
-) -> int:
-    """Print failures and return the highest exit code.
+def _to_json(payload: _Report) -> list[dict[str, _t.Any]]:
+    # the shape editor plugins consume: a null line number marks a
+    # whole-file error
+    return [
+        {
+            "line": None if entry.retcode >= 2 else item.line,
+            "message": item.message,
+            "exit": item.exit,
+        }
+        for entry in payload
+        for item in entry.diagnostics
+    ]
 
-    Builds a report payload from failures, prints each entry with path,
-    line header, and messages, then returns the maximum retcode.
 
-    :param failures: Failures to print (one FunctionResult per
-        function).
-    :param config: Config for ANSI and formatting.
-    :param file: Module path when failures came from a file (optional).
-    :return: Exit code (non-zero if any check failed).
-    """
-    payload = _build_report(failures, file)
-    format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
-    output = []
-    obj = []
+def _to_text(payload: _Report, config: _Config) -> list[str]:
+    output: list[str] = []
     for entry in payload:
         header = entry.header
         if not config.no_ansi and _sys.stdout.isatty():
@@ -166,18 +162,33 @@ def report(
             if item.extra is not None:
                 output.append(f"    {item.extra}")
 
-            obj.append(
-                {
-                    "line": None if entry.retcode >= 2 else item.line,
-                    "message": item.message,
-                    "exit": item.exit,
-                },
-            )
+    return output
 
-    if format_json:
-        print(_json.dumps(obj).strip())  # pragma: no cover
 
-    elif output:
-        print("\n".join(output))
+# TODO: make report json by default and wrap with a reporter for cli
+def report(
+    failures: _Failures,
+    config: _Config,
+    file: str | None = None,
+) -> int:
+    """Print failures and return the highest exit code.
+
+    Builds a report payload from failures, renders it as json when
+    _DOCSIG_FORMAT_JSON is set (the contract editor plugins consume),
+    otherwise as text, then returns the maximum retcode.
+
+    :param failures: Failures to print (one FunctionResult per
+        function).
+    :param config: Config for ANSI and formatting.
+    :param file: Module path when failures came from a file (optional).
+    :return: Exit code (non-zero if any check failed).
+    """
+    payload = _build_report(failures, file)
+    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:
+        print(_json.dumps(_to_json(payload)).strip())
+    else:
+        lines = _to_text(payload, config)
+        if lines:
+            print("\n".join(lines))
 
     return payload.retcode
