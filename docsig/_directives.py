@@ -114,6 +114,16 @@ class Comment(_Messages):
 class _Scanner:
     """Scan source tokens for directives, tracking scope per line.
 
+    Three scopes interact while scanning:
+
+    * module scope - column-zero directives, applying to every line
+        that follows
+    * 'next' scope - a module directive flagged 'next' applies until
+        the following statement, then module scope is restored from a
+        snapshot taken at the directive
+    * inline scope - a directive on a code line, applying to that line
+        and the one that follows
+
     :param messages: Initial list of messages to disable.
     """
 
