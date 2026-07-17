@@ -79,7 +79,7 @@ CLI args / pyproject.toml
 | Module                | Role                                                                                 |
 | --------------------- | ------------------------------------------------------------------------------------ |
 | `_core.py`            | `docsig()` entry point — wires config, file discovery, checks, and reporting         |
-| `_main.py`            | CLI argument parsing and top-level exception handling                                |
+| `_main.py`            | CLI argument parsing, top-level exception handling, `excepthook` for user-friendly errors (bypassed when `DOCSIG_DEBUG=1`) |
 | `_config.py`          | `Config`, `Check`, `Ignore` dataclasses; loads from pyproject.toml                   |
 | `_scope.py`           | AST-backed `Scope` and `Function` types with parsed signatures and docstrings        |
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
@@ -92,7 +92,6 @@ CLI args / pyproject.toml
 | `_files.py`           | File discovery; respects `.gitignore` and exclude patterns                           |
 | `_directives.py`      | Handles inline `# noqa`-style suppression comments                                   |
 | `_decorators.py`      | Decorators for `docsig()`: kwarg-to-`Message` parsing and argument validation        |
-| `_hooks.py`           | `excepthook` for user-friendly errors (bypassed when `DOCSIG_DEBUG=1`)               |
 | `messages.py`         | All `Message` definitions and the `MessageMap`; error codes SIG0xx–SIG9xx            |
 | `plugin/_flake8.py`   | Flake8 extension; wraps `docsig()` with `--sig-*` prefixed options                   |
 
