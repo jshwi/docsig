@@ -121,6 +121,14 @@ pre-commit hook); run it after any module restructuring.
 
 pyproject.toml `[tool.docsig]` → CLI arguments override (CLI wins). The `Config` class in `_config.py` handles merging. For the flake8 plugin, all options are prefixed with `--sig-` to avoid conflicts.
 
+Boolean flag help text is single-sourced in `FLAG_HELP` (`_config.py`) and
+flows to three user-facing surfaces: CLI `--help`, the flake8 plugin's
+`--sig-*` options, and the pyproject.toml schema, which
+`plugin/_validate_pyproject.py` generates at runtime by walking
+`build_parser()`'s actions. Edit help text only in `FLAG_HELP`; changing how
+`build_parser()` registers actions (order, defaults, help) changes the
+published schema.
+
 ### Editor Plugins
 
 Editor integrations live under `plugin/` (`plugin/intellij`, `plugin/vscode`,
