@@ -118,6 +118,13 @@ class _Scanner:
         self._comments = Comments()
         self._messages = _Messages(messages)
 
+        # module scope from before a 'next' directive, to restore after
+        # the next statement
+        self._next_scope: tuple[Comments, _Messages] | None = None
+
+        # scope of an inline directive, deferred to the following line
+        self._pending_inline: tuple[int, Comments, _Messages] | None = None
+
     @property
     def directives(self) -> Directives:
         """Directives collected from the scanned source."""
@@ -128,11 +135,6 @@ class _Scanner:
 
         :param text: Python source code to scan for directives.
         """
-        enable_next = False
-        next_comments = Comments(self._comments)
-        next_messages = _Messages(self._messages)
-        pending_inline: tuple[Comments, _Messages] | None = None
-        pending_inline_lineno: int | None = None
         for line in _tokenize.generate_tokens(_StringIO(text).readline):
             # do nothing for these line types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
@@ -156,14 +158,15 @@ class _Scanner:
                             i for i in self._messages if i not in comment
                         )
 
-                    # if directive has a 'next' flag then alter the
-                    # module level scope, not the inline scope (which
-                    # behaves similar to next), so that inline
-                    # directives are included and not overwritten
-                    if comment.isnext and not enable_next:
-                        enable_next = True
-                        next_comments = Comments(self._comments)
-                        next_messages = _Messages(self._messages)
+                    # if directive has a 'next' flag then save the
+                    # module scope from before it, so it can be
+                    # restored after the next statement
+                    # stacked 'next' directives keep the first snapshot
+                    if comment.isnext and self._next_scope is None:
+                        self._next_scope = (
+                            Comments(self._comments),
+                            _Messages(self._messages),
+                        )
 
                     # if module level directive, then make changes
                     # globally
@@ -181,31 +184,28 @@ class _Scanner:
 
                         # defer scoped state for the next line without
                         # changing module-level messages
-                        pending_inline = (
+                        self._pending_inline = (
+                            lineno,
                             Comments(scoped_comments),
                             _Messages(scoped_messages),
                         )
-                        pending_inline_lineno = lineno
 
             # if in a 'next' module level scope and the line type is a
             # newline (not a comment to allow 'next' directives to be
             # stacked) then leave the 'next' module level scope and
             # reset the module messages to before the 'next' directive
-            elif enable_next and line.type != _tokenize.NL:
-                enable_next = False
-                self._comments = next_comments
-                self._messages = next_messages
+            elif self._next_scope is not None and line.type != _tokenize.NL:
+                self._comments, self._messages = self._next_scope
+                self._next_scope = None
 
             # inherit deferred inline scope on the first line after
             # the comment (e.g. an indented def on the following line)
             if (
-                pending_inline is not None
-                and pending_inline_lineno is not None
-                and lineno > pending_inline_lineno
+                self._pending_inline is not None
+                and lineno > self._pending_inline[0]
             ):
-                scoped_comments, scoped_messages = pending_inline
-                pending_inline = None
-                pending_inline_lineno = None
+                _, scoped_comments, scoped_messages = self._pending_inline
+                self._pending_inline = None
 
             # check that a scoped message has not updated this first, as
             # they take precedence over module messages
