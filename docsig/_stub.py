@@ -11,6 +11,7 @@ import inspect as _inspect
 import re as _re
 import typing as _t
 from collections import Counter as _Counter
+from dataclasses import dataclass as _dataclass
 from enum import Enum as _Enum
 
 import astroid as _ast
@@ -96,8 +97,12 @@ class DocType(_Enum):
         return cls.UNKNOWN
 
 
+@_dataclass(frozen=True, eq=False)
 class Param:
     """Single parameter from a docstring or function signature.
+
+    Two params are equal if they share a (non-None) name, or if both
+    are ``**kwargs``, which match regardless of how they are named.
 
     :param kind: The type of the parameter.
     :param name: Parameter name.
@@ -106,64 +111,22 @@ class Param:
     :param closing_token: Token after the name (colon by default).
     """
 
-    # pylint: disable-next=too-many-arguments,too-many-positional-arguments
-    def __init__(
-        self,
-        kind: DocType = DocType.PARAM,
-        name: str | None = None,
-        description: str | None = None,
-        indent: int = 0,
-        closing_token: str = ":",
-    ) -> None:
-        self._kind = kind
-        self._name = name
-        self._description = description
-        self._indent = indent
-        self._closing_token = closing_token
+    kind: DocType = DocType.PARAM
+    name: str | None = None
+    description: str | None = None
+    indent: int = 0
+    closing_token: str = ":"
 
     def __eq__(self, other: object) -> bool:
-        iseq = False
-        if isinstance(other, Param):
-            args = self, other
-            iseq = all(i.kind == DocType.KWARG for i in args) or (
-                self.name == other.name
-                and all(i.name is not None for i in args)
-            )
-
-        return iseq
-
-    def __ne__(self, other: object) -> bool:
-        return not self.__eq__(other)
+        return isinstance(other, Param) and (
+            self.kind == other.kind == DocType.KWARG
+            or (self.name is not None and self.name == other.name)
+        )
 
     @property
     def isprotected(self) -> bool:
         """True if the parameter name starts with an underscore."""
         return str(self.name).startswith("_")
-
-    @property
-    def kind(self) -> DocType:
-        """Type of the param."""
-        return self._kind
-
-    @property
-    def name(self) -> str | None:
-        """Name of the param."""
-        return self._name
-
-    @property
-    def description(self) -> str | None:
-        """Description of param."""
-        return self._description
-
-    @property
-    def indent(self) -> int:
-        """Number of spaces in the indent."""
-        return self._indent
-
-    @property
-    def closing_token(self) -> str:
-        """Token used to terminate the param name definition."""
-        return self._closing_token
 
 
 # single return from a docstring or function signature
