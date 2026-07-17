@@ -67,7 +67,7 @@ CLI args / pyproject.toml
   │
   _check.py (traverse functions)
   │
-  _function_checks.py (per-function validation, emits error codes)
+  _report.py (per-function validation, emits error codes)
   │
   _diagnostic.py (Collector / Diagnostic / Failures)
   │
@@ -83,13 +83,15 @@ CLI args / pyproject.toml
 | `_config.py`          | `Config`, `Check`, `Ignore` dataclasses; loads from pyproject.toml                   |
 | `_module.py`          | AST-backed `Module`, `Class`, `Function` types with parsed signatures and docstrings |
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
-| `_check.py`           | Traverses function tree, dispatches to `_function_checks.py` per function            |
-| `_function_checks.py` | All individual check implementations; each emits a `Message` on failure              |
+| `_check.py`           | Traverses function tree, dispatches to `_report.py` per function                     |
 | `_diagnostic.py`      | `Collector` aggregates results; `Diagnostic`/`FunctionResult`/`Failures`             |
-| `_report.py`          | Formats and prints diagnostics (plain text or `--json`)                              |
+| `_report.py`          | All individual check implementations; formats and prints diagnostics                 |
 | `_parsers.py`         | Parses Python source files/strings into module object trees                          |
 | `_files.py`           | File discovery; respects `.gitignore` and exclude patterns                           |
 | `_directives.py`      | Handles inline `# noqa`-style suppression comments                                   |
+| `_decorators.py`      | Decorators for `docsig()`: kwarg-to-`Message` parsing and argument validation        |
+| `_hooks.py`           | `excepthook` for user-friendly errors (bypassed when `DOCSIG_DEBUG=1`)               |
+| `_utils.py`           | Shared helpers: fuzzy string matching, sentence tokenizing, error printing           |
 | `messages.py`         | All `Message` definitions and the `MessageMap`; error codes SIG0xx–SIG9xx            |
 | `plugin/_flake8.py`   | Flake8 extension; wraps `docsig()` with `--sig-*` prefixed options                   |
 
