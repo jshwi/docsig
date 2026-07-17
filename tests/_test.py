@@ -1535,3 +1535,31 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref in std.out
+
+
+def test_fix_async_function_params_are_checked(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Async functions are subject to the same parameter checks.
+
+    astroid.AsyncFunctionDef is a subclass of FunctionDef, so it is
+    handled by the same isinstance check and must not be silently
+    skipped.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+async def fetch(url, timeout):
+    """Fetch a resource.
+
+    :param url: The URL to fetch.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[203].ref in std.out
