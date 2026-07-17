@@ -1791,3 +1791,26 @@ def test_json_line_null_for_file_error(
     issues = json.loads(std.out)
     assert issues[0]["line"] is None
     assert issues[0]["exit"] == 2
+
+
+def test_json_usage_error(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
+    """JSON usage errors use a null line number.
+
+    Editor plugins consume this contract when a run cannot start at
+    all.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param main: Patch package entry point.
+    """
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    assert main(test_flake8=False) == 2
+    std = capsys.readouterr()
+    issues = json.loads(std.out)
+    assert issues[0]["line"] is None
+    assert issues[0]["exit"] == 2
+    assert "required" in issues[0]["message"]
