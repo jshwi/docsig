@@ -347,9 +347,73 @@ class Function:  # pylint: disable=too-many-instance-attributes
         )
 
     @property
+    def name(self) -> str:
+        """The name of the function."""
+        return self._name
+
+    @property
+    def lineno(self) -> int:
+        """Line number of function declaration."""
+        return self._lineno or 0
+
+    @property
+    def frame(self) -> _Frame:
+        """Astroid frame node enclosing this function."""
+        return self._frame
+
+    @property
+    def error(self) -> type[BaseException] | None:
+        """Unrecoverable error for this function, if any."""
+        return self._error
+
+    @property
+    def children(self) -> _Children:
+        """Functions or classes parsed from the function body."""
+        return self._children
+
+    @property
+    def signature(self) -> _Signature:
+        """The function's signature parameters."""
+        return self._signature
+
+    @property
+    def docstring(self) -> _Docstring:
+        """The function's docstring."""
+        return self._docstring
+
+    @property
+    def messages(self) -> _Messages:
+        """Disabled checks for this function."""
+        return self._messages
+
+    @property
+    def comments(self) -> _Comments:
+        """Comment directives for this function."""
+        return self._comments
+
+    @property
     def ismethod(self) -> bool:
         """Whether this function is defined in a class (method)."""
         return isinstance(self._frame, _ast.nodes.ClassDef)
+
+    @property
+    def isstaticmethod(self) -> bool:
+        """Whether this function is a static method."""
+        return self.ismethod and self._decorated_with("staticmethod")
+
+    @property
+    def isinit(self) -> bool:
+        """Whether this function is a class constructor (__init__)."""
+        return self.ismethod and self.name == "__init__"
+
+    @property
+    def isdunder(self) -> bool:
+        """Whether this function is a dunder method."""
+        return (
+            self.ismethod
+            and not self.isinit
+            and bool(_re.match(r"__(.*)__", self.name))
+        )
 
     @property
     def isproperty(self) -> bool:
@@ -362,11 +426,6 @@ class Function:  # pylint: disable=too-many-instance-attributes
     def isoverloaded(self) -> bool:
         """Whether this function is an overload (typing.overload)."""
         return self._decorated_with("overload")
-
-    @property
-    def isinit(self) -> bool:
-        """Whether this function is a class constructor (__init__)."""
-        return self.ismethod and self.name == "__init__"
 
     @property
     def isoverridden(self) -> bool:
@@ -388,65 +447,6 @@ class Function:  # pylint: disable=too-many-instance-attributes
             and not self.isinit
             and not self.isdunder
         )
-
-    @property
-    def error(self) -> type[BaseException] | None:
-        """Unrecoverable error for this function, if any."""
-        return self._error
-
-    @property
-    def children(self) -> _Children:
-        """Functions or classes parsed from the function body."""
-        return self._children
-
-    @property
-    def isstaticmethod(self) -> bool:
-        """Whether this function is a static method."""
-        return self.ismethod and self._decorated_with("staticmethod")
-
-    @property
-    def isdunder(self) -> bool:
-        """Whether this function is a dunder method."""
-        return (
-            self.ismethod
-            and not self.isinit
-            and bool(_re.match(r"__(.*)__", self.name))
-        )
-
-    @property
-    def name(self) -> str:
-        """The name of the function."""
-        return self._name
-
-    @property
-    def frame(self) -> _Frame:
-        """Astroid frame node enclosing this function."""
-        return self._frame
-
-    @property
-    def lineno(self) -> int:
-        """Line number of function declaration."""
-        return self._lineno or 0
-
-    @property
-    def signature(self) -> _Signature:
-        """The function's signature parameters."""
-        return self._signature
-
-    @property
-    def docstring(self) -> _Docstring:
-        """The function's docstring."""
-        return self._docstring
-
-    @property
-    def messages(self) -> _Messages:
-        """Disabled checks for this function."""
-        return self._messages
-
-    @property
-    def comments(self) -> _Comments:
-        """Comment directives for this function."""
-        return self._comments
 
     def overload(self, rettype: _RetType) -> None:
         """Merge an overload return type into this function's signature.
