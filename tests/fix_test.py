@@ -2010,3 +2010,32 @@ def function(a) -> None:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[306].ref not in std.out
+
+
+def test_fix_allow_rtype_as_return_documentation(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Allow :rtype: directive as valid return documentation.
+
+    A docstring using :rtype: to annotate the return type is valid RST
+    and must not trigger return-missing.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a) -> str:
+    """Docstring summary.
+
+    :param a: A parameter.
+    :rtype: str
+    """
+    return str(a)
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[503].ref not in std.out

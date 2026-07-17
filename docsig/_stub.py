@@ -394,7 +394,7 @@ class Docstring(_Stub):
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
         match = _re.search(
-            r"^[ \t]*:(?:returns?|yields?):\s*(.*)",
+            r"^[ \t]*:(?:returns?|yields?|rtype):\s*(.*)",
             string,
             _re.IGNORECASE | _re.MULTILINE,
         )
