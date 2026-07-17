@@ -1,4 +1,4 @@
-_.excepthook  # unused attribute (docsig/_main.py:24)
+_.excepthook  # unused attribute (docsig/_main.py:25)
 off_by_default  # unused variable (docsig/plugin/_flake8.py:80)
 version  # unused variable (docsig/plugin/_flake8.py:82)
 _.add_options  # unused method (docsig/plugin/_flake8.py:93)

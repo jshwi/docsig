@@ -114,6 +114,25 @@ class Flake8:
             k.replace("sig_", ""): v for k, v in a.__dict__.items()
         }
 
+    def _build_config(self) -> _Config:
+        options = self.a
+        check = _Check(
+            class_=options.check_class,
+            class_constructor=options.check_class_constructor,
+            dunders=options.check_dunders,
+            protected_class_methods=options.check_protected_class_methods,
+            nested=options.check_nested,
+            overridden=options.check_overridden,
+            protected=options.check_protected,
+            property_returns=options.check_property_returns,
+        )
+        ignore = _Ignore(
+            no_params=options.ignore_no_params,
+            args=options.ignore_args,
+            kwargs=options.ignore_kwargs,
+        )
+        return _Config(check=check, ignore=ignore, verbose=options.verbose)
+
     def run(self) -> _t.Generator[_Flake8Error, None, None]:
         """Run docsig on the file and yield flake8 errors per failure.
 
@@ -135,28 +154,8 @@ class Flake8:
             yield 0, 0, line, self.__class__
         else:
             _setup_logger(self.a.verbose)
-            check = _Check(
-                class_=self.a.check_class,
-                class_constructor=self.a.check_class_constructor,
-                dunders=self.a.check_dunders,
-                protected_class_methods=self.a.check_protected_class_methods,
-                nested=self.a.check_nested,
-                overridden=self.a.check_overridden,
-                protected=self.a.check_protected,
-                property_returns=self.a.check_property_returns,
-            )
-            ignore = _Ignore(
-                no_params=self.a.ignore_no_params,
-                args=self.a.ignore_args,
-                kwargs=self.a.ignore_kwargs,
-            )
-            config = _Config(
-                check=check,
-                ignore=ignore,
-                verbose=self.a.verbose,
-            )
             with _cwd_on_sys_path():
-                results = _runner(_Path(self.filename), config)
+                results = _runner(_Path(self.filename), self._build_config())
 
             for result in results:
                 if not result.retcode:
