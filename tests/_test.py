@@ -19,7 +19,7 @@ import docsig
 from docsig import docsig as _docsig
 
 # noinspection PyProtectedMember
-from docsig._utils import pretty_print_error
+from docsig._report import pretty_print_error
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E, Message

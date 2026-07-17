@@ -8,7 +8,7 @@ Exception hook for user-friendly errors unless DOCSIG_DEBUG is set.
 import sys as _sys
 from os import environ as _e
 
-from ._utils import pretty_print_error as _pretty_print_error
+from ._report import pretty_print_error as _pretty_print_error
 
 
 def excepthook(no_ansi: bool = False) -> None:
