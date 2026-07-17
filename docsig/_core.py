@@ -22,9 +22,9 @@ from ._diagnostic import RetCode as _RetCode
 from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
 from ._parsers import parse_from_string as _parse_from_string
+from ._report import print_checks as _print_checks
 from ._report import report as _report
 from ._traverse import run_checks as _run_checks
-from ._utils import print_checks as _print_checks
 from .messages import E as _E
 from .messages import Messages as _Messages
 
