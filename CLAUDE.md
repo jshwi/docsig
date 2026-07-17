@@ -52,6 +52,11 @@ make benchmark   # sets RUN_BENCHMARK=true, uses pytest -m=benchmark
 python -m docsig ...   # a bare `docsig` command may resolve to a stale shim
 ```
 
+Makefile file lists come from `git ls-files`, so brand-new modules are
+invisible to `make lint`/`make types`/`make tests` until staged — `git add`
+new files before trusting a green run, or a later stamp-cached hook pass can
+mask a real failure.
+
 Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
 
 ## Architecture
