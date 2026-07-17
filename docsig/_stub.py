@@ -268,6 +268,34 @@ class _Stub:
 class Signature(_Stub):
     """Parsed function signature (args and return type)."""
 
+    @staticmethod
+    def _params_from_args(
+        args: _ast.nodes.Arguments,
+        skip_bound_arg: bool,
+    ) -> _t.Iterator[Param]:
+        # yield params in the order they are documented: positional,
+        # *args, keyword-only, then **kwargs
+        posonlyargs = list(args.posonlyargs)
+        positional = list(args.args)
+        if skip_bound_arg:
+            # drop self or cls without mutating the AST node
+            if posonlyargs:
+                posonlyargs = posonlyargs[1:]
+            elif positional:
+                positional = positional[1:]
+
+        for arg in (*posonlyargs, *positional):
+            yield Param(name=arg.name)
+
+        if args.vararg:
+            yield Param(DocType.ARG, name=args.vararg)
+
+        for arg in args.kwonlyargs:
+            yield Param(name=arg.name)
+
+        if args.kwarg:
+            yield Param(DocType.KWARG, name=args.kwarg)
+
     @classmethod
     def from_ast(
         cls,
@@ -284,30 +312,10 @@ class Signature(_Stub):
         :return: Signature with args and return type.
         """
         rettype = RetType.from_ast(node.returns)
-        returns = _Return(rettype == RetType.SOME, rettype)
-        signature = cls(returns, ignore)
-        posonlyargs = list(node.args.posonlyargs)
+        signature = cls(_Return(rettype == RetType.SOME, rettype), ignore)
         if node.args.args is not None:
-            args = list(node.args.args)
-            if skip_bound_arg:
-                if posonlyargs:
-                    posonlyargs = posonlyargs[1:]
-                elif args:
-                    args = args[1:]
-
-            # noinspection PyUnresolvedReferences
-            for i in [
-                a if isinstance(a, Param) else Param(name=a.name)
-                for a in [
-                    *posonlyargs,
-                    *args,
-                    Param(DocType.ARG, name=node.args.vararg),
-                    *node.args.kwonlyargs,
-                    Param(DocType.KWARG, name=node.args.kwarg),
-                ]
-                if a is not None and a.name
-            ]:
-                signature.args.append(i)
+            for param in cls._params_from_args(node.args, skip_bound_arg):
+                signature.args.append(param)
 
         return signature
 
