@@ -223,18 +223,7 @@ class _Stub:
 
 
 class Signature(_Stub):
-    """Parsed function signature (args and return type).
-
-    :param returns: True if return is declared in the signature.
-    :param ignore: Configuration object for what to ignore.
-    """
-
-    def __init__(
-        self,
-        returns: _Return | None = None,
-        ignore: _Ignore | None = None,
-    ) -> None:
-        super().__init__(returns, ignore or _Ignore())
+    """Parsed function signature (args and return type)."""
 
     @classmethod
     def from_ast(
