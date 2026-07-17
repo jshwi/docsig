@@ -222,18 +222,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
 
     def _sig2xx_signature(self) -> None:
         if self._func.docstring.args.duplicated:
-            # reduce each duplicate group to one representative without
-            # mutating the list during iteration (which skips items)
-            seen: set[str | None] = set()
-            deduped: list[_Param] = []
-            for arg in self._func.docstring.args:
-                if arg.name not in seen:
-                    seen.add(arg.name)
-                    deduped.append(arg)
-
-            list.clear(self._func.docstring.args)
-            list.extend(self._func.docstring.args, deduped)
-
+            self._dedupe_doc_args()
             # duplicate-params-found
             self._add(_E[201])
         # there are non-existing params in the docstring
@@ -252,6 +241,19 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             )
             # params-missing
             self._add(_E[203])
+
+    def _dedupe_doc_args(self) -> None:
+        # reduce each duplicate group to one representative without
+        # mutating the list during iteration (which skips items)
+        seen: set[str | None] = set()
+        deduped: list[_Param] = []
+        for arg in self._func.docstring.args:
+            if arg.name not in seen:
+                seen.add(arg.name)
+                deduped.append(arg)
+
+        list.clear(self._func.docstring.args)
+        list.extend(self._func.docstring.args, deduped)
 
     def _sig3xx_description(self, doc: _Param) -> None:
         # freeze result as it is a property and PyCharm complains
