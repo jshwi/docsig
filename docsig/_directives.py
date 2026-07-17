@@ -32,10 +32,9 @@ class Comment(_Messages):
         super().__init__()
         self._ismodule = col == 0
         parts = string.split("=")
-        subparts = parts[0].split("-")
-        self._kind = subparts[0]
-        self._flag = None if len(subparts) == 1 else subparts[1]
-        self._isnext = self._flag == "next"
+        directive = parts[0].split("-")
+        self._kind = directive[0]
+        self._flag = directive[1] if len(directive) > 1 else None
 
         # if the flag is not valid, the preceding directive is not valid
         # either
@@ -72,17 +71,17 @@ class Comment(_Messages):
     @property
     def enable(self) -> bool:
         """Whether this is an enable directive."""
-        return self._kind == self._valid_kinds[0]
+        return self._kind == "enable"
 
     @property
     def disable(self) -> bool:
         """Whether this is a disable directive."""
-        return self._kind == self._valid_kinds[1]
+        return self._kind == "disable"
 
     @property
     def isnext(self) -> bool:
         """Whether this directive applies to the next line only."""
-        return self._isnext
+        return self._flag == "next"
 
     @property
     def isvalidflag(self) -> bool:
