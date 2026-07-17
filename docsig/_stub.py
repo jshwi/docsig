@@ -334,6 +334,14 @@ class Docstring(_Stub):
     :param returns: True if a return or yield section is present.
     """
 
+    def __init__(
+        self,
+        string: str | None = None,
+        returns: _Return | None = None,
+    ) -> None:
+        super().__init__(returns)
+        self._string = string
+
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
         # report whether the first indented param field is indented
@@ -364,13 +372,36 @@ class Docstring(_Stub):
 
         return string
 
-    def __init__(
-        self,
-        string: str | None = None,
-        returns: _Return | None = None,
-    ) -> None:
-        super().__init__(returns)
-        self._string = string
+    @staticmethod
+    def _parse_returns(string: str) -> _Return:
+        match = _RETURN_FIELD.search(string)
+        return _Return(
+            bool(match),
+            description_missing=not match or not match.group(1),
+        )
+
+    @staticmethod
+    def _parse_param(
+        field: str,
+        closing_token: str,
+        description: str,
+        indent: int,
+    ) -> Param:
+        # field is the keyword with the param name if one is given,
+        # e.g. "param src" -> kind "param", name "src"
+        words = field.split()
+        name = UNNAMED
+        if len(words) > 1:
+            # drop * / ** / napoleon-escaped stars on the name
+            name = words[-1].lstrip("\\*")
+
+        return Param(
+            DocType.from_str(words[0]),
+            name,
+            description or None,
+            indent,
+            closing_token,
+        )
 
     @classmethod
     def from_ast(cls, node: _ast.Const) -> Docstring:
@@ -379,31 +410,15 @@ class Docstring(_Stub):
         :param node: Const node holding the docstring string.
         :return: Docstring with args and return flag.
         """
-        indent_anomaly = cls._indent_anomaly(node.value)
+        indent = int(cls._indent_anomaly(node.value))
         string = cls._normalize_docstring(node.value)
-        match = _RETURN_FIELD.search(string)
-        returns = _Return(
-            bool(match),
-            description_missing=not match or not match.group(1),
-        )
-        docstring = cls(string, returns)
-        for match in _PARAM_FIELD.findall(string):
-            if match:
-                kinds = match[0].split()
-                if kinds:
-                    name = None
-                    if len(kinds) > 1:
-                        # drop * / ** / napoleon-escaped stars on the name
-                        name = kinds[-1].lstrip("\\*")
-                    docstring.args.append(
-                        Param(
-                            DocType.from_str(kinds[0]),
-                            UNNAMED if name is None else name,
-                            match[2] or None,
-                            int(indent_anomaly),
-                            match[1],
-                        ),
-                    )
+        docstring = cls(string, cls._parse_returns(string))
+        for field, closing_token, description in _PARAM_FIELD.findall(
+            string,
+        ):
+            docstring.args.append(
+                cls._parse_param(field, closing_token, description, indent),
+            )
 
         return docstring
 
