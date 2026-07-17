@@ -3,6 +3,10 @@ docsig._stub
 ============
 
 Stub types for parsed docstrings and signatures.
+
+``Signature`` and ``Docstring`` are the two sides docsig compares. Each
+is a ``Params`` collection plus return information, built from the
+function's AST with ``from_ast``.
 """
 
 from __future__ import annotations as _
@@ -181,8 +185,14 @@ class Param:
         return str(self.name).startswith("_")
 
 
-# single return from a docstring or function signature
 class _Return(_t.NamedTuple):
+    # single return from a docstring or function signature
+    #
+    # returns - a return value is declared (signature) or documented
+    #     (docstring)
+    # type - the kind of return annotation (signatures only)
+    # description_missing - return is documented without a description
+    #     (docstrings only)
     returns: bool = False
     type: RetType = RetType.UNTYPED
     description_missing: bool = False
@@ -246,6 +256,8 @@ class Params(list[Param]):
 
 
 class _Stub:
+    # what a signature and a docstring have in common: a collection of
+    # params and a return
     def __init__(
         self,
         returns: _Return | None = None,
