@@ -20,9 +20,9 @@ from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param
 from ._stub import Params as _Params
 from ._stub import RetType as _RetType
-from ._utils import SENTENCE_ABBREVIATIONS as _SENTENCE_ABBREVIATIONS
-from ._utils import almost_equal as _almost_equal
-from ._utils import sentence_tokenizer as _sentence_tokenizer
+from ._text import SENTENCE_ABBREVIATIONS as _SENTENCE_ABBREVIATIONS
+from ._text import almost_equal as _almost_equal
+from ._text import sentence_tokenizer as _sentence_tokenizer
 from .messages import E as _E
 from .messages import Message as _Message
 from .messages import Messages as _Messages

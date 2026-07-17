@@ -1,8 +1,8 @@
 """
-docsig._utils
-=============
+docsig._text
+============
 
-Shared helpers.
+Text analysis helpers for comparing docstrings to signatures.
 """
 
 import re as _re
