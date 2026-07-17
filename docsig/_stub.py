@@ -350,30 +350,18 @@ class Docstring(_Stub):
         return False
 
     @staticmethod
-    def _docstring_style(string: str) -> str:
-        # prefer existing rst fields over napoleon section headers
+    def _normalize_docstring(string: str) -> str:
+        # convert Google or numpy style to rst when detected, preferring
+        # existing rst fields over napoleon section headers
+        string = _inspect.cleandoc(string)
         if _RST_FIELD.search(string):
-            return "rst"
+            return string
 
         if _NUMPY_SECTION.search(string):
-            return "numpy"
+            return str(_s.NumpyDocstring(string))  # type: ignore
 
         if _GOOGLE_SECTION.search(string):
-            return "google"
-
-        return "rst"
-
-    @staticmethod
-    def _normalize_docstring(string: str) -> str:
-        # convert Google or numpy style to rst when detected
-        # leave rst (including field lists) unchanged
-        string = _inspect.cleandoc(string)
-        style = Docstring._docstring_style(string)
-        if style == "google":
             return str(_s.GoogleDocstring(string))  # type: ignore
-
-        if style == "numpy":
-            return str(_s.NumpyDocstring(string))  # type: ignore
 
         return string
 
