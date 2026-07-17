@@ -13,6 +13,10 @@ from io import StringIO as _StringIO
 from .messages import E as _E
 from .messages import Messages as _Messages
 
+#: scope for one line: the directive comments applying to the line
+#: paired with the messages they leave disabled
+_Scope = tuple["Comments", _Messages]
+
 
 class Comments(list["Comment"]):
     """List of comments."""
@@ -120,7 +124,7 @@ class _Scanner:
 
         # module scope from before a 'next' directive, to restore after
         # the next statement
-        self._next_scope: tuple[Comments, _Messages] | None = None
+        self._next_scope: _Scope | None = None
 
         # scope of an inline directive, deferred to the following line
         self._pending_inline: tuple[int, Comments, _Messages] | None = None
@@ -150,10 +154,7 @@ class _Scanner:
         # inherit the comments and messages defined in the module
         # scope; module state is only updated if the comment turns out
         # to be a module-level directive
-        scope: tuple[Comments, _Messages] = (
-            Comments(self._comments),
-            _Messages(self._messages),
-        )
+        scope: _Scope = Comments(self._comments), _Messages(self._messages)
         if token.type == _tokenize.COMMENT:
             comment = Comment.parse(token.string, col)
             if comment is not None:
@@ -174,12 +175,7 @@ class _Scanner:
         # directive already claimed the line in _apply
         self._directives.setdefault(lineno, scope)
 
-    def _apply(
-        self,
-        comment: Comment,
-        lineno: int,
-        scope: tuple[Comments, _Messages],
-    ) -> tuple[Comments, _Messages]:
+    def _apply(self, comment: Comment, lineno: int, scope: _Scope) -> _Scope:
         comments, messages = scope
         comments.append(comment)
         if comment.disable:
@@ -216,10 +212,7 @@ class _Scanner:
 
         return comments, messages
 
-    def _take_pending_inline(
-        self,
-        lineno: int,
-    ) -> tuple[Comments, _Messages] | None:
+    def _take_pending_inline(self, lineno: int) -> _Scope | None:
         # inherit a deferred inline scope on the first line after the
         # comment (e.g. an indented def on the following line)
         if self._pending_inline is None:
@@ -233,7 +226,7 @@ class _Scanner:
         return comments, messages
 
 
-class Directives(dict[int, tuple[Comments, _Messages]]):
+class Directives(dict[int, _Scope]):
     """Map line number to comments and disabled messages for that line.
 
     Keys are line numbers; values are tuples of comment directives and
