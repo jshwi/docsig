@@ -63,17 +63,13 @@ def validate_args(func: _FuncType) -> _FuncType:
                     "the following arguments are required: path(s) or string",
                 )
 
-            for message in kwargs.get("disable") or []:
-                if not message.isknown:
-                    errors.append(
-                        f"unknown option to disable '{message.description}'",
-                    )
-
-            for message in kwargs.get("target") or []:
-                if not message.isknown:
-                    errors.append(
-                        f"unknown option to target '{message.description}'",
-                    )
+            for option in ("disable", "target"):
+                for message in kwargs.get(option) or []:
+                    if not message.isknown:
+                        errors.append(
+                            f"unknown option to {option}"
+                            f" '{message.description}'",
+                        )
 
             if kwargs.get("check_class") and kwargs.get(
                 "check_class_constructor",
