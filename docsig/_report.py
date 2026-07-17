@@ -100,6 +100,22 @@ def _build_report(
     return payload
 
 
+def print_error(message: str, retcode: int) -> None:
+    """Print an error which cannot be attributed to a line.
+
+    Rendered as json when _DOCSIG_FORMAT_JSON is set (the contract
+    editor plugins consume), otherwise as text to stderr.
+
+    :param message: Error message to print.
+    :param retcode: Exit status the run will finish with.
+    """
+    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:  # pragma: no cover
+        obj = [{"line": None, "message": message, "exit": retcode}]
+        print(_json.dumps(obj).strip())
+    else:
+        print(message, file=_sys.stderr)
+
+
 # TODO: make report json by default and wrap with a reporter for cli
 def report(
     failures: _Failures,

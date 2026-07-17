@@ -4,13 +4,12 @@ docsig._decorators
 """
 
 import functools as _functools
-import json as _json
-import os as _os
 import sys as _sys
 import typing as _t
 from pathlib import Path as _Path
 
 from ._diagnostic import RetCode as _RetCode
+from ._report import print_error as _print_error
 from .messages import E as _E
 
 _FuncType = _t.Callable[..., int]
@@ -35,14 +34,6 @@ def parse_msgs(func: _FuncType) -> _FuncType:
         return func(*args, **kwargs)
 
     return _wrapper
-
-
-def _print_error(message: str, retcode: int) -> None:
-    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:  # pragma: no cover
-        obj = [{"line": None, "message": message, "exit": retcode}]
-        print(_json.dumps(obj).strip())
-    else:
-        print(message, file=_sys.stderr)
 
 
 # TODO: make report json by default and wrap with a reporter for cli
