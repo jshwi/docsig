@@ -361,20 +361,14 @@ class Function:  # pylint: disable=too-many-instance-attributes
     @property
     def isoverridden(self) -> bool:
         """Whether this function overrides a base class method."""
-        if (
-            self.ismethod
-            and not self.isinit
-            and self._frame is not None
-            and isinstance(self._frame, _ast.nodes.ClassDef)
-        ):
-            for ancestor in self._frame.ancestors():
-                if self.name in ancestor and isinstance(
-                    ancestor[self.name],
-                    _ast.nodes.FunctionDef,
-                ):
-                    return True
+        if not isinstance(self._frame, _ast.nodes.ClassDef) or self.isinit:
+            return False
 
-        return False
+        return any(
+            self.name in ancestor
+            and isinstance(ancestor[self.name], _ast.nodes.FunctionDef)
+            for ancestor in self._frame.ancestors()
+        )
 
     @property
     def isprotected(self) -> bool:
