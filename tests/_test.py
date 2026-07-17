@@ -1563,3 +1563,36 @@ async def fetch(url, timeout):
     main(".")
     std = capsys.readouterr()
     assert E[203].ref in std.out
+
+
+def test_prose_after_list_period_check_applies(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Period check applies to prose that follows a list.
+
+    When a list appears in the middle of a description and prose
+    continues after it, SIG306 should evaluate the final prose, not
+    exempt it as a list item.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Valid values are:
+
+        - 'bool'
+        - 'int'
+
+        See the notes for more
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref in std.out
