@@ -109,7 +109,7 @@ def print_error(message: str, retcode: int) -> None:
     :param message: Error message to print.
     :param retcode: Exit status the run will finish with.
     """
-    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:  # pragma: no cover
+    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:
         obj = [{"line": None, "message": message, "exit": retcode}]
         print(_json.dumps(obj).strip())
     else:
