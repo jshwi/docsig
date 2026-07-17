@@ -41,6 +41,27 @@ DEFAULT_EXCLUDES = """\
 )$
 """
 
+#: help text for the boolean flags shared with the flake8 plugin,
+#: keyed by commandline option name
+FLAG_HELP = {
+    "verbose": "increase output verbosity",
+    "check-class": "check class docstrings",
+    "check-class-constructor": "check __init__ methods",
+    "check-dunders": "check dunder methods",
+    "check-nested": "check nested functions and classes",
+    "check-overridden": "check overridden methods",
+    "check-property-returns": "check property return values",
+    "check-protected": "check protected functions and classes",
+    "check-protected-class-methods": (
+        "check public methods belonging to protected classes"
+    ),
+    "ignore-args": "ignore args prefixed with an asterisk",
+    "ignore-kwargs": "ignore kwargs prefixed with two asterisks",
+    "ignore-no-params": (
+        "ignore docstrings where parameters are not documented"
+    ),
+}
+
 
 # split str by comma but allow for escaping
 def _split_comma(value: str) -> list[str]:
@@ -168,64 +189,35 @@ def build_parser() -> _ArgumentParser:
         "-v",
         "--verbose",
         action="store_true",
-        help="increase output verbosity",
+        help=FLAG_HELP["verbose"],
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--check-class",
         action="store_true",
-        help="check class docstrings",
+        help=FLAG_HELP["check-class"],
     )
     group.add_argument(
         "--check-class-constructor",
         action="store_true",
-        help="check __init__ methods",
+        help=FLAG_HELP["check-class-constructor"],
     )
-    parser.add_argument(
-        "--check-dunders",
-        action="store_true",
-        help="check dunder methods",
-    )
-    parser.add_argument(
-        "--check-nested",
-        action="store_true",
-        help="check nested functions and classes",
-    )
-    parser.add_argument(
-        "--check-overridden",
-        action="store_true",
-        help="check overridden methods",
-    )
-    parser.add_argument(
-        "--check-property-returns",
-        action="store_true",
-        help="check property return values",
-    )
-    parser.add_argument(
-        "--check-protected",
-        action="store_true",
-        help="check protected functions and classes",
-    )
-    parser.add_argument(
-        "--check-protected-class-methods",
-        action="store_true",
-        help="check public methods belonging to protected classes",
-    )
-    parser.add_argument(
-        "--ignore-args",
-        action="store_true",
-        help="ignore args prefixed with an asterisk",
-    )
-    parser.add_argument(
-        "--ignore-kwargs",
-        action="store_true",
-        help="ignore kwargs prefixed with two asterisks",
-    )
-    parser.add_argument(
-        "--ignore-no-params",
-        action="store_true",
-        help="ignore docstrings where parameters are not documented",
-    )
+    for flag in (
+        "check-dunders",
+        "check-nested",
+        "check-overridden",
+        "check-property-returns",
+        "check-protected",
+        "check-protected-class-methods",
+        "ignore-args",
+        "ignore-kwargs",
+        "ignore-no-params",
+    ):
+        parser.add_argument(
+            f"--{flag}",
+            action="store_true",
+            help=FLAG_HELP[flag],
+        )
     parser.add_argument(
         "-d",
         "--disable",
