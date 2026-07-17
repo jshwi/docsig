@@ -25,6 +25,33 @@ from ..messages import E as _E
 
 _Flake8Error = tuple[int, int, str, type[_t.Any]]
 
+#: boolean commandline options mirrored by this plugin, prefixed with
+#: --sig- to avoid conflicts with other plugins
+_OPTIONS = (
+    ("verbose", "increase output verbosity"),
+    ("check-class", "check class docstrings"),
+    (
+        "check-class-constructor",
+        "check __init__ methods (mutually incompatible with"
+        " --sig-check-class)",
+    ),
+    ("check-dunders", "check dunder methods"),
+    ("check-nested", "check nested functions and classes"),
+    ("check-overridden", "check overridden methods"),
+    ("check-property-returns", "check property return values"),
+    ("check-protected", "check protected functions and classes"),
+    (
+        "check-protected-class-methods",
+        "check public methods belonging to protected classes",
+    ),
+    ("ignore-args", "ignore args prefixed with an asterisk"),
+    ("ignore-kwargs", "ignore kwargs prefixed with two asterisks"),
+    (
+        "ignore-no-params",
+        "ignore docstrings where parameters are not documented",
+    ),
+)
+
 
 @_contextlib.contextmanager
 def _cwd_on_sys_path() -> _t.Iterator[None]:
@@ -69,81 +96,13 @@ class Flake8:
 
         :param parser: Flake8 option manager to extend.
         """
-        parser.add_option(
-            "--sig-verbose",
-            action="store_true",
-            parse_from_config=True,
-            help="increase output verbosity",
-        )
-        parser.add_option(
-            "--sig-check-class",
-            action="store_true",
-            parse_from_config=True,
-            help="check class docstrings",
-        )
-        parser.add_option(
-            "--sig-check-class-constructor",
-            action="store_true",
-            parse_from_config=True,
-            help=(
-                "check __init__ methods (mutually incompatible with"
-                " --sig-check-class)"
-            ),
-        )
-        parser.add_option(
-            "--sig-check-dunders",
-            action="store_true",
-            parse_from_config=True,
-            help="check dunder methods",
-        )
-        parser.add_option(
-            "--sig-check-nested",
-            action="store_true",
-            parse_from_config=True,
-            help="check nested functions and classes",
-        )
-        parser.add_option(
-            "--sig-check-overridden",
-            action="store_true",
-            parse_from_config=True,
-            help="check overridden methods",
-        )
-        parser.add_option(
-            "--sig-check-property-returns",
-            action="store_true",
-            parse_from_config=True,
-            help="check property return values",
-        )
-        parser.add_option(
-            "--sig-check-protected",
-            action="store_true",
-            parse_from_config=True,
-            help="check protected functions and classes",
-        )
-        parser.add_option(
-            "--sig-check-protected-class-methods",
-            action="store_true",
-            parse_from_config=True,
-            help="check public methods belonging to protected classes",
-        )
-        parser.add_option(
-            "--sig-ignore-args",
-            action="store_true",
-            parse_from_config=True,
-            help="ignore args prefixed with an asterisk",
-        )
-        parser.add_option(
-            "--sig-ignore-kwargs",
-            action="store_true",
-            parse_from_config=True,
-            help="ignore kwargs prefixed with two asterisks",
-        )
-        parser.add_option(
-            "--sig-ignore-no-params",
-            action="store_true",
-            parse_from_config=True,
-            help="ignore docstrings where parameters are not documented",
-        )
+        for option, help_text in _OPTIONS:
+            parser.add_option(
+                f"--sig-{option}",
+                action="store_true",
+                parse_from_config=True,
+                help=help_text,
+            )
 
     @classmethod
     def parse_options(cls, a: _Namespace) -> None:
