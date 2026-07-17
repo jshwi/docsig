@@ -14,3 +14,4 @@ coverage.xml
 dist/
 node_modules/
 plugin/docsig*
+settings.local.json
