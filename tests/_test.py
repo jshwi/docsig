@@ -1503,3 +1503,35 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref in std.out
+
+
+def test_rst_code_block_mid_description_period_check_applies_to_prose(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Period check applies to prose that follows a code block.
+
+    When a code block appears in the middle of a description and prose
+    continues after it, SIG306 should evaluate the final prose, not the
+    code block content.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Example usage::
+
+        foo(x=1)
+
+    See the notes for more
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref in std.out
