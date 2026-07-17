@@ -14,7 +14,6 @@ from pathlib import Path as _Path
 
 import tomli as _tomli
 
-from ._utils import get_parent_that_has as _get_parent_that_has
 from ._version import __version__
 from .messages import Messages as _Messages
 
@@ -48,6 +47,28 @@ def _split_comma(value: str) -> list[str]:
     return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
 
 
+def get_parent_that_has(file: str, start: _Path | None = None) -> _Path | None:
+    """Find the parent directory that contains the given file.
+
+    Start from the current working directory and walk up to root. If
+    no required file is found, return None.
+
+    :param file: File to find.
+    :param start: Starting director.
+    :return: Parent directory containing the file or None if not found.
+    """
+    if start is None:
+        start = _Path.cwd()
+
+    if (start / file).is_file():
+        return start
+
+    if start.parent == start:
+        return None
+
+    return get_parent_that_has(file, start.parent)
+
+
 def get_config(prog: str) -> dict[str, _t.Any]:
     """Return the program's tool-section config from pyproject.toml.
 
@@ -55,7 +76,7 @@ def get_config(prog: str) -> dict[str, _t.Any]:
     :return: Config dict, or empty dict if no config is found.
     """
     # attempt to locate a pyproject.toml file if one exists in parents
-    pyproject_file = _get_parent_that_has(PYPROJECT_TOML)
+    pyproject_file = get_parent_that_has(PYPROJECT_TOML)
     if pyproject_file is None:
         return {}
 

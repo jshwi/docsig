@@ -7,7 +7,6 @@ Shared helpers.
 
 import re as _re
 from difflib import SequenceMatcher as _SequenceMatcher
-from pathlib import Path as _Path
 
 SENTENCE_ABBREVIATIONS = frozenset(
     {
@@ -83,25 +82,3 @@ def sentence_tokenizer(text: str) -> list[str]:
         result.append(text[start:].strip())
 
     return result
-
-
-def get_parent_that_has(file: str, start: _Path | None = None) -> _Path | None:
-    """Find the parent directory that contains the given file.
-
-    Start from the current working directory and walk up to root. If
-    no required file is found, return None.
-
-    :param file: File to find.
-    :param start: Starting director.
-    :return: Parent directory containing the file or None if not found.
-    """
-    if start is None:
-        start = _Path.cwd()
-
-    if (start / file).is_file():
-        return start
-
-    if start.parent == start:
-        return None
-
-    return get_parent_that_has(file, start.parent)
