@@ -160,37 +160,32 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         self._collector.add(value, include_hint=include_hint, **kwargs)
 
     @staticmethod
-    def _normalize_params(from_: _Params, to: _Params) -> None:
-        # inset the parameters that are missing in their corresponding
-        # index so that they are included in further analysis, that way
-        # there are no additional, and redundant, errors
-        # this will ensure that both signature and docstring are equal,
-        # with all parameters that are not documented accounted for
-        for count, arg in enumerate(from_):
+    def _normalize_params(source: _Params, target: _Params) -> None:
+        # insert a placeholder in the target at each index where the
+        # source param has no almost-equal counterpart, so both lists
+        # line up and later checks do not emit redundant errors
+        for count, arg in enumerate(source):
             try:
                 is_equal = _almost_equal(
                     str(arg.name),
-                    str(to[count].name),
+                    str(target[count].name),
                     _MIN_MATCH,
                     _MAX_MATCH,
                 )
             except IndexError:
                 is_equal = False
 
-            # need to make one more test to determine if equal in the
-            # case of very similar names, such as param1, param2 and
-            # param3 for the signature, and param2, param3 for the
-            # docstring, if we don't do this test, param1 is almost
-            # equal to param2, and so won't be inserted, but if we can
-            # determine param2 is already in signature's next index,
-            # then we know that they aren't almost equal, param1 is
-            # missing and does need to be inserted in the docstring
+            # for very similar names such as param1, param2, param3 in
+            # the signature and param2, param3 in the docstring, param1
+            # is almost equal to param2 and would not be inserted, so
+            # confirm the target name does not already match the next
+            # source param before accepting the almost-equal match
             if is_equal:
                 with _contextlib.suppress(IndexError):
-                    is_equal = to[count].name != from_[count + 1].name
+                    is_equal = target[count].name != source[count + 1].name
 
             if not is_equal:
-                to.insert(
+                target.insert(
                     count,
                     _Param(arg.kind, arg.name, _VALID_DESCRIPTION),
                 )
