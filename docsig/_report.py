@@ -100,6 +100,24 @@ def _build_report(
     return payload
 
 
+def pretty_print_error(
+    exception_type: type[BaseException],
+    msg: str,
+    no_ansi: bool,
+) -> None:
+    """Print exception type and message to stderr (ANSI color if tty).
+
+    :param exception_type: Exception class.
+    :param msg: Exception message.
+    :param no_ansi: If True, do not use ANSI escape codes.
+    """
+    exception_type_name = exception_type.__name__
+    if not no_ansi and _sys.stdout.isatty():
+        exception_type_name = f"\033[1;31m{exception_type_name}\033[0m"
+
+    print(f"{exception_type_name}: {msg}", file=_sys.stderr)
+
+
 def print_error(message: str, retcode: int) -> None:
     """Print an error which cannot be attributed to a line.
 
