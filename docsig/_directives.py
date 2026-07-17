@@ -135,82 +135,102 @@ class _Scanner:
 
         :param text: Python source code to scan for directives.
         """
-        for line in _tokenize.generate_tokens(_StringIO(text).readline):
-            # do nothing for these line types
-            if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
-                continue
-
-            # inherit the comments and messages defined in the module
-            # scope, but do not update the module comments and messages
-            # unless it is confirmed that the comment is a module level
-            # directive
-            scoped_comments = Comments(self._comments)
-            scoped_messages = _Messages(self._messages)
-            lineno, col = line.start
-            if line.type == _tokenize.COMMENT:
-                comment = Comment.parse(line.string, col)
-                if comment is not None:
-                    scoped_comments.append(comment)
-                    if comment.disable:
-                        scoped_messages.extend(comment)
-                    elif comment.enable:
-                        scoped_messages = _Messages(
-                            i for i in self._messages if i not in comment
-                        )
-
-                    # if directive has a 'next' flag then save the
-                    # module scope from before it, so it can be
-                    # restored after the next statement
-                    # stacked 'next' directives keep the first snapshot
-                    if comment.isnext and self._next_scope is None:
-                        self._next_scope = (
-                            Comments(self._comments),
-                            _Messages(self._messages),
-                        )
-
-                    # if module level directive, then make changes
-                    # globally
-                    if comment.ismodule:
-                        self._comments = scoped_comments
-                        self._messages = scoped_messages
-                    else:
-                        # keep disable on this line even if an earlier
-                        # token already recorded an empty entry (e.g.
-                        # a string arg before an inline comment)
-                        self._directives[lineno] = (
-                            Comments(scoped_comments),
-                            _Messages(scoped_messages),
-                        )
-
-                        # defer scoped state for the next line without
-                        # changing module-level messages
-                        self._pending_inline = (
-                            lineno,
-                            Comments(scoped_comments),
-                            _Messages(scoped_messages),
-                        )
-
-            # if in a 'next' module level scope and the line type is a
-            # newline (not a comment to allow 'next' directives to be
-            # stacked) then leave the 'next' module level scope and
-            # reset the module messages to before the 'next' directive
-            elif self._next_scope is not None and line.type != _tokenize.NL:
-                self._comments, self._messages = self._next_scope
-                self._next_scope = None
-
-            # inherit deferred inline scope on the first line after
-            # the comment (e.g. an indented def on the following line)
-            if (
-                self._pending_inline is not None
-                and lineno > self._pending_inline[0]
+        for token in _tokenize.generate_tokens(_StringIO(text).readline):
+            # nothing can change scope on these token types
+            if token.type not in (
+                _tokenize.NAME,
+                _tokenize.OP,
+                _tokenize.DEDENT,
             ):
-                _, scoped_comments, scoped_messages = self._pending_inline
-                self._pending_inline = None
+                self._visit(token)
 
-            # check that a scoped message has not updated this first, as
-            # they take precedence over module messages
-            if lineno not in self._directives:
-                self._directives[lineno] = scoped_comments, scoped_messages
+    def _visit(self, token: _tokenize.TokenInfo) -> None:
+        lineno, col = token.start
+
+        # inherit the comments and messages defined in the module
+        # scope; module state is only updated if the comment turns out
+        # to be a module-level directive
+        scope: tuple[Comments, _Messages] = (
+            Comments(self._comments),
+            _Messages(self._messages),
+        )
+        if token.type == _tokenize.COMMENT:
+            comment = Comment.parse(token.string, col)
+            if comment is not None:
+                scope = self._apply(comment, lineno, scope)
+
+        elif self._next_scope is not None and token.type != _tokenize.NL:
+            # a statement ends a 'next' directive: restore the module
+            # scope from before the directive
+            # the scope copied above still carries the directive, so it
+            # applies to this line alone
+            # comments are excluded so 'next' directives can be stacked
+            self._comments, self._messages = self._next_scope
+            self._next_scope = None
+
+        scope = self._take_pending_inline(lineno) or scope
+
+        # the first entry recorded for a line wins, unless an inline
+        # directive already claimed the line in _apply
+        self._directives.setdefault(lineno, scope)
+
+    def _apply(
+        self,
+        comment: Comment,
+        lineno: int,
+        scope: tuple[Comments, _Messages],
+    ) -> tuple[Comments, _Messages]:
+        comments, messages = scope
+        comments.append(comment)
+        if comment.disable:
+            messages.extend(comment)
+
+        elif comment.enable:
+            messages = _Messages(i for i in self._messages if i not in comment)
+
+        if comment.isnext and self._next_scope is None:
+            # save module scope from before the directive so it can be
+            # restored after the next statement
+            # stacked 'next' directives keep the first snapshot
+            self._next_scope = (
+                Comments(self._comments),
+                _Messages(self._messages),
+            )
+
+        if comment.ismodule:
+            self._comments = comments
+            self._messages = messages
+        else:
+            # keep disable on this line even if an earlier token
+            # already recorded an empty entry (e.g. a string arg before
+            # an inline comment)
+            self._directives[lineno] = Comments(comments), _Messages(messages)
+
+            # defer this scope to the following line without changing
+            # module scope
+            self._pending_inline = (
+                lineno,
+                Comments(comments),
+                _Messages(messages),
+            )
+
+        return comments, messages
+
+    def _take_pending_inline(
+        self,
+        lineno: int,
+    ) -> tuple[Comments, _Messages] | None:
+        # inherit a deferred inline scope on the first line after the
+        # comment (e.g. an indented def on the following line)
+        if self._pending_inline is None:
+            return None
+
+        pending_lineno, comments, messages = self._pending_inline
+        if lineno <= pending_lineno:
+            return None
+
+        self._pending_inline = None
+        return comments, messages
 
 
 class Directives(dict[int, tuple[Comments, _Messages]]):
