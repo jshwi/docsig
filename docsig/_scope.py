@@ -273,17 +273,7 @@ class Function:  # pylint: disable=too-many-instance-attributes
         self._lineno = 0
         self._error: type[BaseException] | None = None
         if node is not None and node.parent is not None:
-            self._frame = node.parent.frame()
-            self._decorators = node.decorators
-            self._lineno = node.lineno
-            self._signature = self._signature.from_ast(
-                node,
-                self._config.ignore,
-                skip_bound_arg=self.ismethod and not self.isstaticmethod,
-            )
-            relevant_doc_node = self._select_doc_node(node)
-            if relevant_doc_node is not None:
-                self._docstring = self.docstring.from_ast(relevant_doc_node)
+            self._parse_ast(node, node.parent.frame())
 
     @classmethod
     def from_error(cls, error: type[BaseException]) -> "Function":
@@ -299,6 +289,19 @@ class Function:  # pylint: disable=too-many-instance-attributes
         func = cls()
         func._error = error
         return func
+
+    def _parse_ast(self, node: _ast.nodes.FunctionDef, frame: _Frame) -> None:
+        self._frame = frame
+        self._decorators = node.decorators
+        self._lineno = node.lineno
+        self._signature = _Signature.from_ast(
+            node,
+            self._config.ignore,
+            skip_bound_arg=self.ismethod and not self.isstaticmethod,
+        )
+        doc_node = self._select_doc_node(node)
+        if doc_node is not None:
+            self._docstring = _Docstring.from_ast(doc_node)
 
     def _select_doc_node(
         self,
