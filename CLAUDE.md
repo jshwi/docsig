@@ -85,6 +85,7 @@ CLI args / pyproject.toml
 | `_stub.py`            | Value-object types: `Param`, `Signature`, `Docstring`, return types                  |
 | `_traverse.py`        | Traverses function tree, dispatches to `_checker.py` per function                    |
 | `_checker.py`         | All individual check implementations; each emits a `Message` on failure              |
+| `_text.py`            | Text analysis helpers (sentence tokenizing, fuzzy match) for `_checker.py`           |
 | `_diagnostic.py`      | `Collector` aggregates results; `Diagnostic`/`FunctionResult`/`Failures`             |
 | `_report.py`          | Formats and prints diagnostics (plain text or `--json`)                              |
 | `_parsers.py`         | Parses Python source files/strings into module object trees                          |
@@ -92,7 +93,6 @@ CLI args / pyproject.toml
 | `_directives.py`      | Handles inline `# noqa`-style suppression comments                                   |
 | `_decorators.py`      | Decorators for `docsig()`: kwarg-to-`Message` parsing and argument validation        |
 | `_hooks.py`           | `excepthook` for user-friendly errors (bypassed when `DOCSIG_DEBUG=1`)               |
-| `_utils.py`           | Shared helpers: fuzzy string matching, sentence tokenizing, error printing           |
 | `messages.py`         | All `Message` definitions and the `MessageMap`; error codes SIG0xx–SIG9xx            |
 | `plugin/_flake8.py`   | Flake8 extension; wraps `docsig()` with `--sig-*` prefixed options                   |
 
