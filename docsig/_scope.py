@@ -326,15 +326,14 @@ class Function:  # pylint: disable=too-many-instance-attributes
 
     def _decorated_with(self, name: str) -> bool:
         name = self._imports.get(name, name)
-        if self._decorators is not None:
-            for dec in self._decorators.nodes:
-                if (isinstance(dec, _ast.nodes.Name) and dec.name == name) or (
-                    isinstance(dec, _ast.nodes.Attribute)
-                    and dec.attrname == name
-                ):
-                    return True
+        if self._decorators is None:
+            return False
 
-        return False
+        return any(
+            (isinstance(dec, _ast.nodes.Name) and dec.name == name)
+            or (isinstance(dec, _ast.nodes.Attribute) and dec.attrname == name)
+            for dec in self._decorators.nodes
+        )
 
     @property
     def ismethod(self) -> bool:
