@@ -336,16 +336,15 @@ class Docstring(_Stub):
 
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
+        # report whether the first indented param field is indented
+        # with an odd number of spaces
+        # description or anything else is out of scope
         string = _DIRECTIVE.sub("", string)
         for line in string.splitlines():
-            # only check params
-            # description or anything else is out of scope
             if line.lstrip().startswith(":"):
-                match = _re.match(r"^\s*", line)
-                if match is not None:
-                    spaces = len(match.group())
-                    if spaces > 0:
-                        return spaces % 2 != 0
+                indent = len(line) - len(line.lstrip())
+                if indent > 0:
+                    return indent % 2 != 0
 
         return False
 
