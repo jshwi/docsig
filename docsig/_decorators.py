@@ -14,10 +14,9 @@ from ._diagnostic import RetCode as _RetCode
 from .messages import E as _E
 
 _FuncType = _t.Callable[..., int]
-_WrappedFuncType = _t.Callable[..., int]
 
 
-def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
+def parse_msgs(func: _FuncType) -> _FuncType:
     """Convert disable and target kwargs to message objects.
 
     The wrapped function receives kwargs with disable and target as
@@ -39,7 +38,7 @@ def parse_msgs(func: _WrappedFuncType) -> _WrappedFuncType:
 
 
 # TODO: make report json by default and wrap with a reporter for cli
-def validate_args(func: _FuncType) -> _WrappedFuncType:
+def validate_args(func: _FuncType) -> _FuncType:
     """Validate arguments before calling the wrapped function.
 
     If path or string is missing, or disable and target options are
