@@ -31,6 +31,15 @@ class _Children(list[_t.Union["Scope", "Function"]]): ...
 
 _DEFAULT_NAME = "module"
 
+#: astroid node enclosing a function, or None outside any frame
+_Frame: _t.TypeAlias = (
+    _ast.nodes.FunctionDef
+    | _ast.nodes.Module
+    | _ast.nodes.ClassDef
+    | _ast.nodes.Lambda
+    | None
+)
+
 
 class _Walker:
     """Walk an AST body, collecting a scope's children.
@@ -257,8 +266,8 @@ class Function:  # pylint: disable=too-many-instance-attributes
         self._config = config or _Config()
         self._imports = imports or _Imports()
         self._children = children or _Children()
-        self._frame = None
-        self._decorators = None
+        self._frame: _Frame = None
+        self._decorators: _ast.nodes.Decorators | None = None
         self._signature = _Signature()
         self._docstring = _Docstring()
         self._lineno = 0
@@ -403,15 +412,7 @@ class Function:  # pylint: disable=too-many-instance-attributes
         return self._name
 
     @property
-    def frame(
-        self,
-    ) -> (
-        _ast.nodes.FunctionDef
-        | _ast.nodes.Module
-        | _ast.nodes.ClassDef
-        | _ast.nodes.Lambda
-        | None
-    ):
+    def frame(self) -> _Frame:
         """Astroid frame node enclosing this function."""
         return self._frame
 
