@@ -164,19 +164,27 @@ class _Walker:
             body_walker.children,
         )
         if func.isoverloaded:
-            if (
-                func.name not in self._overloads
-                or self._overloads[func.name].signature.returns.type
-                == _RetType.NONE
-            ):
-                self._overloads[func.name] = func
+            self._record_overload(func)
         else:
-            if func.name in self._overloads:
-                func.overload(
-                    self._overloads[func.name].signature.returns.type,
-                )
-
+            self._merge_overload(func)
             self._children.append(func)
+
+    def _record_overload(self, func: "Function") -> None:
+        # keep one overload variant per name, preferring a variant that
+        # declares a return value over one that returns None
+        recorded = self._overloads.get(func.name)
+        if (
+            recorded is None
+            or recorded.signature.returns.type == _RetType.NONE
+        ):
+            self._overloads[func.name] = func
+
+    def _merge_overload(self, func: "Function") -> None:
+        # the implementation following its overload variants adopts the
+        # recorded variant's return type
+        recorded = self._overloads.get(func.name)
+        if recorded is not None:
+            func.overload(recorded.signature.returns.type)
 
 
 class Scope:
