@@ -48,3 +48,17 @@ Cannot determine whether a return statement should exist or not
     ...     no_ansi=True,
     ... )
     0
+
+Otherwise annotating the return type resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function() -> None:
+    ...     """Docstring summary."""
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

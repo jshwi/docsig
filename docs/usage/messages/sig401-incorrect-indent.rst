@@ -61,3 +61,22 @@ Param not indented correctly
     2 in function
         SIG401: parameter not indented correctly (incorrect-indent)
     1
+
+Aligning the parameter with the rest of the docstring resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     Function description.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

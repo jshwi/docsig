@@ -28,3 +28,23 @@ Return statement documented for class
         SIG504: return statement documented for class (class-return-documented)
         hint: a class does not return a value during instantiation
     1
+
+Removing the return documentation resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... class Class:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ...
+    ...     def __init__(self, a) -> None:
+    ...         pass
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, check_class=True, no_ansi=True)
+    0

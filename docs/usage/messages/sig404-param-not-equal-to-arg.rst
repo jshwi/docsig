@@ -62,3 +62,20 @@ Documented parameter not equal to its respective argument
         SIG201: duplicate parameters found (duplicate-params-found)
         SIG404: documented parameter not equal to its respective argument (param-not-equal-to-arg)
     1
+
+Matching the documented parameter to its argument resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

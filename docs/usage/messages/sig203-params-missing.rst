@@ -42,3 +42,21 @@ Parameters missing
     2 in function
         SIG203: parameters missing (params-missing)
     1
+
+Documenting every signature parameter resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a, b) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

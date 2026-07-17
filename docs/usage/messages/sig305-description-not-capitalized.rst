@@ -72,3 +72,20 @@ This needs to be manually enabled
 
     >>> docsig(string=string, no_ansi=True)
     0
+
+Capitalizing the description resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

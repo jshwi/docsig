@@ -58,3 +58,20 @@ Spelling error found in documented parameter
         SIG203: parameters missing (params-missing)
         SIG403: spelling error found in documented parameter (spelling-error)
     1
+
+Matching the documented name to the argument resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(param) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param param: Description of param.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

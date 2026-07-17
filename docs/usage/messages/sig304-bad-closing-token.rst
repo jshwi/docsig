@@ -152,3 +152,20 @@ bad token used to close parameter declaration '{token}'
         SIG304: bad token used to close parameter declaration '&' (bad-closing-token)
         hint: close a parameter declaration with ':'
     1
+
+Closing the declaration with a colon resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

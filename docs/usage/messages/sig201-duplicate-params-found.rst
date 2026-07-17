@@ -24,3 +24,20 @@ Duplicate parameters found
     2 in function
         SIG201: duplicate parameters found (duplicate-params-found)
     1
+
+Removing the duplicate resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

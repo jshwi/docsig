@@ -107,3 +107,21 @@ But not if it is for a parameter that does not exist
         SIG202: includes parameters that do not exist (params-do-not-exist)
         SIG402: parameters out of order (params-out-of-order)
     1
+
+Naming every documented parameter resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a, b) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     :param b: Description of b.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

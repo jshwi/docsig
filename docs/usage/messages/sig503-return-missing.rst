@@ -110,3 +110,21 @@ Return missing from docstring
         SIG503: return missing from docstring (return-missing)
         hint: it is possible a syntax error could be causing this
     1
+
+Documenting the return resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> int:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     :return: Return description.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

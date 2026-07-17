@@ -23,3 +23,20 @@ Syntax error in description
     2 in function
         SIG302: syntax error in description (syntax-error-in-description)
     1
+
+Adding a space between the colon and the description resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

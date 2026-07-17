@@ -24,3 +24,21 @@ Unknown module comment option for {directive} '{option}'
     3 in function
         SIG003: unknown module comment option for enable 'EIEIO' (unknown-module-directive-option)
     1
+
+Using a valid rule as the option resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... # docsig: enable=SIG403
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

@@ -23,3 +23,20 @@ Description missing from parameter
     2 in function
         SIG301: description missing from parameter (description-missing)
     1
+
+Adding a description resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

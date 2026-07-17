@@ -24,3 +24,20 @@ Includes parameters that do not exist
     2 in function
         SIG202: includes parameters that do not exist (params-do-not-exist)
     1
+
+Removing the unknown parameter resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function(a) -> None:
+    ...     """Docstring summary.
+    ...
+    ...     :param a: Description of a.
+    ...     """
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

@@ -49,3 +49,19 @@ Return statement documented for property
 
     >>> docsig(string=string, check_property_returns=True, no_ansi=True)
     0
+
+Otherwise removing the return documentation resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... class Class:
+    ...     @property
+    ...     def method() -> int:
+    ...         """Docstring summary."""
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0

@@ -20,3 +20,17 @@ Function is missing a docstring
     2 in function
         SIG101: function is missing a docstring (function-doc-missing)
     1
+
+Adding a docstring resolves the check
+
+.. code-block:: python
+
+    >>> string = '''
+    ... def function() -> None:
+    ...     """Docstring summary."""
+    ... '''
+
+.. code-block:: python
+
+    >>> docsig(string=string, no_ansi=True)
+    0
