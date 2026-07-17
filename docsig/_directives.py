@@ -107,45 +107,43 @@ class Comment(_Messages):
         return None
 
 
-class Directives(dict[int, tuple[Comments, _Messages]]):
-    """Map line number to comments and disabled messages for that line.
+class _Scanner:
+    """Scan source tokens for directives, tracking scope per line.
 
-    Keys are line numbers; values are tuples of comment directives and
-    the messages to disable at that line. Used when running checks to
-    respect inline and module-level docsig enable/disable directives.
+    :param messages: Initial list of messages to disable.
     """
 
-    @classmethod
-    def from_text(  # pylint: disable=too-many-locals
-        cls,
-        text: str,
-        messages: _Messages,
-    ) -> Directives:
-        """Build a directives map from docsig directives in the code.
+    def __init__(self, messages: _Messages) -> None:
+        self._directives = Directives()
+        self._comments = Comments()
+        self._messages = _Messages(messages)
+
+    @property
+    def directives(self) -> Directives:
+        """Directives collected from the scanned source."""
+        return self._directives
+
+    def scan(self, text: str) -> None:
+        """Collect scope for each line of the given source.
 
         :param text: Python source code to scan for directives.
-        :param messages: Initial list of messages to disable.
-        :return: Directives instance keyed by line number.
         """
-        directives = cls()
-        fin = _StringIO(text)
-        comments = Comments()
         enable_next = False
-        next_comments = Comments(comments)
-        next_messages = _Messages(messages)
+        next_comments = Comments(self._comments)
+        next_messages = _Messages(self._messages)
         pending_inline: tuple[Comments, _Messages] | None = None
         pending_inline_lineno: int | None = None
-        for line in _tokenize.generate_tokens(fin.readline):
+        for line in _tokenize.generate_tokens(_StringIO(text).readline):
             # do nothing for these line types
             if line.type in (_tokenize.NAME, _tokenize.OP, _tokenize.DEDENT):
                 continue
 
-            # inherit the comments and messages defined in the global
-            # scope, but do not update the global comments and messages
+            # inherit the comments and messages defined in the module
+            # scope, but do not update the module comments and messages
             # unless it is confirmed that the comment is a module level
             # directive
-            scoped_comments = Comments(comments)
-            scoped_messages = _Messages(messages)
+            scoped_comments = Comments(self._comments)
+            scoped_messages = _Messages(self._messages)
             lineno, col = line.start
             if line.type == _tokenize.COMMENT:
                 comment = Comment.parse(line.string, col)
@@ -155,7 +153,7 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                         scoped_messages.extend(comment)
                     elif comment.enable:
                         scoped_messages = _Messages(
-                            i for i in messages if i not in comment
+                            i for i in self._messages if i not in comment
                         )
 
                     # if directive has a 'next' flag then alter the
@@ -164,19 +162,19 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                     # directives are included and not overwritten
                     if comment.isnext and not enable_next:
                         enable_next = True
-                        next_comments = Comments(comments)
-                        next_messages = _Messages(messages)
+                        next_comments = Comments(self._comments)
+                        next_messages = _Messages(self._messages)
 
                     # if module level directive, then make changes
                     # globally
                     if comment.ismodule:
-                        comments = scoped_comments
-                        messages = scoped_messages
+                        self._comments = scoped_comments
+                        self._messages = scoped_messages
                     else:
                         # keep disable on this line even if an earlier
                         # token already recorded an empty entry (e.g.
                         # a string arg before an inline comment)
-                        directives[lineno] = (
+                        self._directives[lineno] = (
                             Comments(scoped_comments),
                             _Messages(scoped_messages),
                         )
@@ -192,11 +190,11 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
             # if in a 'next' module level scope and the line type is a
             # newline (not a comment to allow 'next' directives to be
             # stacked) then leave the 'next' module level scope and
-            # reset the global messages to before the 'next' directive
+            # reset the module messages to before the 'next' directive
             elif enable_next and line.type != _tokenize.NL:
                 enable_next = False
-                comments = next_comments
-                messages = next_messages
+                self._comments = next_comments
+                self._messages = next_messages
 
             # inherit deferred inline scope on the first line after
             # the comment (e.g. an indented def on the following line)
@@ -210,8 +208,27 @@ class Directives(dict[int, tuple[Comments, _Messages]]):
                 pending_inline_lineno = None
 
             # check that a scoped message has not updated this first, as
-            # they take precedence over global messages
-            if lineno not in directives:
-                directives[lineno] = scoped_comments, scoped_messages
+            # they take precedence over module messages
+            if lineno not in self._directives:
+                self._directives[lineno] = scoped_comments, scoped_messages
 
-        return directives
+
+class Directives(dict[int, tuple[Comments, _Messages]]):
+    """Map line number to comments and disabled messages for that line.
+
+    Keys are line numbers; values are tuples of comment directives and
+    the messages to disable at that line. Used when running checks to
+    respect inline and module-level docsig enable/disable directives.
+    """
+
+    @classmethod
+    def from_text(cls, text: str, messages: _Messages) -> Directives:
+        """Build a directives map from docsig directives in the code.
+
+        :param text: Python source code to scan for directives.
+        :param messages: Initial list of messages to disable.
+        :return: Directives instance keyed by line number.
+        """
+        scanner = _Scanner(messages)
+        scanner.scan(text)
+        return scanner.directives
