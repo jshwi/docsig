@@ -148,6 +148,9 @@ class _Return(_t.NamedTuple):
 class Params(list[Param]):
     """A list-like collection of params.
 
+    Appends are filtered: protected params, and param kinds the
+    configuration says to ignore, are silently dropped.
+
     :param ignore: Configuration object for what to ignore.
     """
 
@@ -155,20 +158,23 @@ class Params(list[Param]):
         super().__init__()
         self._ignore = ignore
 
+    def _accepts(self, value: Param) -> bool:
+        if value.isprotected:
+            return False
+
+        if value.kind == DocType.ARG:
+            return not self._ignore.args
+
+        if value.kind == DocType.KWARG:
+            # only one **kwargs can exist, so only the first is kept
+            return not self._ignore.kwargs and not any(
+                i.kind == DocType.KWARG for i in self
+            )
+
+        return value.kind == DocType.PARAM
+
     def append(self, value: Param) -> None:
-        if not value.isprotected and any(
-            (
-                value.kind == DocType.PARAM,
-                (value.kind == DocType.ARG and not self._ignore.args),
-                (
-                    value.kind == DocType.KWARG
-                    and not (
-                        self._ignore.kwargs
-                        or any(i.kind == DocType.KWARG for i in self)
-                    )
-                ),
-            ),
-        ):
+        if self._accepts(value):
             super().append(value)
 
     def get(self, index: int) -> Param:
