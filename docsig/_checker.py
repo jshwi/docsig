@@ -97,20 +97,35 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
     def __init__(self, func: _Function, config: _Config) -> None:
         self._func = func
         self._config = config
-        disabled = _Messages(self._func.messages)
+        self._name = self._qualified_name(func)
+        self._collector = _Collector(
+            self._name,
+            func.lineno,
+            self._disabled_messages(func, config),
+        )
+
+    @staticmethod
+    def _qualified_name(func: _Function) -> str:
+        # prefix the enclosing class so the report reads Class.method
+        frame = func.frame
+        if (
+            frame is not None
+            and hasattr(frame, "name")
+            and frame.name
+            and not isinstance(frame, _ast.nodes.Module)
+        ):
+            return f"{frame.name}.{func.name}"
+
+        return func.name
+
+    @staticmethod
+    def _disabled_messages(func: _Function, config: _Config) -> _Messages:
+        # targeting a subset of checks disables everything else
+        disabled = _Messages(func.messages)
         if config.target:
             disabled.extend(i for i in _E.all if i not in config.target)
 
-        self._name = self._func.name
-        if (
-            self._func.frame is not None
-            and hasattr(self._func.frame, "name")
-            and self._func.frame.name
-            and not isinstance(self._func.frame, _ast.nodes.Module)
-        ):
-            self._name = f"{self._func.frame.name}.{self._name}"
-
-        self._collector = _Collector(self._name, self._func.lineno, disabled)
+        return disabled
 
     def run(self) -> _FunctionResult:
         """Run the function checks and return the result.
