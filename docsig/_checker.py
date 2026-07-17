@@ -268,16 +268,13 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         list.extend(self._func.docstring.args, deduped)
 
     def _sig3xx_description(self, doc: _Param) -> None:
-        # freeze result as it is a property and PyCharm complains
-        # `Member 'None' of 'str | None' does not have attribute
-        # 'startswith'` as property could theoretically have different
-        # result from doc.description is None to
-        # doc.description.startswith
-        doc_description = doc.description
-        if doc_description is None and doc.name is not None:
+        # freeze the property so every check sees the same value
+        description = doc.description
+        if description is None and doc.name is not None:
+            # description-missing
             self._add(_E[301])
-        elif doc_description is not None and self._description_syntax_error(
-            doc_description,
+        elif description is not None and self._description_syntax_error(
+            description,
         ):
             # syntax-error-in-description
             self._add(_E[302])
@@ -289,29 +286,41 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         elif doc.closing_token != ":":
             # bad-closing-token
             self._add(_E[304], token=doc.closing_token, include_hint=True)
-        if doc_description is not None and not all(
+
+        if description is not None and not self._iscapitalized(description):
+            # description-not-capitalized
+            self._add(_E[305])
+
+        if description and self._misses_period(description):
+            # description-missing-period
+            self._add(_E[306])
+
+    @staticmethod
+    def _iscapitalized(description: str) -> bool:
+        # every sentence must start with an uppercase letter, unless it
+        # starts with something other than a letter or an abbreviation
+        # such as e.g.
+        return all(
             stripped[0].isupper()
-            for i in _sentence_tokenizer(doc_description)
+            for i in _sentence_tokenizer(description)
             if (
                 i
                 and (stripped := i.strip())[0].isalpha()
                 and stripped.lower().split()[0].rstrip(",;")
                 not in _SENTENCE_ABBREVIATIONS
             )
-        ):
-            # description is not capitalized
-            self._add(_E[305])
-        # description-missing-period
+        )
+
+    @staticmethod
+    def _misses_period(description: str) -> bool:
         # a description that ends inside an RST code block or directive,
         # or on a list item, does not need a sentence terminator
-        if doc_description:
-            last_char, exempt = _last_prose_char(doc_description)
-            if (
-                not exempt
-                and last_char is not None
-                and last_char not in _VALID_ENDINGS
-            ):
-                self._add(_E[306])
+        last_char, exempt = _last_prose_char(description)
+        return (
+            not exempt
+            and last_char is not None
+            and last_char not in _VALID_ENDINGS
+        )
 
     @staticmethod
     def _description_syntax_error(description: str) -> bool:
