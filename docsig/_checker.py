@@ -237,6 +237,8 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             not in (
                 "`",
                 ".",
+                "!",
+                "?",
             )
         ):
             self._add(_E[306])

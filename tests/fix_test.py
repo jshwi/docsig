@@ -1956,3 +1956,57 @@ def also_crash() -> typing.NoReturn:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[503].ref not in std.out
+
+
+def test_fix_allow_exclamation_mark_as_sentence_ending(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Allow exclamation mark as a valid sentence ending.
+
+    A description ending with ``!`` is a complete sentence and must not
+    trigger description-missing-period.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    :param a: Description of a!
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
+
+
+def test_fix_allow_question_mark_as_sentence_ending(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Allow question mark as a valid sentence ending.
+
+    A description ending with ``?`` is a complete sentence and must not
+    trigger description-missing-period.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a) -> None:
+    """Docstring summary.
+
+    :param a: Is this optional?
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
