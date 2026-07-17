@@ -394,41 +394,53 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         ) and len(self._func.docstring.args) > 1
 
     def _sig5xx_returns(self, check_property_returns: bool) -> None:
-        if not self._func.isinit and not (
+        excluded = self._func.isinit or (
             self._func.isproperty and not check_property_returns
-        ):
-            # no types, cannot know either way
-            if self._func.signature.returns.type == _RetType.UNTYPED:
-                # confirm-return-needed
-                self._add(_E[501], include_hint=True)
-            # return-type is none, so no return should be documented
-            elif self._func.docstring.returns.returns:
-                if self._func.signature.returns.type == _RetType.NONE:
-                    # return-documented-for-none
-                    self._add(_E[502])
-                if self._func.docstring.returns.description_missing:
-                    self._add(_E[506])
-            # return-type is some, so return should be documented
-            elif self._func.signature.returns.returns:
-                # return-missing
-                lines = str(self._func.docstring.string).splitlines()
-                self._add(
-                    _E[503],
-                    include_hint=(
-                        len(lines) > 1
-                        and "return" in lines[-1]
-                        and ":param" not in lines[-1]
-                    ),
-                )
+        )
+        if not excluded:
+            self._check_return_documentation()
         elif self._func.docstring.returns.returns:
-            # this method is init, so no return should be documented
             if self._func.isinit:
+                # this method is init, so no return should be documented
                 # class-return-documented
                 self._add(_E[504], include_hint=True)
-            # method is property and not set to document property
-            elif self._func.isproperty and not check_property_returns:
+            else:
+                # method is property and not set to document property
                 # return-documented-for-property
                 self._add(_E[505], include_hint=True)
+
+    def _check_return_documentation(self) -> None:
+        signature = self._func.signature.returns
+        docstring = self._func.docstring.returns
+        # no types, cannot know either way
+        if signature.type == _RetType.UNTYPED:
+            # confirm-return-needed
+            self._add(_E[501], include_hint=True)
+        # return-type is none, so no return should be documented
+        elif docstring.returns:
+            if signature.type == _RetType.NONE:
+                # return-documented-for-none
+                self._add(_E[502])
+            if docstring.description_missing:
+                # return-description-missing
+                self._add(_E[506])
+        # return-type is some, so return should be documented
+        elif signature.returns:
+            # return-missing
+            self._add(
+                _E[503],
+                include_hint=self._last_line_mentions_return(),
+            )
+
+    def _last_line_mentions_return(self) -> bool:
+        # a hint helps if the last line looks like a return field that
+        # did not parse
+        lines = str(self._func.docstring.string).splitlines()
+        return (
+            len(lines) > 1
+            and "return" in lines[-1]
+            and ":param" not in lines[-1]
+        )
 
     def _sig9xx_error(self) -> None:
         # invalid-syntax
