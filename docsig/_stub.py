@@ -179,7 +179,6 @@ class Params(list[Param]):
     def __init__(self, ignore: _Ignore) -> None:
         super().__init__()
         self._ignore = ignore
-        self._duplicates: list[Param] = []
 
     def append(self, value: Param) -> None:
         if not value.isprotected and any(
@@ -219,20 +218,7 @@ class Params(list[Param]):
 
         Only names are compared; descriptions are ignored.
         """
-        for k, v in _Counter(i.name for i in self).items():
-            if v > 1:
-                for i in self:
-                    if i.name == k:
-                        # record the duplicates for later analysis
-                        self._duplicates.append(i)
-                        return True
-
-        return False
-
-    @property
-    def duplicates(self) -> list[Param]:
-        """Params that share a name."""
-        return self._duplicates
+        return any(v > 1 for v in _Counter(i.name for i in self).values())
 
 
 class _Stub:

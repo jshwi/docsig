@@ -171,15 +171,17 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
 
     def _sig2xx_signature(self) -> None:
         if self._func.docstring.args.duplicated:
-            # pop the duplicates so that they are considered a single
-            # parameter, that way there are no assumptions that the
-            # parameters must be out of order
-            for count, arg in enumerate(self._func.docstring.args):
-                if (
-                    arg in self._func.docstring.args.duplicates
-                    and self._func.docstring.args.count(arg) > 1
-                ):
-                    self._func.docstring.args.pop(count)
+            # reduce each duplicate group to one representative without
+            # mutating the list during iteration (which skips items)
+            seen: set[str | None] = set()
+            deduped: list[_Param] = []
+            for arg in self._func.docstring.args:
+                if arg.name not in seen:
+                    seen.add(arg.name)
+                    deduped.append(arg)
+
+            list.clear(self._func.docstring.args)
+            list.extend(self._func.docstring.args, deduped)
 
             # duplicate-params-found
             self._add(_E[201])

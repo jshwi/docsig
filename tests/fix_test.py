@@ -2039,3 +2039,39 @@ def function(a) -> str:
     assert main(".") == 0
     std = capsys.readouterr()
     assert E[503].ref not in std.out
+
+
+def test_fix_duplicate_dedup_with_multiple_groups_no_spurious_errors(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Deduplication of two groups with unequal counts leaves no extras.
+
+    When two different parameter names are each duplicated, but the
+    first name appears more times than the second, the old pop-during-
+    iteration loop would skip items and leave extra copies behind.
+    Those extras then caused spurious SIG4xx ordering errors.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(y, x):
+    """Function.
+
+    :param y: Description.
+    :param x: Description.
+    :param y: Description.
+    :param x: Description.
+    :param y: Description.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[201].ref in std.out
+    assert E[402].ref not in std.out
+    assert E[403].ref not in std.out
+    assert E[404].ref not in std.out
