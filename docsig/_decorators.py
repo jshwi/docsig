@@ -36,6 +36,39 @@ def parse_msgs(func: _FuncType) -> _FuncType:
     return _wrapper
 
 
+def _validation_errors(
+    args: tuple[str | _Path, ...],
+    kwargs: dict[str, _t.Any],
+) -> list[str]:
+    errors = []
+    if not args and not kwargs.get("string"):
+        errors.append(
+            "the following arguments are required: path(s) or string",
+        )
+
+    for option in ("disable", "target"):
+        for message in kwargs.get(option) or []:
+            if not message.isknown:
+                errors.append(
+                    f"unknown option to {option} '{message.description}'",
+                )
+
+    if kwargs.get("check_class") and kwargs.get("check_class_constructor"):
+        errors.append(
+            "argument to check class constructor not allowed with"
+            " argument to check class",
+        )
+        # argparse won't allow both commandline args, so when running
+        # from a terminal this must be an issue with the pyproject.toml
+        # configuration
+        if _sys.stdin and _sys.stdin.isatty():
+            errors.append(
+                "please check your pyproject.toml configuration",
+            )
+
+    return errors
+
+
 # TODO: make report json by default and wrap with a reporter for cli
 def validate_args(func: _FuncType) -> _FuncType:
     """Validate arguments before calling the wrapped function.
@@ -56,36 +89,8 @@ def validate_args(func: _FuncType) -> _FuncType:
         retcode = _RetCode(2)
         errors = []
         if not kwargs.get("list_checks", False):
-            if not args and not kwargs.get("string"):
-                errors.append(
-                    "the following arguments are required: path(s) or string",
-                )
+            errors = _validation_errors(args, kwargs)
 
-            for option in ("disable", "target"):
-                for message in kwargs.get(option) or []:
-                    if not message.isknown:
-                        errors.append(
-                            f"unknown option to {option}"
-                            f" '{message.description}'",
-                        )
-
-            if kwargs.get("check_class") and kwargs.get(
-                "check_class_constructor",
-            ):
-                errors.append(
-                    "argument to check class constructor not allowed with"
-                    " argument to check class",
-                )
-                # if we don't make it past this condition, then we are
-                # running this using the python interpreter
-                if _sys.stdin and _sys.stdin.isatty():
-                    # otherwise, it is impossible to reach here by
-                    # passing both commandline args as argparse won't
-                    # allow it, therefore, this must be an issue with
-                    # the pyproject.toml configuration
-                    errors.append(
-                        "please check your pyproject.toml configuration",
-                    )
         if errors:
             _print_error("\n".join(errors), retcode.result)
             return retcode.result
