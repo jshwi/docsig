@@ -95,6 +95,13 @@ CLI args / pyproject.toml
 | `messages.py`         | All `Message` definitions and the `MessageMap`; error codes SIG0xx–SIG9xx            |
 | `plugin/_flake8.py`   | Flake8 extension; wraps `docsig()` with `--sig-*` prefixed options                   |
 
+Any commit that renames, folds, or moves a module must update the Data Flow
+diagram and Key Modules table above in that same commit — never deferred to a
+later `chore(ai)` commit. Every file this document references must exist at
+every commit, so history stays clean for `git rebase -x` checks.
+`scripts/check_claude_md.py` enforces this (wired in as the `check-claude-md`
+pre-commit hook); run it after any module restructuring.
+
 ### Error Code Ranges
 
 - **SIG0xx** — configuration errors

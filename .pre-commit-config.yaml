@@ -102,6 +102,12 @@ repos:
         language: system
         entry: make whitelist.py
         pass_filenames: false
+      - id: check-claude-md
+        name: check claude md
+        entry: python3 scripts/check_claude_md.py
+        language: system
+        always_run: true
+        pass_filenames: false
       - id: check-unstaged-news
         name: check unstaged news
         entry: |
