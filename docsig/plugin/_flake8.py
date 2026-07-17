@@ -14,6 +14,7 @@ import typing as _t
 from argparse import Namespace as _Namespace
 from pathlib import Path as _Path
 
+from .._config import FLAG_HELP as _FLAG_HELP
 from .._config import Check as _Check
 from .._config import Config as _Config
 from .._config import Ignore as _Ignore
@@ -28,30 +29,15 @@ _Flake8Error = tuple[int, int, str, type[_t.Any]]
 
 #: boolean commandline options mirrored by this plugin, prefixed with
 #: --sig- to avoid conflicts with other plugins
-_OPTIONS = (
-    ("verbose", "increase output verbosity"),
-    ("check-class", "check class docstrings"),
-    (
-        "check-class-constructor",
-        "check __init__ methods (mutually incompatible with"
-        " --sig-check-class)",
+_OPTIONS = {
+    **_FLAG_HELP,
+    # flake8 has no mutually exclusive groups, so state the conflict in
+    # the help text instead
+    "check-class-constructor": (
+        _FLAG_HELP["check-class-constructor"]
+        + " (mutually incompatible with --sig-check-class)"
     ),
-    ("check-dunders", "check dunder methods"),
-    ("check-nested", "check nested functions and classes"),
-    ("check-overridden", "check overridden methods"),
-    ("check-property-returns", "check property return values"),
-    ("check-protected", "check protected functions and classes"),
-    (
-        "check-protected-class-methods",
-        "check public methods belonging to protected classes",
-    ),
-    ("ignore-args", "ignore args prefixed with an asterisk"),
-    ("ignore-kwargs", "ignore kwargs prefixed with two asterisks"),
-    (
-        "ignore-no-params",
-        "ignore docstrings where parameters are not documented",
-    ),
-)
+}
 
 
 @_contextlib.contextmanager
@@ -97,7 +83,7 @@ class Flake8:
 
         :param parser: Flake8 option manager to extend.
         """
-        for option, help_text in _OPTIONS:
+        for option, help_text in _OPTIONS.items():
             parser.add_option(
                 f"--sig-{option}",
                 action="store_true",
