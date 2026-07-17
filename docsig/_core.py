@@ -154,9 +154,9 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         ],
         stacklevel=5,
     )
-    exclude_ = [_DEFAULT_EXCLUDES]
+    exclude_patterns = [_DEFAULT_EXCLUDES]
     if exclude is not None:
-        exclude_.append(exclude)
+        exclude_patterns.append(exclude)
 
     # while some params could be taken out for one time use (such as
     # verbose), bundling all the configuration together makes it easier
@@ -178,7 +178,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     )
     filters = _Filters(
         include_ignored=include_ignored,
-        exclude=exclude_,
+        exclude=exclude_patterns,
         excludes=excludes or [],
     )
     config = _Config(
