@@ -38,6 +38,49 @@ _NO_RETURN = ("NoReturn", "Never")
 #: closing token
 _FIELD_WORD = r"(?:\\?\*){0,2}\w+(?:[.,|\[\]]+\w+)*[,\[\]]*"
 
+#: a ``..`` directive and its indented block, which may be indented
+#: arbitrarily and so never counts as a param indent anomaly
+_DIRECTIVE = _re.compile(r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*", _re.MULTILINE)
+
+#: an rst field such as ``:param:``, marking a docstring as already rst
+_RST_FIELD = _re.compile(r"^:\w+", _re.MULTILINE)
+
+#: a numpy section header such as ``Returns`` underlined with dashes
+_NUMPY_SECTION = _re.compile(
+    r"^(Parameters|Other Parameters|Returns|Yields|Raises|"
+    r"See Also|Notes|Examples|Attributes|Methods)\n"
+    r"\s*-{3,}\s*$",
+    _re.MULTILINE,
+)
+
+#: a Google section header such as ``Args:``
+_GOOGLE_SECTION = _re.compile(
+    r"^(Args|Arguments|Keyword Args|Keyword Arguments|Parameters|"
+    r"Returns|Yields|Raises|Attributes|Example|Examples):\s*$",
+    _re.MULTILINE,
+)
+
+#: a return field such as ``:return:``, capturing its description
+_RETURN_FIELD = _re.compile(
+    r"^[ \t]*:(?:returns?|yields?|rtype):\s*(.*)",
+    _re.IGNORECASE | _re.MULTILINE,
+)
+
+#: a param field such as ``:param name: description``, in three groups:
+#: the keyword with the (possibly starred) name, the token closing the
+#: name (a colon when written correctly), and the description running
+#: up to the next field or the end of the docstring
+# the suggestion is broken
+# noinspection RegExpSingleCharAlternation
+_PARAM_FIELD = _re.compile(
+    r"^[ \t]*:((?:\\?\*){0,2}[\w]+"
+    rf"(?:\s+{_FIELD_WORD}|"
+    rf"\s\|\s{_FIELD_WORD})*)"
+    r"([^\w\s\\*])"
+    r"((?:.|\n)*?)(?=\n[ \t]*:|\Z)",
+    _re.MULTILINE,
+)
+
 
 class RetType(_Enum):
     """Possible kinds of return annotation."""
@@ -285,14 +328,7 @@ class Docstring(_Stub):
 
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
-        # strip double dot directives from docstring, which can be
-        # indented arbitrarily
-        string = _re.sub(
-            r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*",
-            "",
-            string,
-            flags=_re.MULTILINE,
-        )
+        string = _DIRECTIVE.sub("", string)
         for line in string.splitlines():
             # only check params
             # description or anything else is out of scope
@@ -308,24 +344,13 @@ class Docstring(_Stub):
     @staticmethod
     def _docstring_style(string: str) -> str:
         # prefer existing rst fields over napoleon section headers
-        if _re.search(r"^:\w+", string, _re.MULTILINE):
+        if _RST_FIELD.search(string):
             return "rst"
 
-        if _re.search(
-            r"^(Parameters|Other Parameters|Returns|Yields|Raises|"
-            r"See Also|Notes|Examples|Attributes|Methods)\n"
-            r"\s*-{3,}\s*$",
-            string,
-            _re.MULTILINE,
-        ):
+        if _NUMPY_SECTION.search(string):
             return "numpy"
 
-        if _re.search(
-            r"^(Args|Arguments|Keyword Args|Keyword Arguments|Parameters|"
-            r"Returns|Yields|Raises|Attributes|Example|Examples):\s*$",
-            string,
-            _re.MULTILINE,
-        ):
+        if _GOOGLE_SECTION.search(string):
             return "google"
 
         return "rst"
@@ -361,27 +386,13 @@ class Docstring(_Stub):
         """
         indent_anomaly = cls._indent_anomaly(node.value)
         string = cls._normalize_docstring(node.value)
-        match = _re.search(
-            r"^[ \t]*:(?:returns?|yields?|rtype):\s*(.*)",
-            string,
-            _re.IGNORECASE | _re.MULTILINE,
-        )
+        match = _RETURN_FIELD.search(string)
         returns = _Return(
             bool(match),
             description_missing=not match or not match.group(1),
         )
         docstring = cls(string, returns)
-        # the suggestion is broken
-        # noinspection RegExpSingleCharAlternation
-        for match in _re.findall(
-            r"^[ \t]*:((?:\\?\*){0,2}[\w]+"
-            rf"(?:\s+{_FIELD_WORD}|"
-            rf"\s\|\s{_FIELD_WORD})*)"
-            r"([^\w\s\\*])"
-            r"((?:.|\n)*?)(?=\n[ \t]*:|\Z)",
-            string,
-            _re.MULTILINE,
-        ):
+        for match in _PARAM_FIELD.findall(string):
             if match:
                 kinds = match[0].split()
                 if kinds:
