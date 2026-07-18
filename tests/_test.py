@@ -1471,3 +1471,35 @@ def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
         lambda: parser,
     )
     assert ValidatePyproject() == schema
+
+
+def test_prose_after_rst_directive_period_check_applies(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Period check applies to prose that follows a directive block.
+
+    When prose continues after a directive and its indented content,
+    SIG306 should evaluate the final prose, not the directive.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: A value.
+
+    .. note::
+        Some important note.
+
+    See the notes for more
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref in std.out
