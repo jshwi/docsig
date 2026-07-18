@@ -31,7 +31,7 @@
    :target: https://docsig.io/en/latest/?badge=latest
    :alt: readthedocs.org
 .. |python3.10| image:: https://img.shields.io/badge/python-3.10-blue.svg
-   :target: https://www.python.org/downloads/release/python-390
+   :target: https://www.python.org/downloads/release/python-310
    :alt: python3.10
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
@@ -52,7 +52,7 @@
    :target: https://github.com/jshwi/docsig/actions/workflows/build-intellij-plugin.yaml
    :alt: Build
 .. |VS Code Build| image:: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml/badge.svg
-   :target: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml.yaml
+   :target: https://github.com/jshwi/docsig/actions/workflows/build-vscode-extension.yaml
    :alt: Build
 .. |VS Code Extension| image:: https://img.shields.io/badge/vscode%20extension-v1.0.1-007ACC
    :target: https://marketplace.visualstudio.com/items?itemName=jshwi.docsig
