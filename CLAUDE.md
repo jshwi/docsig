@@ -224,6 +224,20 @@ to promote.
 **Commit subjects must not contain `and`** — if you need `and`, split into two
 commits.
 
+**Pick the commit type by what the change is, not by where it lands:** docs
+pages are `doc:` commits and internal-only cleanups are `refactor:` commits,
+even on `dev/main` — `wip:` is reserved for staged behavior changes, and
+`chore(ai)` only covers AI housekeeping files like `CLAUDE.md`, never docs
+content. A change that corrects expected behavior is a `fix` even when it
+reads like a feature — subject it as `wip: fix ...`, not after the mechanism
+(e.g. "fix commandline exclude ignored when configured in pyproject", not
+"merge exclude patterns across config layers").
+
+**Every fix commit carries a fix test:** a regression test in
+`tests/fix_test.py` named `test_fix_<subject-ish>` whose docstring states the
+problem it guards against, committed with the fix. Unit tests in other test
+files don't satisfy this.
+
 **All commits need DCO sign-off** — conform enforces a `Signed-off-by` trailer,
 so always commit with `git commit -s`.
 
