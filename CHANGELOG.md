@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.1](https://github.com/jshwi/docsig/tree/v0.91.1) - 2026-07-18
+
+### Fixed
+
+- stop SIG306 false positive on ! or ? sentence endings ([#947](https://github.com/jshwi/docsig/issues/947))
+- false SIG503 when rtype is used as return documentation ([#949](https://github.com/jshwi/docsig/issues/949))
+- reduce each duplicate parameter group to one copy ([#951](https://github.com/jshwi/docsig/issues/951))
+
 ## [0.91.0](https://github.com/jshwi/docsig/tree/v0.91.0) - 2026-07-18
 
 ### Removed
