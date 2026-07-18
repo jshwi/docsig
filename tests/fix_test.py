@@ -2094,3 +2094,34 @@ def test_fix_load_config_for_module_invocation(
     patch_argv("__main__.py", ".")
     namespace = build_parser().parse_args()
     assert namespace.check_dunders is True
+
+
+def test_fix_rst_code_block_in_description_does_not_trigger_period_check(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """RST code blocks in param descriptions do not trigger SIG306.
+
+    A description that introduces a code block with ``::`` captures the
+    block's indented content as part of the description text.  The last
+    character of that content is typically not a sentence terminator, so
+    the naive last-character check fired a false positive.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Example usage::
+
+        foo(x=1)
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
