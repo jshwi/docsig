@@ -20,6 +20,7 @@ from ._stub import VALID_DESCRIPTION as _VALID_DESCRIPTION
 from ._stub import Param as _Param
 from ._stub import Params as _Params
 from ._stub import RetType as _RetType
+from ._utils import SENTENCE_ABBREVIATIONS as _SENTENCE_ABBREVIATIONS
 from ._utils import almost_equal as _almost_equal
 from ._utils import sentence_tokenizer as _sentence_tokenizer
 from .messages import E as _E
@@ -247,7 +248,11 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         if doc_description is not None and not all(
             stripped[0].isupper()
             for i in _sentence_tokenizer(doc_description)
-            if i and (stripped := i.strip())[0].isalpha()
+            if (
+                i
+                and (stripped := i.strip())[0].isalpha()
+                and stripped.lower().split()[0] not in _SENTENCE_ABBREVIATIONS
+            )
         ):
             # description is not capitalized
             self._add(_E[305])

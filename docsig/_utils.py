@@ -58,6 +58,11 @@ def print_checks() -> None:
         print(msg.fstring(_TEMPLATE))
 
 
+SENTENCE_ABBREVIATIONS = frozenset(
+    {"e.g.", "i.e.", "mr.", "dr.", "vs.", "etc.", "u.s."},
+)
+
+
 def sentence_tokenizer(text: str) -> list[str]:
     """Split text on sentence boundaries, skipping common abbreviations.
 
@@ -67,7 +72,7 @@ def sentence_tokenizer(text: str) -> list[str]:
     :param text: Input string.
     :return: Non-overlapping sentence strings in order.
     """
-    abbreviations = {"e.g.", "i.e.", "mr.", "dr.", "vs.", "etc.", "u.s."}
+    abbreviations = SENTENCE_ABBREVIATIONS
     result = []
     start = 0
 
