@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 
 # noinspection PyProtectedMember
-from docsig._config import _ArgumentParser, _split_comma
+from docsig._config import _ArgumentParser, _split_comma, build_parser
 
 # noinspection PyProtectedMember
 from docsig._files import Files
@@ -2075,3 +2075,22 @@ def func(y, x):
     assert E[402].ref not in std.out
     assert E[403].ref not in std.out
     assert E[404].ref not in std.out
+
+
+def test_fix_load_config_for_module_invocation(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    patch_argv: FixturePatchArgv,
+) -> None:
+    """Test config loads when run with ``python -m docsig``.
+
+    Problem: The config lookup keyed off argv's program name, so
+    ``python -m docsig`` resolved the prog to ``__main__`` and the
+    ``[tool.docsig]`` table was never read.
+
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
+    :param patch_argv: Patch commandline arguments.
+    """
+    init_pyproject_toml({"check-dunders": True})
+    patch_argv("__main__.py", ".")
+    namespace = build_parser().parse_args()
+    assert namespace.check_dunders is True
