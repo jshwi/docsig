@@ -7,6 +7,7 @@ Entry point and orchestration for running docstring/signature checks.
 
 import logging as _logging
 import sys as _sys
+import typing as _t
 from pathlib import Path as _Path
 from pprint import pformat as _pformat
 
@@ -88,8 +89,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     ignore_kwargs: bool = False,
     no_ansi: bool = False,
     verbose: bool = False,
-    target: _Messages | None = None,
-    disable: _Messages | None = None,
+    target: list[str] | None = None,
+    disable: list[str] | None = None,
     exclude: str | list[str] | None = None,
     excludes: list[str] | None = None,
 ) -> int:
@@ -164,8 +165,10 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         filters=filters,
         no_ansi=no_ansi,
         verbose=verbose,
-        target=target or _Messages(),
-        disable=disable or _Messages(),
+        # the annotations describe the caller's interface; _parse_msgs
+        # has already converted these to Messages by the time they land
+        target=_t.cast("_Messages | None", target) or _Messages(),
+        disable=_t.cast("_Messages | None", disable) or _Messages(),
     )
     setup_logger(config.verbose)
     _logging.getLogger(__package__).debug(_pformat(config))
