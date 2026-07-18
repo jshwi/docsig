@@ -246,7 +246,7 @@ def build_parser() -> _ArgumentParser:
     )
     parser.add_argument(
         "-E",
-        "--excludes",
+        "--exclude-glob",
         nargs="+",
         metavar="PATH",
         help="path glob patterns to exclude from checks",
@@ -326,13 +326,13 @@ class Filters:
 
     :param exclude: Regular expression of files and dirs to exclude from
         checks.
-    :param excludes: Files or dirs to exclude from checks.
+    :param exclude_glob: Files or dirs to exclude from checks.
     :param include_ignored: Check files even if they match a gitignore
         pattern.
     """
 
     exclude: list[str] = _field(default_factory=list)
-    excludes: list[str] = _field(default_factory=list)
+    exclude_glob: list[str] = _field(default_factory=list)
     include_ignored: bool = False
 
 

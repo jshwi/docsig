@@ -92,7 +92,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     target: list[str] | None = None,
     disable: list[str] | None = None,
     exclude: str | list[str] | None = None,
-    excludes: list[str] | None = None,
+    exclude_glob: list[str] | None = None,
 ) -> int:
     """Run docstring/signature checks on paths or a string and report.
 
@@ -126,7 +126,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param disable: List of errors to disable.
     :param exclude: Regular expression(s) of files and dirs to exclude
         from checks, joined with the default exclusions.
-    :param excludes: Files or dirs to exclude from checks.
+    :param exclude_glob: Files or dirs to exclude from checks.
     :return: Exit code (non-zero if any check failed).
     """
     exclude_patterns = [_DEFAULT_EXCLUDES]
@@ -156,7 +156,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     filters = _Filters(
         include_ignored=include_ignored,
         exclude=exclude_patterns,
-        excludes=excludes or [],
+        exclude_glob=exclude_glob or [],
     )
     config = _Config(
         list_checks=list_checks,

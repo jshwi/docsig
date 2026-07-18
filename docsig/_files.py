@@ -103,7 +103,7 @@ class Files(list[_Path]):
 
         for path in list(self):
             if any(_re.match(i, str(path)) for i in filters.exclude) or any(
-                _glob(path, i) for i in filters.excludes
+                _glob(path, i) for i in filters.exclude_glob
             ):
                 logger.debug(FILE_INFO, path, "in exclude list, skipping")
                 self.remove(path)

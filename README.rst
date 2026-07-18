@@ -128,7 +128,7 @@ Commandline
                             comma separated list of rules to target
       -e PATTERN, --exclude PATTERN
                             regular expression of files or dirs to exclude from checks
-      -E PATH [PATH ...], --excludes PATH [PATH ...]
+      -E PATH [PATH ...], --exclude-glob PATH [PATH ...]
                             path glob patterns to exclude from checks
       -i, --include-ignored
                             check files even if they match a gitignore pattern

@@ -1249,7 +1249,7 @@ def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
                 ),
                 "default": [],
             },
-            "excludes": {
+            "exclude-glob": {
                 "type": "array",
                 "items": {"type": "string"},
                 "description": "path glob patterns to exclude from checks",
@@ -1452,7 +1452,7 @@ def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
     )
     parser.add_argument(
         "-E",
-        "--excludes",
+        "--exclude-glob",
         nargs="+",
         metavar="PATH",
         help="path glob patterns to exclude from checks",

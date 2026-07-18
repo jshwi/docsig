@@ -750,7 +750,7 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
         ".",
         "--verbose",
         "--include-ignored",
-        "--excludes",
+        "--exclude-glob",
         *args,
         test_flake8=False,
     )
