@@ -12,6 +12,7 @@
    usage/messages
    usage/message-control
    usage/versioning
+   usage/migrating-to-1
 
 .. toctree::
    :caption: Development
