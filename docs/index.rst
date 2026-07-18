@@ -11,6 +11,7 @@
    usage/configuration
    usage/messages
    usage/message-control
+   usage/versioning
 
 .. toctree::
    :caption: Development

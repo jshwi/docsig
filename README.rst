@@ -288,6 +288,10 @@ or integrated with ``flake8``
               - "--sig-check-overridden"
               - "--sig-check-protected"
 
+Versioning
+----------
+``docsig`` follows semantic versioning, and most releases are patches; read about the versioning policy `here <https://docsig.io/en/latest/usage/versioning.html>`__
+
 Contributing
 ------------
 If you are interested in contributing to ``docsig``, please read about contributing `here <https://docsig.io/en/latest/development/contributing.html>`__
