@@ -185,8 +185,9 @@ And now use `flake8` to lint your files
     $ flake8 example.py
     example.py:1:1: SIG202 includes parameters that do not exist (params-do-not-exist) 'function'
 
-With ``flake8`` the pyproject.toml config will still be the base config, though the
-`ini files <https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations>`_ ``flake8`` gets its config from will override the pyproject.toml config.
+With ``flake8`` configuration comes from ``flake8``'s own
+`ini files <https://flake8.pycqa.org/en/latest/user/configuration.html#configuration-locations>`_
+or commandline options; the plugin does not read pyproject.toml.
 For ``flake8`` all args and config options are prefixed with ``sig`` to
 avoid any potential conflicts with other plugins
 
