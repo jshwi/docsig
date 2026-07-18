@@ -88,6 +88,10 @@ def build_parser() -> _ArgumentParser:
     :return: The argument parser.
     """
     parser = _ArgumentParser(
+        # pin prog so the config lookup works however the program is
+        # invoked, e.g. `python -m docsig` would otherwise resolve the
+        # prog to __main__
+        prog=__package__,
         description="Check signature params for proper documentation",
     )
     parser.add_argument(
