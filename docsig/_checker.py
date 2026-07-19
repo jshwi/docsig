@@ -36,6 +36,25 @@ _VALID_ENDINGS = (
 )
 
 
+def _last_prose_char(text: str) -> tuple[str | None, bool]:
+    # return the last character of non-code-block prose and whether the
+    # text ends inside a code block (a line ending with ::)
+    in_block = False
+    last_char = None
+    for line in text.strip().split("\n"):
+        stripped_ln = line.strip()
+        if in_block:
+            if stripped_ln and line[:1] not in (" ", "\t"):
+                in_block = False
+            else:
+                continue
+        if stripped_ln.endswith("::"):
+            in_block = True
+        if stripped_ln:
+            last_char = stripped_ln[-1]
+    return last_char, in_block
+
+
 class FunctionChecker:  # pylint: disable=too-few-public-methods
     """Collect docstring and signature failures for one function.
 
@@ -209,10 +228,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             # params-missing
             self._add(_E[203])
 
-    def _sig3xx_description(  # pylint: disable=too-many-branches
-        self,
-        doc: _Param,
-    ) -> None:
+    def _sig3xx_description(self, doc: _Param) -> None:
         # freeze result as it is a property and PyCharm complains
         # `Member 'None' of 'str | None' does not have attribute
         # 'startswith'` as property could theoretically have different
@@ -249,25 +265,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         # a description that ends inside an RST code block (introduced
         # by a line ending with ::) does not need a sentence terminator
         if doc_description:
-            # return the last character of non-code-block prose and
-            # whether the text ends inside a code block (a line ending
-            # with ::)
-            in_block = False
-            last_char = None
-            for line in doc_description.strip().split("\n"):
-                stripped_ln = line.strip()
-                if in_block:
-                    if stripped_ln and line[:1] not in (" ", "\t"):
-                        in_block = False
-                    else:
-                        continue
-
-                if stripped_ln.endswith("::"):
-                    in_block = True
-
-                if stripped_ln:
-                    last_char = stripped_ln[-1]
-
+            last_char, in_block = _last_prose_char(doc_description)
             if (
                 not in_block
                 and last_char is not None
