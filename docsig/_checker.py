@@ -202,7 +202,10 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             # params-missing
             self._add(_E[203])
 
-    def _sig3xx_description(self, doc: _Param) -> None:
+    def _sig3xx_description(  # pylint: disable=too-many-branches
+        self,
+        doc: _Param,
+    ) -> None:
         # freeze result as it is a property and PyCharm complains
         # `Member 'None' of 'str | None' does not have attribute
         # 'startswith'` as property could theoretically have different
@@ -232,18 +235,40 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             # description is not capitalized
             self._add(_E[305])
         # description-missing-period
-        if (
-            doc_description
-            and doc_description.strip()
-            and doc_description.strip()[-1]
-            not in (
-                "`",
-                ".",
-                "!",
-                "?",
-            )
-        ):
-            self._add(_E[306])
+        # a description that ends inside an RST code block (introduced
+        # by a line ending with ::) does not need a sentence terminator
+        if doc_description:
+            # return the last character of non-code-block prose and
+            # whether the text ends inside a code block (a line ending
+            # with ::)
+            in_block = False
+            last_char = None
+            for line in doc_description.strip().split("\n"):
+                stripped_ln = line.strip()
+                if in_block:
+                    if stripped_ln and line[:1] not in (" ", "\t"):
+                        in_block = False
+                    else:
+                        continue
+
+                if stripped_ln.endswith("::"):
+                    in_block = True
+
+                if stripped_ln:
+                    last_char = stripped_ln[-1]
+
+            if (
+                not in_block
+                and last_char is not None
+                and last_char
+                not in (
+                    "`",
+                    ".",
+                    "!",
+                    "?",
+                )
+            ):
+                self._add(_E[306])
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         # freeze result as it is a property and PyCharm complains
