@@ -28,6 +28,12 @@ from .messages import Message as _Message
 
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
+_VALID_ENDINGS = (
+    "`",
+    ".",
+    "!",
+    "?",
+)
 
 
 class FunctionChecker:  # pylint: disable=too-few-public-methods
@@ -265,13 +271,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             if (
                 not in_block
                 and last_char is not None
-                and last_char
-                not in (
-                    "`",
-                    ".",
-                    "!",
-                    "?",
-                )
+                and last_char not in _VALID_ENDINGS
             ):
                 self._add(_E[306])
 
