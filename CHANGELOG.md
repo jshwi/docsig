@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.2](https://github.com/jshwi/docsig/tree/v0.91.2) - 2026-07-19
+
+### Fixed
+
+- config lookup for module invocation ([#953](https://github.com/jshwi/docsig/issues/953))
+- false positive SIG306 for rst code blocks in descriptions ([#955](https://github.com/jshwi/docsig/issues/955))
+- false positive SIG305 for abbreviations after sentence end ([#957](https://github.com/jshwi/docsig/issues/957))
+
 ## [0.91.1](https://github.com/jshwi/docsig/tree/v0.91.1) - 2026-07-18
 
 ### Fixed
