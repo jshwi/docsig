@@ -2125,3 +2125,33 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref not in std.out
+
+
+def test_fix_abbreviation_after_sentence_does_not_trigger_sig305(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Known abbreviations starting a sentence fragment do not fire SIG305.
+
+    sentence_tokenizer does not split on 'e.g.' or 'i.e.', but after a
+    previous sentence split, those abbreviations can appear at the start
+    of the remaining fragment.  SIG305 must not fire for such fragments
+    because the lowercase letter belongs to the abbreviation, not to a
+    genuine uncapitalized sentence start.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Some config value. e.g. use 42 for normal mode.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out
