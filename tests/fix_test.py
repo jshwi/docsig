@@ -2155,3 +2155,62 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[305].ref not in std.out
+
+
+def test_fix_rst_directive_in_description_does_not_trigger_sig305(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """RST directives (.. note::) in descriptions do not fire SIG305.
+
+    The sentence tokenizer previously split on the space after the second
+    dot in '.. note::'.  A negative lookbehind in the tokenizer regex now
+    prevents splitting on '..' sequences.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: A value. See also:
+
+        .. note::
+            Some important note.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out
+
+
+def test_fix_parenthesized_abbreviation_does_not_trigger_sig305(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Abbreviations inside parentheses do not fire SIG305.
+
+    'e.g.' preceded by '(' becomes '(e.g.' as the last token before the
+    split, which was not recognised as a known abbreviation.  The fix
+    strips leading punctuation before the abbreviation lookup.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Some mode (e.g. debug mode or release mode).
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out

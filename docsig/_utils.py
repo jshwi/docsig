@@ -75,10 +75,12 @@ def sentence_tokenizer(text: str) -> list[str]:
     result = []
     start = 0
 
-    for match in _re.finditer(r"[.!?]\s+", text):
+    for match in _re.finditer(r"(?<!\.)[.!?]\s+", text):
         end = match.end()
         candidate = text[start:end].strip()
-        last_word = candidate.lower().split()[-1]
+        raw_last = candidate.lower().split()[-1]
+        # strip leading punctuation so "(e.g." matches "e.g."
+        last_word = _re.sub(r"^[^\w.]+", "", raw_last)
         if last_word in abbreviations:
             continue
 
