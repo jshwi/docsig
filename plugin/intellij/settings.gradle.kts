@@ -13,7 +13,7 @@ pluginManagement {
         id("org.jetbrains.intellij.platform.settings") version "2.18.1"
         id("org.jetbrains.changelog") version "2.5.0"
         id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
-        id("org.jetbrains.kotlinx.kover") version "0.9.8"
+        id("org.jetbrains.kotlinx.kover") version "0.9.9"
         id("io.gitlab.arturbosch.detekt") version "1.23.8"
     }
 }
