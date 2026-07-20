@@ -763,3 +763,12 @@ def test_exclude_glob(  # pylint: disable=too-many-positional-arguments
         for i in paths
         if i not in expected
     )
+
+
+def test_exclude_string_api(init_file: FixtureInitFile) -> None:
+    """Test a single exclude pattern passed to the API as a string.
+
+    :param init_file: Initialize a test file.
+    """
+    init_file(WILL_ERROR)
+    assert docsig.docsig(".", exclude=r"module[\\/]file.py", no_ansi=True) == 0
