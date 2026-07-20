@@ -2242,3 +2242,33 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[305].ref not in std.out
+
+
+def test_fix_rst_directive_ending_description_does_not_trigger_sig306(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """RST directives ending a param description do not fire SIG306.
+
+    A directive such as ``.. versionchanged:: 2.2`` is not prose, so a
+    description ending with one does not need a sentence terminator.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: If set to `False`, disables legacy mode.
+
+        .. versionchanged:: 1.22.0
+        .. versionchanged:: 2.2
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
