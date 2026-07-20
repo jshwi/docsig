@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.3](https://github.com/jshwi/docsig/tree/v0.91.3) - 2026-07-20
+
+### Fixed
+
+- false positive SIG305 for parenthesized abbreviations ([#959](https://github.com/jshwi/docsig/issues/959))
+- false positive SIG305 for abbreviations before comma ([#961](https://github.com/jshwi/docsig/issues/961))
+- false positive SIG306 for rst directives in descriptions ([#963](https://github.com/jshwi/docsig/issues/963))
+
 ## [0.91.2](https://github.com/jshwi/docsig/tree/v0.91.2) - 2026-07-19
 
 ### Fixed
