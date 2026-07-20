@@ -2303,3 +2303,56 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref not in std.out
+
+
+def test_fix_read_files_with_pep263_encoding_declaration(
+    tmp_path: Path,
+    main: FixtureMain,
+) -> None:
+    """Valid python declaring a non-utf-8 codec is checked, not failed.
+
+    Problem: Files were always read as utf-8, so valid python declaring
+    another codec with a pep 263 coding cookie could not be read at all
+    and surfaced as SIG902 with the critical exit status.
+
+    :param tmp_path: Create and return the temporary directory.
+    :param main: Mock ``main`` function.
+    """
+    file = tmp_path / "latin1.py"
+    template = '''\
+# -*- coding: latin-1 -*-
+# café
+def function(param: int) -> None:
+    """Summary.
+
+    :param param: A description.
+    """
+'''
+    file.write_bytes(template.encode("latin-1"))
+    assert main(file) == 0
+
+
+def test_fix_read_files_with_utf_8_bom(
+    tmp_path: Path,
+    main: FixtureMain,
+) -> None:
+    """Valid python with a utf-8 byte-order mark is checked, not failed.
+
+    Problem: Files were always read as plain utf-8, so the byte-order
+    mark some editors prepend leaked into the source and surfaced as
+    SIG901 invalid-syntax although cpython runs the file fine.
+
+    :param tmp_path: Create and return the temporary directory.
+    :param main: Mock ``main`` function.
+    """
+    file = tmp_path / "bom.py"
+    template = '''\
+def function(param: int) -> None:
+    """Summary.
+
+    :param param: A description.
+    """
+'''
+    # noinspection PyArgumentEqualDefault
+    file.write_bytes(b"\xef\xbb\xbf" + template.encode("utf-8"))
+    assert main(file) == 0

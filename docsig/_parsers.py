@@ -7,6 +7,7 @@ import logging as _logging
 import os as _os
 from pathlib import Path as _Path
 from tokenize import TokenError as _TokenError
+from tokenize import detect_encoding as _detect_encoding
 
 import astroid as _ast
 
@@ -62,6 +63,18 @@ def parse_from_string(
     return parent
 
 
+def _source_encoding(file: _Path) -> str:
+    # follow the python tokenizer's own rules (pep 263 cookie or bom) so
+    # any file cpython can run can be read; fall back to utf-8 when
+    # detection itself fails, so undecodable files still surface as
+    # unicode-decode-error
+    try:
+        with file.open("rb") as fd:
+            return _detect_encoding(fd.readline)[0]
+    except SyntaxError:
+        return "utf-8"
+
+
 def parse_from_file(file: _Path, config: _Config) -> _Parent:
     """Build a Parent from a file containing Python code.
 
@@ -74,7 +87,7 @@ def parse_from_file(file: _Path, config: _Config) -> _Parent:
     :return: Parent for the parsed file or an error/empty Parent.
     """
     try:
-        code = file.read_text(encoding="utf-8")
+        code = file.read_text(encoding=_source_encoding(file))
         module_name = str(file)[:-3].replace(_os.sep, ".").replace("-", "_")
         parent = parse_from_string(code, config, module_name, file)
 
