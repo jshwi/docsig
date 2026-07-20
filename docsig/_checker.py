@@ -6,6 +6,7 @@ Run docstring and signature checks for a single function.
 """
 
 import contextlib as _contextlib
+import re as _re
 import typing as _t
 
 import astroid as _ast
@@ -34,20 +35,29 @@ _VALID_ENDINGS = (
     "!",
     "?",
 )
+_LIST_ITEM = _re.compile(r"(?:[-*+]|#\.|\d+\.)(?:\s|$)")
 
 
 def _last_prose_char(text: str) -> tuple[str | None, bool]:
     # return the last character of non-code-block prose and whether the
-    # text ends inside a code block (a line ending with ::)
+    # text ends where a sentence terminator is not expected (inside a
+    # code block or directive, or on a list item)
     in_block = False
     last_char = None
+    para_start = None
     for line in text.strip().split("\n"):
         stripped_ln = line.strip()
         if in_block:
             if stripped_ln and line[:1] not in (" ", "\t"):
                 in_block = False
+                para_start = None
             else:
                 continue
+        if not stripped_ln:
+            para_start = None
+            continue
+        if para_start is None:
+            para_start = stripped_ln
         if stripped_ln.startswith(".."):
             # a directive or comment, e.g. `.. versionchanged:: 2.0`,
             # is not prose, and its indented content belongs to it
@@ -55,9 +65,11 @@ def _last_prose_char(text: str) -> tuple[str | None, bool]:
             continue
         if stripped_ln.endswith("::"):
             in_block = True
-        if stripped_ln:
-            last_char = stripped_ln[-1]
-    return last_char, in_block
+        last_char = stripped_ln[-1]
+    ends_on_list_item = para_start is not None and bool(
+        _LIST_ITEM.match(para_start),
+    )
+    return last_char, in_block or ends_on_list_item
 
 
 def check_function(func: _Function, config: _Config) -> _FunctionResult:
@@ -278,12 +290,12 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             # description is not capitalized
             self._add(_E[305])
         # description-missing-period
-        # a description that ends inside an RST code block (introduced
-        # by a line ending with ::) does not need a sentence terminator
+        # a description that ends inside an RST code block or directive,
+        # or on a list item, does not need a sentence terminator
         if doc_description:
-            last_char, in_block = _last_prose_char(doc_description)
+            last_char, exempt = _last_prose_char(doc_description)
             if (
-                not in_block
+                not exempt
                 and last_char is not None
                 and last_char not in _VALID_ENDINGS
             ):

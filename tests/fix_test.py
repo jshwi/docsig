@@ -2272,3 +2272,34 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref not in std.out
+
+
+def test_fix_list_ending_description_does_not_trigger_sig306(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Descriptions ending with a list item do not fire SIG306.
+
+    List items conventionally are not sentence-terminated, so a
+    description whose last paragraph is a bullet or enumerated list
+    does not need to end in a period.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: Individual types for which a formatter can be set are:
+
+        - 'bool'
+        - 'int'
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref not in std.out
