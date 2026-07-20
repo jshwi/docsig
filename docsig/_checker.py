@@ -58,9 +58,11 @@ def _last_prose_char(text: str) -> tuple[str | None, bool]:
             continue
         if para_start is None:
             para_start = stripped_ln
-        if stripped_ln.startswith(".."):
+        if stripped_ln == ".." or stripped_ln.startswith(".. "):
             # a directive or comment, e.g. `.. versionchanged:: 2.0`,
             # is not prose, and its indented content belongs to it
+            # rst explicit markup is `..` followed by whitespace, so an
+            # ellipsis starting a prose line is not a directive
             in_block = True
             continue
         if stripped_ln.endswith("::"):
