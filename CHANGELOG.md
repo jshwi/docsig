@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.4](https://github.com/jshwi/docsig/tree/v0.91.4) - 2026-07-20
+
+### Fixed
+
+- false positive SIG306 for descriptions ending with a list ([#969](https://github.com/jshwi/docsig/issues/969))
+- valid python in non-utf-8 encoding reported as broken file ([#971](https://github.com/jshwi/docsig/issues/971))
+- default excludes for paths below the invocation dir ([#973](https://github.com/jshwi/docsig/issues/973))
+
 ## [0.91.3](https://github.com/jshwi/docsig/tree/v0.91.3) - 2026-07-20
 
 ### Fixed
