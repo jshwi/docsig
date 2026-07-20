@@ -256,7 +256,8 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
             if (
                 i
                 and (stripped := i.strip())[0].isalpha()
-                and stripped.lower().split()[0] not in _SENTENCE_ABBREVIATIONS
+                and stripped.lower().split()[0].rstrip(",;")
+                not in _SENTENCE_ABBREVIATIONS
             )
         ):
             # description is not capitalized

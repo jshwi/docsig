@@ -2214,3 +2214,31 @@ def func(x) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[305].ref not in std.out
+
+
+def test_fix_abbreviation_with_trailing_comma_does_not_trigger_sig305(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Abbreviations followed by a comma do not fire SIG305.
+
+    'e.g.,' and 'i.e.,' end with a trailing comma that was not stripped
+    before the SENTENCE_ABBREVIATIONS lookup, causing a false positive.
+    The fix strips trailing commas and semicolons before the lookup.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def func(x) -> None:
+    """Summary.
+
+    :param x: First value. e.g., debug or release.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out
