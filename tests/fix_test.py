@@ -19,6 +19,7 @@ from docsig.messages import E
 
 from . import (
     TREE,
+    WILL_ERROR,
     FixtureFlake8,
     FixtureInitFile,
     FixtureInitPyprojectTomlFile,
@@ -2356,3 +2357,30 @@ def function(param: int) -> None:
     # noinspection PyArgumentEqualDefault
     file.write_bytes(b"\xef\xbb\xbf" + template.encode("utf-8"))
     assert main(file) == 0
+
+
+def test_fix_default_excludes_apply_below_invocation_path(
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Default excludes apply however the checked path is given.
+
+    Problem: The default exclude patterns were anchored to the start of
+    the path as given, so they only matched when the excluded dir sat
+    directly under the current working directory; checking a
+    subdirectory or an absolute path descended into venvs and other
+    excluded dirs.
+
+    :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    make_tree(
+        {
+            "proj": {
+                ".venv": {"file.py": [WILL_ERROR]},
+                "__pycache__": {"file.py": [WILL_ERROR]},
+            },
+        },
+    )
+    assert main("proj", test_flake8=False) == 0
+    assert main(Path.cwd() / "proj", test_flake8=False) == 0

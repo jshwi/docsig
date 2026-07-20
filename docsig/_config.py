@@ -20,8 +20,11 @@ from .messages import Messages as _Messages
 
 PYPROJECT_TOML = "pyproject.toml"
 
+# the leading optional group allows the excluded dir to sit at any
+# depth, so the default excludes apply however the checked path is
+# given, e.g. a subdir or an absolute path, not only relative to cwd
 DEFAULT_EXCLUDES = """\
-(?x)^(
+(?x)^(?:.*[\\\\/])?(
     |\\.?venv[\\\\/].*
     |\\.git[\\\\/].*
     |\\.hg[\\\\/].*
@@ -33,7 +36,7 @@ DEFAULT_EXCLUDES = """\
     |\\.tox[\\\\/].*
     |\\.vscode[\\\\/].*
     |_?build[\\\\/].*
-    |.*[\\\\/]__pycache__[\\\\/].*
+    |__pycache__[\\\\/].*
     |dist[\\\\/].*
     |node_modules[\\\\/].*
 )$
