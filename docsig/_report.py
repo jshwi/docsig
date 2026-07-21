@@ -121,20 +121,20 @@ def report(
     format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
     output = []
     obj = []
-    for result in payload:
-        header = result.header
+    for entry in payload:
+        header = entry.header
         if not config.no_ansi and _sys.stdout.isatty():
             header = f"\033[35m{header}\033[0m"
 
         output.append(header)
-        for item in result.diagnostics:
+        for item in entry.diagnostics:
             output.append(f"    {item.message}")
             if item.extra is not None:
                 output.append(f"    {item.extra}")
 
             obj.append(
                 {
-                    "line": None if result.retcode == 2 else item.line,
+                    "line": None if entry.retcode == 2 else item.line,
                     "message": item.message,
                     "exit": item.exit,
                 },
