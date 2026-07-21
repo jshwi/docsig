@@ -80,9 +80,8 @@ class Files(list[_Path]):
             self._populate(_Path(path))
 
         for path in list(self):
-            if str(path) != "." and (
-                any(_re.match(i, str(path)) for i in filters.exclude)
-                or any(_glob(path, i) for i in filters.excludes)
+            if any(_re.match(i, str(path)) for i in filters.exclude) or any(
+                _glob(path, i) for i in filters.excludes
             ):
                 logger.debug(FILE_INFO, path, "in exclude list, skipping")
                 self.remove(path)
