@@ -2415,3 +2415,46 @@ def function(a: int, b: int, c: int) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[305].ref not in std.out
+
+
+def test_fix_exclude_ignored_when_configured_in_pyproject(
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Test commandline exclude merges with pyproject exclude.
+
+    Problem: An exclude pattern configured in pyproject.toml silently
+    replaced a pattern passed on the commandline, so the commandline
+    pattern was ignored.
+
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
+    :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    make_tree({"a": {"file.py": [WILL_ERROR]}, "b": {"file.py": [WILL_ERROR]}})
+    init_pyproject_toml({"exclude": r"a[\\/].*"})
+    assert main(".", "--exclude", r"b[\\/].*", test_flake8=False) == 0
+
+
+def test_fix_exclude_repeated_argument(
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Test exclude patterns accumulate when the argument is repeated.
+
+    :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    make_tree({"a": {"file.py": [WILL_ERROR]}, "b": {"file.py": [WILL_ERROR]}})
+    assert (
+        main(
+            ".",
+            "--exclude",
+            r"a[\\/].*",
+            "--exclude",
+            r"b[\\/].*",
+            test_flake8=False,
+        )
+        == 0
+    )

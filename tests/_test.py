@@ -1240,12 +1240,13 @@ def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
                 "default": [],
             },
             "exclude": {
-                "type": "string",
+                "type": ["string", "array"],
+                "items": {"type": "string"},
                 "description": (
                     "regular expression of files or dirs to exclude from"
                     " checks"
                 ),
-                "default": None,
+                "default": [],
             },
             "excludes": {
                 "type": "array",
@@ -1443,6 +1444,8 @@ def test_validate_pyproject(monkeypatch: pytest.MonkeyPatch) -> None:
     parser.add_argument(
         "-e",
         "--exclude",
+        action="append",
+        default=[],
         metavar="PATTERN",
         help="regular expression of files or dirs to exclude from checks",
     )

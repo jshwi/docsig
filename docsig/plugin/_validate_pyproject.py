@@ -66,11 +66,13 @@ class ValidatePyproject(dict[str, _t.Any]):
             self["properties"][name] = {"default": action.default}
             if isinstance(action.default, bool):
                 self["properties"][name]["type"] = "boolean"
+            elif type(action).__name__ == "_AppendAction":
+                # append options take a single value or a list
+                self["properties"][name]["type"] = ["string", "array"]
+                self["properties"][name]["items"] = {"type": "string"}
             elif isinstance(action.default, list) or action.nargs in _NARGS:
                 self["properties"][name]["type"] = "array"
                 self["properties"][name]["items"] = {"type": "string"}
-            elif action.type is None:
-                self["properties"][name]["type"] = "string"
 
             if action.help:
                 description = action.help

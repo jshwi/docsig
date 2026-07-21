@@ -75,8 +75,8 @@ def merge_configs(
 ) -> dict[str, _t.Any]:
     """Merge the second config dict into the first and return the first.
 
-    List values in obj2 are added to lists in obj1; other keys are
-    overridden.
+    Values in obj2 are added to lists in obj1, so list options union
+    across config layers; other keys are overridden.
 
     :param obj1: Base config dict (modified in place).
     :param obj2: Overrides and extra keys to merge in.
@@ -84,8 +84,10 @@ def merge_configs(
     """
     for key, n_val in obj1.items():
         c_val = obj2.get(key)
-        if isinstance(c_val, list) and isinstance(n_val, list):
-            obj1[key].extend(c_val)
+        if isinstance(n_val, list) and c_val:
+            obj1[key].extend(
+                c_val if isinstance(c_val, list) else [c_val],
+            )
         elif c_val:
             obj1[key] = c_val
 
@@ -243,6 +245,8 @@ def build_parser() -> _ArgumentParser:
     parser.add_argument(
         "-e",
         "--exclude",
+        action="append",
+        default=[],
         metavar="PATTERN",
         help="regular expression of files or dirs to exclude from checks",
     )
