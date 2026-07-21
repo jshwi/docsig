@@ -24,6 +24,10 @@ UNNAMED = "-1000"
 # an example of valid parameter description
 VALID_DESCRIPTION = " A valid description."
 
+# annotations meaning the function never returns a value, treated the
+# same as ``-> None`` for documentation purposes
+_NO_RETURN = ("NoReturn", "Never")
+
 
 class RetType(_Enum):
     """Possible kinds of return annotation."""
@@ -44,13 +48,12 @@ class RetType(_Enum):
 
         # NoReturn / Never mean the function never returns a value, so
         # treat them the same as -> None for documentation purposes
-        _no_return = {"NoReturn", "Never"}
-        if isinstance(returns, _ast.nodes.Name) and returns.name in _no_return:
+        if isinstance(returns, _ast.nodes.Name) and returns.name in _NO_RETURN:
             return cls.NONE
 
         if (
             isinstance(returns, _ast.nodes.Attribute)
-            and returns.attrname in _no_return
+            and returns.attrname in _NO_RETURN
         ):
             return cls.NONE
 
