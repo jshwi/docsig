@@ -2544,3 +2544,31 @@ def test_fix_gitignore_resolved_from_checked_path(
     # the repo's patterns and so is still checked
     (Path("repo") / "linked.py").symlink_to(Path.cwd() / "outside.py")
     assert main("repo", test_flake8=False) != 0
+
+
+def test_fix_typed_param_fields_with_brackets_pipes_or_dots(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Types with brackets, pipes, or dots parse in a param field.
+
+    Problem: The param-field regex only recognized plain words, so
+    valid sphinx typed fields such as ``:param list[str] x:`` had the
+    bracket read as the token closing the name, producing spurious
+    SIG302, SIG305, and SIG404 for correctly documented params.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a: list, b: dict, c: int, d: object) -> None:
+    """Summary.
+
+    :param list[str] a: A description.
+    :param dict[str, int] b: A description.
+    :param int|str c: A description.
+    :param t.Any d: A description.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0

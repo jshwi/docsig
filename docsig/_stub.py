@@ -29,6 +29,15 @@ VALID_DESCRIPTION = " A valid description."
 # same as ``-> None`` for documentation purposes
 _NO_RETURN = ("NoReturn", "Never")
 
+#: a word in a param field after the leading keyword: a (possibly
+#: starred) name or type expression, in which ``. , | [ ]`` join word
+#: characters so types such as ``list[str]``, ``t.Any``, ``int|str``,
+#: and the split words of ``dict[str, int]`` hold together; a trailing
+#: ``,`` or bracket belongs to a bracketed type, while a trailing ``.``
+#: or ``|`` stays outside the word so it is still read as a bad
+#: closing token
+_FIELD_WORD = r"(?:\\?\*){0,2}\w+(?:[.,|\[\]]+\w+)*[,\[\]]*"
+
 
 class RetType(_Enum):
     """Possible kinds of return annotation."""
@@ -371,8 +380,8 @@ class Docstring(_Stub):
         # noinspection RegExpSingleCharAlternation
         for match in _re.findall(
             r"^[ \t]*:((?:\\?\*){0,2}[\w]+"
-            r"(?:\s+(?:\\?\*){0,2}[\w]+|"
-            r"\s\|\s(?:\\?\*){0,2}[\w]+)*)"
+            rf"(?:\s+{_FIELD_WORD}|"
+            rf"\s\|\s{_FIELD_WORD})*)"
             r"([^\w\s\\*])"
             r"((?:.|\n)*?)(?=\n[ \t]*:|\Z)",
             string,
