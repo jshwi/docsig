@@ -155,7 +155,7 @@ pylint = "^4.0.6"
 tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 towncrier = ">=23.11,<26.0"
-tox = "^4.57.0"
+tox = "^4.57.2"
 validate-pyproject = {extras = ["all", "store"], version = "^0.25"}
 vulture = "^2.11"
 
