@@ -264,8 +264,8 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         doc_description = doc.description
         if doc_description is None and doc.name is not None:
             self._add(_E[301])
-        elif doc_description is not None and not doc_description.startswith(
-            " ",
+        elif doc_description is not None and self._description_syntax_error(
+            doc_description,
         ):
             # syntax-error-in-description
             self._add(_E[302])
@@ -300,6 +300,42 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
                 and last_char not in _VALID_ENDINGS
             ):
                 self._add(_E[306])
+
+    @staticmethod
+    def _description_syntax_error(description: str) -> bool:
+        # a field body may start on the line after the field name, so a
+        # newline followed by an indented body is well formed; within
+        # that body a deeper indent directly after a body line is not
+        # valid rst ("unexpected indentation") unless the line above
+        # opens a literal block or is a list item
+        if description.startswith(" "):
+            return False
+
+        if not description.startswith("\n"):
+            return True
+
+        prev_indent: int | None = None
+        prev_text = ""
+        seen = False
+        for line in description.splitlines()[1:]:
+            stripped_ln = line.strip()
+            if not stripped_ln:
+                prev_indent = None
+                continue
+
+            seen = True
+            indent = len(line) - len(line.lstrip())
+            if (
+                prev_indent is not None
+                and indent > prev_indent
+                and not prev_text.endswith("::")
+                and not _LIST_ITEM.match(prev_text)
+            ):
+                return True
+
+            prev_indent, prev_text = indent, stripped_ln
+
+        return not seen
 
     def _sig4xx_parameters(self, doc: _Param, sig: _Param) -> None:
         # freeze result as it is a property and PyCharm complains
