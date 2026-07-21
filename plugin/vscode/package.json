@@ -125,7 +125,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-check-file": "^3.3.2",
     "prettier": "^3.9.5",
-    "sinon": "^22.0.0",
+    "sinon": "^22.1.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.64.0"
   },
