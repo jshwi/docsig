@@ -36,6 +36,19 @@ class RetType(_Enum):
     SOME = 2
     UNTYPED = 3
 
+    @staticmethod
+    def _annotates_none(returns: _ast.nodes.NodeNG | None) -> bool:
+        if isinstance(returns, _ast.nodes.Const):
+            return returns.value is None
+
+        if isinstance(returns, _ast.nodes.Name):
+            return returns.name in _NO_RETURN
+
+        if isinstance(returns, _ast.nodes.Attribute):
+            return returns.attrname in _NO_RETURN
+
+        return False
+
     @classmethod
     def from_ast(cls, returns: _ast.nodes.NodeNG | None) -> RetType:
         """Build return type from the function's return AST node.
@@ -43,30 +56,17 @@ class RetType(_Enum):
         :param returns: Return annotation AST node or None.
         :return: RetType.NONE, RetType.SOME, or RetType.UNTYPED.
         """
-        if isinstance(returns, _ast.nodes.Const) and returns.value is None:
+        if cls._annotates_none(returns):
             return cls.NONE
 
-        # NoReturn / Never mean the function never returns a value, so
-        # treat them the same as -> None for documentation purposes
-        if isinstance(returns, _ast.nodes.Name) and returns.name in _NO_RETURN:
-            return cls.NONE
-
-        if (
-            isinstance(returns, _ast.nodes.Attribute)
-            and returns.attrname in _NO_RETURN
-        ):
-            return cls.NONE
-
-        if isinstance(
-            returns,
-            (
-                _ast.nodes.Const,
-                _ast.nodes.Name,
-                _ast.nodes.Attribute,
-                _ast.nodes.Subscript,
-                _ast.nodes.BinOp,
-            ),
-        ):
+        annotation_nodes = (
+            _ast.nodes.Const,
+            _ast.nodes.Name,
+            _ast.nodes.Attribute,
+            _ast.nodes.Subscript,
+            _ast.nodes.BinOp,
+        )
+        if isinstance(returns, annotation_nodes):
             return cls.SOME
 
         return cls.UNTYPED
