@@ -2920,3 +2920,37 @@ def numpy(alpha) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_pyproject_resolved_from_the_checked_path(
+    tmp_path: Path,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    main: FixtureMain,
+) -> None:
+    """Config comes from the project the checked path belongs to.
+
+    Problem: The pyproject.toml was located by walking up from the
+    current working directory, so checking a package from the root of
+    the monorepo containing it applied the root's config instead of
+    the package's, silently changing which checks ran.
+
+    :param tmp_path: Create and return the temporary directory.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
+    :param main: Mock ``main`` function.
+    """
+    # the cwd the run starts in enables a check its project wants
+    init_pyproject_toml({"check-protected": True})
+    # the project actually being checked asks for nothing
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "pyproject.toml").write_text(
+        "[tool.docsig]\n",
+        encoding="utf-8",
+    )
+    (project / "module.py").write_text(
+        '''def _function(param) -> None:
+    """Summary."""
+''',
+        encoding="utf-8",
+    )
+    assert main(Path("project") / "module.py", test_flake8=False) == 0

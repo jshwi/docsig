@@ -68,19 +68,16 @@ def _split_comma(value: str) -> list[str]:
     return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
 
 
-def get_parent_that_has(file: str, start: _Path | None = None) -> _Path | None:
+def get_parent_that_has(file: str, start: _Path) -> _Path | None:
     """Find the parent directory that contains the given file.
 
-    Start from the current working directory and walk up to root. If
-    no required file is found, return None.
+    Start from the given directory and walk up to root. If no required
+    file is found, return None.
 
     :param file: File to find.
-    :param start: Starting director.
+    :param start: Directory to start the search from.
     :return: Parent directory containing the file or None if not found.
     """
-    if start is None:
-        start = _Path.cwd()
-
     if (start / file).is_file():
         return start
 
@@ -90,14 +87,23 @@ def get_parent_that_has(file: str, start: _Path | None = None) -> _Path | None:
     return get_parent_that_has(file, start.parent)
 
 
-def get_config(prog: str) -> dict[str, _t.Any]:
+def get_config(prog: str, path: _Path | None = None) -> dict[str, _t.Any]:
     """Return the program's tool-section config from pyproject.toml.
 
     :param prog: Program name.
+    :param path: Path being checked, whose project owns the config;
+        defaults to the current working directory.
     :return: Config dict, or empty dict if no config is found.
     """
+    # config belongs to the project the checked path is in, which is
+    # not necessarily the project the process was started in, e.g. a
+    # package checked from the root of the monorepo containing it
+    start = _Path.cwd() if path is None else path.resolve()
+    if not start.is_dir():
+        start = start.parent
+
     # attempt to locate a pyproject.toml file if one exists in parents
-    pyproject_file = get_parent_that_has(PYPROJECT_TOML)
+    pyproject_file = get_parent_that_has(PYPROJECT_TOML, start)
     if pyproject_file is None:
         return {}
 
@@ -143,7 +149,10 @@ class _ArgumentParser(_argparse.ArgumentParser):
         namespace: _argparse.Namespace | None = None,
     ) -> tuple[_argparse.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
-        config = get_config(_Path(self.prog).stem)
+        # one config applies to the whole run, so the first checked
+        # path decides which project it comes from
+        paths = getattr(namespace, "path", None)
+        config = get_config(_Path(self.prog).stem, paths[0] if paths else None)
         namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 
