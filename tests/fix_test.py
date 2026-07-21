@@ -2384,3 +2384,34 @@ def test_fix_default_excludes_apply_below_invocation_path(
     )
     assert main("proj", test_flake8=False) == 0
     assert main(Path.cwd() / "proj", test_flake8=False) == 0
+
+
+def test_fix_no_capitalization_error_after_common_abbreviations(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Common abbreviations do not end a sentence.
+
+    Problem: The abbreviation set held only a handful of entries, so
+    common abbreviations such as ``cf.``, ``no.``, ``fig.``, and
+    ``et al.`` were read as sentence boundaries and the lowercase text
+    following them reported as SIG305 description-not-capitalized.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(a: int, b: int, c: int) -> None:
+    """Summary.
+
+    :param a: The threshold, cf. the parent class.
+    :param b: No. of items to keep.
+    :param c: The layout in fig. 3, per Smith et al. and others.
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[305].ref not in std.out

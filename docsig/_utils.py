@@ -14,7 +14,30 @@ from .messages import TEMPLATE as _TEMPLATE
 from .messages import E as _E
 
 SENTENCE_ABBREVIATIONS = frozenset(
-    {"e.g.", "i.e.", "mr.", "dr.", "vs.", "etc.", "u.s."},
+    {
+        "al.",
+        "approx.",
+        "ca.",
+        "cf.",
+        "dr.",
+        "e.g.",
+        "eq.",
+        "etc.",
+        "fig.",
+        "figs.",
+        "i.e.",
+        "incl.",
+        "mr.",
+        "no.",
+        "p.",
+        "pp.",
+        "resp.",
+        "sec.",
+        "u.s.",
+        "viz.",
+        "vol.",
+        "vs.",
+    },
 )
 
 
