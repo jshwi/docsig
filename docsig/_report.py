@@ -21,9 +21,9 @@ from .messages import TEMPLATE as _TEMPLATE
 # pylint: disable=too-few-public-methods
 @_dataclass(frozen=True)
 class _ReportDiagnostic:
-    lineno: int
+    line: int
     message: str
-    retcode: int
+    exit: int
     extra: str | None = None
 
 
@@ -79,9 +79,9 @@ def _build_report(
             )
             diagnostics.append(
                 _ReportDiagnostic(
-                    lineno=item.lineno,
+                    line=item.lineno,
                     message=msg,
-                    retcode=result.retcode,
+                    exit=result.retcode,
                     extra=extra,
                 ),
             )
@@ -134,9 +134,9 @@ def report(
 
             obj.append(
                 {
-                    "line": None if result.retcode == 2 else item.lineno,
+                    "line": None if result.retcode == 2 else item.line,
                     "message": item.message,
-                    "exit": item.retcode,
+                    "exit": item.exit,
                 },
             )
 
