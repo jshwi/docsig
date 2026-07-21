@@ -48,7 +48,7 @@ def _last_prose_char(text: str) -> tuple[str | None, bool]:
     for line in text.strip().split("\n"):
         stripped_ln = line.strip()
         if in_block:
-            if stripped_ln and line[:1] not in (" ", "\t"):
+            if stripped_ln and line[:1] != " ":
                 in_block = False
                 para_start = None
             else:
