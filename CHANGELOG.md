@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.5](https://github.com/jshwi/docsig/tree/v0.91.5) - 2026-07-21
+
+### Fixed
+
+- capitalization error after common abbreviations ([#976](https://github.com/jshwi/docsig/issues/976))
+- commandline exclude ignored when configured in pyproject ([#978](https://github.com/jshwi/docsig/issues/978))
+- syntax error reported for description on line after field ([#980](https://github.com/jshwi/docsig/issues/980))
+
 ## [0.91.4](https://github.com/jshwi/docsig/tree/v0.91.4) - 2026-07-20
 
 ### Fixed
