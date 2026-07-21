@@ -2458,3 +2458,32 @@ def test_fix_exclude_repeated_argument(
         )
         == 0
     )
+
+
+def test_fix_description_on_line_after_field_not_syntax_error(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Field bodies starting on the following line are well formed.
+
+    Problem: The multi-line rst field form, with the description on an
+    indented line below ``:param name:``, was reported as SIG302
+    syntax-error-in-description although it is one of the two canonical
+    sphinx field layouts.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(param) -> None:
+    """Summary.
+
+    :param param:
+        A description of the parameter,
+        continued on another line.
+
+            An indented block after a paragraph break.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
