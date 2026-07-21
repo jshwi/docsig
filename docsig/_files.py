@@ -58,26 +58,48 @@ def _glob(path: _Path, pattern: str) -> bool:
     return _WcPath(str(path)).globmatch(pattern)  # type: ignore
 
 
+def _find_repo(path: _Path) -> _Path | None:
+    # the root of the repo the path belongs to, identified by a .git
+    # entry; .git is a dir holding a HEAD file in a normal checkout and
+    # a file pointing to the real git dir in worktrees and submodules
+    resolved = path.resolve()
+    for parent in (resolved, *resolved.parents):
+        git = parent / ".git"
+        if (git / "HEAD").is_file() or git.is_file():
+            return parent
+
+    return None
+
+
 class Files(list[_Path]):
     """Collect paths to check (gitignore and exclude applied).
 
     :param paths: Path(s) to collect (files or directories).
     :param filters: Filters object.
-    :param repo: Path to the repo root.
     """
 
     def __init__(
         self,
         paths: tuple[str | _Path, ...],
         filters: _Filters,
-        repo: _Path | None = None,
     ) -> None:
         super().__init__()
         self._include_ignored = filters.include_ignored
-        self._gitignore = _Gitignore(repo)
+        self._repo: _Path | None = None
+        self._gitignore = _Gitignore(None)
         logger = _logging.getLogger(__package__)
+        # gitignore patterns come from the repo each checked path
+        # belongs to, which is not necessarily the repo containing the
+        # current working directory
+        gitignores: dict[_Path | None, _Gitignore] = {}
         for path in paths:
-            self._populate(_Path(path))
+            root = _Path(path)
+            self._repo = _find_repo(root)
+            if self._repo not in gitignores:
+                gitignores[self._repo] = _Gitignore(self._repo)
+
+            self._gitignore = gitignores[self._repo]
+            self._populate(root)
 
         for path in list(self):
             if any(_re.match(i, str(path)) for i in filters.exclude) or any(
@@ -97,7 +119,7 @@ class Files(list[_Path]):
 
             raise FileNotFoundError(root)
 
-        if not self._include_ignored and self._gitignore.match_file(root):
+        if not self._include_ignored and self._ignored(root):
             logger.debug(FILE_INFO, root, "in gitignore, skipping")
             return
 
@@ -107,3 +129,17 @@ class Files(list[_Path]):
         if root.is_dir():
             for path in root.iterdir():
                 self._populate(path)
+
+    def _ignored(self, path: _Path) -> bool:
+        # gitignore patterns are relative to the repo root, so the path
+        # is matched relative to the repo root too, wherever the run
+        # was invoked from
+        if self._repo is None:
+            return False
+
+        try:
+            relative = path.resolve().relative_to(self._repo)
+        except ValueError:
+            return False
+
+        return self._gitignore.match_file(relative)

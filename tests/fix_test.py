@@ -2487,3 +2487,60 @@ def function(param) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_gitignore_applied_in_worktree(
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Gitignore filtering works where ``.git`` is a file.
+
+    Problem: The repo was identified by the presence of a .git/HEAD
+    file, but in worktrees and submodules .git is a file pointing to
+    the real git dir, so gitignore filtering was silently disabled
+    there.
+
+    :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    make_tree(
+        {
+            ".git": ["gitdir: /some/repo/.git/worktrees/branch"],
+            ".gitignore": ["skip.py"],
+            "skip.py": [WILL_ERROR],
+        },
+    )
+    assert main(".", test_flake8=False) == 0
+
+
+def test_fix_gitignore_resolved_from_checked_path(
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Gitignore patterns come from the checked path's own repo.
+
+    Problem: The repo was resolved by walking up from the current
+    working directory, not from the path being checked, so a tree
+    outside the cwd's repo was filtered with the wrong repo's
+    gitignore patterns, or none at all.
+
+    :param make_tree: Create the directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    make_tree(
+        {
+            "repo": {
+                ".git": {"HEAD": ["ref: refs/heads/master"]},
+                ".gitignore": ["skip.py"],
+                "skip.py": [WILL_ERROR],
+            },
+            "outside.py": [WILL_ERROR],
+        },
+    )
+    # cwd is not a repo, but the checked path is
+    assert main("repo", test_flake8=False) == 0
+
+    # a symlink resolving outside the repo cannot be matched against
+    # the repo's patterns and so is still checked
+    (Path("repo") / "linked.py").symlink_to(Path.cwd() / "outside.py")
+    assert main("repo", test_flake8=False) != 0
