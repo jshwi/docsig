@@ -8,8 +8,8 @@ Diagnostic records and per-function check results for docsig runs.
 import typing as _t
 from dataclasses import dataclass as _dataclass
 
-from ._module import Function as _Function
 from .messages import Message as _Message
+from .messages import Messages as _Messages
 
 
 class Failures(list["FunctionResult"]):
@@ -54,21 +54,21 @@ class Diagnostic:  # pylint: disable=too-few-public-methods
 class Collector:
     """Collect diagnostics and exit weights for one function.
 
-    :param func: Function to collect diagnostics for.
     :param qualified_name: Qualified name (Class.method) when nested,
         else bare name.
     :param lineno: Line number of the function in the source.
+    :param disabled: Messages disabled for this function.
     """
 
     def __init__(
         self,
-        func: _Function,
         qualified_name: str,
         lineno: int,
+        disabled: _Messages,
     ) -> None:
-        self._func = func
         self._qualified_name = qualified_name
         self._lineno = lineno
+        self._disabled = disabled
         self._diagnostics: list[Diagnostic] = []
         self._retcode = RetCode()
 
@@ -94,10 +94,7 @@ class Collector:
             value.hint if include_hint else None,
             value.new,
         )
-        if (
-            value not in self._func.messages
-            and diagnostic not in self._diagnostics
-        ):
+        if value not in self._disabled and diagnostic not in self._diagnostics:
             self._diagnostics.append(diagnostic)
 
     @property

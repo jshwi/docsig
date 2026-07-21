@@ -13,7 +13,6 @@ import astroid as _ast
 
 from ._config import Config as _Config
 from ._diagnostic import Collector as _Collector
-from ._diagnostic import Diagnostic as _Diagnostic
 from ._diagnostic import FunctionResult as _FunctionResult
 from ._module import Function as _Function
 from ._stub import UNNAMED as _UNNAMED
@@ -26,6 +25,7 @@ from ._utils import almost_equal as _almost_equal
 from ._utils import sentence_tokenizer as _sentence_tokenizer
 from .messages import E as _E
 from .messages import Message as _Message
+from .messages import Messages as _Messages
 
 _MIN_MATCH = 0.8
 _MAX_MATCH = 1.0
@@ -95,11 +95,9 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
     def __init__(self, func: _Function, config: _Config) -> None:
         self._func = func
         self._config = config
-        self._diagnostics: list[_Diagnostic] = []
+        disabled = _Messages(self._func.messages)
         if config.target:
-            self._func.messages.extend(
-                i for i in _E.all if i not in config.target
-            )
+            disabled.extend(i for i in _E.all if i not in config.target)
 
         self._name = self._func.name
         if (
@@ -110,7 +108,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         ):
             self._name = f"{self._func.parent.name}.{self._name}"
 
-        self._collector = _Collector(func, self._name, self._func.lineno)
+        self._collector = _Collector(self._name, self._func.lineno, disabled)
 
     def run(self) -> _FunctionResult:
         """Run the function checks and return the result.
