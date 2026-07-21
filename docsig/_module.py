@@ -233,19 +233,25 @@ class Function(Parent):  # pylint: disable=too-many-instance-attributes
                 self._config.ignore,
                 skip_bound_arg=self.ismethod and not self.isstaticmethod,
             )
-            if (
-                self.isinit
-                and not self._config.check.class_constructor
-                and not isinstance(self._frame, _ast.nodes.Lambda)
-            ):
-                # docstring for __init__ is expected on the class
-                # docstring
-                relevant_doc_node = self._frame.doc_node
-            else:
-                relevant_doc_node = node.doc_node
-
+            relevant_doc_node = self._select_doc_node(node)
             if relevant_doc_node is not None:
                 self._docstring = self.docstring.from_ast(relevant_doc_node)
+
+    def _select_doc_node(
+        self,
+        node: _ast.nodes.FunctionDef,
+    ) -> _ast.nodes.Const | None:
+        # docstring for __init__ is expected on the class docstring,
+        # unless the class constructor is documented instead
+        if (
+            self.isinit
+            and not self._config.check.class_constructor
+            and self._frame is not None
+            and not isinstance(self._frame, _ast.nodes.Lambda)
+        ):
+            return self._frame.doc_node
+
+        return node.doc_node
 
     def __len__(self) -> int:
         """Length of the longest of signature args or docstring args."""
