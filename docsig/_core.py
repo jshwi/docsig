@@ -101,7 +101,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     verbose: bool = False,
     target: _Messages | None = None,
     disable: _Messages | None = None,
-    exclude: str | None = None,
+    exclude: str | list[str] | None = None,
     excludes: list[str] | None = None,
 ) -> int:
     """Run docstring/signature checks on paths or a string and report.
@@ -135,8 +135,8 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
     :param verbose: Increase output verbosity.
     :param target: List of errors to target.
     :param disable: List of errors to disable.
-    :param exclude: Regular expression of files and dirs to exclude from
-        checks.
+    :param exclude: Regular expression(s) of files and dirs to exclude
+        from checks, joined with the default exclusions.
     :param excludes: Files or dirs to exclude from checks.
     :return: Exit code (non-zero if any check failed).
     """
@@ -155,8 +155,10 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         stacklevel=5,
     )
     exclude_patterns = [_DEFAULT_EXCLUDES]
-    if exclude is not None:
+    if isinstance(exclude, str):
         exclude_patterns.append(exclude)
+    elif exclude:
+        exclude_patterns.extend(exclude)
 
     # while some params could be taken out for one time use (such as
     # verbose), bundling all the configuration together makes it easier
