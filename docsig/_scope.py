@@ -90,67 +90,62 @@ class _Walker:
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
         scope_comments, scope_disabled = self._directives_at(node.lineno or 0)
-        if hasattr(node, "body"):
-            for subnode in node.body:
-                comments, disabled = self._directives_for(subnode)
-                comments.extend(scope_comments)
-                disabled.extend(scope_disabled)
-                if isinstance(
+        for subnode in getattr(node, "body", []):
+            comments, disabled = self._directives_for(subnode)
+            comments.extend(scope_comments)
+            disabled.extend(scope_disabled)
+            if isinstance(
+                subnode,
+                (_ast.nodes.Import, _ast.nodes.ImportFrom),
+            ):
+                for name in subnode.names:
+                    original, alias = name
+                    self._imports[original] = alias or original
+            elif isinstance(subnode, _ast.nodes.FunctionDef):
+                # walk the function body before constructing the
+                # function, so imports it contains are collected
+                # before decorators or the signature are resolved
+                body_walker = _Walker(
+                    self._directives,
+                    self._file,
+                    self._config,
+                    self._imports,
+                )
+                body_walker.walk(subnode)
+                func = Function(
                     subnode,
-                    (_ast.nodes.Import, _ast.nodes.ImportFrom),
-                ):
-                    for name in subnode.names:
-                        original, alias = name
-                        self._imports[original] = alias or original
-                elif isinstance(subnode, _ast.nodes.FunctionDef):
-                    # walk the function body before constructing the
-                    # function, so imports it contains are collected
-                    # before decorators or the signature are resolved
-                    body_walker = _Walker(
+                    comments,
+                    disabled,
+                    self._config,
+                    self._imports,
+                    body_walker.children,
+                )
+                if func.isoverloaded:
+                    if (
+                        func.name not in self._overloads
+                        or self._overloads[func.name].signature.returns.type
+                        == _RetType.NONE
+                    ):
+                        self._overloads[func.name] = func
+                else:
+                    if func.name in self._overloads:
+                        func.overload(
+                            self._overloads[func.name].signature.returns.type,
+                        )
+
+                    self._children.append(func)
+            elif isinstance(subnode, _ast.nodes.ClassDef):
+                self._children.append(
+                    Scope.from_ast(
+                        subnode,
                         self._directives,
                         self._file,
                         self._config,
                         self._imports,
-                    )
-                    body_walker.walk(subnode)
-                    func = Function(
-                        subnode,
-                        comments,
-                        disabled,
-                        self._config,
-                        self._imports,
-                        body_walker.children,
-                    )
-                    if func.isoverloaded:
-                        if (
-                            func.name not in self._overloads
-                            or self._overloads[
-                                func.name
-                            ].signature.returns.type
-                            == _RetType.NONE
-                        ):
-                            self._overloads[func.name] = func
-                    else:
-                        if func.name in self._overloads:
-                            func.overload(
-                                self._overloads[
-                                    func.name
-                                ].signature.returns.type,
-                            )
-
-                        self._children.append(func)
-                elif isinstance(subnode, _ast.nodes.ClassDef):
-                    self._children.append(
-                        Scope.from_ast(
-                            subnode,
-                            self._directives,
-                            self._file,
-                            self._config,
-                            self._imports,
-                        ),
-                    )
-                else:
-                    self.walk(subnode)
+                    ),
+                )
+            else:
+                self.walk(subnode)
 
     def _directives_at(self, lineno: int) -> tuple[_Comments, _Messages]:
         return self._directives.get(lineno, (_Comments(), _Messages()))
