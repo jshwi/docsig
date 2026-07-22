@@ -167,7 +167,9 @@ Work lands on `dev/main` as `wip:` commits. When ready to ship:
 2. Check out the issue branch: `gh issue develop <N> --checkout`
 3. Cherry-pick the wip commit onto the issue branch: `git cherry-pick <sha>`
 4. Soft-reset to keep changes staged: `git reset --soft HEAD~1`
-5. Run `make && git add . && git commit -s -m "fix: <subject> (#<N>)"` — the
+5. Run `make && git add . && git commit -s -m "fix: <subject> (#<N>)"` — bare
+  `make` installs the pre-commit hooks, and those hooks run the test, lint, and
+  type checks at commit time, so never run `make tests` separately here. The
   `commit-msg` hook creates the news fragment and blocks the first attempt.
 6. Run `git add . && git commit -s -m "fix: <subject> (#<N>)"` again — succeeds.
 7. Push, open a PR targeting `master`, wait for the pipeline.
