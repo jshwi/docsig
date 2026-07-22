@@ -90,9 +90,7 @@ class _Walker:
                 subnode,
                 (_ast.nodes.Import, _ast.nodes.ImportFrom),
             ):
-                for name in subnode.names:
-                    original, alias = name
-                    self._imports[original] = alias or original
+                self._collect_imports(subnode)
             elif isinstance(subnode, _ast.nodes.FunctionDef):
                 # walk the function body before constructing the
                 # function, so imports it contains are collected
@@ -161,6 +159,13 @@ class _Walker:
             disabled.extend(more_disabled)
 
         return comments, disabled
+
+    def _collect_imports(
+        self,
+        subnode: _ast.nodes.Import | _ast.nodes.ImportFrom,
+    ) -> None:
+        for original, alias in subnode.names:
+            self._imports[original] = alias or original
 
 
 class Scope:
