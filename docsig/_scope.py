@@ -92,23 +92,7 @@ class _Walker:
         scope_comments, scope_disabled = self._directives_at(node.lineno or 0)
         if hasattr(node, "body"):
             for subnode in node.body:
-                comments, disabled = self._directives_at(subnode.lineno or 0)
-
-                # astroid sets lineno to the first decorator
-                # inline disable on the def line is at fromlineno
-                fromlineno = getattr(subnode, "fromlineno", 0)
-                if (
-                    isinstance(subnode, _ast.nodes.FunctionDef)
-                    and fromlineno
-                    and fromlineno != (subnode.lineno or 0)
-                ):
-                    more_comments, more_disabled = self._directives.get(
-                        fromlineno,
-                        (_Comments(), _Messages()),
-                    )
-                    comments.extend(more_comments)
-                    disabled.extend(more_disabled)
-
+                comments, disabled = self._directives_for(subnode)
                 comments.extend(scope_comments)
                 disabled.extend(scope_disabled)
                 if isinstance(
@@ -170,6 +154,26 @@ class _Walker:
 
     def _directives_at(self, lineno: int) -> tuple[_Comments, _Messages]:
         return self._directives.get(lineno, (_Comments(), _Messages()))
+
+    def _directives_for(
+        self,
+        subnode: _ast.nodes.NodeNG,
+    ) -> tuple[_Comments, _Messages]:
+        comments, disabled = self._directives_at(subnode.lineno or 0)
+
+        # astroid sets lineno to the first decorator
+        # inline disable on the def line is at fromlineno
+        fromlineno = getattr(subnode, "fromlineno", 0)
+        if (
+            isinstance(subnode, _ast.nodes.FunctionDef)
+            and fromlineno
+            and fromlineno != (subnode.lineno or 0)
+        ):
+            more_comments, more_disabled = self._directives_at(fromlineno)
+            comments.extend(more_comments)
+            disabled.extend(more_disabled)
+
+        return comments, disabled
 
 
 class Scope:
