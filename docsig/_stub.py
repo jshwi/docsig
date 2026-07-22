@@ -70,7 +70,7 @@ _SECTION_NAMES = "|".join(
 #: trailing whitespace after the name is tolerated, as napoleon strips
 #: it and the underline below already allows it
 _NUMPY_SECTION = _re.compile(
-    rf"^({_SECTION_NAMES})[ \t]*\n\s*-{{3,}}\s*$",
+    rf"^({_SECTION_NAMES})[ \t]*\n\s*-{{2,}}\s*$",
     _re.MULTILINE | _re.IGNORECASE,
 )
 

@@ -2893,3 +2893,30 @@ def function(param: int) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref in std.out
+
+
+def test_fix_numpy_section_header_with_short_underline(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A numpy section header underlined with two dashes is a section.
+
+    Problem: The numpy gate demanded three dashes under the section
+    name, while napoleon accepts two, so a two dash underline stopped
+    napoleon from running and the params vanished.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def numpy(alpha) -> None:
+    """Summary.
+
+    Parameters
+    --
+    alpha
+        Description of alpha.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
