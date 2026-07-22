@@ -73,15 +73,7 @@ class _Walker:
         """Children collected from the walked scope."""
         return self._children
 
-    def walk(
-        self,
-        node: (
-            _ast.nodes.Module
-            | _ast.nodes.ClassDef
-            | _ast.nodes.FunctionDef
-            | _ast.nodes.NodeNG
-        ),
-    ) -> None:
+    def walk(self, node: _ast.nodes.NodeNG) -> None:
         """Collect children from the body of an AST node.
 
         :param node: AST node whose body to walk.
