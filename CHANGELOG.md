@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.7](https://github.com/jshwi/docsig/tree/v0.91.7) - 2026-07-22
+
+### Fixed
+
+- indent anomaly reported for tab indented docstrings ([#996](https://github.com/jshwi/docsig/issues/996))
+- return doc required for quoted none annotation ([#998](https://github.com/jshwi/docsig/issues/998))
+- json line zero for whole file syntax errors ([#1000](https://github.com/jshwi/docsig/issues/1000))
+
 ## [0.91.6](https://github.com/jshwi/docsig/tree/v0.91.6) - 2026-07-22
 
 ### Fixed
