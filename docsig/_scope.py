@@ -89,16 +89,10 @@ class _Walker:
         # need to keep track of `comments` as, even though they are
         # resolved in the directive object, they are needed to notify
         # the user in the case that they are invalid
-        scope_comments, scope_disabled = self._directives.get(
-            node.lineno or 0,
-            (_Comments(), _Messages()),
-        )
+        scope_comments, scope_disabled = self._directives_at(node.lineno or 0)
         if hasattr(node, "body"):
             for subnode in node.body:
-                comments, disabled = self._directives.get(
-                    subnode.lineno or 0,
-                    (_Comments(), _Messages()),
-                )
+                comments, disabled = self._directives_at(subnode.lineno or 0)
 
                 # astroid sets lineno to the first decorator
                 # inline disable on the def line is at fromlineno
@@ -173,6 +167,9 @@ class _Walker:
                     )
                 else:
                     self.walk(subnode)
+
+    def _directives_at(self, lineno: int) -> tuple[_Comments, _Messages]:
+        return self._directives.get(lineno, (_Comments(), _Messages()))
 
 
 class Scope:
