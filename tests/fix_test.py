@@ -5,6 +5,7 @@ tests.fix_test
 
 # pylint: disable=protected-access,line-too-long,too-many-lines
 import io
+import json
 import pickle
 from pathlib import Path
 
@@ -2658,3 +2659,31 @@ def function_int() -> "int":
     assert "function_none" not in std.out
     assert "function_no_return" not in std.out
     assert "function_int" in std.out
+
+
+def test_fix_json_null_line_for_syntax_error(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
+    """JSON reports a null line number for syntax errors.
+
+    Problem: The null line marking a whole-file error was keyed on
+    exit status 2 only, but a syntax error carries exit status 123, so
+    SIG901 serialized with line 0 while the other whole-file errors
+    correctly serialized with null.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param tmp_path: Create and return the temporary directory.
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    """
+    file = tmp_path / "syntax_error.py"
+    file.write_text("def function(:\n", encoding="utf-8")
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    assert main(file, test_flake8=False) == 123
+    std = capsys.readouterr()
+    issues = json.loads(std.out)
+    assert issues[0]["line"] is None
+    assert issues[0]["exit"] == 123

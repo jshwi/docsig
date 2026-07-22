@@ -134,7 +134,7 @@ def report(
 
             obj.append(
                 {
-                    "line": None if entry.retcode == 2 else item.line,
+                    "line": None if entry.retcode >= 2 else item.line,
                     "message": item.message,
                     "exit": item.exit,
                 },
