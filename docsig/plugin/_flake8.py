@@ -95,10 +95,16 @@ class Flake8:
     def parse_options(cls, a: _Namespace) -> None:
         """Store parsed options on class state without the sig prefix.
 
+        Only the plugin's own options are kept, as flake8's core options
+        share names with them once the prefix is gone, and whichever was
+        registered last would otherwise win.
+
         :param a: Argparse namespace from flake8.
         """
         cls.a.__dict__ = {
-            k.replace("sig_", ""): v for k, v in a.__dict__.items()
+            k.removeprefix("sig_"): v
+            for k, v in a.__dict__.items()
+            if k.startswith("sig_")
         }
 
     def _build_config(self) -> _Config:
