@@ -3169,3 +3169,36 @@ def test_fix_empty_string_is_an_empty_module(
     assert docsig(string="") == 0
     std = capsys.readouterr()
     assert not std.err
+
+
+@pytest.mark.parametrize("value", ["0", "", "false", "no", "off"])
+def test_fix_falsy_json_env_var_does_not_enable_json(
+    value: str,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A falsy value for the json env var leaves json off.
+
+    Problem: The env var was tested for being set at all, so switching
+    it off by assigning a falsy value turned json on instead, with no
+    way to disable it short of unsetting it.
+
+    :param value: Falsy value to assign to the env var.
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(param) -> None:
+    """Summary."""
+'''
+    init_file(template)
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", value)
+    assert main(".", test_flake8=False) == 1
+    std = capsys.readouterr()
+    # the text renderer prints a header, json opens an array
+    assert "in function" in std.out
+    assert not std.out.lstrip().startswith("[")
