@@ -20,6 +20,10 @@ TEST_FILES := $(shell git ls-files "tests/*.py")
 DOCS_FILES := $(shell git ls-files \
 	"docs/*.rst" "docs/*.md" "docs/_templates" "docs/static")
 
+# Git directory, which is a file and not a directory when this is a
+# worktree, so ask git where the real one is rather than assuming .git
+GIT_DIR := $(shell git rev-parse --git-common-dir 2>/dev/null || echo .git)
+
 # Virtual environment path
 ifeq ($(OS),Windows_NT)
 	VENV := .venv/Scripts/activate
@@ -33,7 +37,7 @@ BUILD := dist/docsig-$(VERSION)-py3-none-any.whl
 ########################################################################
 # Implicit Phony Targets
 .PHONY: all
-all: .make/pre-commit .git/blame-ignore-revs help
+all: .make/pre-commit $(GIT_DIR)/blame-ignore-revs help
 
 .PHONY: help
 help: $(VENV)
@@ -84,7 +88,7 @@ $(VENV): poetry.lock
 	@mkdir -p $(@D)
 	@touch $@
 
-.git/blame-ignore-revs:
+$(GIT_DIR)/blame-ignore-revs:
 	@git config --local include.path $(@F) 2>/dev/null || true
 	@mkdir -p $(@D)
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
@@ -231,8 +235,8 @@ clean:
 	@find . -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
 	@find . -type d -name '.benchmarks' -exec rm -rf {} + 2>/dev/null || true
 	@rm -rf .coverage
-	@rm -rf .git/blame-ignore-revs
-	@rm -rf .git/hooks/*
+	@rm -rf $(GIT_DIR)/blame-ignore-revs
+	@rm -rf $(GIT_DIR)/hooks/*
 	@rm -rf .make
 	@rm -rf .mypy_cache
 	@rm -rf .pytest_cache
@@ -259,7 +263,7 @@ format: .make/black .make/flynt .make/isort
 install-hooks: .make/pre-commit
 
 #: install .git-blame-ignore-revs
-install-ignore-revs: .git/blame-ignore-revs
+install-ignore-revs: $(GIT_DIR)/blame-ignore-revs
 
 #: install poetry
 install-poetry: $(POETRY)
