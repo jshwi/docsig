@@ -92,38 +92,7 @@ class _Walker:
             ):
                 self._collect_imports(subnode)
             elif isinstance(subnode, _ast.nodes.FunctionDef):
-                # walk the function body before constructing the
-                # function, so imports it contains are collected
-                # before decorators or the signature are resolved
-                body_walker = _Walker(
-                    self._directives,
-                    self._file,
-                    self._config,
-                    self._imports,
-                )
-                body_walker.walk(subnode)
-                func = Function(
-                    subnode,
-                    comments,
-                    disabled,
-                    self._config,
-                    self._imports,
-                    body_walker.children,
-                )
-                if func.isoverloaded:
-                    if (
-                        func.name not in self._overloads
-                        or self._overloads[func.name].signature.returns.type
-                        == _RetType.NONE
-                    ):
-                        self._overloads[func.name] = func
-                else:
-                    if func.name in self._overloads:
-                        func.overload(
-                            self._overloads[func.name].signature.returns.type,
-                        )
-
-                    self._children.append(func)
+                self._visit_function(subnode, comments, disabled)
             elif isinstance(subnode, _ast.nodes.ClassDef):
                 self._children.append(
                     Scope.from_ast(
@@ -166,6 +135,45 @@ class _Walker:
     ) -> None:
         for original, alias in subnode.names:
             self._imports[original] = alias or original
+
+    def _visit_function(
+        self,
+        subnode: _ast.nodes.FunctionDef,
+        comments: _Comments,
+        disabled: _Messages,
+    ) -> None:
+        # walk the function body before constructing the function, so
+        # imports it contains are collected before decorators or the
+        # signature are resolved
+        body_walker = _Walker(
+            self._directives,
+            self._file,
+            self._config,
+            self._imports,
+        )
+        body_walker.walk(subnode)
+        func = Function(
+            subnode,
+            comments,
+            disabled,
+            self._config,
+            self._imports,
+            body_walker.children,
+        )
+        if func.isoverloaded:
+            if (
+                func.name not in self._overloads
+                or self._overloads[func.name].signature.returns.type
+                == _RetType.NONE
+            ):
+                self._overloads[func.name] = func
+        else:
+            if func.name in self._overloads:
+                func.overload(
+                    self._overloads[func.name].signature.returns.type,
+                )
+
+            self._children.append(func)
 
 
 class Scope:
