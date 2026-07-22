@@ -755,14 +755,14 @@ smmap = ">=3.0.1,<6"
 
 [[package]]
 name = "gitpython"
-version = "3.1.53"
+version = "3.1.54"
 description = "GitPython is a Python library used to interact with Git repositories"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "gitpython-3.1.53-py3-none-any.whl", hash = "sha256:187885556b64ab357bd4ea84e2c4cce2861a613a7f4268b3f7f7ba05f2ce4ab0"},
-    {file = "gitpython-3.1.53.tar.gz", hash = "sha256:06ae8d9623b0ed0d67b8adeac5c7008d0a5a404b087a9e0d0c7163bdd3a6b497"},
+    {file = "gitpython-3.1.54-py3-none-any.whl", hash = "sha256:b90d7b3d9bc0238681d24369130826f0dcdb0ceaa45db67cf1d4ffa4c302dedf"},
+    {file = "gitpython-3.1.54.tar.gz", hash = "sha256:53f2085e24a2cda300eed7c3fc5f1559ae289634b725e98acaf4791940247aa0"},
 ]
 
 [package.dependencies]
@@ -2745,4 +2745,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "16bd1b269edd8b65f4ce00934578918c939cd3a2c6fa190fc6bcfc50454d5e61"
+content-hash = "aab9402c88863ef1d8d1fdd99846ea1979f3f1ca17c094c3de913514aa85edc8"
