@@ -96,6 +96,15 @@ class RetType(_Enum):
     @staticmethod
     def _annotates_none(returns: _ast.nodes.NodeNG | None) -> bool:
         if isinstance(returns, _ast.nodes.Const):
+            if isinstance(returns.value, str):
+                # a quoted annotation, e.g. -> "None", is legal
+                # forward-reference style and annotates whatever the
+                # string names
+                return returns.value.split(".")[-1] in (
+                    "None",
+                    *_NO_RETURN,
+                )
+
             return returns.value is None
 
         if isinstance(returns, _ast.nodes.Name):

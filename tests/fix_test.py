@@ -2622,3 +2622,39 @@ def test_fix_no_indent_anomaly_for_tab_indented_source(
     )
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_quoted_none_annotation_not_a_value_return(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A quoted ``-> "None"`` annotation needs no return doc.
+
+    Problem: A quoted annotation is a string constant, and only the
+    ``None`` constant itself was recognized as annotating no return,
+    so the legal forward-reference style ``-> "None"`` was classified
+    as a value return and reported SIG503 return-missing.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function_none() -> "None":
+    """Summary."""
+
+
+def function_no_return() -> "typing.NoReturn":
+    """Summary."""
+
+
+def function_int() -> "int":
+    """Summary."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert "function_none" not in std.out
+    assert "function_no_return" not in std.out
+    assert "function_int" in std.out
