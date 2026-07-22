@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.6](https://github.com/jshwi/docsig/tree/v0.91.6) - 2026-07-22
+
+### Fixed
+
+- gitignore resolved from cwd instead of checked path ([#986](https://github.com/jshwi/docsig/issues/986))
+- stop false positives for typed parameter fields ([#988](https://github.com/jshwi/docsig/issues/988))
+- google docstrings undetected by keyword args section ([#990](https://github.com/jshwi/docsig/issues/990))
+
 ## [0.91.5](https://github.com/jshwi/docsig/tree/v0.91.5) - 2026-07-21
 
 ### Fixed
