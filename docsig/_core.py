@@ -18,7 +18,6 @@ from ._config import Config as _Config
 from ._config import Filters as _Filters
 from ._config import Ignore as _Ignore
 from ._diagnostic import Failures as _Failures
-from ._diagnostic import RetCode as _RetCode
 from ._files import Files as _Files
 from ._parsers import parse_from_file as _parse_from_file
 from ._parsers import parse_from_string as _parse_from_string
@@ -56,17 +55,19 @@ def runner(file: _Path, config: _Config) -> _Failures:
 
 def _check_string(string: str, config: _Config) -> int:
     module = _parse_from_string(string, config)
-    failures = _run_checks(module, config)
-    return _report(failures, config)
+    return _report([(_run_checks(module, config), None)], config)
 
 
 def _check_files(paths: tuple[str | _Path, ...], config: _Config) -> int:
-    retcodes = _RetCode()
-    for file in _Files(paths, config.filters):
-        failures = runner(file, config)
-        retcodes.add(_report(failures, config, str(file)))
-
-    return retcodes.result
+    # a generator, so that each file is still checked and reported as it
+    # is reached rather than after the whole run
+    return _report(
+        (
+            (runner(file, config), str(file))
+            for file in _Files(paths, config.filters)
+        ),
+        config,
+    )
 
 
 @_decorators.parse_msgs

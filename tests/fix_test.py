@@ -3128,3 +3128,31 @@ def directive(param1, param2) -> int:
     std = capsys.readouterr()
     assert E[3].ref not in std.out
     assert E[503].ref not in std.out
+
+
+def test_fix_multi_file_json_is_one_valid_document(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Checking several files emits a single json array.
+
+    Problem: One array was printed per file with nothing between them,
+    so the output of any run over more than one file was rejected by
+    every json parser, and no entry said which file it came from.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param make_tree: Create directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    template = ["def function(param) -> None:", '    """Summary."""']
+    make_tree({"one.py": template, "two.py": template})
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    assert main(".", test_flake8=False) == 1
+    std = capsys.readouterr()
+    issues = json.loads(std.out)
+    assert len(issues) == 2
+    assert {Path(i["path"]).name for i in issues} == {"one.py", "two.py"}
+    assert all(i["message"].startswith(E[203].ref) for i in issues)

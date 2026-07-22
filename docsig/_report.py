@@ -158,9 +158,11 @@ def print_error(message: str, retcode: int) -> None:
 
 def _to_json(payload: _Report) -> list[dict[str, _t.Any]]:
     # the shape editor plugins consume: a null line number marks a
-    # whole-file error
+    # whole-file error, and the path attributes the diagnostic when more
+    # than one file was checked
     return [
         {
+            "path": entry.file,
             "line": None if entry.retcode >= 2 else item.line,
             "message": item.message,
             "exit": item.exit,
@@ -188,28 +190,38 @@ def _to_text(payload: _Report, config: _Config) -> list[str]:
 
 # TODO: make report json by default and wrap with a reporter for cli
 def report(
-    failures: _Failures,
+    results: _t.Iterable[tuple[_Failures, str | None]],
     config: _Config,
-    file: str | None = None,
 ) -> int:
-    """Print failures and return the highest exit code.
+    """Print failures for a whole run and return the highest exit code.
 
-    Builds a report payload from failures, renders it as json when
+    Builds a report payload per result, renders them as json when
     _DOCSIG_FORMAT_JSON is enabled (the contract editor plugins
     consume), otherwise as text, then returns the maximum retcode.
 
-    :param failures: Failures to print (one FunctionResult per
-        function).
+    Text is printed per file as each one is checked, while json is held
+    back and printed as a single array, as one array per file would
+    concatenate into a document no json parser accepts.
+
+    :param results: Failures paired with the module path they came from
+        (one pair per file, the path None when checking a string).
     :param config: Config for ANSI and formatting.
-    :param file: Module path when failures came from a file (optional).
     :return: Exit code (non-zero if any check failed).
     """
-    payload = _build_report(failures, file)
-    if _format_json():
-        print(_json.dumps(_to_json(payload)).strip())
-    else:
-        lines = _to_text(payload, config)
-        if lines:
-            print("\n".join(lines))
+    codes = _RetCode()
+    diagnostics: list[dict[str, _t.Any]] = []
+    format_json = _format_json()
+    for failures, file in results:
+        payload = _build_report(failures, file)
+        codes.add(payload.retcode)
+        if format_json:
+            diagnostics.extend(_to_json(payload))
+        else:
+            lines = _to_text(payload, config)
+            if lines:
+                print("\n".join(lines))
 
-    return payload.retcode
+    if format_json:
+        print(_json.dumps(diagnostics).strip())
+
+    return codes.result
