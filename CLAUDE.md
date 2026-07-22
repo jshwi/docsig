@@ -52,6 +52,11 @@ make benchmark   # sets RUN_BENCHMARK=true, uses pytest -m=benchmark
 python -m docsig ...   # a bare `docsig` command may resolve to a stale shim
 ```
 
+Makefile file lists come from `git ls-files`, so brand-new modules are
+invisible to `make lint`/`make types`/`make tests` until staged — `git add`
+new files before trusting a green run, or a later stamp-cached hook pass can
+mask a real failure.
+
 Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
 
 ## Architecture
@@ -132,6 +137,27 @@ under `plugin/`.
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
 
+### Documentation
+
+- The docs build with `-W` (warnings are errors), and every `.rst` file —
+  including README.rst — is doctested. Console (`$`) code blocks are NOT
+  doctested and drift silently; verify them manually when CLI output changes.
+- Furo does not render `layout.html` (it ships an error page for anything
+  inheriting it). Theme overrides belong in `docs/_templates/base.html`
+  extending `!base.html`; SEO meta tags live in its `extrahead` block, with
+  the description single-sourced from `conf.py` via `html_context`.
+- Files pulled in only via `.. include::` must be added to `exclude_patterns`
+  in `docs/conf.py`, or Sphinx also publishes them as standalone duplicate
+  pages (and they land in the sitemap).
+- Message pages (`docs/usage/messages/`) show the failing case and end with a
+  doctested resolution example (exit `0`). `scripts/update_docs.py` scaffolds
+  new pages but never overwrites — extend them by hand after generation.
+- `make build` fails the first time README or generated docs regenerate
+  (update-readme/update-docs stamp targets, same "blocks the first attempt"
+  pattern as the commit-msg hook); rerun and commit the regenerated files.
+- Read the Docs builds `latest` from master, so docs changes only go live on
+  docsig.io once they reach master.
+
 ### Changelog / Release Workflow
 
 - Changelog fragments go in `changelog/` (managed by **towncrier**)
@@ -168,7 +194,9 @@ Work lands on `dev/main` as `wip:` commits. When ready to ship:
 2. Check out the issue branch: `gh issue develop <N> --checkout`
 3. Cherry-pick the wip commit onto the issue branch: `git cherry-pick <sha>`
 4. Soft-reset to keep changes staged: `git reset --soft HEAD~1`
-5. Run `make && git add . && git commit -s -m "fix: <subject> (#<N>)"` — the
+5. Run `make && git add . && git commit -s -m "fix: <subject> (#<N>)"` — bare
+  `make` installs the pre-commit hooks, and those hooks run the test, lint, and
+  type checks at commit time, so never run `make tests` separately here. The
   `commit-msg` hook creates the news fragment and blocks the first attempt.
 6. Run `git add . && git commit -s -m "fix: <subject> (#<N>)"` again — succeeds.
 7. Push, open a PR targeting `master`, wait for the pipeline.
@@ -188,6 +216,20 @@ to promote.
 
 **Commit subjects must not contain `and`** — if you need `and`, split into two
 commits.
+
+**Pick the commit type by what the change is, not by where it lands:** docs
+pages are `doc:` commits and internal-only cleanups are `refactor:` commits,
+even on `dev/main` — `wip:` is reserved for staged behavior changes, and
+`chore(ai)` only covers AI housekeeping files like `CLAUDE.md`, never docs
+content. A change that corrects expected behavior is a `fix` even when it
+reads like a feature — subject it as `wip: fix ...`, not after the mechanism
+(e.g. "fix commandline exclude ignored when configured in pyproject", not
+"merge exclude patterns across config layers").
+
+**Every fix commit carries a fix test:** a regression test in
+`tests/fix_test.py` named `test_fix_<subject-ish>` whose docstring states the
+problem it guards against, committed with the fix. Unit tests in other test
+files don't satisfy this.
 
 **All commits need DCO sign-off** — conform enforces a `Signed-off-by` trailer,
 so always commit with `git commit -s`.
