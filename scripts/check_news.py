@@ -174,6 +174,20 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     return 0
 
 
+def isolate_git_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Remove any inherited git environment variables.
+
+    Git exports GIT_DIR, GIT_INDEX_FILE and friends to the processes it
+    runs, so under a git hook these tests would initialize and commit
+    against the repository running the hook instead of their own
+    temporary one, racing on its config with every xdist worker.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    for key in [i for i in os.environ if i.startswith("GIT_")]:
+        monkeypatch.delenv(key)
+
+
 class Test:
     """Tests for this script."""
 
@@ -193,6 +207,7 @@ class Test:
         :param tmp_path: Create and return a temporary directory.
         :param monkeypatch: Mock patch environment and attributes.
         """
+        isolate_git_env(monkeypatch)
         monkeypatch.chdir(tmp_path)
         this_pyproject = Path(__file__).parent.parent / "pyproject.toml"
         conf = tomli.loads(this_pyproject.read_text(encoding="utf-8"))
@@ -344,6 +359,24 @@ class Test:
         self._touch_unique_file()
         self.repo.git.add(Path.cwd())
         assert self._ci(message="add(plugin): feature") == 0
+
+    def test_git_env_is_isolated(
+        self,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """The repository under test is never the one running a hook.
+
+        :param monkeypatch: Mock patch environment and attributes.
+        """
+        # setup has already run, so nothing a hook exported is left
+        assert not [i for i in os.environ if i.startswith("GIT_")]
+        assert Path(self.repo.working_dir) == Path.cwd()
+
+        # and what a hook would have exported is what gets removed
+        monkeypatch.setenv("GIT_DIR", str(Path.cwd() / "elsewhere"))
+        monkeypatch.setenv("GIT_INDEX_FILE", "elsewhere.index")
+        isolate_git_env(monkeypatch)
+        assert not [i for i in os.environ if i.startswith("GIT_")]
 
 
 if __name__ == "__main__":  # pragma: no cover
