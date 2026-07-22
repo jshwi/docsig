@@ -53,6 +53,17 @@ class _Report(list[_ReportEntry]):
         return codes.result
 
 
+#: values switching the json format off, so that setting the variable
+#: to a falsy value reads as off rather than merely as set
+_JSON_OFF = frozenset({"", "0", "false", "no", "off"})
+
+
+def _format_json() -> bool:
+    # the private contract editor plugins consume, off unless the
+    # variable holds something other than a falsy value
+    return _os.getenv("_DOCSIG_FORMAT_JSON", "").lower() not in _JSON_OFF
+
+
 def _build_report(
     failures: _Failures,
     file: str | None = None,
@@ -133,13 +144,13 @@ def pretty_print_error(
 def print_error(message: str, retcode: int) -> None:
     """Print an error which cannot be attributed to a line.
 
-    Rendered as JSON when _DOCSIG_FORMAT_JSON is set (the contract
+    Rendered as JSON when _DOCSIG_FORMAT_JSON is enabled (the contract
     editor plugins consume), otherwise as text to stderr.
 
     :param message: Error message to print.
     :param retcode: Exit status the run will finish with.
     """
-    if _os.getenv("_DOCSIG_FORMAT_JSON") is not None:
+    if _format_json():
         obj = [{"line": None, "message": message, "exit": retcode}]
         print(_json.dumps(obj).strip())
     else:
@@ -199,7 +210,7 @@ def report(
     """
     codes = _RetCode()
     diagnostics: list[dict[str, _t.Any]] = []
-    format_json = _os.getenv("_DOCSIG_FORMAT_JSON") is not None
+    format_json = _format_json()
     for failures, file in results:
         payload = _build_report(failures, file)
         codes.add(payload.retcode)
