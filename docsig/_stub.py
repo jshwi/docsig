@@ -357,12 +357,25 @@ class Docstring(_Stub):
     @staticmethod
     def _indent_anomaly(string: str) -> bool:
         # report whether the first indented param field is indented
-        # with an odd number of spaces
+        # with an odd number of spaces relative to the docstring's own
+        # margin, so a uniformly indented docstring, e.g. one indented
+        # with tabs, is not an anomaly
+        # tabs are expanded as cleandoc expands them for parsing
         # description or anything else is out of scope
-        string = _DIRECTIVE.sub("", string)
-        for line in string.splitlines():
+        string = _DIRECTIVE.sub("", string.expandtabs())
+        lines = string.splitlines()
+        # the margin is the least indent below the summary line; the
+        # last line is counted even when blank as it carries the
+        # indent of the closing quotes
+        indents = [
+            len(line) - len(line.lstrip())
+            for line in lines[1:]
+            if line.strip() or line is lines[-1]
+        ]
+        margin = min(indents, default=0)
+        for line in lines:
             if line.lstrip().startswith(":"):
-                indent = len(line) - len(line.lstrip())
+                indent = len(line) - len(line.lstrip()) - margin
                 if indent > 0:
                     return indent % 2 != 0
 

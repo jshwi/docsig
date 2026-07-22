@@ -2598,3 +2598,27 @@ def function(**kwargs: str) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_no_indent_anomaly_for_tab_indented_source(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Tab-indented files do not report an indent anomaly.
+
+    Problem: The indent probe ran on the raw docstring before cleandoc
+    expanded tabs, counting a tab as one character, so every param in
+    a tab-indented file was reported as SIG401 incorrect-indent.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = (
+        "def function(param: int) -> None:\n"
+        '\t"""Summary.\n'
+        "\n"
+        "\t:param param: A description.\n"
+        '\t"""\n'
+    )
+    init_file(template)
+    assert main(".") == 0
