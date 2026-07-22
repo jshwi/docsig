@@ -326,8 +326,8 @@ class Docstring(_Stub):
             return "numpy"
 
         if _re.search(
-            r"^(Args|Arguments|Parameters|Returns|Yields|Raises|"
-            r"Attributes|Example|Examples):\s*$",
+            r"^(Args|Arguments|Keyword Args|Keyword Arguments|Parameters|"
+            r"Returns|Yields|Raises|Attributes|Example|Examples):\s*$",
             string,
             _re.MULTILINE,
         ):

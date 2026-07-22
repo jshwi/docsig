@@ -2572,3 +2572,29 @@ def function(a: list, b: dict, c: int, d: object) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_google_keyword_args_section_recognized(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A google docstring is detected by its Keyword Args section.
+
+    Problem: ``Keyword Args`` and ``Keyword Arguments`` were missing
+    from the google section headers used to detect google style, so a
+    docstring documenting only keyword arguments was never converted
+    and its params were invisible, reported as SIG203 params-missing.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(**kwargs: str) -> None:
+    """Summary.
+
+    Keyword Args:
+        alpha (str): A description.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0
