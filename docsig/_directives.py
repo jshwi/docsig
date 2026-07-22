@@ -55,7 +55,11 @@ class Comment(_Messages):
             if len(parts) == 1:
                 self.extend(_E.all)
             else:
-                self.extend(_E.from_ref(i) for i in parts[1].split(","))
+                # whitespace around the separator is stripped, to agree
+                # with the commandline and pyproject surfaces
+                self.extend(
+                    _E.from_ref(i.strip()) for i in parts[1].split(",")
+                )
 
     @property
     def kind(self) -> str:

@@ -3070,3 +3070,61 @@ def test_fix_flake8_core_options_do_not_collide_with_plugin(
     assert Flake8.a.verbose is False
     assert Flake8.a.check_class is True
     assert not hasattr(Flake8.a, "max_line_length")
+
+
+def test_fix_whitespace_in_disable_list_on_every_surface(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A space after the comma disables the rule it precedes.
+
+    Problem: Only a space free list was understood. The commandline
+    exited 2 on ``unknown option to disable ' SIG501'``, and a
+    directive warned about the wrong thing while silently leaving the
+    rule the user believed they disabled still enabled.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def directive(param1, param2) -> int:
+    """Summary."""
+    return 0
+'''
+    init_file(template)
+    assert (
+        main(".", "-d", f"{E[203].ref}, {E[503].ref}", test_flake8=False) == 0
+    )
+    std = capsys.readouterr()
+    assert E[203].ref not in std.out
+    assert E[503].ref not in std.out
+
+
+def test_fix_whitespace_in_directive_disable_list(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A space after the comma in a directive disables both rules.
+
+    Problem: The rule following the space was never matched, so it
+    stayed enabled while SIG003 was reported against it, meaning the
+    user was told the wrong thing about a check that still fired.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = f'''
+# docsig: disable={E[203].ref}, {E[503].ref}
+def directive(param1, param2) -> int:
+    """Summary."""
+    return 0
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[3].ref not in std.out
+    assert E[503].ref not in std.out

@@ -65,7 +65,11 @@ FLAG_HELP = {
 
 # split str by comma but allow for escaping
 def _split_comma(value: str) -> list[str]:
-    return [i.replace("\\,", ",") for i in _re.split(r"(?<!\\),", value)]
+    # whitespace around the separator is stripped, so that a list
+    # written the way prose is reads the same as a space free one
+    return [
+        i.replace("\\,", ",").strip() for i in _re.split(r"(?<!\\),", value)
+    ]
 
 
 def get_parent_that_has(file: str, start: _Path) -> _Path | None:
