@@ -3156,3 +3156,41 @@ def test_fix_multi_file_json_is_one_valid_document(
     assert len(issues) == 2
     assert {Path(i["path"]).name for i in issues} == {"one.py", "two.py"}
     assert all(i["message"].startswith(E[203].ref) for i in issues)
+
+
+def test_fix_sphinx_inline_type_with_ellipsis_or_quoted_member(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Parse a sphinx type-before-name field with ``...`` or quotes.
+
+    Problem: the ``:param <type> <name>:`` field grammar only joined
+    word characters with ``. , | [ ]``, so a bare ellipsis such as
+    ``tuple[int, ...]`` or ``Callable[..., str]`` and quoted members
+    such as ``Literal['a', 'b']`` terminated the type early. The
+    parameter name became a fragment of the type (``tuple[int``,
+    ``Callable[``) and the next character was read as a bad closing
+    token, spuriously emitting SIG302/SIG304/SIG404 on legal code.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(cb, items, mode) -> int:
+    """Summary.
+
+    :param Callable[..., str] cb: A callback.
+    :param tuple[int, ...] items: The numbers.
+    :param Literal['a', 'b'] mode: The mode.
+    :return: A number.
+    """
+    return 1
+'''
+    init_file(template)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[302].ref not in std.out
+    assert E[304].ref not in std.out
+    assert E[404].ref not in std.out

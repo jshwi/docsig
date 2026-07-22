@@ -34,13 +34,16 @@ VALID_DESCRIPTION = " A valid description."
 _NO_RETURN = ("NoReturn", "Never")
 
 #: a word in a param field after the leading keyword: a (possibly
-#: starred) name or type expression, in which ``. , | [ ]`` join word
-#: characters so types such as ``list[str]``, ``t.Any``, ``int|str``,
-#: and the split words of ``dict[str, int]`` hold together; a trailing
-#: ``,`` or bracket belongs to a bracketed type, while a trailing ``.``
-#: or ``|`` stays outside the word so it is still read as a bad
-#: closing token
-_FIELD_WORD = r"(?:\\?\*){0,2}\w+(?:[.,|\[\]]+\w+)*[,\[\]]*"
+#: starred) name or type-expression fragment built from word characters
+#: and the punctuation that joins them in a type — ``. , | [ ] ' "`` —
+#: so ``list[str]``, ``t.Any``, ``int|str``, the split words of
+#: ``dict[str, int]``, an ellipsis such as ``tuple[int, ...]`` or
+#: ``Callable[..., str]``, and quoted members such as ``Literal['a']``
+#: or ``Annotated[int, "m"]`` all hold together; the word may not *end*
+#: on a ``.`` or ``|``, so a stray trailing one before whitespace is
+#: left outside the word and read as a bad closing token, while a ``,``
+#: or bracket still belongs to a bracketed type
+_FIELD_WORD = r"(?:\\?\*){0,2}[\w.,|\[\]'\"]*[\w,\[\]'\"]"
 
 #: a ``..`` directive and its indented block, which may be indented
 #: arbitrarily and so never counts as a param indent anomaly
