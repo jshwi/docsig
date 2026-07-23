@@ -169,6 +169,14 @@ Tests live in `tests/` and use fixtures to build temporary Python files on disk,
 
 - Changelog fragments go in `changelog/` (managed by **towncrier**)
 
+A fragment's content is machine-derived from the commit subject — `check_news.py`
+parses `^(\w+):\s+(.+)\s+\(#(\d+)\)$` and writes group 2 verbatim — and the
+`commit-msg` hook **rewrites the file** whenever its text and the subject differ
+(`commit description changed, updated <N>.fix.md`). Fragments therefore cannot be
+hand-extended. Anything a fragment can't carry, such as a fix that surfaces new
+violations on unchanged code, belongs in the hand-written `gh release create
+--notes` body; stage that text in the PR body so it's findable at release time.
+
 To publish a release:
 
 ```bash
