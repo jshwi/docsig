@@ -2776,3 +2776,59 @@ class Klass:
     assert E[203].ref not in std.out
     assert E[503].ref not in std.out
     assert E[505].ref in std.out
+
+
+def test_fix_wrapped_role_does_not_disable_conversion(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A cross-reference role at column 0 is not an rst field.
+
+    Problem: The gate marking a docstring as already rst matched any
+    line opening with a role, so prose reflowed to put a role such as
+    ``:class:`Thing``` at the start of a line stopped napoleon from
+    ever running, and every Google or numpy param vanished.
+
+    The third function guards the gate's reason for existing, as a real
+    field still has to win over a section header, leaving the ``Args:``
+    block below it as prose rather than a second param.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def google(alpha) -> None:
+    """Summary.
+
+    See
+    :class:`Thing` for details.
+
+    Args:
+        alpha: Description of alpha.
+    """
+
+
+def numpy(alpha) -> None:
+    """Summary.
+
+    See
+    :class:`Thing` for details.
+
+    Parameters
+    ----------
+    alpha
+        Description of alpha.
+    """
+
+
+def rst(alpha) -> None:
+    """Summary.
+
+    :param alpha: Description of alpha.
+
+    Args:
+        beta: Description of beta.
+    """
+'''
+    init_file(template)
+    assert main(".") == 0

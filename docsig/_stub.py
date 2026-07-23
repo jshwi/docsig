@@ -46,8 +46,11 @@ _FIELD_WORD = r"(?:\\?\*){0,2}\w+(?:[.,|\[\]]+\w+)*[,\[\]]*"
 #: arbitrarily and so never counts as a param indent anomaly
 _DIRECTIVE = _re.compile(r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*", _re.MULTILINE)
 
-#: an rst field such as ``:param:``, marking a docstring as already rst
-_RST_FIELD = _re.compile(r"^:\w+", _re.MULTILINE)
+#: an rst field such as ``:param:``, marking a docstring as already rst;
+#: the closing colon must be followed by whitespace or the end of the
+#: line, which a role such as ``:class:`Thing``` never is, so a wrapped
+#: cross-reference at column 0 does not pass for a field
+_RST_FIELD = _re.compile(r"^:\w+[^:\n]*:(?=\s|$)", _re.MULTILINE)
 
 #: every section name napoleon knows, longest first so multi-word names
 #: are preferred; derived from napoleon itself rather than hand-listed,
