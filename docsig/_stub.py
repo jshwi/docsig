@@ -66,9 +66,11 @@ _SECTION_NAMES = "|".join(
     )
 )
 
-#: a numpy section header such as ``Returns`` underlined with dashes
+#: a numpy section header such as ``Returns`` underlined with dashes;
+#: trailing whitespace after the name is tolerated, as napoleon strips
+#: it and the underline below already allows it
 _NUMPY_SECTION = _re.compile(
-    rf"^({_SECTION_NAMES})\n\s*-{{3,}}\s*$",
+    rf"^({_SECTION_NAMES})[ \t]*\n\s*-{{3,}}\s*$",
     _re.MULTILINE | _re.IGNORECASE,
 )
 

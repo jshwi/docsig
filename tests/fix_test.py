@@ -2832,3 +2832,33 @@ def rst(alpha) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_numpy_section_header_with_trailing_whitespace(
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A numpy section header survives trailing whitespace.
+
+    Problem: The numpy gate demanded the newline immediately after the
+    section name, so an invisible trailing space stopped napoleon from
+    running, while the underline below the name had always tolerated
+    the same whitespace.
+
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    # written with explicit newlines so the trailing space survives the
+    # trailing-whitespace hook
+    template = (
+        "def numpy(alpha) -> None:\n"
+        '    """Summary.\n'
+        "\n"
+        "    Parameters   \n"
+        "    ----------\n"
+        "    alpha\n"
+        "        Description of alpha.\n"
+        '    """\n'
+    )
+    init_file(template)
+    assert main(".") == 0
