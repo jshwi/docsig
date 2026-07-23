@@ -2687,3 +2687,92 @@ def test_fix_json_null_line_for_syntax_error(
     issues = json.loads(std.out)
     assert issues[0]["line"] is None
     assert issues[0]["exit"] == 123
+
+
+def test_fix_napoleon_sections_missed_by_the_section_gate(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Every section napoleon converts reaches napoleon.
+
+    Problem: The google and numpy section headers were hand-listed
+    subsets of the sections napoleon knows, and the two lists had
+    drifted apart from each other as well as from napoleon, so a
+    docstring headed by a section missing from its list was never
+    converted and all of its documented params were invisible. The
+    lists were case sensitive too, while napoleon lowercases a header
+    before matching it.
+
+    Documentation hidden this way also hid the violations it should
+    raise, so a property documenting a return goes unreported until its
+    section reaches napoleon.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function_1(alpha: str) -> None:
+    """Summary.
+
+    Keyword Arguments
+    -----------------
+    alpha : str
+        The alpha value.
+    """
+
+
+def function_2(alpha: str) -> None:
+    """Summary.
+
+    Other Parameters:
+        alpha (str): The alpha value.
+    """
+
+
+def function_3(alpha: str) -> None:
+    """Summary.
+
+    Args
+    ----
+    alpha : str
+        The alpha value.
+    """
+
+
+def function_4() -> int:
+    """Summary.
+
+    Return:
+        The result.
+    """
+    return 1
+
+
+def function_5(alpha: str) -> None:
+    """Summary.
+
+    parameters:
+        alpha (str): The alpha value.
+    """
+
+
+class Klass:
+    """Summary."""
+
+    @property
+    def prop(self) -> int:
+        """Summary.
+
+        Return:
+            The result.
+        """
+        return 1
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[203].ref not in std.out
+    assert E[503].ref not in std.out
+    assert E[505].ref in std.out
