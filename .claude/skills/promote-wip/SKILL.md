@@ -23,6 +23,9 @@ repeat the whole flow once per SHA — one issue and one PR each.
   start the branch step over.
 - **After every commit, confirm `HEAD` actually moved** — the `rtk`/hook output
   can print `ok` even when a hook blocked the commit.
+- **Open the PR yourself; never hand that step to the user.** The `Closes #<N>`
+  body is the only thing that closes the issue, and a PR opened from the
+  terminal link lands with an empty body.
 
 ## Steps
 
@@ -155,13 +158,40 @@ gh pr create --repo jshwi/docsig --base master \
 <what was wrong + what the fix does>"
 ```
 
+`--body` is mandatory. Never use `--fill`: it copies the commit _body_, which is
+only the `Signed-off-by` trailer, leaving the PR with no description and no
+closing keyword.
+
 ### 9. Report
 
 Give the user the issue URL, the new commit SHA, and the PR URL. Call out any
 deviation from the literal wip subject (a conform reword) and note the pipeline
 is running.
 
-### 10. After the merge, when rebasing dev/main
+### 10. Merge
+
+```bash
+git checkout master && git merge <issue-branch> && git push
+```
+
+master fast-forwards, and GitHub marks the PR merged by itself once the head
+commit lands on the default branch — PR #1003's `merge_commit_sha` equals its
+head SHA, so no merge commit is created. That auto-merge is what fires
+`Closes #<N>` from the PR body.
+
+So the PR must exist, with the keyword in its body, **before** master is pushed.
+If the issue is still open afterwards, the body was the problem, not the merge
+route. Recover with:
+
+```bash
+gh issue close <N> --repo jshwi/docsig --reason completed --comment "Fixed in <sha> on master."
+gh api -X DELETE repos/jshwi/docsig/git/refs/heads/<issue-branch>
+```
+
+Leave the PR alone while doing so — closing it by hand records it as `CLOSED`
+rather than `MERGED`, preempting the auto-detection.
+
+### 11. After the merge, when rebasing dev/main
 
 `git rebase master` on `dev/main` replays the wip commit that was just promoted.
 It does **not** drop out automatically: if the promoted commit gained anything

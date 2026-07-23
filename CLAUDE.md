@@ -214,8 +214,21 @@ Work lands on `dev/main` as `wip:` commits. When ready to ship:
   type checks at commit time, so never run `make tests` separately here. The
   `commit-msg` hook creates the news fragment and blocks the first attempt.
 6. Run `git add . && git commit -s -m "fix: <subject> (#<N>)"` again — succeeds.
-7. Push, open a PR targeting `master`, wait for the pipeline.
+7. Push, open a PR targeting `master`, wait for the pipeline. The body **must**
+  open with `Closes #<N>`. Never `gh pr create --fill` — it copies the commit
+  *body*, which is only the `Signed-off-by` trailer, so the PR gets no
+  description and no closing keyword.
 8. Merge: `git checkout master && git merge <branch> && git push`
+
+The local merge is correct and sufficient: master fast-forwards, and GitHub
+detects the head commit arriving on the default branch and marks the PR merged
+on its own (PR #1003's `merge_commit_sha` equals its head SHA — no merge commit
+was ever created). That auto-merge is what fires `Closes #<N>`.
+
+The keyword must therefore be in the **PR body**; `(#<N>)` in the commit subject
+is only a cross-reference and closes nothing. Open the PR **before** pushing
+master, or there is no PR for the push to mark merged. Issue #1005 stayed open
+because its PR body was empty.
 
 **wip subject → final subject:** strip `wip:`, add a colon after the type, append
 the issue number.
