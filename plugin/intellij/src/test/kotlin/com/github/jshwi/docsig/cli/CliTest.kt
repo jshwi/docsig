@@ -154,6 +154,33 @@ class CliTest {
     }
 
     @Test
+    fun `run parses json issues carrying an unknown path field`() {
+        // the docsig cli attaches a per-entry "path" key the Issue model
+        // does not declare; without ignoreUnknown jackson throws and the
+        // run is dropped, leaving the editor with no diagnostics
+        val project = mockk<Project>()
+
+        bindSettings(project, mockk<DocsigSettings>(relaxed = true))
+
+        mockSubprocess {
+            subprocess(
+                """[{"path":"/x/test.py","message":"bad","line":1,"exit":1}]"""
+                    .trimIndent(),
+            )
+        }
+
+        val result = cli(project, "python").run("test.py")
+
+        assertEquals(1, result.size)
+
+        val issue = result.first()
+
+        assertEquals("bad", issue.message)
+        assertEquals(1, issue.line)
+        assertEquals(1, issue.exit)
+    }
+
+    @Test
     fun `run returns empty list on invalid json`() {
         val project = mockk<Project>()
 
