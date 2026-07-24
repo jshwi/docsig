@@ -1,31 +1,39 @@
 {# Furo renders pages through base.html (it does not support layout.html), so
-SEO meta tags are added by overriding its empty extrahead block. #} {% extends
-"!base.html" %} {% block extrahead %} {{ super() }} {# Add meta tags for SEO #}
-<meta name="description" content="{{ seo_description }}" />
-<meta
-  name="keywords"
-  content="python, docstring, documentation, linting, sphinx, numpy, google, parameters, signature, type checking, code quality, pre-commit, flake8"
-/>
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="docsig" />
-<meta
-  property="og:title"
-  content="{{ project }} - Check Python signature params for proper documentation"
-/>
-<meta property="og:description" content="{{ seo_description }}" />
+SEO meta tags are added by overriding its empty extrahead block. Only the
+homepage carries the site-level description and the SoftwareApplication
+structured data. If every page emitted them, all pages would advertise the same
+generic description (duplicate meta descriptions, which search engines discount)
+and each would claim to be the application's landing page (misplaced schema.org
+data that muddies rich results and AI overviews). Content pages instead expose
+per-page Open Graph/Twitter tags and let search engines derive the snippet from
+the page body. #} {% extends "!base.html" %} {% block extrahead %} {{ super() }}
+<meta property="og:site_name" content="{{ project }}" />
 <meta
   property="og:url"
   content="{{ pageurl if pageurl else 'https://docsig.io/' }}"
 />
 <meta property="og:image" content="https://docsig.io/_static/docsig.svg" />
 <meta name="twitter:card" content="summary" />
+<meta name="twitter:image" content="https://docsig.io/_static/docsig.svg" />
+{% if pagename == "index" %}
+<meta name="description" content="{{ seo_description }}" />
+<meta
+  name="keywords"
+  content="python, docstring, documentation, linting, sphinx, numpy, google, parameters, signature, type checking, code quality, pre-commit, flake8"
+/>
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="{{ project }} - Check Python signature params for proper documentation"
+/>
+<meta property="og:description" content="{{ seo_description }}" />
 <meta
   name="twitter:title"
   content="{{ project }} - Check Python signature params for proper documentation"
 />
 <meta name="twitter:description" content="{{ seo_description }}" />
-<meta name="twitter:image" content="https://docsig.io/_static/docsig.svg" />
-{# Add JSON-LD structured data for better SEO #}
+{# Structured data describes the software as a whole, so it belongs only on the
+landing page. #}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -77,4 +85,8 @@ SEO meta tags are added by overriding its empty extrahead block. #} {% extends
     ]
   }
 </script>
-{% endblock %}
+{% else %}
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{ title|striptags }} — {{ project }}" />
+<meta name="twitter:title" content="{{ title|striptags }} — {{ project }}" />
+{% endif %} {% endblock %}
