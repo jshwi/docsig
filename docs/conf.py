@@ -124,15 +124,24 @@ ogp_site_url = html_baseurl
 ogp_site_name = project
 ogp_description_length = 200
 ogp_enable_meta_description = True
-# Default preview image, served under /en/latest/_static/ (see html_baseurl).
-ogp_image = f"{html_baseurl}_static/docsig.svg"
-# Auto-generated per-page card images are intentionally disabled; they need a
-# base template and font assets vendored into the repo (a separate change).
-ogp_social_cards = {"enable": False}
-# With social cards off, the extension emits no twitter:card, so X would not
-# render a card at all. Add it back explicitly; X reads the per-page og:title,
-# og:description, and og:image for the card's contents.
-ogp_custom_meta_tags = ['<meta name="twitter:card" content="summary" />']
+# Generate a raster preview card per page from its title and description.
+# og:image then points at the page's own card and twitter:card becomes
+# summary_large_image, so X/Slack/LinkedIn render a large-image card.
+# Deliberately no ogp_image: opengraph only generates cards when no other image
+# is configured, so setting a fallback here would switch card generation off.
+# The card logo must be a raster too -- opengraph rejects an SVG (and with -W
+# that warning fails the build) -- so it uses the committed static/docsig.png
+# rather than the SVG html_logo it would otherwise fall back to.
+# Render cards in DejaVu Sans rather than opengraph's default Roboto Flex:
+# Roboto Flex has no heart glyph, so a description containing an emoji (e.g.
+# the contributing page's "thanks for ... <heart>") renders a tofu and warns.
+# DejaVu Sans ships with matplotlib and covers the glyph.
+ogp_social_cards = {
+    "enable": True,
+    "image": "static/docsig.png",
+    "site_url": "docsig.io",
+    "font": "DejaVu Sans",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
