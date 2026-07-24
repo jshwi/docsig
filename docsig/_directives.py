@@ -121,8 +121,10 @@ class _Scanner:
     * 'next' scope - a module directive flagged 'next' applies until
         the following statement, then module scope is restored from a
         snapshot taken at the directive
-    * inline scope - a directive on a code line, applying to that line
-        and the one that follows
+    * inline scope - an indented directive, applying from its own line
+        until the statement it annotates ends; blank lines and further
+        comments in between do not end that reach, and consecutive
+        directives stack rather than replacing one another
 
     :param messages: Initial list of messages to disable.
     """
@@ -179,13 +181,25 @@ class _Scanner:
             self._comments, self._messages = self._next_scope
             self._next_scope = None
 
-        scope = self._take_pending_inline(lineno) or scope
+        # an indented directive reaches the statement it annotates
+        # across any blank or comment lines between the two
+        if self._pending_inline is not None:
+            _, pending_comments, pending_messages = self._pending_inline
+            scope = Comments(pending_comments), _Messages(pending_messages)
 
         # the first entry recorded for a line wins, unless an inline
         # directive already claimed the line in _apply
         self._directives.setdefault(lineno, scope)
+        self._end_pending_inline(lineno, token.type)
 
     def _apply(self, comment: Comment, lineno: int, scope: _Scope) -> _Scope:
+        if not comment.ismodule and self._pending_inline is not None:
+            # stack onto an indented directive that is still waiting
+            # for its statement, so neither directive is lost, the way
+            # module directives already accumulate
+            _, pending_comments, pending_messages = self._pending_inline
+            scope = Comments(pending_comments), _Messages(pending_messages)
+
         comments, messages = scope
         comments.append(comment)
         if comment.disable:
@@ -222,18 +236,16 @@ class _Scanner:
 
         return comments, messages
 
-    def _take_pending_inline(self, lineno: int) -> _Scope | None:
-        # inherit a deferred inline scope on the first line after the
-        # comment (e.g. an indented def on the following line)
-        if self._pending_inline is None:
-            return None
-
-        pending_lineno, comments, messages = self._pending_inline
-        if lineno <= pending_lineno:
-            return None
-
-        self._pending_inline = None
-        return comments, messages
+    def _end_pending_inline(self, lineno: int, kind: int) -> None:
+        # the end of a statement on a line after the directive ends its
+        # reach; a directive written on the code line itself ends at
+        # the following statement instead, so its own line is excluded
+        if (
+            self._pending_inline is not None
+            and kind == _tokenize.NEWLINE
+            and lineno > self._pending_inline[0]
+        ):
+            self._pending_inline = None
 
 
 class Directives(dict[int, _Scope]):

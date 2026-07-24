@@ -2954,3 +2954,55 @@ def test_fix_pyproject_resolved_from_the_checked_path(
         encoding="utf-8",
     )
     assert main(Path("project") / "module.py", test_flake8=False) == 0
+
+
+def test_fix_indented_directive_reach_over_intervening_lines(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """An indented directive reaches the statement it annotates.
+
+    Problem: An indented directive was deferred to the single line
+    following it and replaced any directive already deferred, so a
+    blank or comment line before the def dropped it, and stacked
+    directives lost all but the last, while the same directives at
+    module level applied correctly.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+class Klass:
+    """Summary."""
+
+    # docsig: disable-next=duplicate-params-found,params-out-of-order
+    # docsig: disable-next=confirm-return-needed
+    def method_1(self, param1, param2, param3):
+        """Summary.
+
+        :param param1: Description of param1.
+        :param param3: Description of param3.
+        :param param2: Description of param2.
+        :param param2: Description of param2.
+        """
+
+    # docsig: disable-next=params-missing
+    # a comment explaining why the check is disabled
+
+    def method_2(self, param) -> None:
+        """Summary."""
+
+    def method_3(self, param) -> None:
+        """Summary."""
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[201].ref not in std.out
+    assert E[402].ref not in std.out
+    assert "method_2" not in std.out
+    # the directives must not reach past the statement they annotate
+    assert E[203].ref in std.out
+    assert "method_3" in std.out
