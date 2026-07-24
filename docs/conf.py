@@ -107,10 +107,13 @@ html_favicon = "static/favicon.ico"
 # conflicting signals.
 html_baseurl = "https://docsig.io/en/latest/"
 
-# Variables for the SEO meta tags rendered by _templates/base.html
+# Variables for the SEO meta tags rendered by _templates/base.html. The image
+# lives under the served /en/latest/_static/ path, so it is built from
+# html_baseurl rather than the site root (https://docsig.io/_static/... 404s).
 html_context = {
     "seo_description": " ".join(description.split()),
     "seo_author": author,
+    "seo_image": f"{html_baseurl}_static/docsig.svg",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

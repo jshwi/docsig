@@ -12,9 +12,9 @@ the page body. #} {% extends "!base.html" %} {% block extrahead %} {{ super() }}
   property="og:url"
   content="{{ pageurl if pageurl else 'https://docsig.io/' }}"
 />
-<meta property="og:image" content="https://docsig.io/_static/docsig.svg" />
+<meta property="og:image" content="{{ seo_image }}" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:image" content="https://docsig.io/_static/docsig.svg" />
+<meta name="twitter:image" content="{{ seo_image }}" />
 {% if pagename == "index" %}
 <meta name="description" content="{{ seo_description }}" />
 <meta
