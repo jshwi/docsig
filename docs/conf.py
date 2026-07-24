@@ -54,7 +54,10 @@ extensions = [
     "jsonschema",
 ]
 
-sitemap_url_scheme = "{lang}latest/{link}"
+# Read the Docs serves this project under /en/latest/, so that prefix lives in
+# html_baseurl (below) and the sitemap only needs to append the page link.
+# Keeping the prefix here as well would double it in the generated sitemap.
+sitemap_url_scheme = "{link}"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -96,8 +99,13 @@ todo_include_todos = False
 html_logo = "static/docsig.svg"
 html_favicon = "static/favicon.ico"
 
-# SEO Configuration
-html_baseurl = "https://docsig.io/"
+# SEO Configuration.
+# Read the Docs serves the built docs under /en/latest/, so canonical links,
+# pageurl, and the sitemap must all carry that prefix — otherwise the emitted
+# canonical URLs (https://docsig.io/<page>) point at paths that 404 while the
+# sitemap advertises the real /en/latest/ ones, giving search engines
+# conflicting signals.
+html_baseurl = "https://docsig.io/en/latest/"
 
 # Variables for the SEO meta tags rendered by _templates/base.html
 html_context = {
