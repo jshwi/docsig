@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.91.8](https://github.com/jshwi/docsig/tree/v0.91.8) - 2026-07-24
+
+### Fixed
+
+- documentation undetected under unknown section headers ([#1002](https://github.com/jshwi/docsig/issues/1002))
+- false positive SIG203 for a wrapped cross-reference role ([#1005](https://github.com/jshwi/docsig/issues/1005))
+- numpy sections undetected with trailing whitespace ([#1007](https://github.com/jshwi/docsig/issues/1007))
+
 ## [0.91.7](https://github.com/jshwi/docsig/tree/v0.91.7) - 2026-07-22
 
 ### Fixed
