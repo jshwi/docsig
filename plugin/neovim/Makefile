@@ -14,6 +14,17 @@ LUA_VERSION := 5.4
 STYLUA_VERSION := 2.5.2
 VERSION := 1.0.0
 
+RETRIES := 3
+RETRY_DELAY := 5
+
+# rocks without a src.rock on luarocks.org are fetched from github,
+# which intermittently drops the transfer mid-download
+retry = n=0; until $(1); do \
+		n=$$((n + 1)); \
+		[ $$n -lt $(RETRIES) ] || exit 1; \
+		sleep $(RETRY_DELAY); \
+	done
+
 LUA_DIR := $(shell \
 	if command -v brew >/dev/null 2>&1; then \
 		brew --prefix lua@$(LUA_VERSION) 2>/dev/null; \
@@ -60,7 +71,8 @@ clean:
 ../../scripts/check_coverage.py: ../../.venv/bin/python
 
 .venv/bin/stylua: .venv/bin/activate
-	@.venv/bin/pip install -q git+https://github.com/johnnymorganz/stylua@v2.5.2
+	@$(call retry,.venv/bin/pip install -q \
+		git+https://github.com/johnnymorganz/stylua@v2.5.2)
 	@touch $@
 
 ../../build/docsig.pyz:
@@ -72,17 +84,17 @@ resources/docsig.pyz: ../../build/docsig.pyz
 	@touch $@
 
 .luarocks/.installed:
-	@luarocks install --tree .luarocks luacov
-	@luarocks --lua-version=5.1 \
+	@$(call retry,luarocks install --tree .luarocks luacov)
+	@$(call retry,luarocks --lua-version=5.1 \
 		--lua-dir=$(LUAJIT_DIR) \
 		install \
 		--tree .luarocks \
-		busted 2.0.0-1
+		busted 2.0.0-1)
 	@mkdir -p $(@D)
 	@touch $@
 
 .luarocks/bin/luacheck: .luarocks/.installed
-	@luarocks $(LUA_ARGS) install --tree .luarocks luacheck
+	@$(call retry,luarocks $(LUA_ARGS) install --tree .luarocks luacheck)
 	@test -x .luarocks/bin/luacheck
 	@touch $@
 
