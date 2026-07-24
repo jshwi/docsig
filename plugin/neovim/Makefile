@@ -72,7 +72,7 @@ clean:
 
 .venv/bin/stylua: .venv/bin/activate
 	@$(call retry,.venv/bin/pip install -q \
-		git+https://github.com/johnnymorganz/stylua@v2.5.2)
+		git+https://github.com/johnnymorganz/stylua@v$(STYLUA_VERSION))
 	@touch $@
 
 ../../build/docsig.pyz:
