@@ -121,13 +121,18 @@ pre-commit hook); run it after any module restructuring.
 
 pyproject.toml `[tool.docsig]` → CLI arguments override (CLI wins). The `Config` class in `_config.py` handles merging. For the flake8 plugin, all options are prefixed with `--sig-` to avoid conflicts.
 
-Boolean flag help text is single-sourced in `FLAG_HELP` (`_config.py`) and
-flows to three user-facing surfaces: CLI `--help`, the flake8 plugin's
-`--sig-*` options, and the pyproject.toml schema, which
-`plugin/_validate_pyproject.py` generates at runtime by walking
-`build_parser()`'s actions. Edit help text only in `FLAG_HELP`; changing how
-`build_parser()` registers actions (order, defaults, help) changes the
-published schema.
+Help text for the `check-*`/`ignore-*` flags plus `--verbose` is
+single-sourced in `FLAG_HELP` (`_config.py`) and flows to three user-facing
+surfaces: CLI `--help`, the flake8 plugin's `--sig-*` options, and the
+pyproject.toml schema, which `plugin/_validate_pyproject.py` generates at
+runtime by walking `build_parser()`'s actions. `FLAG_HELP`'s keys are exactly
+the set the flake8 plugin mirrors; the remaining boolean flags
+(`--list-checks`, `--no-ansi`, `--include-ignored`) keep their help inline in
+`build_parser()` and reach only the CLI, or the CLI plus the schema. The
+flake8 plugin overrides one entry — `check-class-constructor` gains a
+mutual-exclusivity note, since flake8 has no mutually exclusive groups.
+Otherwise edit help text only in `FLAG_HELP`; changing how `build_parser()`
+registers actions (order, defaults, help) changes the published schema.
 
 ### Editor Plugins
 
