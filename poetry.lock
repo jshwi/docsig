@@ -2411,6 +2411,25 @@ standalone = ["Sphinx (>=5)"]
 test = ["pytest"]
 
 [[package]]
+name = "sphinxext-opengraph"
+version = "0.13.0"
+description = "Sphinx Extension to enable OGP support"
+optional = false
+python-versions = ">=3.9"
+groups = ["docs"]
+files = [
+    {file = "sphinxext_opengraph-0.13.0-py3-none-any.whl", hash = "sha256:936c07828edc9ad9a7b07908b29596dc84ed0b3ceaa77acdf51282d232d4d80e"},
+    {file = "sphinxext_opengraph-0.13.0.tar.gz", hash = "sha256:103335d08567ad8468faf1425f575e3b698e9621f9323949a6c8b96d9793e80b"},
+]
+
+[package.dependencies]
+Sphinx = ">=6.0"
+
+[package.extras]
+rtd = ["furo (>=2024)", "sphinx (>=8.1.0,<8.2.0)", "sphinx-design"]
+social-cards = ["matplotlib (>=3)"]
+
+[[package]]
 name = "tabulate"
 version = "0.10.0"
 description = "Pretty-print tabular data"
@@ -2745,4 +2764,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "6146764ad1f435e72399f63f77f17a66e68a555494a4ce2de1f9d0a4a2e14b64"
+content-hash = "712eec216c4c7512f7ae7b46794239f9121991761c43e053c80c600add35f319"
