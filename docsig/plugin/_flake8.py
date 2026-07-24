@@ -18,8 +18,6 @@ from pathlib import Path as _Path
 from .._config import Check as _Check
 from .._config import Config as _Config
 from .._config import Ignore as _Ignore
-from .._config import get_config as _get_config
-from .._config import merge_configs as _merge_configs
 from .._core import handle_deprecations as _handle_deprecations
 from .._core import runner as _runner
 from .._core import setup_logger as _setup_logger
@@ -157,7 +155,7 @@ class Flake8:
 
     @classmethod
     def parse_options(cls, a: _Namespace) -> None:
-        """Merge parsed options with pyproject config into class state.
+        """Store parsed options on class state without the sig prefix.
 
         :param a: Argparse namespace from flake8.
         """
@@ -170,10 +168,9 @@ class Flake8:
                 stacklevel=8,
             )
 
-        cls.a.__dict__ = _merge_configs(
-            {k.replace("sig_", ""): v for k, v in a.__dict__.items()},
-            _get_config(__package__),
-        )
+        cls.a.__dict__ = {
+            k.replace("sig_", ""): v for k, v in a.__dict__.items()
+        }
 
     def run(self) -> _t.Generator[_Flake8Error, None, None]:
         """Run docsig on the file and yield flake8 errors per failure.
