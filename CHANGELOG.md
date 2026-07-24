@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.92.0](https://github.com/jshwi/docsig/tree/v0.92.0) - 2026-07-25
+
+### Removed
+
+- short form for check-dunders ([#1009](https://github.com/jshwi/docsig/issues/1009))
+
 ## [0.91.8](https://github.com/jshwi/docsig/tree/v0.91.8) - 2026-07-24
 
 ### Fixed
