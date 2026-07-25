@@ -224,6 +224,16 @@ wip: fix evaluate docstring when description is missing
  →  fix: evaluate docstring when description is missing (#922)
 ```
 
+**The finalized description must be conform-legal on its own:** stripping
+`wip:` removes the imperative verb that satisfied conform's imperative mood
+check, and `case: lower` rejects a leading capital. So a description opening
+with a gerund is refused (`fix: missing period undetected after ellipsis
+line`), as is one opening with a capitalized message reference (`fix: SIG306
+undetected ...`) — lowercase it, per `fix: json line zero for whole file
+syntax errors (#1000)`. `scripts/promote_wip.py` checks the derived subject
+against the policy before it touches anything, and takes `--description` to
+reword it without rewriting the wip commit.
+
 Do **not** open the GitHub issue or create news fragments manually — the hook
 handles fragments, and the issue should only be opened once the commit is ready
 to promote.
