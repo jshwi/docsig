@@ -51,47 +51,47 @@ def _split_comma(value: str) -> list[str]:
     ]
 
 
-def get_parent_that_has(file: str, start: _Path | None = None) -> _Path | None:
-    """Find the parent directory that contains the given file.
+def _common_ancestor(paths: _t.Sequence[_Path]) -> _Path:
+    # deepest path all the checked paths share, so that one config
+    # applies to the whole run no matter how many paths are given, or
+    # in what order; paths with nothing in common, such as separate
+    # windows drives, share no parts and give the working directory
+    common = []
+    for parts in zip(*(i.resolve().parts for i in paths)):
+        if len(set(parts)) != 1:
+            break
 
-    Start from the current working directory and walk up to root. If
-    no required file is found, return None.
+        common.append(parts[0])
 
-    :param file: File to find.
-    :param start: Starting director.
-    :return: Parent directory containing the file or None if not found.
-    """
-    if start is None:
-        start = _Path.cwd()
-
-    if (start / file).is_file():
-        return start
-
-    if start.parent == start:
-        return None
-
-    return get_parent_that_has(file, start.parent)
+    return _Path(*common).resolve()
 
 
-def get_config(prog: str) -> dict[str, _t.Any]:
+def get_config(prog: str, *path: _Path) -> dict[str, _t.Any]:
     """Return the program's tool-section config from pyproject.toml.
 
+    Search upwards from the common ancestor of the checked paths, and
+    return the config of the first pyproject.toml with a section for
+    the program. A pyproject.toml without one says nothing about the
+    program, e.g. a packaging only manifest, so the search continues
+    past it, whereas an empty section opts the project out.
+
     :param prog: Program name.
+    :param path: Paths being checked, whose project owns the config;
+        defaults to the current working directory.
     :return: Config dict, or empty dict if no config is found.
     """
-    # attempt to locate a pyproject.toml file if one exists in parents
-    pyproject_file = get_parent_that_has(PYPROJECT_TOML)
-    if pyproject_file is None:
-        return {}
+    # config belongs to the project the checked paths are in, which is
+    # not necessarily the project the process was started in, e.g. a
+    # package checked from the root of the monorepo containing it
+    start = _common_ancestor(path)
+    for parent in start, *start.parents:
+        pyproject_file = parent / PYPROJECT_TOML
+        if pyproject_file.is_file():
+            tool = _tomli.loads(pyproject_file.read_text()).get("tool", {})
+            if prog in tool:
+                return {k.replace("-", "_"): v for k, v in tool[prog].items()}
 
-    pyproject_file /= PYPROJECT_TOML
-    return {
-        k.replace("-", "_"): v
-        for k, v in _tomli.loads(pyproject_file.read_text())
-        .get("tool", {})
-        .get(prog, {})
-        .items()
-    }
+    return {}
 
 
 def merge_configs(
@@ -126,7 +126,10 @@ class _ArgumentParser(_argparse.ArgumentParser):
         namespace: _argparse.Namespace | None = None,
     ) -> tuple[_argparse.Namespace | None, list[str]]:
         namespace, args = super().parse_known_args(args, namespace)
-        config = get_config(_Path(self.prog).stem)
+        config = get_config(
+            _Path(self.prog).stem,
+            *getattr(namespace, "path", []),
+        )
         namespace.__dict__ = merge_configs(namespace.__dict__, config)
         return namespace, args
 

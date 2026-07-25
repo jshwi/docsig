@@ -2975,3 +2975,85 @@ def function(cb, items, mode) -> int:
     assert E[302].ref not in std.out
     assert E[304].ref not in std.out
     assert E[404].ref not in std.out
+
+
+def test_fix_pyproject_resolved_from_the_checked_path(
+    tmp_path: Path,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    main: FixtureMain,
+) -> None:
+    """Config comes from the project the checked path belongs to.
+
+    Problem: The pyproject.toml was located by walking up from the
+    current working directory, so checking a package from the root of
+    the monorepo containing it applied the root's config instead of
+    the package's, silently changing which checks ran.
+
+    :param tmp_path: Create and return the temporary directory.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
+    :param main: Mock ``main`` function.
+    """
+    # the cwd the run starts in enables a check its project wants
+    init_pyproject_toml({"check-protected": True})
+    # the project actually being checked asks for nothing
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "pyproject.toml").write_text(
+        "[tool.docsig]\n",
+        encoding="utf-8",
+    )
+    (project / "module.py").write_text(
+        '''def _function(param) -> None:
+    """Summary."""
+''',
+        encoding="utf-8",
+    )
+    assert main(Path("project") / "module.py", test_flake8=False) == 0
+
+
+def test_fix_pyproject_resolved_from_the_common_ancestor(
+    tmp_path: Path,
+    init_pyproject_toml: FixtureInitPyprojectTomlFile,
+    main: FixtureMain,
+) -> None:
+    """Config comes from the project all the checked paths share.
+
+    Problem: The pyproject.toml was located by walking up from the
+    current working directory, so checking packages of a monorepo from
+    outside it applied the working directory's config. Resolving from
+    the first checked path instead would have made the config depend
+    on the order the paths were given in, which for a pre-commit hook
+    is the order the files happened to be edited in.
+
+    :param tmp_path: Create and return the temporary directory.
+    :param init_pyproject_toml: Initialize a test pyproject.toml file.
+    :param main: Mock ``main`` function.
+    """
+    # the cwd the run starts in asks for nothing
+    init_pyproject_toml({})
+    project = tmp_path / "project"
+    project.mkdir()
+    # the project the checked paths share enables a check
+    (project / "pyproject.toml").write_text(
+        "[tool.docsig]\ncheck-protected = true\n",
+        encoding="utf-8",
+    )
+    modules = []
+    for name in "a", "b":
+        # neither package asks for anything on its own
+        package = project / name
+        package.mkdir()
+        (package / "pyproject.toml").write_text(
+            "[tool.docsig]\n",
+            encoding="utf-8",
+        )
+        (package / "module.py").write_text(
+            '''def _function(param) -> None:
+    """Summary."""
+''',
+            encoding="utf-8",
+        )
+        modules.append(Path("project") / name / "module.py")
+
+    assert main(*modules, test_flake8=False) == 1
+    assert main(*reversed(modules), test_flake8=False) == 1
