@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.92.2](https://github.com/jshwi/docsig/tree/v0.92.2) - 2026-07-25
+
+### Fixed
+
+- pyproject resolved from the working directory ([#1017](https://github.com/jshwi/docsig/issues/1017))
+- inline directive dropped before intervening lines ([#1019](https://github.com/jshwi/docsig/issues/1019))
+- message list kwargs rejected by type checkers ([#1021](https://github.com/jshwi/docsig/issues/1021))
+
 ## [0.92.1](https://github.com/jshwi/docsig/tree/v0.92.1) - 2026-07-25
 
 ### Fixed
