@@ -133,6 +133,20 @@ the monorepo root — the repo root must not be treated as a Neovim
 runtimepath entry, since Neovim would recursively source every `.lua` file
 under `plugin/`.
 
+Anything synced into that mirror must resolve inside its own tree, since the
+mirror is cloned standalone and a `../..` path escapes into an unrelated
+directory on a user's machine. `plugin/neovim/Makefile` is monorepo-only for
+that reason and is excluded from the sync — the `Verify Mirror Is Self
+Contained` step fails the publish if any synced file reaches above the root,
+and the `Tag Version` step therefore reads `make version` from
+`plugin/neovim`, not from the mirror.
+
+Everything between the `<!-- Plugin description -->` markers in each
+`plugin/*/README.md` is published as that integration's page on docsig.io by
+`generate_integration_docs` (`docs/extensions/generate.py`), and the IntelliJ
+build extracts its own marked block for the marketplace listing. Development
+instructions belong *outside* the markers.
+
 ### Testing Patterns
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
