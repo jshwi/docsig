@@ -7,9 +7,12 @@ tests.fix_test
 import io
 import json
 import pickle
+import typing as t
 from pathlib import Path
 
 import pytest
+
+from docsig import docsig
 
 # noinspection PyProtectedMember
 from docsig._config import _ArgumentParser, _split_comma, build_parser
@@ -3109,3 +3112,17 @@ class Klass:
     # the directives must not reach past the statement they annotate
     assert E[203].ref in std.out
     assert "method_3" in std.out
+
+
+def test_fix_message_list_kwargs_rejected_by_type_checkers() -> None:
+    """Annotate target and disable as the string lists they accept.
+
+    The entry point advertised ``Messages`` for both kwargs, but
+    ``parse_msgs`` builds them from codes, so the documented calls
+    passing a list of string refs were rejected by a type checker, while
+    the annotated ``Messages`` form failed at runtime as unknown
+    options.
+    """
+    hints = t.get_type_hints(docsig)
+    assert hints["target"] == list[str] | None
+    assert hints["disable"] == list[str] | None
