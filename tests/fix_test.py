@@ -2893,3 +2893,47 @@ def function(param: int) -> None:
     main(".")
     std = capsys.readouterr()
     assert E[306].ref in std.out
+
+
+def test_fix_whitespace_in_comma_separated_rule_lists(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A space after the comma still disables both rules.
+
+    Problem: The rule following the space was never matched. In a
+    directive it stayed enabled while SIG003 was reported against it,
+    so the user was told the wrong thing about a check that still
+    fired, and on the commandline the run was rejected outright.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    directive = f'''
+# docsig: disable={E[203].ref}, {E[503].ref}
+def directive(param1, param2) -> int:
+    """Summary."""
+    return 0
+'''
+    init_file(directive)
+    assert main(".") == 0
+    std = capsys.readouterr()
+    assert E[3].ref not in std.out
+    assert E[503].ref not in std.out
+    template = '''
+def function(param1, param2) -> int:
+    """Summary."""
+    return 0
+'''
+    init_file(template)
+    assert (
+        main(
+            ".",
+            "--disable",
+            f"{E[203].ref}, {E[503].ref}",
+            test_flake8=False,
+        )
+        == 0
+    )

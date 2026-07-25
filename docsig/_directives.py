@@ -51,7 +51,12 @@ class Comment(_Messages):
             if len(parts) == 1:
                 self.extend(_E.all)
             else:
-                self.extend(_E.from_ref(i) for i in parts[1].split(","))
+                # whitespace around the separator is stripped, so that a
+                # list written the way prose is reads the same as a
+                # space free one
+                self.extend(
+                    _E.from_ref(i.strip()) for i in parts[1].split(",")
+                )
 
     @property
     def kind(self) -> str:
