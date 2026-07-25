@@ -2862,3 +2862,34 @@ def test_fix_numpy_section_header_with_trailing_whitespace(
     )
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_ellipsis_line_does_not_suppress_sig306(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """A prose line starting with an ellipsis is still prose.
+
+    Problem: Any line starting with two dots was read as an rst
+    directive, but rst explicit markup is two dots followed by
+    whitespace, so a prose line starting with an ellipsis put the
+    probe in block mode and a description missing its final period
+    escaped SIG306.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = '''
+def function(param: int) -> None:
+    """Summary.
+
+    :param param: The value used for
+        ... continuing thoughts with no period
+    """
+'''
+    init_file(template)
+    main(".")
+    std = capsys.readouterr()
+    assert E[306].ref in std.out
