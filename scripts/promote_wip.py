@@ -120,23 +120,35 @@ def policy_report(repo: git.Repo, subject: str) -> str | None:
     return None
 
 
-def pull_request_body(commit: git.Commit, issue: int) -> str:
+def pull_request_body(
+    commit: git.Commit,
+    issue: int,
+    body: str = "",
+) -> str:
     """Construct the pull request body.
+
+    A wip commit's message is only its sign-off trailer, so nothing
+    survives to describe the change. Prefer an explicit body when one
+    is given, and fall back to the commit's own paragraphs otherwise.
 
     :param commit: Commit being promoted.
     :param issue: Issue the pull request closes.
+    :param body: Body to use in place of the commit's paragraphs.
     :return: Body text beginning with the closing reference.
     """
     lines = [f"Closes #{issue}"]
-    paragraphs = str(commit.message).split("\n", 1)[1:]
-    if paragraphs:
-        text = "\n".join(
-            i
-            for i in paragraphs[0].splitlines()
-            if not i.startswith("Signed-off-by:")
-        ).strip()
-        if text:
-            lines.extend(["", text])
+    text = body
+    if not text:
+        paragraphs = str(commit.message).split("\n", 1)[1:]
+        if paragraphs:
+            text = "\n".join(
+                i
+                for i in paragraphs[0].splitlines()
+                if not i.startswith("Signed-off-by:")
+            ).strip()
+
+    if text:
+        lines.extend(["", text])
 
     return "\n".join(lines)
 
@@ -171,6 +183,11 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     p.add_argument(
         "--description",
         help="replace the description taken from the wip subject",
+    )
+    p.add_argument(
+        "--pr-body",
+        default="",
+        help="body for the pull request, after the closing reference",
     )
     o = p.parse_args()
     repo = git.Repo(Path.cwd())
@@ -219,7 +236,7 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
                 "--title",
                 subject,
                 "--body",
-                pull_request_body(wip_commit, issue),
+                pull_request_body(wip_commit, issue, o.pr_body),
             ),
         )
     except subprocess.CalledProcessError as err:
