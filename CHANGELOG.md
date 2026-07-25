@@ -11,6 +11,14 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.92.1](https://github.com/jshwi/docsig/tree/v0.92.1) - 2026-07-25
+
+### Fixed
+
+- sig306 undetected after an ellipsis line ([#1011](https://github.com/jshwi/docsig/issues/1011))
+- whitespace rejected in comma separated rule lists ([#1013](https://github.com/jshwi/docsig/issues/1013))
+- sphinx inline types rejected with an ellipsis or quotes ([#1015](https://github.com/jshwi/docsig/issues/1015))
+
 ## [0.92.0](https://github.com/jshwi/docsig/tree/v0.92.0) - 2026-07-25
 
 ### Removed
