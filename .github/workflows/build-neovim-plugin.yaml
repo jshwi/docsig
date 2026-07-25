@@ -112,11 +112,25 @@ jobs:
             --exclude .make \
             --exclude .venv \
             --exclude .luarocks \
+            --exclude Makefile \
             --exclude coverage \
             --exclude tests/tmp \
             --exclude '*.log' \
             "${PLUGIN_DIR}/" mirror/
+          # an exclude also protects the receiving side from --delete, so
+          # the copy already committed to the mirror has to go by hand
+          rm -f mirror/Makefile
           cp LICENSE mirror/LICENSE
+
+      # the mirror is a clone in its own right, so anything reaching
+      # above its root resolves against an unrelated directory on a
+      # user's machine
+      - name: Verify Mirror Is Self Contained
+        run: |
+          if grep -rIn -e '\.\./\.\.' mirror --exclude-dir=.git; then
+            echo "mirror references paths outside its own tree" >&2
+            exit 1
+          fi
 
       - name: Commit and Push
         working-directory: mirror
@@ -136,7 +150,7 @@ jobs:
       - name: Tag Version
         working-directory: mirror
         run: |
-          version="$(make -s version)"
+          version="$(make -s -C "${GITHUB_WORKSPACE}/${PLUGIN_DIR}" version)"
           if ! git rev-parse "v${version}" >/dev/null 2>&1; then
             git tag "v${version}"
             git push origin "v${version}"
