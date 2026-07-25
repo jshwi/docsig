@@ -1,10 +1,11 @@
 """Promote a wip commit from dev/main to an issue branch.
 
 Automates the promotion workflow documented in CLAUDE.md: create or
-reuse the GitHub issue and its linked branch, cherry-pick the wip
-commit with its finalized subject, run the commit hooks (retrying
-once so the news fragment they create is included), push, and open a
-pull request targeting master.
+reuse the GitHub issue and its linked branch, check the finalized
+subject against the commit policy before anything is touched,
+cherry-pick the wip commit with that subject, run the commit hooks
+(retrying once so the news fragment they create is included), push,
+and open a pull request targeting master.
 
 Merging is left to the maintainer once the pipeline passes.
 """
@@ -12,6 +13,7 @@ Merging is left to the maintainer once the pipeline passes.
 import re
 import subprocess
 import sys
+import tempfile
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -50,6 +52,72 @@ def issue_branch(issue: int) -> str:
         branches = gh("issue", "develop", "--list", str(issue))
 
     return branches.splitlines()[0].split()[0]
+
+
+def new_issue(title: str, body: str) -> int:
+    """Open a GitHub issue for the fix.
+
+    :param title: Title for the new issue.
+    :param body: Body for the new issue.
+    :return: Number of the issue that was opened.
+    """
+    url = gh("issue", "create", "--title", title, "--body", body)
+    return int(url.rsplit("/", maxsplit=1)[1])
+
+
+def policy_report(repo: git.Repo, subject: str) -> str | None:
+    """Check a finalized subject against the commit policy.
+
+    A wip subject clears conform's imperative mood check because ``wip:
+    fix ...`` puts an imperative verb first. Finalizing strips that
+    verb, so a description opening with a gerund, or with a capitalized
+    message reference, is only rejected at commit time, once the
+    working tree has been rearranged and the hooks have run. Check it
+    up front against the policy the commit-msg hook applies, so a
+    rewording costs nothing.
+
+    :param repo: Repository whose sign-off identity signs the message.
+    :param subject: Finalized commit subject.
+    :return: Conform's report if the policy fails, else None.
+    """
+    name = repo.git.config("--get", "user.name")
+    email = repo.git.config("--get", "user.email")
+    with tempfile.NamedTemporaryFile(
+        "w",
+        delete=False,
+        suffix=".txt",
+    ) as file:
+        file.write(f"{subject}\n\nSigned-off-by: {name} <{email}>\n")
+        path = Path(file.name)
+
+    try:
+        proc = subprocess.run(
+            [
+                "conform",
+                "enforce",
+                "--commit-msg-file",
+                str(path),
+                "--reporter",
+                "cli",
+            ],
+            capture_output=True,
+            check=False,
+            cwd=repo.working_dir,
+            text=True,
+        )
+    except FileNotFoundError:
+        print(
+            "warning: conform not on PATH, subject unchecked",
+            file=sys.stderr,
+        )
+        return None
+    finally:
+        path.unlink()
+
+    if proc.returncode:
+        return f"{proc.stdout}{proc.stderr}".strip()
+
+    return None
 
 
 def pull_request_body(commit: git.Commit, issue: int) -> str:
@@ -100,6 +168,10 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     group.add_argument("--issue", type=int, help="existing issue number")
     group.add_argument("--title", help="title for a new issue")
     p.add_argument("--body", default="", help="body for a new issue")
+    p.add_argument(
+        "--description",
+        help="replace the description taken from the wip subject",
+    )
     o = p.parse_args()
     repo = git.Repo(Path.cwd())
     if repo.is_dirty(untracked_files=True):
@@ -115,16 +187,20 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     if not match:
         return f"not a wip commit: {summary}"
 
-    if " and " in match[2]:
-        return f"subject contains 'and', split the commit: {match[2]}"
+    description = o.description or match[2]
+    if " and " in description:
+        return f"subject contains 'and', split the commit: {description}"
 
     try:
-        issue = o.issue
-        if issue is None:
-            url = gh("issue", "create", "--title", o.title, "--body", o.body)
-            issue = int(url.rsplit("/", maxsplit=1)[1])
+        issue = o.issue or new_issue(o.title, o.body)
+        subject = f"{match[1]}: {description} (#{issue})"
+        report = policy_report(repo, subject)
+        if report is not None:
+            return (
+                f"subject fails the commit policy:\n{report}\n"
+                f"reword it and rerun with --issue {issue} --description"
+            )
 
-        subject = f"{match[1]}: {match[2]} (#{issue})"
         branch = issue_branch(issue)
         repo.git.fetch("origin", branch)
         repo.git.checkout(branch)
