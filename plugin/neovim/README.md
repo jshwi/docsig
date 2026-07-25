@@ -28,22 +28,6 @@ return {
 use({ "jshwi/docsig.nvim", ft = "python" })
 ```
 
-To develop against the [docsig monorepo](https://github.com/jshwi/docsig),
-where the plugin lives at `plugin/neovim`, clone it, build the bundled
-checker, and point at the plugin directory:
-
-```bash
-git clone https://github.com/jshwi/docsig
-make -C docsig/plugin/neovim bundle
-```
-
-```lua
--- lazy.nvim
-return {
-  { dir = "/path/to/docsig/plugin/neovim", ft = "python" },
-}
-```
-
 ## Setup
 
 The plugin loads automatically when `vim.g.docsig` is not set to `false`.
@@ -110,12 +94,41 @@ telemetry, or usage statistics. Source code is not transmitted to external
 services. The bundled checker at `resources/docsig.pyz` is invoked with your
 configured Python interpreter.
 
+## License
+
+MIT
+
+<!-- Plugin description end -->
+
 ## Development
 
+[jshwi/docsig.nvim](https://github.com/jshwi/docsig.nvim) is a generated
+repository, synced from `plugin/neovim` in the
+[docsig](https://github.com/jshwi/docsig) monorepo on every push to master.
+Report issues and open pull requests against the monorepo; changes pushed to
+the mirror are overwritten by the next sync.
+
+Clone the monorepo, build the bundled checker, then point a plugin manager at
+the plugin directory:
+
 ```bash
-make -C plugin/neovim deps bundle verify
-make -C plugin/neovim format lint
-make -C plugin/neovim test
+git clone https://github.com/jshwi/docsig
+cd docsig/plugin/neovim
+make deps bundle verify
+```
+
+```lua
+-- lazy.nvim
+return {
+  { dir = "/path/to/docsig/plugin/neovim", ft = "python" },
+}
+```
+
+The remaining targets run from that same directory:
+
+```bash
+make format lint
+make test
 ```
 
 `deps` installs luarocks packages (`luacov`, `busted`, `luacheck`) into
@@ -126,9 +139,5 @@ inside headless Neovim. `format` uses StyLua with `.stylua.toml`. `lint` runs
 `.luacheckrc`.
 
 Tests run in headless Neovim (`nvim --headless`) and require Neovim 0.10+.
-
-## License
-
-MIT
-
-<!-- Plugin description end -->
+The targets are driven by the monorepo build, so `Makefile` is not part of
+the published mirror.
