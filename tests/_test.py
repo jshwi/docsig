@@ -11,6 +11,7 @@ import io
 import json
 import os
 import pickle
+from argparse import Namespace
 from pathlib import Path
 
 import pytest
@@ -24,6 +25,9 @@ from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E, Message
 from docsig.plugin import ValidatePyproject
+
+# noinspection PyProtectedMember
+from docsig.plugin._flake8 import Flake8
 
 from . import (
     CHECK_ARGS,
@@ -1814,3 +1818,30 @@ def test_json_usage_error(
     assert issues[0]["line"] is None
     assert issues[0]["exit"] == 2
     assert "required" in issues[0]["message"]
+
+
+@pytest.mark.parametrize("core_first", [True, False])
+def test_flake8_core_options_do_not_collide_with_plugin(
+    core_first: bool,
+) -> None:
+    """Only the plugin's own options are read off the namespace.
+
+    Problem: The sig prefix was stripped with an unanchored replace over
+    every option flake8 owns, so flake8's core ``verbose`` and the
+    plugin's ``sig_verbose`` both landed on ``verbose`` and the winner
+    was decided by registration order alone.
+
+    :param core_first: Register flake8's own options before the
+        plugin's, the order flake8 happens to use today.
+    """
+    # flake8's own verbose must not be read as the plugin's, whichever
+    # order the two were registered in
+    core = {"verbose": 3, "max_line_length": 79}
+    plugin = {"sig_verbose": False, "sig_check_class": True}
+    namespace = Namespace(
+        **({**core, **plugin} if core_first else {**plugin, **core}),
+    )
+    Flake8.parse_options(namespace)
+    assert Flake8.a.verbose is False
+    assert Flake8.a.check_class is True
+    assert not hasattr(Flake8.a, "max_line_length")

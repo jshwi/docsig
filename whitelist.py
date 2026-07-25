@@ -1,7 +1,6 @@
 off_by_default  # unused variable (docsig/plugin/_flake8.py:55)
 version  # unused variable (docsig/plugin/_flake8.py:57)
 _.add_options  # unused method (docsig/plugin/_flake8.py:68)
-_.parse_options  # unused method (docsig/plugin/_flake8.py:156)
 __call__  # unused function (tests/__init__.py:24)
 content  # unused variable (tests/__init__.py:24)
 __call__  # unused function (tests/__init__.py:31)
