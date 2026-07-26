@@ -173,6 +173,11 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
+.make/test-check-claude-md: $(VENV) scripts/check_claude_md.py
+	@$(POETRY) run pytest scripts/check_claude_md.py -n=auto
+	@mkdir -p $(@D)
+	@touch $@
+
 .make/test-check-news: $(VENV) scripts/check_news.py
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
@@ -288,7 +293,11 @@ publish: $(BUILD) check-links
 	@POETRY_KEYRING_ENABLED=true $(POETRY) publish
 
 #: run tests on scripts
-test-scripts: .make/test-check-news .make/test-bump .make/test-check-ai-commit
+test-scripts: \
+	.make/test-check-news \
+	.make/test-bump \
+	.make/test-check-ai-commit \
+	.make/test-check-claude-md
 
 #: run tests on source code
 test-source: .make/doctest coverage.xml
