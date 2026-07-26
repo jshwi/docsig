@@ -14,10 +14,12 @@ import re
 import subprocess
 import sys
 import tempfile
+import typing as t
 from argparse import ArgumentParser
 from pathlib import Path
 
 import git
+import pytest
 
 WIP = re.compile(r"^wip: (\w+) (.+)$")
 
@@ -247,6 +249,217 @@ def main() -> int | str:  # pylint: disable=too-many-return-statements
     print("wait for the pipeline, then merge with:")
     print(f"git checkout master; git merge {branch}; git push")
     return 0
+
+
+class Test:
+    """Tests for this script."""
+
+    repo: git.Repo
+    path: Path
+    monkeypatch: pytest.MonkeyPatch
+
+    @pytest.fixture(autouse=True)
+    def setup(
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Set up the test environment.
+
+        :param tmp_path: Create and return a temporary directory.
+        :param monkeypatch: Mock patch environment and attributes.
+        """
+        monkeypatch.chdir(tmp_path)
+        self.monkeypatch = monkeypatch
+        self.path = tmp_path
+        self.repo = git.Repo.init(tmp_path)
+        config = self.repo.config_writer()
+        config.set_value("user", "name", "Test User")
+        config.set_value("user", "email", "test.user@example.com")
+        config.set_value("commit", "gpgsign", False)
+        config.release()
+        (tmp_path / "file.txt").write_text("", encoding="utf-8")
+        self.repo.git.add(str(tmp_path))
+        self.repo.git.commit(message="Initial commit")
+
+    def wip(self, summary: str) -> str:
+        """Add an empty commit with the given subject.
+
+        :param summary: Subject line for the commit.
+        :return: Hexsha of the created commit.
+        """
+        self.repo.git.commit("--allow-empty", "-m", summary)
+        return str(self.repo.head.commit.hexsha)
+
+    def argv(self, *args: str) -> None:
+        """Set the commandline the script parses.
+
+        :param args: Arguments following the program name.
+        """
+        self.monkeypatch.setattr("sys.argv", ["__main__.py", *args])
+
+    def test_dirty_working_tree(self) -> None:
+        """Test promotion refuses to run over uncommitted changes."""
+        (self.path / "dirty.txt").write_text("x", encoding="utf-8")
+        self.argv("HEAD", "--issue", "1")
+        assert main() == "working tree is not clean"
+
+    def test_unknown_commit(self) -> None:
+        """Test an unresolvable revision is reported."""
+        self.argv("nosuchref", "--issue", "1")
+        assert main() == "no such commit: nosuchref"
+
+    def test_not_a_wip_commit(self) -> None:
+        """Test a commit of another type is refused."""
+        sha = self.wip("fix: already promoted (#1)")
+        self.argv(sha, "--issue", "1")
+        assert str(main()).startswith("not a wip commit:")
+
+    def test_description_contains_and(self) -> None:
+        """Test a subject needing to be split is refused."""
+        sha = self.wip("wip: fix this and that")
+        self.argv(sha, "--issue", "1")
+        assert "split the commit" in str(main())
+
+    def test_description_override_contains_and(self) -> None:
+        """Test the override is checked for 'and' as well."""
+        sha = self.wip("wip: fix something")
+        self.argv(sha, "--issue", "1", "--description", "fix this and that")
+        assert "split the commit" in str(main())
+
+    def test_policy_failure_reported(self) -> None:
+        """Test a subject failing the commit policy stops promotion."""
+        sha = self.wip("wip: fix something")
+        self.monkeypatch.setattr(f"{__name__}.policy_report", lambda *_: "no")
+        self.argv(sha, "--issue", "12")
+        result = str(main())
+        assert "subject fails the commit policy" in result
+        assert "--issue 12 --description" in result
+
+    def test_policy_skipped_without_conform(
+        self,
+        capsys: pytest.CaptureFixture,
+    ) -> None:
+        """Test a missing conform warns rather than failing.
+
+        :param capsys: Capture sys out and err.
+        """
+
+        def _raise(*_: object, **__: object) -> None:
+            raise FileNotFoundError
+
+        self.monkeypatch.setattr("subprocess.run", _raise)
+        assert policy_report(self.repo, "fix: a thing (#1)") is None
+        assert "conform not on PATH" in capsys.readouterr().err
+
+    def test_issue_branch_reuses_existing(self) -> None:
+        """Test an existing linked branch is not created twice."""
+        calls = []
+
+        def _gh(*args: str) -> str:
+            calls.append(args)
+            return "1234-a-branch\tsomething"
+
+        self.monkeypatch.setattr(f"{__name__}.gh", _gh)
+        assert issue_branch(1) == "1234-a-branch"
+        assert len(calls) == 1
+
+    def test_issue_branch_created_when_missing(self) -> None:
+        """Test a branch is created when the issue has none."""
+        replies = ["", "", "1234-a-branch\tsomething"]
+        calls = []
+
+        def _gh(*args: str) -> str:
+            calls.append(args)
+            return replies.pop(0)
+
+        self.monkeypatch.setattr(f"{__name__}.gh", _gh)
+        assert issue_branch(1) == "1234-a-branch"
+        assert calls[1] == ("issue", "develop", "1")
+
+    def test_new_issue_parses_number(self) -> None:
+        """Test the issue number is taken from the returned url."""
+        url = "https://github.com/jshwi/docsig/issues/1234"
+        self.monkeypatch.setattr(f"{__name__}.gh", lambda *_: url)
+        assert new_issue("a title", "a body") == 1234
+
+    def test_pull_request_body_from_commit(self) -> None:
+        """Test the commit's own paragraphs describe the change."""
+        self.repo.git.commit(
+            "--allow-empty",
+            "-m",
+            "wip: fix a thing",
+            "-m",
+            "Why it was broken.\n\nSigned-off-by: T U <t@u.com>",
+        )
+        body = pull_request_body(self.repo.head.commit, 7)
+        assert body.startswith("Closes #7")
+        assert "Why it was broken." in body
+        assert "Signed-off-by" not in body
+
+    def test_pull_request_body_explicit(self) -> None:
+        """Test an explicit body wins over the commit's paragraphs."""
+        self.repo.git.commit(
+            "--allow-empty",
+            "-m",
+            "wip: fix a thing",
+            "-m",
+            "From the commit.",
+        )
+        body = pull_request_body(self.repo.head.commit, 7, "From the flag.")
+        assert body == "Closes #7\n\nFrom the flag."
+
+    def test_pull_request_body_bare_commit(self) -> None:
+        """Test a commit with no paragraphs yields only the reference."""
+        self.wip("wip: fix a thing")
+        assert pull_request_body(self.repo.head.commit, 7) == "Closes #7"
+
+    def test_commit_staged_retries(self) -> None:
+        """Test a commit blocked by a hook is retried once.
+
+        The commit-msg hook writes the news fragment then fails the
+        first attempt, so the fragment has to be staged and the commit
+        remade. GitPython builds ``repo.git.commit`` dynamically, so
+        this stubs the command namespace rather than patching it.
+        """
+        calls: list[str] = []
+
+        class _Git:
+            """Stand-in for the git command namespace."""
+
+            @staticmethod
+            def commit(*_: str) -> None:
+                """Fail the first attempt, as the hook does.
+
+                :param _: Arguments the caller passes to git commit.
+                """
+                calls.append("commit")
+                if calls.count("commit") == 1:
+                    raise git.GitCommandError("commit", 1)
+
+            @staticmethod
+            def add(*_: str) -> None:
+                """Record that the fragment was staged.
+
+                :param _: Arguments the caller passes to git add.
+                """
+                calls.append("add")
+
+        class _Repo:  # pylint: disable=too-few-public-methods
+            """Stand-in for the repository the function commits to."""
+
+            git = _Git()
+
+        commit_staged(t.cast(git.Repo, _Repo()), "fix: a thing (#1)")
+        assert calls == ["commit", "add", "commit"]
+
+    def test_commit_staged_first_attempt(self) -> None:
+        """Test a commit which is not blocked is made only once."""
+        self.repo.git.commit("--allow-empty", "-m", "wip: fix a thing")
+        (self.path / "new.txt").write_text("x", encoding="utf-8")
+        self.repo.git.add(str(self.path))
+        commit_staged(self.repo, "wip: fix another thing")
+        assert self.repo.head.commit.summary == "wip: fix another thing"
 
 
 if __name__ == "__main__":
