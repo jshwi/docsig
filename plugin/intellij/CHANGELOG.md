@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- coalesce rapid saves so a check runs once writing stops, rather than
+  600ms after the first save
+
 ## [1.1.0] - 2026-07-15
 
 ### Changed

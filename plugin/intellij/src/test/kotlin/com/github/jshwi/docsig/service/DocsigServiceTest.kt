@@ -334,6 +334,37 @@ class DocsigServiceTest {
     }
 
     @Test
+    fun `scheduleFromSave resets the debounce when a run is pending`() {
+        var cancelCalls = 0
+        var requestCalls = 0
+        var pending = false
+        val alarm = trackingAlarm(
+            onCancel = { cancelCalls += 1 },
+            onAddRequest = { requestCalls += 1 },
+            isPending = { pending },
+            setPending = { pending = it },
+        )
+
+        DocsigService.alarmFactory = { alarm }
+
+        val cli = mockk<Cli>(relaxed = true)
+        every { cli.isAvailable() } returns true
+        every { cli.isPythonSupported() } returns true
+        every { cli.run(any()) } returns emptyList()
+
+        val service = DocsigService(project)
+        injectCli(service, cli)
+
+        service.scheduleFromSave("/j.py")
+        service.scheduleFromSave("/j.py")
+
+        // a second save inside the debounce window pushes the run out
+        // rather than being dropped, matching vscode and neovim
+        assertEquals(2, cancelCalls)
+        assertEquals(2, requestCalls)
+    }
+
+    @Test
     fun `scheduleAfterSettingsChange clears cache then runs cli`() {
         var pending = false
         val alarm = trackingAlarm(

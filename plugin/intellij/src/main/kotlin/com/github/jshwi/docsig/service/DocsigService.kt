@@ -54,13 +54,16 @@ internal class DocsigService(private val project: Project) {
 
         val alarm = alarmMap.computeIfAbsent(path) { alarmFactory(project) }
 
-        // for saving, reset timer on each save so rapid writes coalesce
-        // when idle, do not cancel
+        // for saving, reset the timer on each save so rapid writes
+        // coalesce into one run after the writing stops
+        // when idle, leave a pending request alone
         // daemon re-runs inspection often
         // each pass would push the run forever if we kept resetting
-        if (!alarm.isEmpty) return
-
-        if (resetDebounce) alarm.cancelAllRequests()
+        if (resetDebounce) {
+            alarm.cancelAllRequests()
+        } else if (!alarm.isEmpty) {
+            return
+        }
 
         alarm.addRequest({ runDocsig(path) }, DEBOUNCE_MS)
     }
