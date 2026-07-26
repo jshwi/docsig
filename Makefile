@@ -178,6 +178,11 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
+.make/test-check-coverage: $(VENV) scripts/check_coverage.py
+	@$(POETRY) run pytest scripts/check_coverage.py -n=auto
+	@mkdir -p $(@D)
+	@touch $@
+
 .make/test-check-news: $(VENV) scripts/check_news.py
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
@@ -297,7 +302,8 @@ test-scripts: \
 	.make/test-check-news \
 	.make/test-bump \
 	.make/test-check-ai-commit \
-	.make/test-check-claude-md
+	.make/test-check-claude-md \
+	.make/test-check-coverage
 
 #: run tests on source code
 test-source: .make/doctest coverage.xml
