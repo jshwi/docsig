@@ -9,6 +9,7 @@ internal data class DocsigState(
     var checkOverridden: Boolean = false,
     var checkPropertyReturns: Boolean = false,
     var checkProtected: Boolean = false,
+    var checkProtectedClassMethods: Boolean = false,
     var ignoreArgs: Boolean = false,
     var ignoreKwargs: Boolean = false,
     var ignoreNoParams: Boolean = false,

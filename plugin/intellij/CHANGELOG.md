@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- check protected class method option
+
 ### Fixed
 
 - coalesce rapid saves so a check runs once writing stops, rather than

@@ -26,6 +26,52 @@ class OptionsTest {
         unmockkAll()
     }
 
+    /**
+     * The vscode extension and the neovim plugin expose the same flag
+     * surface, so a flag added to docsig has to reach all three. Pin the
+     * boolean flags here; a missing entry is otherwise invisible until
+     * someone compares the three settings screens by hand.
+     */
+    @Test
+    fun `boolean options cover the documented flag surface`() {
+        val settings = DocsigSettings()
+        every {
+            testProject.getService(DocsigSettings::class.java)
+        } returns settings
+
+        settings.state.checkDunders = true
+        settings.state.checkNested = true
+        settings.state.checkOverridden = true
+        settings.state.checkPropertyReturns = true
+        settings.state.checkProtected = true
+        settings.state.checkProtectedClassMethods = true
+        settings.state.ignoreArgs = true
+        settings.state.ignoreKwargs = true
+        settings.state.ignoreNoParams = true
+        settings.state.includeIgnored = true
+
+        val args = mutableListOf<String>()
+        Options(testProject).entries.forEach { option ->
+            option.add { args.add(it) }
+        }
+
+        assertEquals(
+            listOf(
+                "--check-dunders",
+                "--check-nested",
+                "--check-overridden",
+                "--check-property-returns",
+                "--check-protected",
+                "--check-protected-class-methods",
+                "--ignore-args",
+                "--ignore-kwargs",
+                "--ignore-no-params",
+                "--include-ignored",
+            ),
+            args.filter { it.startsWith("--") }.sorted(),
+        )
+    }
+
     @Test
     fun `all options execute lifecycle methods`() {
         val settings = DocsigSettings()

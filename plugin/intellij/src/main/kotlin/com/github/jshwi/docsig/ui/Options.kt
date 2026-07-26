@@ -82,6 +82,18 @@ internal class Options(project: Project) {
             ) { s, v -> s.state.checkProtected = v },
             BoolOption(
                 project,
+                Group.CHECK,
+                DocsigBundle.message(
+                    "settings.options.check-protected-class-methods.title",
+                ),
+                DocsigBundle.message(
+                    "settings.options.check-protected-class-methods.summary",
+                ),
+                "--check-protected-class-methods",
+                { it.state.checkProtectedClassMethods },
+            ) { s, v -> s.state.checkProtectedClassMethods = v },
+            BoolOption(
+                project,
                 Group.IGNORE,
                 DocsigBundle.message(
                     "settings.options.ignore-args.title",
