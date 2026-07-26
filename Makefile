@@ -198,6 +198,11 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
+.make/test-update-readme: $(VENV) scripts/update_readme.py
+	@$(POETRY) run pytest scripts/update_readme.py -n=auto
+	@mkdir -p $(@D)
+	@touch $@
+
 .make/test-check-news: $(VENV) scripts/check_news.py
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
@@ -321,7 +326,8 @@ test-scripts: \
 	.make/test-check-coverage \
 	.make/test-commit-fix \
 	.make/test-make-help \
-	.make/test-update-copyright
+	.make/test-update-copyright \
+	.make/test-update-readme
 
 #: run tests on source code
 test-source: .make/doctest coverage.xml
