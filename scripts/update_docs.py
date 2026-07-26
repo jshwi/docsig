@@ -4,7 +4,10 @@ import contextlib
 import io
 import re
 import sys
+import typing as t
 from pathlib import Path
+
+import pytest
 
 from docsig import main
 from docsig.messages import NEW
@@ -145,6 +148,139 @@ def remove_outdated_messages() -> None:
     for path in USAGE.glob("*-messages.rst"):
         if not any(path.name.startswith(v) for v in CATEGORIES.values()):
             path.unlink()
+
+
+class Test:
+    """Tests for this script."""
+
+    usage: Path
+
+    @pytest.fixture(autouse=True)
+    def setup(
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Set up the test environment.
+
+        :param tmp_path: Create and return a temporary directory.
+        :param monkeypatch: Mock patch environment and attributes.
+        """
+        self.usage = tmp_path / "usage"
+        self.usage.mkdir()
+        monkeypatch.setattr(f"{__name__}.USAGE", self.usage)
+
+    @staticmethod
+    def run_until_stable(generate: t.Callable[[], None]) -> int:
+        """Run a generator until it stops rewriting a toctree.
+
+        generate_messages exits on the first category it changes, so a
+        full scaffold takes as many runs as there are categories.
+        generate_configurations writes without exiting, so it settles
+        on the first run.
+
+        :param generate: Generator function to run.
+        :return: Number of runs which rewrote something.
+        """
+        for run in range(len(CATEGORIES) + 2):
+            try:
+                generate()
+            except SystemExit:
+                continue
+
+            return run
+
+        raise AssertionError("generator never settled")
+
+    def toc(self, name: str, content: str = "") -> Path:
+        """Create a toctree file for a category.
+
+        :param name: File name of the toctree, without its suffix.
+        :param content: Initial content of the file.
+        :return: Path to the created file.
+        """
+        path = self.usage / f"{name}.rst"
+        path.write_text(content, encoding="utf-8")
+        return path
+
+    def test_configurations_generated(self) -> None:
+        """Test a page is scaffolded for every check option."""
+        self.toc("check-configuration")
+        self.toc("ignore-configuration")
+        generate_configurations()
+
+        pages = list((self.usage / "configuration").glob("*.rst"))
+        assert pages
+        assert all(i.name.startswith(("check-", "ignore-")) for i in pages)
+
+    def test_configurations_listed_in_toc(self) -> None:
+        """Test generated pages are referenced by the toctree."""
+        toc = self.toc("check-configuration")
+        self.toc("ignore-configuration")
+        generate_configurations()
+
+        content = toc.read_text(encoding="utf-8")
+        assert ".. toctree::" in content
+        assert "configuration/check-" in content
+
+    def test_existing_page_not_overwritten(self) -> None:
+        """Test a page that already exists is left as it is."""
+        self.toc("check-configuration")
+        self.toc("ignore-configuration")
+        directory = self.usage / "configuration"
+        directory.mkdir()
+        page = directory / "check-dunders.rst"
+        page.write_text("hand written", encoding="utf-8")
+        generate_configurations()
+
+        assert page.read_text(encoding="utf-8") == "hand written"
+
+    def test_configurations_write_without_exiting(self) -> None:
+        """Test scaffolding configurations never fails the caller.
+
+        generate_messages exits so the hook blocks until the new pages
+        are committed; this one writes silently. Pin the difference, so
+        restoring the exit is a deliberate change rather than a silent
+        one.
+        """
+        toc = self.toc("check-configuration")
+        self.toc("ignore-configuration")
+
+        generate_configurations()
+
+        written = toc.read_text(encoding="utf-8")
+        assert written != ""
+
+        # a second pass finds everything current, writes nothing more
+        generate_configurations()
+
+        assert toc.read_text(encoding="utf-8") == written
+
+    def test_messages_generated(self) -> None:
+        """Test a page is scaffolded for every message."""
+        with pytest.raises(SystemExit):
+            generate_messages()
+
+        pages = list((self.usage / "messages").glob("sig*.rst"))
+        assert pages
+
+    def test_messages_split_by_category(self) -> None:
+        """Test each message page is filed under its code range."""
+        self.run_until_stable(generate_messages)
+        toc = self.usage / "signature-messages.rst"
+        assert "messages/sig2" in toc.read_text(encoding="utf-8")
+
+    def test_messages_exit_once_per_category(self) -> None:
+        """Test a full scaffold takes one run for each category."""
+        assert self.run_until_stable(generate_messages) == len(CATEGORIES)
+
+    def test_outdated_messages_removed(self) -> None:
+        """Test a toctree outside the categories is deleted."""
+        stale = self.toc("gone-messages")
+        kept = self.toc("returns-messages")
+        remove_outdated_messages()
+        assert not stale.is_file()
+        assert kept.is_file()
 
 
 if __name__ == "__main__":
