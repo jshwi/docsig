@@ -24,34 +24,47 @@ def _normalize_for_alternate_argparse_versions(text: str) -> str:
     return text.replace("    optional arguments:", "    options:")
 
 
-shutil.get_terminal_size = lambda: os.terminal_size((93, 24))  # type: ignore
-helpio = io.StringIO()
-with contextlib.redirect_stdout(helpio), contextlib.suppress(SystemExit):
-    sys.argv = ["docsig", "--help"]
-    main()
-
-path = Path(__file__).parent.parent / "README.rst"
-conflict_pattern = re.compile(
+README = Path(__file__).parent.parent / "README.rst"
+CONFLICT_PATTERN = re.compile(
     r"^(<<<<<<<|=======|>>>>>>>).*\n?",
     flags=re.MULTILINE,
 )
-commandline_pattern = re.compile(
+COMMANDLINE_PATTERN = re.compile(
     r"(Commandline\s*\*+\s*..\s*code-block::\s*console\s*\n)((?:\s{4}.*\n)+)",
 )
-# this won't work if there's a conflict in the file as it analyzes
-# indents
-readme_content = conflict_pattern.sub("", path.read_text())
-match = commandline_pattern.search(readme_content)
-if match is not None:
-    docsig_help = _normalize_for_alternate_argparse_versions(
-        re.sub(r"^", "    ", helpio.getvalue(), flags=re.MULTILINE),
+
+
+def _help() -> str:
+    shutil.get_terminal_size = lambda: os.terminal_size(  # type: ignore
+        (93, 24),
     )
-    updated_readme_content = (
-        commandline_pattern.sub(rf"\1{docsig_help}", readme_content)
-        .replace("    \n", "\n")
-        .replace("\n\n\n", "\n\n")
-    )
-    if updated_readme_content != readme_content:
-        path.write_text(updated_readme_content)
-        # error if readme not correct to ensure ci knows about it
-        sys.exit("readme was not up-to-date, fixed")
+    helpio = io.StringIO()
+    with contextlib.redirect_stdout(helpio), contextlib.suppress(SystemExit):
+        sys.argv = ["docsig", "--help"]
+        main()
+
+    return helpio.getvalue()
+
+
+def _main() -> None:
+    # this won't work if there's a conflict in the file as it analyzes
+    # indents
+    readme_content = CONFLICT_PATTERN.sub("", README.read_text())
+    match = COMMANDLINE_PATTERN.search(readme_content)
+    if match is not None:
+        docsig_help = _normalize_for_alternate_argparse_versions(
+            re.sub(r"^", "    ", _help(), flags=re.MULTILINE),
+        )
+        updated_readme_content = (
+            COMMANDLINE_PATTERN.sub(rf"\1{docsig_help}", readme_content)
+            .replace("    \n", "\n")
+            .replace("\n\n\n", "\n\n")
+        )
+        if updated_readme_content != readme_content:
+            README.write_text(updated_readme_content)
+            # error if readme not correct to ensure ci knows about it
+            sys.exit("readme was not up-to-date, fixed")
+
+
+if __name__ == "__main__":
+    _main()
