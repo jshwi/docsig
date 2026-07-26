@@ -27,6 +27,76 @@ describe("diagnostics", function()
     diagnostics.clear(bufnr)
   end)
 
+  it("publish underlines the function name", function()
+    local bufnr = temp_buf({ "def foo():", "    pass" })
+    diagnostics.publish(
+      bufnr,
+      { { line = 1, message = "SIG101: missing", exit = 1 } }
+    )
+
+    local items =
+      vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() })
+    assert.equals(items[1].col, 4)
+    assert.equals(items[1].end_col, 7)
+    diagnostics.clear(bufnr)
+  end)
+
+  it("publish underlines a nested method name", function()
+    local bufnr = temp_buf({ "class A:", "    async def bar(self):" })
+    diagnostics.publish(
+      bufnr,
+      { { line = 2, message = "SIG101: missing", exit = 1 } }
+    )
+
+    local items =
+      vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() })
+    assert.equals(items[1].col, 14)
+    assert.equals(items[1].end_col, 17)
+    diagnostics.clear(bufnr)
+  end)
+
+  it("publish underlines a class name", function()
+    local bufnr = temp_buf({ "class Widget:", "    pass" })
+    diagnostics.publish(
+      bufnr,
+      { { line = 1, message = "SIG101: missing", exit = 1 } }
+    )
+
+    local items =
+      vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() })
+    assert.equals(items[1].col, 6)
+    assert.equals(items[1].end_col, 12)
+    diagnostics.clear(bufnr)
+  end)
+
+  it("publish falls back to the first non-blank column", function()
+    local bufnr = temp_buf({ "    x = 1" })
+    diagnostics.publish(
+      bufnr,
+      { { line = 1, message = "SIG101: missing", exit = 1 } }
+    )
+
+    local items =
+      vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() })
+    assert.equals(items[1].col, 4)
+    assert.equals(items[1].end_col, 4)
+    diagnostics.clear(bufnr)
+  end)
+
+  it("publish falls back to column zero on a blank line", function()
+    local bufnr = temp_buf({ "" })
+    diagnostics.publish(
+      bufnr,
+      { { line = 1, message = "SIG101: missing", exit = 1 } }
+    )
+
+    local items =
+      vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() })
+    assert.equals(items[1].col, 0)
+    assert.equals(items[1].end_col, 0)
+    diagnostics.clear(bufnr)
+  end)
+
   it("publish uses error severity for exit code two", function()
     local bufnr = temp_buf({ "def foo():", "    pass" })
     diagnostics.publish(bufnr, {
