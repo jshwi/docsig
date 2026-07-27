@@ -108,6 +108,17 @@ conform's imperative-mood check, so the derived subject has to stand on its own:
 - **Header fits 72 chars** including the `(#<N>)` suffix (`.conform.yaml`
   `header.length`).
 
+Check a candidate before committing rather than guessing:
+
+```bash
+printf '%s\n\nSigned-off-by: <name> <email>\n' "<subject>" > /tmp/cm.txt
+conform enforce --commit-msg-file /tmp/cm.txt
+```
+
+Every policy reports individually. **GPG always FAILs here** — a bare message
+file has no commit to verify — so read the other rows and ignore that one; it
+passes on the real signed commit.
+
 The news fragment is the subject verbatim (see CLAUDE.md), so the subject _is_
 the changelog line. Prefer the descriptive house style over a literal `wip:`
 carry-over — compare `fix: google docstrings undetected by keyword args section`
@@ -169,3 +180,4 @@ is running.
 | `commit description changed, updated <N>.fix.md`  | subject changed between attempts      | commit again                                       |
 | cherry-pick conflict                              | fix depends on dev/main-only refactor | land the refactor on master first                  |
 | branch named `...-1`                              | `gh issue develop` run twice          | delete both branches (local+remote), recreate once |
+| conform: `GPG ... reference not found`            | preflighting a bare message file      | ignore; real signed commits pass                   |
