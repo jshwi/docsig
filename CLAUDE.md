@@ -273,9 +273,26 @@ files don't satisfy this.
 **All commits need DCO sign-off** — conform enforces a `Signed-off-by` trailer,
 so always commit with `git commit -s`.
 
-**Atomic-commit exception for AI housekeeping:** changes to chore files like
-`CLAUDE.md` are self-explanatory line by line, so a session's housekeeping can
-be batched into a single `chore(ai): commit claude session` commit.
+### Recording what Claude learns
+
+CLAUDE.md holds three kinds of claim: **orientation** (the map — provenance is
+the commit that moved the code), **preference** (the maintainer's), and **scar
+tissue** (earned by something going wrong). Scar tissue is admitted only when
+something actually failed *and* the repo doesn't already say it. No incident,
+no rule — a lesson merely noticed goes in Claude's own memory instead.
+
+Record it the moment it lands, never batched at session end: one `chore(ai)`
+commit per rule, whose **body states the incident** — command, SHA, error —
+self-contained, with no pointer to a transcript or memory file. The file gets
+the rule, the commit gets the war story. A rule that supersedes another
+rewrites it in place in the same commit rather than appending a qualifier
+beside stale text. `.claude/skills/` follows the same policy, except a new
+file's body states intent rather than an incident.
+
+`scripts/check_ai_commit.py` (the `check-ai-commit` commit-msg hook) rejects a
+bodyless `chore(ai)` commit, and batched subjects like `commit claude session`.
+It cannot catch a rule never written, so before finishing a session sweep back
+over it for anything learned but not committed.
 
 ### wip → master promotion
 
