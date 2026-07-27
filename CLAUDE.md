@@ -80,6 +80,14 @@ invisible to `make lint`/`make types`/`make tests` until staged — `git add`
 new files before trusting a green run, or a later stamp-cached hook pass can
 mask a real failure.
 
+**A fresh worktree cannot commit until it has a `.venv`.** The pre-commit test
+hook runs `make test-bump`, whose `scripts/bump_version.py` tests copy the repo
+into a pytest tmpdir and run `make` there; without `.venv/bin/activate` that
+copy fails and blocks the commit. The same tests also leave their fixtures —
+`changelog/1.add.md` and a `toml-sort`-reformatted `pyproject.toml` — staged in
+the *real* index, so clear those before retrying. Run `make install-venv` in a
+new worktree first.
+
 Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
 
 ## Architecture
