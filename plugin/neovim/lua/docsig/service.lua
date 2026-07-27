@@ -128,6 +128,18 @@ function M.schedule_from_save(config, bufnr)
   schedule(config, path, bufnr, save_timers, true, "save")
 end
 
+-- a write from another program (formatter, git, another editor) only
+-- surfaces once neovim notices the file changed on disk, so without
+-- this the cache stays stale for it, exactly as the intellij plugin
+-- guards against with its vfs listener
+function M.invalidate_external_change(path)
+  if path == "" or cache[path] == nil then return end
+
+  cache[path] = nil
+  log.debug("external change path=" .. path)
+  M.publish_for_path(path)
+end
+
 function M.publish_cached(bufnr)
   if not is_local_python(bufnr) then return end
 

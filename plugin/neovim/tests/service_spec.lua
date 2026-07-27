@@ -199,6 +199,38 @@ describe("service", function()
     assert.truthy(service.has_cached(path))
   end)
 
+  it("invalidate_external_change clears cache plus diagnostics", function()
+    reset_state()
+    local bufnr, path = temp_buf("external")
+    state.issues = {
+      { line = 1, message = "SIG101: missing", exit = 1 },
+    }
+    service.run_docsig(cfg(), path, bufnr)
+    vim.wait(2000, function()
+      return service.has_cached(path)
+    end)
+
+    service.invalidate_external_change(path)
+
+    assert.falsy(service.has_cached(path))
+    assert.equals(
+      #vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() }),
+      0
+    )
+  end)
+
+  it("invalidate_external_change ignores an uncached path", function()
+    reset_state()
+    service.invalidate_external_change("/never-checked.py")
+    assert.falsy(service.has_cached("/never-checked.py"))
+  end)
+
+  it("invalidate_external_change ignores an unnamed buffer", function()
+    reset_state()
+    service.invalidate_external_change("")
+    assert.falsy(service.has_cached(""))
+  end)
+
   it("detach clears timers and diagnostics", function()
     reset_state()
     local bufnr, _ = temp_buf("detach")

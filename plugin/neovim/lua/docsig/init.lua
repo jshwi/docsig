@@ -52,6 +52,15 @@ local function create_autocmds()
     end,
   })
 
+  vim.api.nvim_create_autocmd("FileChangedShellPost", {
+    group = autocmd_group,
+    pattern = "*.py",
+    callback = function(args)
+      service.invalidate_external_change(vim.api.nvim_buf_get_name(args.buf))
+      service.ensure_fresh(current_config(), args.buf)
+    end,
+  })
+
   vim.api.nvim_create_autocmd("BufUnload", {
     group = autocmd_group,
     pattern = "*.py",

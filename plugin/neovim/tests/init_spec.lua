@@ -114,6 +114,37 @@ describe("init", function()
     assert.truthy(service.has_cached(path))
   end)
 
+  it("file changed autocmd drops the stale cache", function()
+    reset_state()
+    docsig.setup({ debounce_ms = 0 })
+    local bufnr, path = temp_buf("init-external")
+    state.issues = {
+      {
+        line = 1,
+        message = "SIG101: missing (function-doc-missing)",
+        exit = 1,
+      },
+    }
+    service.run_docsig(cfg(), path, bufnr)
+    vim.wait(2000, function()
+      return service.has_cached(path)
+    end)
+
+    state.issues = {}
+    vim.api.nvim_exec_autocmds(
+      "FileChangedShellPost",
+      { buffer = bufnr, modeline = false }
+    )
+    vim.wait(2000, function()
+      return service.has_cached(path)
+    end)
+
+    assert.equals(
+      #vim.diagnostic.get(bufnr, { namespace = diagnostics.namespace() }),
+      0
+    )
+  end)
+
   it("buf unload autocmd detaches buffer", function()
     reset_state()
     docsig.setup({ debounce_ms = 0 })
