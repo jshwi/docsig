@@ -78,7 +78,9 @@ python -m docsig ...   # a bare `docsig` command may resolve to a stale shim
 Makefile file lists come from `git ls-files`, so brand-new modules are
 invisible to `make lint`/`make types`/`make tests` until staged — `git add`
 new files before trusting a green run, or a later stamp-cached hook pass can
-mask a real failure.
+mask a real failure. `rm -rf .make` forces the rest to rerun but not `types`,
+whose only prerequisite is `.mypy_cache/CACHEDIR.TAG` — clear that cache too,
+or mypy reports "Nothing to be done" over code it has never seen.
 
 **A fresh worktree cannot commit until it has a `.venv`.** The pre-commit test
 hook runs `make test-bump`, whose `scripts/bump_version.py` tests copy the repo
