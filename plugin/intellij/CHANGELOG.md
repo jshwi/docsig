@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- update bundled docsig from v0.90.3 to v0.92.2 for several fixes, see
+  the
+  [docsig changelog](https://github.com/jshwi/docsig/blob/master/CHANGELOG.md)
+  for details
+  (docsig v0.90.3)
 - coalesce rapid saves so a check runs once writing stops, rather than
   600ms after the first save
 
