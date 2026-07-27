@@ -200,6 +200,35 @@ gh api -X DELETE repos/jshwi/docsig/git/refs/heads/<issue-branch>
 Leave the PR alone while doing so — closing it by hand records it as `CLOSED`
 rather than `MERGED`, preempting the auto-detection.
 
+### 11. After the merge, when rebasing dev/main
+
+`git rebase master` on `dev/main` replays the wip commit that was just promoted.
+It does **not** drop out automatically: if the promoted commit gained anything
+the wip lacked (an extra test probe, a reworded docstring) the patch IDs differ,
+so git replays it and conflicts.
+
+- **The promoted wip itself → `git rebase --skip`.** Confirm master supersedes it
+  first, by checking every line the wip added is present in the promoted commit:
+  ```bash
+  git diff <wip>~1 <wip> -- <file> > /tmp/wip.patch
+  git diff <promoted>~1 <promoted> -- <file> > /tmp/master.patch
+  grep '^+' /tmp/wip.patch | grep -vxFf <(grep '^+' /tmp/master.patch)
+  ```
+  Empty output (or only lines you deliberately reworded) means skipping is safe.
+- **Later commits appending to the same file → resolve, never skip.** Tests all
+  append to the end of `tests/fix_test.py`, so an unrelated wip that adds a test
+  there collides with whatever the promotion added last. Keep both sides.
+- Run the full suite before `git push --force-with-lease` — a hand-resolved
+  conflict is not covered by the PR pipeline that already passed.
+
+Pre-flight the whole thing while the pipeline runs, in a throwaway detached
+worktree, so the conflicts are known before touching `dev/main`:
+
+```bash
+git worktree add -f --detach <scratch>/rb dev/main && cd <scratch>/rb
+git rebase <promoted-sha>
+```
+
 ## Quick reference
 
 | Symptom                                           | Cause                                 | Action                                             |
@@ -211,3 +240,5 @@ rather than `MERGED`, preempting the auto-detection.
 | cherry-pick conflict                              | fix depends on dev/main-only refactor | land the refactor on master first                  |
 | branch named `...-1`                              | `gh issue develop` run twice          | delete both branches (local+remote), recreate once |
 | conform: `GPG ... reference not found`            | preflighting a bare message file      | ignore; real signed commits pass                   |
+| dev/main rebase conflicts on the promoted wip     | promoted commit differs from the wip  | verify master supersedes it, then `--skip`         |
+| dev/main rebase conflicts at end of `fix_test.py` | two commits append tests there        | resolve keeping both, never `--skip`               |
