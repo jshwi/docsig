@@ -128,6 +128,12 @@ repos:
         language: system
         stages:
           - commit-msg
+      - id: check-ai-commit
+        name: check ai commit
+        entry: bash -c 'make check-ai-commit MSG="$1"' --
+        language: system
+        stages:
+          - commit-msg
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v6.0.0"
     hooks:

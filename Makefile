@@ -164,6 +164,11 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
+.make/test-check-ai-commit: $(VENV) scripts/check_ai_commit.py
+	@$(POETRY) run pytest scripts/check_ai_commit.py -n=auto
+	@mkdir -p $(@D)
+	@touch $@
+
 .make/test-check-news: $(VENV) scripts/check_news.py
 	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
@@ -198,11 +203,11 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 
 ########################################################################
 # Phony Targets
-.PHONY: benchmark build bump check-deps check-links clean docs format \
-	install-hooks install-ignore-revs install-poetry install-venv lint \
-	lock-deps publish test-scripts test-source tests tox types \
-	update-copyright update-deps update-docs update-readme whitelist \
-	news commit-fix version neovim
+.PHONY: benchmark build bump check-ai-commit check-deps check-links clean \
+	docs format install-hooks install-ignore-revs install-poetry \
+	install-venv lint lock-deps publish test-scripts test-source tests \
+	tox types update-copyright update-deps update-docs update-readme \
+	whitelist news commit-fix version neovim
 
 #: show program's version number and exit
 version:
@@ -279,7 +284,7 @@ publish: $(BUILD) check-links
 	@POETRY_KEYRING_ENABLED=true $(POETRY) publish
 
 #: run tests on scripts
-test-scripts: .make/test-check-news .make/test-bump
+test-scripts: .make/test-check-news .make/test-bump .make/test-check-ai-commit
 
 #: run tests on source code
 test-source: .make/doctest coverage.xml
@@ -318,6 +323,10 @@ news: $(VENV)
 #: check test written for fix
 commit-fix: $(VENV)
 	@$(POETRY) run python scripts/commit_fix.py $(MSG)
+
+#: check ai housekeeping commit explains itself
+check-ai-commit: $(VENV)
+	@$(POETRY) run python scripts/check_ai_commit.py $(MSG)
 
 #: bundle neovim plugin
 neovim:
