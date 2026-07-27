@@ -89,30 +89,13 @@ internal class DocsigService(private val project: Project) {
             try {
                 val issues = cli.run(path)
 
-                cache[path] = mergeIssues(path, issues)
+                cache[path] = mergeIssues(cache[path], issues)
             } finally {
                 inFlight.remove(path)
             }
 
             notifyPsi(path)
         }
-    }
-
-    // keeps previous non-line issues unless a fresh run provides
-    // replacements
-    private fun mergeIssues(path: String, issues: List<Issue>): List<Issue> {
-        val hasGlobalError = issues.any { it.exit == 2 && it.line == null }
-
-        // if there is no global error, just return issues
-        if (!hasGlobalError) return issues
-
-        // if the new result has a global failure the service keeps
-        // previous line-level issues from the cache and appends the new
-        // non-line issues, that way a cli-wide error does not wipe
-        // line-specific markers until a good run replaces them
-        val prevLineIssues = cache[path].orEmpty().filter { it.line != null }
-
-        return prevLineIssues + issues.filter { it.line == null }
     }
 
     // call on the edt after the run so the daemon re-runs inspections

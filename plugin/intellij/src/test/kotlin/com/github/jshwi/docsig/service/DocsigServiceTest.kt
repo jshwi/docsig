@@ -95,94 +95,6 @@ class DocsigServiceTest {
     }
 
     @Test
-    fun `mergeIssues returns new issues when no global error`() {
-        val service = DocsigService(project)
-        putCache(
-            service,
-            "/a.py",
-            listOf(Issue(1, "old", 1)),
-        )
-
-        val merged =
-            invokeMergeIssues(
-                service,
-                "/a.py",
-                listOf(Issue(2, "new", 1)),
-            )
-
-        assertEquals(
-            listOf(Issue(2, "new", 1)),
-            merged,
-        )
-    }
-
-    @Test
-    fun `mergeIssues keeps prior line issues when global error`() {
-        val service = DocsigService(project)
-        putCache(
-            service,
-            "/a.py",
-            listOf(
-                Issue(1, "stale line", 1),
-                Issue(null, "old global", 2),
-            ),
-        )
-
-        val merged =
-            invokeMergeIssues(
-                service,
-                "/a.py",
-                listOf(
-                    Issue(null, "fresh global", 2),
-                    Issue(9, "ignored line from cli", 1),
-                ),
-            )
-
-        assertEquals(
-            listOf(
-                Issue(1, "stale line", 1),
-                Issue(null, "fresh global", 2),
-            ),
-            merged,
-        )
-    }
-
-    @Test
-    fun `mergeIssues treats exit 2 with line as not global error`() {
-        val service = DocsigService(project)
-
-        val issues =
-            listOf(
-                Issue(3, "line error", 2),
-            )
-
-        assertEquals(
-            issues,
-            invokeMergeIssues(service, "/b.py", issues),
-        )
-    }
-
-    @Test
-    fun `mergeIssues global error drops line issues when cache empty`() {
-        val service = DocsigService(project)
-
-        val merged =
-            invokeMergeIssues(
-                service,
-                "/z.py",
-                listOf(
-                    Issue(null, "global", 2),
-                    Issue(5, "line", 1),
-                ),
-            )
-
-        assertEquals(
-            listOf(Issue(null, "global", 2)),
-            merged,
-        )
-    }
-
-    @Test
     fun `scheduleFromSave notifies when python interpreter missing`() {
         val cli = mockk<Cli>()
         every { cli.isAvailable() } returns false
@@ -584,24 +496,6 @@ class DocsigServiceTest {
 
         field.isAccessible = true
         field.set(service, lazyOf(cli))
-    }
-
-    private fun invokeMergeIssues(
-        service: DocsigService,
-        path: String,
-        issues: List<Issue>,
-    ): List<Issue> {
-        val method =
-            DocsigService::class.java.getDeclaredMethod(
-                "mergeIssues",
-                String::class.java,
-                List::class.java,
-            )
-
-        method.isAccessible = true
-
-        @Suppress("UNCHECKED_CAST")
-        return method.invoke(service, path, issues) as List<Issue>
     }
 
     private fun invokeRunDocsig(service: DocsigService, path: String) {
