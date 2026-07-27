@@ -8,6 +8,10 @@ export function activate(context: vscode.ExtensionContext): void {
 
   const collection = vscode.languages.createDiagnosticCollection("docsig");
   const service = new DocsigService(context, collection);
+  // a file written by another program (formatter, git, another editor)
+  // never reaches the document events, so its cached result would
+  // survive until something reopened it
+  const watcher = vscode.workspace.createFileSystemWatcher("**/*.py");
 
   context.subscriptions.push(
     Log.outputChannel(),
@@ -40,6 +44,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
       service.scheduleFromSave(document.uri.fsPath);
     }),
+    watcher,
+    watcher.onDidChange((uri) => service.invalidateExternalChange(uri.fsPath)),
+    watcher.onDidDelete((uri) => service.invalidateExternalChange(uri.fsPath)),
     vscode.workspace.onDidChangeConfiguration((event) => {
       const docsigChanged = event.affectsConfiguration("docsig");
       const pythonChanged = event.affectsConfiguration("python");

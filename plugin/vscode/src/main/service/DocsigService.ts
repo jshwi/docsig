@@ -75,6 +75,33 @@ export class DocsigService implements vscode.Disposable {
     });
   }
 
+  /**
+   * Drop cached issues for a file written outside the editor.
+   *
+   * A document open in the editor reloads and re-runs on its own, so
+   * only closed files are invalidated here: they would otherwise show
+   * their stale result the moment they were reopened.
+   */
+  invalidateExternalChange(path: string): void {
+    if (!this.cache.has(path)) {
+      return;
+    }
+
+    if (this.isOpen(path)) {
+      return;
+    }
+
+    this.cache.delete(path);
+    this.collection.delete(vscode.Uri.file(path));
+    Log.debug(`external change path=${path}`);
+  }
+
+  private isOpen(path: string): boolean {
+    return vscode.workspace.textDocuments.some(
+      (document) => document.uri.fsPath === path,
+    );
+  }
+
   async publishCached(path: string): Promise<void> {
     if (!this.hasCached(path)) {
       return;

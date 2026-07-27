@@ -62,6 +62,47 @@ suite("DocsigService", () => {
     assert.deepEqual(subject.getIssues("/no/such/path"), []);
   });
 
+  test("invalidateExternalChange drops a closed file's cache", async () => {
+    const cli = mockCli({
+      run: async () => [{ line: 1, message: "m", exit: 1 }],
+    });
+    const subject = service(() => cli);
+
+    await subject.runNow("/gone.py");
+    assert.equal(subject.hasCached("/gone.py"), true);
+
+    subject.invalidateExternalChange("/gone.py");
+    assert.equal(subject.hasCached("/gone.py"), false);
+  });
+
+  test("invalidateExternalChange ignores an unknown path", () => {
+    const subject = service(() => mockCli());
+
+    subject.invalidateExternalChange("/never-checked.py");
+    assert.equal(subject.hasCached("/never-checked.py"), false);
+  });
+
+  test("invalidateExternalChange leaves an open document alone", async () => {
+    // deliberately not a python document: opening one fires the
+    // onLanguage activation event, which loads the real extension into
+    // this run. the guard compares paths, not languages
+    const document = await vscode.workspace.openTextDocument({
+      content: "def f():\n    pass\n",
+    });
+    const path = document.uri.fsPath;
+    const cli = mockCli({
+      run: async () => [{ line: 1, message: "m", exit: 1 }],
+    });
+    const subject = service(() => cli);
+
+    await subject.runNow(path);
+    assert.equal(subject.hasCached(path), true);
+
+    // the editor reloads an open document itself, which re-runs docsig
+    subject.invalidateExternalChange(path);
+    assert.equal(subject.hasCached(path), true);
+  });
+
   test("scheduleFromSave notifies when python interpreter missing", async () => {
     const warn = sinon.stub(vscode.window, "showWarningMessage");
     const cli = mockCli({ isAvailable: async () => false });
