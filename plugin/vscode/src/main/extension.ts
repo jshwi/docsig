@@ -87,7 +87,9 @@ export function activate(context: vscode.ExtensionContext): void {
   const watcher = vscode.workspace.createFileSystemWatcher("**/*.py");
 
   context.subscriptions.push(
-    Log.outputChannel(),
+    // not the channel itself: Log caches it, so disposing it directly
+    // would leave the cached reference pointing at a closed channel
+    { dispose: () => Log.disposeChannel() },
     collection,
     service,
     vscode.workspace.onDidOpenTextDocument((document) =>

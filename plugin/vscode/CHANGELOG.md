@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Drop stale results when a file changes outside the editor
 
+### Fixed
+- Rebuild the log channel after disposal, so logging survives a second
+  activation instead of failing with 'Channel has been closed'
+
 [1.0.1](https://github.com/jshwi/docsig/releases/tag/vscode-extension-v1.0.1) - 2026-07-10
 ------------------------------------------------------------------------
 ### Fixed

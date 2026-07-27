@@ -63,13 +63,11 @@ function configurationEvent(
   };
 }
 
-function disposeAllButChannel(context: vscode.ExtensionContext): void {
-  const channel = Log.outputChannel();
-  context.subscriptions
-    .filter((subscription) => subscription !== channel)
-    .forEach((subscription) => {
-      subscription.dispose();
-    });
+function disposeAll(context: vscode.ExtensionContext): void {
+  context.subscriptions.forEach((subscription) => {
+    subscription.dispose();
+  });
+  context.subscriptions.length = 0;
 }
 
 suite("extension", () => {
@@ -174,9 +172,7 @@ suite("extension", () => {
     try {
       assert.ok(context.subscriptions.length > 0);
     } finally {
-      // the output channel is cached by Log for the life of the
-      // process, so disposing it here closes it for every later test
-      disposeAllButChannel(context);
+      disposeAll(context);
     }
   });
 
@@ -192,9 +188,27 @@ suite("extension", () => {
     try {
       assert.ok(context.subscriptions.length > 0);
     } finally {
-      // the output channel is cached by Log for the life of the
-      // process, so disposing it here closes it for every later test
-      disposeAllButChannel(context);
+      disposeAll(context);
+    }
+  });
+
+  test("activate runs a second time after a full dispose", () => {
+    const context = mockExtensionContext("/tmp/docsig-ext", "/tmp/docsig-st");
+    sinon.stub(vscode.window, "visibleTextEditors").value([]);
+
+    activate(context);
+    disposeAll(context);
+
+    // the channel registered above is Log's cached one; if disposing it
+    // did not drop the cache, this second run would throw "Channel has
+    // been closed" from the first line of activate
+    activate(context);
+
+    try {
+      Log.debug("still writable");
+      assert.ok(context.subscriptions.length > 0);
+    } finally {
+      disposeAll(context);
     }
   });
 
