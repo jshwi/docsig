@@ -105,11 +105,17 @@ conform's imperative-mood check, so the derived subject has to stand on its own:
 - **Description starts lowercase.** If stripping `wip: fix ` leaves an uppercase
   first word (e.g. an error code like `SIG306`), reword so a lowercase verb
   leads: `fix: stop SIG306 false positive ...`.
+- **No gerund lead.** `fix: missing period undetected after ellipsis line` is
+  refused; compare `fix: json line zero for whole file syntax errors (#1000)`.
 - **No `and` in the subject.** Split the work into two commits if you need it.
 - **Spellcheck-safe words.** Avoid coined jargon like `dedup`/`params`; prefer
   dictionary words (`reduce`, `parameters`, `deduplicate` spelled out).
 - **Header fits 72 chars** including the `(#<N>)` suffix (`.conform.yaml`
   `header.length`).
+
+`scripts/promote_wip.py` checks the derived subject against the policy before it
+touches anything, and takes `--description` to reword it without rewriting the
+wip commit.
 
 Check a candidate before committing rather than guessing:
 

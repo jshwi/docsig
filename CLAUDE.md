@@ -231,43 +231,7 @@ gh release create v<N> --repo jshwi/docsig --title "v<N>" --notes "..."
 git checkout dev/main && git rebase master && git push --force-with-lease
 ```
 
-### wip → master promotion
-
-Work lands on `dev/main` as `wip:` commits. When ready to ship:
-
-1. Open a GitHub issue for the fix.
-2. Check out the issue branch: `gh issue develop <N> --checkout`
-3. Cherry-pick the wip commit onto the issue branch: `git cherry-pick <sha>`
-4. Soft-reset to keep changes staged: `git reset --soft HEAD~1`
-5. Run `make && git add . && git commit -s -m "fix: <subject> (#<N>)"` — bare
-  `make` installs the pre-commit hooks, and those hooks run the test, lint, and
-  type checks at commit time, so never run `make tests` separately here. The
-  `commit-msg` hook creates the news fragment and blocks the first attempt.
-6. Run `git add . && git commit -s -m "fix: <subject> (#<N>)"` again — succeeds.
-7. Push, open a PR targeting `master`, wait for the pipeline.
-8. Merge: `git checkout master && git merge <branch> && git push`
-
-**wip subject → final subject:** strip `wip:`, add a colon after the type, append
-the issue number.
-
-```
-wip: fix evaluate docstring when description is missing
- →  fix: evaluate docstring when description is missing (#922)
-```
-
-**The finalized description must be conform-legal on its own:** stripping
-`wip:` removes the imperative verb that satisfied conform's imperative mood
-check, and `case: lower` rejects a leading capital. So a description opening
-with a gerund is refused (`fix: missing period undetected after ellipsis
-line`), as is one opening with a capitalized message reference (`fix: SIG306
-undetected ...`) — lowercase it, per `fix: json line zero for whole file
-syntax errors (#1000)`. `scripts/promote_wip.py` checks the derived subject
-against the policy before it touches anything, and takes `--description` to
-reword it without rewriting the wip commit.
-
-Do **not** open the GitHub issue or create news fragments manually — the hook
-handles fragments, and the issue should only be opened once the commit is ready
-to promote.
+### Commit policy
 
 **Commit subjects must not contain `and`** — if you need `and`, split into two
 commits.
@@ -305,19 +269,24 @@ so always commit with `git commit -s`.
 `CLAUDE.md` are self-explanatory line by line, so a session's housekeeping can
 be batched into a single `chore(ai): commit claude session` commit.
 
-**Prerequisite refactors:** if the fix depends on a preparatory `refactor:`
-commit, land it on master first via a temp branch before touching the issue
-branch:
+### wip → master promotion
 
-```bash
-git checkout -b tmp
-git commit -s -m "refactor: <subject>"
-git checkout master && git merge tmp && git branch -d tmp && git push
-```
+Work lands on `dev/main` as `wip:` commits. Shipping one means opening a GitHub
+issue, cherry-picking onto the issue branch, letting the `commit-msg` hook build
+the news fragment, and opening a PR targeting `master`.
 
-Then rebase the issue branch onto the updated master before cherry-picking the
-fix.
+The full procedure lives in the `promote-wip` skill
+(`.claude/skills/promote-wip/SKILL.md`): every step, the hook's deliberate
+first-attempt block, the conform rules the stripped subject must satisfy, the
+prerequisite-refactor detour, and the `dev/main` rebase afterwards. Invoke the
+skill rather than working from memory.
 
-**`gh issue develop` only once:** running it a second time for the same issue
-creates a `-1` suffixed branch. If that happens, delete both local and remote
-copies of both branches before recreating.
+Two rules hold whether or not the skill is loaded:
+
+- **Never open the GitHub issue or write news fragments by hand.** The issue is
+  opened as part of the promotion, once the commit is ready; the hook owns the
+  fragment.
+- **The closing keyword belongs in the PR body.** `(#<N>)` in the commit subject
+  is only a cross-reference and closes nothing, so open the PR **before**
+  pushing master — otherwise there is no PR for the push to mark merged, and
+  the issue stays open.
