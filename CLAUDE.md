@@ -258,6 +258,18 @@ reads like a feature — subject it as `wip: fix ...`, not after the mechanism
 (e.g. "fix commandline exclude ignored when configured in pyproject", not
 "merge exclude patterns across config layers").
 
+**`wip: fix` is reserved for `./docsig`** — only the Python package is subject
+as an unscoped `wip: fix`. Everything else carries the scope of what it
+touches, even when the change is a fix:
+
+| Path                       | Scope                     |
+| -------------------------- | ------------------------- |
+| `docsig/`                  | none — `wip: fix ...`     |
+| `plugin/intellij/src`      | `intellij-plugin`         |
+| `plugin/vscode/src`        | `vscode-extension`        |
+| `plugin/neovim/lua/docsig` | `neovim-plugin`           |
+| `plugin/neovim/Makefile`   | `make` or `neovim-plugin` |
+
 **Every fix commit carries a fix test:** a regression test in
 `tests/fix_test.py` named `test_fix_<subject-ish>` whose docstring states the
 problem it guards against, committed with the fix. Unit tests in other test
