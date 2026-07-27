@@ -195,7 +195,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v4.6.0"
+    rev: "v4.6.1"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -252,7 +252,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.7.2"
+    rev: "1.8.1"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
