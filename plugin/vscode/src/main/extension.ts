@@ -3,6 +3,79 @@ import { Python } from "./cli/Python";
 import * as Log from "./messages/Log";
 import { DocsigService, isLocalPythonDocument } from "./service/DocsigService";
 
+/**
+ * The slice of the service the event handlers below need.
+ *
+ * Declaring it keeps each handler callable with a stand-in, the way the
+ * intellij listeners take a project service plus the neovim autocmds
+ * call plain module functions.
+ */
+export interface ServiceLike {
+  hasCached(path: string): boolean;
+  publishCached(path: string): Promise<void>;
+  ensureFresh(path: string): void;
+  scheduleFromSave(path: string): void;
+  invalidateExternalChange(path: string): void;
+  scheduleAfterSettingsChange(): void;
+}
+
+/** Publish what is known for a document, else schedule a run. */
+export function attach(
+  service: ServiceLike,
+  document: vscode.TextDocument,
+): void {
+  if (!isLocalPythonDocument(document)) {
+    return;
+  }
+
+  const path = document.uri.fsPath;
+  if (service.hasCached(path)) {
+    void service.publishCached(path);
+    return;
+  }
+
+  service.ensureFresh(path);
+}
+
+/** Schedule an idle run for an edited document. */
+export function onChange(
+  service: ServiceLike,
+  document: vscode.TextDocument,
+): void {
+  if (!isLocalPythonDocument(document)) {
+    return;
+  }
+
+  service.ensureFresh(document.uri.fsPath);
+}
+
+/** Schedule a save run for a written document. */
+export function onSave(
+  service: ServiceLike,
+  document: vscode.TextDocument,
+): void {
+  if (!isLocalPythonDocument(document)) {
+    return;
+  }
+
+  service.scheduleFromSave(document.uri.fsPath);
+}
+
+/** Re-run every affected path when the settings change. */
+export function onConfigurationChange(
+  service: ServiceLike,
+  event: vscode.ConfigurationChangeEvent,
+): void {
+  const docsigChanged = event.affectsConfiguration("docsig");
+  const pythonChanged = event.affectsConfiguration("python");
+  if (!docsigChanged && !pythonChanged) {
+    return;
+  }
+
+  Python.invalidate();
+  service.scheduleAfterSettingsChange();
+}
+
 export function activate(context: vscode.ExtensionContext): void {
   Log.debug("activated");
 
@@ -17,62 +90,26 @@ export function activate(context: vscode.ExtensionContext): void {
     Log.outputChannel(),
     collection,
     service,
-    vscode.workspace.onDidOpenTextDocument((document) => {
-      if (!isLocalPythonDocument(document)) {
-        return;
-      }
-
-      const path = document.uri.fsPath;
-      if (service.hasCached(path)) {
-        void service.publishCached(path);
-        return;
-      }
-
-      service.ensureFresh(path);
-    }),
-    vscode.workspace.onDidChangeTextDocument((event) => {
-      if (!isLocalPythonDocument(event.document)) {
-        return;
-      }
-
-      service.ensureFresh(event.document.uri.fsPath);
-    }),
-    vscode.workspace.onDidSaveTextDocument((document) => {
-      if (!isLocalPythonDocument(document)) {
-        return;
-      }
-
-      service.scheduleFromSave(document.uri.fsPath);
-    }),
+    vscode.workspace.onDidOpenTextDocument((document) =>
+      attach(service, document),
+    ),
+    vscode.workspace.onDidChangeTextDocument((event) =>
+      onChange(service, event.document),
+    ),
+    vscode.workspace.onDidSaveTextDocument((document) =>
+      onSave(service, document),
+    ),
     watcher,
     watcher.onDidChange((uri) => service.invalidateExternalChange(uri.fsPath)),
     watcher.onDidDelete((uri) => service.invalidateExternalChange(uri.fsPath)),
-    vscode.workspace.onDidChangeConfiguration((event) => {
-      const docsigChanged = event.affectsConfiguration("docsig");
-      const pythonChanged = event.affectsConfiguration("python");
-      if (!docsigChanged && !pythonChanged) {
-        return;
-      }
-
-      Python.invalidate();
-      service.scheduleAfterSettingsChange();
-    }),
+    vscode.workspace.onDidChangeConfiguration((event) =>
+      onConfigurationChange(service, event),
+    ),
   );
 
-  vscode.window.visibleTextEditors.forEach((editor) => {
-    const document = editor.document;
-    if (!isLocalPythonDocument(document)) {
-      return;
-    }
-
-    const path = document.uri.fsPath;
-    if (service.hasCached(path)) {
-      void service.publishCached(path);
-      return;
-    }
-
-    service.ensureFresh(path);
-  });
+  vscode.window.visibleTextEditors.forEach((editor) =>
+    attach(service, editor.document),
+  );
 }
 
 export function deactivate(): void {}
