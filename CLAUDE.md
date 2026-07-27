@@ -264,6 +264,15 @@ reads like a feature — subject it as `wip: fix ...`, not after the mechanism
 (e.g. "fix commandline exclude ignored when configured in pyproject", not
 "merge exclude patterns across config layers").
 
+**`chore` never carries a deliberate source change** — it is for build,
+config, and tooling files: Makefiles, `.conform.yaml`, workflows,
+`pyproject.toml`, AI housekeeping. A change under `docsig/`,
+`plugin/*/src`, or `plugin/neovim/lua` is `fix`, `refactor`, or `add`, even
+when users never perceive it — a guard added ahead of the change that makes
+it necessary is a `refactor`, since it alters no behavior on its own. The
+only source a `chore` touches is formatter or tooling fallout, such as
+trailing commas, `# type: ignore`, or `py.typed`.
+
 **`wip: fix` is reserved for `./docsig`** — only the Python package is subject
 as an unscoped `wip: fix`. Everything else carries the scope of what it
 touches, even when the change is a fix:
