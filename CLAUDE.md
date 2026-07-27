@@ -6,6 +6,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **docsig** is a Python documentation linter that checks function/method signatures match their docstring parameter documentation. It supports reStructuredText (Sphinx), NumPy, and Google docstring formats. It ships as a CLI tool, a flake8 plugin, and a pyproject.toml schema validator.
 
+## Where Claude Works
+
+Claude works in a clone at `~/Documents/Repos/claude/docsig`, never in the
+maintainer's checkout at `~/Documents/Repos/Projects/docsig`. **That checkout
+is read-only.** It may be read; it must never be written — no commits, no
+`git config`, no `make`, and no running an interpreter inside the tree, since
+that alone drops `__pycache__` into it. This is not a per-task choice and is
+not a question to ask.
+
+The clone carries two remotes: `origin` for GitHub and `local` for the
+maintainer's `.git`. Work on `dev/main` is delivered by pushing a
+`claude/<topic>-<date>` branch to `local`, which the maintainer folds in on
+their side; pushing a *new branch ref* is fine, pushing onto their checked-out
+branch is not. Promotions push to `origin` instead, and stop at an open pull
+request.
+
+The rule exists because a shared `.git` is genuinely unsafe here: the
+`check_news.py` tests call `git init` without clearing the `GIT_DIR` git
+exports to hook processes, and xdist workers once raced on the real
+`.git/config` and set `core.bare = true`, breaking every checkout in the tree
+mid-release. A `PreToolUse` hook now enforces the boundary rather than relying
+on care.
+
 ## Development Setup
 
 This project uses **Poetry** (version pinned in `.poetry-version`) with a local virtualenv.
