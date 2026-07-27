@@ -90,6 +90,15 @@ copy fails and blocks the commit. The same tests also leave their fixtures —
 the *real* index, so clear those before retrying. Run `make install-venv` in a
 new worktree first.
 
+**Never commit from a worktree — clone instead.** Conform's GPG policy reports
+`reference not found` in a linked worktree, since `.git` is a file there and
+conform cannot open the repository through it. Its other policies only read
+the message file, so they still pass, which makes the failure look like a
+signing problem it is not. There is no way to satisfy the hook from a
+worktree, and `--no-verify` is not the answer: it skips every other hook too,
+so lint, types, and the test suite stop running. When the clone's working tree
+is busy, `git clone` it again rather than adding a worktree.
+
 Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
 
 ## Architecture
