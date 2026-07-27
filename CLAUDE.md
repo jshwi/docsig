@@ -189,6 +189,22 @@ Everything between the `<!-- Plugin description -->` markers in each
 build extracts its own marked block for the marketplace listing. Development
 instructions belong *outside* the markers.
 
+Each plugin keeps its own hand-written `plugin/*/CHANGELOG.md`, and nothing
+generates an entry for it: the root `changelog/` fragments cover the Python
+package only, and `check_news.py` returns early for any scoped commit. A
+commit under `plugin/*` that a user can perceive therefore writes its own
+line under `## [Unreleased]` in that plugin's changelog, in the same commit.
+A `refactor`, a test, or a change that cannot reach a user carries no entry,
+and says so in its body.
+
+Only intellij and vscode ship as versioned builds, where that entry waits
+under `## [Unreleased]` until a `bump` commit moves it beneath a version
+heading. The neovim plugin is rolling — `publish-mirror` syncs every push to
+master, so an entry is in users' hands as soon as it lands, and its version
+exists only as the `v<N>` tag that workflow pushes to `jshwi/docsig.nvim`
+when `make version` changes. There is no `neovim-plugin-v*` tag or release
+in this repository to link to.
+
 ### Testing Patterns
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
