@@ -12,6 +12,7 @@ VERSION := $(shell bash scripts/get_docsig_version.sh pyproject.toml)
 export POETRY_KEYRING_ENABLED := false
 POETRY := bin/poetry/bin/poetry
 POETRY_VERSION := $(shell cat .poetry-version)
+RUN := $(POETRY) run
 
 # File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
@@ -41,7 +42,7 @@ all: .make/pre-commit $(GIT_DIR)/blame-ignore-revs help
 
 .PHONY: help
 help: $(VENV)
-	@$(POETRY) run python scripts/make_help.py
+	@$(RUN) python scripts/make_help.py
 
 ########################################################################
 # Main Targets
@@ -66,7 +67,7 @@ docs/_build/html/index.html: $(VENV) \
 		CHANGELOG.md \
 		.conform.yaml \
 		CONTRIBUTING.md
-	@$(POETRY) run $(MAKE) -C docs html
+	@$(RUN) $(MAKE) -C docs html
 
 $(VENV): poetry.lock
 	@[ ! $$(basename "$$($(POETRY) env info --path)") = ".venv" ] \
@@ -76,7 +77,7 @@ $(VENV): poetry.lock
 	@touch $@
 
 .make/pre-commit: $(VENV)
-	@$(POETRY) run pre-commit install \
+	@$(RUN) pre-commit install \
 		--hook-type pre-commit \
 		--hook-type pre-merge-commit \
 		--hook-type pre-push \
@@ -101,52 +102,52 @@ $(POETRY): .poetry-version
 	@touch $@
 
 README.rst: $(VENV) $(PACKAGE_FILES)
-	@$(POETRY) run python scripts/update_readme.py >/dev/null 2>&1 || exit 0
+	@$(RUN) python scripts/update_readme.py >/dev/null 2>&1 || exit 0
 	@touch $@
 
 .make/update-docs: $(VENV) $(PACKAGE_FILES)
-	@$(POETRY) run python scripts/update_docs.py
+	@$(RUN) python scripts/update_docs.py
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/black: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run black $(PYTHON_FILES)
+	@$(RUN) black $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/flynt: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run flynt $(PYTHON_FILES)
+	@$(RUN) flynt $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/isort: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run isort $(PYTHON_FILES)
+	@$(RUN) isort $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/pylint: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run pylint --output-format=colorized $(PYTHON_FILES)
+	@$(RUN) pylint --output-format=colorized $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/docsig: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run docsig $(PYTHON_FILES)
+	@$(RUN) docsig $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
 .mypy_cache/CACHEDIR.TAG: $(VENV) $(PYTHON_FILES)
-	@$(POETRY) run mypy $(PYTHON_FILES)
+	@$(RUN) mypy $(PYTHON_FILES)
 	@touch $@
 
 whitelist.py: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
-	@$(POETRY) run vulture > $@ || exit 0
+	@$(RUN) vulture > $@ || exit 0
 
 coverage.xml: $(VENV) $(PACKAGE_FILES) $(TEST_FILES)
-	@$(POETRY) run pytest -n=auto --cov=docsig --cov=tests \
-		&& $(POETRY) run coverage xml
+	@$(RUN) pytest -n=auto --cov=docsig --cov=tests \
+		&& $(RUN) coverage xml
 
 .make/doctest: $(VENV) README.rst $(PYTHON_FILES) $(DOCS_FILES)
-	@$(POETRY) run pytest docs README.rst --doctest-glob='*.rst'
+	@$(RUN) pytest docs README.rst --doctest-glob='*.rst'
 	@mkdir -p $(@D)
 	@touch $@
 
@@ -160,66 +161,66 @@ docs/_build/linkcheck/output.json: $(VENV) \
 		{ \
 			curl -fsI --max-time 5 https://docsig.io >/dev/null 2>&1 \
 			|| { echo "could not establish connection, skipping"; exit 0; }; \
-			$(POETRY) run $(MAKE) -C docs linkcheck; \
+			$(RUN) $(MAKE) -C docs linkcheck; \
 		}
 
 .make/check-deps: $(VENV) $(PYTHON_FILES) pyproject.toml
-	@$(POETRY) run deptry .
+	@$(RUN) deptry .
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-check-ai-commit: $(VENV) scripts/check_ai_commit.py
-	@$(POETRY) run pytest scripts/check_ai_commit.py -n=auto
+	@$(RUN) pytest scripts/check_ai_commit.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-check-claude-md: $(VENV) scripts/check_claude_md.py
-	@$(POETRY) run pytest scripts/check_claude_md.py -n=auto
+	@$(RUN) pytest scripts/check_claude_md.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-check-coverage: $(VENV) scripts/check_coverage.py
-	@$(POETRY) run pytest scripts/check_coverage.py -n=auto
+	@$(RUN) pytest scripts/check_coverage.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-commit-fix: $(VENV) scripts/commit_fix.py
-	@$(POETRY) run pytest scripts/commit_fix.py -n=auto
+	@$(RUN) pytest scripts/commit_fix.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-make-help: $(VENV) scripts/make_help.py
-	@$(POETRY) run pytest scripts/make_help.py -n=auto
+	@$(RUN) pytest scripts/make_help.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-update-copyright: $(VENV) scripts/update_copyright.py
-	@$(POETRY) run pytest scripts/update_copyright.py -n=auto
+	@$(RUN) pytest scripts/update_copyright.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-update-readme: $(VENV) scripts/update_readme.py
-	@$(POETRY) run pytest scripts/update_readme.py -n=auto
+	@$(RUN) pytest scripts/update_readme.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-update-docs: $(VENV) scripts/update_docs.py
-	@$(POETRY) run pytest scripts/update_docs.py -n=auto
+	@$(RUN) pytest scripts/update_docs.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-promote-wip: $(VENV) scripts/promote_wip.py
-	@$(POETRY) run pytest scripts/promote_wip.py -n=auto
+	@$(RUN) pytest scripts/promote_wip.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-check-news: $(VENV) scripts/check_news.py
-	@$(POETRY) run pytest scripts/check_news.py --cov -n=auto
+	@$(RUN) pytest scripts/check_news.py --cov -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
 .make/test-bump: $(VENV) scripts/bump_version.py
-	@$(POETRY) run pytest scripts/bump_version.py -n=auto
+	@$(RUN) pytest scripts/bump_version.py -n=auto
 	@mkdir -p $(@D)
 	@touch $@
 
@@ -234,12 +235,12 @@ build/requirements.txt: $(VENV)
 
 build/site-packages/$(VERSION): build/requirements.txt
 	@rm -rf $(@D) >/dev/null
-	@$(POETRY) run pip install -r $< --target $(@D)
-	@$(POETRY) run pip install . --no-deps --target $(@D)
+	@$(RUN) pip install -r $< --target $(@D)
+	@$(RUN) pip install . --no-deps --target $(@D)
 	@touch $@
 
 build/docsig.pyz: build/site-packages/$(VERSION)
-	@$(POETRY) run shiv \
+	@$(RUN) shiv \
 		--site-packages $(<D) \
 		--entry-point docsig.__main__:main \
 		--output-file $@
@@ -259,7 +260,7 @@ version:
 
 #: run benchmarks
 benchmark: $(VENV)
-	@RUN_BENCHMARK=true $(POETRY) run pytest -m=benchmark --benchmark-save=benchmark
+	@RUN_BENCHMARK=true $(RUN) pytest -m=benchmark --benchmark-save=benchmark
 
 #: build distribution
 build: $(BUILD)
@@ -267,7 +268,7 @@ build: $(BUILD)
 bump: part = patch
 #: bump version (use: make bump part=major|minor|patch)
 bump: .make/pre-commit
-	@$(POETRY) run python scripts/bump_version.py $(part)
+	@$(RUN) python scripts/bump_version.py $(part)
 
 #: check dependencies are properly managed
 check-deps: .make/check-deps
@@ -349,14 +350,14 @@ tests: test-scripts test-source
 
 #: run tox
 tox: $(VENV)
-	@$(POETRY) run tox
+	@$(RUN) tox
 
 #: check typing
 types: .mypy_cache/CACHEDIR.TAG
 
 #: update copyright year in files containing it
 update-copyright: $(VENV)
-	@$(POETRY) run python3 scripts/update_copyright.py
+	@$(RUN) python3 scripts/update_copyright.py
 
 #: update dependencies
 update-deps: $(VENV)
@@ -373,15 +374,15 @@ whitelist: whitelist.py
 
 #: make news fragment
 news: $(VENV)
-	@$(POETRY) run python scripts/check_news.py $(MSG)
+	@$(RUN) python scripts/check_news.py $(MSG)
 
 #: check test written for fix
 commit-fix: $(VENV)
-	@$(POETRY) run python scripts/commit_fix.py $(MSG)
+	@$(RUN) python scripts/commit_fix.py $(MSG)
 
 #: check ai housekeeping commit explains itself
 check-ai-commit: $(VENV)
-	@$(POETRY) run python scripts/check_ai_commit.py $(MSG)
+	@$(RUN) python scripts/check_ai_commit.py $(MSG)
 
 #: bundle neovim plugin
 neovim:
