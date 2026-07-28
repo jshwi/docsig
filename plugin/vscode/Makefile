@@ -50,10 +50,10 @@ clean:
 node_modules/.package-lock.json: package.json package-lock.json
 	@npm install --include=dev
 
-../../bin/poetry/bin/poetry:
-	@$(MAKE) -C ../../ bin/poetry/bin/poetry
+../../bin/uv/uv:
+	@$(MAKE) -C ../../ bin/uv/uv
 
-../../.venv/bin/python: venv ../../bin/poetry/bin/poetry
+../../.venv/bin/python: venv ../../bin/uv/uv
 
 ../../scripts/check_coverage.py: ../../.venv/bin/python
 

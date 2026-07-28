@@ -60,10 +60,10 @@ clean:
 
 ########################################################################
 # Main Targets
-../../bin/poetry/bin/poetry:
-	@$(MAKE) -C ../../ bin/poetry/bin/poetry
+../../bin/uv/uv:
+	@$(MAKE) -C ../../ bin/uv/uv
 
-../../.venv/bin/python: venv ../../bin/poetry/bin/poetry
+../../.venv/bin/python: venv ../../bin/uv/uv
 
 .venv/bin/activate: ../../.venv/bin/python
 	@../../.venv/bin/python -m venv .venv

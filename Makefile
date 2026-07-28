@@ -4,15 +4,22 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 
 # Extract version from pyproject.toml
-# Use this instead of `$ poetry version --short` as the version may be
-# needed before poetry is installed
+# Use this instead of `$ uv version --short` as the version may be
+# needed before uv is installed
 VERSION := $(shell bash scripts/get_docsig_version.sh pyproject.toml)
 
-# Poetry configuration
-export POETRY_KEYRING_ENABLED := false
-POETRY := bin/poetry/bin/poetry
-POETRY_VERSION := $(shell cat .poetry-version)
-RUN := $(POETRY) run
+# uv configuration
+# CI already has a pinned uv on PATH from setup-uv, so let the
+# environment point at it rather than bootstrapping a second copy
+UV ?= bin/uv/uv
+UV_VERSION := $(shell cat .uv-version)
+# only ever bootstrap the copy under bin, never an overridden uv
+ifeq ($(UV),bin/uv/uv)
+	UV_BOOTSTRAP := bin/uv/uv
+endif
+# uv resolves the environment on every `run`; make already gates each
+# target on $(VENV), so skip the redundant check
+RUN := $(UV) run --no-sync
 
 # File lists
 PYTHON_FILES := $(shell git ls-files "*.py" ':!:whitelist.py' ':!:*_vendor*')
@@ -58,7 +65,7 @@ $(BUILD): .make/doctest \
 		.make/doctest \
 		coverage.xml \
 		docs/_build/html/index.html
-	@$(POETRY) build
+	@$(UV) build
 	@touch $@
 
 docs/_build/html/index.html: $(VENV) \
@@ -69,11 +76,8 @@ docs/_build/html/index.html: $(VENV) \
 		CONTRIBUTING.md
 	@$(RUN) $(MAKE) -C docs html
 
-$(VENV): poetry.lock
-	@[ ! $$(basename "$$($(POETRY) env info --path)") = ".venv" ] \
-		&& rm -rf "$$($(POETRY) env info --path)" \
-		|| exit 0
-	@POETRY_VIRTUALENVS_IN_PROJECT=1 $(POETRY) install
+$(VENV): $(UV_BOOTSTRAP) uv.lock
+	@$(UV) sync --all-groups
 	@touch $@
 
 .make/pre-commit: $(VENV)
@@ -95,10 +99,9 @@ $(GIT_DIR)/blame-ignore-revs:
 	@mkdir -p $(@D)
 	@printf '%s\n' '[blame]' 'ignoreRevsFile = .git-blame-ignore-revs' > $@
 
-$(POETRY): .poetry-version
-	@curl -sSL https://install.python-poetry.org | \
-		POETRY_HOME="$$(pwd)/bin/poetry" "$$(which python)" - \
-		--version $(POETRY_VERSION)
+bin/uv/uv: .uv-version
+	@curl -sSL https://astral.sh/uv/$(UV_VERSION)/install.sh | \
+		UV_UNMANAGED_INSTALL="$$(pwd)/bin/uv" sh >/dev/null
 	@touch $@
 
 README.rst: $(VENV) $(PACKAGE_FILES)
@@ -224,19 +227,22 @@ docs/_build/linkcheck/output.json: $(VENV) \
 	@mkdir -p $(@D)
 	@touch $@
 
-poetry.lock: $(POETRY) pyproject.toml
-	@$< lock
+uv.lock: $(UV_BOOTSTRAP) pyproject.toml
+	@$(UV) lock
 	@touch $@
 
+# --no-hashes as pip enforces hashes for every transitive dependency once
+# any are present, which --target installs cannot satisfy
 build/requirements.txt: $(VENV)
 	@mkdir -p $(@D)
-	@$(POETRY) export -f requirements.txt --output $@
+	@$(UV) export --format requirements-txt --no-hashes \
+		--no-emit-project --no-dev --output-file $@
 	@touch $@
 
 build/site-packages/$(VERSION): build/requirements.txt
 	@rm -rf $(@D) >/dev/null
-	@$(RUN) pip install -r $< --target $(@D)
-	@$(RUN) pip install . --no-deps --target $(@D)
+	@$(UV) pip install -r $< --target $(@D)
+	@$(UV) pip install . --no-deps --target $(@D)
 	@touch $@
 
 build/docsig.pyz: build/site-packages/$(VERSION)
@@ -249,7 +255,7 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 ########################################################################
 # Phony Targets
 .PHONY: benchmark build bump check-ai-commit check-deps check-links clean \
-	docs format install-hooks install-ignore-revs install-poetry \
+	docs format install-hooks install-ignore-revs install-uv \
 	install-venv lint lock-deps publish test-scripts test-source tests \
 	tox types update-copyright update-deps update-docs update-readme \
 	whitelist news commit-fix version neovim
@@ -294,7 +300,6 @@ clean:
 	@rm -rf docs/_generated
 	@rm -rf .tox
 	@rm -rf node_modules
-	@rm -rf .poetry
 	@rm -rf build
 	@$(MAKE) -C plugin/intellij clean
 	@$(MAKE) -C plugin/vscode clean
@@ -311,8 +316,8 @@ install-hooks: .make/pre-commit
 #: install .git-blame-ignore-revs
 install-ignore-revs: $(GIT_DIR)/blame-ignore-revs
 
-#: install poetry
-install-poetry: $(POETRY)
+#: install uv
+install-uv: $(UV_BOOTSTRAP)
 
 #: install virtualenv
 install-venv: $(VENV)
@@ -320,13 +325,14 @@ install-venv: $(VENV)
 #: lint code
 lint: .make/pylint .make/docsig
 
-#: lock poetry dependencies
-lock-deps: poetry.lock
+#: lock uv dependencies
+lock-deps: uv.lock
 
 #: publish distribution
 publish: $(BUILD) check-links
-	@# Keyring is disabled globally to avoid hangs; publish needs it for PyPI token
-	@POETRY_KEYRING_ENABLED=true $(POETRY) publish
+	@# twine rather than `uv publish`, which is token-only and cannot read
+	@# the PyPI token from the keyring
+	@$(RUN) twine upload dist/docsig-$(VERSION)*
 
 #: run tests on scripts
 test-scripts: \
@@ -361,7 +367,7 @@ update-copyright: $(VENV)
 
 #: update dependencies
 update-deps: $(VENV)
-	@$(POETRY) update
+	@$(UV) sync --all-groups --upgrade
 
 #: update docs according to source
 update-docs: .make/update-docs
