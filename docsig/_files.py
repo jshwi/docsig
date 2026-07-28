@@ -86,7 +86,7 @@ class Files(list[_Path]):
         super().__init__()
         self._include_ignored = filters.include_ignored
         self._repo: _Path | None = None
-        self._gitignore = _Gitignore(None)
+        self._gitignore = _Gitignore()
         logger = _logging.getLogger(__package__)
         # gitignore patterns come from the repo each checked path
         # belongs to, which is not necessarily the repo containing the
