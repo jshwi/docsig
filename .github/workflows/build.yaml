@@ -10,12 +10,14 @@ on:
 
 env:
   PYTHONIOENCODING: utf-8
-  POETRY: bin/poetry/bin/poetry
+  UV: uv
 
 jobs:
   build:
     name: "${{ matrix.os }}-python${{ matrix.python-version }}"
     runs-on: "${{ matrix.os }}"
+    env:
+      UV_PYTHON: "${{ matrix.python-version }}"
     strategy:
       matrix:
         python-version:
@@ -37,19 +39,16 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: Get Poetry Version
-        id: get-poetry-version
-        run: |
-          ver=$(python -c "print(open('.poetry-version').read().strip())")
-          echo "version=$ver" >> "$GITHUB_OUTPUT"
+      - name: Get uv Version
+        id: get-uv-version
+        run: echo "version=$(cat .uv-version)" >> "$GITHUB_OUTPUT"
         shell: bash
-      - name: Cache Poetry
-        uses: actions/cache@v6
+      - name: Setup uv
+        id: setup-uv
+        uses: astral-sh/setup-uv@v9.0.0
         with:
-          path: bin/poetry
-          key: >
-            poetry-${{ runner.os }}-${{
-              steps.get-poetry-version.outputs.version}}
+          version: "${{ steps.get-uv-version.outputs.version }}"
+          enable-cache: true
       - name: Build
         id: build
         run: make build
