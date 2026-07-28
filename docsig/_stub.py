@@ -97,7 +97,7 @@ _RETURN_FIELD = _re.compile(
 # the suggestion is broken
 # noinspection RegExpSingleCharAlternation
 _PARAM_FIELD = _re.compile(
-    r"^[ \t]*:((?:\\?\*){0,2}[\w]+"
+    r"^[ \t]*:((?:\\?\*){0,2}\w+"
     rf"(?:\s+{_FIELD_WORD}|"
     rf"\s\|\s{_FIELD_WORD})*)"
     r"([^\w\s\\*])"
