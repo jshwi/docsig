@@ -166,6 +166,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         # line up and later checks do not emit redundant errors
         for count, arg in enumerate(source):
             try:
+                # noinspection PyUnresolvedReferences
                 is_equal = _almost_equal(
                     str(arg.name),
                     str(target[count].name),
@@ -300,6 +301,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
         # every sentence must start with an uppercase letter, unless it
         # starts with something other than a letter or an abbreviation
         # such as e.g.
+        # noinspection PyUnboundLocalVariable
         return all(
             stripped[0].isupper()
             for i in _sentence_tokenizer(description)
