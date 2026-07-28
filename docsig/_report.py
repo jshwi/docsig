@@ -175,7 +175,6 @@ def _to_text(payload: _Report, config: _Config) -> list[str]:
     return output
 
 
-# TODO: make report json by default and wrap with a reporter for cli
 def report(
     failures: _Failures,
     config: _Config,

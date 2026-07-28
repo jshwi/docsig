@@ -69,7 +69,6 @@ def _validation_errors(
     return errors
 
 
-# TODO: make report json by default and wrap with a reporter for cli
 def validate_args(func: _FuncType) -> _FuncType:
     """Validate arguments before calling the wrapped function.
 
