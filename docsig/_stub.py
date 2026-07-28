@@ -58,7 +58,7 @@ _RST_FIELD = _re.compile(r"^:\w+[^:\n]*:(?=\s|$)", _re.MULTILINE)
 #: every section name napoleon knows, longest first so multi-word names
 #: are preferred; derived from napoleon itself rather than hand-listed,
 #: because a hand-listed subset silently stops docstrings it does not
-#: recognise from ever reaching napoleon, hiding their params
+#: recognize from ever reaching napoleon, hiding their params
 # noinspection PyProtectedMember
 _SECTION_NAMES = "|".join(
     _re.escape(name)

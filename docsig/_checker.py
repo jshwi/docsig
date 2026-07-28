@@ -327,7 +327,7 @@ class FunctionChecker:  # pylint: disable=too-few-public-methods
     @staticmethod
     def _description_syntax_error(description: str) -> bool:
         # a field body may start on the line after the field name, so a
-        # newline followed by an indented body is well formed; within
+        # newline followed by an indented body is well-formed; within
         # that body a deeper indent directly after a body line is not
         # valid rst ("unexpected indentation") unless the line above
         # opens a literal block or is a list item
