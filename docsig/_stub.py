@@ -317,7 +317,7 @@ class Signature(_Stub):
         # yield params in the order they are documented: positional,
         # *args, keyword-only, then **kwargs
         posonlyargs = list(args.posonlyargs)
-        positional = list(args.args)
+        positional = list(args.args)  # type: ignore
         if skip_bound_arg:
             # drop self or cls without mutating the AST node
             if posonlyargs:
