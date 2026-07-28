@@ -132,7 +132,7 @@ def pretty_print_error(
 def print_error(message: str, retcode: int) -> None:
     """Print an error which cannot be attributed to a line.
 
-    Rendered as json when _DOCSIG_FORMAT_JSON is set (the contract
+    Rendered as JSON when _DOCSIG_FORMAT_JSON is set (the contract
     editor plugins consume), otherwise as text to stderr.
 
     :param message: Error message to print.
@@ -183,13 +183,13 @@ def report(
 ) -> int:
     """Print failures for a whole run and return the highest exit code.
 
-    Builds a report payload per result, renders them as json when
+    Builds a report payload per result, renders them as JSON when
     _DOCSIG_FORMAT_JSON is enabled (the contract editor plugins
     consume), otherwise as text, then returns the maximum retcode.
 
-    Text is printed per file as each one is checked, while json is held
+    Text is printed per file as each one is checked, while JSON is held
     back and printed as a single array, as one array per file would
-    concatenate into a document no json parser accepts.
+    concatenate into a document no JSON parser accepts.
 
     :param results: Failures paired with the module path they came from
         (one pair per file, the path None when checking a string).
