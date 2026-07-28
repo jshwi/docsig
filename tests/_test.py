@@ -1845,3 +1845,31 @@ def test_flake8_core_options_do_not_collide_with_plugin(
     assert Flake8.a.verbose is False
     assert Flake8.a.check_class is True
     assert not hasattr(Flake8.a, "max_line_length")
+
+
+def test_multi_file_json_is_one_valid_document(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    make_tree: FixtureMakeTree,
+    main: FixtureMain,
+) -> None:
+    """Checking several files emits a single JSON array.
+
+    One array was printed per file with nothing between them, so the
+    output of any run over more than one file was rejected by every JSON
+    parser, and no entry said which file it came from.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param make_tree: Create directory tree from dict mapping.
+    :param main: Mock ``main`` function.
+    """
+    template = ["def function(param) -> None:", '    """Summary."""']
+    make_tree({"one.py": template, "two.py": template})
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    assert main(".", test_flake8=False) == 1
+    std = capsys.readouterr()
+    issues = json.loads(std.out)
+    assert len(issues) == 2
+    assert {Path(i["path"]).name for i in issues} == {"one.py", "two.py"}
+    assert all(i["message"].startswith(E[203].ref) for i in issues)
