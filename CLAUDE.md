@@ -31,15 +31,21 @@ on care.
 
 ## Development Setup
 
-This project uses **Poetry** (version pinned in `.poetry-version`) with a local virtualenv.
+This project uses **uv** (version pinned in `.uv-version`) with a local virtualenv.
 
 ```bash
-make install-poetry   # install Poetry to bin/poetry/
+make install-uv       # install uv to bin/uv/
 make install-venv     # create .venv and install all dependencies
 ```
 
-Invoke Poetry as `bin/poetry/bin/poetry` (or use the make targets, which wire
-this up) — a global `poetry` on PATH may not match `.poetry-version`.
+Invoke uv as `bin/uv/uv` (or use the make targets, which wire this up) — a
+global `uv` on PATH may not match `.uv-version`. The Makefile takes `UV` from
+the environment, which is how CI points it at the copy `setup-uv` installs;
+setting it locally skips the pinned bootstrap, so leave it alone.
+
+The build backend stays `poetry-core` — uv does not care what builds the
+wheel, and keeping it means the published artifacts are unaffected.
+Dependency groups are PEP 735 `[dependency-groups]`, not `[tool.poetry.group]`.
 
 ## Commands
 
@@ -51,13 +57,13 @@ make tests
 make test-source
 
 # Run pytest directly (faster, no doctest)
-poetry run pytest -n=auto --cov=docsig --cov=tests
+uv run pytest -n=auto --cov=docsig --cov=tests
 
 # Run a single test file
-poetry run pytest tests/base_test.py -vv
+uv run pytest tests/base_test.py -vv
 
 # Run doctests only
-poetry run pytest docs README.rst --doctest-glob='*.rst'
+uv run pytest docs README.rst --doctest-glob='*.rst'
 
 # Lint (pylint + docsig on itself)
 make lint
