@@ -22,7 +22,7 @@ default_stages:
   - pre-commit
 exclude: |
   (?x)^(
-    | poetry\.lock
+    | uv\.lock
     | whitelist\.py
     | .*\.idea\/.*
     | docs\/conf\.py
