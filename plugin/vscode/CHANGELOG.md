@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Rebuild the log channel after disposal, so logging survives a second
   activation instead of failing with 'Channel has been closed'
+- update bundled docsig from v0.90.3 to v0.92.2 for several fixes, see
+  the
+  [docsig changelog](https://github.com/jshwi/docsig/blob/master/CHANGELOG.md)
+  for details
+  (docsig v0.92.2)
 
 [1.0.1](https://github.com/jshwi/docsig/releases/tag/vscode-extension-v1.0.1) - 2026-07-10
 ------------------------------------------------------------------------
