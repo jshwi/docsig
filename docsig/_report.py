@@ -49,6 +49,7 @@ class _Report(list[_ReportEntry]):
         codes = _RetCode()
         for entry in self:
             codes.add(entry.retcode)
+
         return codes.result
 
 

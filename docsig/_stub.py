@@ -393,6 +393,7 @@ class Docstring(_Stub):
         # description or anything else is out of scope
         string = _DIRECTIVE.sub("", string.expandtabs())
         lines = string.splitlines()
+
         # the margin is the least indent below the summary line; the
         # last line is counted even when blank as it carries the
         # indent of the closing quotes
