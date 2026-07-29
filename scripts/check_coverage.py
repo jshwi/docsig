@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pytest>=9.1.1,<10.0"]
+# ///
 """Check coverage summary meets a line-coverage threshold."""
 
 import json
