@@ -8,7 +8,7 @@ Test package for ``docsig``.
 import typing as t
 from pathlib import Path
 
-FixtureMain = t.Callable[..., t.Union[str, int]]
+FixtureMain = t.Callable[..., str | int]
 FixtureFlake8 = t.Callable[..., int]
 FixturePatchArgv = t.Callable[..., None]
 FixtureInitPyprojectTomlFile = t.Callable[[dict[str, t.Any]], Path]
@@ -28,7 +28,7 @@ class FixtureInitFile(
 class FixtureMakeTree(t.Protocol):  # pylint: disable=too-few-public-methods
     """Type for ``fixture_mock_tree``."""
 
-    def __call__(self, obj: t.Dict[t.Any, t.Any], path: Path = ..., /) -> None:
+    def __call__(self, obj: dict[t.Any, t.Any], path: Path = ..., /) -> None:
         """Type for ``fixture_make_tree``."""
 
 

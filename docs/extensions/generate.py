@@ -70,7 +70,7 @@ def extension(func: t.Callable[..., None]) -> t.Callable[..., None]:
     return wrapper
 
 
-def get_docsig_help() -> t.Optional[str]:
+def get_docsig_help() -> str | None:
     """Extract help from readme.
 
     :return: Help text, or None (won't be None - typechecker stuff).
