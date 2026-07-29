@@ -12,7 +12,7 @@ def _main() -> None:
     file = Path("Makefile")
     targets = {}
     lines = [i.rstrip() for i in file.read_text(encoding="utf-8").splitlines()]
-    for prev_line, line in zip([""] + lines[:-1], lines):
+    for prev_line, line in zip([""] + lines[:-1], lines, strict=True):
         target_match = re.match(r"^([a-zA-Z_-]+):", line)
         if target_match:
             target = target_match.group(1)

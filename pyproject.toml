@@ -235,7 +235,6 @@ target-version = "py310"
 # these fire on code the retired tools accepted, and adopting them would
 # rewrite source rather than reproduce the previous behavior
 ignore = [
-  "B905", # bugbear ships B9xx opt-in, so flake8 never ran it
   "SIM103", # flake8-simplify 0.21.0 does not flag these two returns
   "UP006", # pyupgrade leaves t.List/t.Dict/t.Tuple/t.Type alone
   "UP007", # pyupgrade leaves t.Union alone

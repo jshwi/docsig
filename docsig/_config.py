@@ -57,6 +57,7 @@ def _common_ancestor(paths: _t.Sequence[_Path]) -> _Path:
     # in what order; paths with nothing in common, such as separate
     # windows drives, share no parts and give the working directory
     common = []
+    # strict=False as the shortest path is the ancestor to stop at
     for parts in zip(*(i.resolve().parts for i in paths)):
         if len(set(parts)) != 1:
             break
