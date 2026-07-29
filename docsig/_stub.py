@@ -23,17 +23,17 @@ import astroid as _ast
 from ._config import Ignore as _Ignore
 from ._vendor.sphinx.ext import napoleon as _s
 
-#: no function will accidentally have this name
+#: No function will accidentally have this name.
 UNNAMED = "-1000"
 
-#: an example of valid parameter description
+#: An example of valid parameter description.
 VALID_DESCRIPTION = " A valid description."
 
-#: annotations meaning the function never returns a value, treated the
-#: same as ``-> None`` for documentation purposes
+#: Annotations meaning the function never returns a value, treated the
+#: same as ``-> None`` for documentation purposes.
 _NO_RETURN = ("NoReturn", "Never")
 
-#: a word in a param field after the leading keyword: a (possibly
+#: A word in a param field after the leading keyword: a (possibly
 #: starred) name or type-expression fragment built from word characters
 #: and the punctuation that joins them in a type — ``. , | [ ] ' "`` —
 #: so ``list[str]``, ``t.Any``, ``int|str``, the split words of
@@ -42,23 +42,23 @@ _NO_RETURN = ("NoReturn", "Never")
 #: or ``Annotated[int, "m"]`` all hold together; the word may not *end*
 #: on a ``.`` or ``|``, so a stray trailing one before whitespace is
 #: left outside the word and read as a bad closing token, while a ``,``
-#: or bracket still belongs to a bracketed type
+#: or bracket still belongs to a bracketed type.
 _FIELD_WORD = r"(?:\\?\*){0,2}[\w.,|\[\]'\"]*[\w,\[\]'\"]"
 
-#: a ``..`` directive and its indented block, which may be indented
-#: arbitrarily and so never counts as a param indent anomaly
+#: A ``..`` directive and its indented block, which may be indented
+#: arbitrarily and so never counts as a param indent anomaly.
 _DIRECTIVE = _re.compile(r"^[ \t]*\.\..*\n(?:[ \t]+.*\n)*", _re.MULTILINE)
 
-#: an rst field such as ``:param:``, marking a docstring as already rst;
+#: An rst field such as ``:param:``, marking a docstring as already rst;
 #: the closing colon must be followed by whitespace or the end of the
 #: line, which a role such as ``:class:`Thing``` never is, so a wrapped
-#: cross-reference at column 0 does not pass for a field
+#: cross-reference at column 0 does not pass for a field.
 _RST_FIELD = _re.compile(r"^:\w+[^:\n]*:(?=\s|$)", _re.MULTILINE)
 
-#: every section name napoleon knows, longest first so multi-word names
+#: Every section name napoleon knows, longest first so multi-word names
 #: are preferred; derived from napoleon itself rather than hand-listed,
 #: because a hand-listed subset silently stops docstrings it does not
-#: recognize from ever reaching napoleon, hiding their params
+#: recognize from ever reaching napoleon, hiding their params.
 # noinspection PyProtectedMember
 _SECTION_NAMES = "|".join(
     _re.escape(name)
@@ -70,31 +70,31 @@ _SECTION_NAMES = "|".join(
     )
 )
 
-#: a numpy section header such as ``Returns`` underlined with dashes;
+#: A numpy section header such as ``Returns`` underlined with dashes;
 #: trailing whitespace after the name is tolerated, as napoleon strips
-#: it and the underline below already allows it
+#: it and the underline below already allows it.
 _NUMPY_SECTION = _re.compile(
     rf"^({_SECTION_NAMES})[ \t]*\n\s*-{{2,}}\s*$",
     _re.MULTILINE | _re.IGNORECASE,
 )
 
-#: a Google section header such as ``Args:``
+#: A Google section header such as ``Args:``.
 _GOOGLE_SECTION = _re.compile(
     rf"^({_SECTION_NAMES}):\s*$",
     _re.MULTILINE | _re.IGNORECASE,
 )
 
-#: a return field such as ``:return:``, capturing its description
+#: A return field such as ``:return:``, capturing its description.
 _RETURN_FIELD = _re.compile(
     r"^[ \t]*:(?:returns?|yields?|rtype):\s*(.*)",
     _re.IGNORECASE | _re.MULTILINE,
 )
 
-#: a param field such as ``:param name: description``, in three groups:
+#: A param field such as ``:param name: description``, in three groups:
 #: the keyword with the (possibly starred) name, the token closing the
 #: name (a colon when written correctly), and the description running
 #: up to the next field or the end of the docstring
-# the suggestion is broken
+#: the suggestion is broken.
 # noinspection RegExpSingleCharAlternation
 _PARAM_FIELD = _re.compile(
     r"^[ \t]*:((?:\\?\*){0,2}\w+"
