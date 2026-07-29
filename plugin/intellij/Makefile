@@ -12,6 +12,17 @@ else
 GRADLE := ./gradlew
 endif
 
+# uv configuration, mirroring the root makefile so an environment that
+# already has a pinned uv is not made to bootstrap a second copy
+UV ?= ../../bin/uv/uv
+# only ever bootstrap the copy under bin, never an overridden uv
+ifeq ($(UV),../../bin/uv/uv)
+	UV_BOOTSTRAP := ../../bin/uv/uv
+endif
+# the shared python scripts declare their own dependencies inline, so
+# they run without the project virtual environment
+SCRIPT := $(UV) run --script
+
 # File lists
 PROJECT_FILES := $(shell git ls-files "src")
 SETTINGS_FILES := $(shell git ls-files "*.kts")
@@ -22,8 +33,8 @@ CONFIG_FILES := .editorconfig detekt.yaml Makefile
 .PHONY: all help clean ide
 
 #: show this help message and exit
-help:
-	@python ../../scripts/make_help.py
+help: $(UV_BOOTSTRAP)
+	@$(SCRIPT) ../../scripts/make_help.py
 
 #: clean build files
 clean:
@@ -43,6 +54,9 @@ version:
 
 ########################################################################
 # Main Targets
+../../bin/uv/uv:
+	@$(MAKE) -C ../../ bin/uv/uv
+
 .make/format: $(PROJECT_FILES) $(SETTINGS_FILES) $(CONFIG_FILES)
 	@$(GRADLE) ktlintFormat
 	@mkdir -p $(@D)
