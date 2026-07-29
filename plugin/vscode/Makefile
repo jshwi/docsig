@@ -20,6 +20,17 @@ PACKAGE_FILES := \
 VERSION := $(shell node -p "require('./package.json').version")
 VSIX := build/docsig-$(VERSION).vsix
 
+# uv configuration, mirroring the root makefile so an environment that
+# already has a pinned uv is not made to bootstrap a second copy
+UV ?= ../../bin/uv/uv
+# only ever bootstrap the copy under bin, never an overridden uv
+ifeq ($(UV),../../bin/uv/uv)
+	UV_BOOTSTRAP := ../../bin/uv/uv
+endif
+# the shared python scripts declare their own dependencies inline, so
+# they run without the project virtual environment
+SCRIPT := $(UV) run --script
+
 # Use a virtual display when $DISPLAY is unset (CI / remote SSH).
 ifeq ($(strip $(DISPLAY)),)
 VSCODE_TEST_PREFIX := xvfb-run -a
@@ -30,8 +41,8 @@ endif
 .PHONY: all help clean
 
 #: show this help message and exit
-help:
-	@python ../../scripts/make_help.py
+help: $(UV_BOOTSTRAP)
+	@$(SCRIPT) ../../scripts/make_help.py
 
 #: clean build files
 clean:
@@ -52,10 +63,6 @@ node_modules/.package-lock.json: package.json package-lock.json
 
 ../../bin/uv/uv:
 	@$(MAKE) -C ../../ bin/uv/uv
-
-../../.venv/bin/python: venv ../../bin/uv/uv
-
-../../scripts/check_coverage.py: ../../.venv/bin/python
 
 ../../build/docsig.pyz:
 	@$(MAKE) -C ../../ build build/docsig.pyz
@@ -95,8 +102,8 @@ coverage/coverage-summary.json: out/main/extension.js ../../scripts/check_covera
 	@mkdir -p $(@D)
 	@touch $@
 
-.make/test: coverage/coverage-summary.json
-	@../../.venv/bin/python ../../scripts/check_coverage.py --threshold 100
+.make/test: $(UV_BOOTSTRAP) coverage/coverage-summary.json
+	@$(SCRIPT) ../../scripts/check_coverage.py --threshold 100
 	@mkdir -p $(@D)
 	@touch $@
 

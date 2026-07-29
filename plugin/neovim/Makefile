@@ -14,6 +14,17 @@ LUA_VERSION := 5.4
 STYLUA_VERSION := 2.5.2
 VERSION := 1.0.0
 
+# uv configuration, mirroring the root makefile so an environment that
+# already has a pinned uv is not made to bootstrap a second copy
+UV ?= ../../bin/uv/uv
+# only ever bootstrap the copy under bin, never an overridden uv
+ifeq ($(UV),../../bin/uv/uv)
+	UV_BOOTSTRAP := ../../bin/uv/uv
+endif
+# the shared python scripts declare their own dependencies inline, so
+# they run without the project virtual environment
+SCRIPT := $(UV) run --script
+
 RETRIES := 3
 RETRY_DELAY := 5
 
@@ -46,8 +57,8 @@ LUA_ARGS := $(if $(LUA_DIR), --lua-version=$(LUA_VERSION) --lua-dir=$(LUA_DIR),)
 .PHONY: all help clean
 
 #: show this help message and exit
-help:
-	@python ../../scripts/make_help.py
+help: $(UV_BOOTSTRAP)
+	@$(SCRIPT) ../../scripts/make_help.py
 
 #: clean build files
 clean:
@@ -67,8 +78,6 @@ clean:
 
 .venv/bin/activate: ../../.venv/bin/python
 	@../../.venv/bin/python -m venv .venv
-
-../../scripts/check_coverage.py: ../../.venv/bin/python
 
 .venv/bin/stylua: .venv/bin/activate
 	@$(call retry,.venv/bin/pip install -q \
@@ -121,7 +130,8 @@ resources/docsig.pyz: ../../build/docsig.pyz
 	@mkdir -p $(@D)
 	@touch $@
 
-.make/test: ../../scripts/check_coverage.py \
+.make/test: $(UV_BOOTSTRAP) \
+		../../scripts/check_coverage.py \
 		.make/lint \
 		.make/bundle \
 		.luarocks/.installed \
@@ -129,7 +139,7 @@ resources/docsig.pyz: ../../build/docsig.pyz
 		$(TEST_FILES) \
 		$(CONFIG_FILES)
 	@DOCSIG_COVERAGE=1 nvim --headless -u tests/minimal_init.lua -l tests/runner.lua
-	@../../.venv/bin/python ../../scripts/check_coverage.py --threshold 100
+	@$(SCRIPT) ../../scripts/check_coverage.py --threshold 100
 	@mkdir -p $(@D)
 	@touch $@
 

@@ -248,11 +248,11 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 
 ########################################################################
 # Phony Targets
-.PHONY: benchmark build bump check-ai-commit check-deps check-links clean \
-	docs format install-hooks install-ignore-revs install-uv \
-	install-venv lint lock-deps publish test-scripts test-source tests \
-	tox types update-copyright update-deps update-docs update-readme \
-	whitelist news commit-fix version neovim
+.PHONY: benchmark build bump check-ai-commit check-claude-md check-deps \
+	check-links clean docs format install-hooks install-ignore-revs \
+	install-uv install-venv lint lock-deps publish test-scripts \
+	test-source tests tox types update-copyright update-deps update-docs \
+	update-readme whitelist news commit-fix version neovim
 
 #: show program's version number and exit
 version:
@@ -383,6 +383,12 @@ commit-fix: $(VENV)
 #: check ai housekeeping commit explains itself
 check-ai-commit: $(VENV)
 	@$(RUN) python scripts/check_ai_commit.py $(MSG)
+
+# the script declares its dependencies inline, so this needs uv but not
+# the project virtual environment
+#: check claude md is not stale
+check-claude-md: $(UV_BOOTSTRAP)
+	@$(UV) run --script scripts/check_claude_md.py
 
 #: bundle neovim plugin
 neovim:

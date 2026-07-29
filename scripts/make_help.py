@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pytest>=9.1.1,<10.0"]
+# ///
 """Print help for makefile."""
 
 import re
