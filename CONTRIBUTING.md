@@ -168,7 +168,7 @@ Base tests for core functionality are organized into the following
 docsig uses:
 
 - Black style
-- isort for imports
+- ruff for imports
 
 Autoformatting will run on commit
 
