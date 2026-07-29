@@ -71,6 +71,10 @@ keywords = [
   "signature"
 ]
 license = "MIT"
+license-files = [
+  "LICENSE",
+  "licenses/*"
+]
 maintainers = [
   {email = "s.whitlock@live.com", name = "jshwi"}
 ]
