@@ -9,12 +9,11 @@ dev = [
   "black>=24.4.2,<27.0.0",
   "bump-my-version>=1.5.0,<1.6.0",
   "deptry>=0.23.0,<0.26.0",
-  "flynt>=1.0.1,<2.0.0",
   "gitpython>=3.1.58,<4.0.0",
-  "isort>=5.13.2,<9.0.0",
   "mypy>=2.3.0,<3.0",
   "pre-commit>=4.6.1,<5.0.0",
   "pylint>=4.0.6,<5.0.0",
+  "ruff>=0.16.0,<0.17.0",
   "tomli-w>=1.0.0,<2.0.0",
   "tomli>=2.0.1,<3.0.0",
   "towncrier>=23.11,<26.0",
@@ -181,19 +180,6 @@ DEP004 = [
 check-class = true
 check-protected-class-methods = true
 
-[tool.flynt]
-line-length = 79
-transform-concats = true
-
-[tool.isort]
-ensure_newline_before_comments = true
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 79
-multi_line_output = 3
-profile = "black"
-use_parentheses = true
-
 [tool.mypy]
 exclude = [
   'whitelist\.py'
@@ -235,6 +221,59 @@ norecursedirs = [
 pythonpath = [
   "tests/plugins"
 ]
+
+[tool.ruff]
+# vendored code is upstream's to format, and whitelist.py is generated
+extend-exclude = [
+  "docsig/_vendor",
+  "whitelist.py"
+]
+line-length = 79
+target-version = "py310"
+
+[tool.ruff.lint]
+# these fire on code the retired tools accepted, and adopting them would
+# rewrite source rather than reproduce the previous behavior
+ignore = [
+  "B905", # bugbear ships B9xx opt-in, so flake8 never ran it
+  "SIM103", # flake8-simplify 0.21.0 does not flag these two returns
+  "UP006", # pyupgrade leaves t.List/t.Dict/t.Tuple/t.Type alone
+  "UP007", # pyupgrade leaves t.Union alone
+  "UP045" # pyupgrade leaves t.Optional alone
+]
+select = [
+  "B", # flake8-bugbear
+  "COM812", # add-trailing-comma
+  "E", # pycodestyle errors, via flake8
+  "F", # pyflakes, via flake8; F541 was rm_unneeded_f_str
+  "FLY", # flynt, less --transform-concats, which ruff has no rule for
+  "I", # isort
+  # bandit ran as `-lll`, so only the checks it rates high severity
+  "S102", # exec
+  "S103", # world-writable file permissions
+  "S304", # insecure cipher
+  "S312", # telnetlib
+  "S321", # ftplib
+  "S324", # insecure hash function
+  "S501", # request without certificate validation
+  "S502", # ssl with bad version
+  "S505", # weak cryptographic key
+  "S507", # ssh without host key verification
+  "S509", # snmp with weak cryptography
+  "S602", # subprocess with shell=True
+  "S605", # process started with a shell
+  "S609", # wildcard injection
+  "S612", # insecure logging.config.listen
+  "S701", # jinja2 without autoescape
+  "SIM", # flake8-simplify
+  "UP", # pyupgrade; UP031/UP032 were also flynt's
+  "W" # pycodestyle warnings, via flake8
+]
+
+[tool.ruff.lint.per-file-ignores]
+"docsig/_scope.py" = ["E701"]
+"tests/exclude_test.py" = ["E501"]
+"tests/fix_test.py" = ["E501"]
 
 [tool.towncrier]
 directory = "changelog"
