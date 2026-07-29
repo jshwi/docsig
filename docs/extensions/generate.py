@@ -85,7 +85,7 @@ def get_docsig_help() -> str | None:
 
 
 def get_plugin_description(path: Path) -> str:
-    """extract plugin description from readme.
+    """Extract plugin description from readme.
 
     :param path: Path to the readme.
     :return: Plugin description.
