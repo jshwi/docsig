@@ -37,8 +37,8 @@ def main() -> str | int:
     if _os.getenv("_DOCSIG_FORMAT_JSON"):
         _warnings.simplefilter("ignore", FutureWarning)
 
-    a = _parse_args()
-    _excepthook(a.no_ansi)
-    kwargs = vars(a)
+    args = _parse_args()
+    _excepthook(args.no_ansi)
+    kwargs = vars(args)
     path = kwargs.pop("path")
     return _docsig(*path, **kwargs)
