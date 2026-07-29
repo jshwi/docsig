@@ -48,12 +48,6 @@ Dependency groups are PEP 735 `[dependency-groups]`, not `[tool.poetry.group]`.
 ## Commands
 
 ```bash
-# Run all tests (doctest + pytest + script tests)
-make tests
-
-# Run only source tests (doctest + pytest with coverage)
-make test-source
-
 # Run pytest directly (faster, no doctest)
 uv run pytest -n=auto --cov=docsig --cov=tests
 
@@ -62,18 +56,6 @@ uv run pytest tests/base_test.py -vv
 
 # Run doctests only
 uv run pytest docs README.rst --doctest-glob='*.rst'
-
-# Lint (pylint + docsig on itself)
-make lint
-
-# Format (black + flynt + isort)
-make format
-
-# Type check (mypy)
-make types
-
-# Run benchmarks
-make benchmark   # sets RUN_BENCHMARK=true, uses pytest -m=benchmark
 
 # Run the working tree
 python -m docsig ...   # a bare `docsig` command may resolve to a stale shim
