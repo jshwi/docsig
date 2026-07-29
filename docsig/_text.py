@@ -70,6 +70,7 @@ def sentence_tokenizer(text: str) -> list[str]:
         end = match.end()
         candidate = text[start:end].strip()
         raw_last = candidate.lower().split()[-1]
+
         # strip leading punctuation so "(e.g." matches "e.g."
         last_word = _re.sub(r"^[^\w.]+", "", raw_last)
         if last_word in abbreviations:

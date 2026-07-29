@@ -58,6 +58,7 @@ def parse_from_string(
 
         scope = _Scope.from_ast(node, directives, file, config)
         logger.debug(_FILE_INFO, source_name, "parsing python code successful")
+
     except _ERRORS as err:
         logger.debug(
             _FILE_INFO,
@@ -77,6 +78,7 @@ def _source_encoding(file: _Path) -> str:
     try:
         with file.open("rb") as fd:
             return _detect_encoding(fd.readline)[0]
+
     except SyntaxError:
         return "utf-8"
 
