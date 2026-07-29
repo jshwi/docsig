@@ -49,7 +49,7 @@ class _Template(t.NamedTuple):
     expected: str
 
 
-class _Registered(t.List[_Template]):
+class _Registered(list[_Template]):
     def __init__(self, *args: _Template) -> None:
         super().__init__()
         self.extend(args)
@@ -82,7 +82,7 @@ class _Registered(t.List[_Template]):
             *(x for y in prefix for x in self if x.name.startswith(y)),
         )
 
-    def getids(self) -> t.Tuple[str, ...]:
+    def getids(self) -> tuple[str, ...]:
         """Returns a tuple of all the names of the classes contained.
 
         :return: A tuple of names of the classes within this sequence.
@@ -126,8 +126,8 @@ class _BaseTemplate(ABC):
 
 
 def _register(
-    base_template: t.Type[_BaseTemplate],
-) -> t.Type[_BaseTemplate]:
+    base_template: type[_BaseTemplate],
+) -> type[_BaseTemplate]:
     inst = base_template()
     registered.append(_Template(inst.name, inst.template, inst.expected))
     return base_template

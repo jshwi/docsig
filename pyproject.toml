@@ -232,13 +232,10 @@ line-length = 79
 target-version = "py310"
 
 [tool.ruff.lint]
-# these fire on code the retired tools accepted, and adopting them would
-# rewrite source rather than reproduce the previous behavior
 ignore = [
-  "SIM103", # flake8-simplify 0.21.0 does not flag these two returns
-  "UP006", # pyupgrade leaves t.List/t.Dict/t.Tuple/t.Type alone
-  "UP007", # pyupgrade leaves t.Union alone
-  "UP045" # pyupgrade leaves t.Optional alone
+  # both sites it finds are the last arm of a chain of guard clauses,
+  # and collapsing only that arm breaks the shape of the rest
+  "SIM103"
 ]
 select = [
   "B", # flake8-bugbear
