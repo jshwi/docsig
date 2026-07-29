@@ -2,9 +2,9 @@
 
 Most tests run with all the args that start with ``check``, so passing
 or failing of most tests depends on these passing. This means that by
-default, templates including classes, magic methods, overridden
-methods, protected methods, and property returns, will be checked, even
-though by default they aren't.
+default, templates including classes, magic methods, overridden methods,
+protected methods, and property returns, will be checked, even though by
+default they aren't.
 
 There are separate tests written to exclude these particular flags.
 Their templates contain a specific string to include them in these
@@ -13,11 +13,10 @@ special case tests.
 Some tests overlap, which is why some templates are found by their
 prefix, their suffix, or whether they simply contain a substring.
 
-Templates ending with ``S`` are ``Sphinx`` style docstrings.
-Templates ending with ``N`` are ``NumPy`` style docstrings.
-Templates ending with ``NI`` are ``NumPy`` style docstrings with an
-unusual indent, and all templates ending with ``G`` are ``Google`` style
-docstrings.
+Templates ending with ``S`` are ``Sphinx`` style docstrings. Templates
+ending with ``N`` are ``NumPy`` style docstrings. Templates ending with
+``NI`` are ``NumPy`` style docstrings with an unusual indent, and all
+templates ending with ``G`` are ``Google`` style docstrings.
 """
 
 # pylint: disable=protected-access,too-many-lines
@@ -7795,8 +7794,8 @@ def test_stdout(
 
     Passing tests will not print to stdout.
 
-    All templates prefixed with ``P`` will be tested for no output.
-    As passing templates return an empty str as their expected results,
+    All templates prefixed with ``P`` will be tested for no output. As
+    passing templates return an empty str as their expected results,
     this test will confirm that tests that are not meant to pass do not
     include this, as "" will always be True for being in a str object.
 
@@ -8079,8 +8078,8 @@ def test_ignore_args(
     Test that docs without args, where the signature contains args,
     don’t fail with ``--ignore-args``.
 
-    All templates containing args in their signature must have `WArgs` in
-    their name.
+    All templates containing args in their signature must have `WArgs`
+    in their name.
 
     Passing templates with ``WArgs`` will fail, and failing tests with
     ``WArgs`` will pass, as tests which pass will have args documented,
@@ -8126,9 +8125,9 @@ def test_ignore_kwargs(
     ``WKwargs`` as their name.
 
     Passing templates with ``WKwargs`` will fail, and failing tests with
-    ``WKwargs`` will pass, as tests which pass will have args documented,
-    which shouldn’t be to pass with this check. All other tests will
-    have the usual result.
+    ``WKwargs`` will pass, as tests which pass will have args
+    documented, which shouldn’t be to pass with this check. All other
+    tests will have the usual result.
 
     All templates prefixed with ``M`` will be excluded from this test,
     as this tests multiple functions in a file, some that may pass and
@@ -8221,9 +8220,10 @@ def test_check_class_constructor(
     because they are missing parameters from the ``__init__`` under that
     regime.
 
-    Tests that should fail when checked with ``--check-class-constructor`` have
-    an 'F' just before the final part of the name relating to the docstring
-    style. Otherwise, the test should pass.
+    Tests that should fail when checked with
+    ``--check-class-constructor`` have an 'F' just before the final part
+    of the name relating to the docstring style. Otherwise, the test
+    should pass.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.

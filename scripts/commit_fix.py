@@ -13,9 +13,8 @@ import pytest
 def main() -> int | str:
     """Entry point.
 
-    Commit message file path (.git/COMMIT_EDITMSG) automatically
-    passed as the first positional argument by the commit-msg pre-commit
-    hook.
+    Commit message file path (.git/COMMIT_EDITMSG) automatically passed
+    as the first positional argument by the commit-msg pre-commit hook.
 
     :return: 0 if successful, error message if unsuccessful.
     """

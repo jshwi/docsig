@@ -73,9 +73,9 @@ def create_news_fragment(
     create an unwanted duplicate as if it was a new commit for the same
     issue.
 
-    Check the latest untracked news fragment (the name is not known
-    yet) and confirm its contents aren't identical to the last news
-    fragment before it.
+    Check the latest untracked news fragment (the name is not known yet)
+    and confirm its contents aren't identical to the last news fragment
+    before it.
 
     :param desc: Description to write to file.
     :param name: Name of the new file.
@@ -105,9 +105,8 @@ def create_news_fragment(
 def main() -> int | str:  # pylint: disable=too-many-return-statements
     """Entry point.
 
-    Commit message file path (.git/COMMIT_EDITMSG) automatically
-    passed as the first positional argument by the commit-msg pre-commit
-    hook.
+    Commit message file path (.git/COMMIT_EDITMSG) automatically passed
+    as the first positional argument by the commit-msg pre-commit hook.
 
     This script reads the commit message file and cannot determine the
     commit from the commandline.

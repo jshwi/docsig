@@ -176,8 +176,8 @@ class Test:
 
         generate_messages exits on the first category it changes, so a
         full scaffold takes as many runs as there are categories.
-        generate_configurations writes without exiting, so it settles
-        on the first run.
+        generate_configurations writes without exiting, so it settles on
+        the first run.
 
         :param generate: Generator function to run.
         :return: Number of runs which rewrote something.

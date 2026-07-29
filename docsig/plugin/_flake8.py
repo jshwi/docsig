@@ -193,10 +193,9 @@ class Flake8:
     def run(self) -> _t.Generator[_Flake8Error, None, None]:
         """Run docsig on the file and yield flake8 errors per failure.
 
-        If both class and class-constructor checks are enabled,
-        yield one error and return, otherwise run checks with current
-        config and yield one (line, col, message, checker_class) per
-        failure.
+        If both class and class-constructor checks are enabled, yield
+        one error and return, otherwise run checks with current config
+        and yield one (line, col, message, checker_class) per failure.
 
         :return: Generator of flake8-style error tuples.
         """

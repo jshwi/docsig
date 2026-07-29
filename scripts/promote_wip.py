@@ -4,8 +4,8 @@ Automates the promotion workflow documented in CLAUDE.md: create or
 reuse the GitHub issue and its linked branch, check the finalized
 subject against the commit policy before anything is touched,
 cherry-pick the wip commit with that subject, run the commit hooks
-(retrying once so the news fragment they create is included), push,
-and open a pull request targeting master.
+(retrying once so the news fragment they create is included), push, and
+open a pull request targeting master.
 
 Merging is left to the maintainer once the pipeline passes.
 """
@@ -73,10 +73,10 @@ def policy_report(repo: git.Repo, subject: str) -> str | None:
     A wip subject clears conform's imperative mood check because ``wip:
     fix ...`` puts an imperative verb first. Finalizing strips that
     verb, so a description opening with a gerund, or with a capitalized
-    message reference, is only rejected at commit time, once the
-    working tree has been rearranged and the hooks have run. Check it
-    up front against the policy the commit-msg hook applies, so a
-    rewording costs nothing.
+    message reference, is only rejected at commit time, once the working
+    tree has been rearranged and the hooks have run. Check it up front
+    against the policy the commit-msg hook applies, so a rewording costs
+    nothing.
 
     :param repo: Repository whose sign-off identity signs the message.
     :param subject: Finalized commit subject.
@@ -130,8 +130,8 @@ def pull_request_body(
     """Construct the pull request body.
 
     A wip commit's message is only its sign-off trailer, so nothing
-    survives to describe the change. Prefer an explicit body when one
-    is given, and fall back to the commit's own paragraphs otherwise.
+    survives to describe the change. Prefer an explicit body when one is
+    given, and fall back to the commit's own paragraphs otherwise.
 
     :param commit: Commit being promoted.
     :param issue: Issue the pull request closes.
@@ -158,8 +158,8 @@ def pull_request_body(
 def commit_staged(repo: git.Repo, subject: str) -> None:
     """Commit staged changes with sign-off.
 
-    The commit-msg hook creates the news fragment and blocks the
-    first attempt; stage the fragment and commit again.
+    The commit-msg hook creates the news fragment and blocks the first
+    attempt; stage the fragment and commit again.
 
     :param repo: Repository to commit to.
     :param subject: Finalized commit subject.
@@ -410,7 +410,9 @@ class Test:
         assert body == "Closes #7\n\nFrom the flag."
 
     def test_pull_request_body_bare_commit(self) -> None:
-        """Test a commit with no paragraphs yields only the reference."""
+        """Test a commit with no paragraphs yields only the
+        reference.
+        """
         self.wip("wip: fix a thing")
         assert pull_request_body(self.repo.head.commit, 7) == "Closes #7"
 

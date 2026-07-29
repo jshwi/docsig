@@ -2083,7 +2083,8 @@ def test_module_single_error_disables_next(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Test disabling entire module with specific `disable-next` comment.
+    """Test disabling entire module with specific `disable-next`
+    comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2119,7 +2120,8 @@ def test_single_function_single_error_disable_next(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Test disabling single function with specific `disable-next` comment.
+    """Test disabling single function with specific `disable-next`
+    comment.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.

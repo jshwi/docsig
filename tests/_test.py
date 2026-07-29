@@ -1689,8 +1689,7 @@ def test_google_style_detected_by_arguments(
 
     Arguments is an accepted alias for Args, and the only marker of
     google style in this docstring. Without it the docstring falls back
-    to rst, the parameter is not parsed, and params-missing is
-    reported.
+    to rst, the parameter is not parsed, and params-missing is reported.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -1806,8 +1805,7 @@ def test_json_usage_error(
 ) -> None:
     """JSON usage errors use a null line number.
 
-    Editor plugins consume this contract when a run cannot start at
-    all.
+    Editor plugins consume this contract when a run cannot start at all.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param capsys: Capture sys out.
