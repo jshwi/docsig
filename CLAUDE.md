@@ -43,8 +43,6 @@ global `uv` on PATH may not match `.uv-version`. The Makefile takes `UV` from
 the environment, which is how CI points it at the copy `setup-uv` installs;
 setting it locally skips the pinned bootstrap, so leave it alone.
 
-The build backend stays `poetry-core` — uv does not care what builds the
-wheel, and keeping it means the published artifacts are unaffected.
 Dependency groups are PEP 735 `[dependency-groups]`, not `[tool.poetry.group]`.
 
 ## Commands
