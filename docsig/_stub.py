@@ -93,8 +93,8 @@ _RETURN_FIELD = _re.compile(
 #: A param field such as ``:param name: description``, in three groups:
 #: the keyword with the (possibly starred) name, the token closing the
 #: name (a colon when written correctly), and the description running
-#: up to the next field or the end of the docstring
-#: the suggestion is broken.
+#: up to the next field or the end of the docstring the suggestion is
+# broken.
 # noinspection RegExpSingleCharAlternation
 _PARAM_FIELD = _re.compile(
     r"^[ \t]*:((?:\\?\*){0,2}\w+"
