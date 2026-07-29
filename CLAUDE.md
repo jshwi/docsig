@@ -45,6 +45,15 @@ setting it locally skips the pinned bootstrap, so leave it alone.
 
 Dependency groups are PEP 735 `[dependency-groups]`, not `[tool.poetry.group]`.
 
+Scripts reached for from outside the project virtualenv carry PEP 723 inline
+metadata and run as `$(UV) run --script`: `scripts/check_coverage.py` and
+`scripts/make_help.py`, which the three `plugin/*/Makefile`s call, and
+`scripts/check_claude_md.py`, which the `check-claude-md` hook calls through
+`make check-claude-md`. Each still imports `pytest` for its embedded tests, so
+the inline block has to declare it even though the CLI path never uses it.
+A script that imports `docsig` — `scripts/update_readme.py`,
+`scripts/update_docs.py` — cannot take this route, and stays on `$(RUN)`.
+
 ## Commands
 
 ```bash
