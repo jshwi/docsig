@@ -1,7 +1,7 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
+build-backend = "uv_build"
 requires = [
-  "poetry-core>=2.0.0"
+  "uv_build>=0.12.0,<0.13"
 ]
 
 [dependency-groups]
@@ -55,6 +55,14 @@ tests = [
 [project]
 authors = [
   {email = "s.whitlock@live.com", name = "jshwi"}
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14"
 ]
 dependencies = [
   "astroid (>=4.0.2,<5.0.0)",
@@ -259,6 +267,10 @@ name = "Removed"
 
 [tool.towncrier.fragment.security]
 name = "Security"
+
+[tool.uv.build-backend]
+# docsig is a flat layout; the backend otherwise looks for src/docsig
+module-root = ""
 
 [tool.vulture]
 exclude = [
