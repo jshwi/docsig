@@ -55,8 +55,7 @@ help: $(VENV)
 # Main Targets
 $(BUILD): .make/doctest \
 		.make/black \
-		.make/flynt \
-		.make/isort \
+		.make/ruff \
 		.make/pylint \
 		.make/docsig \
 		.make/update-docs \
@@ -118,13 +117,8 @@ README.rst: $(VENV) $(PACKAGE_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
-.make/flynt: $(VENV) $(PYTHON_FILES)
-	@$(RUN) flynt $(PYTHON_FILES)
-	@mkdir -p $(@D)
-	@touch $@
-
-.make/isort: $(VENV) $(PYTHON_FILES)
-	@$(RUN) isort $(PYTHON_FILES)
+.make/ruff: $(VENV) $(PYTHON_FILES)
+	@$(RUN) ruff check --fix $(PYTHON_FILES)
 	@mkdir -p $(@D)
 	@touch $@
 
@@ -308,7 +302,7 @@ clean:
 docs: docs/_build/html/index.html
 
 #: run formatters
-format: .make/black .make/flynt .make/isort
+format: .make/black .make/ruff
 
 #: install pre-commit hooks
 install-hooks: .make/pre-commit
