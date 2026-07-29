@@ -227,29 +227,11 @@ hand-extended. Anything a fragment can't carry, such as a fix that surfaces new
 violations on unchanged code, belongs in the hand-written `gh release create
 --notes` body; stage that text in the PR body so it's findable at release time.
 
-To publish a release:
-
-```bash
-# 1. Verify all commits since last tag pass conform
-git rebase v<prev> -x 'conform enforce'
-
-# 2. Bump version on a temp branch (towncrier folds changelog fragments in)
-git checkout -b bump
-make bump part=patch   # or major|minor
-
-# 3. Merge to master, push commits and tag
-git checkout master && git merge bump && git push && git push --tags
-git branch -d bump
-
-# 4. Publish to PyPI
-make publish
-
-# 5. Create GitHub release using the new CHANGELOG.md section
-gh release create v<N> --repo jshwi/docsig --title "v<N>" --notes "..."
-
-# 6. Rebase dev/main onto master
-git checkout dev/main && git rebase master && git push --force-with-lease
-```
+The publish procedure lives in the `release` skill
+(`.claude/skills/release/SKILL.md`): verifying conform over the range, the
+version bump that folds the fragments in, the merge and tag, the PyPI publish,
+the GitHub release, and the `dev/main` rebase afterwards. Invoke the skill
+rather than working from memory.
 
 ### Commit policy
 
