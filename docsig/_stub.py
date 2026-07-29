@@ -23,14 +23,14 @@ import astroid as _ast
 from ._config import Ignore as _Ignore
 from ._vendor.sphinx.ext import napoleon as _s
 
-# no function will accidentally have this name
+#: no function will accidentally have this name
 UNNAMED = "-1000"
 
-# an example of valid parameter description
+#: an example of valid parameter description
 VALID_DESCRIPTION = " A valid description."
 
-# annotations meaning the function never returns a value, treated the
-# same as ``-> None`` for documentation purposes
+#: annotations meaning the function never returns a value, treated the
+#: same as ``-> None`` for documentation purposes
 _NO_RETURN = ("NoReturn", "Never")
 
 #: a word in a param field after the leading keyword: a (possibly
