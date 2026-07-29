@@ -134,8 +134,8 @@ class _Scanner:
     :param messages: Initial list of messages to disable.
     """
 
-    def __init__(self, messages: _Messages) -> None:
-        self._directives = Directives()
+    def __init__(self, directives: Directives, messages: _Messages) -> None:
+        self._directives = directives
         self._comments = Comments()
         self._messages = _Messages(messages)
 
@@ -269,6 +269,6 @@ class Directives(dict[int, _Scope]):
         :param messages: Initial list of messages to disable.
         :return: Directives instance keyed by line number.
         """
-        scanner = _Scanner(messages)
+        scanner = _Scanner(cls(), messages)
         scanner.scan(text)
         return scanner.directives
