@@ -85,6 +85,14 @@ worktree, and `--no-verify` is not the answer: it skips every other hook too,
 so lint, types, and the test suite stop running. When the clone's working tree
 is busy, `git clone` it again rather than adding a worktree.
 
+**Nothing left unstaged survives a commit reliably.** pre-commit stashes
+unstaged changes for the duration of the hook run, then rolls that stash back
+when a hook's auto-fix conflicts with it, and the working tree comes back
+without the edit. It is not lost — the stash is written to
+`~/.cache/pre-commit/patch*`, and `git apply` on the newest patch there
+restores it. Stage every edit before committing, including one held back for
+a later commit.
+
 Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
 
 ## Architecture
