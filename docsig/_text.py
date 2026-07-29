@@ -62,7 +62,6 @@ def sentence_tokenizer(text: str) -> list[str]:
     :param text: Input string.
     :return: Non-overlapping sentence strings in order.
     """
-    abbreviations = SENTENCE_ABBREVIATIONS
     result = []
     start = 0
 
@@ -73,7 +72,7 @@ def sentence_tokenizer(text: str) -> list[str]:
 
         # strip leading punctuation so "(e.g." matches "e.g."
         last_word = _re.sub(r"^[^\w.]+", "", raw_last)
-        if last_word in abbreviations:
+        if last_word in SENTENCE_ABBREVIATIONS:
             continue
 
         result.append(candidate)
