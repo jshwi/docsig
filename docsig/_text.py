@@ -64,7 +64,6 @@ def sentence_tokenizer(text: str) -> list[str]:
     """
     result = []
     start = 0
-
     for match in _re.finditer(r"(?<!\.)[.!?]\s+", text):
         end = match.end()
         candidate = text[start:end].strip()
