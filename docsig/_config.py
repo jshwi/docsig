@@ -71,8 +71,8 @@ def get_config(prog: str, *path: _Path) -> dict[str, _t.Any]:
     """Return the program's tool-section config from pyproject.toml.
 
     Search upwards from the common ancestor of the checked paths, and
-    return the config of the first pyproject.toml with a section for
-    the program. A pyproject.toml without one says nothing about the
+    return the config of the first pyproject.toml with a section for the
+    program. A pyproject.toml without one says nothing about the
     program, e.g. a packaging only manifest, so the search continues
     past it, whereas an empty section opts the project out.
 

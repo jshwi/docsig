@@ -1777,9 +1777,9 @@ def test_fix_normalize_skips_napoleon_when_rst_fields_present(
 ) -> None:
     """Leave RST field lists alone when Napoleon would mangle them.
 
-    An RST docstring may use an underlined Returns heading for prose
-    and still document params with sphinx field lists. Always running
-    Numpy conversion rewrites those fields and falsely reports missing
+    An RST docstring may use an underlined Returns heading for prose and
+    still document params with sphinx field lists. Always running Numpy
+    conversion rewrites those fields and falsely reports missing
     parameters.
 
     :param capsys: Capture sys out.
@@ -1867,8 +1867,8 @@ def test_fix_setter_does_not_trigger_return_check(
 ) -> None:
     """Property setter is exempt from return documentation checks.
 
-    A setter decorated with ``@<name>.setter`` never returns a value
-    and must not trigger confirm-return-needed.
+    A setter decorated with ``@<name>.setter`` never returns a value and
+    must not trigger confirm-return-needed.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2055,8 +2055,8 @@ def test_fix_duplicate_dedup_with_multiple_groups_no_spurious_errors(
 
     When two different parameter names are each duplicated, but the
     first name appears more times than the second, the old pop-during-
-    iteration loop would skip items and leave extra copies behind.
-    Those extras then caused spurious SIG4xx ordering errors.
+    iteration loop would skip items and leave extra copies behind. Those
+    extras then caused spurious SIG4xx ordering errors.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2137,7 +2137,8 @@ def test_fix_abbreviation_after_sentence_does_not_trigger_sig305(
     init_file: FixtureInitFile,
     main: FixtureMain,
 ) -> None:
-    """Known abbreviations starting a sentence fragment do not fire SIG305.
+    """Known abbreviations starting a sentence fragment do not fire
+    SIG305.
 
     sentence_tokenizer does not split on 'e.g.' or 'i.e.', but after a
     previous sentence split, those abbreviations can appear at the start
@@ -2169,9 +2170,9 @@ def test_fix_rst_directive_in_description_does_not_trigger_sig305(
 ) -> None:
     """RST directives (.. note::) in descriptions do not fire SIG305.
 
-    The sentence tokenizer previously split on the space after the second
-    dot in '.. note::'.  A negative lookbehind in the tokenizer regex now
-    prevents splitting on '..' sequences.
+    The sentence tokenizer previously split on the space after the
+    second dot in '.. note::'.  A negative lookbehind in the tokenizer
+    regex now prevents splitting on '..' sequences.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2287,8 +2288,8 @@ def test_fix_list_ending_description_does_not_trigger_sig306(
     """Descriptions ending with a list item do not fire SIG306.
 
     List items conventionally are not sentence-terminated, so a
-    description whose last paragraph is a bullet or enumerated list
-    does not need to end in a period.
+    description whose last paragraph is a bullet or enumerated list does
+    not need to end in a period.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2500,9 +2501,8 @@ def test_fix_gitignore_applied_in_worktree(
     """Gitignore filtering works where ``.git`` is a file.
 
     Problem: The repo was identified by the presence of a .git/HEAD
-    file, but in worktrees and submodules .git is a file pointing to
-    the real git dir, so gitignore filtering was silently disabled
-    there.
+    file, but in worktrees and submodules .git is a file pointing to the
+    real git dir, so gitignore filtering was silently disabled there.
 
     :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
@@ -2525,8 +2525,8 @@ def test_fix_gitignore_resolved_from_checked_path(
 
     Problem: The repo was resolved by walking up from the current
     working directory, not from the path being checked, so a tree
-    outside the cwd's repo was filtered with the wrong repo's
-    gitignore patterns, or none at all.
+    outside the cwd's repo was filtered with the wrong repo's gitignore
+    patterns, or none at all.
 
     :param make_tree: Create the directory tree from dict mapping.
     :param main: Mock ``main`` function.
@@ -2556,10 +2556,10 @@ def test_fix_typed_param_fields_with_brackets_pipes_or_dots(
 ) -> None:
     """Types with brackets, pipes, or dots parse in a param field.
 
-    Problem: The param-field regex only recognized plain words, so
-    valid sphinx typed fields such as ``:param list[str] x:`` had the
-    bracket read as the token closing the name, producing spurious
-    SIG302, SIG305, and SIG404 for correctly documented params.
+    Problem: The param-field regex only recognized plain words, so valid
+    sphinx typed fields such as ``:param list[str] x:`` had the bracket
+    read as the token closing the name, producing spurious SIG302,
+    SIG305, and SIG404 for correctly documented params.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -2586,8 +2586,8 @@ def test_fix_google_keyword_args_section_recognized(
 
     Problem: ``Keyword Args`` and ``Keyword Arguments`` were missing
     from the google section headers used to detect google style, so a
-    docstring documenting only keyword arguments was never converted
-    and its params were invisible, reported as SIG203 params-missing.
+    docstring documenting only keyword arguments was never converted and
+    its params were invisible, reported as SIG203 params-missing.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -2611,8 +2611,8 @@ def test_fix_no_indent_anomaly_for_tab_indented_source(
     """Tab-indented files do not report an indent anomaly.
 
     Problem: The indent probe ran on the raw docstring before cleandoc
-    expanded tabs, counting a tab as one character, so every param in
-    a tab-indented file was reported as SIG401 incorrect-indent.
+    expanded tabs, counting a tab as one character, so every param in a
+    tab-indented file was reported as SIG401 incorrect-indent.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -2636,9 +2636,9 @@ def test_fix_quoted_none_annotation_not_a_value_return(
     """A quoted ``-> "None"`` annotation needs no return doc.
 
     Problem: A quoted annotation is a string constant, and only the
-    ``None`` constant itself was recognized as annotating no return,
-    so the legal forward-reference style ``-> "None"`` was classified
-    as a value return and reported SIG503 return-missing.
+    ``None`` constant itself was recognized as annotating no return, so
+    the legal forward-reference style ``-> "None"`` was classified as a
+    value return and reported SIG503 return-missing.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2672,10 +2672,10 @@ def test_fix_json_null_line_for_syntax_error(
 ) -> None:
     """JSON reports a null line number for syntax errors.
 
-    Problem: The null line marking a whole-file error was keyed on
-    exit status 2 only, but a syntax error carries exit status 123, so
-    SIG901 serialized with line 0 while the other whole-file errors
-    correctly serialized with null.
+    Problem: The null line marking a whole-file error was keyed on exit
+    status 2 only, but a syntax error carries exit status 123, so SIG901
+    serialized with line 0 while the other whole-file errors correctly
+    serialized with null.
 
     :param monkeypatch: Mock patch environment and attributes.
     :param tmp_path: Create and return the temporary directory.
@@ -2703,9 +2703,9 @@ def test_fix_napoleon_sections_missed_by_the_section_gate(
     subsets of the sections napoleon knows, and the two lists had
     drifted apart from each other as well as from napoleon, so a
     docstring headed by a section missing from its list was never
-    converted and all of its documented params were invisible. The
-    lists were case sensitive too, while napoleon lowercases a header
-    before matching it.
+    converted and all of its documented params were invisible. The lists
+    were case sensitive too, while napoleon lowercases a header before
+    matching it.
 
     Documentation hidden this way also hid the violations it should
     raise, so a property documenting a return goes unreported until its
@@ -2789,8 +2789,8 @@ def test_fix_wrapped_role_does_not_disable_conversion(
 
     Problem: The gate marking a docstring as already rst matched any
     line opening with a role, so prose reflowed to put a role such as
-    ``:class:`Thing``` at the start of a line stopped napoleon from
-    ever running, and every Google or numpy param vanished.
+    ``:class:`Thing``` at the start of a line stopped napoleon from ever
+    running, and every Google or numpy param vanished.
 
     The third function guards the gate's reason for existing, as a real
     field still has to win over a section header, leaving the ``Args:``
@@ -2845,8 +2845,8 @@ def test_fix_numpy_section_header_with_trailing_whitespace(
 
     Problem: The numpy gate demanded the newline immediately after the
     section name, so an invisible trailing space stopped napoleon from
-    running, while the underline below the name had always tolerated
-    the same whitespace.
+    running, while the underline below the name had always tolerated the
+    same whitespace.
 
     :param init_file: Initialize a test file.
     :param main: Mock ``main`` function.
@@ -2876,9 +2876,9 @@ def test_fix_ellipsis_line_does_not_suppress_sig306(
 
     Problem: Any line starting with two dots was read as an rst
     directive, but rst explicit markup is two dots followed by
-    whitespace, so a prose line starting with an ellipsis put the
-    probe in block mode and a description missing its final period
-    escaped SIG306.
+    whitespace, so a prose line starting with an ellipsis put the probe
+    in block mode and a description missing its final period escaped
+    SIG306.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2906,9 +2906,9 @@ def test_fix_whitespace_in_comma_separated_rule_lists(
     """A space after the comma still disables both rules.
 
     Problem: The rule following the space was never matched. In a
-    directive it stayed enabled while SIG003 was reported against it,
-    so the user was told the wrong thing about a check that still
-    fired, and on the commandline the run was rejected outright.
+    directive it stayed enabled while SIG003 was reported against it, so
+    the user was told the wrong thing about a check that still fired,
+    and on the commandline the run was rejected outright.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.
@@ -2989,8 +2989,8 @@ def test_fix_pyproject_resolved_from_the_checked_path(
 
     Problem: The pyproject.toml was located by walking up from the
     current working directory, so checking a package from the root of
-    the monorepo containing it applied the root's config instead of
-    the package's, silently changing which checks ran.
+    the monorepo containing it applied the root's config instead of the
+    package's, silently changing which checks ran.
 
     :param tmp_path: Create and return the temporary directory.
     :param init_pyproject_toml: Initialize a test pyproject.toml file.
@@ -3024,9 +3024,9 @@ def test_fix_pyproject_resolved_from_the_common_ancestor(
     Problem: The pyproject.toml was located by walking up from the
     current working directory, so checking packages of a monorepo from
     outside it applied the working directory's config. Resolving from
-    the first checked path instead would have made the config depend
-    on the order the paths were given in, which for a pre-commit hook
-    is the order the files happened to be edited in.
+    the first checked path instead would have made the config depend on
+    the order the paths were given in, which for a pre-commit hook is
+    the order the files happened to be edited in.
 
     :param tmp_path: Create and return the temporary directory.
     :param init_pyproject_toml: Initialize a test pyproject.toml file.
@@ -3070,10 +3070,10 @@ def test_fix_indented_directive_reach_over_intervening_lines(
     """An indented directive reaches the statement it annotates.
 
     Problem: An indented directive was deferred to the single line
-    following it and replaced any directive already deferred, so a
-    blank or comment line before the def dropped it, and stacked
-    directives lost all but the last, while the same directives at
-    module level applied correctly.
+    following it and replaced any directive already deferred, so a blank
+    or comment line before the def dropped it, and stacked directives
+    lost all but the last, while the same directives at module level
+    applied correctly.
 
     :param capsys: Capture sys out.
     :param init_file: Initialize a test file.

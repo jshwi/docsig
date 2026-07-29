@@ -186,8 +186,8 @@ class DocType(_Enum):
 class Param:
     """Single parameter from a docstring or function signature.
 
-    Two params are equal if they share a (non-None) name, or if both
-    are ``**kwargs``, which match regardless of how they are named.
+    Two params are equal if they share a (non-None) name, or if both are
+    ``**kwargs``, which match regardless of how they are named.
 
     :param kind: The type of the parameter.
     :param name: Parameter name.

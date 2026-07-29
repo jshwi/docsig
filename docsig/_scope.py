@@ -47,8 +47,8 @@ _Frame: _t.TypeAlias = (
 class _Walker:
     """Walk an AST body, collecting a scope's children.
 
-    A new walker is used for each scope so that children, along with
-    the overloads they merge into, are collected per scope. The one
+    A new walker is used for each scope so that children, along with the
+    overloads they merge into, are collected per scope. The one
     exception is imports, which are shared across the whole tree.
 
     :param directives: Directives and excluded errors per line.
