@@ -252,6 +252,11 @@ repos:
     hooks:
       - id: zizmor
         name: audit github actions workflow files
+  - repo: https://github.com/sphinx-contrib/sphinx-lint
+    rev: "v1.0.2"
+    hooks:
+      - id: sphinx-lint
+        name: lint rst files
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: "3.11.1"
     hooks:
