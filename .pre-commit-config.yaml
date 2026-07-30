@@ -1,7 +1,8 @@
 ---
 ci:
   skip:
-    - lint
+    - docsig
+    - pylint
     - deptry
     - copyright-year
     - make-docs
@@ -38,11 +39,18 @@ repos:
   - repo: local
     hooks:
       # local so the package can be imported to lint
-      - id: lint
-        name: lint
-        entry: make lint
+      - id: docsig
+        name: docsig
+        entry: make .make/docsig
         language: system
         pass_filenames: false
+      - id: pylint
+        name: pylint
+        entry: make .make/pylint
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-push
       - id: intellij-plugin
         name: intellij plugin
         entry: make -C plugin/intellij format detect
