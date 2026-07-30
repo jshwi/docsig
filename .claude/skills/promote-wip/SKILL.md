@@ -226,6 +226,15 @@ so git replays it and conflicts.
   there collides with whatever the promotion added last. Keep both sides.
 - Run the full suite before `git push --force-with-lease` — a hand-resolved
   conflict is not covered by the PR pipeline that already passed.
+- **After the rebase, prove nothing unpromoted was dropped.** Record the old
+  head first, then compare:
+  ```bash
+  git range-diff <old-dev-main>...dev/main | grep ' < '
+  ```
+  Every `<` line must be the promoted wip or a deliberate removal. A `--skip`
+  on the wrong conflict silently deletes an unpromoted fix _with its
+  regression test_, and the suite still passes because the test that would
+  have failed is gone too — the range-diff is the only check that sees it.
 
 Pre-flight the whole thing while the pipeline runs, in a throwaway detached
 worktree, so the conflicts are known before touching `dev/main`:
