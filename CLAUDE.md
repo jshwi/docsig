@@ -77,13 +77,19 @@ mask a real failure. `rm -rf .make` forces the rest to rerun but not `types`,
 whose only prerequisite is `.mypy_cache/CACHEDIR.TAG` — clear that cache too,
 or mypy reports "Nothing to be done" over code it has never seen.
 
-**A fresh worktree cannot commit until it has a `.venv`.** The pre-commit test
-hook runs `make test-bump`, whose `scripts/bump_version.py` tests copy the repo
-into a pytest tmpdir and run `make` there; without `.venv/bin/activate` that
-copy fails and blocks the commit. The same tests also leave their fixtures —
-`changelog/1.add.md` and a `toml-sort`-reformatted `pyproject.toml` — staged in
-the *real* index, so clear those before retrying. Run `make install-venv` in a
-new worktree first.
+The heavy hooks — the test suite, the Sphinx docs build, and pylint — run at
+the pre-push stage, not per commit; a commit can therefore be momentarily red,
+and `git rebase -x` remains the tool for proving per-commit green when it
+matters. Everything reaching `local` or `origin` has passed the full set.
+
+**A fresh worktree cannot commit until it has a `.venv`.** The per-commit
+hooks run make targets, so without `.venv/bin/activate` nothing passes. The
+test hook, now at pre-push, runs `make test-bump`, whose
+`scripts/bump_version.py` tests copy the repo into a pytest tmpdir and run
+`make` there; without a venv that copy fails and blocks the push. The same
+tests also leave their fixtures — `changelog/1.add.md` and a
+`toml-sort`-reformatted `pyproject.toml` — staged in the *real* index, so
+clear those before retrying. Run `make install-venv` in a new worktree first.
 
 **Never commit from a worktree — clone instead.** Conform's GPG policy reports
 `reference not found` in a linked worktree, since `.git` is a file there and
