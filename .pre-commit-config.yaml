@@ -3,6 +3,7 @@ ci:
   skip:
     - docsig
     - pylint
+    - types
     - deptry
     - copyright-year
     - make-docs
@@ -51,6 +52,12 @@ repos:
         pass_filenames: false
         stages:
           - pre-push
+      # local so mypy runs in the project environment, not a mirror's
+      - id: types
+        name: check types
+        entry: make types
+        language: system
+        pass_filenames: false
       - id: intellij-plugin
         name: intellij plugin
         entry: make -C plugin/intellij format detect
@@ -247,11 +254,6 @@ repos:
     hooks:
       - id: editorconfig-checker
         name: check .editorconfig rules
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.3.1"
-    hooks:
-      - id: mypy
-        additional_dependencies: [types-pyyaml==6.0.12]
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: "v0.25"
     hooks:
