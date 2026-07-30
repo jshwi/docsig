@@ -249,7 +249,7 @@ build/docsig.pyz: build/site-packages/$(VERSION)
 # Phony Targets
 .PHONY: benchmark build bump check-ai-commit check-claude-md check-deps \
 	check-links clean docs format install-hooks install-ignore-revs \
-	install-uv install-venv lint lock-deps publish test-scripts \
+	install-uv install-venv lint lock-deps mutation publish test-scripts \
 	test-source tests tox types update-copyright update-deps update-docs \
 	update-readme whitelist news commit-fix version neovim
 
@@ -260,6 +260,10 @@ version:
 #: run benchmarks
 benchmark: $(VENV)
 	@RUN_BENCHMARK=true $(RUN) pytest -m=benchmark --benchmark-save=benchmark
+
+#: run mutation testing
+mutation: $(VENV)
+	@$(RUN) mutmut run
 
 #: build distribution
 build: $(BUILD)
