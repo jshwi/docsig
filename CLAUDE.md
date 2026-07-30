@@ -91,6 +91,15 @@ tests also leave their fixtures — `changelog/1.add.md` and a
 `toml-sort`-reformatted `pyproject.toml` — staged in the *real* index, so
 clear those before retrying. Run `make install-venv` in a new worktree first.
 
+**The `.venv` belongs to the checked-out branch, not to the clone.** Any
+`uv sync` reconciles it to the current branch's `uv.lock` exactly, so a
+package that only exists on another branch is *removed*, and anything
+installed by hand with `uv pip install` is removed with it. The make targets
+all depend on `$(VENV)`, so this happens without being asked for — a push
+alone is enough. Running a tool across branches therefore needs the branch
+that carries it checked out; reinstalling by hand only survives until the next
+target runs.
+
 **Never commit from a worktree — clone instead.** Conform's GPG policy reports
 `reference not found` in a linked worktree, since `.git` is a file there and
 conform cannot open the repository through it. Its other policies only read
