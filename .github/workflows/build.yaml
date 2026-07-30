@@ -13,6 +13,32 @@ env:
   UV: uv
 
 jobs:
+  checks:
+    name: checks
+    runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: "3.10"
+    steps:
+      - name: Checkout Build
+        id: checkout-build
+        uses: actions/checkout@v7
+      - name: Get uv Version
+        id: get-uv-version
+        run: echo "version=$(cat .uv-version)" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Setup uv
+        id: setup-uv
+        uses: astral-sh/setup-uv@v9.0.0
+        with:
+          version: "${{ steps.get-uv-version.outputs.version }}"
+          enable-cache: true
+      - name: Build
+        id: build
+        run: make build
+      - name: Check Dependencies
+        id: check-dependencies
+        run: make check-deps
+
   build:
     name: "${{ matrix.os }}-python${{ matrix.python-version }}"
     runs-on: "${{ matrix.os }}"
@@ -44,16 +70,9 @@ jobs:
         with:
           version: "${{ steps.get-uv-version.outputs.version }}"
           enable-cache: true
-      - name: Build
-        id: build
-        run: make build
-      - name: Check Dependencies
-        id: check-dependencies
-        run: make check-deps
-      - name: Test Scripts
-        id: test-scripts
-        run: |
-          make test-scripts
+      - name: Test
+        id: test
+        run: make tests
       - name: Upload Coverage
         id: upload-coverage
         uses: codecov/codecov-action@v7
