@@ -61,7 +61,6 @@ $(BUILD): .make/doctest \
 		.make/update-docs \
 		.mypy_cache/CACHEDIR.TAG \
 		README.rst \
-		.make/doctest \
 		coverage.xml \
 		docs/_build/html/index.html
 	@$(UV) build
