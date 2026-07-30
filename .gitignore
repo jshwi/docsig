@@ -12,6 +12,7 @@ __pycache__/
 bin
 coverage.xml
 dist/
+mutants/
 node_modules/
 plugin/docsig*
 settings.local.json

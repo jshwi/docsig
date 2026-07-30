@@ -10,6 +10,7 @@ dev = [
   "bump-my-version>=1.5.1,<1.6.0",
   "deptry>=0.23.0,<0.26.0",
   "gitpython>=3.1.59,<4.0.0",
+  "mutmut>=3.3.0,<4.0.0",
   "mypy>=2.3.0,<3.0",
   "pre-commit>=4.6.2,<5.0.0",
   "pylint>=4.0.7,<5.0.0",
@@ -180,6 +181,26 @@ DEP004 = [
 [tool.docsig]
 check-class = true
 check-protected-class-methods = true
+
+[tool.mutmut]
+do_not_mutate = [
+  "docsig/_vendor/*",
+  "docsig/_version.py"
+]
+# mutants/ is gitignored, so the _gitignore plugin would collect
+# nothing there; randomly is off so cached mutant results stay
+# comparable between runs; the attached -pname form is required, as
+# toml-sort sorts array values so a separate flag would come unpaired
+pytest_add_cli_args = [
+  "-pno:_gitignore",
+  "-pno:randomly"
+]
+pytest_add_cli_args_test_selection = [
+  "tests/"
+]
+source_paths = [
+  "docsig/"
+]
 
 [tool.mypy]
 exclude = [

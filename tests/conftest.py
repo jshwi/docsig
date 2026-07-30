@@ -26,6 +26,18 @@ from . import (
     FixturePatchArgv,
 )
 
+if os.environ.get("MUTANT_UNDER_TEST") is not None:  # pragma: no cover
+    # mutmut's trampoline resolves its relative source paths against
+    # cwd on every stats hit, and these tests chdir away from the
+    # project root; resolving them once here, while cwd is still the
+    # root, keeps the later strict resolves valid from any directory
+    from mutmut.configuration import Config as _MutmutConfig
+
+    _mutmut_config = _MutmutConfig.get()
+    _mutmut_config.source_paths = [
+        p.resolve() for p in _mutmut_config.source_paths
+    ]
+
 
 @pytest.fixture(name="init_pyproject_toml")
 def fixture_init_pyproject_toml(
