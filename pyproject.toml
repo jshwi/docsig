@@ -45,6 +45,7 @@ plugin = [
 ]
 tests = [
   "pytest-benchmark>=4,<6",
+  "pytest-codspeed>=4.0.0,<5.0.0",
   "pytest-cov>=5,<8",
   "pytest-randomly>=3.15,<5.0",
   "pytest-sugar>=1.0.0,<2.0.0",
