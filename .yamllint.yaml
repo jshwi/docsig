@@ -1,0 +1,9 @@
+---
+rules:
+  line-length:
+    max: 79
+    # a hash-pinned action reference with its version comment cannot
+    # fit in 79 columns, so workflow files are exempt
+    ignore:
+      - .github/workflows/*.yaml
+      - .github/workflows/*.yml
