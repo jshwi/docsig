@@ -11,23 +11,34 @@ import io
 import json
 import os
 import pickle
+import sys
 from argparse import Namespace
 from pathlib import Path
 
+import astroid
 import pytest
 
 import docsig
 from docsig import docsig as _docsig
 
 # noinspection PyProtectedMember
+from docsig._config import Ignore
+
+# noinspection PyProtectedMember
+from docsig._main import _excepthook
+
+# noinspection PyProtectedMember
 from docsig._report import pretty_print_error
+
+# noinspection PyProtectedMember
+from docsig._stub import Signature
 from docsig.messages import FLAKE8 as F
 from docsig.messages import TEMPLATE as T
 from docsig.messages import E, Message
 from docsig.plugin import ValidatePyproject
 
 # noinspection PyProtectedMember
-from docsig.plugin._flake8 import Flake8
+from docsig.plugin._flake8 import Flake8, _cwd_on_sys_path
 
 from . import (
     CHECK_ARGS,
@@ -682,6 +693,15 @@ def test_sys_excepthook(
     assert (
         std.err.strip() == "\033[1;31mBaseException\033[0m: a base exception"
     )
+
+    # noinspection PyUnresolvedReferences
+    pretty_print_error(
+        BaseException,
+        "a base exception",
+        no_ansi=True,
+    )
+    std = capsys.readouterr()
+    assert std.err.strip() == "BaseException: a base exception"
 
 
 def test_ignore_args_ignore_kwargs_index_error(
@@ -1873,3 +1893,90 @@ def test_multi_file_json_is_one_valid_document(
     assert len(issues) == 2
     assert {Path(i["path"]).name for i in issues} == {"one.py", "two.py"}
     assert all(i["message"].startswith(E[203].ref) for i in issues)
+
+
+def test_no_excepthook_when_debugging(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Default traceback is preserved when DOCSIG_DEBUG is enabled.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    hook = sys.excepthook
+    monkeypatch.setattr("sys.excepthook", hook)
+    monkeypatch.setenv("DOCSIG_DEBUG", "1")
+    _excepthook(no_ansi=False)
+    assert sys.excepthook is hook
+
+
+def test_cwd_already_on_sys_path(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A search path entry docsig did not add is left in place on exit.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    monkeypatch.syspath_prepend(os.getcwd())
+    with _cwd_on_sys_path():
+        pass
+    assert os.path.abspath(os.getcwd()) in sys.path
+
+
+def test_signature_of_unknown_args() -> None:
+    """An unknown argument list produces a signature with no params.
+
+    astroid types ``Arguments.args`` as optional, so a node whose
+    arguments could not be resolved must yield an empty signature
+    rather than raise.
+    """
+    node = astroid.extract_node("def function(): ...")
+    node.args.args = None
+    signature = Signature.from_ast(node, Ignore())
+    assert not signature.args.names
+
+
+def test_validate_pyproject_uncommon_options(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test schema for option shapes the commandline does not have.
+
+    A scalar option with a non-list default is typed as neither
+    boolean nor array, an option without help gets no description, a
+    mutually exclusive group with fewer than two schema entries is not
+    constrained, and a second group appends to the existing ``allOf``
+    list.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--custom",
+        action="store",
+        help="a plain string option",
+    )
+    parser.add_argument("--quiet", action="store_true")
+    lonely = parser.add_mutually_exclusive_group()
+    lonely.add_argument("--lonely", action="store_true", help="lonely option")
+    first = parser.add_mutually_exclusive_group()
+    first.add_argument("--first-a", action="store_true", help="first a")
+    first.add_argument("--first-b", action="store_true", help="first b")
+    second = parser.add_mutually_exclusive_group()
+    second.add_argument("--second-a", action="store_true", help="second a")
+    second.add_argument("--second-b", action="store_true", help="second b")
+    monkeypatch.setattr(
+        "docsig.plugin._validate_pyproject._build_parser",
+        lambda: parser,
+    )
+    schema = ValidatePyproject()
+    assert schema["properties"]["custom"] == {
+        "default": None,
+        "description": "a plain string option",
+    }
+    assert schema["properties"]["quiet"] == {
+        "default": False,
+        "type": "boolean",
+    }
+    assert schema["allOf"] == [
+        {"not": {"required": ["first-a", "first-b"]}},
+        {"not": {"required": ["second-a", "second-b"]}},
+    ]
