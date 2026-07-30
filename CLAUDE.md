@@ -108,7 +108,10 @@ without the edit. It is not lost — the stash is written to
 restores it. Stage every edit before committing, including one held back for
 a later commit.
 
-Coverage must remain at **100%** (`fail_under = 100` in pyproject.toml).
+Coverage must remain at **100%** (`fail_under = 100` with `branch = true` in
+pyproject.toml). The `[tool.coverage]` tables gate more than the main suite:
+`make test-check-news` also runs with `--cov`, so a coverage config change the
+main suite satisfies can still fail the push on `scripts/check_news.py`.
 
 ## Architecture
 
