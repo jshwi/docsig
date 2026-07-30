@@ -67,6 +67,8 @@ repos:
         language: system
         entry: make tests
         pass_filenames: false
+        stages:
+          - pre-push
       # check imports against dependencies
       - id: deptry
         name: deptry
