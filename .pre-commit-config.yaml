@@ -247,6 +247,11 @@ repos:
     hooks:
       - id: actionlint
         name: lint github actions workflow files
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: "v1.28.0"
+    hooks:
+      - id: zizmor
+        name: audit github actions workflow files
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: "3.11.1"
     hooks:
