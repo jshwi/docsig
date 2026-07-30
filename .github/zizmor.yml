@@ -1,0 +1,10 @@
+# release.yaml is rejected automation awaiting removal from dev/main
+# (releases stay manual), so it is left out of workflow hardening
+# rather than churning a file that is about to go
+rules:
+  unpinned-uses:
+    ignore:
+      - release.yaml
+  artipacked:
+    ignore:
+      - release.yaml
