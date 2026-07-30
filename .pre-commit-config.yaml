@@ -90,6 +90,8 @@ repos:
         language: system
         entry: make docs/_build/html/index.html
         pass_filenames: false
+        stages:
+          - pre-push
       - id: update-readme
         name: update readme
         language: system
