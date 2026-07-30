@@ -4,6 +4,7 @@
 .benchmarks/
 .coverage
 .env
+.hypothesis/
 .make/
 .tox
 /*coverage*
