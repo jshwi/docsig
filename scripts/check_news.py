@@ -359,6 +359,22 @@ class Test:
         self.repo.git.add(Path.cwd())
         assert self._ci(message="add(plugin): feature") == 0
 
+    def test_fragment_outside_changelog(self) -> None:
+        """Deduplication only recognizes fragments under changelog/.
+
+        A fragment created in any other configured directory is
+        reported as created but never compared against the last one.
+        """
+        news = Path.cwd() / "news"
+        news.mkdir()
+        conf = tomli.loads(self.pyproject.read_text(encoding="utf-8"))
+        conf["tool"]["towncrier"]["directory"] = str(news)
+        self.pyproject.write_text(tomli_w.dumps(conf), encoding="utf-8")
+        self.repo.git.add(Path.cwd())
+        expected = CREATED_NEWS.format(path=news / "1.add.md")
+        assert self._ci(message="add: feature (#1)") == expected
+        assert (news / "1.add.md").is_file()
+
     def test_git_env_is_isolated(
         self,
         monkeypatch: pytest.MonkeyPatch,
