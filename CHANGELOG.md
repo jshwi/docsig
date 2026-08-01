@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.93.0](https://github.com/jshwi/docsig/tree/v0.93.0) - 2026-08-01
+
+### Removed
+
+- short form for check-class ([#1030](https://github.com/jshwi/docsig/issues/1030))
+
 ## [0.92.2](https://github.com/jshwi/docsig/tree/v0.92.2) - 2026-07-25
 
 ### Fixed
