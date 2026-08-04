@@ -10,6 +10,7 @@ import argparse
 import contextlib
 import io
 import json
+import logging
 import os
 import pickle
 import re
@@ -2677,3 +2678,37 @@ def test_broken_symlink_logged_then_skipped(
     link.symlink_to(tmp_path / "does-not-exist")
     assert main(".", "--verbose", test_flake8=False) == 0
     assert "broken.py: broken link, skipping" in patch_logger.getvalue()
+
+
+def test_verbose_output_goes_to_stdout(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test the log docsig sets up writes to stdout.
+
+    The report goes to stdout, and the verbose log belongs alongside it
+    rather than mixed into stderr.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    monkeypatch.setattr(
+        logging.getLogger(docsig.__name__),
+        "handlers",
+        [],
+    )
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: Description of a.
+    """
+''')
+    main(".", "--verbose", test_flake8=False)
+    std = capsys.readouterr()
+    assert "parsing python code successful" in std.out
+    assert "parsing python code successful" not in std.err
