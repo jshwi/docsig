@@ -2543,3 +2543,49 @@ class Klass:
     assert not capsys.readouterr().out.strip()
     assert main(".", "--check-protected", test_flake8=False) != 0
     assert E[203].ref in capsys.readouterr().out
+
+
+def test_string_parse_logs_against_stdin(
+    patch_logger: io.StringIO,
+    main: FixtureMain,
+) -> None:
+    """Test source given as a string is logged as coming from stdin.
+
+    There is no file to name, and the log line is the only place the
+    distinction shows.
+
+    :param patch_logger: Logs as an io instance.
+    :param main: Mock ``main`` function.
+    """
+    main(
+        "--string",
+        'def function(a) -> None:\n    """Summary.\n\n'
+        '    :param a: Description of a.\n    """\n',
+        "--verbose",
+        test_flake8=False,
+    )
+    assert "stdin: parsing python code successful" in patch_logger.getvalue()
+
+
+def test_syntax_error_logged_on_a_single_line(
+    patch_logger: io.StringIO,
+    main: FixtureMain,
+) -> None:
+    """Test a parse failure is logged folded onto one line.
+
+    The error carries the offending source across several lines, and a
+    log record spanning lines is unreadable next to the others.
+
+    :param patch_logger: Logs as an io instance.
+    :param main: Mock ``main`` function.
+    """
+    main(
+        "--string",
+        "def function(:\n    pass\n",
+        "--verbose",
+        test_flake8=False,
+    )
+    assert (
+        "stdin: parsing python code failed: invalid syntax (<unknown>, line 1)"
+        in patch_logger.getvalue()
+    )
