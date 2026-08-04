@@ -2657,3 +2657,23 @@ which produces a TokenError."""
         f"{PATH}: error parsing comments ('eof in multi-line statement'"
         in patch_logger.getvalue()
     )
+
+
+def test_broken_symlink_logged_then_skipped(
+    patch_logger: io.StringIO,
+    tmp_path: Path,
+    main: FixtureMain,
+) -> None:
+    """Test a link with no target is passed over, not raised on.
+
+    A path that does not exist is an error worth stopping for, unless
+    it is a link, which is only worth a note.
+
+    :param patch_logger: Logs as an io instance.
+    :param tmp_path: Create and return the temporary directory.
+    :param main: Mock ``main`` function.
+    """
+    link = tmp_path / "broken.py"
+    link.symlink_to(tmp_path / "does-not-exist")
+    assert main(".", "--verbose", test_flake8=False) == 0
+    assert "broken.py: broken link, skipping" in patch_logger.getvalue()
