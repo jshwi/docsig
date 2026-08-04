@@ -2163,3 +2163,54 @@ def test_flake8_option_read_from_config(
     init_file(f"[flake8]\nsig-{option} = true\n", Path("setup.cfg"))
     flake8(".")
     assert capsys.readouterr() == commandline
+
+
+def test_confirm_return_needed_carries_hint(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test SIG501 is reported with its hint attached.
+
+    The hint is the only thing telling the user an annotation resolves
+    the ambiguity, and nothing asserted it was ever printed.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a):
+    """Summary.
+
+    :param a: Description of a.
+    """
+''')
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert E[501].ref in std.out
+    assert E[501].hint in std.out
+
+
+def test_bad_closing_token_carries_hint(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test SIG304 is reported with its hint attached.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a- Description of a.
+    """
+''')
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert E[304].ref in std.out
+    assert E[304].hint in std.out
