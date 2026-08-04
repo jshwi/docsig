@@ -2829,3 +2829,87 @@ def function(a) -> None:
 ''')
     main(".", test_flake8=False)
     assert E[302].ref not in capsys.readouterr().out
+
+
+def test_blank_description_is_not_missing_a_period(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a description of only whitespace has no sentence to end.
+
+    There is no prose in it, so there is no last character to hold to a
+    terminator.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    # written this way so the trailing whitespace the case needs
+    # survives the hook that strips it from the source
+    blank = " " * 2
+    init_file(f'''
+def function(a) -> None:
+    """Summary.
+
+    :param a:{blank}
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[306].ref not in capsys.readouterr().out
+
+
+def test_bare_explicit_markup_starts_a_block(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a lone double dot opens a block like a directive does.
+
+    Rst explicit markup is two dots, with or without a directive after
+    them, so what is indented under it belongs to it and is not prose
+    needing a terminator.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: Text.
+
+        ..
+            some content here
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[306].ref not in capsys.readouterr().out
+
+
+def test_list_item_ending_a_block_is_the_paragraph(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test the line that closes a block starts the paragraph after it.
+
+    A literal block runs until something returns to the margin, and
+    when that something is a list item the description ends on a list
+    item, which needs no terminator.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: Intro::
+    - list at field indent
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[306].ref not in capsys.readouterr().out
