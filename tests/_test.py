@@ -14,6 +14,7 @@ import os
 import pickle
 import re
 import sys
+import warnings
 from argparse import Namespace
 from pathlib import Path
 
@@ -2214,3 +2215,60 @@ def function(a) -> None:
     std = capsys.readouterr()
     assert E[304].ref in std.out
     assert E[304].hint in std.out
+
+
+def test_new_violation_warns_and_flags_the_report(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a message flagged new warns rather than erroring outright.
+
+    A new violation is announced with a FutureWarning and its report
+    line carries a reminder, so a check can land before it starts
+    failing builds. No message sets the flag today, so nothing
+    exercised the path.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    monkeypatch.setitem(E, 203, E[203]._replace(new=True))
+    init_file('''
+def function(a) -> None:
+    """Summary."""
+''')
+    with pytest.warns(FutureWarning, match=E[203].ref):
+        main(".", test_flake8=False)
+
+    std = capsys.readouterr()
+    assert "warning: please remember to fix this or disable it" in std.out
+
+
+def test_new_violation_warning_silenced_for_json(
+    monkeypatch: pytest.MonkeyPatch,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test the new-violation warning stays out of json output.
+
+    The warning would be written to stderr alongside the document, so
+    _DOCSIG_FORMAT_JSON silences it.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    monkeypatch.setitem(E, 203, E[203]._replace(new=True))
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    init_file('''
+def function(a) -> None:
+    """Summary."""
+''')
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        main(".", test_flake8=False)
+
+    assert not [i for i in caught if issubclass(i.category, FutureWarning)]
