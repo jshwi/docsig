@@ -2516,3 +2516,30 @@ def function(a) -> None:
     diagnostics = json.loads(capsys.readouterr().out)
     assert diagnostics
     assert all(i["line"] == 2 for i in diagnostics)
+
+
+def test_protected_method_skipped_by_default(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a protected method is only checked when asked for.
+
+    A protected function at module level never reaches the check, so
+    the guard only ever bites on a method.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+class Klass:
+    """Summary."""
+
+    def _protected(self, param) -> None:
+        """Summary."""
+''')
+    assert main(".", test_flake8=False) == 0
+    assert not capsys.readouterr().out.strip()
+    assert main(".", "--check-protected", test_flake8=False) != 0
+    assert E[203].ref in capsys.readouterr().out
