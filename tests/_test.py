@@ -46,6 +46,7 @@ from . import (
     CHECK_ARGS,
     PATH,
     WILL_ERROR,
+    FixtureFlake8,
     FixtureInitFile,
     FixtureInitPyprojectTomlFile,
     FixtureMain,
@@ -2015,3 +2016,150 @@ def test_readme_documents_current_help(
         helpio.getvalue(),
         flags=re.MULTILINE,
     ) in readme.read_text(encoding="utf-8")
+
+
+_FLAKE8_CONFIG_OPTIONS = (
+    (
+        "check-class",
+        '''
+class Klass:
+    """Docstring."""
+
+    def __init__(self, param) -> None:
+        pass
+''',
+    ),
+    (
+        "check-class-constructor",
+        '''
+class Klass:
+    """Docstring."""
+
+    def __init__(self, param) -> None:
+        pass
+''',
+    ),
+    (
+        "check-dunders",
+        '''
+class Klass:
+    """Docstring."""
+
+    def __call__(self, param) -> None:
+        """Docstring."""
+''',
+    ),
+    (
+        "check-nested",
+        '''
+def function() -> None:
+    """Docstring."""
+
+    def nested(param) -> None:
+        """Docstring."""
+''',
+    ),
+    (
+        "check-overridden",
+        '''
+class Base:
+    """Docstring."""
+
+    def method(self, param) -> None:
+        """Docstring.
+
+        :param param: Description of param.
+        """
+
+
+class Child(Base):
+    """Docstring."""
+
+    def method(self, param) -> None:
+        """Docstring."""
+''',
+    ),
+    (
+        "check-property-returns",
+        '''
+class Klass:
+    """Docstring."""
+
+    @property
+    def prop(self) -> int:
+        """Docstring."""
+        return 1
+''',
+    ),
+    (
+        "check-protected",
+        '''
+def _function(param) -> None:
+    """Docstring."""
+''',
+    ),
+    (
+        "check-protected-class-methods",
+        '''
+class _Klass:
+    """Docstring."""
+
+    def method(self, param) -> None:
+        """Docstring."""
+''',
+    ),
+    (
+        "ignore-args",
+        '''
+def function(*args) -> None:
+    """Docstring."""
+''',
+    ),
+    (
+        "ignore-kwargs",
+        '''
+def function(**kwargs) -> None:
+    """Docstring."""
+''',
+    ),
+    (
+        "ignore-no-params",
+        '''
+def function(param) -> None:
+    """Docstring."""
+''',
+    ),
+)
+
+
+@pytest.mark.parametrize(("option", "template"), _FLAKE8_CONFIG_OPTIONS)
+def test_flake8_option_read_from_config(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    flake8: FixtureFlake8,
+    option: str,
+    template: str,
+) -> None:
+    """Test each --sig-* option takes effect from a flake8 config file.
+
+    Every option is registered with ``parse_from_config=True``, but the
+    suite only ever passes them on the commandline, so an option that
+    stopped being read from setup.cfg would go unnoticed.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param flake8: Flake8 plugin fixture.
+    :param option: Option to set, without the ``--sig-`` prefix.
+    :param template: Source the option changes the result for.
+    """
+    init_file(template)
+    flake8(".")
+    baseline = capsys.readouterr()
+    flake8(f"--sig-{option}", ".")
+    commandline = capsys.readouterr()
+    # a template the option makes no difference to would pass the
+    # comparison below without testing anything
+    assert commandline != baseline
+    init_file(f"[flake8]\nsig-{option} = true\n", Path("setup.cfg"))
+    flake8(".")
+    assert capsys.readouterr() == commandline
