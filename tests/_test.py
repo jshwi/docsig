@@ -2746,3 +2746,86 @@ def test_main_installs_the_friendly_excepthook(
     assert (
         capsys.readouterr().err.strip() == "FileNotFoundError: does-not-exist"
     )
+
+
+def test_list_item_body_may_continue_indented(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a list item in a field body may be continued deeper.
+
+    An indent below a list item continues that item, so it is not the
+    unexpected indentation that rst would reject.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a:
+        - one
+            continued deeper
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[302].ref not in capsys.readouterr().out
+
+
+def test_unexpected_indent_found_after_a_blank_line(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a field body is checked past the paragraph it starts with.
+
+    A blank line ends a paragraph rather than the body, so a paragraph
+    below one is still rst that has to hold together.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a:
+        Body line.
+
+        Second para.
+            Deeper unexpectedly.
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[302].ref in capsys.readouterr().out
+
+
+def test_literal_block_body_may_indent_deeper(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a line opening a literal block may be indented under.
+
+    A line ending in a double colon opens a literal block, and the
+    block is indented under it by definition.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a:
+        Body::
+            literal deeper
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[302].ref not in capsys.readouterr().out
