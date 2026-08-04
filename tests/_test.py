@@ -2712,3 +2712,37 @@ def function(a) -> None:
     std = capsys.readouterr()
     assert "parsing python code successful" in std.out
     assert "parsing python code successful" not in std.err
+
+
+def test_main_installs_the_friendly_excepthook(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
+    """Test an error escaping docsig prints without a traceback.
+
+    A path that does not exist is the user's mistake, not a crash to
+    debug, so main leaves behind a hook that prints the error alone,
+    coloured unless ansi is turned off.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    """
+    monkeypatch.setattr("sys.excepthook", sys.excepthook)
+    monkeypatch.setattr("sys.stdout.isatty", lambda: True)
+    err = FileNotFoundError("does-not-exist")
+    with pytest.raises(FileNotFoundError):
+        main("does-not-exist", test_flake8=False, no_ansi=False)
+
+    sys.excepthook(FileNotFoundError, err, None)
+    assert capsys.readouterr().err.strip() == (
+        "\033[1;31mFileNotFoundError\033[0m: does-not-exist"
+    )
+    with pytest.raises(FileNotFoundError):
+        main("does-not-exist", test_flake8=False)
+
+    sys.excepthook(FileNotFoundError, err, None)
+    assert (
+        capsys.readouterr().err.strip() == "FileNotFoundError: does-not-exist"
+    )
