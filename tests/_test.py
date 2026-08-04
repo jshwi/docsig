@@ -2454,3 +2454,65 @@ def function(a) -> None:
 ''')
     assert main(".", test_flake8=False) == 0
     assert not capsys.readouterr().out.strip()
+
+
+def test_string_input_header_has_no_path_prefix(
+    capsys: pytest.CaptureFixture,
+    main: FixtureMain,
+) -> None:
+    """Test a string parsed with --string reports no file prefix.
+
+    There is no file to name, so the header is the line number alone.
+
+    :param capsys: Capture sys out.
+    :param main: Mock ``main`` function.
+    """
+    main("--string", "def function(a):\n    pass\n", test_flake8=False)
+    std = capsys.readouterr()
+    assert std.out.startswith("1 in function")
+
+
+def test_syntax_error_reported_at_line_zero(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test an unparsable module is reported against line zero.
+
+    The module never parsed, so there is no line to blame, and the
+    report says so rather than pointing at the first line.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file("def function(:\n    pass\n")
+    assert main(".", test_flake8=False) == 123
+    std = capsys.readouterr()
+    assert f"{PATH}:0 in module" in std.out
+
+
+def test_json_report_carries_the_line_number(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test each json diagnostic reports the line it was found on.
+
+    Editor plugins position their diagnostics with it.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    monkeypatch.setenv("_DOCSIG_FORMAT_JSON", "1")
+    init_file('''
+def function(a) -> None:
+    """Summary."""
+''')
+    main(".", test_flake8=False)
+    diagnostics = json.loads(capsys.readouterr().out)
+    assert diagnostics
+    assert all(i["line"] == 2 for i in diagnostics)
