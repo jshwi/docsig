@@ -229,6 +229,19 @@ in this repository to link to.
 
 Tests live in `tests/` and use fixtures to build temporary Python files on disk, run `docsig()` or the CLI against them, and assert on collected error codes. The `tests/plugins/` directory contains a custom `_gitignore` pytest plugin (added to `pythonpath` in pytest config). Script tests (`scripts/check_news.py`, `scripts/bump_version.py`) are tested separately via `make test-scripts`.
 
+**Checks are tested through behavior, never by calling internals.** A test
+builds a `.py` file and runs it through `docsig()` or the CLI, then asserts on
+the codes that come back; it does not import a helper such as
+`docsig._text.almost_equal` and assert on its return value. Internals are
+reachable from the tests, so this is a standing preference rather than
+something the layout enforces.
+
+This decides mutation-testing survivors too (`make mutation`). A surviving
+mutant earns a test only when some input file makes docsig's output differ
+with the mutant applied; that input is the test. A mutant no input can
+distinguish is unreachable code to delete, not a gap to test around, and a
+mutant killable only by asserting on internals is neither — leave it alive.
+
 ### Documentation
 
 - The docs build with `-W` (warnings are errors), and every `.rst` file —
