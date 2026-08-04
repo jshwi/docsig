@@ -2589,3 +2589,22 @@ def test_syntax_error_logged_on_a_single_line(
         "stdin: parsing python code failed: invalid syntax (<unknown>, line 1)"
         in patch_logger.getvalue()
     )
+
+
+def test_module_name_derived_from_the_path(
+    patch_logger: io.StringIO,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test the module a file is parsed as is named after its path.
+
+    The suffix goes, separators become dots, and a hyphen is not legal
+    in a module name so it becomes an underscore.
+
+    :param patch_logger: Logs as an io instance.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file("def broken(:\n    pass\n", Path("mod-ule") / "fi-le.py")
+    main(".", "--verbose", test_flake8=False)
+    assert "(mod_ule.fi_le, line 1)" in patch_logger.getvalue()
