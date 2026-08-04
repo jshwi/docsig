@@ -7,10 +7,12 @@ tests._test
 from __future__ import annotations
 
 import argparse
+import contextlib
 import io
 import json
 import os
 import pickle
+import re
 import sys
 from argparse import Namespace
 from pathlib import Path
@@ -1980,3 +1982,36 @@ def test_validate_pyproject_uncommon_options(
         {"not": {"required": ["first-a", "first-b"]}},
         {"not": {"required": ["second-a", "second-b"]}},
     ]
+
+
+def test_readme_documents_current_help(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test README.rst's console block matches the parser's help output.
+
+    scripts/update_readme.py regenerates the block, but only `make build`
+    ever compares it against the parser, so an option's help text,
+    metavar, or flags can drift from what is documented without the suite
+    noticing.
+
+    :param monkeypatch: Mock patch environment and attributes.
+    """
+    monkeypatch.setattr(
+        "shutil.get_terminal_size",
+        lambda *_, **__: os.terminal_size((93, 24)),
+    )
+    monkeypatch.setattr("sys.argv", ["docsig", "--help"])
+    helpio = io.StringIO()
+    with (
+        contextlib.redirect_stdout(helpio),
+        contextlib.suppress(SystemExit),
+    ):
+        docsig.main()
+
+    readme = Path(__file__).parent.parent / "README.rst"
+    assert re.sub(
+        r"^(?=.)",
+        "    ",
+        helpio.getvalue(),
+        flags=re.MULTILINE,
+    ) in readme.read_text(encoding="utf-8")
