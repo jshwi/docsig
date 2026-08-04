@@ -2608,3 +2608,52 @@ def test_module_name_derived_from_the_path(
     init_file("def broken(:\n    pass\n", Path("mod-ule") / "fi-le.py")
     main(".", "--verbose", test_flake8=False)
     assert "(mod_ule.fi_le, line 1)" in patch_logger.getvalue()
+
+
+def test_undecodable_file_logged_against_its_path(
+    patch_logger: io.StringIO,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a file that will not decode is logged with its path.
+
+    :param patch_logger: Logs as an io instance.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    file = init_file("")
+    file.write_bytes(b'def function():\n    """Summary \xff\xfe."""\n')
+    main(".", "--verbose", test_flake8=False)
+    assert (
+        f"{PATH}: 'utf-8' codec can't decode byte 0xff"
+        in patch_logger.getvalue()
+    )
+
+
+def test_directive_token_error_logged_against_the_file(
+    patch_logger: io.StringIO,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test comments that will not tokenize are logged, not fatal.
+
+    The ast parses, so the module is still worth checking; only the
+    directives in it are given up on, and the log line is the only
+    record that they were.
+
+    :param patch_logger: Logs as an io instance.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    template = r'''
+"""The problem is the trailing line continuation at the end of the line,
+which produces a TokenError."""
+# +2: [syntax-error]
+""\
+'''
+    init_file(template)
+    assert main(".", "--verbose", test_flake8=False) == 0
+    assert (
+        f"{PATH}: error parsing comments ('eof in multi-line statement'"
+        in patch_logger.getvalue()
+    )
