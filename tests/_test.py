@@ -2272,3 +2272,185 @@ def function(a) -> None:
         main(".", test_flake8=False)
 
     assert not [i for i in caught if issubclass(i.category, FutureWarning)]
+
+
+def test_param_at_match_lower_bound_is_not_spelling_error(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a name matching at exactly the lower bound is not a typo.
+
+    "para" and "params" match at a ratio of exactly 0.8, and the bound
+    is exclusive, so the pair is too far apart to call a misspelling.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(para) -> None:
+    """Summary.
+
+    :param params: Description of params.
+    """
+''')
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert E[404].ref in std.out
+    assert E[403].ref not in std.out
+
+
+def test_list_description_needs_no_period(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a description ending on a list item is not missing a period.
+
+    A list item is not a sentence, so SIG306 does not apply to it.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: - item one
+        - item two
+    """
+''')
+    assert main(".", test_flake8=False) == 0
+    assert E[306].ref not in capsys.readouterr().out
+
+
+def test_directive_ending_description_needs_no_period(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a description ending in a directive needs no terminator.
+
+    The directive and its indented body are not prose, so the last
+    sentence terminator before them is the one that counts.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: Text.
+
+        .. versionadded:: 1.0
+            Indented content
+    """
+''')
+    assert main(".", test_flake8=False) == 0
+    assert E[306].ref not in capsys.readouterr().out
+
+
+def test_similar_param_names_partly_documented(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test near-identical names left undocumented report only once.
+
+    param1 is almost equal to param2, so lining the two lists up has to
+    look ahead to the next signature param, or the documented names read
+    as merely out of order on top of the one that is missing.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(param1, param2, param3) -> None:
+    """Summary.
+
+    :param param2: Second.
+    :param param3: Third.
+    """
+''')
+    main(".", test_flake8=False)
+    std = capsys.readouterr()
+    assert E[203].ref in std.out
+    assert E[402].ref not in std.out
+
+
+def test_sentence_after_abbreviation_must_be_capitalized(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test tokenizing continues past an abbreviation.
+
+    "e.g." is not a sentence boundary, but the sentence that really does
+    follow it still has to start with a capital.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """Summary.
+
+    :param a: See e.g. this. also lowercase.
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[305].ref in capsys.readouterr().out
+
+
+def test_indent_anomaly_after_field_at_margin(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test an odd indent is found after a field sitting at the margin.
+
+    The first field establishes the margin without being an anomaly
+    itself, so the scan continues to the field that is misaligned.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a, b) -> None:
+    """Summary.
+
+    :param a: At margin.
+     :param b: Odd indent.
+    """
+''')
+    main(".", test_flake8=False)
+    assert E[401].ref in capsys.readouterr().out
+
+
+def test_docstring_of_only_a_field_has_no_margin(
+    capsys: pytest.CaptureFixture,
+    init_file: FixtureInitFile,
+    main: FixtureMain,
+) -> None:
+    """Test a docstring that is a single field line is handled.
+
+    There is no line below the summary to take a margin from, so the
+    margin falls back to zero rather than to nothing at all.
+
+    :param capsys: Capture sys out.
+    :param init_file: Initialize a test file.
+    :param main: Mock ``main`` function.
+    """
+    init_file('''
+def function(a) -> None:
+    """:param a: Only a field."""
+''')
+    assert main(".", test_flake8=False) == 0
+    assert not capsys.readouterr().out.strip()
