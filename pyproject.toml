@@ -186,6 +186,11 @@ check-class = true
 check-protected-class-methods = true
 
 [tool.mutmut]
+# the help block in README.rst is asserted against the parser, and the
+# mutants/ tree only receives the source and the tests otherwise
+also_copy = [
+  "README.rst"
+]
 do_not_mutate = [
   "docsig/_vendor/*",
   "docsig/_version.py"
