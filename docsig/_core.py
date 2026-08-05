@@ -217,7 +217,7 @@ def docsig(  # pylint: disable=too-many-locals,too-many-arguments
         # noinspection PyNoneFunctionAssignment
         return int(bool(_print_checks()))  # type: ignore
 
-    if string:
+    if string is not None:
         return _check_string(string, config)
 
     return _check_files(path, config)
