@@ -41,7 +41,7 @@ def _validation_errors(
     kwargs: dict[str, _t.Any],
 ) -> list[str]:
     errors = []
-    if not args and not kwargs.get("string"):
+    if not args and kwargs.get("string") is None:
         errors.append(
             "the following arguments are required: path(s) or string",
         )

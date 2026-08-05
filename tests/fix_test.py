@@ -3153,3 +3153,19 @@ def numpy(alpha) -> None:
 '''
     init_file(template)
     assert main(".") == 0
+
+
+def test_fix_empty_string_is_an_empty_module(
+    capsys: pytest.CaptureFixture,
+) -> None:
+    """An empty string is checked as an empty module, not rejected.
+
+    Problem: The guard for a missing string argument tested truthiness
+    rather than presence, so docsig(string="") was reported as a usage
+    error (exit status 2) while checking an empty file passed with 0.
+
+    :param capsys: Capture sys out.
+    """
+    assert docsig(string="") == 0
+    std = capsys.readouterr()
+    assert not std.err
