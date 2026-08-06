@@ -99,8 +99,22 @@ jobs:
           printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/docsig_nvim
           chmod 600 ~/.ssh/docsig_nvim
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          export GIT_SSH_COMMAND="ssh -i ~/.ssh/docsig_nvim"
+          # identities-only stops ssh falling back to another identity the
+          # runner happens to carry, so a rejection is always this key
+          ssh_command="ssh -o IdentitiesOnly=yes -i ~/.ssh/docsig_nvim"
+          export GIT_SSH_COMMAND="${ssh_command}"
           echo "GIT_SSH_COMMAND=${GIT_SSH_COMMAND}" >> "$GITHUB_ENV"
+          # the deploy key living on the mirror can be removed without
+          # anything here changing, and git reports that as a bare
+          # permission denied against a public repository that needs no
+          # permission to read, so name it before the rest of the job runs
+          if ! $ssh_command -T git@github.com 2>&1 \
+              | grep -q 'successfully authenticated'; then
+            echo "::error::DOCSIG_NVIM_DEPLOY_KEY is not registered on \
+          jshwi/docsig.nvim; add its public half as a deploy key with \
+          write access"
+            exit 1
+          fi
           git clone git@github.com:jshwi/docsig.nvim mirror
         env:
           DEPLOY_KEY: ${{ secrets.DOCSIG_NVIM_DEPLOY_KEY }}
