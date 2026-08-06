@@ -239,8 +239,12 @@ build/site-packages/$(VERSION): build/requirements.txt
 	@$(RUN) pip install . --no-deps --target $(@D)
 	@touch $@
 
+# a fresh install stamps site-packages with the install time, so without
+# a fixed timestamp every build differs and the mirror commits the
+# bundle again whether or not it changed
 build/docsig.pyz: build/site-packages/$(VERSION)
 	@$(RUN) shiv \
+		--reproducible \
 		--site-packages $(<D) \
 		--entry-point docsig.__main__:main \
 		--output-file $@
