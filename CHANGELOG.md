@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.94.0](https://github.com/jshwi/docsig/tree/v0.94.0) - 2026-08-08
+
+### Removed
+
+- ignore-typechecker option ([#1041](https://github.com/jshwi/docsig/issues/1041))
+
 ## [0.93.0](https://github.com/jshwi/docsig/tree/v0.93.0) - 2026-08-01
 
 ### Removed
