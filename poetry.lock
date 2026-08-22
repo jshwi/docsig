@@ -3098,14 +3098,14 @@ sphinx = ">=1.8"
 
 [[package]]
 name = "sphinx-markdown-builder"
-version = "0.6.10"
+version = "0.6.11"
 description = "A Sphinx extension to add markdown generation support."
 optional = false
 python-versions = ">=3.7"
 groups = ["docs"]
 files = [
-    {file = "sphinx_markdown_builder-0.6.10-py3-none-any.whl", hash = "sha256:16d86738b9ac69fcbc86e373c31c6402c30af1fa8d98d0f62cc5f38bfe5fc26e"},
-    {file = "sphinx_markdown_builder-0.6.10.tar.gz", hash = "sha256:cd5acf88d52ea0146a712fd557404f10326dff3428a78ba928e59b1727fd4a86"},
+    {file = "sphinx_markdown_builder-0.6.11-py3-none-any.whl", hash = "sha256:acfb94d6ee66c7a47da0ca0420578fa16f115812af25b8fd21755d5909aacf51"},
+    {file = "sphinx_markdown_builder-0.6.11.tar.gz", hash = "sha256:ba3bf33e0e42ff30ae686ac73957a95e6d045790dcfbaca012dd8ae01794e577"},
 ]
 
 [package.dependencies]
@@ -3588,4 +3588,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "ddfcbfbf9a483b475a04b01c639deb64fe8667fd5036f9d2d8d54865d9035266"
+content-hash = "51908da9e56bb6135a6b035cd6526ea87d2c9dc6f2a33755dcaf3351a6644074"
