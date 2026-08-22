@@ -11,6 +11,12 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.96.0](https://github.com/jshwi/docsig/tree/v0.96.0) - 2026-08-22
+
+### Added
+
+- description-missing-period violation ([#1066](https://github.com/jshwi/docsig/issues/1066))
+
 ## [0.95.0](https://github.com/jshwi/docsig/tree/v0.95.0) - 2026-08-15
 
 ### Removed
