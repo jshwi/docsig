@@ -156,7 +156,7 @@ tomli = "^2.0.1"
 tomli-w = "^1.0.0"
 towncrier = ">=23.11,<26.0"
 tox = "^4.60.1"
-validate-pyproject = {extras = ["all", "store"], version = "^0.25"}
+validate-pyproject = {extras = ["all", "store"], version = "^0.26"}
 vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
