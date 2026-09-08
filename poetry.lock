@@ -3387,14 +3387,14 @@ dev = ["furo (>=2024.5.6)", "nox", "packaging", "sphinx (>=5)", "twisted"]
 
 [[package]]
 name = "tox"
-version = "4.60.0"
+version = "4.60.1"
 description = "tox is a generic virtualenv management and test command line tool"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "tox-4.60.0-py3-none-any.whl", hash = "sha256:175abbc4cdef615d66874c0843be4f44c353c14aab6d89939bb22246f84122bd"},
-    {file = "tox-4.60.0.tar.gz", hash = "sha256:6f93bb580d35e00fc69cfec1116eecbe21155f747753ca5019374f7c69b2eac9"},
+    {file = "tox-4.60.1-py3-none-any.whl", hash = "sha256:6f23a6417ad761b17c047e14b6e278968c09eb9b1fc00025269f82ec8327bc75"},
+    {file = "tox-4.60.1.tar.gz", hash = "sha256:2611b77ebe06fa571ae2f4176eaf644115d08891befb9c7cb705cb038d5ab38e"},
 ]
 
 [package.dependencies]
@@ -3487,18 +3487,18 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [[package]]
 name = "validate-pyproject"
-version = "0.25"
+version = "0.26"
 description = "Validation library and CLI tool for checking on 'pyproject.toml' files using JSON Schema"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "validate_pyproject-0.25-py3-none-any.whl", hash = "sha256:f9d05e2686beff82f9ea954f582306b036ced3d3feb258c1110f2c2a495b1981"},
-    {file = "validate_pyproject-0.25.tar.gz", hash = "sha256:e68c12d1cb0d8ddc269ffc42875a81727ddb7865000aa6d2f77d833b55c53f0b"},
+    {file = "validate_pyproject-0.26-py3-none-any.whl", hash = "sha256:ab3fa448d7178d44d1b06e4b526ab5136e3faa7a1b7e7c6320c8a17fc11a9a2e"},
+    {file = "validate_pyproject-0.26.tar.gz", hash = "sha256:eb3e48eeed404761ca4bb45a91d1fa82d83bbaf3aedcfca4ee9483b4bb3e2b9e"},
 ]
 
 [package.dependencies]
-fastjsonschema = ">=2.16.2,<=3"
+fastjsonschema = {version = ">=2.16.2,<=3", markers = "python_version >= \"3.10\""}
 packaging = {version = ">=24.2", optional = true, markers = "extra == \"all\""}
 tomli = {version = ">=1.2.1", optional = true, markers = "python_version < \"3.11\" and extra == \"all\""}
 trove-classifiers = {version = ">=2021.10.20", optional = true, markers = "extra == \"all\""}
@@ -3588,4 +3588,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "51908da9e56bb6135a6b035cd6526ea87d2c9dc6f2a33755dcaf3351a6644074"
+content-hash = "c69eff092df278c2c21af6546a241a09e5980e338af347aa474d80d4dfb156c1"
