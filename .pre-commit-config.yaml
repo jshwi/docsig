@@ -17,7 +17,7 @@ ci:
     - neovim-plugin
     - check-claude-md
 default_language_version:
-  python: "3.10"
+  python: "3.11"
 default_stages:
   - pre-commit
 exclude: |
