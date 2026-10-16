@@ -28,7 +28,7 @@
    :target: https://codecov.io/gh/jshwi/docsig
    :alt: codecov.io
 .. |readthedocs.org| image:: https://readthedocs.org/projects/docsig/badge/?version=latest
-   :target: https://docsig.io/en/latest/?badge=latest
+   :target: https://app.readthedocs.org/projects/docsig/badge/?version=latest
    :alt: readthedocs.org
 .. |python3.10| image:: https://img.shields.io/badge/python-3.10-blue.svg
    :target: https://www.python.org/downloads/release/python-310
