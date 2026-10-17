@@ -28,7 +28,7 @@ maintainers = [
 ]
 name = "docsig"
 readme = "README.rst"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 version = "0.96.0"
 
 [project.entry-points."flake8.extension"]
@@ -42,7 +42,7 @@ docsig = "docsig.__main__:main"
 
 [tool.black]
 line-length = 79
-target-version = ["py310"]
+target-version = ["py311"]
 
 [tool.bumpversion]
 allow_dirty = true

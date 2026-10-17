@@ -8,7 +8,7 @@ and signature mismatches for Python files using the bundled `docsig` checker.
 ## Requirements
 
 - Neovim **0.10+**
-- Python **3.10+** (`g:python3_host_prog` or `python3` on `PATH`)
+- Python **3.11+** (`g:python3_host_prog` or `python3` on `PATH`)
 
 ## Installation
 

@@ -19,7 +19,7 @@ from docsig import main
 
 
 def _normalize_for_alternate_argparse_versions(text: str) -> str:
-    # requires-python is >=3.10, where argparse prints "options:" and
+    # requires-python is >=3.11, where argparse prints "options:" and
     # "[path ...]"; normalize help from older interpreters to that form
     text = text.replace("[path [path ...]]", "[path ...]")
 

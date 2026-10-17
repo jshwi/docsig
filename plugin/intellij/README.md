@@ -16,7 +16,7 @@ source line as a warning or error.
 
 Install [Docsig IntelliJ IDE plugin](https://plugins.jetbrains.com/plugin/32129-docsig),
 and configure CLI-equivalent options under **Settings | Tools | Docsig** (per
-project). Analysis uses the project's configured Python 3.10+ interpreter
+project). Analysis uses the project's configured Python 3.11+ interpreter
 and the bundled `docsig` executable shipped with the plugin.
 
 ## Privacy and Data Usage

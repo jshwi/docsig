@@ -24,7 +24,7 @@ using the bundled docsig checker. Diagnostics are published through
 2. REQUIREMENTS					*docsig-requirements*
 
 - Neovim 0.10+
-- Python 3.10+ (|g:python3_host_prog| or `python3` on `$PATH`)
+- Python 3.11+ (|g:python3_host_prog| or `python3` on `$PATH`)
 - The bundled checker, built with `make bundle` in the plugin directory
 
 ==============================================================================

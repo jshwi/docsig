@@ -17,7 +17,7 @@ onto the reported source line as a warning or error.
 
 Install [Docsig VS Code Extension](https://marketplace.visualstudio.com/items?itemName=jshwi.docsig),
 and configure CLI-equivalent options under **Settings | Docsig** (per
-workspace). Analysis uses the workspace Python 3.10+ interpreter from the
+workspace). Analysis uses the workspace Python 3.11+ interpreter from the
 Python extension and the bundled `docsig` executable shipped with the
 extension.
 

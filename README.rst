@@ -7,7 +7,7 @@
 
 |
 
-|License| |PyPI| |Jetbrains Plugin| |VS Code Extension| |CI| |Jetbrains Build| |VS Code Build| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.10| |Black| |isort| |pylint| |Security Status|
+|License| |PyPI| |Jetbrains Plugin| |VS Code Extension| |CI| |Jetbrains Build| |VS Code Build| |CodeQL| |pre-commit.ci status| |codecov.io| |readthedocs.org| |python3.11| |Black| |isort| |pylint| |Security Status|
 
 .. |License| image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :target: https://opensource.org/licenses/MIT
@@ -30,9 +30,9 @@
 .. |readthedocs.org| image:: https://readthedocs.org/projects/docsig/badge/?version=latest
    :target: https://app.readthedocs.org/projects/docsig/badge/?version=latest
    :alt: readthedocs.org
-.. |python3.10| image:: https://img.shields.io/badge/python-3.10-blue.svg
-   :target: https://www.python.org/downloads/release/python-310
-   :alt: python3.10
+.. |python3.11| image:: https://img.shields.io/badge/python-3.11-blue.svg
+   :target: https://www.python.org/downloads/release/python-311
+   :alt: python3.11
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
    :alt: Black
@@ -176,7 +176,7 @@ ensure your installation has registered `docsig`
 .. code-block:: console
 
     $ flake8 --version
-    7.3.0 (docsig: 0.96.0, mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) CPython 3.10.19 on Darwin
+    7.3.0 (docsig: 0.96.0, mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) CPython 3.11.14 on Darwin
 
 And now use `flake8` to lint your files
 
