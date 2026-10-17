@@ -163,7 +163,7 @@ validate-pyproject = {extras = ["all", "store"], version = "^0.26"}
 vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
-Sphinx = ">=7,<8.2"
+Sphinx = ">=8.2.3,<8.3"
 docutils = ">=0.18,<0.22"
 furo = ">=2024.4.27,<2026.0.0"
 matplotlib = "<3.12"
