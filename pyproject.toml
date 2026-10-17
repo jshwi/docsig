@@ -186,7 +186,7 @@ shiv = "^1.0.8"
 pytest = ">=9.1.1,<10.0"
 pytest-benchmark = ">=5.3.0,<6"
 pytest-cov = ">=5,<8"
-pytest-randomly = ">=3.15,<5.0"
+pytest-randomly = ">=5.0.0,<6.0"
 pytest-sugar = "^1.0.0"
 pytest-xdist = "^3.6.1"
 
