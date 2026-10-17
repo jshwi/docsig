@@ -16,13 +16,6 @@ on:
       - plugin/intellij
       - .github/workflows/build-intellij-plugin.yaml
 
-concurrency:
-  group: >-
-    ${{ github.workflow }}-${{
-      github.event.pull_request.number || github.ref
-    }}
-  cancel-in-progress: true
-
 env:
   PLUGIN_DIR: plugin/intellij
 
