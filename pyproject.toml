@@ -177,7 +177,7 @@ sphinx-sitemap = "^2.9.0"
 sphinxext-opengraph = "^0.13.0"
 
 [tool.poetry.group.flake8.dependencies]
-flake8 = "^7.1.0"
+flake8 = "^7.4.1"
 
 [tool.poetry.group.plugin.dependencies]
 shiv = "^1.0.8"
