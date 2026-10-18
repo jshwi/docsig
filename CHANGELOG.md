@@ -11,6 +11,16 @@ and the changes for the upcoming release can be found in
 
 <!-- release notes start -->
 
+## [0.97.0](https://github.com/jshwi/docsig/tree/v0.97.0) - 2026-10-18
+
+### Added
+
+- support for python3.15 ([#1109](https://github.com/jshwi/docsig/issues/1109))
+
+### Changed
+
+- drop support for python3.10 ([#1111](https://github.com/jshwi/docsig/issues/1111))
+
 ## [0.96.0](https://github.com/jshwi/docsig/tree/v0.96.0) - 2026-10-16
 
 ### Added
