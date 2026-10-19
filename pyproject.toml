@@ -6,7 +6,7 @@ requires = [
 
 [project]
 authors = [
-  {email = "s.whitlock@live.com", name = "jshwi"}
+  { email = "s.whitlock@live.com", name = "jshwi" }
 ]
 dependencies = [
   "astroid (>=4.0.2,<4.3)",
@@ -24,7 +24,7 @@ keywords = [
 ]
 license = "MIT"
 maintainers = [
-  {email = "s.whitlock@live.com", name = "jshwi"}
+  { email = "s.whitlock@live.com", name = "jshwi" }
 ]
 name = "docsig"
 readme = "README.rst"
@@ -159,7 +159,7 @@ tomli = "^2.5.0"
 tomli-w = "^1.0.0"
 towncrier = ">=26.9.0,<27.0"
 tox = "^4.65.5"
-validate-pyproject = {extras = ["all", "store"], version = "^0.26"}
+validate-pyproject = { extras = ["all", "store"], version = "^0.26" }
 vulture = "^2.11"
 
 [tool.poetry.group.docs.dependencies]
