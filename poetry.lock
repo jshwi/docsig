@@ -245,14 +245,14 @@ files = [
 
 [[package]]
 name = "bump-my-version"
-version = "1.6.1"
+version = "1.6.3"
 description = "Version bump your Python project"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "bump_my_version-1.6.1-py3-none-any.whl", hash = "sha256:3d20080151fa2f25128852d886a3ce98bab4a20f2f897a493df191567a7e0c23"},
-    {file = "bump_my_version-1.6.1.tar.gz", hash = "sha256:29bc31e366a3745ce6c64e750a5ac7c5265a085c22dc1e858c006bc3d27e5ce0"},
+    {file = "bump_my_version-1.6.3-py3-none-any.whl", hash = "sha256:48d4a302e49a507f3b71e0532a317121f58815ed446ad36b52fb2589c134f548"},
+    {file = "bump_my_version-1.6.3.tar.gz", hash = "sha256:a886d5b8a86b439bb1119eecc3625a940c545e8e7b093ae5fd52a754c904c165"},
 ]
 
 [package.dependencies]
@@ -3843,4 +3843,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4.0"
-content-hash = "ddefa9df2eafffeb6e3b769773ea831bc0963457223448cf7d87bcb661fc8b98"
+content-hash = "44dd0945f79be73d5967b5c800d47ff4eb519cc12c884fcef067c588c196e338"
