@@ -3620,14 +3620,14 @@ dev = ["codespell (>=2.4)", "furo (>=2024.5.6)", "nox", "packaging", "sphinx (>=
 
 [[package]]
 name = "tox"
-version = "4.67.0"
+version = "4.67.1"
 description = "tox is a generic virtualenv management and test command line tool"
 optional = false
 python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "tox-4.67.0-py3-none-any.whl", hash = "sha256:8fbe14416ba59543d3df3b9376537e5132fd2dd44176591285ecefb40b179533"},
-    {file = "tox-4.67.0.tar.gz", hash = "sha256:d3e48816bebbd7bad0f6942a36fa7bcd14fe4ccbf4b3a5d54040ca0294dafd1f"},
+    {file = "tox-4.67.1-py3-none-any.whl", hash = "sha256:23d614cb703e1f7bd39e00c046d4c261b63fb9986e185134c6be2f93531d9726"},
+    {file = "tox-4.67.1.tar.gz", hash = "sha256:a68602f64421b199016127364ee47347b958391d19c2b2e53fe95673a8fe98e9"},
 ]
 
 [package.dependencies]
@@ -3843,4 +3843,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4.0"
-content-hash = "ddefa9df2eafffeb6e3b769773ea831bc0963457223448cf7d87bcb661fc8b98"
+content-hash = "fe5d9b9100b4aaf770b78c71d83797729844022765f3f532c495c2f8e91e113d"
