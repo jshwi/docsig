@@ -184,7 +184,7 @@ repos:
             | plugin\/neovim\/README\.md
           )$
   - repo: https://github.com/pappasam/toml-sort
-    rev: "v0.24.4"
+    rev: "v0.25.0"
     hooks:
       - id: toml-sort
         args:
@@ -196,7 +196,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/pre-commit/pre-commit
-    rev: "v4.6.2"
+    rev: "v4.7.0"
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
@@ -212,13 +212,13 @@ repos:
           - "--recursive"
           - "-lll"
   - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.21.2"
+    rev: "v3.22.0"
     hooks:
       - id: pyupgrade
         args:
           - "--py311-plus"
   - repo: https://github.com/PyCQA/flake8
-    rev: "7.3.0"
+    rev: "7.4.1"
     hooks:
       - id: flake8
         exclude: ^(.*\/)?(_?templates\.py|exclude_test\.py)
@@ -237,13 +237,13 @@ repos:
       - id: add-trailing-comma
         name: add trailing commas
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: "26.5.1"
+    rev: "26.10.1"
     hooks:
       - id: black
         additional_dependencies:
           - tomli==2.0.1
   - repo: https://github.com/pycqa/isort
-    rev: "9.0.0b5"
+    rev: "10.0.0b1"
     hooks:
       - id: isort
   - repo: https://github.com/codespell-project/codespell
@@ -253,7 +253,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.9.0"
+    rev: "1.10.0"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
@@ -272,12 +272,12 @@ repos:
       - id: editorconfig-checker
         name: check .editorconfig rules
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.3.1"
+    rev: "v2.4.0"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: "v0.25"
+    rev: "v0.27"
     hooks:
       - id: validate-pyproject
         additional_dependencies: ["validate-pyproject-schema-store[all]"]
