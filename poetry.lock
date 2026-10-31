@@ -2690,7 +2690,7 @@ files = [
 astroid = ">=4.0.2,<=4.1.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
-    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
+    {version = ">=0.3.6", markers = "python_version == \"3.11\""},
     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
 ]
 isort = ">=5,!=5.13,<10"
@@ -3740,18 +3740,18 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [[package]]
 name = "validate-pyproject"
-version = "0.26"
+version = "0.27"
 description = "Validation library and CLI tool for checking on 'pyproject.toml' files using JSON Schema"
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "validate_pyproject-0.26-py3-none-any.whl", hash = "sha256:ab3fa448d7178d44d1b06e4b526ab5136e3faa7a1b7e7c6320c8a17fc11a9a2e"},
-    {file = "validate_pyproject-0.26.tar.gz", hash = "sha256:eb3e48eeed404761ca4bb45a91d1fa82d83bbaf3aedcfca4ee9483b4bb3e2b9e"},
+    {file = "validate_pyproject-0.27-py3-none-any.whl", hash = "sha256:6ad8a9a80480a5a833753f4e1c1b22cb01b8a5ad0015b1e9dbd4a5f8e898aba0"},
+    {file = "validate_pyproject-0.27.tar.gz", hash = "sha256:324cd1258b0b162968bba6a0ff4a610c8d13074be7e2097661c5702c22043d43"},
 ]
 
 [package.dependencies]
-fastjsonschema = {version = ">=2.16.2,<=3", markers = "python_version >= \"3.10\""}
+fastjsonschema = ">=2.16.2,<=3"
 packaging = {version = ">=24.2", optional = true, markers = "extra == \"all\""}
 trove-classifiers = {version = ">=2021.10.20", optional = true, markers = "extra == \"all\""}
 validate-pyproject-schema-store = {version = "*", optional = true, markers = "extra == \"store\""}
@@ -3864,4 +3864,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4.0"
-content-hash = "58f757f3b9092e5ce9c8001f5958c0c2c6381a5709f6ddb87941bdaf14bd7a96"
+content-hash = "2ef3bbeb90635b511c34daa95359827d766ee50c4f7fba6e7bef831cd9d46971"
