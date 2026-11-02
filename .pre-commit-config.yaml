@@ -200,7 +200,7 @@ repos:
     hooks:
       - id: validate_manifest
   - repo: https://github.com/siderolabs/conform
-    rev: "v0.1.0-alpha.31"
+    rev: "v0.1.0-alpha.32"
     hooks:
       - id: conform
         name: conform
@@ -218,7 +218,7 @@ repos:
         args:
           - "--py311-plus"
   - repo: https://github.com/PyCQA/flake8
-    rev: "7.4.1"
+    rev: "7.5.0"
     hooks:
       - id: flake8
         exclude: ^(.*\/)?(_?templates\.py|exclude_test\.py)
@@ -243,7 +243,7 @@ repos:
         additional_dependencies:
           - tomli==2.0.1
   - repo: https://github.com/pycqa/isort
-    rev: "10.0.0b1"
+    rev: "10.0.0b2"
     hooks:
       - id: isort
   - repo: https://github.com/codespell-project/codespell
@@ -253,7 +253,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/tox-dev/tox-ini-fmt
-    rev: "1.10.0"
+    rev: "1.10.1"
     hooks:
       - id: tox-ini-fmt
   - repo: https://github.com/dannysepler/rm_unneeded_f_str
@@ -272,7 +272,7 @@ repos:
       - id: editorconfig-checker
         name: check .editorconfig rules
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.4.0"
+    rev: "v2.4.1"
     hooks:
       - id: mypy
         additional_dependencies: [types-pyyaml==6.0.12]
