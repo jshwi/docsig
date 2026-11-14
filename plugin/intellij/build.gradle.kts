@@ -19,7 +19,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("io.mockk:mockk:1.14.11")
+    testImplementation("io.mockk:mockk:1.14.12")
     intellijPlatform {
         pycharm("2026.1")
         testFramework(TestFrameworkType.Platform)
