@@ -2690,7 +2690,7 @@ files = [
 astroid = ">=4.0.2,<=4.1.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
-    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
+    {version = ">=0.3.6", markers = "python_version == \"3.11\""},
     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
 ]
 isort = ">=5,!=5.13,<10"
@@ -3809,18 +3809,18 @@ files = [
 
 [[package]]
 name = "wcmatch"
-version = "10.2.1"
+version = "11.2"
 description = "Wildcard/glob file name matcher."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["main", "dev"]
 files = [
-    {file = "wcmatch-10.2.1-py3-none-any.whl", hash = "sha256:2d775395b93f233af66690f62cb9d52b084ec159a31cc4084f4069d72f437acd"},
-    {file = "wcmatch-10.2.1.tar.gz", hash = "sha256:ecac70a5c70e62ba854b78318d3a1408e8651f8f1c96e5837743b71aa6a4fb92"},
+    {file = "wcmatch-11.2-py3-none-any.whl", hash = "sha256:952bab83c75c233836007a69550a3a8753cf06964c1eb3b84ff11ad5bff1c272"},
+    {file = "wcmatch-11.2.tar.gz", hash = "sha256:1605bde546fbde4c063628c7d89eda486909fd4337e51d73a873987fbcb2554c"},
 ]
 
 [package.dependencies]
-bracex = ">=3.0"
+bracex = ">=3.2"
 
 [[package]]
 name = "wcwidth"
@@ -3864,4 +3864,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4.0"
-content-hash = "58f757f3b9092e5ce9c8001f5958c0c2c6381a5709f6ddb87941bdaf14bd7a96"
+content-hash = "ce97d86aeeff643b5a267a3415231c6e579cb99134ac3c7cf35ef500491952bd"
